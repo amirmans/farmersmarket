@@ -8,13 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface StoreMapViewController : UIViewController <UIScrollViewDelegate>
-{    
+@interface StoreMapViewController : UIViewController <UIScrollViewDelegate> {
     __weak IBOutlet UIScrollView *mapScrollView;
     __weak IBOutlet UIImageView *storeMapImageView;
 }
 
-@property (weak, nonatomic) IBOutlet UIImageView *storeMapImageView;
-@property (weak, nonatomic) IBOutlet UIScrollView *mapScrollView;
+@property(weak, nonatomic) IBOutlet UIImageView *storeMapImageView;
+@property(weak, nonatomic) IBOutlet UIScrollView *mapScrollView;
 
 @end

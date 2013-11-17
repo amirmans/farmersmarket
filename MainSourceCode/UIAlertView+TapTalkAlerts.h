@@ -10,6 +10,6 @@
 
 @interface UIAlertView (TapTalkAlerts)
 
-+(void) showErrorAlert:(NSString *) text;
++ (void)showErrorAlert:(NSString *)text;
 
 @end

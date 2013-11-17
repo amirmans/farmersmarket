@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface BusinessCustomerProfileManager : NSObject {
-    NSString *businessName;
+    NSString *customerProfileName;
     NSDictionary *allChoices;
     NSArray *mainChoices;
     NSDictionary *productItems;
@@ -17,14 +17,14 @@
 }
 
 
-+ (BusinessCustomerProfileManager *) sharedBusinessCustomerProfileManager;
++ (BusinessCustomerProfileManager *)sharedBusinessCustomerProfileManager;
 
-@property (nonatomic, retain) NSString *businessName;
-@property (nonatomic, retain) NSDictionary *allChoices;
-@property (nonatomic, retain) NSArray *mainChoices;
-@property (nonatomic, retain) NSDictionary *productItems;
+@property(nonatomic, retain) NSString *customerProfileName;
+@property(nonatomic, retain) NSDictionary *allChoices;
+@property(nonatomic, retain) NSArray *mainChoices;
+@property(nonatomic, retain) NSDictionary *productItems;
 
-@property (atomic, assign) BOOL loadInfo;
+@property(atomic, assign) BOOL loadInfo;
 
 
 @end

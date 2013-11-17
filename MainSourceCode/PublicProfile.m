@@ -8,7 +8,7 @@
 
 #import "PublicProfile.h"
 
-@interface PublicProfile() {
+@interface PublicProfile () {
 
 @private
     UIImage *checkedButton;
@@ -16,6 +16,7 @@
 }
 
 - (void)setCurrentChoicesToWhatWasChosenPreviuosly;
+
 - (BOOL)textView:(UITextView *)textView replaceTextWith:(NSString *)text;
 
 @end
@@ -36,13 +37,11 @@
 #define TAG_HELP  3
 
 
-
 @synthesize appNavController;
 @synthesize nameButton, ageButton, pictureButton, interestButton, quoteButton, profileTextView;
 @synthesize toolbar;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization 
@@ -51,23 +50,20 @@
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
+
     // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark - View lifecycle
 
-- (IBAction)cancel:(id)sender
-{
-    [self.navigationController popViewControllerAnimated:YES]; 
+- (IBAction)cancel:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void) saveUserChoices
-{
+- (void)saveUserChoices {
     NSUserDefaults *profileValues = [NSUserDefaults standardUserDefaults];
     bool boolValue = nameButton.isSelected;
     [profileValues setBool:boolValue forKey:NAME];
@@ -77,125 +73,106 @@
     [profileValues setBool:boolValue forKey:AGE];
     boolValue = interestButton.isSelected;
     [profileValues setBool:boolValue forKey:INTERESTS];
-    
+
     [profileValues synchronize];
 }
 
 
-- (IBAction)meowcialize:(id)sender
-{
+- (IBAction)meowcialize:(id)sender {
     [self saveUserChoices];
 }
 
-- (IBAction)toggleName:(id)sender
-{
-    if (nameButton.isSelected)
-    {   
+- (IBAction)toggleName:(id)sender {
+    if (nameButton.isSelected) {
         nameButton.selected = FALSE;
     }
-    else
-    {
+    else {
         nameButton.selected = TRUE;
     }
-    
-    [self textView: profileTextView replaceTextWith: @""];
+
+    [self textView:profileTextView replaceTextWith:@""];
 }
 
 
-- (IBAction)toggleAgeGroup:(id)sender
-{
-    if (ageButton.isSelected)
-    {   
+- (IBAction)toggleAgeGroup:(id)sender {
+    if (ageButton.isSelected) {
         ageButton.selected = FALSE;
     }
-    else
-    {
+    else {
         ageButton.selected = TRUE;
     }
-   
+
     [self textView:profileTextView replaceTextWith:@""];
 }
 
 
-- (IBAction)togglePublicPicture:(id)sender
-{
-    if (pictureButton.isSelected)
-    {   
+- (IBAction)togglePublicPicture:(id)sender {
+    if (pictureButton.isSelected) {
         pictureButton.selected = FALSE;
     }
-    else
-    {
+    else {
         pictureButton.selected = TRUE;
     }
-    
+
     [self textView:profileTextView replaceTextWith:@""];
 }
 
 
-- (IBAction)toggleBriefInterest:(id)sender
-{
-    if (interestButton.isSelected)
-    {   
+- (IBAction)toggleBriefInterest:(id)sender {
+    if (interestButton.isSelected) {
         interestButton.selected = FALSE;
     }
-    else
-    {
+    else {
         interestButton.selected = TRUE;
     }
-    
-    [self textView: profileTextView replaceTextWith: @""];
-    
+
+    [self textView:profileTextView replaceTextWith:@""];
+
 }
 
-- (IBAction)toggleMyQuoteofTheDay:(id)sender
-{
-    if (quoteButton.isSelected)
-    {   
+- (IBAction)toggleMyQuoteofTheDay:(id)sender {
+    if (quoteButton.isSelected) {
         quoteButton.selected = FALSE;
     }
-    else
-    {
+    else {
         quoteButton.selected = TRUE;
     }
 
-    [self textView:profileTextView replaceTextWith:@""];    
+    [self textView:profileTextView replaceTextWith:@""];
 }
 
-- (void)setCurrentChoicesToWhatWasChosenPreviuosly
-{
+- (void)setCurrentChoicesToWhatWasChosenPreviuosly {
     NSUserDefaults *profileValues = [NSUserDefaults standardUserDefaults];
-    
+
     BOOL boolKey = [profileValues boolForKey:NAME];
-    [nameButton setSelected: boolKey];
-    
+    [nameButton setSelected:boolKey];
+
     boolKey = [profileValues boolForKey:MY_QUOTE];
     [quoteButton setSelected:boolKey];
-    
+
     boolKey = [profileValues boolForKey:AGE];
     [ageButton setSelected:boolKey];
-    
+
     boolKey = [profileValues boolForKey:INTERESTS];
     [interestButton setSelected:boolKey];
-    
-    [self textView: profileTextView replaceTextWith:@""];
+
+    [self textView:profileTextView replaceTextWith:@""];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+
 //    [self.view addSubview:tabBar];
 //    CGRect cgrect = CGRectMake(0,0,105,30);
 //    UIToolbar *toolBar1 =[[UIToolbar alloc]initWithFrame:cgrect];
-                          
+
 //    [self.navigationController.toolbar setItems:[NSArray arrayWithObjects:toolBar1, nil]];
 //    [self.navigationController.toolbar setHidden:FALSE];
     [self setCurrentChoicesToWhatWasChosenPreviuosly];
 }
 
-- (void)viewDidLayoutSubviews
-{
+- (void)viewDidLayoutSubviews {
 }
 
 //TODO
@@ -223,53 +200,50 @@
 
 // the replacement text isn't used - this routing builds the whole confirmation/information string 
 // from scratch eact time is called
-- (BOOL)textView:(UITextView *)textView replaceTextWith:(NSString *)text
-{
+- (BOOL)textView:(UITextView *)textView replaceTextWith:(NSString *)text {
     NSString *publicProfile = @"";
-       
+
     if (nameButton.isSelected)
         textView.text = @"My name is: Amir. ";
     else
         textView.text = @"";
-    
+
     publicProfile = [textView.text stringByAppendingString:publicProfile];
-   
+
     if (ageButton.isSelected)
         textView.text = @" I am more than 33 years old.";
     else
         textView.text = @" I am more than 21 years old.";
-    
+
     publicProfile = [publicProfile stringByAppendingString:textView.text];
 
     if (interestButton.isSelected)
         textView.text = @" I am interested in socializing and drinking.";
     else
         textView.text = @"";
-    
+
     publicProfile = [publicProfile stringByAppendingString:textView.text];
-   
+
     if (quoteButton.isSelected)
         textView.text = @" It is good to be the king";
     else
         textView.text = @"";
-    
+
     publicProfile = [publicProfile stringByAppendingString:textView.text];
 
     textView.text = publicProfile;
-    
+
     return TRUE;
 }
- 
-     
-- (void)viewDidUnload
-{
+
+
+- (void)viewDidUnload {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }

@@ -9,14 +9,13 @@
 #import <UIKit/UIKit.h>
 
 
-@interface MenuViewController : UIViewController
-{
+@interface MenuViewController : UIViewController {
     UIWebView *webView;
     UIActivityIndicatorView *activityIndicator;
 }
 
-@property (atomic, retain) IBOutlet UIWebView *webView;
-@property (atomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property(atomic, retain) IBOutlet UIWebView *webView;
+@property(atomic, retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 
 @end

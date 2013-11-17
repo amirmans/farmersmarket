@@ -10,7 +10,8 @@
 
 @interface TapTalkLooks : NSObject
 
-+ (void)setToTapTalkLooks:(UIView*)tempView isActionButton:(BOOL)action makeItRound:(BOOL)roundIt;
-+ (void)setBackgroundImage:(UIView*)tempView;
++ (void)setToTapTalkLooks:(UIView *)tempView isActionButton:(BOOL)action makeItRound:(BOOL)roundIt;
+
++ (void)setBackgroundImage:(UIView *)tempView;
 
 @end

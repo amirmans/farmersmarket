@@ -1,0 +1,6 @@
+.DS_Store
+.idea
+TapForAll.xcworkspace/xcuserdata/
+TapForAll.xcodeproj/xcuserdata/
+Pods
+Podfile.lock

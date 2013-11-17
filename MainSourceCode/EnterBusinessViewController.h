@@ -10,12 +10,12 @@
 #import "AppDelegate.h"
 
 @interface EnterBusinessViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate> {
-    
+
     NSDictionary *allChoices;
     NSArray *mainChoices;
 }
 
-- (id) initWithData: (NSDictionary *) subAndMainChoices :(NSArray *) onlyMainChoices;
+- (id)initWithData:(NSDictionary *)subAndMainChoices :(NSArray *)onlyMainChoices;
 
 
 @end

@@ -18,8 +18,7 @@
 @synthesize payUIButton;
 @synthesize questionsUIButton;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -27,24 +26,22 @@
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
+
     // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [TapTalkLooks setToTapTalkLooks:payUIButton isActionButton:YES makeItRound:YES];
     [TapTalkLooks setToTapTalkLooks:cancelUIButton isActionButton:YES makeItRound:YES];
     [TapTalkLooks setToTapTalkLooks:questionsUIButton isActionButton:YES makeItRound:YES];
-    
+
     _rateView.notSelectedImage = [UIImage imageNamed:@"kermit_empty.png"];
     _rateView.halfSelectedImage = [UIImage imageNamed:@"kermit_half.png"];
     _rateView.fullSelectedImage = [UIImage imageNamed:@"kermit_full.png"];
@@ -52,21 +49,20 @@
     _rateView.editable = YES;
     _rateView.maxRating = 5;
     _rateView.delegate = self;
-    
-    
+
+
     [billScrollView setBackgroundColor:[UIColor blackColor]];
     [billScrollView setCanCancelContentTouches:NO];
     billScrollView.clipsToBounds = YES;
-    
+
     billScrollView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
     CGSize billSize = CGSizeMake(billImageView.frame.size.width, billImageView.frame.size.height);
     [billScrollView setContentSize:billSize];
     [billScrollView addSubview:billImageView];
-    
+
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     billScrollView = nil;
     billImageView = nil;
     [self setPayUIButton:nil];
@@ -77,26 +73,21 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 
-- (IBAction)cancel:(id)sender
-{
-    [self.navigationController popViewControllerAnimated:YES]; 
+- (IBAction)cancel:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
-
-- (void)rateView:(RateView *)rateView ratingDidChange:(float)rating 
-{
+- (void)rateView:(RateView *)rateView ratingDidChange:(float)rating {
     const int intRating = roundf(rating);
     NSString *strRating = @"No opinion";
-    switch (intRating)
-    {
+    switch (intRating) {
         case 1:
             strRating = @"No opinion";
             break;
@@ -112,10 +103,10 @@
         case 5:
             strRating = @"Wow";
             break;
-            default:
+        default:
             strRating = @"No opinion";
     }
-    
+
     ratingString.text = strRating;
 }
 

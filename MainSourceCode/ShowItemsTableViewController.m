@@ -8,6 +8,9 @@
 
 #import "ShowItemsTableViewController.h"
 #import "ProductItemViewCell.h"
+#import "DetailProductItemViewController.h"
+// github library to load the images asynchronously
+#import <SDWebImage/UIImageView+WebCache.h>
 
 
 @implementation ShowItemsTableViewController
@@ -18,14 +21,15 @@
 @synthesize searchBar;
 @synthesize searchDisplayController;
 @synthesize sections;
+@synthesize toolbar;
 
 
 #pragma mark - Utility methods
-
-- (NSString *)itemAtIndexPath:(NSIndexPath *)indexPath
+- (NSDictionary *)itemAtIndexPath:(NSIndexPath *)indexPath
 {
-	NSString *tempStr = [[self.productsAndCategories objectForKey:[self.sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-	return tempStr;
+	NSDictionary *tempDict = [[self.productsAndCategories objectForKey:[self.sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    
+	return tempDict;
 }
 
 
@@ -74,7 +78,6 @@
 {
     [super viewDidLoad];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    self.tableView.rowHeight = 130.0;
     self.title = @"List of items";
     self.tableView.scrollEnabled = YES;
     UISearchBar *tempSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 0)];
@@ -89,6 +92,7 @@
     searchDisplayController.delegate = self;
     searchDisplayController.searchResultsDataSource = self;
     searchDisplayController.searchResultsDelegate = self;
+    self.tableView.rowHeight = 245; // change this number whenever you change the ui in ProductItemViewCell
 //    self.tableView.backgroundColor = [UIColor lightGrayColor];
     
     
@@ -156,23 +160,18 @@
     return nRows;
 }
 
-
-
+//Fornow
+//
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-	return [[self.sections objectAtIndex:section] stringByAppendingString:@" Product Category"];
+	return [[self.sections objectAtIndex:section] stringByAppendingString:@"Product Category"];
 }
-
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
-{
-	return self.sections;
-}
-
 //
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    return headerView;
+//- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+//{
+//	return self.sections;
 //}
-//
+
 //- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
 //    return footerView;
 //}
@@ -201,18 +200,30 @@
                 cell = (ProductItemViewCell *) currentObject;
                 break;
             }
-        }      
+        }
     }
 
     // Configure the cell...
-    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]){
-        cell.textLabel.text = 
+    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView])
+    {
+        cell.textLabel.text =
         [self.filteredProductItems objectAtIndex:indexPath.row];
     }
-    else{
-        cell.title.text = [self itemAtIndexPath:indexPath];
-        [cell.descriptionTextView setText:@"it goes great with chelo kabab"];
-
+    else
+    {
+        cell.title.text = [[self itemAtIndexPath:indexPath] objectForKey:@"Name"];
+        [cell.packageInfoTextView setText:[[self itemAtIndexPath:indexPath] objectForKey:@"Package"]];
+        [cell.locationTextView setText:[[self itemAtIndexPath:indexPath] objectForKey:@"Location"]];
+        [cell.priceTextField setText:[[self itemAtIndexPath:indexPath] objectForKey:@"Price"]];
+        [cell.descriptionTextView setText:[[self itemAtIndexPath:indexPath] objectForKey:@"ShortDescription"]];
+        
+        //---
+        NSURL *imageURL = [NSURL URLWithString:[[self itemAtIndexPath:indexPath] objectForKey:@"Picture"]];
+        [cell.productImageView setImageWithURL:imageURL placeholderImage:nil options:SDWebImageProgressiveDownload];
+        //---
+//        UIImage *image = [UIImage imageWithContentsOfFile:[[self itemAtIndexPath:indexPath] objectForKey:@"Picture"]];
+//        [cell.productImageView setImage:image];
+        NSLog(@"The url for image of this product is: %@",[[self itemAtIndexPath:indexPath] objectForKey:@"Picture"]);
     }
 /*
     cell.detailTextLabel.text = [[BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].productItems objectForKey:[productItems objectAtIndex:indexPath.row]];        
@@ -266,14 +277,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */}
+    NSDictionary *tempDict = [[self.productsAndCategories objectForKey:[self.sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    
+    DetailProductItemViewController *detailViewController = [[DetailProductItemViewController alloc] initWithNibName:nil bundle:nil data:tempDict];
+    // ...
+    // Pass the selected object to the new view controller.
+    [self.navigationController pushViewController:detailViewController animated:YES];
+}
 
-- (void)filterContentForSearchText:(NSString*)searchText 
+- (void)filterContentForSearchText:(NSString*)searchText
                              scope:(NSString*)scope
 {
     NSPredicate *resultPredicate = [NSPredicate 

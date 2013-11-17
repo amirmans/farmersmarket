@@ -10,16 +10,12 @@
 
 @implementation UIAlertView (TapTalkAlerts)
 
-+(void) showErrorAlert:(NSString *)text
-{
-	UIAlertView* alertView = [[UIAlertView alloc]
-                              initWithTitle:text
-                              message:nil
-                              delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                              otherButtonTitles:nil];
-    
-	[alertView show];
++ (void)showErrorAlert:(NSString *)text {
+    UIAlertView *alertView = [[UIAlertView alloc]
+            initWithTitle:text
+                  message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+
+    [alertView show];
     alertView = nil;
 }
 

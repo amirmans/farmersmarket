@@ -10,14 +10,15 @@
 
 @interface ConsumerProfileViewController : UIViewController <UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *nicknameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
-@property (weak, nonatomic) IBOutlet UIButton *topContainerButton;
-@property (weak, nonatomic) IBOutlet UIButton *lowerContainerButton;
-@property (weak, nonatomic) IBOutlet UILabel *errorMessageLabel;
-@property (weak, nonatomic) IBOutlet UITextField *passwordAgainTextField;
+@property(weak, nonatomic) IBOutlet UITextField *nicknameTextField;
+@property(weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property(weak, nonatomic) IBOutlet UIButton *topContainerButton;
+@property(weak, nonatomic) IBOutlet UIButton *lowerContainerButton;
+@property(weak, nonatomic) IBOutlet UILabel *errorMessageLabel;
+@property(weak, nonatomic) IBOutlet UITextField *passwordAgainTextField;
 
 - (IBAction)saveButtonAction:(id)sender;
+
 - (IBAction)resetButtonAction:(id)sender;
 
 

@@ -29,11 +29,10 @@
     _editable = NO;
     _maxRating = 0;
     _leftMargin = 0;
-    _midMargin = 5;        
-    _minImageSize = CGSizeMake(5, 5);        
+    _midMargin = 5;
+    _minImageSize = CGSizeMake(5, 5);
     self.backgroundColor = [UIColor clearColor];
 }
-
 
 
 - (id)initWithFrame:(CGRect)frame {
@@ -45,14 +44,14 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if ((self = [super initWithCoder:aDecoder])) {
-        [self baseInit];        
+        [self baseInit];
     }
     return self;
 }
 
 - (void)dealloc {
     _notSelectedImage = nil;
-    _halfSelectedImage = nil;    
+    _halfSelectedImage = nil;
     _fullSelectedImage = nil;
     _imageViews = nil;
 }
@@ -60,9 +59,9 @@
 #pragma mark Refresh + ReLayout
 
 - (void)refresh {
-    for(NSUInteger i = 0; i < _imageViews.count; ++i) {
+    for (NSUInteger i = 0; i < _imageViews.count; ++i) {
         UIImageView *imageView = [_imageViews objectAtIndex:i];
-        if (_rating >= i+1) {
+        if (_rating >= i + 1) {
             imageView.image = _fullSelectedImage;
         } else if (_rating > i) {
             imageView.image = _halfSelectedImage;
@@ -74,44 +73,44 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
+
     if (_notSelectedImage == nil) return;
-    
+
     NSLog(@"%f, %d, %d, %d", self.frame.size.width, _leftMargin, _midMargin, _imageViews.count);
-    float desiredImageWidth = (self.frame.size.width - (_leftMargin*2) - (_midMargin*_imageViews.count)) / _imageViews.count;
+    float desiredImageWidth = (self.frame.size.width - (_leftMargin * 2) - (_midMargin * _imageViews.count)) / _imageViews.count;
     float imageWidth = MAX(_minImageSize.width, desiredImageWidth);
     float imageHeight = MAX(_minImageSize.height, self.frame.size.height);
-    
+
     for (int i = 0; i < _imageViews.count; ++i) {
-        
+
         UIImageView *imageView = [_imageViews objectAtIndex:i];
-        CGRect imageFrame = CGRectMake(_leftMargin + i*(_midMargin+imageWidth), 0, imageWidth, imageHeight);
+        CGRect imageFrame = CGRectMake(_leftMargin + i * (_midMargin + imageWidth), 0, imageWidth, imageHeight);
         imageView.frame = imageFrame;
-        
-    }    
-    
+
+    }
+
 }
 
 #pragma mark Setting Properties
 
 - (void)setMaxRating:(int)maxRating {
     _maxRating = maxRating;
-    
+
     // Remove old image views
-    for(int i = 0; i < _imageViews.count; ++i) {
+    for (int i = 0; i < _imageViews.count; ++i) {
         UIImageView *imageView = (UIImageView *) [_imageViews objectAtIndex:i];
         [imageView removeFromSuperview];
     }
     [_imageViews removeAllObjects];
-    
+
     // Add new image views
-    for(int i = 0; i < maxRating; ++i) {
+    for (int i = 0; i < maxRating; ++i) {
         UIImageView *imageView = [[UIImageView alloc] init];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         [_imageViews addObject:imageView];
         [self addSubview:imageView];
     }
-    
+
     // Relayout and refresh
     [self setNeedsLayout];
     [self refresh];
@@ -142,16 +141,16 @@
 
 - (void)handleTouchAtLocation:(CGPoint)touchLocation {
     if (!_editable) return;
-    
+
     _rating = 0;
-    for(int i = _imageViews.count - 1; i >= 0; i--) {
-        UIImageView *imageView = [_imageViews objectAtIndex:i];        
+    for (int i = _imageViews.count - 1; i >= 0; i--) {
+        UIImageView *imageView = [_imageViews objectAtIndex:i];
         if (touchLocation.x > imageView.frame.origin.x) {
-            _rating = i+1;
+            _rating = i + 1;
             break;
         }
     }
-    
+
     [self refresh];
 }
 

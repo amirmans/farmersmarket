@@ -13,25 +13,21 @@
 
 @synthesize map = _map;
 
-- (UIImage *) map
-{
-    if (map == nil)
-    {
+- (UIImage *)map {
+    if (map == nil) {
         NSBundle *bundle = [NSBundle mainBundle];
-        NSString *path = [bundle pathForResource: @"StoreMap" ofType: @"jpg"];
+        NSString *path = [bundle pathForResource:@"StoreMap" ofType:@"jpg"];
         map = [[UIImage alloc] initWithContentsOfFile:path];
     }
     return map;
 }
 
-- (UIImage *)getMapOfStore
-{
+- (UIImage *)getMapOfStore {
     return self.map;
 }
 
 
-- (id) init 
-{
+- (id)init {
     self = [super init];
     return self;
 }

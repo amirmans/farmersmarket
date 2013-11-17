@@ -9,11 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @interface StoreMap : NSObject {
-    UIImage *map;  
+    UIImage *map;
 }
 
 - (UIImage *)getMapOfStore;
-@property (weak, nonatomic) UIImage *map;
+
+@property(weak, nonatomic) UIImage *map;
 
 
 @end

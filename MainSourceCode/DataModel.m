@@ -1,4 +1,3 @@
-
 #import "DataModel.h"
 #import "TapTalkChatMessage.h"
 
@@ -15,39 +14,32 @@
 
 static DataModel *sharedDataModel = nil;
 
-+ (DataModel *)sharedDataModelManager
-{
-    if (sharedDataModel == nil)
-    {
++ (DataModel *)sharedDataModelManager {
+    if (sharedDataModel == nil) {
         sharedDataModel = [[super allocWithZone:NULL] init];
     }
-    
+
     return sharedDataModel;
 }
 
 
-+ (id)allocWithZone:(NSZone *)zone
-{
++ (id)allocWithZone:(NSZone *)zone {
     return [self sharedDataModelManager];
 }
 
-- (id)init
-{
-    @synchronized ([DataModel class])
-    {
-        if (self == nil)
-        {
+- (id)init {
+    @synchronized ([DataModel class]) {
+        if (self == nil) {
             self = [super init];
-            if (self)
-            {
+            if (self) {
                 // Register default values for our settings
                 [[NSUserDefaults standardUserDefaults] registerDefaults:
-                 [NSDictionary dictionaryWithObjectsAndKeys:
-                  @"", NicknameKey,
-                  @"", PasswordKey,
-                  [NSNumber numberWithInt:0], JoinedChatKey,
-                  @"0", DeviceTokenKey,
-                  nil]];
+                        [NSDictionary dictionaryWithObjectsAndKeys:
+                                @"", NicknameKey,
+                                @"", PasswordKey,
+                                [NSNumber numberWithInt:0], JoinedChatKey,
+                                @"0", DeviceTokenKey,
+                                nil]];
             }
         }
 
@@ -71,8 +63,7 @@ static DataModel *sharedDataModel = nil;
 //}
 
 
-- (void)saveMessages
-{
+- (void)saveMessages {
 //	NSMutableData* data = [[NSMutableData alloc] init];
 //	NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
 //	[archiver encodeObject:self.messages forKey:@"Messages"];
@@ -86,54 +77,45 @@ static DataModel *sharedDataModel = nil;
 //    data = nil;    
 }
 
-- (int)addMessage:(TapTalkChatMessage*)message
-{
-	[self.messages addObject:message];
+- (int)addMessage:(TapTalkChatMessage *)message {
+    [self.messages addObject:message];
 //	[self saveMessages];
-	return self.messages.count - 1;
+    return self.messages.count - 1;
 }
 
-- (NSString*)nickname
-{
-	return [[NSUserDefaults standardUserDefaults] stringForKey:NicknameKey];
+- (NSString *)nickname {
+    return [[NSUserDefaults standardUserDefaults] stringForKey:NicknameKey];
 }
 
-- (void)setNickname:(NSString*)name
-{
-	[[NSUserDefaults standardUserDefaults] setObject:name forKey:NicknameKey];
+- (void)setNickname:(NSString *)name {
+    [[NSUserDefaults standardUserDefaults] setObject:name forKey:NicknameKey];
 }
 
 
-- (BOOL)joinedChat
-{
-	return [[NSUserDefaults standardUserDefaults] boolForKey:JoinedChatKey];
+- (BOOL)joinedChat {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:JoinedChatKey];
 }
 
-- (void)setJoinedChat:(BOOL)value
-{
-	[[NSUserDefaults standardUserDefaults] setBool:value forKey:JoinedChatKey];
+- (void)setJoinedChat:(BOOL)value {
+    [[NSUserDefaults standardUserDefaults] setBool:value forKey:JoinedChatKey];
 }
 
-- (NSString*)deviceToken
-{
-	return [[NSUserDefaults standardUserDefaults] stringForKey:DeviceTokenKey];
+- (NSString *)deviceToken {
+    return [[NSUserDefaults standardUserDefaults] stringForKey:DeviceTokenKey];
 }
 
-- (void)setDeviceToken:(NSString*)token
-{
-	[[NSUserDefaults standardUserDefaults] setObject:token forKey:DeviceTokenKey];
+- (void)setDeviceToken:(NSString *)token {
+    [[NSUserDefaults standardUserDefaults] setObject:token forKey:DeviceTokenKey];
 }
 
-- (void)setUserID:(int)uid
-{
+- (void)setUserID:(int)uid {
 //    UIDevice* device = [UIDevice currentDevice];
 //	return [device.uniqueIdentifier stringByReplacingOccurrencesOfString:@"-" withString:@""];
     //TODO
     [[NSUserDefaults standardUserDefaults] setInteger:uid forKey:UserIDKey];
 }
 
-- (int)userID
-{
+- (int)userID {
     return [[NSUserDefaults standardUserDefaults] integerForKey:UserIDKey];
 }
 
@@ -142,15 +124,19 @@ static DataModel *sharedDataModel = nil;
 }
 
 
-- (NSString*)password {
+- (NSString *)password {
     return [[NSUserDefaults standardUserDefaults] stringForKey:PasswordKey];
 }
 
-- (void)setPassword:(NSString*)string
-{
-	[[NSUserDefaults standardUserDefaults] setObject:string forKey:PasswordKey];
+- (void)setPassword:(NSString *)string {
+    [[NSUserDefaults standardUserDefaults] setObject:string forKey:PasswordKey];
 }
 
+- (BOOL)businessAllowedToSendNotification:(NSString *)businessName {
+    
+    //TODO
+    return FALSE;
+}
 
 
 @end

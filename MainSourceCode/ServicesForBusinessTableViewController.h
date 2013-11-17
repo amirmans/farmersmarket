@@ -10,16 +10,16 @@
 #import "Business.h"
 
 
-@interface ServicesForBusinessTableViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
-{
+@interface ServicesForBusinessTableViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource> {
     NSDictionary *allChoices;
     NSArray *mainChoices;
     NSString *chosenMainMenu;
     Business *biz;
-    
+
 }
 
-@property (atomic, retain) Business *biz;
-- (id)initWithData: (NSDictionary *)allChoices :(NSArray *)mainChoices :(NSString *)chosenMainMenu forBusiness:(Business *)argBiz;
+@property(atomic, retain) Business *biz;
+
+- (id)initWithData:(NSDictionary *)allChoices :(NSArray *)mainChoices :(NSString *)chosenMainMenu forBusiness:(Business *)argBiz;
 
 @end

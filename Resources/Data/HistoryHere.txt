@@ -1,0 +1,18 @@
+{
+    "Thu Sep 15th 2011" =     (
+        "1:30pm to 3:10pm",
+        "Good coffee cake"
+    );
+
+    "Sun Sep 10th 2011" =     (
+        "2:10pm - 3:01pm",
+        "Good service"
+    );
+    "Thu Aug 25th 2011" =     (
+        "1:40pm - 3:07pm",
+        "Internet was slow"
+    );
+    "Thu Sep 1st 2011" =     (
+        "2:00pm - 2:50pm"
+    );
+}

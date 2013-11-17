@@ -24,9 +24,7 @@ static NSUInteger firstTime = TRUE;
 @synthesize askUIButton;
 
 
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -34,65 +32,58 @@ static NSUInteger firstTime = TRUE;
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
+
     // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark - methods added by Amir
 
-- (IBAction)meow
-{
+- (IBAction)meow {
     [orderView resignFirstResponder];
-    
+
     MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
     if ([MFMessageComposeViewController canSendText]) {
         controller.body = orderView.text;
-		controller.recipients = [NSArray arrayWithObjects:@"14158676326", nil];
-		controller.messageComposeDelegate = self;
-		[self presentModalViewController:controller animated:NO];
+        controller.recipients = [NSArray arrayWithObjects:@"14158676326", nil];
+        controller.messageComposeDelegate = self;
+//       [self presentModalViewController:controller animated:NO];  //compatibility
+        [self presentViewController:controller animated:YES completion:nil];
     }
 
 }
 
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if (([textView.text length] > MAX_LENGTH) && [text length] > 0)  // text length of zero indicates back space or delete keys
     {
-       [self.errorMessageView setHidden:FALSE];
-       return FALSE;
+        [self.errorMessageView setHidden:FALSE];
+        return FALSE;
     }
-    else
-    {
+    else {
         [errorMessageView setHidden:TRUE];
         return TRUE;
     }
 }
 
-- (void)textViewDidBeginEditing:(UITextView *)textView
-{
-    if (firstTime)
-    {
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    if (firstTime) {
         firstTime = FALSE;
         textView.text = @"";
         [textView setNeedsDisplay];
     }
 }
 
-- (void)textViewDidEndEditing:(UITextView *)textView
-{
+- (void)textViewDidEndEditing:(UITextView *)textView {
     firstTime = TRUE;
 }
 
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [errorMessageView setHidden:TRUE];
@@ -103,8 +94,7 @@ static NSUInteger firstTime = TRUE;
 //    [errorMessageView setNeedsDisplay];
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     [self setOrderView:nil];
     [self setAskUIButton:nil];
     [self setCancelUIButton:nil];
@@ -113,57 +103,52 @@ static NSUInteger firstTime = TRUE;
     // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 
-- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
-{
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
     UIAlertView *alert;
     MeowConfirmationViewController *orderconfirmation;
-	switch (result) {
-		case MessageComposeResultCancelled:
-			NSLog(@"Cancelled");
-			break;
-		case MessageComposeResultFailed:
-            alert = [[UIAlertView alloc] initWithTitle:@"Ordering" message:@"Unknown Error" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-			[alert show];
+    switch (result) {
+        case MessageComposeResultCancelled:
+            NSLog(@"Cancelled");
+            break;
+        case MessageComposeResultFailed:
+            alert = [[UIAlertView alloc] initWithTitle:@"Ordering" message:@"Unknown Error" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
             alert = nil;
-			break;
-		case MessageComposeResultSent:
+            break;
+        case MessageComposeResultSent:
             orderconfirmation = [[MeowConfirmationViewController alloc] initWithNibName:nil bundle:nil];
             [self.navigationController pushViewController:orderconfirmation animated:YES];
-			break;
-		default:
-			break;
-	}
+            break;
+        default:
+            break;
+    }
     alert = nil;
-	[self dismissModalViewControllerAnimated:YES];
+//    [self dismissModalViewControllerAnimated:YES]; Compatibility
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
-- (IBAction)Cancel:(id)sender 
-{
-    UIAlertView *alert =  [[UIAlertView alloc] initWithTitle:@"Cancel?" message:@"Sure?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles: @"No", nil];
+- (IBAction)Cancel:(id)sender {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Cancel?" message:@"Sure?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
     [alert show];
 }
 
 
 #pragma UIAlertViewDelegate method
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0)
-    {
-        orderView.text =@"";
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        orderView.text = @"";
         [orderView resignFirstResponder];
 //        [self.view setNeedsDisplay];
     }
-    else 
-    {
+    else {
         // do nothing
     }
 }
@@ -212,6 +197,6 @@ static NSUInteger firstTime = TRUE;
     
 	[request startAsynchronous];
 }
-*/ 
+*/
 
 @end

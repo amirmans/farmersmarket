@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Grocery store</key>
+	<dict>
+		<key>main choices</key>
+		<dict>
+			<key>TapTalk to the house</key>
+			<array>
+				<string>Search for items</string>
+				<string>Ask for service</string>
+				<string>Show map of the store</string>
+			</array>
+		</dict>
+	</dict>
+	<key>Coffee shop</key>
+	<dict>
+		<key>main choices</key>
+		<dict>
+			<key>TapTalk to the house</key>
+			<array>
+				<string>Search for items</string>
+				<string>Ask for service</string>
+				<string>Ask for the bill</string>
+				<string>Look at the map of the store</string>
+			</array>
+		</dict>
+	</dict>
+</dict>
+</plist>

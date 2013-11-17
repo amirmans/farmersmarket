@@ -28,13 +28,13 @@
     id <RateViewDelegate> delegate;
 }
 
-@property (nonatomic, retain) UIImage *notSelectedImage;
-@property (nonatomic, retain) UIImage *halfSelectedImage;
-@property (nonatomic, retain) UIImage *fullSelectedImage;
-@property (nonatomic) float rating;
+@property(nonatomic, retain) UIImage *notSelectedImage;
+@property(nonatomic, retain) UIImage *halfSelectedImage;
+@property(nonatomic, retain) UIImage *fullSelectedImage;
+@property(nonatomic) float rating;
 @property BOOL editable;
-@property (nonatomic) int maxRating;
-@property (unsafe_unretained, assign) id <RateViewDelegate> delegate;
+@property(nonatomic) int maxRating;
+@property(unsafe_unretained, assign) id <RateViewDelegate> delegate;
 @property int leftMargin;
 
 @end

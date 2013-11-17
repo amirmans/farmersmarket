@@ -10,13 +10,16 @@
 #import "UIAlertView+TapTalkAlerts.h"
 #import "DataModel.h"
 #import "MBProgressHUD.h"
-#import "ASIFormDataRequest.h"
 #import "TapTalkLooks.h"
+
+#import "AFNetworking.h"
 
 @interface ConsumerProfileViewController ()
 
 - (BOOL)validatePassword:(NSString *)pass;
+
 - (void)populateFieldsWithInitialValues;
+
 - (void)postSaveRequest;
 
 @end
@@ -30,8 +33,7 @@
 @synthesize lowerContainerButton;
 @synthesize errorMessageLabel;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -39,8 +41,7 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     // all these steps needs to be done to load the background image
@@ -49,29 +50,27 @@
     [TapTalkLooks setToTapTalkLooks:self.lowerContainerButton isActionButton:NO makeItRound:YES];
 
     errorMessageLabel.hidden = TRUE;
-    
+
     nicknameTextField.delegate = self;
     [nicknameTextField setReturnKeyType:UIReturnKeyDone];
-    
+
     passwordTextField.secureTextEntry = YES;
     [passwordTextField setReturnKeyType:UIReturnKeyDone];
     passwordTextField.delegate = self;
-    
+
     passwordAgainTextField.secureTextEntry = YES;
     [passwordAgainTextField setReturnKeyType:UIReturnKeyDone];
     passwordAgainTextField.delegate = self;
-    
+
     [self populateFieldsWithInitialValues];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
@@ -86,7 +85,7 @@
 
     [super viewDidUnload];
 }
-   
+
 
 - (void)populateFieldsWithInitialValues {
     nicknameTextField.text = [DataModel sharedDataModelManager].nickname;
@@ -107,8 +106,7 @@
     short nVerificationSteps = 3;
     short loopIndex = 0;
     //Validating input by the user - These rules should match the ones in the server
-    while ((loopIndex < nVerificationSteps) && (badInformation == FALSE))
-    {
+    while ((loopIndex < nVerificationSteps) && (badInformation == FALSE)) {
         switch (loopIndex) {
             case 0:
                 if (nicknameTextField.text.length < 2) {
@@ -117,7 +115,7 @@
                     errorMessageLabel.text = @"Nickname must be more the 2 chars long.";
                     errorMessageLabel.textColor = [UIColor redColor];
                 }
-                    
+
                 break;
             case 1:
                 if (![self validatePassword:passwordTextField.text]) {
@@ -136,13 +134,11 @@
         }
         loopIndex++;
     } // while
-    
-    if (badInformation)
-    {
+
+    if (badInformation) {
         [UIAlertView showErrorAlert:@"There are errors in your input. Please fix them first"];
     }
-    else
-    {
+    else {
         [self postSaveRequest];
         if (self.navigationController.parentViewController != nil)
             [self.navigationController popViewControllerAnimated:YES];
@@ -166,94 +162,125 @@
         return;
     if (passwordAgainTextField.text.length < 1)
         return;
-    
+
     NSString *textToCompare;
     if (textField == passwordAgainTextField)
         textToCompare = passwordTextField.text;
     else
         textToCompare = passwordAgainTextField.text;
-    
+
     errorMessageLabel.hidden = FALSE;
-    if (![textToCompare isEqualToString:textField.text])
-    {
+    if (![textToCompare isEqualToString:textField.text]) {
         errorMessageLabel.text = @"Passwords Don't match.";
         errorMessageLabel.textColor = [UIColor redColor];
     }
-    else
-    {
+    else {
         errorMessageLabel.text = @"Passwords matched.";
         errorMessageLabel.textColor = [UIColor greenColor];
     }
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
 }
 
 
-- (void)postSaveRequest
-{
-	// Show an activity spinner that blocks the whole screen
-	MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-	hud.labelText = NSLocalizedString(@"Updating account information", @"");
-        
-	// Create the HTTP request object for our URL
+- (void)postSaveRequest {
+    // Show an activity spinner that blocks the whole screen
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = NSLocalizedString(@"Updating account information", @"");
 
-    NSURL* url = [NSURL URLWithString:ConsumerProfileServer];
-	__block ASIFormDataRequest* __weak request = [ASIFormDataRequest requestWithURL:url];
-	[request setDelegate:self];
-    
-	// Add the POST fields
-    //	[request setPostValue:@"message" forKey:@"cmd"];
-    //	[request setPostValue:[[DataModel sharedDataModelManager] userID] forKey:@"userID"];
-    //	[request setPostValue:text forKey:@"text"];
-    [request setPostValue:@"join" forKey:@"cmd"];
-    [request setPostValue:nicknameTextField.text forKey:@"nickname"];
-    [request setPostValue:passwordTextField.text forKey:@"password"];
-    
-    NSLog(@"saving profile information was called with this url: %@?cmd=%@&nickname=%@&password=%@", url, @"join",nicknameTextField.text, passwordTextField.text );
-    
-	// This code will be executed when the HTTP request is successful
-	[request setCompletionBlock:^
-     {
-         if ([self isViewLoaded])
-         {
-             [MBProgressHUD hideHUDForView:self.view animated:YES];
-             
-             // If the HTTP response code is not "200 OK", then our server API
-             // complained about a problem. This shouldn't happen, but you never
-             // know. We must be prepared to handle such unexpected situations.
-             int retcode = [request responseStatusCode];
-             if ( retcode == 0)
-             {
-                 [UIAlertView showErrorAlert:NSLocalizedString(@"No connection to profile system ", nil)];
-             }
-             else
-             {
-                 //Success set everything now
-                 [[NSUserDefaults standardUserDefaults] setObject:nicknameTextField.text forKey:NicknameKey];
-                 [[DataModel sharedDataModelManager] setNickname:nicknameTextField.text];
-                 [[DataModel sharedDataModelManager] setPassword:passwordAgainTextField.text];
-                 [UIAlertView showErrorAlert:@"Profile information saved successfully"];
-                 // uid is determine by the database. so we set DataModel fter we talk to the server
-                 [DataModel sharedDataModelManager].userID = retcode;
-             }
-         }
-     }];
-    
-	// This code is executed when the HTTP request fails
-	[request setFailedBlock:^
-     {
-         if ([self isViewLoaded])
-         {
-             [MBProgressHUD hideHUDForView:self.view animated:YES];
-             [UIAlertView showErrorAlert:@"Error in accessing profile system.  Please try in a few min"];
-         }
-     }];
-    
-	[request startAsynchronous];
+    NSString *urlString = ConsumerProfileServer;
+
+    AFHTTPRequestOperationManager *manager;
+    manager = [AFHTTPRequestOperationManager manager];
+
+    [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
+    [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
+
+    NSDictionary *params;
+    params = @{@"cmd": @"join", @"nickname": nicknameTextField.text,@"password": passwordTextField.text};
+    [manager POST:urlString parameters:params
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              NSLog(@"Response from profile server:%@", responseObject);
+              if ([self isViewLoaded]) {
+                  [MBProgressHUD hideHUDForView:self.view animated:YES];
+
+                  //profile system , when successful assigns userID and returns it.  userID is a positive integer
+                  if (operation.response.statusCode == 0) {
+                      [UIAlertView showErrorAlert:NSLocalizedString(@"Error in generatin user ID.  Please try agin a few min later", nil)];
+                  }
+                  else {
+                      //Success set everything now
+                      [[NSUserDefaults standardUserDefaults] setObject:nicknameTextField.text forKey:NicknameKey];
+                      [[DataModel sharedDataModelManager] setNickname:nicknameTextField.text];
+                      [[DataModel sharedDataModelManager] setPassword:passwordAgainTextField.text];
+                      [UIAlertView showErrorAlert:@"Profile information saved successfully"];
+                      // uid is determine by the database. so we set DataModel after we talk to the server
+                      [DataModel sharedDataModelManager].userID = operation.response.statusCode;
+                  }
+              }
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"Error: %@", error);
+              if ([self isViewLoaded]) {
+                  [MBProgressHUD hideHUDForView:self.view animated:YES];
+                  [UIAlertView showErrorAlert:@"Error in accessing profile system.  Please try again in a few min"];
+              }
+
+          }
+    ];
+
+    // Create the HTTP request object for our URL
+//    zzzzZZZZZZZ
+//    NSURL *url = [NSURL URLWithString:ConsumerProfileServer];
+//    __block ASIFormDataRequest *__weak request = [ASIFormDataRequest requestWithURL:url];
+//    [request setDelegate:self];
+//
+//    // Add the POST fields
+//    //	[request setPostValue:@"message" forKey:@"cmd"];
+//    //	[request setPostValue:[[DataModel sharedDataModelManager] userID] forKey:@"userID"];
+//    //	[request setPostValue:text forKey:@"text"];
+//    [request setPostValue:@"join" forKey:@"cmd"];
+//    [request setPostValue:nicknameTextField.text forKey:@"nickname"];
+//    [request setPostValue:passwordTextField.text forKey:@"password"];
+//
+//    NSLog(@"saving profile information was called with this url: %@?cmd=%@&nickname=%@&password=%@", url, @"join", nicknameTextField.text, passwordTextField.text);
+//
+//    // This code will be executed when the HTTP request is successful
+//    [request setCompletionBlock:^{
+//        if ([self isViewLoaded]) {
+//            [MBProgressHUD hideHUDForView:self.view animated:YES];
+//
+//            // If the HTTP response code is not "200 OK", then our server API
+//            // complained about a problem. This shouldn't happen, but you never
+//            // know. We must be prepared to handle such unexpected situations.
+//            int retcode = [request responseStatusCode];
+//            if (retcode == 0) {
+//                [UIAlertView showErrorAlert:NSLocalizedString(@"No connection to profile system ", nil)];
+//            }
+//            else {
+//                //Success set everything now
+//                [[NSUserDefaults standardUserDefaults] setObject:nicknameTextField.text forKey:NicknameKey];
+//                [[DataModel sharedDataModelManager] setNickname:nicknameTextField.text];
+//                [[DataModel sharedDataModelManager] setPassword:passwordAgainTextField.text];
+//                [UIAlertView showErrorAlert:@"Profile information saved successfully"];
+//                // uid is determine by the database. so we set DataModel fter we talk to the server
+//                [DataModel sharedDataModelManager].userID = retcode;
+//            }
+//        }
+//    }];
+//
+//    // This code is executed when the HTTP request fails
+//    [request setFailedBlock:^{
+//        if ([self isViewLoaded]) {
+//            [MBProgressHUD hideHUDForView:self.view animated:YES];
+//            [UIAlertView showErrorAlert:@"Error in accessing profile system.  Please try in a few min"];
+//        }
+//    }];
+//
+//    [request startAsynchronous];
 }
 
 

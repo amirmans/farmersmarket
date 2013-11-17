@@ -7,14 +7,13 @@
 //
 
 #import "ProductItemViewCell.h"
-#import <QuartzCore/QuartzCore.h>
 
-@interface ProductItemViewCell() {
+@interface ProductItemViewCell () {
 
     UIImageView *__backgroundImageView;
-    
+
 @private
-    
+
 }
 @end
 
@@ -26,24 +25,20 @@
 @synthesize descriptionTextView;
 
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    self = [super initWithCoder:aDecoder];
     if (self) {
-        // Initialization code
-        //– stretchableImageWithLeftCapWidth:topCapHeight:
-        //__backgroundImageView = [[UIImageView alloc] initWithImage:...stretchableImage...];
-        //self.contentView addSubview:__backgroundImageView];
-        //[self.contentView sendSubviewToBack:__backgroundImageView];
         self.productImageView.layer.cornerRadius = 10.0;
-        self.productImageView.layer.borderColor = [[UIColor blackColor] CGColor];
-        self.layer.borderWidth = 2;
+//        self.layer.borderWidth = 2;
+        
+//        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
+    
     return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state

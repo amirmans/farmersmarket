@@ -1,26 +1,22 @@
-
-#import "ChatTableView.h"
+ #import "ChatTableView.h"
 #import "DataModel.h"
 
 @implementation ChatTableView
 
 //@synthesize dataModel;
 
-- (void)scrollToNewestMessage
-{
-	// The newest message is at the bottom of the table
+- (void)scrollToNewestMessage {
+    // The newest message is at the bottom of the table
     //TODO
-	NSIndexPath* indexPath = [NSIndexPath indexPathForRow:([DataModel sharedDataModelManager].messages.count-1) inSection:0];
-    NSLog(@"indexPath at scrollToNewestMessage is: %i, %i", indexPath.section,indexPath.row);
-	[self scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];	
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([DataModel sharedDataModelManager].messages.count - 1) inSection:0];
+    NSLog(@"indexPath at scrollToNewestMessage is: %i, %i", indexPath.section, indexPath.row);
+    [self scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
-- (void)viewWillAppearWithNewMessage
-{
-	// Show a label in the table's footer if there are no messages
+- (void)viewWillAppearWithNewMessage {
+    // Show a label in the table's footer if there are no messages
     int nMessages = [DataModel sharedDataModelManager].messages.count;
-	if (nMessages == 0)
-	{
+    if (nMessages == 0) {
 //		UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 30)];
 //		label.text = NSLocalizedString(@"You have no messages", nil);
 //		label.font = [UIFont boldSystemFontOfSize:16.0f];
@@ -33,12 +29,12 @@
 //		self.tableFooterView = label;
 //		[label release];
         NSLog(@"nMessages = %d", nMessages);
-	}
-	else
-	{
-		[self scrollToNewestMessage];
-	}
+    }
+    else {
+        [self scrollToNewestMessage];
+    }
 }
+
 //
 //#pragma mark -
 //#pragma mark UITableViewDataSource

@@ -1,4 +1,4 @@
-//
+  //
 //  MessagesFromOpenConnections.m
 //  meowcialize
 //
@@ -10,19 +10,15 @@
 #import "MBProgressHUD.h"
 #import "ChatTableView.h"
 #import "DataModel.h"
-//#import "TapTalkChatMessage.h"
 #import "MessageTableViewCell.h"
 #import "SpeechBubbleView.h"
-#import "ASIFormDataRequest.h"
-
 #import "UIAlertView+TapTalkAlerts.h"
 #import "LoginViewController.h"
 
-#import <QuartzCore/CALayer.h>
+#import "AFNetworking.h"
 
 
-@interface ChatMessagesViewController ()
-{
+@interface ChatMessagesViewController () {
     TapTalkChatMessage *ttChatMessage;
 }
 
@@ -32,10 +28,9 @@
 @synthesize chatTableView;
 @synthesize sendButton;
 @synthesize composeMessageTextField;
-//@synthesize dataModel;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -44,8 +39,7 @@
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     // Release any cached data, images, etc that aren't in use.
@@ -53,40 +47,41 @@
 
 #pragma mark - View lifecycle
 
-- (void)viewDidLoad
-{   
+- (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.    
-    self.title = [[DataModel sharedDataModelManager] businessName];
-    //TODO
-    [chatTableView setBackgroundColor:[UIColor colorWithRed:219/255.0 green:226/255.0 blue:237/255.0 alpha:1.0]];
     
+    //TODO
+    [chatTableView setBackgroundColor:[UIColor colorWithRed:219 / 255.0 green:226 / 255.0 blue:237 / 255.0 alpha:1.0]];
+
     [[composeMessageTextField layer] setBorderColor:[[UIColor whiteColor] CGColor]];
     [[composeMessageTextField layer] setBorderWidth:2.3];
     [[composeMessageTextField layer] setCornerRadius:15];
-    [composeMessageTextField setClipsToBounds: YES]; 
+    [composeMessageTextField setClipsToBounds:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     NSLog(@"messagesFromOpenConnection is about to appear");
+    self.title = [[DataModel sharedDataModelManager] businessName];
     if (![[DataModel sharedDataModelManager] joinedChat]) {
         // show the user that are about to connect to a new business chatroom
-        LoginViewController* loginController = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
+        LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
         loginController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
 //      loginController.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self presentModalViewController:loginController animated:YES];
+//        [self presentModalViewController:loginController animated:YES]; Compatibility
+        [self presentViewController:loginController animated:YES completion:nil];
+
         loginController = nil;
 
         [[DataModel sharedDataModelManager] setJoinedChat:TRUE];
         [ttChatMessage loadMessagesFromServer];
 
-        MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.labelText = NSLocalizedString(@"Loading messages", @"");
     }
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     ttChatMessage = nil;
@@ -96,8 +91,7 @@
     [super viewDidUnload];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
@@ -106,43 +100,37 @@
 #pragma mark -
 #pragma mark UITableViewDataSource
 
-- (int)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
-{
-	return [DataModel sharedDataModelManager].messages.count;
+- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [DataModel sharedDataModelManager].messages.count;
 }
 
-- (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
-{
-	static NSString* CellIdentifier = @"MessageCellIdentifier";
-    
-	MessageTableViewCell* cell = (MessageTableViewCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-	if (cell == nil)
-		cell = [[MessageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    
-	//TapTalkChatMessage* message = [[DataModel sharedDataModelManager].messages objectAtIndex:indexPath.row];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"MessageCellIdentifier";
+
+    MessageTableViewCell *cell = (MessageTableViewCell *) [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil)
+        cell = [[MessageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+
+    //TapTalkChatMessage* message = [[DataModel sharedDataModelManager].messages objectAtIndex:indexPath.row];
     [ttChatMessage setValuesFrom:[[DataModel sharedDataModelManager].messages objectAtIndex:indexPath.row]];
 
-	[cell insertMessage:ttChatMessage];
-	return cell;
+    [cell insertMessage:ttChatMessage];
+    return cell;
 }
 
 #pragma mark -
 #pragma mark UITableView Delegate
 
-- (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
-{
-	// This function is called before cellForRowAtIndexPath, once for each cell.
-	// We calculate the size of the speech bubble here and then cache it in the
-	// Message object, so we don't have to repeat those calculations every time
-	// we draw the cell. We add 16px for the label that sits under the bubble.
-//	TapTalkChatMessage* message = [[DataModel sharedDataModelManager].messages objectAtIndex:indexPath.row];
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // This function is called before cellForRowAtIndexPath, once for each cell.
+    // We calculate the size of the speech bubble here and then cache it in the
+    // Message object, so we don't have to repeat those calculations every time
+    // we draw the cell. We add 16px for the label that sits under the bubble.
     NSDictionary *tempMessage = [[DataModel sharedDataModelManager].messages objectAtIndex:indexPath.row];
     [ttChatMessage setValuesFrom:tempMessage];
     //TODO: cleanup
-//    NSLog(@"information in message in the heightForRowAtIndexPath");
-//    NSLog(@"textChar is:%@ sender is:%@dateAdded is%@", tempMessage.textChat, tempMessage.sender, tempMessage.dateAdded);
-	ttChatMessage.bubbleSize = [SpeechBubbleView sizeForText:ttChatMessage.textChat];
-	
+    ttChatMessage.bubbleSize = [SpeechBubbleView sizeForText:ttChatMessage.textChat];
+
     return ttChatMessage.bubbleSize.height + 16;
 }
 
@@ -150,104 +138,134 @@
 #pragma mark - 
 #pragma Actions
 //TODO check to see if we need TapTalkChatMessage
-- (void)didSaveMessage:(TapTalkChatMessage*)message atIndex:(int)index
-{
-	// This method is called when the user presses Save in the Compose screen,
-	// but also when a push notification is received. We remove the "There are
-	// no messages" label from the table view's footer if it is present, and
-	// add a new row to the table view with a nice animation.
-	if ([self isViewLoaded])
-	{
+- (void)didSaveMessage:(TapTalkChatMessage *)message atIndex:(int)index {
+    // This method is called when the user presses Save in the Compose screen,
+    // but also when a push notification is received. We remove the "There are
+    // no messages" label from the table view's footer if it is present, and
+    // add a new row to the table view with a nice animation.
+    if ([self isViewLoaded]) {
 //		self.chatTableView = nil;
 //        [self.chatTableView beginUpdates];
-		[self.chatTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        [self.chatTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
 //        [self.chatTableView endUpdates];
         [self.chatTableView viewWillAppearWithNewMessage];
 //        self.composeMessageTextField.text = @"";
 //		[self.chatTableView scrollToNewestMessage];
-	}
+    }
 }
 
 
-- (void)userDidCompose:(NSString*)text
-{
-	// Create a new Message object
-	TapTalkChatMessage* message = [[TapTalkChatMessage alloc] init];
+- (void)userDidCompose:(NSString *)text {
+    // Create a new Message object
+    TapTalkChatMessage *message = [[TapTalkChatMessage alloc] init];
 
-	message.sender = [DataModel sharedDataModelManager].nickname;
-	message.dateAdded = [NSDate date];
-	message.textChat = text;
-    
-	// Add the Message to the data model's list of messages
-	int index = [[DataModel sharedDataModelManager] addMessage:message];
-    
-	// Add a row for the Message to ChatViewController's table view.
-	// Of course, ComposeViewController doesn't really know that the
-	// delegate is the ChatViewController.
-	[self didSaveMessage:message atIndex:index];
+    message.sender = [DataModel sharedDataModelManager].nickname;
+    message.dateAdded = [NSDate date];
+    message.textChat = text;
+
+    // Add the Message to the data model's list of messages
+    int index = [[DataModel sharedDataModelManager] addMessage:message];
+
+    // Add a row for the Message to ChatViewController's table view.
+    // Of course, ComposeViewController doesn't really know that the
+    // delegate is the ChatViewController.
+    [self didSaveMessage:message atIndex:index];
 }
 
 
-- (void)sendChatMessageToServer
-{
-	// Show an activity spinner that blocks the whole screen
-	MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-	hud.labelText = NSLocalizedString(@"Sending the message", @"");
-    
-	NSString* text = composeMessageTextField.text;
-    
-	// Create the HTTP request object for our URL
+- (void)sendChatMessageToServer {
+    // Show an activity spinner that blocks the whole screen
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = NSLocalizedString(@"Sending the message", @"");
+
+    NSString *text = composeMessageTextField.text;
+
+    // Create the HTTP request object for our URL
     NSString *urlString = [DataModel sharedDataModelManager].chatSystemURL;
-    urlString =[urlString stringByAppendingString:AddChatServerURL_APPENDIX];
+    urlString = [urlString stringByAppendingString:AddChatServerURL_APPENDIX];
     NSLog(@"url string to call and add the chat message is: %@", urlString);
-    NSURL* url = [NSURL URLWithString:urlString];
-	__block ASIFormDataRequest* __weak request = [ASIFormDataRequest requestWithURL:url];
-	[request setDelegate:self];
-    [request setPostValue:text forKey:@"message"];
+    AFHTTPRequestOperationManager *manager;
+    manager = [AFHTTPRequestOperationManager manager];
+    
+    [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
+    [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
+    
     NSString *userName = [DataModel sharedDataModelManager].nickname;
-    [request setPostValue:userName forKey:@"user"];
-    
-	// This code will be executed when the HTTP request is successful
-	[request setCompletionBlock:^
-     {
-         // now composeMessageTextField.text which has given its value to text is being processes 
-         // good time to erase it.
-         composeMessageTextField.text = nil;
-         if ([self isViewLoaded])
-         {
-             [MBProgressHUD hideHUDForView:self.view animated:YES];
-             
-             // If the HTTP response code is not "200 OK", then our server API
-             // complained about a problem. This shouldn't happen, but you never
-             // know. We must be prepared to handle such unexpected situations.
-             if ([request responseStatusCode] != 200)
-             {
-                 [UIAlertView showErrorAlert:NSLocalizedString(@"No connection to Business", nil)];
-             }
-             else
-             {
+    NSDictionary *params = @{@"user": userName,
+                             @"message": text};
+    [manager POST:urlString parameters:params
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              composeMessageTextField.text = nil;
+              NSLog(@"Response from chat server for posting the message:%@", responseObject);
+              if ([self isViewLoaded]) {
+                  [MBProgressHUD hideHUDForView:self.view animated:YES];
+            
+                  // If the HTTP response code is not "200 OK", then our server API
+                  // complained about a problem. This shouldn't happen, but you never
+                  // know. We must be prepared to handle such unexpected situations.
+                  if (operation.response.statusCode != 200) {
+                      [UIAlertView showErrorAlert:NSLocalizedString(@"No connection to Business's Chatroom", nil)];
+                  }
+                  else {
+                
+                  }
+              }
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"Error: %@", error);
+            if ([self isViewLoaded]) {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                [UIAlertView showErrorAlert:@"You are not in the business's chat room"];
+            }
+                
+          }
+    ];
 
-             }
-         }
-     }];
-    
-	// This code is executed when the HTTP request fails
-	[request setFailedBlock:^
-     {
-         if ([self isViewLoaded])
-         {
-             [MBProgressHUD hideHUDForView:self.view animated:YES];
-             [UIAlertView showErrorAlert:@"You are not in the business's chat room"];
-         }
-     }];
-    
-	[request startAsynchronous];
+//    NSURL *url = [NSURL URLWithString:urlString];
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+//    [request setValue:text forKey:@"message"];
+//    NSString *userName = [DataModel sharedDataModelManager].nickname;
+//    [request setValue:userName forKey:@"user"];
+//    __block ASIFormDataRequest *__weak request = [ASIFormDataRequest requestWithURL:url];
+//    [request setDelegate:self];
+//    [request setPostValue:text forKey:@"message"];
+//    NSString *userName = [DataModel sharedDataModelManager].nickname;
+//    [request setPostValue:userName forKey:@"user"];
+//
+//    // This code will be executed when the HTTP request is successful
+//    [request setCompletionBlock:^{
+//        // now composeMessageTextField.text which has given its value to text is being processes
+//        // good time to erase it.
+//        composeMessageTextField.text = nil;
+//        if ([self isViewLoaded]) {
+//            [MBProgressHUD hideHUDForView:self.view animated:YES];
+//
+//            // If the HTTP response code is not "200 OK", then our server API
+//            // complained about a problem. This shouldn't happen, but you never
+//            // know. We must be prepared to handle such unexpected situations.
+//            if ([request responseStatusCode] != 200) {
+//                [UIAlertView showErrorAlert:NSLocalizedString(@"No connection to Business's Chatroom", nil)];
+//            }
+//            else {
+//
+//            }
+//        }
+//    }];
+//
+//    // This code is executed when the HTTP request fails
+//    [request setFailedBlock:^{
+//        if ([self isViewLoaded]) {
+//            [MBProgressHUD hideHUDForView:self.view animated:YES];
+//            [UIAlertView showErrorAlert:@"You are not in the business's chat room"];
+//        }
+//    }];
+//
+//    [request startAsynchronous];
 }
 
 
 - (IBAction)sendMessage:(id)sender {
-    if ([composeMessageTextField.text length] > 1)
-    {
+    if ([composeMessageTextField.text length] > 1) {
         [composeMessageTextField resignFirstResponder];
         [self sendChatMessageToServer];
     }
@@ -256,15 +274,14 @@
 #pragma mark -
 #pragma mark UITextViewDelegate
 
-- (void)updateBytesRemaining:(NSString*)text
-{
-	// Calculate how many bytes long the text is. We will send the text as
-	// UTF-8 characters to the server. Most common UTF-8 characters can be
-	// encoded as a single byte, but multiple bytes as possible as well.
+- (void)updateBytesRemaining:(NSString *)text {
+    // Calculate how many bytes long the text is. We will send the text as
+    // UTF-8 characters to the server. Most common UTF-8 characters can be
+    // encoded as a single byte, but multiple bytes as possible as well.
 //	const char* s = [text UTF8String];
 //	size_t numberOfBytes = strlen(s);
-    
-	// Show the number of remaining bytes in the navigation bar's title
+
+    // Show the number of remaining bytes in the navigation bar's title
     //TODO
 //    int remaining = MaxMessageLength - numberOfBytes;
 //	if (remaining >= 0)
@@ -276,76 +293,76 @@
 //	self.saveItem.enabled = (remaining >= 0) && (text.length != 0);
 }
 
-- (BOOL)textView:(UITextView*)theTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text
-{
-	NSString* newText = [theTextView.text stringByReplacingCharactersInRange:range withString:text];
-	[self updateBytesRemaining:newText];
-	return YES;
+- (BOOL)textView:(UITextView *)theTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    NSString *newText = [theTextView.text stringByReplacingCharactersInRange:range withString:text];
+    [self updateBytesRemaining:newText];
+    return YES;
 }
 
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    [self animateTextField: textField up: YES];
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    [self animateTextField:textField up:YES];
 }
 
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    [self animateTextField: textField up: NO];
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    [self animateTextField:textField up:NO];
 }
 
-- (void) animateTextField: (UITextField*) textField up: (BOOL) up
-{
-    const int movementDistance = 200; // tweak as needed
+- (void)animateTextField:(UITextField *)textField up:(BOOL)up {
+    const int movementDistance = 175; // tweak as needed
     const float movementDuration = 0.3f; // tweak as needed
-    
+
     int movement = (up ? -movementDistance : movementDistance);
-    
-    [UIView beginAnimations: @"anim" context: nil];
-    [UIView setAnimationBeginsFromCurrentState: YES];
-    [UIView setAnimationDuration: movementDuration];
+
+    [UIView beginAnimations:@"anim" context:nil];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:movementDuration];
     self.view.frame = CGRectOffset(self.view.frame, 0, movement);
     [UIView commitAnimations];
 }
 
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+
 #pragma mark -
 #pragma mark TapTalkChatMessageDelegate Protocol definitions
-- (void)tapTalkChatMessageDidFinishLoadingData:(NSMutableArray *)objects
-{
+- (void)timerCallBack {
+    [ttChatMessage loadMessagesFromServer];
+}
+
+- (void)tapTalkChatMessageDidFinishLoadingData:(NSMutableArray *)objects {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-    [DataModel sharedDataModelManager].messages  =  objects;
+    [DataModel sharedDataModelManager].messages = objects;
     [self.chatTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
     [self.chatTableView scrollToNewestMessage];
-    
+
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:
-                                [self methodSignatureForSelector: @selector(timerCallBack)]];
-	[invocation setTarget:self];
-	[invocation setSelector:@selector(timerCallback)];
+            [self methodSignatureForSelector:@selector(timerCallBack)]];
+    [invocation setTarget:self];
+    [invocation setSelector:@selector(timerCallBack)];
     //	[NSTimer scheduledTimerWithTimeInterval:10.0 invocation:invocation repeats:YES];
-    
-    NSTimer *chatTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(timerCallBack) userInfo:nil repeats: NO];
-    
+
+    NSTimer *chatTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(timerCallBack) userInfo:nil repeats:NO];
+
     if (![[DataModel sharedDataModelManager] joinedChat]) {
         [chatTimer invalidate];
         chatTimer = nil;
     }
 }
 
-- (void) tapTalkChatMessageDidFailWithError:(NSError *)error
-{
-    NSLog(@"Connection failed with error: %@", error); 
+- (void)tapTalkChatMessageDidFailWithError:(NSError *)error {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-    NSString *alertMessage = [[NSString alloc] initWithFormat:@"No connection to %@", [[DataModel sharedDataModelManager] businessName]];
+    NSString *alertMessage = [[NSString alloc] initWithFormat:@"No connection to %@\'s chat server", [[DataModel sharedDataModelManager] businessName]];
     [UIAlertView showErrorAlert:NSLocalizedString(alertMessage, nil)];
-    alertMessage= nil;
+    alertMessage = nil;
+    [[DataModel sharedDataModelManager] setJoinedChat:FALSE];
 }
-
-- (void)timerCallBack
-{
-    [ttChatMessage loadMessagesFromServer];
-}
-
 
 
 

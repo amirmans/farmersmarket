@@ -9,17 +9,19 @@
 #import "Business.h"
 #import "SBJsonParser.h"
 
+#import <SDWebImage/UIImageView+WebCache.h>
 
-
-
-@interface Business() {
+@interface Business () {
     NSString *imageFileName;
     NSString *imageFileExt;
 @private
+
 }
 
-@property (atomic, retain) NSString *imageFileName;
-@property (atomic, retain) NSString *imageFileExt;
+@property(nonatomic, retain) NSString *imageFileName;
+@property(nonatomic, retain) NSString *imageFileExt;
+
+- (void)fetchResponseData:(NSData *)responseData;
 
 @end
 
@@ -27,280 +29,205 @@
 @implementation Business
 
 
-@synthesize image, coordinate, title, subtitle, customerProfile, businessName, customerProfileName, imageFileName,
-            imageFileExt, isCustomer, googlePlacesObject, delegate;
-@synthesize isPinIconLoaded, isProductListLoaded, businessID;
+@synthesize image, coordinate, title, subtitle, customerProfile, businessName, customerProfileName, imageFileName, imageFileExt, googlePlacesObject, delegate;
+@synthesize isProductListLoaded, businessID;
 @synthesize businessProducts;
 @synthesize chatSystemURL;
 
 
-
-- (void)initMemberData 
-{    
+- (void)initMemberData {
     self.image = nil;
-    self.isCustomer = FALSE;    
+    self.isCustomer = -1;
     self.customerProfileName = nil;
     self.imageFileName = nil;
     self.imageFileExt = nil;
     self.delegate = nil;
     self.googlePlacesObject = nil;
-    self.isPinIconLoaded = FALSE;
-    self.isProductListLoaded = FALSE; 
+    self.isProductListLoaded = FALSE;
     self.businessProducts = nil;
-    self.businessID = -1;  // -1 is invalid
+    self.businessID = -1;  // -1 is invalid like nil -  0 is a valid businessID
     self.chatSystemURL = nil;
 }
 
-
-- (BusinessCustomerProfileManager *) customerProfile
-{
-//    [customerProfile setBusinessName:@"Coffee shop"];
-    [customerProfile setBusinessName:self.businessName];
-    return customerProfile;
+- (int)isCustomer {
+    return isCustomer;
 }
 
-/*
-- (id) initWithCoordinate:(CLLocationCoordinate2D)argCoordicate
-             BusinessName:(NSString *)bName
-                    Title:(NSString *)tName
-                 SubTitle:(NSString *)stName 
-            ImageFileName:(NSString *)imgFName
-       ImageFileExtension:(NSString *)imgXName;
-{
-    [self initMemberData];
-    coordinate = argCoordicate;
-    businessName = bName;
-    title = tName;
-    subtitle = stName;
-    imageFileName = imgFName;
-    imageFileExt = imgXName;
-    
-
-    return self;
+- (void)setIsCustomer:(int)isCust {
+    isCustomer = isCust;
 }
 
-*/ 
-
--(void) startLoadingBusinessProductCategoriesAndProducts 
-{
+- (void)startLoadingBusinessProductCategoriesAndProducts {
     //TODO
-    //        NSURL *wordsURL = [NSURL URLWithString:@"http://www.stanford.edu/class/cs193p/vocabwords.txt"];
-    //		words = [[NSMutableDictionary dictionaryWithContentsOfURL:wordsURL] retain];
-    //NSString *urlString = [NSString stringWithFormat:@"http://mydoosts.com/businessProducts.php?businessID=%i", businessID];
-    NSString *urlString = [NSString stringWithFormat:@"http://www.stanford.edu/class/cs193p/vocabwords.txt"];
+    NSString *urlString = [NSString stringWithFormat:@"%@?businessID=%i", BusinessProductListServer, businessID];
     urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *url = [NSURL URLWithString:urlString];
-    //        NSMutableURLRequest *request  = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadRevalidatingCacheData timeoutInterval:10];
-    businessProducts = [NSDictionary dictionaryWithContentsOfURL:url];
-    isProductListLoaded = TRUE;
-    /*        
-     NSURLResponse *resp = nil;
-     NSError *err = nil;
-     NSData *responseData;
-     responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&err];
-     
-     if (!err) {
-     NSString *responseString    = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];	
-     NSError *jsonError          = nil;
-     SBJsonParser *json          = [[SBJsonParser alloc] init];
-     businessProducts    = [json objectWithString:responseString error:&jsonError];
-     //            businessProducts = [tempBusinessProducts objectForKey:@"products"];  //Needs to change if database table businessProducts "products" field change
-     responseString = nil;
-     
-     isProductListLoaded = TRUE;
-     }
-     */
+//
+//    businessProducts = [NSDictionary dictionaryWithContentsOfURL:url];
+//    isProductListLoaded = TRUE;
 
+    dispatch_async(TT_CommunicationWithServerQ, ^{
+        NSData* data = [NSData dataWithContentsOfURL:url];
+        [self performSelectorOnMainThread:@selector(fetchResponseData:) withObject:data waitUntilDone:YES];
+    });
+    
 }
 
-- (NSDictionary *)businessProducts 
-{
+- (void)fetchResponseData:(NSData *)responseData {
+    //parse out the json data
+    NSError* error;
+    //TODO
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *path;
+//    path = [bundle pathForResource:@"DefaultProducts" ofType:@"txt"];
+//    businessProducts = [NSDictionary dictionaryWithContentsOfFile:path];
+    path = [bundle pathForResource:@"DefaultProductList" ofType:@"plist"];
+    NSData *plistFileData = [NSData dataWithContentsOfFile:path options:0UL error:&error];
+    id plist = [NSPropertyListSerialization propertyListWithData:plistFileData options:NSPropertyListImmutable format:NULL error:&error];
+    if(plist == NULL) {
+        NSLog(@"Unable to deserialize property list.  Error: %@, info: %@", error, [error userInfo]);
+        exit(1);
+    }
+//    NSData *jsonData = [plist JSONDataWithOptions:JKSerializeOptionPretty error:&error];
+    NSDictionary *tempBusinessProducts = [NSJSONSerialization
+                          JSONObjectWithData:responseData
+                          options:kNilOptions
+                          error:&error];
+    businessProducts = [tempBusinessProducts objectForKey:@"products"];
+
+    BOOL weGotADict = FALSE;
+    if ([businessProducts isKindOfClass: [NSDictionary class]]) {
+        NSLog(@"Hey I am a dictionary");
+        weGotADict = TRUE;
+    }
+    else if ([businessProducts isKindOfClass:[NSString class]]) {
+        NSData* tempData = [(NSString* )businessProducts  dataUsingEncoding:NSUTF8StringEncoding];
+        NSPropertyListFormat format;
+        businessProducts = [NSPropertyListSerialization propertyListWithData:tempData options:NSPropertyListXMLFormat_v1_0 format:&format error:&error];
+        if(error){
+            // do something with error
+            NSLog(@"Error: %@",error);
+            
+        }	else {
+            ////success
+            weGotADict = TRUE;
+        }
+    }
+    else
+    {
+        NSLog(@"in Business:fetchResponseData - I don't know what I am.");
+    }
+    
+    if (!weGotADict) {
+        businessProducts = plist;
+    }
+    else {
+        //use data from server
+    }
+
+    isProductListLoaded = TRUE;
+}
+
+
+- (NSDictionary *)businessProducts {
     if (businessProducts == nil) {
         [self startLoadingBusinessProductCategoriesAndProducts];
     }
-    
+
     return businessProducts;
 }
 
 // the only valid initializer
 // we populate our Business object with google object and then call our own server to get additional information 
-- (id)initWithGooglePlacesObject:(GooglePlacesObject *)googleObject
-{
+- (id)initWithGooglePlacesObject:(GooglePlacesObject *)googleObject {
     // get what we can from the google object and then use "reference" to call the "detail method"
     // to get the rest of info
     [self initMemberData];
     self.googlePlacesObject = googleObject;
-    businessName = googleObject.name;
+    self.businessName = googleObject.name;
     coordinate = googleObject.coordinate;
     title = googleObject.name;
     subtitle = [googleObject.type objectAtIndex:0];
- 
+
     NSString *urlString = BusinessInformationServer;
     NSString *getValues = [NSString stringWithFormat:@"?businessName=%@", businessName];
     urlString = [urlString stringByAppendingString:getValues];
     urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *url = [NSURL URLWithString:urlString];
-    NSMutableURLRequest *request  = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadRevalidatingCacheData timeoutInterval:10];
+    NSMutableURLRequest *request =
+            [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadRevalidatingCacheData timeoutInterval:10];
 
     NSURLResponse *resp = nil;
     NSError *err = nil;
     NSData *responseData;
     responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&err];
-    //    NSLog(@"%@ was called to get additional information from our own server", urlString);
-    isCustomer = FALSE;
+
+    isCustomer = 0;
     if (!err) {
-        NSString *responseString    = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];	
-        NSError *jsonError          = nil;
-        SBJsonParser *json          = [[SBJsonParser alloc] init];
-        NSDictionary *responseDictionary    = [json objectWithString:responseString error:&jsonError];
-        
-        if ([jsonError code]==0) 
-        {
-            if ( [responseDictionary count] > 0)
-            {
-                isCustomer = TRUE;
-                self.businessID =  [[responseDictionary valueForKey:@"businessID"] intValue];
+        NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+        SBJsonParser *json = [[SBJsonParser alloc] init];
+        NSDictionary *responseDictionary = [json objectWithString:responseString];
+
+        if (nil != responseDictionary) {
+            if ([responseDictionary count] > 0) {
+                isCustomer = 1;
+                self.businessID = [[responseDictionary valueForKey:@"businessID"] intValue];
                 customerProfileName = [responseDictionary valueForKey:@"customerProfileName"];
                 self.chatSystemURL = [responseDictionary valueForKey:@"chat_system_url"];
-//                [self businessProducts:businessID];
-                NSString* iconPath  = [NSString stringWithFormat:@"%@",[responseDictionary valueForKey:@"icon"]];
-                if (iconPath != nil)
-                {
+                //                [self businessProducts:businessID];
+                NSString *iconPath = [NSString stringWithFormat:@"%@", [responseDictionary valueForKey:@"icon"]];
+                if (iconPath != nil) {
+                    NSURL *iconUrl = [NSURL URLWithString:iconPath];
                     NSRange range = [[iconPath lowercaseString] rangeOfString:@"null"];
-                    if (range.location == NSNotFound)
-                        image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:iconPath]]];
+                    //We have a valid icon path - retrieve the image from our own server
+                    if (range.location == NSNotFound) {
+                        SDWebImageManager *manager = [SDWebImageManager sharedManager];
+
+                        [manager downloadWithURL:iconUrl
+                        options:0
+                        progress:nil
+                        completed:^(UIImage *webImage, NSError *error, SDImageCacheType cacheType, BOOL finished)
+                        {
+                            if (webImage)
+                            {
+                                // do something with image
+                                image = webImage;
+                            }
+                        }];
+                    }
                 }
-                NSLog(@"%@ is a customer", self.businessName);
             }
         }
     }
-    
-    // if the business isn't on of our customer sor it is our customer but we don't have an icon for it, use what google has given us, as the default image
-    
-    if (image == nil) {    
-        image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:googleObject.icon]]];  
-/*        NSString *defaultImageURL = [[NSString alloc] initWithString:googleObject.icon];         
-        NSURLRequest *imageRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:defaultImageURL] cachePolicy:NSURLRequestReloadRevalidatingCacheData timeoutInterval:60.0];
-        NSURLConnection *imageConnection = [[NSURLConnection alloc] initWithRequest:imageRequest delegate:self startImmediately:YES];
-
-        if (imageConnection) 
-        {
-            responseWithLargData = [NSMutableData data];
-//          connectionIsActive = YES;
-        }		
-        else {
-            NSLog(@"connection failed");
-        } */
-    }
+    NSLog(@"In Business:initWithGooglePlacesObject for %@ with isCustomer of %d - %@ was called to get additional information from our own server", self.businessName, self.isCustomer, urlString);
 
     return self;
 }
 
 
-- (void)connection:(NSURLConnection *)conn didReceiveResponse:(NSURLResponse *)response 
-{
-	[responseWithLargData setLength:0];
-}
-
-- (void)connection:(NSURLConnection *)conn didReceiveData:(NSData *)data 
-{
-	[responseWithLargData appendData:data];
-}
-
-- (void)connection:(NSURLConnection *)conn didFailWithError:(NSError *)error 
-{
-    NSLog(@"error in connection when trying to get the google icon");
-}
-
-
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)conn 
-{
-    NSLog(@"connection to get google image is back");
-    image = [UIImage imageWithData:responseWithLargData];
-}
-
-- (void) getTaptalkBusinessesInformation {
-    //call taptalk server
-    //TODO
-    
-}
-
-- (UIImage *)image
-{
-    //TODO
-    if (image == nil)
-    {
-        NSBundle *bundle = [NSBundle mainBundle];
-        NSString *path;
-        //        path = [bundle pathForResource: @"CoffeeStore" ofType: @"jpg"];
-        path = [bundle pathForResource: self.imageFileName ofType: self.imageFileExt];
-        image = [UIImage imageWithContentsOfFile:path];  
-    }
-    
+- (UIImage *)image {
     return image;
 }
 
-
-- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate
-{
+- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate {
     coordinate = newCoordinate;
 }
 
 
-- (CLLocationCoordinate2D)coordinate;
-{
-    return coordinate; 
+- (CLLocationCoordinate2D)coordinate; {
+    return coordinate;
 }
 
 // required if you set the MKPinAnnotationView's "canShowCallout" property to YES
-- (NSString *)title
-{
+- (NSString *)title {
     return title;
 }
 
 
-- (NSString *)subtitle
-{
+- (NSString *)subtitle {
     return subtitle;
 }
 
-/*
-- (void)setCompletionBlockWithSuccess:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-                              failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
-{
-    operation.completionBlock = ^ {
-        if ([self isCancelled]) {
-            return;
-        }
-        
-        if (error) {
-            if (failure) {
-                dispatch_async(dispatch_get_main_queue(), ^(void) {
-                    failure(self, self.error);
-                });
-            }
-        } else {
-            dispatch_async(json_request_operation_processing_queue(), ^(void) {
-                id JSON = self.responseJSON;
-                
-                dispatch_async(dispatch_get_main_queue(), ^(void) {
-                    if (self.JSONError) {
-                        if (failure) {
-                            failure(self, self.JSONError);
-                        }
-                    } else {
-                        if (success) {
-                            success(self, JSON);
-                        }
-                    }
-                }); 
-            });
-        }
-    };    
-}
- 
-*/ 
 
- 
+
 @end

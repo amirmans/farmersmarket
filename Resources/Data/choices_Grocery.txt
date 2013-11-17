@@ -1,0 +1,13 @@
+{
+    'TapTalk to the house'  =     (
+        'Search for items',
+        'Ask for service',
+        'Show map of the store'
+    );
+    'Socialize with others inside' =     (
+        'Use current public profile',
+        'Change profile'
+    );
+    'Ask others who have been here'  =     (
+    );
+}

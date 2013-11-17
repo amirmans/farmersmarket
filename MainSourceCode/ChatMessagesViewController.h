@@ -14,15 +14,14 @@
 @class ChatTableView;
 
 
-@interface ChatMessagesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TapTalkChatMessageDelegate>
-{
-    
+@interface ChatMessagesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TapTalkChatMessageDelegate> {
+
 }
-@property (weak, nonatomic) IBOutlet UIButton *sendButton;
+@property(weak, nonatomic) IBOutlet UIButton *sendButton;
 
-@property (weak, nonatomic) IBOutlet UITextField *composeMessageTextField;
+@property(weak, nonatomic) IBOutlet UITextField *composeMessageTextField;
 
-@property (weak, nonatomic) IBOutlet ChatTableView *chatTableView;
+@property(weak, nonatomic) IBOutlet ChatTableView *chatTableView;
 
 //@property (atomic, strong) DataModel *dataModel; 
 - (IBAction)sendMessage:(id)sender;
