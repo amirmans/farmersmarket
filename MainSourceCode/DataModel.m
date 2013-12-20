@@ -5,6 +5,7 @@
 @implementation DataModel
 
 @synthesize messages;
+@synthesize notifications;
 @synthesize chatSystemURL;
 @synthesize businessName;
 @synthesize ageGroup;
@@ -14,73 +15,72 @@
 
 static DataModel *sharedDataModel = nil;
 
-+ (DataModel *)sharedDataModelManager {
-    if (sharedDataModel == nil) {
-        sharedDataModel = [[super allocWithZone:NULL] init];
-    }
-
-    return sharedDataModel;
++(DataModel*)sharedDataModelManager
+{
+	@synchronized([DataModel class])
+	{
+		if (!sharedDataModel)
+            return [[self alloc] init];
+	}
+    
+	return sharedDataModel;
 }
 
-
-+ (id)allocWithZone:(NSZone *)zone {
-    return [self sharedDataModelManager];
++(id)alloc
+{
+	@synchronized([DataModel class])
+	{
+		NSAssert(sharedDataModel == nil,
+                 @"Attempted to allocate a second instance of a singleton.");
+		sharedDataModel = [super alloc];
+		return sharedDataModel;
+	}
+    
+	return nil;
 }
 
 - (id)init {
-    @synchronized ([DataModel class]) {
-        if (self == nil) {
-            self = [super init];
-            if (self) {
-                // Register default values for our settings
-                [[NSUserDefaults standardUserDefaults] registerDefaults:
-                        [NSDictionary dictionaryWithObjectsAndKeys:
-                                @"", NicknameKey,
-                                @"", PasswordKey,
-                                [NSNumber numberWithInt:0], JoinedChatKey,
-                                @"0", DeviceTokenKey,
-                                nil]];
-            }
+    if (self) {
+        // Register default values for our settings
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        notifications = [defaults objectForKey:@"Notifications"];
+        if (!notifications)
+        {
+            notifications = [[NSMutableArray alloc] init];
         }
-
-        return self;
+//        [[NSUserDefaults standardUserDefaults] registerDefaults:@{NicknameKey: @""},
+//         @{PasswordKey: @"N/A"},
+//         @{JoinedChatKey: [NSNumber numberWithInt:12]},
+//         @{DeviceTokenKey:@"walla"},
+//         @{@"Notifications": @""}];
+        // Load default defaults
+// from Internet        [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Defaults" ofType:@"plist"]]];
     }
+    
+    return self;
 }
 
 
-// Returns the path to the Messages.plist file in the app's Documents directory
-//- (NSString*)messagesPath
-//{
-//    NSString *messageFilePath;
-//    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
-//                                                              NSUserDomainMask, YES) objectAtIndex:0];
-//    messageFilePath = [rootPath stringByAppendingPathComponent:@"Messages.plist"];
-////    if (![[NSFileManager defaultManager] fileExistsAtPath:messageFilePath]) {
-////        messageFilePath = [[NSBundle mainBundle] pathForResource:@"Messages" ofType:@"plist"];
-////    }
-//    
-//    return messageFilePath;
-//}
-
-
-- (void)saveMessages {
-//	NSMutableData* data = [[NSMutableData alloc] init];
-//	NSKeyedArchiver* archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-//	[archiver encodeObject:self.messages forKey:@"Messages"];
-//	[archiver finishEncoding];
-//    
-//    NSError* error;
-////TODO	[data writeToFile:[self messagesPath] options:NSDataWritingAtomic error:&error];
-//    if(error != nil)
-//        NSLog(@"write error %@", error);
-//    archiver = nil;
-//    data = nil;    
+- (void)addNotification:(NSDictionary *)notificationDataFromServer {
+    // Add our own stuff to the notification from the server
+    NSMutableDictionary *notificationData = [[NSMutableDictionary alloc]
+                                             initWithDictionary:[notificationDataFromServer objectForKey:@"aps"]];
+    NSDate *dateAdded = [NSDate date];
+    [notificationData setObject:dateAdded forKey:@"dateTimeRecieved"];
+    
+    [self.notifications addObject:notificationData];
 }
 
-- (int)addMessage:(TapTalkChatMessage *)message {
-    [self.messages addObject:message];
-//	[self saveMessages];
-    return self.messages.count - 1;
+- (NSMutableArray *)notification {
+    return notifications;
+}
+
+
+- (void)saveNotifications {
+    // we cannot put a mutable array in the NSUserDefaults
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:notifications forKey:@"Notifications"];
+    [defaults synchronize];
 }
 
 - (NSString *)nickname {
@@ -89,6 +89,13 @@ static DataModel *sharedDataModel = nil;
 
 - (void)setNickname:(NSString *)name {
     [[NSUserDefaults standardUserDefaults] setObject:name forKey:NicknameKey];
+}
+
+
+- (int)addMessage:(TapTalkChatMessage *)message {
+    [self.messages addObject:message];
+    //	[self saveMessages];
+    return self.messages.count - 1;
 }
 
 

@@ -9,6 +9,7 @@
 #define BusinessProductListServer @"http://mydoosts.com/taptalk/businessinfo/businessProducts.php"
 #define ConsumerProfileServer @"http://mydoosts.com/taptalk/profilesystem/consumerprofile.php"
 #define ChatSystemServer @"http://mydoosts.com/taptalk/chatsystem/index.php"
+#define BusinessCustomerIconDirectory @"http://www.mydoosts.com/taptalk/customerFiles/businessCustomers/icons/"
 
 // We store our settings in the NSUserDefaults dictionary using these keys
 static NSString *const NicknameKey = @"nickname";

@@ -3,7 +3,7 @@
 //  TapTalk
 //
 //  Created by Amir on 10/26/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2011 MyDoosts.com All rights reserved.
 //
 
 
@@ -13,10 +13,20 @@
 #import "MyLocationViewController.h"
 
 #import "ChatMessagesViewController.h"
-#import "Notifications.h"
+#import "BusinessNotificationTableViewController.h"
 #import "ConsumerProfileViewController.h"
 #import "DataModel.h"
 #import "UIAlertView+TapTalkAlerts.h"
+
+
+@interface AppDelegate () {
+    BusinessNotificationTableViewController *notificationController;
+    UITabBarItem *notificationsTabBar;
+}
+
+
+@end
+
 
 
 @implementation AppDelegate
@@ -25,11 +35,13 @@
 @synthesize managedObjectContext = __managedObjectContext;
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
+@synthesize notificationDelegate;
 
 
 @synthesize enterBusinessNav, tt_tabBarController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
     // Override point for customization after application launch
     NSBundle *bundle = [NSBundle mainBundle];
 
@@ -59,13 +71,15 @@
     // notifications from businesses
     imagePath = [bundle pathForResource:@"Notifications" ofType:@"png"];
     UIImage *notificationImage = [[UIImage alloc] initWithContentsOfFile:imagePath];
-    UITabBarItem *notificationsTabBar = [[UITabBarItem alloc] initWithTitle:@"Notifications" image:notificationImage tag:3];
-    Notifications *notificationController = [[Notifications alloc] initWithNibName:nil bundle:nil];
+    notificationsTabBar = [[UITabBarItem alloc] initWithTitle:@"Notifications" image:notificationImage tag:3];
+
+    notificationController = [[BusinessNotificationTableViewController alloc] initWithNibName:nil bundle:nil];
     notificationController.tabBarItem = notificationsTabBar;
+    UINavigationController *notificationNav = [[UINavigationController alloc] initWithRootViewController:notificationController];
     
     // setup main window with the tabbarcontroller
     self.tt_tabBarController = [[UITabBarController alloc] init];
-    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, openMessages, consumerProfileViewController, notificationController, nil];
+    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, openMessages, consumerProfileViewController, notificationNav, nil];
 
     tt_tabBarController.delegate = self;
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -78,24 +92,20 @@
     messagesImage = nil;
 
     // Let the device know we want to receive push notifications
-    //TODO
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
             (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 
-    // Register for sound and alert push notifications.
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-            (UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-
     // Check if the app was launched in response to the user tapping on a
-    // push notification. If so, we add the new message to the data model.
+    // push notification.
     if (launchOptions != nil) {
         NSDictionary *dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         if (dictionary != nil) {
             NSLog(@"Launched from push notification: %@", dictionary);
-            [self addMessageFromRemoteNotification:dictionary updateUI:NO];
+//            [self addMessageFromRemoteNotification:dictionary updateUI:NO];
+            [self doUpdateForRemoteNotification:dictionary updateUI:YES];
         }
     }
-
+    
     return YES;
 }
 
@@ -112,6 +122,10 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
+    [[DataModel sharedDataModelManager] saveNotifications];
+    NSLog(@"All contents of NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+//    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+//    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -257,36 +271,35 @@
 
 
 #pragma mark - Methods for messages and notification stuff
-- (void)addMessageFromRemoteNotification:(NSDictionary *)userInfo updateUI:(BOOL)updateUI {
-    // Create a new Message object
-    TapTalkChatMessage *message = [[TapTalkChatMessage alloc] init];
-    message.dateAdded = [NSDate date];
-
-    // The JSON payload is already converted into an NSDictionary for us.
-    // We are interested in the contents of the alert message.
-    NSString *alertValue = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
-
-    // The server API formatted the alert text as "sender: message", so we
-    // split that up into a sender name and the actual message text.
-    NSMutableArray *parts = [NSMutableArray arrayWithArray:[alertValue componentsSeparatedByString:@": "]];
-    message.sender = [parts objectAtIndex:0];
-    [parts removeObjectAtIndex:0];
-    message.textChat = [parts componentsJoinedByString:@": "];
-
-    // Add the Message to the data model's list of messages
-    [[DataModel sharedDataModelManager] addMessage:message];
+- (void)doUpdateForRemoteNotification:(NSDictionary *)userInfo updateUI:(BOOL)updateUI {
+    
+    notificationsTabBar.badgeValue = @"New";
+    // Add the Message to the data model to be inserted to the UINotificationsViewtable later.
+    [[DataModel sharedDataModelManager] addNotification:userInfo];
 
     // If we are called from didFinishLaunchingWithOptions, we should not
     // tell the ChatViewController's table view to insert the new Message.
     // At that point, the table view isn't loaded yet and it gets confused.
-//	if (updateUI)
-//		[self.chatViewController didSaveMessage:message atIndex:index];
+//    int index = 0;
+    
+	if (updateUI)
+        [notificationDelegate updateUIWithNewNotification];
 
-//	[message release];
 }
 
 
 #pragma mark - UIApplicationDelegate for notification
+//TODO
+- (void)postUpdateDeviceToken:(NSString *)newDeviceToken
+{
+
+/*    AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:ServerApiURL]];
+    [client
+     postPath:@"/api.php"
+     parameters:params
+     success:nil failure:nil]; */
+}
+
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // We have received a new device token. This method is usually called right
     // away after you've registered for push notifications, but there are no
@@ -309,7 +322,7 @@
     // If the token changed and we already sent the "join" request, we should
     // let the server know about the new device token.
     if ([[DataModel sharedDataModelManager] joinedChat] && ![newToken isEqualToString:oldToken]) {
-//TODO		[self postUpdateRequest];
+		[self postUpdateDeviceToken:newToken];
     }
 }
 
@@ -324,6 +337,8 @@
     for (id key in userInfo) {
         NSLog(@"key: %@, value: %@", key, [userInfo objectForKey:key]);
     }
+
+    [self doUpdateForRemoteNotification:userInfo updateUI:YES];
     
 }
 

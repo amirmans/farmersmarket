@@ -7,16 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NewNotificationProtocol.h"
 
-//@class DataModel;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UIActionSheetDelegate> {
     IBOutlet UIWindow *window;
     IBOutlet UITabBarController *tt_tabBarController;
     IBOutlet UINavigationController *enterBusinessNav;
+    __weak id <NewNotificationProtocol> notificationDelegate; // default is strong which conflicts with the property
 }
 
 @property(strong, nonatomic) UIWindow *window;
+@property (nonatomic, weak) id <NewNotificationProtocol> notificationDelegate;
 
 @property(readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property(readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
@@ -25,7 +27,6 @@
 @property(atomic, retain) UITabBarController *tt_tabBarController;
 @property(atomic, retain) UINavigationController *enterBusinessNav;
 
-//@property (atomic, strong) DataModel *dataModel;
 
 - (void)saveContext;
 

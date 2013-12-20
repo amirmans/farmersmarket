@@ -164,12 +164,13 @@
     message.textChat = text;
 
     // Add the Message to the data model's list of messages
-    int index = [[DataModel sharedDataModelManager] addMessage:message];
+    //ZZZZZZ TODO
+    [[DataModel sharedDataModelManager] addMessage:message];
 
     // Add a row for the Message to ChatViewController's table view.
     // Of course, ComposeViewController doesn't really know that the
     // delegate is the ChatViewController.
-    [self didSaveMessage:message atIndex:index];
+//TODO    [self didSaveMessage:message atIndex:index];
 }
 
 

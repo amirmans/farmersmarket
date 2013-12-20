@@ -23,7 +23,6 @@
 
 @property(weak, nonatomic) IBOutlet ChatTableView *chatTableView;
 
-//@property (atomic, strong) DataModel *dataModel; 
 - (IBAction)sendMessage:(id)sender;
 
 @end

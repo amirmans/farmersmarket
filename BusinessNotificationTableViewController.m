@@ -7,12 +7,48 @@
 //
 
 #import "BusinessNotificationTableViewController.h"
+#import "DataModel.h"
+#import "TapTalkChatMessage.h"
+#import "TapTalkLooks.h"
+#import "NotificationTableViewCell.h"
+#import "AppDelegate.h"
+
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface BusinessNotificationTableViewController ()
 
 @end
 
 @implementation BusinessNotificationTableViewController
+
+@synthesize notificationsInReverseChronological;
+
+// delegate Method for NewNotificationWhileRunning
+- (void)updateUIWithNewNotification
+{
+    notificationsInReverseChronological = [[[[[DataModel sharedDataModelManager] notifications] reverseObjectEnumerator] allObjects] mutableCopy];
+    
+    NSLog(@"BEGIN reloadData");
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        [self.tableView reloadData];
+    });
+    NSLog(@"END reloadData");
+    self.tabBarItem.badgeValue = nil;
+}
+
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+
+        AppDelegate * myAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        myAppDelegate.notificationDelegate = self;
+                                       
+    }
+    return self;
+
+}
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -23,15 +59,33 @@
     return self;
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    
+    // for some reason - setting the background color in the nib file didn't work
+    self.title = @"Notification Center";
+    [TapTalkLooks setBackgroundImage:self.tableView];
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    self.tableView.rowHeight = 142; // change this number whenever you change the ui in ProductItemViewCell
+    self.tabBarItem.badgeValue = nil;
+    
+    // we want to show the notifications in the reverse chronological order: the last
+    // one should be displayed first
+    notificationsInReverseChronological = [[[[[DataModel sharedDataModelManager] notifications]
+                                             reverseObjectEnumerator] allObjects] mutableCopy];
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,28 +98,50 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return notificationsInReverseChronological.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (NotificationTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *CellIdentifier = @"NotificationCell";
+    NotificationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"NotificationTableViewCell" owner:nil options:nil];
+        
+        for (id currentObject in topLevelObjects)
+        {
+            if ([currentObject isKindOfClass:[UITableViewCell class]])
+            {
+                cell = (NotificationTableViewCell *) currentObject;
+                break;
+            }
+        }
+
     }
     
     // Configure the cell...
+    NSDictionary *notification = [notificationsInReverseChronological objectAtIndex:indexPath.row];
+    cell.sender.text = [notification objectForKey:@"sender"];
+    cell.alertMessage.text = [notification objectForKey:@"alert"];
     
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    [formatter setDateFormat:@"hh:mm"];
+    NSString *timeString = [formatter stringFromDate:[notification objectForKey:@"dateTimeRecieved"]];
+    cell.dateAdded.text = timeString;
+    
+    //get image url from notification image name
+    NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:[notification objectForKey:@"imageName"]];
+    NSURL *imageURL = [NSURL URLWithString:imageURLString];
+    [cell.businessNotificationIcon setImageWithURL:imageURL placeholderImage:nil];
+ 
+    formatter = nil;
     return cell;
 }
 
@@ -125,5 +201,21 @@
 }
  
  */
+
+
+//TODO
+- (void)didSaveMessage:(NSString *)message atIndex:(int)index
+{
+	// This method is called when a push notification is received. We remove the "There are
+	// no messages" label from the table view's footer if it is present, and
+	// add a new row to the table view with a nice animation.
+//TODO	if ([self isViewLoaded])
+	{
+		self.tableView.tableFooterView = nil;
+		[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+//TODO		[self scrollToNewestMessage];
+	}
+}
+
 
 @end

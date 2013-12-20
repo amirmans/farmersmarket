@@ -1,45 +1,65 @@
 @class TapTalkChatMessage;
 
+
+//
+//@interface NotificationData : NSDictionary {
+//    NSDictionary *tt_notification;
+//    
+//    NSString *alertMessage;
+//    NSString *businessSendingNotification;
+//    NSString *sound;
+//    NSString *additionalInformation;  // more information - optional
+//    UIImage *notificationIcon;
+//    NSString *notificationIconURL;
+//    short badge;
+//    NSDate *dateAdded;
+//    NSDate *dateTappedOn;
+//}
+//
+//- (id)init;
+//
+//@property(nonatomic, retain) NSString *alertMessage;
+//@property(nonatomic, retain) NSString *businessSendingNotification;
+//@property(nonatomic, retain) NSString *sound;
+//@property(nonatomic, retain) NSString *additionalInformation;
+////@property(nonatomic, retain) UIImage *notificationIcon;
+//@property(nonatomic, retain) NSString *notificationIconURL;
+////@property(atomic) short badge;
+//@property(nonatomic, retain) NSDate *dateAdded;
+//@property(nonatomic, retain) NSDate *dateTappedOn;
+//
+//@end
+//
+
 // The main data model object
 @interface DataModel : NSObject {
-
+    NSMutableArray *notifications;
 }
 
 + (DataModel *)sharedDataModelManager;
 
-// The complete history of messages this user has sent and received, in
-// chronological order (oldest first).
-@property(nonatomic, retain) NSMutableArray *messages;
-
-// Loads the list of messages from a file.
-//- (void)loadMessages;
-
-// Saves the list of messages to a file.
-- (void)saveMessages;
-
-// Adds a message that the user composed himself or that we received through
-// a push notification. Returns the index of the new message in the list of
-// messages.
-- (int)addMessage:(TapTalkChatMessage *)message;
+//Notification stuff
+//- (id)initNotification;
+- (void)addNotification:(NSDictionary *)notificationData;
+- (void)saveNotifications;
+- (BOOL)businessAllowedToSendNotification:(NSString *)businessName;
 
 // Get and set the user's nickname.
 - (NSString *)nickname;
-
 - (void)setNickname:(NSString *)name;
 
 
 // Determines whether the user has successfully joined a chat.
 - (BOOL)joinedChat;
-
 - (void)setJoinedChat:(BOOL)value;
+//Chat Messages
+- (int)addMessage:(TapTalkChatMessage *)message;
 
 // Get and set the device token. We cache the token so we can determine whether
 // to send an "update" request to the server.
-- (NSString *)deviceToken;
+- (NSString *)deviceToken;- (void)setDeviceToken:(NSString *)token;
 
-- (void)setDeviceToken:(NSString *)token;
 
-- (BOOL)businessAllowedToSendNotification:(NSString *)businessName;
 
 @property(nonatomic, assign) int userID; // determined and given by the server
 @property(nonatomic, retain) NSString *chatSystemURL;
@@ -47,6 +67,9 @@
 @property(nonatomic, retain) NSString *password;
 @property(atomic, assign) short ageGroup;
 @property(nonatomic, retain) NSString *emailAddress;
+@property(nonatomic, retain) NSMutableArray *notifications;
+@property(nonatomic, retain) NSMutableArray *messages;
+
 
 @end
 

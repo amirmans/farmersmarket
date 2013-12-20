@@ -78,15 +78,14 @@
 
 
 - (void)viewDidUnload {
-//
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
     [self setInformation:nil];
     [self setMapActivityIndicator:nil];
     self.locationManager = nil;
     mapView.delegate = nil;
     googlePlacesConnection = nil;
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -136,9 +135,9 @@
     NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
     NSLog(@"in didUpdateLocation: howRecent is: %f", howRecent);
 //    if (abs(howRecent) > 15.0) {
-        NSLog(@"in didUpdateLocation: latitude %+.6f, longitude %+.6f about to calculateAndDisplayLocation",
-                newLocation.coordinate.latitude,
-                newLocation.coordinate.longitude);
+//        NSLog(@"in didUpdateLocation: latitude %+.6f, longitude %+.6f about to calculateAndDisplayLocation",
+//                newLocation.coordinate.latitude,
+//                newLocation.coordinate.longitude);
         [self calulateAndDisplayLocationFor:newLocation];
 //    }
     // else skip the event and process the next one.
@@ -211,19 +210,19 @@
         //            [pinView setImage:customerPinImage];
         //            UIImageView *pinImageView = [[UIImageView alloc]initWithImage:customerPinImage];
         //            [pinView addSubview:pinImageView];
-        NSLog(@"In MyLocationViewController:viewForAnnotaion deciding on the pin color %@ is a customer", ((Business *) annotation).businessName);
+//        NSLog(@"In MyLocationViewController:viewForAnnotaion deciding on the pin color %@ is a customer", ((Business *) annotation).businessName);
     }
     else if (((Business *) annotation).isCustomer == 0) {
         pinView.pinColor = MKPinAnnotationColorPurple;
-        NSLog(@"In MyLocationViewController:viewForAnnotaion %@ is NOT a customer", ((Business *) annotation).businessName);
+//        NSLog(@"In MyLocationViewController:viewForAnnotaion %@ is NOT a customer", ((Business *) annotation).businessName);
     }
     else {
         pinView.pinColor = MKPinAnnotationColorGreen;
-        NSLog(@"In MyLocationViewController:viewForAnnotaion %@ is unknown", ((Business *) annotation).businessName);
+//        NSLog(@"In MyLocationViewController:viewForAnnotaion %@ is unknown", ((Business *) annotation).businessName);
     }
 
     customerPinImage = nil;
-    NSLog(@"at the end pinView businessName is: %@ and its color is: %i", ((Business *) annotation).businessName, pinView.pinColor);
+//    NSLog(@"at the end pinView businessName is: %@ and its color is: %i", ((Business *) annotation).businessName, pinView.pinColor);
 
     return pinView;
 }

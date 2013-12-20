@@ -34,10 +34,10 @@
 
 
 #pragma mark - init methods
-- (void)initModel
-{
-    productItems = [[BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].productItems allKeys]; 
-}
+//- (void)initModel
+//{
+//    productItems = [[BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].productItems allKeys]; 
+//}
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil data:(NSDictionary *)argProducts
