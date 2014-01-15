@@ -16,6 +16,8 @@
 @interface DetailProductItemViewController ()
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
+- (void)displayReducedPrice;
+- (void)displayExpirationDate;
 @end
 
 
@@ -30,7 +32,55 @@
 @synthesize ratingTextField;
 @synthesize complementaryProductsText;
 @synthesize otherBoughtButton;
+@synthesize reducedPriceEndDate;
+@synthesize reducedPriceTextField;
+@synthesize reducedPriceLabel;
 
+
+- (BOOL)isTherePriceReduction
+{
+    //TODO - check to see the expiration date of the sale prices isn't passed yet
+    double price = [[productDictionary objectForKey:@"Price"] doubleValue];
+    double reducedPrice = [[productDictionary objectForKey:@"ReducedPrice"] doubleValue];
+    if (reducedPrice >0 && reducedPrice < price)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+- (void)displayExpirationDate
+{
+    if (![self isTherePriceReduction])
+    {
+        reducedPriceEndDate.text =@"NA";
+    }
+    else
+    {
+        reducedPriceEndDate.textColor = [UIColor redColor];
+        reducedPriceEndDate.text = [productDictionary objectForKey:@"ExpirationDate"];
+    }
+}
+
+- (void)displayReducedPrice
+{
+    if (![self isTherePriceReduction])
+    {
+        reducedPriceTextField.text =@"NA";
+    }
+    else
+    {
+        // make it stand out
+        reducedPriceTextField.textColor = [UIColor redColor];
+        UIFont* boldFont = [UIFont boldSystemFontOfSize:[UIFont systemFontSize]];
+        [reducedPriceTextField setFont:boldFont];
+        reducedPriceTextField.text = [productDictionary objectForKey:@"ReducedPrice"];
+        [reducedPriceLabel setFont:boldFont];
+    }
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,23 +100,11 @@
     return self;
 }
 
-
-- (void)viewWillAppear:(BOOL)animated
-{
- 
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    // at this point view and its navigationcontroller exist
-//   [[self navigationController] setToolbarHidden:TRUE animated:YES];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-
+    self.title = [productDictionary objectForKey:@"Name"];
     longDescription.text = [productDictionary objectForKey:@"LongDescription"];
     priceTextField.text = [productDictionary objectForKey:@"Price"];
     rewardsTextField.text =@"NA";
@@ -76,6 +114,8 @@
     NSURL *imageURL = [NSURL URLWithString:[productDictionary objectForKey:@"LargePicture"]];
     [largePicture setImageWithURL:imageURL placeholderImage:nil options:SDWebImageProgressiveDownload];
     [TapTalkLooks setToTapTalkLooks:otherBoughtButton isActionButton:YES makeItRound:NO];
+    [self displayReducedPrice];
+    [self displayExpirationDate];
 }
 
 

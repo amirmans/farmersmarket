@@ -16,8 +16,11 @@
 @property(weak, nonatomic) IBOutlet UIButton *lowerContainerButton;
 @property(weak, nonatomic) IBOutlet UILabel *errorMessageLabel;
 @property(weak, nonatomic) IBOutlet UITextField *passwordAgainTextField;
+@property (weak, nonatomic) IBOutlet UITextField *ageGroupTextField;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *ageGroupSegmentedControl;
 
 - (IBAction)saveButtonAction:(id)sender;
+- (IBAction)ageGroupSegmentedControlAction:(id)sender;
 
 - (IBAction)resetButtonAction:(id)sender;
 

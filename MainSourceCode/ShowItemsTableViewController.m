@@ -9,6 +9,7 @@
 #import "ShowItemsTableViewController.h"
 #import "ProductItemViewCell.h"
 #import "DetailProductItemViewController.h"
+#import "TapTalkLooks.h"
 // github library to load the images asynchronously
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -21,7 +22,6 @@
 @synthesize searchBar;
 @synthesize searchDisplayController;
 @synthesize sections;
-@synthesize toolbar;
 
 
 #pragma mark - Utility methods
@@ -34,12 +34,6 @@
 
 
 #pragma mark - init methods
-//- (void)initModel
-//{
-//    productItems = [[BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].productItems allKeys]; 
-//}
-
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil data:(NSDictionary *)argProducts
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -58,7 +52,6 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-//        [self initModel];
     }
     
     return self;
@@ -80,12 +73,12 @@
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     self.title = @"List of items";
     self.tableView.scrollEnabled = YES;
-    UISearchBar *tempSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 0)];
-    self.searchBar = tempSearchBar;
-    tempSearchBar = nil;
+    searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 0)];
+//    self.searchBar = tempSearchBar;
+//    tempSearchBar = nil;
     self.searchBar.delegate = self; 
-    [self.searchBar sizeToFit];  
-    self.tableView.tableHeaderView = self.searchBar; 
+//    [self.searchBar sizeToFit];
+//    self.tableView.tableHeaderView = self.searchBar;
     
     searchDisplayController = [[UISearchDisplayController alloc]
                         initWithSearchBar:searchBar contentsController:self];
@@ -101,6 +94,9 @@
 
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    [TapTalkLooks setBackgroundImage:self.tableView];
+    [self.tableView setSectionFooterHeight:0];
 }
 
 - (void)viewDidUnload
@@ -160,26 +156,32 @@
     return nRows;
 }
 
-//Fornow
-//
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-	return [[self.sections objectAtIndex:section] stringByAppendingString:@"Product Category"];
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    NSString *sectionTitle = [self.sections objectAtIndex:section];
+    
+    // Create label with section title
+    UILabel *label = [[UILabel alloc] init];
+    label.frame = CGRectMake(80, 0, [sectionTitle length], [self.tableView sectionHeaderHeight]);
+    label.textColor = [UIColor blueColor];
+    label.font = [UIFont fontWithName:@"Helvetica" size:20];
+    label.text = sectionTitle;
+    label.backgroundColor = [UIColor clearColor];
+//    label.backgroundColor = [UIColor :[UIImage imageNamed:@"retina_wood.png"]];
+    
+    /*I also want the header to throw a shadow on the rest of the table*/
+    label.layer.shadowColor = [[UIColor orangeColor] CGColor];
+    label.layer.shadowOffset = CGSizeMake(0, 0);
+    label.layer.shadowOpacity = 0.5f;
+    label.layer.shadowRadius = 3.25f;
+    label.layer.masksToBounds = NO;
+    
+   return label;
 }
-//
-//- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
-//{
-//	return self.sections;
-//}
 
-//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-//    return footerView;
-//}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 0.0;
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 32.0f;
 }
-
 
 #pragma mark - Table view data source
 
@@ -201,6 +203,13 @@
                 break;
             }
         }
+        NSString *specialDeal = [[self itemAtIndexPath:indexPath] objectForKey:@"OnSpecial"];
+        
+        if ([specialDeal hasPrefix:@"T"] || [specialDeal hasPrefix:@"Y"])
+            [cell.specialLabel setHidden:FALSE];
+        else
+            [cell.specialLabel setHidden:TRUE];
+
     }
 
     // Configure the cell...
@@ -217,17 +226,12 @@
         [cell.priceTextField setText:[[self itemAtIndexPath:indexPath] objectForKey:@"Price"]];
         [cell.descriptionTextView setText:[[self itemAtIndexPath:indexPath] objectForKey:@"ShortDescription"]];
         
-        //---
         NSURL *imageURL = [NSURL URLWithString:[[self itemAtIndexPath:indexPath] objectForKey:@"Picture"]];
         [cell.productImageView setImageWithURL:imageURL placeholderImage:nil options:SDWebImageProgressiveDownload];
-        //---
-//        UIImage *image = [UIImage imageWithContentsOfFile:[[self itemAtIndexPath:indexPath] objectForKey:@"Picture"]];
-//        [cell.productImageView setImage:image];
+
         NSLog(@"The url for image of this product is: %@",[[self itemAtIndexPath:indexPath] objectForKey:@"Picture"]);
     }
-/*
-    cell.detailTextLabel.text = [[BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].productItems objectForKey:[productItems objectAtIndex:indexPath.row]];        
-*/
+
     return cell;
 }
 

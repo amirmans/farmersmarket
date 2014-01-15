@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *recipesButton;
 @property (weak, nonatomic) IBOutlet UIButton *otherBoughtButton;
 
+@property (weak, nonatomic) IBOutlet UILabel *reducedPriceLabel;
 
 - (IBAction)recipesAction:(id)sender;
 - (IBAction)otherBoughtAction:(id)sender;

@@ -35,9 +35,9 @@
 @synthesize isCustomer;
 
 
-// ForNow
+// we don't have access to biz.isCustomer in all the methods of the class
 - (void)setIsCustomer:(int)isCust {
-    assert (isCust == 0 || isCust ==1);
+    NSAssert ((isCust == 0 || isCust ==1),@"the only valid values are 0 or 1");
     isCustomer = (BOOL)isCust;
 }
 
@@ -79,12 +79,7 @@
     [TapTalkLooks setToTapTalkLooks:addToCustomersOrService isActionButton:YES makeItRound:NO];
 
     if (self.isCustomer == 1) {
-        //TODO
-//        if (biz.isProductListLoaded)
-            [addToCustomersOrService setTitle:@"Enter and use TapTalk services" forState:UIControlStateNormal];
-//        else {
-//            [addToCustomersOrService setTitle:@"Loading services" forState:UIControlStateNormal];
-//        }
+        [addToCustomersOrService setTitle:@"Enter and use TapForAll services" forState:UIControlStateNormal];
     }
     else {
         [addToCustomersOrService setTitle:@"Vote to add as a customer" forState:UIControlStateNormal];
@@ -129,7 +124,6 @@
     [self setRating:nil];
     [self setTypesOfBusiness:nil];
     [self setActivityIndicator:nil];
-//    [self setNext:nil];
     addToCustomersOrService = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -152,7 +146,6 @@
         [[DataModel sharedDataModelManager] setChatSystemURL:biz.chatSystemURL];
         [[DataModel sharedDataModelManager] setBusinessName:biz.businessName];
         [biz startLoadingBusinessProductCategoriesAndProducts];
-//        ServicesForBusinessViewController *detailInfo =[[ServicesForBusinessViewController alloc] initWithData:biz];
         [self.navigationController pushViewController:detailInfo animated:YES];
     }
     else {
@@ -182,7 +175,9 @@
         GooglePlacesObject *googleDetailObject = [objects objectAtIndex:0];
         
         if (googleDetailObject.rating)
-            rating.text = [NSString stringWithFormat:@"%@", googleDetailObject.rating];
+        {
+            rating.text = [[NSString stringWithFormat:@"%@", googleDetailObject.rating] stringByAppendingString:@" out of 5"];
+        }
         else
             rating.text = @"N/A";
         if (googleDetailObject.formattedAddress == nil)
@@ -203,7 +198,6 @@
         contactInfo.dataDetectorTypes = UIDataDetectorTypeAll;
     }
     [activityIndicator stopAnimating];
-//    [self.view setNeedsDisplay];
 }
 
 - (void)googlePlacesConnection:(GooglePlacesConnection *)conn didFailWithError:(NSError *)error {
@@ -214,7 +208,6 @@
     [alert show];
 
     [activityIndicator stopAnimating];
-//    [self.view setNeedsDisplay];
 }
 
 @end

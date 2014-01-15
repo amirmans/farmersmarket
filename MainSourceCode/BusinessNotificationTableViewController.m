@@ -26,7 +26,7 @@
 // delegate Method for NewNotificationWhileRunning
 - (void)updateUIWithNewNotification
 {
-    notificationsInReverseChronological = [[[[[DataModel sharedDataModelManager] notifications] reverseObjectEnumerator] allObjects] mutableCopy];
+    notificationsInReverseChronological = [[[DataModel sharedDataModelManager] notifications] mutableCopy];
     
     NSLog(@"BEGIN reloadData");
     dispatch_async(dispatch_get_main_queue(), ^(void) {
@@ -72,7 +72,7 @@
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     
     // for some reason - setting the background color in the nib file didn't work
@@ -84,8 +84,14 @@
     
     // we want to show the notifications in the reverse chronological order: the last
     // one should be displayed first
-    notificationsInReverseChronological = [[[[[DataModel sharedDataModelManager] notifications]
-                                             reverseObjectEnumerator] allObjects] mutableCopy];
+//    notificationsInReverseChronological = [[[[[DataModel sharedDataModelManager] notifications]
+//                                             reverseObjectEnumerator] allObjects] mutableCopy];
+    notificationsInReverseChronological = [[[DataModel sharedDataModelManager] notifications]  mutableCopy];
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -132,7 +138,7 @@
     cell.alertMessage.text = [notification objectForKey:@"alert"];
     
     NSDateFormatter *formatter = [NSDateFormatter new];
-    [formatter setDateFormat:@"hh:mm"];
+    [formatter setDateFormat:@"MMM dd, yyyy hh:mm a"];
     NSString *timeString = [formatter stringFromDate:[notification objectForKey:@"dateTimeRecieved"]];
     cell.dateAdded.text = timeString;
     
@@ -145,28 +151,30 @@
     return cell;
 }
 
-/*
+
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
 
-/*
+
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [notificationsInReverseChronological removeObjectAtIndex:indexPath.row];
+        [[DataModel sharedDataModelManager] setNotifications:notificationsInReverseChronological];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.

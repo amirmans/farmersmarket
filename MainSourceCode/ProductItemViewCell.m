@@ -23,6 +23,7 @@
 @synthesize productImageView;
 @synthesize title;
 @synthesize descriptionTextView;
+@synthesize specialLabel;
 
 
 - (id)initWithCoder:(NSCoder *)aDecoder

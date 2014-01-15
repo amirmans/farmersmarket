@@ -88,23 +88,6 @@
     [super viewDidUnload];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
@@ -112,28 +95,13 @@
 
 
 #pragma mark CLLocationManagerDelegate
-
-- (void)startMonitoringForRegion:(CLRegion *)region {
-    
-}
-//
-//- (void)startSignificantChangeUpdates {
-//    // Create the location manager if this object does not
-//    // already have one.
-//    if (nil == locationManager) {
-//        locationManager = [[CLLocationManager alloc] init];
-//        locationManager.delegate = self;
-//        [locationManager startMonitoringSignificantLocationChanges];
-//    }
-//}
-
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     // If it's a relatively recent event, turn off updates to save power
     // However - it seems this method could be called multiple time to achieve the desired accuracy
     
-    NSDate *eventDate = newLocation.timestamp;
-    NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
-    NSLog(@"in didUpdateLocation: howRecent is: %f", howRecent);
+//    NSDate *eventDate = newLocation.timestamp;
+//   NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+//    NSLog(@"in didUpdateLocation: howRecent is: %f", howRecent);
 //    if (abs(howRecent) > 15.0) {
 //        NSLog(@"in didUpdateLocation: latitude %+.6f, longitude %+.6f about to calculateAndDisplayLocation",
 //                newLocation.coordinate.latitude,
@@ -152,29 +120,11 @@
 
 
 #pragma mark MKMapViewDelegate
-
-- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
-//    NSLog(@"About to display the icons");
-}
-
-- (void)selectAnnotation:(id <MKAnnotation>)annotation animated:(BOOL)animated {
-
-}
-
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
 
     DetailBusinessInformation *detailBizInfo = [[DetailBusinessInformation alloc] initWithBusinessObject:((Business *) view.annotation)];
     [self.navigationController pushViewController:detailBizInfo animated:YES];
 }
-
-- (void)mapViewWillStartLocatingUser:(MKMapView *)mapView {
-    // NSLog(@"We are in the delegate method of mapViewWillStartLocationUser");
-}
-
-- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
-    // NSLog(@"We are in the delegate method of regionWillChangeAnimated");
-}
-
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation {
     NSBundle *bundle = [NSBundle mainBundle];
@@ -196,34 +146,26 @@
         if (((Business *) annotation).image != nil) {
             UIImageView *iconView = [[UIImageView alloc] initWithImage:((Business *) annotation).image];
             pinView.leftCalloutAccessoryView = iconView;
-//            iconView = nil;
+            iconView = nil;
         }
         pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
     }
     else {
-        NSLog(@"pinView wasn't nill");
         pinView.annotation = annotation;
     }
     // set the color of the pin
     if (((Business *) annotation).isCustomer == 1) {
         pinView.pinColor = MKPinAnnotationColorRed;
-        //            [pinView setImage:customerPinImage];
-        //            UIImageView *pinImageView = [[UIImageView alloc]initWithImage:customerPinImage];
-        //            [pinView addSubview:pinImageView];
-//        NSLog(@"In MyLocationViewController:viewForAnnotaion deciding on the pin color %@ is a customer", ((Business *) annotation).businessName);
+
     }
     else if (((Business *) annotation).isCustomer == 0) {
         pinView.pinColor = MKPinAnnotationColorPurple;
-//        NSLog(@"In MyLocationViewController:viewForAnnotaion %@ is NOT a customer", ((Business *) annotation).businessName);
     }
     else {
         pinView.pinColor = MKPinAnnotationColorGreen;
-//        NSLog(@"In MyLocationViewController:viewForAnnotaion %@ is unknown", ((Business *) annotation).businessName);
     }
 
     customerPinImage = nil;
-//    NSLog(@"at the end pinView businessName is: %@ and its color is: %i", ((Business *) annotation).businessName, pinView.pinColor);
-
     return pinView;
 }
 
@@ -234,7 +176,6 @@
     [self setResultsLoaded: NO];
     [locationManager startUpdatingLocation];
     [mapActivityIndicator stopAnimating];
-    
 }
 
 

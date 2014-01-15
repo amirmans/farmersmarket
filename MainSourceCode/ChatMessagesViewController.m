@@ -61,16 +61,17 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    NSLog(@"messagesFromOpenConnection is about to appear");
-    self.title = [[DataModel sharedDataModelManager] businessName];
+    NSString *viewControllerTitle = [[DataModel sharedDataModelManager] businessName];
+    // title is displayed in the tabbar also, therefore it cann't be a long string
+//    viewControllerTitle = [viewControllerTitle stringByAppendingString:@"'s chat room"];
+    
+    self.title = viewControllerTitle;
     if (![[DataModel sharedDataModelManager] joinedChat]) {
         // show the user that are about to connect to a new business chatroom
         LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
         loginController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-//      loginController.modalPresentationStyle = UIModalPresentationFormSheet;
-//        [self presentModalViewController:loginController animated:YES]; Compatibility
-        [self presentViewController:loginController animated:YES completion:nil];
 
+        [self presentViewController:loginController animated:YES completion:nil];
         loginController = nil;
 
         [[DataModel sharedDataModelManager] setJoinedChat:TRUE];
@@ -221,47 +222,6 @@
                 
           }
     ];
-
-//    NSURL *url = [NSURL URLWithString:urlString];
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-//    [request setValue:text forKey:@"message"];
-//    NSString *userName = [DataModel sharedDataModelManager].nickname;
-//    [request setValue:userName forKey:@"user"];
-//    __block ASIFormDataRequest *__weak request = [ASIFormDataRequest requestWithURL:url];
-//    [request setDelegate:self];
-//    [request setPostValue:text forKey:@"message"];
-//    NSString *userName = [DataModel sharedDataModelManager].nickname;
-//    [request setPostValue:userName forKey:@"user"];
-//
-//    // This code will be executed when the HTTP request is successful
-//    [request setCompletionBlock:^{
-//        // now composeMessageTextField.text which has given its value to text is being processes
-//        // good time to erase it.
-//        composeMessageTextField.text = nil;
-//        if ([self isViewLoaded]) {
-//            [MBProgressHUD hideHUDForView:self.view animated:YES];
-//
-//            // If the HTTP response code is not "200 OK", then our server API
-//            // complained about a problem. This shouldn't happen, but you never
-//            // know. We must be prepared to handle such unexpected situations.
-//            if ([request responseStatusCode] != 200) {
-//                [UIAlertView showErrorAlert:NSLocalizedString(@"No connection to Business's Chatroom", nil)];
-//            }
-//            else {
-//
-//            }
-//        }
-//    }];
-//
-//    // This code is executed when the HTTP request fails
-//    [request setFailedBlock:^{
-//        if ([self isViewLoaded]) {
-//            [MBProgressHUD hideHUDForView:self.view animated:YES];
-//            [UIAlertView showErrorAlert:@"You are not in the business's chat room"];
-//        }
-//    }];
-//
-//    [request startAsynchronous];
 }
 
 

@@ -6,8 +6,6 @@
 //  Copyright (c) 2011 MyDoosts.com All rights reserved.
 //
 
-
-
 #import "AppDelegate.h"
 
 #import "MyLocationViewController.h"
@@ -56,9 +54,10 @@
     // messages from others
     imagePath = [bundle pathForResource:@"Messages" ofType:@"png"];
     UIImage *messagesImage = [[UIImage alloc] initWithContentsOfFile:imagePath];
-    UITabBarItem *messagesTabBar = [[UITabBarItem alloc] initWithTitle:@"Messages" image:messagesImage tag:1];
-    ChatMessagesViewController *openMessages = [[ChatMessagesViewController alloc] initWithNibName:nil bundle:nil];
-    openMessages.tabBarItem = messagesTabBar;
+    UITabBarItem *chatTabBar = [[UITabBarItem alloc] initWithTitle:@"Messages" image:messagesImage tag:1];
+    ChatMessagesViewController *chatViewContoller = [[ChatMessagesViewController alloc] initWithNibName:nil bundle:nil];
+    chatViewContoller.tabBarItem = chatTabBar;
+    UINavigationController *chatNav = [[UINavigationController alloc] initWithRootViewController:chatViewContoller];
 
     //consumer profile tab
     imagePath = [bundle pathForResource:@"ProfileTabBarIcon" ofType:@"png"];
@@ -79,7 +78,7 @@
     
     // setup main window with the tabbarcontroller
     self.tt_tabBarController = [[UITabBarController alloc] init];
-    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, openMessages, consumerProfileViewController, notificationNav, nil];
+    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, chatNav, consumerProfileViewController, notificationNav, nil];
 
     tt_tabBarController.delegate = self;
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -101,7 +100,6 @@
         NSDictionary *dictionary = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
         if (dictionary != nil) {
             NSLog(@"Launched from push notification: %@", dictionary);
-//            [self addMessageFromRemoteNotification:dictionary updateUI:NO];
             [self doUpdateForRemoteNotification:dictionary updateUI:YES];
         }
     }
@@ -276,12 +274,9 @@
     notificationsTabBar.badgeValue = @"New";
     // Add the Message to the data model to be inserted to the UINotificationsViewtable later.
     [[DataModel sharedDataModelManager] addNotification:userInfo];
-
-    // If we are called from didFinishLaunchingWithOptions, we should not
-    // tell the ChatViewController's table view to insert the new Message.
-    // At that point, the table view isn't loaded yet and it gets confused.
-//    int index = 0;
     
+    // At this point, the notification is recieved when when the application is running.  So, lets update
+    // the notification table with the new entry
 	if (updateUI)
         [notificationDelegate updateUIWithNewNotification];
 
@@ -289,15 +284,10 @@
 
 
 #pragma mark - UIApplicationDelegate for notification
-//TODO
-- (void)postUpdateDeviceToken:(NSString *)newDeviceToken
-{
 
-/*    AFHTTPClient *client = [AFHTTPClient clientWithBaseURL:[NSURL URLWithString:ServerApiURL]];
-    [client
-     postPath:@"/api.php"
-     parameters:params
-     success:nil failure:nil]; */
+- (void) postProcessForSuccess:(int)givenUserID
+{
+    [DataModel sharedDataModelManager].userID = givenUserID;
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
@@ -317,12 +307,24 @@
 
     NSLog(@"My token is: %@", newToken);
 
-    [[DataModel sharedDataModelManager] setDeviceToken:newToken];
-
     // If the token changed and we already sent the "join" request, we should
     // let the server know about the new device token.
-    if ([[DataModel sharedDataModelManager] joinedChat] && ![newToken isEqualToString:oldToken]) {
-		[self postUpdateDeviceToken:newToken];
+    if (![newToken isEqualToString:oldToken]) {
+        NSError *error;
+        ServerInteractionManager *serverManager =[[ServerInteractionManager alloc] init];
+        serverManager.postProcessesDelegate = self;
+        
+        int uid = [[DataModel sharedDataModelManager] userID];
+        
+        // a valid uid means we have a registered user, update user info with the
+        // new deviceToken.  If not, just save the deviceToken in the default file, for the time
+        // user registers.
+        if (uid > 0 )
+        {
+            [serverManager ServerUpdateDeviceToken:newToken withUserID:uid WithError:&error];
+        }
+        
+        [[DataModel sharedDataModelManager] setDeviceToken:newToken];
     }
 }
 

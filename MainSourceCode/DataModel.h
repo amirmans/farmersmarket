@@ -41,9 +41,8 @@
 //Notification stuff
 //- (id)initNotification;
 - (void)addNotification:(NSDictionary *)notificationData;
+- (void)setNotifications:(NSMutableArray *)notificationArray;
 - (void)saveNotifications;
-- (BOOL)businessAllowedToSendNotification:(NSString *)businessName;
-
 // Get and set the user's nickname.
 - (NSString *)nickname;
 - (void)setNickname:(NSString *)name;

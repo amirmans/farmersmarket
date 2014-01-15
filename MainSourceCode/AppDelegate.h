@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "NewNotificationProtocol.h"
+#import "ServerInteractionManager.h"
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UIActionSheetDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UIActionSheetDelegate, PostProcesses> {
     IBOutlet UIWindow *window;
     IBOutlet UITabBarController *tt_tabBarController;
     IBOutlet UINavigationController *enterBusinessNav;

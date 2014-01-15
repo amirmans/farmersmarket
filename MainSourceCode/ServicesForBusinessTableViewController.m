@@ -56,15 +56,6 @@
 
     // for some reason - setting the background color in the nib file didn't work
     [TapTalkLooks setBackgroundImage:self.tableView];
-//    
-//    UIImageView *tempImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_image.jpg"]];
-//    [tempImageView setFrame:self.tableView.frame];
-//    
-//    self.tableView.backgroundView = tempImageView;
-//    tempImageView = nil;
-    // Do any additional setup after loading the view from its nib.
-    self.hidesBottomBarWhenPushed = FALSE;
-
     self.title = chosenMainMenu;
 
     NSArray *tempRows = [allChoices objectForKey:chosenMainMenu];
@@ -73,7 +64,7 @@
         NSLog(@"Here are allchoices in the detail view....%@", allChoices);
         NSLog(@"Here is the chosen main menu...%@", chosenMainMenu);
     }
-    // TODO - changed on Sep 21st, 2013
+
     CGFloat navbarHeight = self.navigationController.navigationBar.frame.size.height;
     NSInteger tabbarHeight = self.tabBarController.tabBar.frame.size.height;
     CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
@@ -119,6 +110,10 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"TapTalk"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.backgroundColor = [UIColor colorWithRed:255.0/255.0f green:204.0/255.0f blue:102.0/255.0f alpha:1.0];
+        cell.textLabel.textColor = [UIColor blueColor];
+        cell.accessoryView = [[ UIImageView alloc ] initWithImage:[UIImage imageNamed:@"indicator.png"]];
+        [cell.accessoryView setFrame:CGRectMake(0, 0, 24, 46)];
     }
 
     cell.textLabel.text = [[allChoices objectForKey:chosenMainMenu] objectAtIndex:indexPath.row];
@@ -143,7 +138,7 @@
             }
         }
         if (whileIndex == 1) {
-            if (([tmpStr rangeOfString:@"food or drink"].location != NSNotFound) || ([tmpStr rangeOfString:@"ask for service"].location != NSNotFound)) {
+            if (([tmpStr rangeOfString:@"food or drink"].location != NSNotFound) || ([tmpStr rangeOfString:@"service"].location != NSNotFound)) {
                 MeowToOrderController *orderViewController = [[MeowToOrderController alloc] initWithNibName:nil bundle:nil];
                 [self.navigationController pushViewController:orderViewController animated:YES];
             }
@@ -164,7 +159,7 @@
         }
 
         if (whileIndex == 4) {
-            if ([tmpStr rangeOfString:@"items"].location != NSNotFound) {
+            if (([tmpStr rangeOfString:@"items"].location != NSNotFound) || ([tmpStr rangeOfString:@"have"].location != NSNotFound)) {
                 //at this point we have already loaded the businessProducts
                 ShowItemsTableViewController *showItemsTableViewController = [[ShowItemsTableViewController alloc]
                         initWithNibName:nil bundle:nil data:biz.businessProducts];

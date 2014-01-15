@@ -17,9 +17,8 @@
 @interface ConsumerProfileViewController ()
 
 - (BOOL)validatePassword:(NSString *)pass;
-
+- (BOOL)validateAllUserInput;
 - (void)populateFieldsWithInitialValues;
-
 - (void)postSaveRequest;
 
 @end
@@ -32,6 +31,8 @@
 @synthesize topContainerButton;
 @synthesize lowerContainerButton;
 @synthesize errorMessageLabel;
+@synthesize ageGroupSegmentedControl;
+@synthesize ageGroupTextField;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -82,6 +83,7 @@
     [self setLowerContainerButton:nil];
     [self setErrorMessageLabel:nil];
     [self setPasswordAgainTextField:nil];
+    [self setAgeGroupSegmentedControl:nil];
 
     [super viewDidUnload];
 }
@@ -92,6 +94,10 @@
     passwordTextField.text = [DataModel sharedDataModelManager].password;
     passwordAgainTextField.text = [DataModel sharedDataModelManager].password;
     errorMessageLabel.text = @"";
+    
+    int ageGroupfromDefault = [[DataModel sharedDataModelManager] ageGroup];
+    ageGroupSegmentedControl.selectedSegmentIndex = ageGroupfromDefault;
+    ageGroupTextField.text = [ageGroupSegmentedControl titleForSegmentAtIndex:ageGroupfromDefault];
 }
 
 - (BOOL)validatePassword:(NSString *)pass {
@@ -101,11 +107,12 @@
         return TRUE;
 }
 
-- (IBAction)saveButtonAction:(id)sender {
+- (BOOL)validateAllUserInput
+{
     BOOL badInformation = FALSE;
     short nVerificationSteps = 3;
     short loopIndex = 0;
-    //Validating input by the user - These rules should match the ones in the server
+    
     while ((loopIndex < nVerificationSteps) && (badInformation == FALSE)) {
         switch (loopIndex) {
             case 0:
@@ -115,7 +122,7 @@
                     errorMessageLabel.text = @"Nickname must be more the 2 chars long.";
                     errorMessageLabel.textColor = [UIColor redColor];
                 }
-
+                
                 break;
             case 1:
                 if (![self validatePassword:passwordTextField.text]) {
@@ -134,6 +141,15 @@
         }
         loopIndex++;
     } // while
+    
+    return badInformation;
+}
+
+
+- (IBAction)saveButtonAction:(id)sender {
+
+    //Validating input by the user - These rules should match the ones in the server
+    BOOL badInformation = [self validateAllUserInput];
 
     if (badInformation) {
         [UIAlertView showErrorAlert:@"There are errors in your input. Please fix them first"];
@@ -145,13 +161,12 @@
     }
 }
 
+- (IBAction)ageGroupSegmentedControlAction:(id)sender {
+    ageGroupTextField.text = [ageGroupSegmentedControl titleForSegmentAtIndex:ageGroupSegmentedControl.selectedSegmentIndex];
+}
+
 - (IBAction)resetButtonAction:(id)sender {
     [self populateFieldsWithInitialValues];
-//    TODO
-//    ChatConfirmation *loginController = [[ChatConfirmation alloc] initWithNibName:nil bundle:nil];
-//    loginController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-//    loginController.modalPresentationStyle = UIModalPresentationFormSheet;
-//    [self presentViewController:loginController animated:YES completion:nil];
 }
 
 #pragma mark
@@ -198,9 +213,11 @@
 
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
-
+    int ageGroup = ageGroupSegmentedControl.selectedSegmentIndex;
+    NSString *deviceToken = [[DataModel sharedDataModelManager] deviceToken];
     NSDictionary *params;
-    params = @{@"cmd": @"join", @"nickname": nicknameTextField.text,@"password": passwordTextField.text};
+    params = @{@"cmd": @"join", @"nickname": nicknameTextField.text,
+               @"password": passwordTextField.text, @"age_group":[NSNumber numberWithInt:ageGroup], @"device_token":deviceToken};
     [manager POST:urlString parameters:params
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               NSLog(@"Response from profile server:%@", responseObject);
@@ -212,13 +229,13 @@
                       [UIAlertView showErrorAlert:NSLocalizedString(@"Error in generatin user ID.  Please try agin a few min later", nil)];
                   }
                   else {
-                      //Success set everything now
-                      [[NSUserDefaults standardUserDefaults] setObject:nicknameTextField.text forKey:NicknameKey];
                       [[DataModel sharedDataModelManager] setNickname:nicknameTextField.text];
                       [[DataModel sharedDataModelManager] setPassword:passwordAgainTextField.text];
-                      [UIAlertView showErrorAlert:@"Profile information saved successfully"];
                       // uid is determine by the database. so we set DataModel after we talk to the server
                       [DataModel sharedDataModelManager].userID = operation.response.statusCode;
+                      [DataModel sharedDataModelManager].ageGroup = ageGroupSegmentedControl.selectedSegmentIndex;
+                      
+                      [UIAlertView showErrorAlert:@"Profile information saved successfully"];
                   }
               }
           }
@@ -231,56 +248,6 @@
 
           }
     ];
-
-    // Create the HTTP request object for our URL
-//    zzzzZZZZZZZ
-//    NSURL *url = [NSURL URLWithString:ConsumerProfileServer];
-//    __block ASIFormDataRequest *__weak request = [ASIFormDataRequest requestWithURL:url];
-//    [request setDelegate:self];
-//
-//    // Add the POST fields
-//    //	[request setPostValue:@"message" forKey:@"cmd"];
-//    //	[request setPostValue:[[DataModel sharedDataModelManager] userID] forKey:@"userID"];
-//    //	[request setPostValue:text forKey:@"text"];
-//    [request setPostValue:@"join" forKey:@"cmd"];
-//    [request setPostValue:nicknameTextField.text forKey:@"nickname"];
-//    [request setPostValue:passwordTextField.text forKey:@"password"];
-//
-//    NSLog(@"saving profile information was called with this url: %@?cmd=%@&nickname=%@&password=%@", url, @"join", nicknameTextField.text, passwordTextField.text);
-//
-//    // This code will be executed when the HTTP request is successful
-//    [request setCompletionBlock:^{
-//        if ([self isViewLoaded]) {
-//            [MBProgressHUD hideHUDForView:self.view animated:YES];
-//
-//            // If the HTTP response code is not "200 OK", then our server API
-//            // complained about a problem. This shouldn't happen, but you never
-//            // know. We must be prepared to handle such unexpected situations.
-//            int retcode = [request responseStatusCode];
-//            if (retcode == 0) {
-//                [UIAlertView showErrorAlert:NSLocalizedString(@"No connection to profile system ", nil)];
-//            }
-//            else {
-//                //Success set everything now
-//                [[NSUserDefaults standardUserDefaults] setObject:nicknameTextField.text forKey:NicknameKey];
-//                [[DataModel sharedDataModelManager] setNickname:nicknameTextField.text];
-//                [[DataModel sharedDataModelManager] setPassword:passwordAgainTextField.text];
-//                [UIAlertView showErrorAlert:@"Profile information saved successfully"];
-//                // uid is determine by the database. so we set DataModel fter we talk to the server
-//                [DataModel sharedDataModelManager].userID = retcode;
-//            }
-//        }
-//    }];
-//
-//    // This code is executed when the HTTP request fails
-//    [request setFailedBlock:^{
-//        if ([self isViewLoaded]) {
-//            [MBProgressHUD hideHUDForView:self.view animated:YES];
-//            [UIAlertView showErrorAlert:@"Error in accessing profile system.  Please try in a few min"];
-//        }
-//    }];
-//
-//    [request startAsynchronous];
 }
 
 

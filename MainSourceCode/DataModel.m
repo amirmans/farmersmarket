@@ -48,6 +48,7 @@ static DataModel *sharedDataModel = nil;
         {
             notifications = [[NSMutableArray alloc] init];
         }
+        //TODO
 //        [[NSUserDefaults standardUserDefaults] registerDefaults:@{NicknameKey: @""},
 //         @{PasswordKey: @"N/A"},
 //         @{JoinedChatKey: [NSNumber numberWithInt:12]},
@@ -60,6 +61,18 @@ static DataModel *sharedDataModel = nil;
     return self;
 }
 
+- (void)sortNotificationsinReverseChronologicalOrder
+{
+    NSSortDescriptor *descriptor =
+    [[NSSortDescriptor alloc] initWithKey:@"dateTimeRecieved" ascending:NO];
+    [notifications sortUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
+    descriptor = nil;
+}
+
+- (void)setNotifications:(NSMutableArray *)notificationArray
+{
+    notifications = notificationArray;
+}
 
 - (void)addNotification:(NSDictionary *)notificationDataFromServer {
     // Add our own stuff to the notification from the server
@@ -67,11 +80,14 @@ static DataModel *sharedDataModel = nil;
                                              initWithDictionary:[notificationDataFromServer objectForKey:@"aps"]];
     NSDate *dateAdded = [NSDate date];
     [notificationData setObject:dateAdded forKey:@"dateTimeRecieved"];
+    //fetch the icon for the business identified by the given "business ID" from consumerprofile (database on our server)
+    
     
     [self.notifications addObject:notificationData];
 }
 
-- (NSMutableArray *)notification {
+- (NSMutableArray *)notifications {
+    [self sortNotificationsinReverseChronologicalOrder];
     return notifications;
 }
 
@@ -98,6 +114,14 @@ static DataModel *sharedDataModel = nil;
     return self.messages.count - 1;
 }
 
+- (short)ageGroup {
+    return [[NSUserDefaults standardUserDefaults] integerForKey:@"ageGroup"];
+}
+
+- (void)setAgeGroup:(short)argAgeGroup {
+    [[NSUserDefaults standardUserDefaults] setInteger:argAgeGroup forKey:@"ageGroup"];
+}
+
 
 - (BOOL)joinedChat {
     return [[NSUserDefaults standardUserDefaults] boolForKey:JoinedChatKey];
@@ -116,9 +140,6 @@ static DataModel *sharedDataModel = nil;
 }
 
 - (void)setUserID:(int)uid {
-//    UIDevice* device = [UIDevice currentDevice];
-//	return [device.uniqueIdentifier stringByReplacingOccurrencesOfString:@"-" withString:@""];
-    //TODO
     [[NSUserDefaults standardUserDefaults] setInteger:uid forKey:UserIDKey];
 }
 
@@ -139,11 +160,6 @@ static DataModel *sharedDataModel = nil;
     [[NSUserDefaults standardUserDefaults] setObject:string forKey:PasswordKey];
 }
 
-- (BOOL)businessAllowedToSendNotification:(NSString *)businessName {
-    
-    //TODO
-    return FALSE;
-}
 
 
 @end

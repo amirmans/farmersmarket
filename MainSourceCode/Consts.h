@@ -8,8 +8,9 @@
 //#define BusinessProductListServer @"http://mydoosts.com/businessinfo/productlist.txt"
 #define BusinessProductListServer @"http://mydoosts.com/taptalk/businessinfo/businessProducts.php"
 #define ConsumerProfileServer @"http://mydoosts.com/taptalk/profilesystem/consumerprofile.php"
+//#define ConsumerProfileServer @"http://localhost/TapForAll/profilesystem/consumerprofile.php"
 #define ChatSystemServer @"http://mydoosts.com/taptalk/chatsystem/index.php"
-#define BusinessCustomerIconDirectory @"http://www.mydoosts.com/taptalk/customerFiles/businessCustomers/icons/"
+#define BusinessCustomerIconDirectory @"http://www.mydoosts.com/taptalk/customer_files/icons/"
 
 // We store our settings in the NSUserDefaults dictionary using these keys
 static NSString *const NicknameKey = @"nickname";
@@ -27,6 +28,3 @@ static NSString *const UserIDKey = @"userID";
 // a push notification is limited to 256 bytes and that includes the JSON 
 // overhead and the name of the sender.
 #define MaxMessageLength 190
-
-// Convenience function to show a UIAlertView
-//void ShowErrorAlert(NSString* text);

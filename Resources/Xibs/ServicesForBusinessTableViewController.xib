@@ -18,7 +18,7 @@
             <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
             <color key="separatorColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
             <color key="sectionIndexColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-            <color key="sectionIndexBackgroundColor" red="1" green="0.67832745559999996" blue="0.28229820059999999" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="sectionIndexBackgroundColor" red="1" green="0.80000000000000004" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="dataSource" destination="-1" id="9"/>
                 <outlet property="delegate" destination="-1" id="10"/>

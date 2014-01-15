@@ -3,7 +3,7 @@
 //  TapTalk
 //
 //  Created by Amir on 10/15/11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2011 MyDoosts.com All rights reserved.
 //
 
 #import "Business.h"
@@ -76,29 +76,16 @@
 - (void)fetchResponseData:(NSData *)responseData {
     //parse out the json data
     NSError* error;
-    //TODO
-    NSBundle *bundle = [NSBundle mainBundle];
-    NSString *path;
-//    path = [bundle pathForResource:@"DefaultProducts" ofType:@"txt"];
-//    businessProducts = [NSDictionary dictionaryWithContentsOfFile:path];
-    path = [bundle pathForResource:@"DefaultProductList" ofType:@"plist"];
-    NSData *plistFileData = [NSData dataWithContentsOfFile:path options:0UL error:&error];
-    id plist = [NSPropertyListSerialization propertyListWithData:plistFileData options:NSPropertyListImmutable format:NULL error:&error];
-    if(plist == NULL) {
-        NSLog(@"Unable to deserialize property list.  Error: %@, info: %@", error, [error userInfo]);
-        exit(1);
-    }
-//    NSData *jsonData = [plist JSONDataWithOptions:JKSerializeOptionPretty error:&error];
+
     NSDictionary *tempBusinessProducts = [NSJSONSerialization
                           JSONObjectWithData:responseData
                           options:kNilOptions
                           error:&error];
     businessProducts = [tempBusinessProducts objectForKey:@"products"];
 
-    BOOL weGotADict = FALSE;
+
     if ([businessProducts isKindOfClass: [NSDictionary class]]) {
-        NSLog(@"Hey I am a dictionary");
-        weGotADict = TRUE;
+
     }
     else if ([businessProducts isKindOfClass:[NSString class]]) {
         NSData* tempData = [(NSString* )businessProducts  dataUsingEncoding:NSUTF8StringEncoding];
@@ -108,9 +95,6 @@
             // do something with error
             NSLog(@"Error: %@",error);
             
-        }	else {
-            ////success
-            weGotADict = TRUE;
         }
     }
     else
@@ -118,13 +102,6 @@
         NSLog(@"in Business:fetchResponseData - I don't know what I am.");
     }
     
-    if (!weGotADict) {
-        businessProducts = plist;
-    }
-    else {
-        //use data from server
-    }
-
     isProductListLoaded = TRUE;
 }
 
@@ -168,6 +145,7 @@
         SBJsonParser *json = [[SBJsonParser alloc] init];
         NSDictionary *responseDictionary = [json objectWithString:responseString];
 
+
         if (nil != responseDictionary) {
             if ([responseDictionary count] > 0) {
                 isCustomer = 1;
@@ -199,8 +177,11 @@
             }
         }
     }
+    
+#if (0)
     NSLog(@"In Business:initWithGooglePlacesObject for %@ with isCustomer of %d - %@ was called to get additional information from our own server", self.businessName, self.isCustomer, urlString);
-
+#endif
+    
     return self;
 }
 
