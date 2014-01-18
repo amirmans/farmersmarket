@@ -200,54 +200,80 @@
     return YES;
 }
 
+- (NSDictionary *)getCorrespondingParameters
+{
+    NSDictionary *params;
+    int ageGroup = ageGroupSegmentedControl.selectedSegmentIndex;
+    NSString *deviceToken = [[DataModel sharedDataModelManager] deviceToken];
+    if ([DataModel sharedDataModelManager].userID > 0)
+    {
+        // notice update method in our server, takes care of both situtioans with or without device_token
+        if (deviceToken != nil)
+            params = @{@"cmd": @"update", @"nickname": nicknameTextField.text,@"password": passwordTextField.text, @"age_group":[NSNumber numberWithInt:ageGroup], @"device_token":deviceToken};
+        else
+            params = @{@"cmd": @"update", @"nickname": nicknameTextField.text,
+                       @"password": passwordTextField.text, @"age_group":[NSNumber numberWithInt:ageGroup]};
+    }
+    else
+    {
+        if (deviceToken != nil)
+            params = @{@"cmd": @"join_with_devicetoken", @"nickname": nicknameTextField.text,@"password": passwordTextField.text, @"age_group":[NSNumber numberWithInt:ageGroup], @"device_token":deviceToken};
+        else
+            params = @{@"cmd": @"join", @"nickname": nicknameTextField.text,
+                   @"password": passwordTextField.text, @"age_group":[NSNumber numberWithInt:ageGroup]};
+    }
+    
+    return params;
+    
+}
 
 - (void)postSaveRequest {
     // Show an activity spinner that blocks the whole screen
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText = NSLocalizedString(@"Updating account information", @"");
-
+    
     NSString *urlString = ConsumerProfileServer;
-
+    
     AFHTTPRequestOperationManager *manager;
     manager = [AFHTTPRequestOperationManager manager];
-
+    
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
-    [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
-    int ageGroup = ageGroupSegmentedControl.selectedSegmentIndex;
-    NSString *deviceToken = [[DataModel sharedDataModelManager] deviceToken];
-    NSDictionary *params;
-    params = @{@"cmd": @"join", @"nickname": nicknameTextField.text,
-               @"password": passwordTextField.text, @"age_group":[NSNumber numberWithInt:ageGroup], @"device_token":deviceToken};
-    [manager POST:urlString parameters:params
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              NSLog(@"Response from profile server:%@", responseObject);
-              if ([self isViewLoaded]) {
-                  [MBProgressHUD hideHUDForView:self.view animated:YES];
-
-                  //profile system , when successful assigns userID and returns it.  userID is a positive integer
-                  if (operation.response.statusCode == 0) {
-                      [UIAlertView showErrorAlert:NSLocalizedString(@"Error in generatin user ID.  Please try agin a few min later", nil)];
-                  }
-                  else {
-                      [[DataModel sharedDataModelManager] setNickname:nicknameTextField.text];
-                      [[DataModel sharedDataModelManager] setPassword:passwordAgainTextField.text];
-                      // uid is determine by the database. so we set DataModel after we talk to the server
-                      [DataModel sharedDataModelManager].userID = operation.response.statusCode;
-                      [DataModel sharedDataModelManager].ageGroup = ageGroupSegmentedControl.selectedSegmentIndex;
-                      
-                      [UIAlertView showErrorAlert:@"Profile information saved successfully"];
-                  }
-              }
+    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+    
+    NSDictionary *params = [self getCorrespondingParameters];
+    [manager POST:urlString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+    {
+        NSLog(@"Response from profile server:%@", responseObject);
+        if ([self isViewLoaded]) {
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            
+            //profile system , when successful assigns userID and returns it.  userID is a positive integer
+            if (operation.response.statusCode != 200) {
+                [UIAlertView showErrorAlert:NSLocalizedString(@"Error in generatin user ID.  Please try agin a few min later", nil)];
+            }
+            else {
+                [[DataModel sharedDataModelManager] setNickname:nicknameTextField.text];
+                [[DataModel sharedDataModelManager] setPassword:passwordAgainTextField.text];
+                // uid is determine by the database. so we set DataModel after we talk to the server
+                NSDictionary *jsonDictResponse = (NSDictionary *) responseObject;
+                int userID = [[jsonDictResponse objectForKey:@"userID"] intValue];
+                // userID of 0 means, we updated a record with an existing user ID, so we sould not change the exiting userID
+                if (userID != 0)
+                    [DataModel sharedDataModelManager].userID = userID;
+                [DataModel sharedDataModelManager].ageGroup = ageGroupSegmentedControl.selectedSegmentIndex;
+                
+                [UIAlertView showErrorAlert:@"Profile information saved successfully"];
+            }
+        }
+    }
+    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          NSLog(@"Error: %@", error);
+          if ([self isViewLoaded]) {
+              [MBProgressHUD hideHUDForView:self.view animated:YES];
+              [UIAlertView showErrorAlert:@"Error in accessing profile system.  Please try again in a few min"];
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"Error: %@", error);
-              if ([self isViewLoaded]) {
-                  [MBProgressHUD hideHUDForView:self.view animated:YES];
-                  [UIAlertView showErrorAlert:@"Error in accessing profile system.  Please try again in a few min"];
-              }
-
-          }
-    ];
+          
+    }];
 }
 
 
