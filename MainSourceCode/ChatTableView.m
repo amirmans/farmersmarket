@@ -9,13 +9,12 @@
     // The newest message is at the bottom of the table
     //TODO
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([DataModel sharedDataModelManager].messages.count - 1) inSection:0];
-    NSLog(@"indexPath at scrollToNewestMessage is: %i, %i", indexPath.section, indexPath.row);
     [self scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 - (void)viewWillAppearWithNewMessage {
     // Show a label in the table's footer if there are no messages
-    int nMessages = [DataModel sharedDataModelManager].messages.count;
+    unsigned long nMessages = [DataModel sharedDataModelManager].messages.count;
     if (nMessages == 0) {
 //		UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 30)];
 //		label.text = NSLocalizedString(@"You have no messages", nil);
@@ -28,7 +27,7 @@
 //		label.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
 //		self.tableFooterView = label;
 //		[label release];
-        NSLog(@"nMessages = %d", nMessages);
+        NSLog(@"nMessages = %ld", nMessages);
     }
     else {
         [self scrollToNewestMessage];

@@ -7,20 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Business;
 
 @interface MeowToOrderController : UIViewController <UITextViewDelegate, UITextFieldDelegate, MFMessageComposeViewControllerDelegate, UIAlertViewDelegate> {
     UITextField *errorMessageView;
     UITextView *orderView;
+    Business *myBusiness;
 }
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil forBusiness:(Business *)biz;
 
 @property(weak, nonatomic) IBOutlet UIButton *cancelUIButton;
 @property(weak, nonatomic) IBOutlet UIButton *askUIButton;
 @property(atomic, retain) IBOutlet UITextView *orderView;
 @property(atomic, retain) IBOutlet UITextField *errorMessageView;
+@property(atomic, retain) Business *myBusiness;
 
 
 - (IBAction)meow;
-
 - (IBAction)Cancel:(id)sender;
 
 @end

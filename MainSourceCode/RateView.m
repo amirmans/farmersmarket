@@ -76,7 +76,7 @@
 
     if (_notSelectedImage == nil) return;
 
-    NSLog(@"%f, %d, %d, %d", self.frame.size.width, _leftMargin, _midMargin, _imageViews.count);
+    NSLog(@"%f, %d, %d, %lu", self.frame.size.width, _leftMargin, _midMargin, (unsigned long)_imageViews.count);
     float desiredImageWidth = (self.frame.size.width - (_leftMargin * 2) - (_midMargin * _imageViews.count)) / _imageViews.count;
     float imageWidth = MAX(_minImageSize.width, desiredImageWidth);
     float imageHeight = MAX(_minImageSize.height, self.frame.size.height);
@@ -143,7 +143,7 @@
     if (!_editable) return;
 
     _rating = 0;
-    for (int i = _imageViews.count - 1; i >= 0; i--) {
+    for (int i = (int)_imageViews.count - 1; i >= 0; i--) {
         UIImageView *imageView = [_imageViews objectAtIndex:i];
         if (touchLocation.x > imageView.frame.origin.x) {
             _rating = i + 1;

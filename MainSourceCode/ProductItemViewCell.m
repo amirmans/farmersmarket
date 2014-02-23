@@ -10,8 +10,6 @@
 
 @interface ProductItemViewCell () {
 
-    UIImageView *__backgroundImageView;
-
 @private
 
 }

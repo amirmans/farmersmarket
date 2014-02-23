@@ -5,8 +5,6 @@
 #define AddChatServerURL_APPENDIX @"addchatmessage.php"
 #define LoadChatServerURL_APPENDIX @"loadchatmessages.php"
 #define BusinessInformationServer @"http://mydoosts.com/taptalk/businessinfo/index.php"
-//#define BusinessProductListServer @"http://mydoosts.com/businessinfo/productlist.txt"
-#define BusinessProductListServer @"http://mydoosts.com/taptalk/businessinfo/businessProducts.php"
 #define ConsumerProfileServer @"http://mydoosts.com/taptalk/profilesystem/consumerprofile.php"
 //#define ConsumerProfileServer @"http://localhost/TapForAll/profilesystem/consumerprofile.php"
 #define ChatSystemServer @"http://mydoosts.com/taptalk/chatsystem/index.php"

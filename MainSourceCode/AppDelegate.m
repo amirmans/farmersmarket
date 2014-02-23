@@ -22,7 +22,6 @@
     UITabBarItem *notificationsTabBar;
 }
 
-
 @end
 
 
@@ -80,6 +79,26 @@
     self.tt_tabBarController = [[UITabBarController alloc] init];
     self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, chatNav, consumerProfileViewController, notificationNav, nil];
 
+    
+    // Override point for customization after application launch.
+//    UIImage *navBackgroundImage = [UIImage imageNamed:@"navigation_background.png"];
+//    [[UINavigationBar appearance] setBackgroundImage:navBackgroundImage forBarMetrics:UIBarMetricsDefault];
+//    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
+//                                                           [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0], UITextAttributeTextColor,
+//                                                           [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8],UITextAttributeTextShadowColor,
+//                                                           [NSValue valueWithUIOffset:UIOffsetMake(0, 1)],
+//                                                           UITextAttributeTextShadowOffset,
+//                                                           [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:20.0f], UITextAttributeFont, nil]];
+//
+//    UIImage *backBarBackgroundImage = [UIImage imageNamed:@"Navigation_button.png"]; //] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
+//    [[UIBarButtonItem appearance] setBackgroundImage:backBarBackgroundImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//    [[UIBarButtonItem appearance] setTitleTextAttributes: [
+//                                                           NSDictionary dictionaryWithObjectsAndKeys: [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:255.0/255.0 alpha:1.0],
+//                                                           UITextAttributeTextColor, [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8],
+//                                                           UITextAttributeTextShadowColor, [NSValue valueWithUIOffset:UIOffsetMake(0, 1)],
+//                                                           UITextAttributeTextShadowOffset, [UIFont fontWithName:@"Verdana" size:16.0f],
+//                                                           UITextAttributeFont, nil] forState:UIControlStateNormal];
+    
     tt_tabBarController.delegate = self;
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.tt_tabBarController;
@@ -314,14 +333,14 @@
         ServerInteractionManager *serverManager =[[ServerInteractionManager alloc] init];
         serverManager.postProcessesDelegate = self;
         
-        int uid = [[DataModel sharedDataModelManager] userID];
+        long uid = [[DataModel sharedDataModelManager] userID];
         
         // a valid uid means we have a registered user, update user info with the
         // new deviceToken.  If not, just save the deviceToken in the default file, for the time
         // user registers.
         if (uid > 0 )
         {
-            [serverManager ServerUpdateDeviceToken:newToken withUserID:uid WithError:&error];
+            [serverManager serverUpdateDeviceToken:newToken withUserID:uid WithError:&error];
         }
         
         [[DataModel sharedDataModelManager] setDeviceToken:newToken];

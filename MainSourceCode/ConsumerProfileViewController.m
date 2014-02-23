@@ -203,24 +203,25 @@
 - (NSDictionary *)getCorrespondingParameters
 {
     NSDictionary *params;
-    int ageGroup = ageGroupSegmentedControl.selectedSegmentIndex;
+    NSInteger ageGroup = ageGroupSegmentedControl.selectedSegmentIndex;
     NSString *deviceToken = [[DataModel sharedDataModelManager] deviceToken];
+    NSNumber *uid = [NSNumber numberWithLong:[DataModel sharedDataModelManager].userID];
     if ([DataModel sharedDataModelManager].userID > 0)
     {
-        // notice update method in our server, takes care of both situtioans with or without device_token
+        // notice update method in our server, takes care of both situations with or without device_token
         if (deviceToken != nil)
-            params = @{@"cmd": @"update", @"nickname": nicknameTextField.text,@"password": passwordTextField.text, @"age_group":[NSNumber numberWithInt:ageGroup], @"device_token":deviceToken};
+            params = @{@"cmd": @"update", @"uid": uid ,@"nickname": nicknameTextField.text,@"password": passwordTextField.text, @"age_group":[NSNumber numberWithInteger:ageGroup], @"device_token":deviceToken};
         else
-            params = @{@"cmd": @"update", @"nickname": nicknameTextField.text,
-                       @"password": passwordTextField.text, @"age_group":[NSNumber numberWithInt:ageGroup]};
+            params = @{@"cmd": @"update", @"uid": uid ,@"nickname": nicknameTextField.text,
+                       @"password": passwordTextField.text, @"age_group":[NSNumber numberWithInteger:ageGroup]};
     }
     else
     {
         if (deviceToken != nil)
-            params = @{@"cmd": @"join_with_devicetoken", @"nickname": nicknameTextField.text,@"password": passwordTextField.text, @"age_group":[NSNumber numberWithInt:ageGroup], @"device_token":deviceToken};
+            params = @{@"cmd": @"join_with_devicetoken", @"nickname": nicknameTextField.text,@"password": passwordTextField.text, @"age_group":[NSNumber numberWithInteger:ageGroup], @"device_token":deviceToken};
         else
             params = @{@"cmd": @"join", @"nickname": nicknameTextField.text,
-                   @"password": passwordTextField.text, @"age_group":[NSNumber numberWithInt:ageGroup]};
+                   @"password": passwordTextField.text, @"age_group":[NSNumber numberWithInteger:ageGroup]};
     }
     
     return params;
@@ -247,7 +248,8 @@
         if ([self isViewLoaded]) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             
-            //profile system , when successful assigns userID and returns it.  userID is a positive integer
+            NSLog(@"operation (saving profile information) response status code: %ld", (long)operation.response.statusCode);
+            //status code = 200 is html code for OK - so anything else means not OK
             if (operation.response.statusCode != 200) {
                 [UIAlertView showErrorAlert:NSLocalizedString(@"Error in generatin user ID.  Please try agin a few min later", nil)];
             }

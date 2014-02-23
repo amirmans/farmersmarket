@@ -8,10 +8,9 @@
 
 @protocol PostProcesses <NSObject>
 
-@required
-- (void)postProcessForSuccess:(int)givenUserID;
-
 @optional
+- (void)postProcessForSuccess:(int)givenUserID;
+- (void)postProcessForListOfBusinessesSuccess:(NSData *)responseObject;
 - (void)postProcessForFailure;
 
 @end
@@ -22,7 +21,14 @@
     __weak id <PostProcesses> postProcessesDelegate;
 }
 
-- (BOOL)ServerUpdateDeviceToken:(NSString *)deviceToken withUserID:(int)uid WithError:(NSError **)error;
+- (BOOL)serverUpdateDeviceToken:(NSString *)deviceToken withUserID:(int)uid WithError:(NSError **)error;
+- (void)serverCallToGetListofAllBusinesses;
+
+
+// borrowed from Google GTM
++ (NSString*)gtm_stringByEscapingForURLArgument:(NSString *)tmpString;
++ (NSString*)gtm_stringByUnescapingFromURLArgument:(NSString *)tmpString;
+
 @property (nonatomic, weak) id <PostProcesses> postProcessesDelegate;
 
 @end

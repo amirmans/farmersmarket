@@ -9,28 +9,43 @@
 #import <UIKit/UIKit.h>
 #import "BusinessCustomerProfileManager.h"
 #import "GooglePlacesObject.h"
+#import "GooglePlacesConnection.h"
+#import "ServerInteractionManager.h"
 
+@class GooglePlacesObject;
 @protocol TaptalkBusinessDelegate;
 
-@interface Business : NSObject <MKAnnotation, NSURLConnectionDelegate> {
+@interface Business : NSObject <MKAnnotation, NSURLConnectionDelegate, GooglePlacesConnectionDelegate,  PostProcesses> {
     CLLocationCoordinate2D coordinate;
     NSString *title;
     NSString *subtitle;
     UIImage *image;
+    
 
-    BusinessCustomerProfileManager *customerProfile;
+//    BusinessCustomerProfileManager *customerProfile;
     GooglePlacesObject *googlePlacesObject;
     NSString *businessName;
     NSString *customerProfileName;
     NSString *chatSystemURL;
     int isCustomer;
     int businessID;
+    
+    NSString *rating;
+    NSString *address;
+    NSString *website;
+    NSString *phone;
+    NSString *sms_no;
+    NSString *referenceData;
+    NSMutableString * businessTypes;
+    NSString *neighborhood;
 
-//    NSMutableData *responseWithLargData;
+    GooglePlacesConnection *googlePlacesConnection;
+
     NSDictionary *businessProducts;
+    NSError *businessError;
 }
 
-@property(nonatomic, weak) id <TaptalkBusinessDelegate> delegate;
+@property(nonatomic, weak) id <TaptalkBusinessDelegate> businessDelegate;
 
 @property(nonatomic, readonly) CLLocationCoordinate2D coordinate;
 @property(nonatomic, readonly, copy) NSString *title;
@@ -40,30 +55,31 @@
 
 @property(nonatomic, retain) NSDictionary *businessProducts;
 @property(atomic, retain) GooglePlacesObject *googlePlacesObject;
-@property(nonatomic, readonly) BusinessCustomerProfileManager *customerProfile;
+//@property(nonatomic, readonly) BusinessCustomerProfileManager *customerProfile;
 @property(nonatomic, retain) NSString *businessName;
 @property(atomic, retain) NSString *chatSystemURL;
 @property(atomic, retain) NSString *customerProfileName;
 @property(atomic, assign) int businessID;
 @property(nonatomic, assign) int isCustomer;
-//@property(nonatomic, assign) BOOL isPinIconLoaded;
 @property(nonatomic, assign) BOOL isProductListLoaded;
+
+@property(nonatomic, retain) NSString *rating;
+@property(nonatomic, retain) NSString *website;
+@property(nonatomic, retain) NSString *address;
+@property(nonatomic, retain) NSString *phone;
+@property(nonatomic, retain) NSString *sms_no;
+@property(atomic, retain) NSString *referenceData;
+@property(atomic, retain) NSString *neighborhood;
+@property(atomic, retain) NSMutableString * businessTypes;
+@property(nonatomic, retain) NSError *businessError;
+
 
 
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;
-
 - (void)startLoadingBusinessProductCategoriesAndProducts;
 
-/*
-- (id)initWithCoordinate:(CLLocationCoordinate2D)argCoordicate
-             BusinessName:(NSString *)bName
-                    Title:(NSString *)tName
-                 SubTitle:(NSString *)stName 
-            ImageFileName:(NSString *)imgFName
-       ImageFileExtension:(NSString *)imgXName;
- */
-
 - (id)initWithGooglePlacesObject:(GooglePlacesObject *)googleObject;
+- (id)initWithDataFromDatabase:(NSDictionary *)data;
 
 @end
 

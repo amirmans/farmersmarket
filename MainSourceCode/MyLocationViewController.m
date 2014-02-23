@@ -8,16 +8,23 @@
 
 #import "MyLocationViewController.h"
 
+// Not good - but for now, this view holds the information about each business and passes them to other view controllers
 #import "Business.h"
-#import "DetailBusinessInformation.h"
+#import "ListofBusinesses.h"
+
+// To display deails for the business that was tapped
+#import "DetailBusinessViewController.h"
+
+// To display the businessList
+#import "BusinessListTableViewController.h"
 
 @interface MyLocationViewController () {
 
 @private
 
 }
-- (void)calulateAndDisplayLocationFor:(CLLocation *)argLocation;
 
+- (void)calulateAndDisplayLocationFor:(CLLocation *)argLocation;
 - (void)addAnnotationsForBusinesses;
 
 @end
@@ -74,8 +81,19 @@
     [mapActivityIndicator startAnimating];
     self.mapView.mapType = MKMapTypeStandard;   // also MKMapTypeSatellite or MKMapTypeHybrid
     [information setTextColor:[UIColor redColor]];
+    
+    UIBarButtonItem *displayListButton = [[UIBarButtonItem alloc] initWithTitle:@"List view" style:UIBarButtonItemStyleDone target:self action:@selector(displayListView:)];
+    self.navigationItem.leftBarButtonItem = displayListButton;
+    displayListButton = nil;
 }
 
+
+- (void)displayListView:(UIBarButtonItem *)button
+{
+    BusinessListTableViewController *listTableView = [[BusinessListTableViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:listTableView animated:YES];
+    listTableView = nil;
+}
 
 - (void)viewDidUnload {
     // Release any retained subviews of the main view.
@@ -122,8 +140,9 @@
 #pragma mark MKMapViewDelegate
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
 
-    DetailBusinessInformation *detailBizInfo = [[DetailBusinessInformation alloc] initWithBusinessObject:((Business *) view.annotation)];
+    DetailBusinessViewController *detailBizInfo = [[DetailBusinessViewController alloc] initWithBusinessObject:((Business *) view.annotation)];
     [self.navigationController pushViewController:detailBizInfo animated:YES];
+    detailBizInfo = nil;
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation {
@@ -207,6 +226,9 @@
 
         [self addAnnotationsForBusinesses];
         [mapActivityIndicator stopAnimating];
+        //To speed up things - start retrieving list of businesses, so it will be ready when <List> is pressed
+        ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
+        [businessArrays startGettingListofAllBusinesses];
     }
 }
 

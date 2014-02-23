@@ -8,29 +8,26 @@
 
 #import "VoteToAddBusinessConfirmation.h"
 //#import "ServicesForBusinessViewController.h"
-#import "GooglePlacesObject.h"
-#import "DetailBusinessInformation.h"
+//#import "GooglePlacesObject.h"
+#import "DetailBusinessViewController.h"
 #import "ServicesForBusinessTableViewController.h"
 #import "DataModel.h"
 #import "TapTalkLooks.h"
 
 
-@interface DetailBusinessInformation ()
+@interface DetailBusinessViewController ()
 
 @end
 
-@implementation DetailBusinessInformation
+@implementation DetailBusinessViewController
 
 @synthesize activityIndicator;
 @synthesize typesOfBusiness;
 @synthesize rating;
 @synthesize contactInfo;
-
-@synthesize typesData;
 @synthesize businessNameData;
 @synthesize customerProfileName;
 @synthesize distanceInMileString;
-@synthesize referenceData;
 @synthesize biz;
 @synthesize isCustomer;
 
@@ -46,8 +43,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        googlePlacesConnection = [[GooglePlacesConnection alloc] initWithDelegate:self];
         biz = bizArg;
+        distanceInMileString = nil;
     }
     return self;
 }
@@ -56,11 +53,9 @@
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         biz = bizArg;
-        googlePlacesConnection = [[GooglePlacesConnection alloc] initWithDelegate:self];
-        referenceData = biz.googlePlacesObject.reference;
-        businessNameData = biz.googlePlacesObject.name;
-        typesData = biz.googlePlacesObject.type;
-        //distanceInMileString is valid in the google object but not in detailGoogleObject - weird
+
+        businessNameData = biz.businessName;
+        //distanceInMileString is correct in the google object but not in detailGoogleObject - weird
         distanceInMileString = biz.googlePlacesObject.distanceInMilesString;
         isCustomer = biz.isCustomer;
         if (self.isCustomer == 1) {
@@ -85,41 +80,18 @@
         [addToCustomersOrService setTitle:@"Vote to add as a customer" forState:UIControlStateNormal];
     }
 
-    [googlePlacesConnection getGoogleObjectDetails:self.referenceData];
     [activityIndicator setHidesWhenStopped:TRUE];
     [activityIndicator startAnimating];
     self.title = businessNameData;
-
-    NSString *typeText;
-    NSString *tempText = [[NSString alloc] init];
-    int index = 0;
-    for (typeText in typesData) {
-        if (index == 0) {
-            tempText = [NSString stringWithFormat:@"%@", typeText];
-        }
-        else {
-            tempText = [NSString stringWithFormat:@"%@, %@", tempText, typeText];
-        }
-        index++;
-    }
-
-    typesOfBusiness.textAlignment =  NSTextAlignmentCenter;
-    tempText = [tempText capitalizedString];
-    tempText = [NSString stringWithFormat:@"%@\n%@%@", tempText, distanceInMileString, @" miles from you"];
-    typesOfBusiness.text = tempText;
+    
     // setup looks of the ui elements
     [TapTalkLooks setToTapTalkLooks:typesOfBusiness isActionButton:NO makeItRound:YES];
     [TapTalkLooks setToTapTalkLooks:contactInfo isActionButton:NO makeItRound:YES];
-
-    tempText = nil;
+    [self doPopulateDisplayFields];
 }
 
 - (void)viewDidUnload {
-    googlePlacesConnection = nil;
-    referenceData = nil;
     businessNameData = nil;
-    typesData = nil;
-
     [self setContactInfo:nil];
     [self setRating:nil];
     [self setTypesOfBusiness:nil];
@@ -149,7 +121,6 @@
         [self.navigationController pushViewController:detailInfo animated:YES];
     }
     else {
-
         VoteToAddBusinessConfirmation *confirmation = [[VoteToAddBusinessConfirmation alloc] initWithNibName:nil bundle:nil];
         [self.navigationController pushViewController:confirmation animated:YES];
     }
@@ -157,47 +128,58 @@
 
 
 #pragma mark -
-#pragma mark GooglePlaces Delegation methods
-
-//UPDATE - to handle filtering
-- (void)googlePlacesConnection:(GooglePlacesConnection *)conn didFinishLoadingWithGooglePlacesObjects:(NSMutableArray *)objects {
-
-    if ([objects count] == 0) {
-        [activityIndicator stopAnimating];
+- (void)doPopulateDisplayFields
+{
+    [activityIndicator stopAnimating];
+    if (biz.businessError) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No additional information was for this location from google"
                                                         message:@"Try another place name or wait for a few minutes"
                                                        delegate:nil cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
-    } else {
-        //        locations = objects;
-        //UPDATED locationFilterResults for filtering later on
-        GooglePlacesObject *googleDetailObject = [objects objectAtIndex:0];
-        
-        if (googleDetailObject.rating)
+    } else {        
+        NSString *tempText = biz.businessTypes;
+        if (tempText == nil)
         {
-            rating.text = [[NSString stringWithFormat:@"%@", googleDetailObject.rating] stringByAppendingString:@" out of 5"];
+            tempText =@"Business Types: Not Known";
         }
+        if (distanceInMileString !=nil)
+            tempText = [NSString stringWithFormat:@"%@\n%@%@", tempText, distanceInMileString, @" miles from you"];
+        else if (biz.neighborhood)
+            tempText = [NSString stringWithFormat:@"%@\nNeighborhood: %@", tempText, biz.neighborhood];
         else
-            rating.text = @"N/A";
-        if (googleDetailObject.formattedAddress == nil)
-            contactInfo.text= @"Address is not provided";
+            tempText = [NSString stringWithFormat:@"%@\n%@", tempText, @"N/A"];
+        tempText = [tempText capitalizedString];
+        
+        typesOfBusiness.textAlignment =  NSTextAlignmentCenter;
+        typesOfBusiness.text = tempText;
+        
+        if (biz.address == nil)
+            contactInfo.text= @"Address not provided";
         else
-            contactInfo.text = googleDetailObject.formattedAddress;
+            contactInfo.text = biz.address;
         contactInfo.text = [contactInfo.text stringByAppendingString:@"\n\n"];
-        if (googleDetailObject.website)
-            contactInfo.text = [contactInfo.text stringByAppendingString:googleDetailObject.website];
+        if (biz.website != Nil)
+            contactInfo.text = [contactInfo.text stringByAppendingString:biz.website];
         else
-            contactInfo.text = [contactInfo.text stringByAppendingString:@"web site not provided."];
+            contactInfo.text = [contactInfo.text stringByAppendingString:@"website not provided."];
         contactInfo.text = [contactInfo.text stringByAppendingString:@"\n\n\n"];
-        if (googleDetailObject.formattedPhoneNumber)
-            contactInfo.text = [contactInfo.text stringByAppendingString:googleDetailObject.formattedPhoneNumber];
+        if (biz.phone != nil)
+            contactInfo.text = [contactInfo.text stringByAppendingString:biz.phone];
         else
             contactInfo.text = [contactInfo.text stringByAppendingString:@"Phone number not provided."];
         
         contactInfo.dataDetectorTypes = UIDataDetectorTypeAll;
+        
+        if (biz.rating)
+        {
+            rating.text = [[NSString stringWithFormat:@"%@", biz.rating] stringByAppendingString:@" out of 5"];
+        }
+        else
+            rating.text = @"N/A";
+
     }
-    [activityIndicator stopAnimating];
+
 }
 
 - (void)googlePlacesConnection:(GooglePlacesConnection *)conn didFailWithError:(NSError *)error {

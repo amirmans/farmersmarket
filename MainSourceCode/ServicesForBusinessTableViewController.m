@@ -139,7 +139,7 @@
         }
         if (whileIndex == 1) {
             if (([tmpStr rangeOfString:@"food or drink"].location != NSNotFound) || ([tmpStr rangeOfString:@"service"].location != NSNotFound)) {
-                MeowToOrderController *orderViewController = [[MeowToOrderController alloc] initWithNibName:nil bundle:nil];
+                MeowToOrderController *orderViewController = [[MeowToOrderController alloc] initWithNibName:nil bundle:nil forBusiness:biz];
                 [self.navigationController pushViewController:orderViewController animated:YES];
             }
         }

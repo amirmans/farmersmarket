@@ -16,7 +16,8 @@
 // limitations under the License.
 
 #import "GooglePlacesConnection.h"
-#import "../GTM/GTMNSString+URLArguments.h"
+//#import "../GTM/GTMNSString+URLArguments.h"
+#import "ServerInteractionManager.h"
 
 @implementation GooglePlacesConnection
 
@@ -38,12 +39,11 @@
 	return self;
 }
 
-- (id) init
+- (id)init
 {
 	NSLog(@"need a delegate!! use initWithDelegate!");
 	return nil;
 }
-
 
 //Method is called to load initial search
 -(void)getGoogleObjects:(CLLocationCoordinate2D)coords andTypes:(NSString *)types
@@ -54,12 +54,17 @@
     double centerLat = coords.latitude;
 	double centerLng = coords.longitude;
     
-    types = [types gtm_stringByEscapingForURLArgument];
+    types = [ServerInteractionManager gtm_stringByEscapingForURLArgument:types];
     
     NSString* gurl  = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?location=%f,%f&radius=500&types=%@&sensor=true&key=%@",
                                     centerLat, centerLng, types, kGOOGLE_API_KEY];
+////    
+//    int currenDist = 1000;
+//    NSString *gurl = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?location=%f,%f&radius=%@&types=%@&sensor=true&key=%@", centerLat, centerLng,
+//                     [NSString stringWithFormat:@"%i", currenDist], types, kGOOGLE_API_KEY];
+//
     
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:gurl] 
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:gurl]
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy 
                                                        timeoutInterval:10];
     
@@ -90,8 +95,8 @@
 	double centerLat = coords.latitude;
 	double centerLng = coords.longitude;
     
-    query = [query gtm_stringByEscapingForURLArgument];
-    types = [types gtm_stringByEscapingForURLArgument];
+    query = [ServerInteractionManager gtm_stringByEscapingForURLArgument:query];
+    types = [ServerInteractionManager gtm_stringByEscapingForURLArgument:types];
     
     NSString* gurl = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/search/json?location=%f,%f&radius=1000&types=%@&name=%@&sensor=true&key=%@", centerLat, centerLng, types, query, kGOOGLE_API_KEY];
     

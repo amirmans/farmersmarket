@@ -111,7 +111,7 @@ static DataModel *sharedDataModel = nil;
 - (int)addMessage:(TapTalkChatMessage *)message {
     [self.messages addObject:message];
     //	[self saveMessages];
-    return self.messages.count - 1;
+    return self.messages.count - 1.0;
 }
 
 - (short)ageGroup {
@@ -139,11 +139,11 @@ static DataModel *sharedDataModel = nil;
     [[NSUserDefaults standardUserDefaults] setObject:token forKey:DeviceTokenKey];
 }
 
-- (void)setUserID:(int)uid {
+- (void)setUserID:(long)uid {
     [[NSUserDefaults standardUserDefaults] setInteger:uid forKey:UserIDKey];
 }
 
-- (int)userID {
+- (long)userID {
     return [[NSUserDefaults standardUserDefaults] integerForKey:UserIDKey];
 }
 

@@ -60,7 +60,7 @@
 
 
 
-@property(nonatomic, assign) int userID; // determined and given by the server
+@property(nonatomic, assign) long userID; // determined and given by the server
 @property(nonatomic, retain) NSString *chatSystemURL;
 @property(nonatomic, retain) NSString *businessName;
 @property(nonatomic, retain) NSString *password;

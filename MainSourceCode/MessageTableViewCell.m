@@ -4,11 +4,25 @@
 
 static UIColor *color = nil;
 
+
+@interface MessageTableViewCell () {
+    NSDateFormatter *formatter;
+@private
+    
+}
+
+@property(nonatomic, retain) NSDateFormatter *formatter;
+
+@end
+
+
 @implementation MessageTableViewCell
+
+@synthesize formatter;
 
 + (void)initialize {
     if (self == [MessageTableViewCell class]) {
-        color = [[UIColor colorWithRed:219 / 255.0 green:226 / 255.0 blue:237 / 255.0 alpha:1.0] retain];
+        color = [UIColor colorWithRed:219 / 255.0 green:226 / 255.0 blue:237 / 255.0 alpha:1.0];
     }
 }
 
@@ -35,15 +49,23 @@ static UIColor *color = nil;
         label.font = [UIFont systemFontOfSize:13];
         label.textColor = [UIColor colorWithRed:64 / 255.0 green:64 / 255.0 blue:64 / 255.0 alpha:1.0];
         [self.contentView addSubview:label];
+        label = nil;
+        bubbleView = nil;
+        
+        // format for displaying date
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateStyle:NSDateFormatterShortStyle];
+        [formatter setTimeStyle:NSDateFormatterShortStyle];
+        [formatter setDoesRelativeDateFormatting:YES];
     }
     return self;
 }
 
-- (void)dealloc {
-    [bubbleView release];
-    [label release];
-    [super dealloc];
-}
+//- (void)dealloc {
+//    [bubbleView release];
+//    [label release];
+//    [super dealloc];
+//}
 
 - (void)layoutSubviews {
     // This is a little trick to set the background color of a table view cell.
@@ -84,12 +106,7 @@ static UIColor *color = nil;
     [bubbleView setText:tmpStr bubbleType:bubbleType];
 
     // Format the message date
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateStyle:NSDateFormatterShortStyle];
-    [formatter setTimeStyle:NSDateFormatterShortStyle];
-    [formatter setDoesRelativeDateFormatting:YES];
     NSString *dateString = [formatter stringFromDate:message.dateAdded];
-    [formatter release];
 
     // Set the sender's name and date on the label
     label.text = [NSString stringWithFormat:@"%@ @ %@", senderName, dateString];

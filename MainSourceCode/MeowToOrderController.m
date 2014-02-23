@@ -7,8 +7,9 @@
 //
 #import "MeowToOrderController.h"
 #import "MeowConfirmationViewController.h"
+#import "UIAlertView+TapTalkAlerts.h"
 #import "TapTalkLooks.h"
-
+#import "Business.h"
 
 #define MAX_LENGTH 70
 
@@ -22,12 +23,14 @@ static NSUInteger firstTime = TRUE;
 @synthesize orderView;
 @synthesize cancelUIButton;
 @synthesize askUIButton;
+@synthesize myBusiness;
 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil forBusiness:(Business *)biz {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        myBusiness = biz;
     }
     return self;
 }
@@ -43,11 +46,21 @@ static NSUInteger firstTime = TRUE;
 
 - (IBAction)meow {
     [orderView resignFirstResponder];
+    
+    NSString *my_sms_no = myBusiness.sms_no;
+    NSString *businessName = myBusiness.businessName;
+    if ((my_sms_no == nil) || (my_sms_no = (id)[NSNull null]))
+    {
+        NSString *message = [NSString stringWithFormat:@"%@ has not given us their service number yet!", businessName];
+        [UIAlertView showErrorAlert:message];
+        return;
+    }
 
     MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
     if ([MFMessageComposeViewController canSendText]) {
         controller.body = orderView.text;
-        controller.recipients = [NSArray arrayWithObjects:@"14158676326", nil];
+        
+        controller.recipients = [NSArray arrayWithObjects:my_sms_no, nil];
         controller.messageComposeDelegate = self;
 //       [self presentModalViewController:controller animated:NO];  //compatibility
         [self presentViewController:controller animated:YES completion:nil];
@@ -135,7 +148,7 @@ static NSUInteger firstTime = TRUE;
 
 
 - (IBAction)Cancel:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Cancel?" message:@"Sure?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Clear your text?" message:@"Sure?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
     [alert show];
 }
 

@@ -115,7 +115,8 @@
 #define	kVeterinaryCare	@"veterinary_care"
 #define	kZoo	@"zoo"
 
-#define kGOOGLE_API_KEY @"AIzaSyBbX8d3lJY30cBCAVjlnQT5v-h0YsexFhw"
+//#define kGOOGLE_API_KEY @"AIzaSyBbX8d3lJY30cBCAVjlnQT5v-h0YsexFhw"
+#define kGOOGLE_API_KEY @"AIzaSyBjJcsPVsRERXqA5SKas-nseCmrZaajEeE"
 
 @interface GooglePlacesObject : NSObject
 {
