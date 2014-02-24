@@ -159,7 +159,7 @@ static NSString *const TextKey = @"textChat";
     NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
     self.messages = [json objectWithString:responseString];
     if (self.messages != nil) {
-        NSLog(@"Got %lui messages from the server", (unsigned long)self.messages.count);
+        NSLog(@"Got %i messages from the server", self.messages.count);
 //        [DataModel sharedDataModelManager].messages  =  self.messages;
         [myDelegate tapTalkChatMessageDidFinishLoadingData:self.messages];
     }

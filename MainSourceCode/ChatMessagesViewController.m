@@ -101,9 +101,8 @@
 #pragma mark -
 #pragma mark UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [DataModel sharedDataModelManager].messages.count;
-
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

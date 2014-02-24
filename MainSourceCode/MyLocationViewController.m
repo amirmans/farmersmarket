@@ -79,6 +79,8 @@
     self.title = @"Where?";
     [mapActivityIndicator hidesWhenStopped];
     [mapActivityIndicator startAnimating];
+    ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
+    [businessArrays startGettingListofAllBusinesses];
     self.mapView.mapType = MKMapTypeStandard;   // also MKMapTypeSatellite or MKMapTypeHybrid
     [information setTextColor:[UIColor redColor]];
     
@@ -227,8 +229,6 @@
         [self addAnnotationsForBusinesses];
         [mapActivityIndicator stopAnimating];
         //To speed up things - start retrieving list of businesses, so it will be ready when <List> is pressed
-        ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
-        [businessArrays startGettingListofAllBusinesses];
     }
 }
 

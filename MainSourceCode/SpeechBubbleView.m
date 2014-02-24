@@ -44,32 +44,20 @@ const CGFloat WrapWidth = 200;       // maximum width of text in the bubble
     CGSize textSize = [text sizeWithFont:font
                        constrainedToSize:CGSizeMake(WrapWidth, 9999)
                            lineBreakMode:NSLineBreakByWordWrapping]; //compatibility
-    
-//    NSAttributedString *attributedText =
-//    [[NSAttributedString alloc]
-//     initWithString:text
-//     attributes:@
-//     {
-//     NSFontAttributeName: font
-//     }];
-//    CGRect rect = [attributedText boundingRectWithSize:(CGSize){WrapWidth, CGFLOAT_MAX}
-//                                               options:NSStringDrawingUsesLineFragmentOrigin
-//                                               context:nil];
-//    CGSize textSize = rect.size;
-    
+
     CGSize bubbleSize;
     bubbleSize.width = textSize.width + TextLeftMargin + TextRightMargin;
     bubbleSize.height = textSize.height + TextTopMargin + TextBottomMargin;
-    
+
     if (bubbleSize.width < MinBubbleWidth)
         bubbleSize.width = MinBubbleWidth;
-    
+
     if (bubbleSize.height < MinBubbleHeight)
         bubbleSize.height = MinBubbleHeight;
-    
+
     bubbleSize.width += HorzPadding * 2;
     bubbleSize.height += VertPadding * 2;
-    
+
     return bubbleSize;
 }
 
@@ -111,6 +99,7 @@ const CGFloat WrapWidth = 200;       // maximum width of text in the bubble
 }
 
 - (void)setText:(NSString *)newText bubbleType:(BubbleType)newBubbleType {
+//	[text release];
     text = [newText copy];
     bubbleType = newBubbleType;
     [self setNeedsDisplay];
