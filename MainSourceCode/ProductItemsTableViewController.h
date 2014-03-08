@@ -10,15 +10,14 @@
 #import "BusinessCustomerProfileManager.h"
 
 
-@interface ShowItemsTableViewController : UITableViewController <UISearchDisplayDelegate, UISearchBarDelegate> {
+@interface ProductItemsTableViewController : UITableViewController <UISearchDisplayDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource> {
+    
     NSArray *productItems;
     NSMutableArray *filteredProductItems;
     // newly added
     NSDictionary *productsAndCategories;
     NSArray *sections;
-    
-    IBOutlet UISearchBar *searchBar;
-    IBOutlet UISearchDisplayController *searchDisplayController;
+
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil data:(NSDictionary *)products;
@@ -27,9 +26,10 @@
 @property(atomic, retain) NSArray *productItems;
 @property(nonatomic, retain) NSArray *filteredProductItems;
 @property(atomic, retain) NSArray *sections;
-//@property (weak, nonatomic) IBOutlet UILabel *specialLabel;
 
-@property(nonatomic, retain) IBOutlet UISearchBar *searchBar;
-@property(nonatomic, retain) IBOutlet UISearchDisplayController *searchDisplayController;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+
+@property (strong, nonatomic) IBOutlet UISearchDisplayController *searchDisplayController;
+
 
 @end

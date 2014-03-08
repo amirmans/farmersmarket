@@ -10,10 +10,17 @@
 #define ChatSystemServer @"http://mydoosts.com/taptalk/chatsystem/index.php"
 #define BusinessCustomerIconDirectory @"http://www.mydoosts.com/taptalk/customer_files/icons/"
 
+//payment processing
+#define STRIPE_TEST_PUBLIC_KEY @"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi"
+#define TapForAllPaymentServer @"http://mydoosts.com/taptalk/paymentsystem/charge.php"
+
+
+
 // We store our settings in the NSUserDefaults dictionary using these keys
 static NSString *const NicknameKey = @"nickname";
 static NSString *const PasswordKey = @"password";
 static NSString *const JoinedChatKey = @"joinedChat";
+
 static NSString *const DeviceTokenKey = @"deviceToken";
 static NSString *const EmailAddressKey = @"email1";
 //TODO

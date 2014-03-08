@@ -11,6 +11,7 @@
 #import "SBJsonParser.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "UIAlertView+TapTalkAlerts.h"
 
 @interface Business () {
     NSString *imageFileName;
@@ -46,6 +47,9 @@
 @synthesize businessTypes;
 @synthesize businessError;
 @synthesize neighborhood;
+@synthesize paymentProcessingEmail;
+@synthesize paymentProcessingID;
+@synthesize email;
 
 
 
@@ -81,14 +85,11 @@
 }
 
 - (void)startLoadingBusinessProductCategoriesAndProducts {
-    //TODO
     NSString *urlString = [NSString stringWithFormat:@"%@?businessID=%i", BusinessInformationServer, businessID];
     urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *url = [NSURL URLWithString:urlString];
-//
-//    businessProducts = [NSDictionary dictionaryWithContentsOfURL:url];
-//    isProductListLoaded = TRUE;
 
+//    isProductListLoaded = TRUE;
     dispatch_async(TT_CommunicationWithServerQ, ^{
         NSData* data = [NSData dataWithContentsOfURL:url];
         [self performSelectorOnMainThread:@selector(fetchResponseData:) withObject:data waitUntilDone:YES];
@@ -98,7 +99,7 @@
 
 - (void)fetchResponseData:(NSData *)responseData {
     //parse out the json data
-    NSError* error;
+    NSError* error =nil;
 
     NSDictionary *tempBusinessProducts = [NSJSONSerialization
                           JSONObjectWithData:responseData
@@ -113,16 +114,20 @@
         NSPropertyListFormat format;
         businessProducts = [NSPropertyListSerialization propertyListWithData:tempData options:NSPropertyListXMLFormat_v1_0 format:&format error:&error];
         if(error){
-            // do something with error
             NSLog(@"Error: %@",error);
-            
         }
     }
     else
     {
         NSLog(@"in Business:fetchResponseData - I don't know what I am.");
+        NSMutableDictionary* errorUserInfo = [NSMutableDictionary dictionary];
+        [errorUserInfo setValue:@"No product items found!" forKey:NSLocalizedDescriptionKey];
+        error = [NSError errorWithDomain:@"Business:loadProducts" code:-1 userInfo:errorUserInfo];
     }
-    
+    if (error)
+    {
+        [UIAlertView showErrorAlert:[error localizedDescription]];
+    }
     isProductListLoaded = TRUE;
 }
 
@@ -136,51 +141,56 @@
 }
 
 
-//TODO - this method should be modified so we can call it from initWithGooglePlacesObject
+- (NSString *)stringFromDataDictionary:(NSDictionary *)data forKey:(NSString *)key
+{
+    NSString* field = [data objectForKey:key];
+    if (field == (id)[NSNull null] || field.length == 0 )
+    {
+        field = nil;
+    }
+    
+    return field;
+
+}
+
+- (NSMutableString *)mutableStringFromDataDictionary:(NSDictionary *)data forKey:(NSString *)key
+{
+    NSMutableString *field = [data objectForKey:key];
+    if (field == (id)[NSNull null] || field.length == 0 )
+    {
+        field = nil;
+    }
+    
+    return field;
+    
+}
+
+
 - (id)initWithDataFromDatabase:(NSDictionary *)data {
 //    [self initMemberData];
     isCustomer = 1;
     
     // since these values are coming from db, we should take care "[Null]" - database marks for null
     title = [data objectForKey:@"name"];
-    
-    rating =  [data objectForKey:@"rating"];
-    if (rating == (id)[NSNull null] || rating.length == 0 )
-        rating = nil;
-        
-    website = [data objectForKey:@"website"];
-    if (website == (id)[NSNull null] || website.length == 0 )
-        website = nil;
-        
-    phone = [data objectForKey:@"phone"];
-    if (phone == (id)[NSNull null] || phone.length == 0 )
-        phone = nil;
-    
-    sms_no = [data objectForKey:@"sms_no"];
-    if (sms_no == (id)[NSNull null] || sms_no.length == 0 )
-    {
-        sms_no = nil;
-        if (phone !=nil)
-        {
-            sms_no = phone;
-        }
+    rating = [self stringFromDataDictionary:data forKey:@"rating"];
+    website = [self stringFromDataDictionary:data forKey:@"website"];
+    phone = [self stringFromDataDictionary:data forKey:@"phone"];
+    sms_no = [self stringFromDataDictionary:data forKey:@"sms_no"];
+    if ((sms_no == nil) && (phone != nil)) {
+        sms_no = phone;
     }
-    
-    businessTypes = [data objectForKey:@"businessTypes"];
-    if (businessTypes == (id)[NSNull null] || businessTypes.length == 0 )
-        businessTypes = nil;
-    
-    neighborhood = [data objectForKey:@"neighborhood"];
-    if (neighborhood == (id)[NSNull null] || neighborhood.length == 0 )
-        neighborhood = nil;
-    
-    customerProfileName = [data objectForKey:@"customerProfileName"];
-    if (customerProfileName == (id)[NSNull null] || customerProfileName.length == 0 )
-        customerProfileName = nil;
-    
+    email = [self stringFromDataDictionary:data forKey:@"email"];
+    paymentProcessingID = [self stringFromDataDictionary:data forKey:@"payment_processing_id"];
+    paymentProcessingEmail = [self stringFromDataDictionary:data forKey:@"payment_processing_email"];
+    if ((paymentProcessingEmail == nil) && (email != nil)) {
+        paymentProcessingEmail = email;
+    }
+    businessTypes = [self mutableStringFromDataDictionary:data forKey:@"businessTypes"];
+    neighborhood = [self stringFromDataDictionary:data forKey:@"neighborhood"];
+    customerProfileName = [self stringFromDataDictionary:data forKey:@"customerProfileName"];
     image = [data objectForKey:@"icon"];
-    businessName = [data objectForKey:@"name"];
-    chatSystemURL = [data objectForKey:@"chat_system_url"];
+    businessName = [self stringFromDataDictionary:data forKey:@"name"];
+    chatSystemURL = [self stringFromDataDictionary:data forKey:@"chat_system_url"];
     businessID = [[data objectForKey:@"businessID"] intValue];
  
     return self;
@@ -236,15 +246,11 @@
                     self.businessID = [[responseDictionary valueForKey:@"businessID"] intValue];
                     customerProfileName = [responseDictionary valueForKey:@"customerProfileName"];
                     self.chatSystemURL = [responseDictionary valueForKey:@"chat_system_url"];
-                    self.sms_no = [responseDictionary valueForKey:@"sms_no"];
-                    if (sms_no == (id)[NSNull null] || sms_no.length == 0 )
-                    {
-                        sms_no = nil;
-                        if (phone !=nil)
-                        {
-                            sms_no = phone;
-                        }
+                    sms_no = [self stringFromDataDictionary:responseDictionary forKey:@"sms_no"];
+                    if ((sms_no == nil) && (phone != nil)) {
+                        sms_no = phone;
                     }
+
 
                     NSString *iconPath = [NSString stringWithFormat:@"%@", [responseDictionary valueForKey:@"icon"]];
                     if (iconPath != nil) {

@@ -200,7 +200,7 @@
                     GooglePlacesObject *object = [[GooglePlacesObject alloc] initWithJsonResultDict:[googlePlacesObjects objectAtIndex:x] andUserCoordinates:userLocation];
                     [googlePlacesObjects replaceObjectAtIndex:x withObject:object];
                 }
-                //Amir added for debuging
+                
 
                 [delegate googlePlacesConnection:self didFinishLoadingWithGooglePlacesObjects:googlePlacesObjects];
                 

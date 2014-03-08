@@ -211,7 +211,7 @@
 
     if ([objects count] == 0) {
         [mapActivityIndicator stopAnimating];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No matches found near this location frm google"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No matches found near this location from google"
                                                         message:@"Try another place name or address"
                                                        delegate:nil cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
@@ -228,7 +228,7 @@
 
         [self addAnnotationsForBusinesses];
         [mapActivityIndicator stopAnimating];
-        //To speed up things - start retrieving list of businesses, so it will be ready when <List> is pressed
+        
     }
 }
 

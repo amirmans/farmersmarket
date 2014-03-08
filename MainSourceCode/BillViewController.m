@@ -5,9 +5,13 @@
 //  Created by Amir Amirmansoury on 9/14/11.
 //  Copyright (c) 2011 __MyDoosts__. All rights reserved.
 //
+#include <stdlib.h>
 
 #import "BillViewController.h"
 #import "TapTalkLooks.h"
+#import "AskForSeviceViewController.h"
+#import "Business.h"
+#import "BillPayViewController.h"
 
 @implementation BillViewController
 
@@ -17,11 +21,29 @@
 @synthesize cancelUIButton;
 @synthesize payUIButton;
 @synthesize questionsUIButton;
+@synthesize billBusiness;
+@synthesize billInDollar;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+//TODO
+- (void)pullBillInformationFromBusiness
+{
+//    float randomAmt = (((float) (arc4random() % ((unsigned)RAND_MAX + 1)) / RAND_MAX) * 100.0) + 5.0;
+    int r = arc4random() % 10000;
+    billInDollar = [[NSDecimalNumber alloc] initWithInt:r];
+//    NSDecimalNumberHandler *handler = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain
+//                                                                                             scale:-2
+//                                                                                  raiseOnExactness:NO
+//                                                                                   raiseOnOverflow:NO
+//                                                                                  raiseOnUnderflow:NO
+//                                                                               raiseOnDivideByZero:NO];
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil forBusiness:(Business *)biz
+ {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        billBusiness = biz;
     }
     return self;
 }
@@ -38,6 +60,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.title = @"View Bill";
+    [self pullBillInformationFromBusiness];
     [TapTalkLooks setToTapTalkLooks:payUIButton isActionButton:YES makeItRound:YES];
     [TapTalkLooks setToTapTalkLooks:cancelUIButton isActionButton:YES makeItRound:YES];
     [TapTalkLooks setToTapTalkLooks:questionsUIButton isActionButton:YES makeItRound:YES];
@@ -81,6 +105,16 @@
 
 - (IBAction)cancel:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)readyToPayAction:(id)sender {
+    BillPayViewController *payBillViewController = [[BillPayViewController alloc] initWithNibName:nil bundle:nil withAmount:billInDollar forBusiness:billBusiness];
+    [self.navigationController pushViewController:payBillViewController animated:YES];
+}
+
+- (IBAction)questionsAction:(id)sender {
+    AskForSeviceViewController *orderViewController = [[AskForSeviceViewController alloc] initWithNibName:nil bundle:nil forBusiness:billBusiness];
+    [self.navigationController pushViewController:orderViewController animated:YES];
 }
 
 

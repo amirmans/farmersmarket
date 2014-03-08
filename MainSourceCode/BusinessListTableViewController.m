@@ -24,6 +24,7 @@
 
 
 @synthesize businessListArray;
+@synthesize filteredBusinessListArray;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -39,16 +40,13 @@
 {
     [super viewDidLoad];
 
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
+    self.clearsSelectionOnViewWillAppear = NO;
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
+
     ListofBusinesses* businesses = [ListofBusinesses sharedListofBusinesses];
     businessListArray = [businesses businessListArray];
-
+    filteredBusinessListArray = [[NSMutableArray alloc] initWithCapacity:businessListArray.count];
     UIBarButtonItem *displayListButton = [[UIBarButtonItem alloc] initWithTitle:@"Map view" style:UIBarButtonItemStyleDone target:self action:@selector(displayMapView:)];
     self.navigationItem.leftBarButtonItem = displayListButton;
     displayListButton = nil;
@@ -61,7 +59,6 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -72,22 +69,37 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-//#warning Potentially incomplete method implementation.
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//#warning Incomplete method implementation.
-    // Return the number of rows in the section.
+    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
+        return filteredBusinessListArray.count;
+    }
+    
     return businessListArray.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    // for some odd reason when the table is reload after a search row height doesn't get its value from the nib
+    // file - so I had to do this - the value should correspond to the value in the cell xib file 
+    return 130;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"BusinessListCell";
-    BusinessTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *searchCellIdentifier = @"SearchBusinessListCell";
+    BusinessTableViewCell *cell = nil;
+    
+    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
+        cell = [tableView dequeueReusableCellWithIdentifier:searchCellIdentifier];
+    }
+    else {
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    }
     if (cell == nil) {
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"BusinessTableViewCell" owner:nil options:nil];
         
@@ -102,23 +114,34 @@
         
     }
     
-    // Configure the cell...
-    cell.businessNameTextField.text = [[businessListArray objectAtIndex:indexPath.row] objectForKey:@"name"];
+ //    NSLog(@"in business list: business name is: %@ and types are: %@", [[businessListArray objectAtIndex:indexPath.row] objectForKey:@"name"], businessTypes);
     
-    NSString *businessTypes = [[businessListArray objectAtIndex:indexPath.row] objectForKey:@"businessTypes"];
-    NSLog(@"in business list: business name is: %@ and types are: %@", [[businessListArray objectAtIndex:indexPath.row] objectForKey:@"name"], businessTypes);
+    NSDictionary *cellDict;
+    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView])
+    {
+        cellDict = [filteredBusinessListArray objectAtIndex:indexPath.row];
+    }
+    else
+    {
+        cellDict = [businessListArray objectAtIndex:indexPath.row];
+    }
+    
+    // Configure the cell...
+    cell.businessNameTextField.text = [cellDict objectForKey:@"name"];
+    
+    NSString *businessTypes = [cellDict objectForKey:@"businessTypes"];
     if (businessTypes != (id)[NSNull null] && businessTypes != nil )
     {
         cell.businessTypesTextField.text = businessTypes;
     }
 
-    NSString *neighborhood = [[businessListArray objectAtIndex:indexPath.row] objectForKey:@"neighborhood"];
+    NSString *neighborhood = [cellDict objectForKey:@"neighborhood"];
     if (neighborhood != (id)[NSNull null] && neighborhood != nil )
     {
         cell.neighborhoodTextField.text = neighborhood;
     }
    
-    NSString *tmpIconName = [[businessListArray objectAtIndex:indexPath.row] objectForKey:@"icon"];
+    NSString *tmpIconName = [cellDict objectForKey:@"icon"];
     if (tmpIconName != (id)[NSNull null] && tmpIconName.length != 0 )
     {
         NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:tmpIconName];
@@ -173,17 +196,44 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here, for example:
-    Business *biz = [[Business alloc] initWithDataFromDatabase:[businessListArray objectAtIndex:indexPath.row]];
-    // Create the next view controller.
+    Business * biz = nil;
+    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
+        biz = [[Business alloc] initWithDataFromDatabase:[filteredBusinessListArray objectAtIndex:indexPath.row]];
+    }
+    else {
+        biz = [[Business alloc] initWithDataFromDatabase:[businessListArray objectAtIndex:indexPath.row]];
+    }
     DetailBusinessViewController *detailBizInfo = [[DetailBusinessViewController alloc] initWithBusinessObject:biz];
-
-    // Pass the selected object to the new view controller.
-    
-    // Push the view controller.
     [self.navigationController pushViewController:detailBizInfo animated:YES];
 }
- 
+
+#pragma mark Content Filtering
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
+{
+    [self.filteredBusinessListArray removeAllObjects]; // First clear the filtered array.
+    for (NSDictionary *bizDict in businessListArray)
+    {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                                  @"(SELF contains[cd] %@)", searchText];
+        if ([predicate evaluateWithObject:[bizDict objectForKey:@"name"]])
+        {
+            [filteredBusinessListArray addObject:bizDict];
+        }
+    }
+    
+}
+
+#pragma mark - UISearchDisplayController Delegate Methods
+
+-(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
+    
+    [self filterContentForSearchText:searchString scope:
+     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    
+    return YES;
+}
+
 
 
 @end

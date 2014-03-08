@@ -20,9 +20,7 @@
     NSString *title;
     NSString *subtitle;
     UIImage *image;
-    
 
-//    BusinessCustomerProfileManager *customerProfile;
     GooglePlacesObject *googlePlacesObject;
     NSString *businessName;
     NSString *customerProfileName;
@@ -38,6 +36,9 @@
     NSString *referenceData;
     NSMutableString * businessTypes;
     NSString *neighborhood;
+    NSString *paymentProcessingEmail;
+    NSString *paymentProcessingID;
+    NSString *email;
 
     GooglePlacesConnection *googlePlacesConnection;
 
@@ -68,11 +69,13 @@
 @property(nonatomic, retain) NSString *address;
 @property(nonatomic, retain) NSString *phone;
 @property(nonatomic, retain) NSString *sms_no;
+@property(nonatomic, retain) NSString *paymentProcessingEmail;
+@property(nonatomic, retain) NSString *paymentProcessingID;
+@property(nonatomic, retain) NSString *email;
 @property(atomic, retain) NSString *referenceData;
 @property(atomic, retain) NSString *neighborhood;
 @property(atomic, retain) NSMutableString * businessTypes;
 @property(nonatomic, retain) NSError *businessError;
-
 
 
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;

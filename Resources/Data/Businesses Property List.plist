@@ -13,7 +13,7 @@
 			</array>
 		</dict>
 	</dict>
-	<key>Shopping store</key>
+	<key>store</key>
 	<dict>
 		<key>main choices</key>
 		<dict>
@@ -25,7 +25,7 @@
 			</array>
 		</dict>
 	</dict>
-	<key>Food place</key>
+	<key>bistro</key>
 	<dict>
 		<key>main choices</key>
 		<dict>

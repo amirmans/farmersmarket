@@ -101,8 +101,8 @@
 #pragma mark -
 #pragma mark UITableViewDataSource
 
-- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [DataModel sharedDataModelManager].messages.count;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return ([DataModel sharedDataModelManager].messages.count);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -214,7 +214,6 @@
               }
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"Error: %@", error);
             if ([self isViewLoaded]) {
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 [UIAlertView showErrorAlert:@"You are not in the business's chat room"];

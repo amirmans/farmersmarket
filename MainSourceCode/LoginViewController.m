@@ -60,11 +60,11 @@
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
 
-    NSString *userIDString = [NSString stringWithFormat:@"%d", [DataModel sharedDataModelManager].userID];
+    NSString *userIDString = [NSString stringWithFormat:@"%li", [DataModel sharedDataModelManager].userID];
     NSDictionary *params = @{@"cmd":@"join",  @"userID":userIDString, @"code":[[DataModel sharedDataModelManager] businessName]};
     [manager GET:ChatSystemServer parameters:params
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              NSLog(@"Response from chat server for joining:%@", responseObject);
+
               if ([self isViewLoaded]) {
                   [MBProgressHUD hideHUDForView:self.view animated:YES];
 

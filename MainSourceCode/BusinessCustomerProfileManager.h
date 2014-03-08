@@ -12,7 +12,7 @@
     NSString *customerProfileName;
     NSDictionary *allChoices;
     NSArray *mainChoices;
-    NSDictionary *productItems;
+//    NSDictionary *productItems;
     BOOL loadInfo;
 }
 
@@ -22,7 +22,7 @@
 @property(nonatomic, retain) NSString *customerProfileName;
 @property(nonatomic, retain) NSDictionary *allChoices;
 @property(nonatomic, retain) NSArray *mainChoices;
-@property(nonatomic, retain) NSDictionary *productItems;
+//@property(nonatomic, retain) NSDictionary *productItems;
 
 @property(atomic, assign) BOOL loadInfo;
 

@@ -94,8 +94,23 @@ const CGFloat WrapWidth = 200;       // maximum width of text in the bubble
         textRect.origin.x = bubbleRect.origin.x + TextRightMargin;
     }
 
-    [[UIColor blackColor] set];
-    [text drawInRect:textRect withFont:font lineBreakMode:NSLineBreakByWordWrapping]; //compatibility
+//    [[UIColor blackColor] set];
+    ////------- Changed to replace depreciated "drawInRect:textRect withFont:font lineBreakMode:NSLineBreakByWordWrapping" method
+//    UIFont *font = [UIFont fontWithName:@"Courier" size:kCellFontSize];
+    
+    /// Make a copy of the default paragraph style
+    NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    /// Set line break mode
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    /// Set text alignment
+    paragraphStyle.alignment = NSTextAlignmentLeft;
+    
+    NSDictionary *attributes = @{ NSFontAttributeName: font,
+                                  NSParagraphStyleAttributeName: paragraphStyle };
+    
+    ///--------
+//    [text drawInRect:textRect withFont:font lineBreakMode:NSLineBreakByWordWrapping]; //compatibility
+    [text drawInRect:textRect withAttributes:attributes];
 }
 
 - (void)setText:(NSString *)newText bubbleType:(BubbleType)newBubbleType {

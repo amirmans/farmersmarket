@@ -8,9 +8,9 @@
 
 #import "ServicesForBusinessTableViewController.h"
 #import "MenuViewController.h"
-#import "MeowToOrderController.h"
+#import "AskForSeviceViewController.h"
 #import "BillViewController.h"
-#import "ShowItemsTableViewController.h"
+#import "ProductItemsTableViewController.h"
 #import "StoreMapViewController.h"
 #import "TapTalkLooks.h"
 
@@ -139,14 +139,14 @@
         }
         if (whileIndex == 1) {
             if (([tmpStr rangeOfString:@"food or drink"].location != NSNotFound) || ([tmpStr rangeOfString:@"service"].location != NSNotFound)) {
-                MeowToOrderController *orderViewController = [[MeowToOrderController alloc] initWithNibName:nil bundle:nil forBusiness:biz];
+                AskForSeviceViewController *orderViewController = [[AskForSeviceViewController alloc] initWithNibName:nil bundle:nil forBusiness:biz];
                 [self.navigationController pushViewController:orderViewController animated:YES];
             }
         }
 
         if (whileIndex == 2) {
             if ([tmpStr rangeOfString:@"bill"].location != NSNotFound) {
-                BillViewController *billViewController = [[BillViewController alloc] initWithNibName:nil bundle:nil];
+                BillViewController *billViewController = [[BillViewController alloc] initWithNibName:nil bundle:nil forBusiness:biz];
                 [self.navigationController pushViewController:billViewController animated:YES];
             }
         }
@@ -160,8 +160,8 @@
 
         if (whileIndex == 4) {
             if (([tmpStr rangeOfString:@"items"].location != NSNotFound) || ([tmpStr rangeOfString:@"have"].location != NSNotFound)) {
-                //at this point we have already loaded the businessProducts
-                ShowItemsTableViewController *showItemsTableViewController = [[ShowItemsTableViewController alloc]
+                //at this point we should have already loaded the businessProducts
+                ProductItemsTableViewController *showItemsTableViewController = [[ProductItemsTableViewController alloc]
                         initWithNibName:nil bundle:nil data:biz.businessProducts];
                 [self.navigationController pushViewController:showItemsTableViewController animated:YES];
             }

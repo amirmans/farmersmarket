@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @class Business;
 
-@interface MeowToOrderController : UIViewController <UITextViewDelegate, UITextFieldDelegate, MFMessageComposeViewControllerDelegate, UIAlertViewDelegate> {
+@interface AskForSeviceViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, MFMessageComposeViewControllerDelegate, UIAlertViewDelegate> {
     UITextField *errorMessageView;
     UITextView *orderView;
     Business *myBusiness;

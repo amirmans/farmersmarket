@@ -140,7 +140,7 @@
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
     [[DataModel sharedDataModelManager] saveNotifications];
-    NSLog(@"All contents of NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+//    NSLog(@"All contents of NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
 //    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
 //    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 }
@@ -304,7 +304,7 @@
 
 #pragma mark - UIApplicationDelegate for notification
 
-- (void) postProcessForSuccess:(int)givenUserID
+- (void) postProcessForSuccess:(long)givenUserID
 {
     [DataModel sharedDataModelManager].userID = givenUserID;
 }

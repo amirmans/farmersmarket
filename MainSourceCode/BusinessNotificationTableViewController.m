@@ -27,12 +27,9 @@
 - (void)updateUIWithNewNotification
 {
     notificationsInReverseChronological = [[[DataModel sharedDataModelManager] notifications] mutableCopy];
-    
-    NSLog(@"BEGIN reloadData");
     dispatch_async(dispatch_get_main_queue(), ^(void) {
         [self.tableView reloadData];
     });
-    NSLog(@"END reloadData");
     self.tabBarItem.badgeValue = nil;
 }
 

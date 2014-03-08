@@ -244,7 +244,6 @@
     NSDictionary *params = [self getCorrespondingParameters];
     [manager POST:urlString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
     {
-        NSLog(@"Response from profile server:%@", responseObject);
         if ([self isViewLoaded]) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             

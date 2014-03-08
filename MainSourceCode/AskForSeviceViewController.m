@@ -5,7 +5,7 @@
 //  Created by Amir Amirmansoury on 8/14/11.
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
-#import "MeowToOrderController.h"
+#import "AskForSeviceViewController.h"
 #import "MeowConfirmationViewController.h"
 #import "UIAlertView+TapTalkAlerts.h"
 #import "TapTalkLooks.h"
@@ -14,8 +14,7 @@
 #define MAX_LENGTH 70
 
 
-@implementation MeowToOrderController
-
+@implementation AskForSeviceViewController
 
 static NSUInteger firstTime = TRUE;
 
@@ -127,7 +126,6 @@ static NSUInteger firstTime = TRUE;
     MeowConfirmationViewController *orderconfirmation;
     switch (result) {
         case MessageComposeResultCancelled:
-            NSLog(@"Cancelled");
             break;
         case MessageComposeResultFailed:
             alert = [[UIAlertView alloc] initWithTitle:@"Ordering" message:@"Unknown Error" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
