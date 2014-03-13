@@ -27,15 +27,9 @@
 //TODO
 - (void)pullBillInformationFromBusiness
 {
-//    float randomAmt = (((float) (arc4random() % ((unsigned)RAND_MAX + 1)) / RAND_MAX) * 100.0) + 5.0;
     int r = arc4random() % 10000;
     billInDollar = [[NSDecimalNumber alloc] initWithInt:r];
-//    NSDecimalNumberHandler *handler = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundPlain
-//                                                                                             scale:-2
-//                                                                                  raiseOnExactness:NO
-//                                                                                   raiseOnOverflow:NO
-//                                                                                  raiseOnUnderflow:NO
-//                                                                               raiseOnDivideByZero:NO];
+
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil forBusiness:(Business *)biz
@@ -60,7 +54,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"View Bill";
+    NSString *titleString = [NSString stringWithFormat:@"Bill from %@", billBusiness.businessName];
+    self.title = titleString;
     [self pullBillInformationFromBusiness];
     [TapTalkLooks setToTapTalkLooks:payUIButton isActionButton:YES makeItRound:YES];
     [TapTalkLooks setToTapTalkLooks:cancelUIButton isActionButton:YES makeItRound:YES];
@@ -74,7 +69,6 @@
     _rateView.maxRating = 5;
     _rateView.delegate = self;
 
-
     [billScrollView setBackgroundColor:[UIColor blackColor]];
     [billScrollView setCanCancelContentTouches:NO];
     billScrollView.clipsToBounds = YES;
@@ -83,7 +77,19 @@
     CGSize billSize = CGSizeMake(billImageView.frame.size.width, billImageView.frame.size.height);
     [billScrollView setContentSize:billSize];
     [billScrollView addSubview:billImageView];
+    
+    // now add the history button to the navigation controller bar
+    UIBarButtonItem *billsHistoryButton = [[UIBarButtonItem alloc]
+                                   initWithTitle:@"Bill history"
+                                   style:UIBarButtonItemStyleBordered
+                                   target:self
+                                   action:@selector(loadBillHistory)];
+    self.navigationItem.rightBarButtonItem = billsHistoryButton;
+}
 
+
+- (void)loadBillHistory {
+    
 }
 
 - (void)viewDidUnload {

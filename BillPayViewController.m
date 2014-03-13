@@ -13,7 +13,6 @@
 #import "UIAlertView+TapTalkAlerts.h"
 #import "Consts.h"
 #import "Business.h"
-#import "PKTextField.h"
 
 @interface BillPayViewController () {
 
@@ -28,10 +27,10 @@
 @synthesize payButton;
 @synthesize changeCardButton;
 @synthesize amountTextField;
-@synthesize paymentView;
 @synthesize stripeCard;
 @synthesize business;
 @synthesize totalBillInDollars;
+@synthesize stripeView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil withAmount:(NSDecimalNumber *)amt forBusiness:(Business *)biz
 {
@@ -59,6 +58,15 @@
     [TapTalkLooks setToTapTalkLooks:button isActionButton:YES makeItRound:TRUE];
 }
 
+
+- (void)addStripView {
+    self.stripeView = [[STPView alloc] initWithFrame:CGRectMake(15,70,290,105)
+                                              andKey:STRIPE_TEST_PUBLIC_KEY];
+    self.stripeView.delegate = self;
+    [self.view addSubview:self.stripeView];
+
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -68,15 +76,7 @@
     [TapTalkLooks setToTapTalkLooks:payButton isActionButton:YES makeItRound:YES];
     [TapTalkLooks setToTapTalkLooks:changeCardButton isActionButton:YES makeItRound:YES];
     [self greyoutView:payButton];
-    
-    self.paymentView = [[PKView alloc] initWithFrame:CGRectMake(15, 75, 290, 105)];
-    PKCardNumber* cardNumber = [PKCardNumber cardNumberWithString:@"4242424242424242"];
-    
-    self.paymentView.cardNumberField.placeholder = cardNumber.string;
-    paymentView.cardNumberField.text =cardNumber.string;
-;
-    self.paymentView.delegate = self;
-    [self.view addSubview:self.paymentView];
+    [self addStripView];
     
     amountTextField.text = [currencyFormatter stringFromNumber:totalBillInDollars];
 }
@@ -88,21 +88,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-//pkview delegate method
-- (void) paymentView:(PKView*)paymentView withCard:(PKCard *)card isValid:(BOOL)valid
-{
-//    NSLog(@"Card number: %@", card.number);
-//    NSLog(@"Card expiry: %lu/%lu", (unsigned long)card.expMonth, (unsigned long)card.expYear);
-//    NSLog(@"Card cvc: %@", card.cvc);
-//    NSLog(@"Address zip: %@", card.addressZip);
-    
-    [self enableView:payButton];
-}
 
 - (IBAction)payAction:(id)sender {
     [self greyoutView:payButton];
     [self greyoutView:changeCardButton];
-//    NSDecimalNumber *decAmount = [NSDecimalNumber decimalNumberWithString:amountTextField.text];
+
     NSString *message = [NSString stringWithFormat:@"Paying %@ to %@", amountTextField.text, business.businessName];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:message message:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
     [alert setTag:1]; // to identify this alert in the delegate method
@@ -110,28 +100,29 @@
     alert = nil;
 }
 
-- (void)createStripCard
+
+- (void) prepareToGetStripeToken
 {
-    self.stripeCard = [[STPCard alloc] init];
-    self.stripeCard.number = paymentView.cardNumber.string;
-    self.stripeCard.cvc = paymentView.cardCVC.string;
-    self.stripeCard.expMonth = paymentView.cardExpiry.month;
-    self.stripeCard.expYear = paymentView.cardExpiry.year;
-    
-    //Create our payment token from Stripe server
-    [Stripe createTokenWithCard:self.stripeCard
-                 publishableKey:STRIPE_TEST_PUBLIC_KEY
-                     completion:^(STPToken* token, NSError* error) {
-                         if(error)
-                             [self handleStripeError:error];
-                         else
-//                             [self postStripeToken:token.tokenId];
-                             [self postStripeToken:token];
-                     }];
+    [self.stripeView createToken:^(STPToken *token, NSError *error) {
+        if (error) {
+            // Handle error
+            [self handleStripeError:error];
+        } else {
+            // Send off token to your server
+            [self postStripeToken:token];
+        }
+    }];
 }
+
 
 - (void)handleStripeError:(NSError *)error
 {
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+                                                      message:[error localizedDescription]
+                                                     delegate:nil
+                                            cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                            otherButtonTitles:nil];
+    [message show];
     [self enableView:payButton];
     [self enableView:changeCardButton];
 }
@@ -216,7 +207,7 @@
     if (alertView.tag == 1) {
         // this is called for the payment option
         if (buttonIndex == 1) {
-            [self createStripCard];
+            [self prepareToGetStripeToken];
         }
         else
         {
@@ -230,16 +221,23 @@
         // this is called for clearing the card information
         if (buttonIndex == 1) {
             // now we need to clear the card box.
-            [paymentView removeFromSuperview];
-            paymentView = nil;
-            self.paymentView = [[PKView alloc] initWithFrame:CGRectMake(15, 75, 290, 105)];
-            self.paymentView.delegate = self;
-            [self.view addSubview:self.paymentView];
-            payButton.enabled = FALSE;
+            [stripeView removeFromSuperview];
+            stripeView = nil;
+            [self addStripView];
+            [self greyoutView:payButton];
             [self.view setNeedsDisplay];
         }
         else {
         }
+    }
+}
+
+- (void)stripeView:(STPView *)view withCard:(PKCard *)card isValid:(BOOL)valid
+{
+    if (valid) {
+        [self enableView:payButton];
+    } else {
+        [UIAlertView showErrorAlert:@"Error from server - please try again"];
     }
 }
 

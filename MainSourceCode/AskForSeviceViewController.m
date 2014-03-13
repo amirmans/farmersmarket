@@ -97,6 +97,7 @@ static NSUInteger firstTime = TRUE;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = [NSString stringWithFormat:@"Get service from %@", myBusiness.businessName];
     // Do any additional setup after loading the view from its nib.
     [errorMessageView setHidden:TRUE];
     errorMessageView.text = @"Remember house Woody Cat can't read more than 250 characters";

@@ -37,6 +37,8 @@
 
 @synthesize enterBusinessNav, tt_tabBarController;
 
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     // Override point for customization after application launch
@@ -98,7 +100,7 @@
 //                                                           UITextAttributeTextShadowColor, [NSValue valueWithUIOffset:UIOffsetMake(0, 1)],
 //                                                           UITextAttributeTextShadowOffset, [UIFont fontWithName:@"Verdana" size:16.0f],
 //                                                           UITextAttributeFont, nil] forState:UIControlStateNormal];
-    
+
     tt_tabBarController.delegate = self;
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.tt_tabBarController;

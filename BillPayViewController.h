@@ -7,21 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Stripe.h"
-#import "PKView.h"
+#import "STPView.h"
 
-@class PKCard;
 
 @class Business;
 
-@interface BillPayViewController : UIViewController <PKViewDelegate, UIAlertViewDelegate> {
+@interface BillPayViewController : UIViewController <STPViewDelegate, UIAlertViewDelegate> {
     
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil withAmount:(NSDecimalNumber *)amt forBusiness:(Business *)biz;
 
 
-@property IBOutlet PKView* paymentView;
+@property STPView* stripeView;
 @property (strong, nonatomic) STPCard* stripeCard;
 
 @property (strong, nonatomic) IBOutlet UITextField *amountTextField;

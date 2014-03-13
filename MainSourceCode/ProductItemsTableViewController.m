@@ -77,8 +77,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    // title set in the caller 
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
-    self.title = @"List of items";
     self.tableView.scrollEnabled = YES;
     searchDisplayController.delegate = self;
     searchDisplayController.searchResultsDataSource = self;

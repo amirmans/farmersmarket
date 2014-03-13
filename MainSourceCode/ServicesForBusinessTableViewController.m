@@ -56,7 +56,7 @@
 
     // for some reason - setting the background color in the nib file didn't work
     [TapTalkLooks setBackgroundImage:self.tableView];
-    self.title = chosenMainMenu;
+    self.title = [NSString stringWithFormat:@"TapforAll - %@", biz.businessName];
 
     NSArray *tempRows = [allChoices objectForKey:chosenMainMenu];
     if (tempRows == nil) {
@@ -154,6 +154,7 @@
         if (whileIndex == 3) {
             if ([tmpStr rangeOfString:@"map"].location != NSNotFound) {
                 StoreMapViewController *storeMapViewController = [[StoreMapViewController alloc] initWithNibName:nil bundle:nil];
+                storeMapViewController.title = [NSString stringWithFormat:@"Map of %@",biz.businessName];
                 [self.navigationController pushViewController:storeMapViewController animated:YES];
             }
         }
@@ -163,6 +164,7 @@
                 //at this point we should have already loaded the businessProducts
                 ProductItemsTableViewController *showItemsTableViewController = [[ProductItemsTableViewController alloc]
                         initWithNibName:nil bundle:nil data:biz.businessProducts];
+                showItemsTableViewController.title = [NSString stringWithFormat:@"What %@ has for you", biz.businessName];
                 [self.navigationController pushViewController:showItemsTableViewController animated:YES];
             }
         }

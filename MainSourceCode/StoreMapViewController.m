@@ -37,7 +37,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     mapScrollView.delegate = self;
-    self.title = @"Map of the store";
+    //self.title = @"Map of the store";
 
     // Configure zooming
     StoreMap *storeMap = [[StoreMap alloc] init];
