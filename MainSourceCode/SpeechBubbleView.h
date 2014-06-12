@@ -2,8 +2,8 @@
 typedef enum {
     BubbleTypeLefthand = 0,
     BubbleTypeRighthand,
-}
-        BubbleType;
+    BubbleTypeCenter
+} BubbleType;
 
 // A UIView that shows a speech bubble
 @interface SpeechBubbleView : UIView {

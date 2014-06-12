@@ -12,8 +12,9 @@
 
 //- (IBAction)exitAction;
 //- (IBAction)composeAction;
-- (void)viewWillAppearWithNewMessage;
-
+//????
+//- (void)viewWillAppearWithNewMessage;
 - (void)scrollToNewestMessage;
+- (void)reloadDataToChatTable;
 
 @end

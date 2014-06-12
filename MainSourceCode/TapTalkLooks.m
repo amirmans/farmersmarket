@@ -15,11 +15,18 @@
     if (action) {
         if ([tempView isKindOfClass:[UIButton class]]) {
             tempView.backgroundColor = [UIColor colorWithRed:0.0f / 255.0f green:0.0f / 255.0f blue:255.0f / 255.0f alpha:1.0f];
-            [((UIButton *) tempView) setTitleColor:[UIColor colorWithRed:255.0f / 255.0f green:175.0f / 255.0f blue:0.0f / 255.0f alpha:1.0f] forState:UIControlStateNormal];
+//            [((UIButton *) tempView) setTitleColor:[UIColor colorWithRed:255.0f / 255.0f green:175.0f / 255.0f blue:0.0f / 255.0f alpha:1.0f] forState:UIControlStateNormal];
+            [((UIButton *) tempView) setTitleColor:[UIColor colorWithRed:153.0f / 255.0f green:255.0f / 255.0f blue:204.0f / 255.0f alpha:1.0f] forState:UIControlStateNormal];
 
             return;
         }
     }
+
+    if ([tempView isKindOfClass:[UILabel class]]) {
+        [((UILabel *) tempView) setTextColor:[UIColor colorWithRed:0.0f / 255.0f green:0.0f / 255.0f blue:255.0f / 255.0f alpha:1.0f]];
+        return;
+    }
+
 
     if (roundIt) {
         [[tempView layer] setBorderColor:[[UIColor whiteColor] CGColor]];
@@ -28,9 +35,11 @@
         [tempView setClipsToBounds:YES];
     }
 
-    tempView.backgroundColor = [UIColor colorWithRed:255.0f / 255.0f green:204.0f / 255.0f blue:102.0f / 255.0f alpha:1.0f];
+//    tempView.backgroundColor = [UIColor colorWithRed:255.0f / 255.0f green:204.0f / 255.0f blue:102.0f / 255.0f alpha:1.0f];
+//    tempView.backgroundColor = [UIColor colorWithRed:235.0f / 255.0f green:204.0f / 255.0f blue:231.0f / 255.0f alpha:1.0f];
+    tempView.backgroundColor = [UIColor colorWithRed:235.0f / 255.0f green:241.0f / 255.0f blue:231.0f / 255.0f alpha:1.0f];
     if ([tempView isKindOfClass:[UITextField class]])
-        ((UITextField *) tempView).textColor = [UIColor blackColor];
+        ((UITextField *) tempView).textColor = [UIColor blueColor];
 }
 
 

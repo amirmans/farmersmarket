@@ -11,8 +11,10 @@
 //#import "GooglePlacesObject.h"
 #import "DetailBusinessViewController.h"
 #import "ServicesForBusinessTableViewController.h"
+#import "ShakeHandWithBusinessViewController.h"
 #import "DataModel.h"
 #import "TapTalkLooks.h"
+#import "CurrentBusiness.h"
 
 
 @interface DetailBusinessViewController ()
@@ -24,13 +26,14 @@
 @synthesize activityIndicator;
 @synthesize typesOfBusiness;
 @synthesize rating;
+@synthesize ratingLabel;
 @synthesize contactInfo;
 @synthesize businessNameData;
 @synthesize customerProfileName;
 @synthesize distanceInMileString;
 @synthesize biz;
 @synthesize isCustomer;
-
+@synthesize showCodeButton;
 
 // we don't have access to biz.isCustomer in all the methods of the class
 - (void)setIsCustomer:(int)isCust {
@@ -70,23 +73,41 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    // setup looks of the ui elements
+    [TapTalkLooks setToTapTalkLooks:typesOfBusiness isActionButton:NO makeItRound:YES];
+    [TapTalkLooks setToTapTalkLooks:contactInfo isActionButton:NO makeItRound:YES];
+    [TapTalkLooks setToTapTalkLooks:rating isActionButton:NO makeItRound:NO];
     [TapTalkLooks setBackgroundImage:self.view];
-    [TapTalkLooks setToTapTalkLooks:addToCustomersOrService isActionButton:YES makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:enterAndGetService isActionButton:YES makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:ratingLabel isActionButton:NO makeItRound:NO];
+//    ratingLabel.textColor = [UIColor blueColor];
 
     if (self.isCustomer == 1) {
-        [addToCustomersOrService setTitle:@"Enter and use TapForAll services" forState:UIControlStateNormal];
+        [enterAndGetService setTitle:@"Enter" forState:UIControlStateNormal];
+        showCodeButton.hidden = false;
+        [TapTalkLooks setToTapTalkLooks:showCodeButton isActionButton:YES makeItRound:NO];
     }
     else {
-        [addToCustomersOrService setTitle:@"Vote to add as a customer" forState:UIControlStateNormal];
+        showCodeButton.hidden = TRUE;
+        enterAndGetService.hidden = TRUE;
+
+        CGRect buttonFrame = enterAndGetService.frame;
+        UIButton *voteToAddAsACustomer = [UIButton buttonWithType:UIButtonTypeCustom];
+        [voteToAddAsACustomer addTarget:self action:@selector(addToCustomers) forControlEvents:UIControlEventTouchUpInside];
+        buttonFrame.origin.x = 45;
+        buttonFrame.size.width = 235;
+        voteToAddAsACustomer.frame = buttonFrame;
+        [voteToAddAsACustomer setTitle:@"Add as a customer" forState:UIControlStateNormal];
+        voteToAddAsACustomer.titleLabel.font = [UIFont boldSystemFontOfSize:15];
+        
+        [TapTalkLooks setToTapTalkLooks:voteToAddAsACustomer isActionButton:YES makeItRound:NO];
+        [self.view addSubview:voteToAddAsACustomer];
     }
 
     [activityIndicator setHidesWhenStopped:TRUE];
     [activityIndicator startAnimating];
     self.title = businessNameData;
     
-    // setup looks of the ui elements
-    [TapTalkLooks setToTapTalkLooks:typesOfBusiness isActionButton:NO makeItRound:YES];
-    [TapTalkLooks setToTapTalkLooks:contactInfo isActionButton:NO makeItRound:YES];
     [self doPopulateDisplayFields];
 }
 
@@ -96,7 +117,7 @@
     [self setRating:nil];
     [self setTypesOfBusiness:nil];
     [self setActivityIndicator:nil];
-    addToCustomersOrService = nil;
+    enterAndGetService = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -106,24 +127,34 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (IBAction)addToCustomersOrShowServicePage:(id)sender {
+- (IBAction)enterAndGetServiceAction:(id)sender {
 
     if (self.isCustomer == 1) {
         [[DataModel sharedDataModelManager] setJoinedChat:FALSE];
+        [[CurrentBusiness sharedCurrentBusinessManager] setBusiness:biz];
         [[BusinessCustomerProfileManager sharedBusinessCustomerProfileManager] setCustomerProfileName:self.customerProfileName];
         NSDictionary *allChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].allChoices;
         NSArray *mainChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].mainChoices;
         ServicesForBusinessTableViewController *detailInfo = [[ServicesForBusinessTableViewController alloc]
                 initWithData:allChoices :mainChoices :[mainChoices objectAtIndex:0] forBusiness:biz];
         [[DataModel sharedDataModelManager] setChatSystemURL:biz.chatSystemURL];
+        [[DataModel sharedDataModelManager] setChat_master_uid:biz.chat_master_uid];
         [[DataModel sharedDataModelManager] setBusinessName:biz.businessName];
         [biz startLoadingBusinessProductCategoriesAndProducts];
         [self.navigationController pushViewController:detailInfo animated:YES];
     }
-    else {
-        VoteToAddBusinessConfirmation *confirmation = [[VoteToAddBusinessConfirmation alloc] initWithNibName:nil bundle:nil];
-        [self.navigationController pushViewController:confirmation animated:YES];
-    }
+}
+
+
+- (void)addToCustomers {
+    VoteToAddBusinessConfirmation *confirmation = [[VoteToAddBusinessConfirmation alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:confirmation animated:YES];
+
+}
+
+- (IBAction)showCode:(id)sender {
+    ShakeHandWithBusinessViewController *shakeHandViewController = [[ShakeHandWithBusinessViewController alloc] initWithNibName:nil bundle:nil businessObject:biz];
+    [self.navigationController pushViewController:shakeHandViewController animated:YES];
 }
 
 

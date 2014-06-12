@@ -7,11 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Business.h"
+#import "QRData.h"
 
 @interface ShakeHandWithBusinessViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UIImageView *qrImageView;
-@property (weak, nonatomic) IBOutlet UITextView *feedbackTextView;
-@property (weak, nonatomic) IBOutlet UIButton *nextButton;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil businessObject:(Business *)bizArg;
+
+
+@property (strong, nonatomic) Business *shakeHandBiz;
+@property (strong, nonatomic) IBOutlet UIImageView *qrImageView;
+@property (strong, nonatomic) IBOutlet UITextView *feedbackTextView;
+@property (strong, nonatomic) IBOutlet UITextView *instructionTextView;
+@property (strong, nonatomic) QRData *qrdata;
+
+@property (strong, nonatomic) IBOutlet UIButton *doneButton;
+@property (strong, nonatomic) IBOutlet UIButton *cancelButton;
+
+
+- (IBAction)CancelAction:(id)sender;
+
+- (IBAction)DoneAction:(id)sender;
 
 @end

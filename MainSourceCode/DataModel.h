@@ -52,7 +52,7 @@
 - (BOOL)joinedChat;
 - (void)setJoinedChat:(BOOL)value;
 //Chat Messages
-- (int)addMessage:(TapTalkChatMessage *)message;
+//- (int)addMessage:(TapTalkChatMessage *)message;
 
 // Get and set the device token. We cache the token so we can determine whether
 // to send an "update" request to the server.
@@ -63,11 +63,18 @@
 @property(nonatomic, assign) long userID; // determined and given by the server
 @property(nonatomic, retain) NSString *chatSystemURL;
 @property(nonatomic, retain) NSString *businessName;
+@property(nonatomic, assign) NSInteger chat_master_uid;
+
 @property(nonatomic, retain) NSString *password;
 @property(atomic, assign) short ageGroup;
 @property(nonatomic, retain) NSString *emailAddress;
 @property(nonatomic, retain) NSMutableArray *notifications;
 @property(nonatomic, retain) NSMutableArray *messages;
+@property(nonatomic, retain) NSMutableArray *businessMessages;
+@property(atomic, assign) BOOL shouldDownloadChatMessages;
+@property(nonatomic, strong) NSString *qrImageFileName;
+
+- (void)buildBusinessChatMessages;
 
 
 @end

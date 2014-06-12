@@ -126,7 +126,9 @@
                 break;
             }
         }
-
+        
+//        [TapTalkLooks setBackgroundImage:cell.contentView];
+        [TapTalkLooks setToTapTalkLooks:cell.contentView isActionButton:NO makeItRound:NO];
     }
     
     // Configure the cell...

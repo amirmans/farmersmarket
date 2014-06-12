@@ -3,6 +3,7 @@
 // Data model object that stores a single message
 @interface TapTalkChatMessage : NSObject <NSCoding> {
     BOOL connectionIsAvailable;
+    NSInteger senderID;
 }
 
 + (NSDate *)convertDateToLocaltime:(NSDate *)inputDate;
@@ -19,10 +20,10 @@
 
 // The complete history of messages this user has sent and received, in
 // chronological order (oldest first).
-@property(nonatomic, retain) NSMutableArray *messages;
-
+//@property(nonatomic, retain) NSMutableArray *messages;
 // The sender of the message. If nil, the message was sent by the user.
 @property(nonatomic, copy) NSString *sender;
+@property(nonatomic, assign) NSInteger senderID;
 
 // When the message was sent
 @property(nonatomic, copy) NSDate *dateAdded;
@@ -39,6 +40,8 @@
 // Determines whether this message as sent by the user of the app. We will
 // display such messages on the right-hand side of the screen.
 - (BOOL)isSentByUser;
+- (BOOL)isSentByBusiness;
+- (void)doToggleUpdatingChatMessages;
 
 @end
 

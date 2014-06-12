@@ -218,6 +218,8 @@
                 break;
             }
         }
+        
+        [TapTalkLooks setToTapTalkLooks:cell.contentView isActionButton:NO makeItRound:NO];
 //        NSString *specialDeal = [[self itemAtIndexPath:indexPath] objectForKey:@"OnSpecial"];
 //        
 //        if ([specialDeal hasPrefix:@"T"] || [specialDeal hasPrefix:@"Y"])

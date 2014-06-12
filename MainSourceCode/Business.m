@@ -50,7 +50,8 @@
 @synthesize paymentProcessingEmail;
 @synthesize paymentProcessingID;
 @synthesize email;
-
+@synthesize chat_master_uid;
+@synthesize map_image_url;
 
 
 - (void)initMemberData {
@@ -74,6 +75,8 @@
     neighborhood = nil;
     ServerInteractionManager *serverManager = [[ServerInteractionManager alloc] init];
     serverManager.postProcessesDelegate = self;
+    chat_master_uid = 0;
+    map_image_url = nil;
 }
 
 - (int)isCustomer {
@@ -119,7 +122,7 @@
     }
     else
     {
-        NSLog(@"in Business:fetchResponseData - I don't know what I am.");
+        NSLog(@"in Business:fetchResponseData for %@ - I don't know what I am.", businessName);
         NSMutableDictionary* errorUserInfo = [NSMutableDictionary dictionary];
         [errorUserInfo setValue:@"No product items found!" forKey:NSLocalizedDescriptionKey];
         error = [NSError errorWithDomain:@"Business:loadProducts" code:-1 userInfo:errorUserInfo];
@@ -166,6 +169,19 @@
 }
 
 
+- (NSInteger)integerFromDataDictionary:(NSDictionary *)data forKey:(NSString *)key
+{
+    NSString* field = [data objectForKey:key];
+    if (field == (id)[NSNull null] || field.length == 0 )
+    {
+        field = @"0";
+    }
+    
+    return [field intValue];
+}
+
+
+
 - (id)initWithDataFromDatabase:(NSDictionary *)data {
 //    [self initMemberData];
     isCustomer = 1;
@@ -190,8 +206,10 @@
     customerProfileName = [self stringFromDataDictionary:data forKey:@"customerProfileName"];
     image = [data objectForKey:@"icon"];
     businessName = [self stringFromDataDictionary:data forKey:@"name"];
-    chatSystemURL = [self stringFromDataDictionary:data forKey:@"chat_system_url"];
+    chatSystemURL = [self stringFromDataDictionary:data forKey:@"chatroom_table"];
     businessID = [[data objectForKey:@"businessID"] intValue];
+    chat_master_uid = [self integerFromDataDictionary:data forKey:@"chat_master_uid"];
+    map_image_url = [self stringFromDataDictionary:data forKey:@"map_image_url"];
  
     return self;
 }
@@ -245,12 +263,13 @@
                     
                     self.businessID = [[responseDictionary valueForKey:@"businessID"] intValue];
                     customerProfileName = [responseDictionary valueForKey:@"customerProfileName"];
-                    self.chatSystemURL = [responseDictionary valueForKey:@"chat_system_url"];
+                    self.chatSystemURL = [responseDictionary valueForKey:@"chatroom_table"];
+                    self.chat_master_uid = [self integerFromDataDictionary:responseDictionary forKey:@"chat_master_uid"];
                     sms_no = [self stringFromDataDictionary:responseDictionary forKey:@"sms_no"];
                     if ((sms_no == nil) && (phone != nil)) {
                         sms_no = phone;
                     }
-
+                    map_image_url = [self stringFromDataDictionary:responseDictionary forKey:@"map_image_url"];
 
                     NSString *iconPath = [NSString stringWithFormat:@"%@", [responseDictionary valueForKey:@"icon"]];
                     if (iconPath != nil) {

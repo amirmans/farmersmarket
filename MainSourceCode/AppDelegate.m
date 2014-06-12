@@ -8,7 +8,8 @@
 
 #import "AppDelegate.h"
 
-#import "MyLocationViewController.h"
+#import "ListofBusinesses.h"
+#import "BusinessListViewController.h"
 
 #import "ChatMessagesViewController.h"
 #import "BusinessNotificationTableViewController.h"
@@ -43,14 +44,23 @@
     
     // Override point for customization after application launch
     NSBundle *bundle = [NSBundle mainBundle];
-
-    //map of businesses around and set it up as the first page
-    MyLocationViewController *myLocation = [[MyLocationViewController alloc] initWithNibName:nil bundle:nil];
+    
+    ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
+    [businessArrays startGettingListofAllBusinesses];
+    
+    
+    BusinessListViewController *listTableView = [[BusinessListViewController alloc] initWithNibName:nil bundle:nil];
+    [listTableView.listBusinessesActivityIndicator hidesWhenStopped];
+    [listTableView.listBusinessesActivityIndicator startAnimating];
+    
     NSString *imagePath = [bundle pathForResource:@"EnterBusiness" ofType:@"png"];
     UIImage *locationImage = [[UIImage alloc] initWithContentsOfFile:imagePath];
     UITabBarItem *locationTabBar = [[UITabBarItem alloc] initWithTitle:@"Where?" image:locationImage tag:0];
-    myLocation.tabBarItem = locationTabBar;
-    enterBusinessNav = [[UINavigationController alloc] initWithRootViewController:myLocation];
+    listTableView.tabBarItem = locationTabBar;
+    enterBusinessNav = [[UINavigationController alloc] initWithRootViewController:listTableView];
+    listTableView = nil;
+    
+    
 
     // messages from others
     imagePath = [bundle pathForResource:@"Messages" ofType:@"png"];
@@ -110,11 +120,16 @@
     profileTabBarImage = nil;
     notificationImage = nil;
     messagesImage = nil;
+    
+    #ifdef __IPHONE_8_0
+    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    #else
 
     // Let the device know we want to receive push notifications
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
             (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-
+    #endif
     // Check if the app was launched in response to the user tapping on a
     // push notification.
     if (launchOptions != nil) {
@@ -189,6 +204,8 @@
             [UIAlertView showErrorAlert:@"Please enter a business first"];
             return FALSE;
         }
+        UINavigationController *nav = [tabBarController.viewControllers objectAtIndex:1];
+        [nav popToRootViewControllerAnimated:YES];
     }
 
     if (tabBarController.tabBar.selectedItem.tag == 1) {
@@ -303,13 +320,25 @@
 
 }
 
-
-#pragma mark - UIApplicationDelegate for notification
-
 - (void) postProcessForSuccess:(long)givenUserID
 {
     [DataModel sharedDataModelManager].userID = givenUserID;
 }
+
+#pragma mark - UIApplicationDelegate for notification
+
+//- (void)registerForRemoteNotificationTypes:(NSUInteger)notificationTypes categories:(NSSet *)categories
+//{
+//    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)] && [UIApplication instancesRespondToSelector:@selector(registerForRemoteNotifications)])
+//    {
+//        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:notificationTypes categories:categories]];
+//        [[UIApplication sharedApplication] registerForRemoteNotifications];
+//    }
+//    else if ([UIApplication instancesRespondToSelector:@selector(registerForRemoteNotificationTypes:)])
+//    {
+//        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
+//    }
+//}
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // We have received a new device token. This method is usually called right

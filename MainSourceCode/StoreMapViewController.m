@@ -7,8 +7,9 @@
 //
 
 #import "StoreMapViewController.h"
-#import "StoreMap.h"
 #import "TapTalkLooks.h"
+#import "CurrentBusiness.h"
+#import "UIAlertView+TapTalkAlerts.h"
 
 @implementation StoreMapViewController
 @synthesize storeMapImageView;
@@ -31,44 +32,37 @@
 }
 
 #pragma mark - View lifecycle
-
 - (void)viewDidLoad {
-
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     mapScrollView.delegate = self;
-    //self.title = @"Map of the store";
-
-    // Configure zooming
-    StoreMap *storeMap = [[StoreMap alloc] init];
-    UIImage *mapImage = storeMap.map;
-
-    CGSize mapImageSize = [mapImage size];
-    CGSize scrollViewSize = mapScrollView.bounds.size;
-
-    CGFloat widthRatio = scrollViewSize.width / mapImageSize.width;
-    CGFloat heightRatio = scrollViewSize.height / mapImageSize.height;
-    CGFloat initialZoom = (widthRatio > heightRatio) ? heightRatio : widthRatio;
-    mapScrollView.maximumZoomScale = 4.0;
-    mapScrollView.minimumZoomScale = 1; /*initialZoom*/;
-    mapScrollView.zoomScale = 1; /*initialZoom;*/
-    mapScrollView.bounces = YES;
-    mapScrollView.bouncesZoom = YES;
-    [mapScrollView setContentSize:CGSizeMake(mapImageSize.width * initialZoom,
-            mapImageSize.height * initialZoom)];
-    [mapScrollView setCenter:storeMapImageView.center];
-    storeMapImageView.image = mapImage;
-
-
-    [mapScrollView addSubview:storeMapImageView];
-    [self.view addSubview:mapScrollView];
-
+    NSString *mapSubDir = [CurrentBusiness sharedCurrentBusinessManager].business.map_image_url;
+    if (mapSubDir == nil) {
+        [UIAlertView showErrorAlert:@"Map is not given to us."];
+        return;
+    }
+        
+    NSString *imageURLString = [BusinessCustomersMapDirectory stringByAppendingString:mapSubDir];
+    NSURL *imageURL = [NSURL URLWithString:imageURLString];
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    [manager downloadWithURL:imageURL options:SDWebImageRetryFailed progress:nil
+                   completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
+                       if (image) {
+                           storeMapImageView.image = image;
+                           self.mapScrollView.contentSize = storeMapImageView.image.size;
+                           mapScrollView.clipsToBounds = YES;	// default is NO, we want to restrict drawing within our scrollview
+                           mapScrollView.minimumZoomScale = 1;
+                           mapScrollView.maximumZoomScale = 5;
+                           [mapScrollView setScrollEnabled:YES];
+                           mapScrollView.contentInset = UIEdgeInsetsZero;
+                       }
+                   }];
+    
     [TapTalkLooks setBackgroundImage:mapScrollView];
-    [mapScrollView setCanCancelContentTouches:NO];
-    mapScrollView.clipsToBounds = YES;
 
-    mapScrollView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
 }
+
 
 - (void)viewDidUnload {
     storeMapImageView = nil;
@@ -90,5 +84,31 @@
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.storeMapImageView;
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [mapScrollView setZoomScale:1.0 animated:YES];
+}
+
+
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale
+{
+    
+}
+
+- (void)scrollViewDidZoom:(UIScrollView *)inscrollView
+{
+    UIView *subView = [inscrollView.subviews objectAtIndex:0];
+    
+    CGFloat offsetX = (inscrollView.bounds.size.width > inscrollView.contentSize.width)?
+    (inscrollView.bounds.size.width - inscrollView.contentSize.width) * 0.5 : 0.0;
+    
+    CGFloat offsetY = (inscrollView.bounds.size.height > inscrollView.contentSize.height)?
+    (inscrollView.bounds.size.height - inscrollView.contentSize.height) * 0.5 : 0.0;
+    
+    subView.center = CGPointMake(inscrollView.contentSize.width * 0.5 + offsetX,
+                                 inscrollView.contentSize.height * 0.5 + offsetY);
+}
+
 
 @end

@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface StoreMapViewController : UIViewController <UIScrollViewDelegate> {
+#import <SDWebImage/UIImageView+WebCache.h>
+
+@interface StoreMapViewController : UIViewController <UIScrollViewDelegate, SDWebImageManagerDelegate> {
     __weak IBOutlet UIScrollView *mapScrollView;
     __weak IBOutlet UIImageView *storeMapImageView;
 }

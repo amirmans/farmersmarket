@@ -17,11 +17,12 @@
 @interface ChatMessagesViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TapTalkChatMessageDelegate> {
 
 }
-@property(weak, nonatomic) IBOutlet UIButton *sendButton;
 
-@property(weak, nonatomic) IBOutlet UITextField *composeMessageTextField;
+@property(strong, nonatomic) IBOutlet UIButton *sendButton;
+@property(strong, nonatomic) IBOutlet UITextField *composeMessageTextField;
+@property(strong, nonatomic) IBOutlet ChatTableView *chatTableView;
+@property(strong, nonatomic) IBOutlet UIBarButtonItem *toggleUpdatingChatMessages;
 
-@property(weak, nonatomic) IBOutlet ChatTableView *chatTableView;
 
 - (IBAction)sendMessage:(id)sender;
 

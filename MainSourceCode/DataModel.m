@@ -5,17 +5,21 @@
 @implementation DataModel
 
 @synthesize messages;
+@synthesize businessMessages;
 @synthesize notifications;
 @synthesize chatSystemURL;
 @synthesize businessName;
+@synthesize chat_master_uid;
 @synthesize ageGroup;
 @synthesize password;
 @synthesize emailAddress;
 @synthesize userID;
+@synthesize shouldDownloadChatMessages;
+@synthesize qrImageFileName;
 
 static DataModel *sharedDataModel = nil;
 
-+(DataModel*)sharedDataModelManager
++ (DataModel *)sharedDataModelManager
 {
 	@synchronized([DataModel class])
 	{
@@ -26,7 +30,7 @@ static DataModel *sharedDataModel = nil;
 	return sharedDataModel;
 }
 
-+(id)alloc
++ (id)alloc
 {
 	@synchronized([DataModel class])
 	{
@@ -48,6 +52,7 @@ static DataModel *sharedDataModel = nil;
         {
             notifications = [[NSMutableArray alloc] init];
         }
+        businessMessages = [[NSMutableArray alloc] init];
         //TODO
 //        [[NSUserDefaults standardUserDefaults] registerDefaults:@{NicknameKey: @""},
 //         @{PasswordKey: @"N/A"},
@@ -99,6 +104,21 @@ static DataModel *sharedDataModel = nil;
     [defaults synchronize];
 }
 
+- (void)buildBusinessChatMessages {
+    [[DataModel sharedDataModelManager].businessMessages removeAllObjects];
+    
+    NSDictionary *arrayElement;
+    TapTalkChatMessage *chatMessage = [TapTalkChatMessage alloc];
+    
+    for (arrayElement in [DataModel sharedDataModelManager].messages) {
+        chatMessage = [chatMessage initWithMessage:arrayElement];
+        if ([chatMessage isSentByBusiness]) {
+            [[DataModel sharedDataModelManager].businessMessages addObject:arrayElement];
+        }
+    }
+    chatMessage = nil;
+}
+
 - (NSString *)nickname {
     return [[NSUserDefaults standardUserDefaults] stringForKey:NicknameKey];
 }
@@ -107,12 +127,12 @@ static DataModel *sharedDataModel = nil;
     [[NSUserDefaults standardUserDefaults] setObject:name forKey:NicknameKey];
 }
 
-
-- (int)addMessage:(TapTalkChatMessage *)message {
-    [self.messages addObject:message];
-    //	[self saveMessages];
-    return self.messages.count - 1.0;
-}
+//????
+//- (int)addMessage:(TapTalkChatMessage *)message {
+//    [self.messages addObject:message];
+//    //	[self saveMessages];
+//    return self.messages.count - 1.0;
+//}
 
 - (short)ageGroup {
     return [[NSUserDefaults standardUserDefaults] integerForKey:@"ageGroup"];

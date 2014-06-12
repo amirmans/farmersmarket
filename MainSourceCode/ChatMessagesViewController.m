@@ -1,4 +1,4 @@
-  //
+//
 //  MessagesFromOpenConnections.m
 //  meowcialize
 //
@@ -14,13 +14,21 @@
 #import "SpeechBubbleView.h"
 #import "UIAlertView+TapTalkAlerts.h"
 #import "LoginViewController.h"
+#import "ChatsFromBusinessTableViewController.h"
+#import "TapTalkLooks.h"
 
 #import "AFNetworking.h"
 
 
 @interface ChatMessagesViewController () {
     TapTalkChatMessage *ttChatMessage;
+    NSTimer *chatTimer;
+    ChatsFromBusinessTableViewController *chatFromBizTableView;
 }
+
+@property(atomic, strong) ChatsFromBusinessTableViewController *chatFromBizTableView;
+
+- (void)doRunTimer;
 
 @end
 
@@ -28,6 +36,8 @@
 @synthesize chatTableView;
 @synthesize sendButton;
 @synthesize composeMessageTextField;
+@synthesize toggleUpdatingChatMessages;
+@synthesize chatFromBizTableView;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -35,6 +45,7 @@
     if (self) {
         // Custom initialization
         ttChatMessage = [[TapTalkChatMessage alloc] initWithDelegate:self];
+        chatFromBizTableView = [[ChatsFromBusinessTableViewController alloc] initWithNibName:nil bundle:nil];
     }
     return self;
 }
@@ -45,35 +56,63 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
+- (void)doToggleUpdatingChatMessages {
+    // take care of Title
+    if ([DataModel sharedDataModelManager].shouldDownloadChatMessages) {
+        toggleUpdatingChatMessages.title = @"Start";
+    } else {
+        toggleUpdatingChatMessages.title = @"Stop";
+    }
+    // take care of data - inside this method shouldDownloadChatMessages
+    [ttChatMessage doToggleUpdatingChatMessages];
+}
+
+- (void)displaybusinessMessages {
+    [self doRunTimer];
+    [self.navigationController pushViewController:chatFromBizTableView animated:YES];
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.    
     
-    //TODO
     [chatTableView setBackgroundColor:[UIColor colorWithRed:219 / 255.0 green:226 / 255.0 blue:237 / 255.0 alpha:1.0]];
-
+    [TapTalkLooks setBackgroundImage:self.view];
     [[composeMessageTextField layer] setBorderColor:[[UIColor whiteColor] CGColor]];
     [[composeMessageTextField layer] setBorderWidth:2.3];
     [[composeMessageTextField layer] setCornerRadius:15];
     [composeMessageTextField setClipsToBounds:YES];
+    
+    // now add the history button to the navigation controller bar
+    toggleUpdatingChatMessages = [[UIBarButtonItem alloc]
+                                  initWithTitle:@"Stop"
+                                  style:UIBarButtonItemStyleBordered
+                                  target:self
+                                  action:@selector(doToggleUpdatingChatMessages)];
+    self.navigationItem.rightBarButtonItem = toggleUpdatingChatMessages;
+    
+    UIBarButtonItem *displayBusinessMessagesButton = [[UIBarButtonItem alloc] initWithTitle:@"Biz" style:UIBarButtonItemStyleDone target:self action:@selector(displaybusinessMessages)];
+    self.navigationItem.leftBarButtonItem = displayBusinessMessagesButton;
+    displayBusinessMessagesButton = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    NSString *viewControllerTitle = [[DataModel sharedDataModelManager] businessName];
-    // title is displayed in the tabbar also, therefore it cann't be a long string
-//    viewControllerTitle = [viewControllerTitle stringByAppendingString:@"'s chat room"];
     
-    self.title = viewControllerTitle;
     if (![[DataModel sharedDataModelManager] joinedChat]) {
         // show the user that are about to connect to a new business chatroom
+        [DataModel sharedDataModelManager].shouldDownloadChatMessages = TRUE;
         LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
         loginController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
 
         [self presentViewController:loginController animated:YES completion:nil];
         loginController = nil;
-
+        
+//        NSString *viewControllerTitle = [[DataModel sharedDataModelManager] businessName];
+//        self.title = viewControllerTitle;
+        self.title = @"All messages";
+        
         [[DataModel sharedDataModelManager] setJoinedChat:TRUE];
         [ttChatMessage loadMessagesFromServer];
 
@@ -112,12 +151,12 @@
     if (cell == nil)
         cell = [[MessageTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 
-    //TapTalkChatMessage* message = [[DataModel sharedDataModelManager].messages objectAtIndex:indexPath.row];
     [ttChatMessage setValuesFrom:[[DataModel sharedDataModelManager].messages objectAtIndex:indexPath.row]];
 
     [cell insertMessage:ttChatMessage];
     return cell;
 }
+
 
 #pragma mark -
 #pragma mark UITableView Delegate
@@ -138,42 +177,33 @@
 
 #pragma mark - 
 #pragma Actions
-//TODO check to see if we need TapTalkChatMessage
 - (void)didSaveMessage:(TapTalkChatMessage *)message atIndex:(int)index {
     // This method is called when the user presses Save in the Compose screen,
     // but also when a push notification is received. We remove the "There are
     // no messages" label from the table view's footer if it is present, and
     // add a new row to the table view with a nice animation.
-    if ([self isViewLoaded]) {
-//		self.chatTableView = nil;
-//        [self.chatTableView beginUpdates];
-        [self.chatTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-//        [self.chatTableView endUpdates];
-        [self.chatTableView viewWillAppearWithNewMessage];
-//        self.composeMessageTextField.text = @"";
-//		[self.chatTableView scrollToNewestMessage];
-    }
+    //????
+//    if ([self isViewLoaded]) {
+//
+//        [self.chatTableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+//        [self.chatTableView viewWillAppearWithNewMessage];
+//
+//    }
 }
 
-
-- (void)userDidCompose:(NSString *)text {
-    // Create a new Message object
-    TapTalkChatMessage *message = [[TapTalkChatMessage alloc] init];
-
-    message.sender = [DataModel sharedDataModelManager].nickname;
-    message.dateAdded = [NSDate date];
-    message.textChat = text;
-
-    // Add the Message to the data model's list of messages
-    //ZZZZZZ TODO
-    [[DataModel sharedDataModelManager] addMessage:message];
-
-    // Add a row for the Message to ChatViewController's table view.
-    // Of course, ComposeViewController doesn't really know that the
-    // delegate is the ChatViewController.
-//TODO    [self didSaveMessage:message atIndex:index];
-}
-
+//????
+//- (void)userDidCompose:(NSString *)text {
+//    // Create a new Message object
+//    TapTalkChatMessage *message = [[TapTalkChatMessage alloc] init];
+//
+//    message.sender = [DataModel sharedDataModelManager].nickname;
+//    message.dateAdded = [NSDate date];
+//    message.textChat = text;
+//
+//    // Add the Message to the data model's list of messages
+////????    [[DataModel sharedDataModelManager] addMessage:message];
+//}
+//
 
 - (void)sendChatMessageToServer {
     // Show an activity spinner that blocks the whole screen
@@ -183,9 +213,6 @@
     NSString *text = composeMessageTextField.text;
 
     // Create the HTTP request object for our URL
-    NSString *urlString = [DataModel sharedDataModelManager].chatSystemURL;
-    urlString = [urlString stringByAppendingString:AddChatServerURL_APPENDIX];
-    NSLog(@"url string to call and add the chat message is: %@", urlString);
     AFHTTPRequestOperationManager *manager;
     manager = [AFHTTPRequestOperationManager manager];
     
@@ -193,9 +220,14 @@
     [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
     
     NSString *userName = [DataModel sharedDataModelManager].nickname;
-    NSDictionary *params = @{@"user": userName,
-                             @"message": text};
-    [manager POST:urlString parameters:params
+    NSString *chatRoom = [DataModel sharedDataModelManager].chatSystemURL;
+    NSInteger userID = [DataModel sharedDataModelManager].userID;
+    NSString  *userIDString = [NSString stringWithFormat:@"%lu", (unsigned long)userID];
+    NSDictionary *params = @{@"user_name": userName,
+                             @"message": text,
+                             @"chatroom": chatRoom,
+                             @"user_id":userIDString};
+    [manager POST:AddChatServer parameters:params
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               composeMessageTextField.text = nil;
               NSLog(@"Response from chat server for posting the message:%@", responseObject);
@@ -289,31 +321,46 @@
     return YES;
 }
 
+- (void)doRunTimer {
+    chatTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(timerCallBack) userInfo:nil repeats:NO];
+}
+
+- (void)timerCallBack {
+    if ([DataModel sharedDataModelManager].shouldDownloadChatMessages)
+        [ttChatMessage loadMessagesFromServer];
+}
 
 #pragma mark -
 #pragma mark TapTalkChatMessageDelegate Protocol definitions
-- (void)timerCallBack {
-    [ttChatMessage loadMessagesFromServer];
-}
 
 - (void)tapTalkChatMessageDidFinishLoadingData:(NSMutableArray *)objects {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     [DataModel sharedDataModelManager].messages = objects;
-    [self.chatTableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
-    [self.chatTableView scrollToNewestMessage];
+    if (chatFromBizTableView.isViewLoaded && chatFromBizTableView.view.window) {
+        [[DataModel sharedDataModelManager] buildBusinessChatMessages];
+        [self.chatFromBizTableView reloadDataToBizChatTable];
+    } else if (self.isViewLoaded && self.view.window) {
+        [self.chatTableView reloadDataToChatTable];
+    }
+    
+//    [self.chatTableView performSelectorOnMainThread:@selector([self.chatTableView reloadDataToChatTables]) withObject:nil waitUntilDone:YES];
 
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:
-            [self methodSignatureForSelector:@selector(timerCallBack)]];
-    [invocation setTarget:self];
-    [invocation setSelector:@selector(timerCallBack)];
+
+//    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:
+//            [self methodSignatureForSelector:@selector(timerCallBack)]];
+//    [invocation setTarget:self];
+//    [invocation setSelector:@selector(timerCallBack)];
     //	[NSTimer scheduledTimerWithTimeInterval:10.0 invocation:invocation repeats:YES];
-
-    NSTimer *chatTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(timerCallBack) userInfo:nil repeats:NO];
-
-    if (![[DataModel sharedDataModelManager] joinedChat]) {
+    if ( ((self.isViewLoaded && self.view.window) || (chatFromBizTableView.isViewLoaded && chatFromBizTableView.view.window))
+        && [[DataModel sharedDataModelManager] joinedChat]) {
+        
+        [self doRunTimer];
+    } else {
         [chatTimer invalidate];
         chatTimer = nil;
+        [[DataModel sharedDataModelManager] setJoinedChat:NO];
     }
+
 }
 
 - (void)tapTalkChatMessageDidFailWithError:(NSError *)error {

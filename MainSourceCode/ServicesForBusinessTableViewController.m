@@ -109,11 +109,11 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"TapTalk"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.backgroundColor = [UIColor colorWithRed:255.0/255.0f green:204.0/255.0f blue:102.0/255.0f alpha:1.0];
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.textLabel.textColor = [UIColor blueColor];
         cell.accessoryView = [[ UIImageView alloc ] initWithImage:[UIImage imageNamed:@"indicator.png"]];
-        [cell.accessoryView setFrame:CGRectMake(0, 0, 24, 46)];
+//        [cell.accessoryView setFrame:CGRectMake(0, 0, 24, 46)];
+        [TapTalkLooks setToTapTalkLooks:cell isActionButton:NO makeItRound:NO];
     }
 
     cell.textLabel.text = [[allChoices objectForKey:chosenMainMenu] objectAtIndex:indexPath.row];

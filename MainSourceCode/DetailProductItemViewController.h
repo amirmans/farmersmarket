@@ -27,12 +27,12 @@
 @property (weak, nonatomic) IBOutlet UITextField *ratingTextField;
 @property (weak, nonatomic) IBOutlet UITextField *complementaryProductsText;
 @property (weak, nonatomic) IBOutlet UIButton *recipesButton;
-@property (weak, nonatomic) IBOutlet UIButton *otherBoughtButton;
+@property (strong, nonatomic) IBOutlet UIButton *similarItemsButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *reducedPriceLabel;
 
 - (IBAction)recipesAction:(id)sender;
-- (IBAction)otherBoughtAction:(id)sender;
+- (IBAction)similarItemsAction:(id)sender;
 
 
 @end

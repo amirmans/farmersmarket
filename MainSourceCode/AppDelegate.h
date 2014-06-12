@@ -11,7 +11,7 @@
 #import "ServerInteractionManager.h"
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UIActionSheetDelegate, PostProcesses> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UIActionSheetDelegate, PostProcesses, UIApplicationDelegate> {
     IBOutlet UIWindow *window;
     IBOutlet UITabBarController *tt_tabBarController;
     IBOutlet UINavigationController *enterBusinessNav;

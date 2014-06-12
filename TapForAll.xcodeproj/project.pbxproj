@@ -24,15 +24,9 @@
 		2949CC3A14589C7200728B87 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2949CC3914589C7200728B87 /* UIKit.framework */; };
 		2949CC3C14589C7200728B87 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2949CC3B14589C7200728B87 /* Foundation.framework */; };
 		2949CC4014589C7200728B87 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2949CC3F14589C7200728B87 /* CoreData.framework */; };
-		2949CC4614589C7200728B87 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2949CC4414589C7200728B87 /* InfoPlist.strings */; };
-		2949CC4814589C7200728B87 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2949CC4714589C7200728B87 /* main.m */; };
-		2949CC4F14589C7200728B87 /* TapTalk.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2949CC4D14589C7200728B87 /* TapTalk.xcdatamodeld */; };
-		2949CC5714589C7200728B87 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2949CC5614589C7200728B87 /* SenTestingKit.framework */; };
 		2949CC5814589C7200728B87 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2949CC3914589C7200728B87 /* UIKit.framework */; };
 		2949CC5914589C7200728B87 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2949CC3B14589C7200728B87 /* Foundation.framework */; };
 		2949CC5A14589C7200728B87 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2949CC3F14589C7200728B87 /* CoreData.framework */; };
-		2949CC6214589C7200728B87 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2949CC6014589C7200728B87 /* InfoPlist.strings */; };
-		2949CC6514589C7200728B87 /* TapTalkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2949CC6414589C7200728B87 /* TapTalkTests.m */; };
 		2949CCF21458A21700728B87 /* checkedRadioButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCC91458A21700728B87 /* checkedRadioButton.png */; };
 		2949CCF31458A21700728B87 /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCCA1458A21700728B87 /* flag.png */; };
 		2949CCF81458A21700728B87 /* House_woody_cat.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCCF1458A21700728B87 /* House_woody_cat.jpg */; };
@@ -41,7 +35,6 @@
 		2949CCFC1458A21700728B87 /* kermit_full.png in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCD31458A21700728B87 /* kermit_full.png */; };
 		2949CCFD1458A21700728B87 /* kermit_half.png in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCD41458A21700728B87 /* kermit_half.png */; };
 		2949CCFF1458A21700728B87 /* Notifications.png in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCD61458A21700728B87 /* Notifications.png */; };
-		2949CD061458A21700728B87 /* woody_cat_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCDD1458A21700728B87 /* woody_cat_icon.png */; };
 		2949CD081458A21700728B87 /* BillViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCE01458A21700728B87 /* BillViewController.xib */; };
 		2949CD0E1458A21700728B87 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCE61458A21700728B87 /* MenuViewController.xib */; };
 		2949CD0F1458A21700728B87 /* MeowConfirmationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCE71458A21700728B87 /* MeowConfirmationViewController.xib */; };
@@ -56,14 +49,11 @@
 		295F5BE01458C5F400832AE8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 295F5BDC1458C5BE00832AE8 /* CoreLocation.framework */; };
 		296804401502164000D15241 /* Businesses Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2968043F1502164000D15241 /* Businesses Property List.plist */; };
 		2971AF4A16071AFA0022B72E /* NotificationPermissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2971AF4816071AFA0022B72E /* NotificationPermissionViewController.m */; };
-		297575BB14FCD9FB009DF0D5 /* StoreMap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 297575BA14FCD9FB009DF0D5 /* StoreMap.jpg */; };
 		298A6C74156C740900986F29 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298A6C73156C740900986F29 /* CFNetwork.framework */; };
 		298A6C7B156C76B800986F29 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 298A6C7A156C76B800986F29 /* libz.1.2.5.dylib */; };
 		298A6C7F156C78E400986F29 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298A6C7E156C78E400986F29 /* MobileCoreServices.framework */; };
 		29AC066315DD9A490039C118 /* VoteToAddBusinessConfirmation.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29AC066215DD9A490039C118 /* VoteToAddBusinessConfirmation.xib */; };
 		29BA182E15C8634200C499FD /* bg_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 29BA182D15C8634200C499FD /* bg_image.jpg */; };
-		29C1216715EB479B0093168B /* DetailProductItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29C1216515EB479B0093168B /* DetailProductItemViewController.m */; };
-		29C3A2E9153EC4AF00843CAC /* DetailBusinessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29C3A2E8153EC4AF00843CAC /* DetailBusinessViewController.xib */; };
 		29CDC4B516293F5A002E3D5A /* BusinessProductsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 29CDC4B416293F5A002E3D5A /* BusinessProductsUtils.m */; };
 		29D29A2015DB5AFA00990F62 /* GooglePlacesConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 29D29A1815DB5AFA00990F62 /* GooglePlacesConnection.m */; };
 		29D29A2115DB5AFA00990F62 /* GooglePlacesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 29D29A1A15DB5AFA00990F62 /* GooglePlacesObject.m */; };
@@ -77,7 +67,6 @@
 		29ECC44C14CCC06C0098653D /* ProductItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C0098653C /* ProductItemViewCell.m */; };
 		29ECC44C14CCC06C00986540 /* ProductItemsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C0098653F /* ProductItemsTableViewController.m */; };
 		29ECC44C14CCC06C00986546 /* ChatMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C00986545 /* ChatMessagesViewController.m */; };
-		29ECC44C14CCC06C00986549 /* ChatTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C00986548 /* ChatTableView.m */; };
 		29ECC44C14CCC06C00986552 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C00986551 /* LoginViewController.m */; };
 		29ECC44C14CCC06C00986555 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C00986554 /* MessageTableViewCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		29ECC44C14CCC06C00986558 /* SpeechBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C00986557 /* SpeechBubbleView.m */; };
@@ -90,16 +79,32 @@
 		29ECC44C14CCC06C0098656F /* TapTalkLooks.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C0098656E /* TapTalkLooks.m */; };
 		29ECC44C14CCC06C00986572 /* UIAlertView+TapTalkAlerts.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C00986571 /* UIAlertView+TapTalkAlerts.m */; };
 		29EEAA2315EACCCD00988BA5 /* indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 29EEAA2215EACCCD00988BA5 /* indicator.png */; };
+		C600C49218DF8A850019E8EF /* ChatsFromBusinessTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C600C49018DF8A850019E8EF /* ChatsFromBusinessTableViewController.m */; };
+		C600C49518DF8C4C0019E8EF /* ChatsFromBusinessTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C600C49418DF8C4C0019E8EF /* ChatsFromBusinessTableViewController.xib */; };
+		C61E552518E794C1007027C7 /* CurrentBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C61E552418E794C1007027C7 /* CurrentBusiness.m */; };
+		C61E552618E794C1007027C7 /* CurrentBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C61E552418E794C1007027C7 /* CurrentBusiness.m */; };
 		C6235F6318B1F62000C216CB /* navigation_button.png in Resources */ = {isa = PBXBuildFile; fileRef = C6235F6218B1F62000C216CB /* navigation_button.png */; };
 		C6235F6718B2242400C216CB /* BusinessTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6235F6518B2242400C216CB /* BusinessTableViewCell.m */; };
+		C632123418E834A30076D1DC /* DetailBusinessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C632123318E834A30076D1DC /* DetailBusinessViewController.xib */; };
+		C640AD391919F81E00DDA94D /* consumerProfileDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C640AD381919F81E00DDA94D /* consumerProfileDataModel.m */; };
 		C650705B18BCB88F00E5D06B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C650705A18BCB88F00E5D06B /* QuartzCore.framework */; };
 		C650705D18BD4CBD00E5D06B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C650705C18BD4CBD00E5D06B /* Default-568h@2x.png */; };
+		C65A68AB191AFB1E00BBDC16 /* DetailProductItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C65A68AA191AFB1E00BBDC16 /* DetailProductItemViewController.m */; };
 		C66237FE18C03E5B00750F82 /* disabled_button_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = C66237FD18C03E5B00750F82 /* disabled_button_bg.png */; };
+		C662DDFE18D8442F00683BBF /* BubbleCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = C662DDFD18D8442F00683BBF /* BubbleCenter.png */; };
 		C6700CFB1859D74B003814C9 /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6700CFA1859D74B003814C9 /* NotificationTableViewCell.m */; };
 		C6700CFD1859DAA4003814C9 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6700CFC1859DAA4003814C9 /* NotificationTableViewCell.xib */; };
+		C67C6AE218DF9B03009EF996 /* TapForAll.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C67C6AE118DF9B03009EF996 /* TapForAll.xcdatamodeld */; };
 		C67D4D4218AEFFEE00D6DF6C /* ListofBusinesses.m in Sources */ = {isa = PBXBuildFile; fileRef = C67D4D4118AEFFEE00D6DF6C /* ListofBusinesses.m */; };
-		C696970A18BC984300F0B4F5 /* BillPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C696970818BC984300F0B4F5 /* BillPayViewController.m */; };
-		C696970B18BC984300F0B4F5 /* BillPayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C696970918BC984300F0B4F5 /* BillPayViewController.xib */; };
+		C686B5A919382B19008D2606 /* Icon-60.png in Resources */ = {isa = PBXBuildFile; fileRef = C686B5A719382B19008D2606 /* Icon-60.png */; };
+		C686B5AA19382B19008D2606 /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C686B5A819382B19008D2606 /* Icon-60@2x.png */; };
+		C686B5B119382C12008D2606 /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = C686B5AB19382C12008D2606 /* Icon-76.png */; };
+		C686B5B219382C12008D2606 /* Icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C686B5AC19382C12008D2606 /* Icon-76@2x.png */; };
+		C686B5BA19382EEF008D2606 /* TapForAll_artwork.png in Resources */ = {isa = PBXBuildFile; fileRef = C686B5B919382EEF008D2606 /* TapForAll_artwork.png */; };
+		C68A65FB18D71049000ABBF8 /* ChatTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C68A65FA18D71049000ABBF8 /* ChatTableView.m */; };
+		C68FE1D418E64F9200FB4321 /* QRData.m in Sources */ = {isa = PBXBuildFile; fileRef = C68FE1D318E64F9200FB4321 /* QRData.m */; };
+		C69298A918DF8FFE00B013E0 /* BillPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C69298A818DF8FFE00B013E0 /* BillPayViewController.m */; };
+		C69298AB18DF903400B013E0 /* BillPayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C69298AA18DF903400B013E0 /* BillPayViewController.xib */; };
 		C69935B018B969F6008FCF8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C699356318B969F6008FCF8A /* AppDelegate.m */; };
 		C69935B118B969F6008FCF8A /* BillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C699356518B969F6008FCF8A /* BillViewController.m */; };
 		C69935BB18B969F6008FCF8A /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C699357A18B969F6008FCF8A /* DataModel.m */; };
@@ -112,14 +117,21 @@
 		C69935D018B969F6008FCF8A /* StoreMap.m in Sources */ = {isa = PBXBuildFile; fileRef = C69935A518B969F6008FCF8A /* StoreMap.m */; };
 		C69935D118B969F6008FCF8A /* StoreMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C69935A718B969F6008FCF8A /* StoreMapViewController.m */; };
 		C69935D518B969F6008FCF8A /* VoteToAddBusinessConfirmation.m in Sources */ = {isa = PBXBuildFile; fileRef = C69935AF18B969F6008FCF8A /* VoteToAddBusinessConfirmation.m */; };
-		C69CD8241884EA460067F9DB /* TapForAllItunesArtWork57.png in Resources */ = {isa = PBXBuildFile; fileRef = C69CD8231884EA460067F9DB /* TapForAllItunesArtWork57.png */; };
-		C69CD8261884EBD50067F9DB /* TapForAllItunesArtWork120.png in Resources */ = {isa = PBXBuildFile; fileRef = C69CD8251884EBD50067F9DB /* TapForAllItunesArtWork120.png */; };
 		C6AB1AFF18C7E7B2001FC051 /* DetailProductItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6AB1AFE18C7E7B2001FC051 /* DetailProductItemViewController.xib */; };
-		C6C91ECF189E3EA700AE6478 /* BusinessListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C91ECD189E3EA700AE6478 /* BusinessListTableViewController.m */; };
+		C6AF155118ED3D6C004DBEBA /* UtilityConsumerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C6AF155018ED3D6C004DBEBA /* UtilityConsumerProfile.m */; };
+		C6AF155218ED3D6C004DBEBA /* UtilityConsumerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C6AF155018ED3D6C004DBEBA /* UtilityConsumerProfile.m */; };
+		C6C8ACA618DF9B6B005DAFD6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C6C8ACA418DF9B6B005DAFD6 /* InfoPlist.strings */; };
+		C6C8ACA918DF9B8F005DAFD6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C8ACA718DF9B8F005DAFD6 /* main.m */; };
+		C6C8ACAD18DF9BBC005DAFD6 /* TapForAllTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C8ACAC18DF9BBC005DAFD6 /* TapForAllTests.m */; };
+		C6C8ACAF18DF9BE5005DAFD6 /* TapForAllTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6C8ACAE18DF9BE5005DAFD6 /* TapForAllTests-Info.plist */; };
+		C6C8ACB318DF9C1A005DAFD6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C6C8ACB118DF9C1A005DAFD6 /* InfoPlist.strings */; };
+		C6C91ECF189E3EA700AE6478 /* BusinessListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C91ECD189E3EA700AE6478 /* BusinessListViewController.m */; };
 		C6C91ED2189E563600AE6478 /* navigation_background.png in Resources */ = {isa = PBXBuildFile; fileRef = C6C91ED1189E563600AE6478 /* navigation_background.png */; };
 		C6DE7D3B188A618D0048B496 /* ShakeHandWithBusinessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6DE7D3A188A618D0048B496 /* ShakeHandWithBusinessViewController.xib */; };
 		C6EABE1718B2D1CD00F50D19 /* BusinessTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6EABE1518B2D1CD00F50D19 /* BusinessTableViewCell.xib */; };
-		C6EABE1818B2D1CD00F50D19 /* BusinessListTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6EABE1618B2D1CD00F50D19 /* BusinessListTableViewController.xib */; };
+		C6EABE1818B2D1CD00F50D19 /* BusinessListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6EABE1618B2D1CD00F50D19 /* BusinessListViewController.xib */; };
+		C6EEA6D81941A5C000857B76 /* Icon-Spotlight-40.png in Resources */ = {isa = PBXBuildFile; fileRef = C6EEA6D61941A5C000857B76 /* Icon-Spotlight-40.png */; };
+		C6EEA6D91941A5C000857B76 /* Icon-Spotlight-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C6EEA6D71941A5C000857B76 /* Icon-Spotlight-40@2x.png */; };
 		C6FDD5CC187CDD2900F4D721 /* BusinessNotificationTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6FDD5CB187CDD2900F4D721 /* BusinessNotificationTableViewController.xib */; };
 		C6FDD5CF187D079600F4D721 /* ServerInteractionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FDD5CD187D079600F4D721 /* ServerInteractionManager.m */; };
 		C6FDD5D3187D087900F4D721 /* BusinessNotificationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FDD5D1187D087900F4D721 /* BusinessNotificationTableViewController.m */; };
@@ -154,17 +166,7 @@
 		2949CC3914589C7200728B87 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2949CC3B14589C7200728B87 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2949CC3F14589C7200728B87 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		2949CC4314589C7200728B87 /* TapForAll-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TapForAll-Info.plist"; sourceTree = "<group>"; };
-		2949CC4514589C7200728B87 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		2949CC4714589C7200728B87 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		2949CC4914589C7200728B87 /* TapForAll-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TapForAll-Prefix.pch"; sourceTree = "<group>"; };
-		2949CC4E14589C7200728B87 /* TapTalk.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TapTalk.xcdatamodel; sourceTree = "<group>"; };
-		2949CC5514589C7200728B87 /* TapForAllTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TapForAllTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2949CC5614589C7200728B87 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		2949CC5F14589C7200728B87 /* TapForAllTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TapForAllTests-Info.plist"; sourceTree = "<group>"; };
-		2949CC6114589C7200728B87 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		2949CC6314589C7200728B87 /* TapTalkTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TapTalkTests.h; sourceTree = "<group>"; };
-		2949CC6414589C7200728B87 /* TapTalkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TapTalkTests.m; sourceTree = "<group>"; };
+		2949CC5514589C7200728B87 /* TapForAllTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TapForAllTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2949CCC91458A21700728B87 /* checkedRadioButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkedRadioButton.png; sourceTree = "<group>"; };
 		2949CCCA1458A21700728B87 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
 		2949CCCF1458A21700728B87 /* House_woody_cat.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = House_woody_cat.jpg; sourceTree = "<group>"; };
@@ -173,7 +175,6 @@
 		2949CCD31458A21700728B87 /* kermit_full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kermit_full.png; sourceTree = "<group>"; };
 		2949CCD41458A21700728B87 /* kermit_half.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = kermit_half.png; sourceTree = "<group>"; };
 		2949CCD61458A21700728B87 /* Notifications.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Notifications.png; sourceTree = "<group>"; };
-		2949CCDD1458A21700728B87 /* woody_cat_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = woody_cat_icon.png; sourceTree = "<group>"; };
 		2949CCE01458A21700728B87 /* BillViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BillViewController.xib; sourceTree = "<group>"; };
 		2949CCE61458A21700728B87 /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
 		2949CCE71458A21700728B87 /* MeowConfirmationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeowConfirmationViewController.xib; sourceTree = "<group>"; };
@@ -190,15 +191,11 @@
 		29711A1A15DB7FF20094F086 /* Business.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Business.h; path = MainSourceCode/Business.h; sourceTree = "<group>"; };
 		2971AF4716071AFA0022B72E /* NotificationPermissionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationPermissionViewController.h; path = MainSourceCode/NotificationPermissionViewController.h; sourceTree = "<group>"; };
 		2971AF4816071AFA0022B72E /* NotificationPermissionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationPermissionViewController.m; path = MainSourceCode/NotificationPermissionViewController.m; sourceTree = "<group>"; };
-		297575BA14FCD9FB009DF0D5 /* StoreMap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = StoreMap.jpg; sourceTree = "<group>"; };
 		298A6C73156C740900986F29 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		298A6C7A156C76B800986F29 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		298A6C7E156C78E400986F29 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		29AC066215DD9A490039C118 /* VoteToAddBusinessConfirmation.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VoteToAddBusinessConfirmation.xib; sourceTree = "<group>"; };
 		29BA182D15C8634200C499FD /* bg_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg_image.jpg; sourceTree = "<group>"; };
-		29C1216415EB479B0093168B /* DetailProductItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailProductItemViewController.h; path = MainSourceCode/DetailProductItemViewController.h; sourceTree = "<group>"; };
-		29C1216515EB479B0093168B /* DetailProductItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailProductItemViewController.m; path = MainSourceCode/DetailProductItemViewController.m; sourceTree = "<group>"; };
-		29C3A2E8153EC4AF00843CAC /* DetailBusinessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailBusinessViewController.xib; sourceTree = "<group>"; };
 		29CDC4B316293F5A002E3D5A /* BusinessProductsUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BusinessProductsUtils.h; path = MainSourceCode/BusinessProductsUtils.h; sourceTree = "<group>"; };
 		29CDC4B416293F5A002E3D5A /* BusinessProductsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BusinessProductsUtils.m; path = MainSourceCode/BusinessProductsUtils.m; sourceTree = "<group>"; };
 		29D29A1715DB5AFA00990F62 /* GooglePlacesConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlacesConnection.h; sourceTree = "<group>"; };
@@ -218,8 +215,6 @@
 		29ECC44C14CCC06C0098653F /* ProductItemsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProductItemsTableViewController.m; path = MainSourceCode/ProductItemsTableViewController.m; sourceTree = "<group>"; };
 		29ECC44C14CCC06C00986544 /* ChatMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatMessagesViewController.h; path = MainSourceCode/ChatMessagesViewController.h; sourceTree = "<group>"; };
 		29ECC44C14CCC06C00986545 /* ChatMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatMessagesViewController.m; path = MainSourceCode/ChatMessagesViewController.m; sourceTree = "<group>"; };
-		29ECC44C14CCC06C00986547 /* ChatTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatTableView.h; path = MainSourceCode/ChatTableView.h; sourceTree = "<group>"; };
-		29ECC44C14CCC06C00986548 /* ChatTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatTableView.m; path = MainSourceCode/ChatTableView.m; sourceTree = "<group>"; };
 		29ECC44C14CCC06C00986550 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = MainSourceCode/LoginViewController.h; sourceTree = "<group>"; };
 		29ECC44C14CCC06C00986551 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = MainSourceCode/LoginViewController.m; sourceTree = "<group>"; };
 		29ECC44C14CCC06C00986553 /* MessageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageTableViewCell.h; path = MainSourceCode/MessageTableViewCell.h; sourceTree = "<group>"; };
@@ -244,20 +239,41 @@
 		29EEAA2215EACCCD00988BA5 /* indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = indicator.png; sourceTree = "<group>"; };
 		7C842395C1AA4059895F19C5 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		99C03DCCF5AF411B99AB2278 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		C600C48F18DF8A850019E8EF /* ChatsFromBusinessTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatsFromBusinessTableViewController.h; path = MainSourceCode/ChatsFromBusinessTableViewController.h; sourceTree = "<group>"; };
+		C600C49018DF8A850019E8EF /* ChatsFromBusinessTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatsFromBusinessTableViewController.m; path = MainSourceCode/ChatsFromBusinessTableViewController.m; sourceTree = "<group>"; };
+		C600C49418DF8C4C0019E8EF /* ChatsFromBusinessTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatsFromBusinessTableViewController.xib; sourceTree = "<group>"; };
+		C61E552318E794C1007027C7 /* CurrentBusiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurrentBusiness.h; path = MainSourceCode/CurrentBusiness.h; sourceTree = "<group>"; };
+		C61E552418E794C1007027C7 /* CurrentBusiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurrentBusiness.m; path = MainSourceCode/CurrentBusiness.m; sourceTree = "<group>"; };
 		C6235F6218B1F62000C216CB /* navigation_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigation_button.png; sourceTree = "<group>"; };
 		C6235F6418B2242400C216CB /* BusinessTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BusinessTableViewCell.h; path = MainSourceCode/BusinessTableViewCell.h; sourceTree = "<group>"; };
 		C6235F6518B2242400C216CB /* BusinessTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BusinessTableViewCell.m; path = MainSourceCode/BusinessTableViewCell.m; sourceTree = "<group>"; };
+		C632123318E834A30076D1DC /* DetailBusinessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailBusinessViewController.xib; sourceTree = "<group>"; };
+		C640AD371919F81E00DDA94D /* consumerProfileDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = consumerProfileDataModel.h; path = MainSourceCode/consumerProfileDataModel.h; sourceTree = "<group>"; };
+		C640AD381919F81E00DDA94D /* consumerProfileDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = consumerProfileDataModel.m; path = MainSourceCode/consumerProfileDataModel.m; sourceTree = "<group>"; };
 		C650705A18BCB88F00E5D06B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C650705C18BD4CBD00E5D06B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Xibs/Default-568h@2x.png"; sourceTree = "<group>"; };
+		C65A68A9191AFB1E00BBDC16 /* DetailProductItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailProductItemViewController.h; sourceTree = "<group>"; };
+		C65A68AA191AFB1E00BBDC16 /* DetailProductItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailProductItemViewController.m; sourceTree = "<group>"; };
 		C66237FD18C03E5B00750F82 /* disabled_button_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disabled_button_bg.png; sourceTree = "<group>"; };
+		C662DDFD18D8442F00683BBF /* BubbleCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BubbleCenter.png; sourceTree = "<group>"; };
 		C6700CF91859D74B003814C9 /* NotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationTableViewCell.h; path = MainSourceCode/NotificationTableViewCell.h; sourceTree = "<group>"; };
 		C6700CFA1859D74B003814C9 /* NotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationTableViewCell.m; path = MainSourceCode/NotificationTableViewCell.m; sourceTree = "<group>"; };
 		C6700CFC1859DAA4003814C9 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
+		C67C6AE018DF9ADE009EF996 /* TapForAll-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TapForAll-Prefix.pch"; path = "TapForAll/TapForAll-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		C67D4D4018AEFFEE00D6DF6C /* ListofBusinesses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListofBusinesses.h; path = MainSourceCode/ListofBusinesses.h; sourceTree = "<group>"; };
 		C67D4D4118AEFFEE00D6DF6C /* ListofBusinesses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ListofBusinesses.m; path = MainSourceCode/ListofBusinesses.m; sourceTree = "<group>"; };
-		C696970718BC984300F0B4F5 /* BillPayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BillPayViewController.h; sourceTree = "<group>"; };
-		C696970818BC984300F0B4F5 /* BillPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BillPayViewController.m; sourceTree = "<group>"; };
-		C696970918BC984300F0B4F5 /* BillPayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BillPayViewController.xib; path = ../../BillPayViewController.xib; sourceTree = "<group>"; };
+		C686B5A719382B19008D2606 /* Icon-60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-60.png"; path = "icons/Icon-60.png"; sourceTree = "<group>"; };
+		C686B5A819382B19008D2606 /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-60@2x.png"; path = "icons/Icon-60@2x.png"; sourceTree = "<group>"; };
+		C686B5AB19382C12008D2606 /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-76.png"; path = "icons/Icon-76.png"; sourceTree = "<group>"; };
+		C686B5AC19382C12008D2606 /* Icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-76@2x.png"; path = "icons/Icon-76@2x.png"; sourceTree = "<group>"; };
+		C686B5B919382EEF008D2606 /* TapForAll_artwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TapForAll_artwork.png; path = icons/TapForAll_artwork.png; sourceTree = "<group>"; };
+		C68A65F918D71049000ABBF8 /* ChatTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatTableView.h; path = MainSourceCode/ChatTableView.h; sourceTree = "<group>"; };
+		C68A65FA18D71049000ABBF8 /* ChatTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatTableView.m; path = MainSourceCode/ChatTableView.m; sourceTree = "<group>"; };
+		C68FE1D218E64F9200FB4321 /* QRData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRData.h; sourceTree = "<group>"; };
+		C68FE1D318E64F9200FB4321 /* QRData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRData.m; sourceTree = "<group>"; };
+		C69298A718DF8FFE00B013E0 /* BillPayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BillPayViewController.h; path = MainSourceCode/BillPayViewController.h; sourceTree = "<group>"; };
+		C69298A818DF8FFE00B013E0 /* BillPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BillPayViewController.m; path = MainSourceCode/BillPayViewController.m; sourceTree = "<group>"; };
+		C69298AA18DF903400B013E0 /* BillPayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BillPayViewController.xib; sourceTree = "<group>"; };
 		C699356218B969F6008FCF8A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C699356318B969F6008FCF8A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		C699356418B969F6008FCF8A /* BillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BillViewController.h; path = MainSourceCode/BillViewController.h; sourceTree = "<group>"; };
@@ -283,15 +299,24 @@
 		C69935A718B969F6008FCF8A /* StoreMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreMapViewController.m; sourceTree = "<group>"; };
 		C69935AE18B969F6008FCF8A /* VoteToAddBusinessConfirmation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoteToAddBusinessConfirmation.h; sourceTree = "<group>"; };
 		C69935AF18B969F6008FCF8A /* VoteToAddBusinessConfirmation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoteToAddBusinessConfirmation.m; sourceTree = "<group>"; };
-		C69CD8231884EA460067F9DB /* TapForAllItunesArtWork57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TapForAllItunesArtWork57.png; sourceTree = "<group>"; };
-		C69CD8251884EBD50067F9DB /* TapForAllItunesArtWork120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TapForAllItunesArtWork120.png; sourceTree = "<group>"; };
 		C6AB1AFE18C7E7B2001FC051 /* DetailProductItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailProductItemViewController.xib; sourceTree = "<group>"; };
-		C6C91ECC189E3EA700AE6478 /* BusinessListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BusinessListTableViewController.h; path = MainSourceCode/BusinessListTableViewController.h; sourceTree = "<group>"; };
-		C6C91ECD189E3EA700AE6478 /* BusinessListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BusinessListTableViewController.m; path = MainSourceCode/BusinessListTableViewController.m; sourceTree = "<group>"; };
+		C6AF154F18ED3D6C004DBEBA /* UtilityConsumerProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UtilityConsumerProfile.h; path = MainSourceCode/UtilityConsumerProfile.h; sourceTree = "<group>"; };
+		C6AF155018ED3D6C004DBEBA /* UtilityConsumerProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UtilityConsumerProfile.m; path = MainSourceCode/UtilityConsumerProfile.m; sourceTree = "<group>"; };
+		C6C8ACA518DF9B6B005DAFD6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = TapForAll/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		C6C8ACA718DF9B8F005DAFD6 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = TapForAll/main.m; sourceTree = SOURCE_ROOT; };
+		C6C8ACA818DF9B8F005DAFD6 /* TapForAll-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "TapForAll-Info.plist"; path = "TapForAll/TapForAll-Info.plist"; sourceTree = SOURCE_ROOT; };
+		C6C8ACAB18DF9BBC005DAFD6 /* TapForAllTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TapForAllTests.h; path = TapForAllTests/TapForAllTests.h; sourceTree = SOURCE_ROOT; };
+		C6C8ACAC18DF9BBC005DAFD6 /* TapForAllTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TapForAllTests.m; path = TapForAllTests/TapForAllTests.m; sourceTree = SOURCE_ROOT; };
+		C6C8ACAE18DF9BE5005DAFD6 /* TapForAllTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "TapForAllTests-Info.plist"; path = "TapForAllTests/TapForAllTests-Info.plist"; sourceTree = SOURCE_ROOT; };
+		C6C8ACB218DF9C1A005DAFD6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = TapForAllTests/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		C6C91ECC189E3EA700AE6478 /* BusinessListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BusinessListViewController.h; path = MainSourceCode/BusinessListViewController.h; sourceTree = "<group>"; };
+		C6C91ECD189E3EA700AE6478 /* BusinessListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BusinessListViewController.m; path = MainSourceCode/BusinessListViewController.m; sourceTree = "<group>"; };
 		C6C91ED1189E563600AE6478 /* navigation_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigation_background.png; sourceTree = "<group>"; };
 		C6DE7D3A188A618D0048B496 /* ShakeHandWithBusinessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShakeHandWithBusinessViewController.xib; sourceTree = "<group>"; };
 		C6EABE1518B2D1CD00F50D19 /* BusinessTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessTableViewCell.xib; sourceTree = "<group>"; };
-		C6EABE1618B2D1CD00F50D19 /* BusinessListTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessListTableViewController.xib; sourceTree = "<group>"; };
+		C6EABE1618B2D1CD00F50D19 /* BusinessListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessListViewController.xib; sourceTree = "<group>"; };
+		C6EEA6D61941A5C000857B76 /* Icon-Spotlight-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Spotlight-40.png"; path = "icons/Icon-Spotlight-40.png"; sourceTree = "<group>"; };
+		C6EEA6D71941A5C000857B76 /* Icon-Spotlight-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Spotlight-40@2x.png"; path = "icons/Icon-Spotlight-40@2x.png"; sourceTree = "<group>"; };
 		C6FDD5CB187CDD2900F4D721 /* BusinessNotificationTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessNotificationTableViewController.xib; sourceTree = "<group>"; };
 		C6FDD5CD187D079600F4D721 /* ServerInteractionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerInteractionManager.m; path = MainSourceCode/ServerInteractionManager.m; sourceTree = "<group>"; };
 		C6FDD5CE187D079600F4D721 /* ServerInteractionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerInteractionManager.h; path = MainSourceCode/ServerInteractionManager.h; sourceTree = "<group>"; };
@@ -326,7 +351,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2949CC5714589C7200728B87 /* SenTestingKit.framework in Frameworks */,
 				2949CC5814589C7200728B87 /* UIKit.framework in Frameworks */,
 				2949CC5914589C7200728B87 /* Foundation.framework in Frameworks */,
 				2949CC5A14589C7200728B87 /* CoreData.framework in Frameworks */,
@@ -348,8 +372,8 @@
 				2971AF4616071A630022B72E /* Notification */,
 				29D2999D15DB58A800990F62 /* External */,
 				2949CCC21458A21700728B87 /* Resources */,
-				2949CC4114589C7200728B87 /* TapTalk */,
-				2949CC5D14589C7200728B87 /* TapTalkTests */,
+				2949CC4114589C7200728B87 /* TapForAll */,
+				2949CC5D14589C7200728B87 /* TapForAllTests */,
 				2949CC3814589C7200728B87 /* Frameworks */,
 				2949CC3614589C7200728B87 /* Products */,
 				99C03DCCF5AF411B99AB2278 /* Pods.xcconfig */,
@@ -360,7 +384,7 @@
 			isa = PBXGroup;
 			children = (
 				2949CC3514589C7200728B87 /* TapForAll.app */,
-				2949CC5514589C7200728B87 /* TapForAllTests.octest */,
+				2949CC5514589C7200728B87 /* TapForAllTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -381,47 +405,48 @@
 				2949CC3914589C7200728B87 /* UIKit.framework */,
 				2949CC3B14589C7200728B87 /* Foundation.framework */,
 				2949CC3F14589C7200728B87 /* CoreData.framework */,
-				2949CC5614589C7200728B87 /* SenTestingKit.framework */,
 				7C842395C1AA4059895F19C5 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		2949CC4114589C7200728B87 /* TapTalk */ = {
+		2949CC4114589C7200728B87 /* TapForAll */ = {
 			isa = PBXGroup;
 			children = (
-				2949CC4D14589C7200728B87 /* TapTalk.xcdatamodeld */,
+				C67C6AE118DF9B03009EF996 /* TapForAll.xcdatamodeld */,
+				C67C6AE018DF9ADE009EF996 /* TapForAll-Prefix.pch */,
 				2949CC4214589C7200728B87 /* Supporting Files */,
 			);
+			name = TapForAll;
 			path = TapTalk;
 			sourceTree = "<group>";
 		};
 		2949CC4214589C7200728B87 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				2949CC4314589C7200728B87 /* TapForAll-Info.plist */,
-				2949CC4414589C7200728B87 /* InfoPlist.strings */,
-				2949CC4714589C7200728B87 /* main.m */,
-				2949CC4914589C7200728B87 /* TapForAll-Prefix.pch */,
+				C6C8ACA718DF9B8F005DAFD6 /* main.m */,
+				C6C8ACA818DF9B8F005DAFD6 /* TapForAll-Info.plist */,
+				C6C8ACA418DF9B6B005DAFD6 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		2949CC5D14589C7200728B87 /* TapTalkTests */ = {
+		2949CC5D14589C7200728B87 /* TapForAllTests */ = {
 			isa = PBXGroup;
 			children = (
-				2949CC6314589C7200728B87 /* TapTalkTests.h */,
-				2949CC6414589C7200728B87 /* TapTalkTests.m */,
+				C6C8ACAB18DF9BBC005DAFD6 /* TapForAllTests.h */,
+				C6C8ACAC18DF9BBC005DAFD6 /* TapForAllTests.m */,
 				2949CC5E14589C7200728B87 /* Supporting Files */,
 			);
+			name = TapForAllTests;
 			path = TapTalkTests;
 			sourceTree = "<group>";
 		};
 		2949CC5E14589C7200728B87 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				2949CC5F14589C7200728B87 /* TapForAllTests-Info.plist */,
-				2949CC6014589C7200728B87 /* InfoPlist.strings */,
+				C6C8ACB118DF9C1A005DAFD6 /* InfoPlist.strings */,
+				C6C8ACAE18DF9BE5005DAFD6 /* TapForAllTests-Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -447,13 +472,18 @@
 		2949CCC61458A21700728B87 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				C6EEA6D61941A5C000857B76 /* Icon-Spotlight-40.png */,
+				C6EEA6D71941A5C000857B76 /* Icon-Spotlight-40@2x.png */,
+				C686B5B919382EEF008D2606 /* TapForAll_artwork.png */,
+				C686B5AB19382C12008D2606 /* Icon-76.png */,
+				C686B5AC19382C12008D2606 /* Icon-76@2x.png */,
+				C686B5A719382B19008D2606 /* Icon-60.png */,
+				C686B5A819382B19008D2606 /* Icon-60@2x.png */,
 				C66237FD18C03E5B00750F82 /* disabled_button_bg.png */,
 				C650705C18BD4CBD00E5D06B /* Default-568h@2x.png */,
 				C6235F6218B1F62000C216CB /* navigation_button.png */,
 				C6C91ED1189E563600AE6478 /* navigation_background.png */,
-				C69CD8251884EBD50067F9DB /* TapForAllItunesArtWork120.png */,
 				29EEAA2215EACCCD00988BA5 /* indicator.png */,
-				C69CD8231884EA460067F9DB /* TapForAllItunesArtWork57.png */,
 				29BA182D15C8634200C499FD /* bg_image.jpg */,
 				29403656159E66E000487779 /* ProfileTabBarIcon.png */,
 				29403657159E66E000487779 /* ProfileTabBarIcon@2x.png */,
@@ -461,7 +491,7 @@
 				293FA98C1595BF8B00B6A29F /* Messages@2x.png */,
 				29397890157B607600D3D23D /* BubbleLefthand.png */,
 				29397891157B607600D3D23D /* BubbleRighthand.png */,
-				297575BA14FCD9FB009DF0D5 /* StoreMap.jpg */,
+				C662DDFD18D8442F00683BBF /* BubbleCenter.png */,
 				29D85FBB14EE452000BDE695 /* Grocery_Location.jpg */,
 				29ECC44B14CCC06C0098653A /* EnterBusiness@2x.png */,
 				29E693CF14CC044B007E958F /* EnterBusiness.png */,
@@ -475,7 +505,6 @@
 				2949CCD31458A21700728B87 /* kermit_full.png */,
 				2949CCD41458A21700728B87 /* kermit_half.png */,
 				2949CCD61458A21700728B87 /* Notifications.png */,
-				2949CCDD1458A21700728B87 /* woody_cat_icon.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -483,9 +512,10 @@
 		2949CCDE1458A21700728B87 /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
-				C696970918BC984300F0B4F5 /* BillPayViewController.xib */,
+				C632123318E834A30076D1DC /* DetailBusinessViewController.xib */,
+				C69298AA18DF903400B013E0 /* BillPayViewController.xib */,
 				C6EABE1518B2D1CD00F50D19 /* BusinessTableViewCell.xib */,
-				C6EABE1618B2D1CD00F50D19 /* BusinessListTableViewController.xib */,
+				C6EABE1618B2D1CD00F50D19 /* BusinessListViewController.xib */,
 				C6DE7D3A188A618D0048B496 /* ShakeHandWithBusinessViewController.xib */,
 				C6FDD5CB187CDD2900F4D721 /* BusinessNotificationTableViewController.xib */,
 				29ECC44C14CCC06C00986567 /* StoreMapViewController.xib */,
@@ -495,9 +525,9 @@
 				29AC066215DD9A490039C118 /* VoteToAddBusinessConfirmation.xib */,
 				29D4FCD315993CCE0034962C /* ConsumerProfileViewController.xib */,
 				2949CCE91458A21700728B87 /* ChatMessagesViewController.xib */,
+				C600C49418DF8C4C0019E8EF /* ChatsFromBusinessTableViewController.xib */,
 				2935D2981569E842003FB5CB /* LoginViewController.xib */,
 				290CF8AF1541E65A00E1B81F /* ServicesForBusinessTableViewController.xib */,
-				29C3A2E8153EC4AF00843CAC /* DetailBusinessViewController.xib */,
 				2949CCE01458A21700728B87 /* BillViewController.xib */,
 				2949CCE61458A21700728B87 /* MenuViewController.xib */,
 				2949CCE81458A21700728B87 /* AskForSeviceViewController.xib */,
@@ -512,6 +542,10 @@
 		296AB7BB158368AA00685894 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				C600C48F18DF8A850019E8EF /* ChatsFromBusinessTableViewController.h */,
+				C600C49018DF8A850019E8EF /* ChatsFromBusinessTableViewController.m */,
+				C68A65F918D71049000ABBF8 /* ChatTableView.h */,
+				C68A65FA18D71049000ABBF8 /* ChatTableView.m */,
 				29ECC44C14CCC06C0098655A /* TapTalkChatMessage.m */,
 				29ECC44C14CCC06C00986559 /* TapTalkChatMessage.h */,
 				29ECC44C14CCC06C00986557 /* SpeechBubbleView.m */,
@@ -520,8 +554,6 @@
 				29ECC44C14CCC06C00986553 /* MessageTableViewCell.h */,
 				29ECC44C14CCC06C00986551 /* LoginViewController.m */,
 				29ECC44C14CCC06C00986550 /* LoginViewController.h */,
-				29ECC44C14CCC06C00986548 /* ChatTableView.m */,
-				29ECC44C14CCC06C00986547 /* ChatTableView.h */,
 				29ECC44C14CCC06C00986545 /* ChatMessagesViewController.m */,
 				29ECC44C14CCC06C00986544 /* ChatMessagesViewController.h */,
 			);
@@ -573,6 +605,8 @@
 				29ECC44C14CCC06C00986569 /* Consts.h */,
 				C6FDD5CD187D079600F4D721 /* ServerInteractionManager.m */,
 				C6FDD5CE187D079600F4D721 /* ServerInteractionManager.h */,
+				C6AF154F18ED3D6C004DBEBA /* UtilityConsumerProfile.h */,
+				C6AF155018ED3D6C004DBEBA /* UtilityConsumerProfile.m */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -580,14 +614,14 @@
 		29D29A2415DB786800990F62 /* BusinessProducts */ = {
 			isa = PBXGroup;
 			children = (
+				C61E552318E794C1007027C7 /* CurrentBusiness.h */,
+				C61E552418E794C1007027C7 /* CurrentBusiness.m */,
 				29CDC4B316293F5A002E3D5A /* BusinessProductsUtils.h */,
 				29CDC4B416293F5A002E3D5A /* BusinessProductsUtils.m */,
 				29ECC44C14CCC06C0098653F /* ProductItemsTableViewController.m */,
 				29ECC44C14CCC06C0098653E /* ProductItemsTableViewController.h */,
 				29ECC44C14CCC06C0098653C /* ProductItemViewCell.m */,
 				29ECC44C14CCC06C0098653B /* ProductItemViewCell.h */,
-				29C1216415EB479B0093168B /* DetailProductItemViewController.h */,
-				29C1216515EB479B0093168B /* DetailProductItemViewController.m */,
 			);
 			name = BusinessProducts;
 			sourceTree = "<group>";
@@ -595,6 +629,8 @@
 		29D4FCC9159939880034962C /* ConsumerProfile */ = {
 			isa = PBXGroup;
 			children = (
+				C640AD371919F81E00DDA94D /* consumerProfileDataModel.h */,
+				C640AD381919F81E00DDA94D /* consumerProfileDataModel.m */,
 				29ECC44C14CCC06C00986562 /* PublicProfile.h */,
 				29ECC44C14CCC06C00986563 /* PublicProfile.m */,
 				29ECC44C14CCC06C0098655D /* ConsumerProfileViewController.m */,
@@ -606,8 +642,8 @@
 		C696970618BC97A300F0B4F5 /* Bill */ = {
 			isa = PBXGroup;
 			children = (
-				C696970718BC984300F0B4F5 /* BillPayViewController.h */,
-				C696970818BC984300F0B4F5 /* BillPayViewController.m */,
+				C69298A718DF8FFE00B013E0 /* BillPayViewController.h */,
+				C69298A818DF8FFE00B013E0 /* BillPayViewController.m */,
 				C699356418B969F6008FCF8A /* BillViewController.h */,
 				C699356518B969F6008FCF8A /* BillViewController.m */,
 			);
@@ -617,6 +653,8 @@
 		C699356118B969F6008FCF8A /* MainSourceCode */ = {
 			isa = PBXGroup;
 			children = (
+				C65A68A9191AFB1E00BBDC16 /* DetailProductItemViewController.h */,
+				C65A68AA191AFB1E00BBDC16 /* DetailProductItemViewController.m */,
 				C699356218B969F6008FCF8A /* AppDelegate.h */,
 				C699356318B969F6008FCF8A /* AppDelegate.m */,
 				C699357618B969F6008FCF8A /* Consts.h */,
@@ -640,6 +678,8 @@
 				C69935A718B969F6008FCF8A /* StoreMapViewController.m */,
 				C69935AE18B969F6008FCF8A /* VoteToAddBusinessConfirmation.h */,
 				C69935AF18B969F6008FCF8A /* VoteToAddBusinessConfirmation.m */,
+				C68FE1D218E64F9200FB4321 /* QRData.h */,
+				C68FE1D318E64F9200FB4321 /* QRData.m */,
 			);
 			path = MainSourceCode;
 			sourceTree = "<group>";
@@ -655,8 +695,8 @@
 				C67D4D4118AEFFEE00D6DF6C /* ListofBusinesses.m */,
 				C6235F6418B2242400C216CB /* BusinessTableViewCell.h */,
 				C6235F6518B2242400C216CB /* BusinessTableViewCell.m */,
-				C6C91ECC189E3EA700AE6478 /* BusinessListTableViewController.h */,
-				C6C91ECD189E3EA700AE6478 /* BusinessListTableViewController.m */,
+				C6C91ECC189E3EA700AE6478 /* BusinessListViewController.h */,
+				C6C91ECD189E3EA700AE6478 /* BusinessListViewController.m */,
 				291850C8153E8DA8008B6EBB /* DetailBusinessViewController.m */,
 				291850C7153E8DA8008B6EBB /* DetailBusinessViewController.h */,
 				29D29A2415DB786800990F62 /* BusinessProducts */,
@@ -702,8 +742,8 @@
 			);
 			name = TapForAllTests;
 			productName = TapTalkTests;
-			productReference = 2949CC5514589C7200728B87 /* TapForAllTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = 2949CC5514589C7200728B87 /* TapForAllTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -711,10 +751,14 @@
 		2949CC2C14589C7100728B87 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastTestingUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 				TargetAttributes = {
 					2949CC3414589C7200728B87 = {
 						DevelopmentTeam = E79MNN58JH;
+					};
+					2949CC5414589C7200728B87 = {
+						TestTargetID = 2949CC3414589C7200728B87;
 					};
 				};
 			};
@@ -741,47 +785,53 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2949CC4614589C7200728B87 /* InfoPlist.strings in Resources */,
-				C69CD8261884EBD50067F9DB /* TapForAllItunesArtWork120.png in Resources */,
+				C632123418E834A30076D1DC /* DetailBusinessViewController.xib in Resources */,
 				2949CCF21458A21700728B87 /* checkedRadioButton.png in Resources */,
 				2949CCF31458A21700728B87 /* flag.png in Resources */,
 				2949CCF81458A21700728B87 /* House_woody_cat.jpg in Resources */,
 				2949CCFA1458A21700728B87 /* ImageOfABill.jpg in Resources */,
 				2949CCFB1458A21700728B87 /* kermit_empty.png in Resources */,
 				2949CCFC1458A21700728B87 /* kermit_full.png in Resources */,
+				C662DDFE18D8442F00683BBF /* BubbleCenter.png in Resources */,
 				C66237FE18C03E5B00750F82 /* disabled_button_bg.png in Resources */,
+				C6C8ACA618DF9B6B005DAFD6 /* InfoPlist.strings in Resources */,
 				C650705D18BD4CBD00E5D06B /* Default-568h@2x.png in Resources */,
-				C696970B18BC984300F0B4F5 /* BillPayViewController.xib in Resources */,
-				C69CD8241884EA460067F9DB /* TapForAllItunesArtWork57.png in Resources */,
+				C6C8ACB318DF9C1A005DAFD6 /* InfoPlist.strings in Resources */,
+				C6EEA6D81941A5C000857B76 /* Icon-Spotlight-40.png in Resources */,
 				2949CCFD1458A21700728B87 /* kermit_half.png in Resources */,
 				2949CCFF1458A21700728B87 /* Notifications.png in Resources */,
-				2949CD061458A21700728B87 /* woody_cat_icon.png in Resources */,
+				C686B5A919382B19008D2606 /* Icon-60.png in Resources */,
 				2949CD081458A21700728B87 /* BillViewController.xib in Resources */,
 				2949CD0E1458A21700728B87 /* MenuViewController.xib in Resources */,
+				C686B5B119382C12008D2606 /* Icon-76.png in Resources */,
 				2949CD0F1458A21700728B87 /* MeowConfirmationViewController.xib in Resources */,
-				C6EABE1818B2D1CD00F50D19 /* BusinessListTableViewController.xib in Resources */,
+				C6EABE1818B2D1CD00F50D19 /* BusinessListViewController.xib in Resources */,
 				2949CD101458A21700728B87 /* AskForSeviceViewController.xib in Resources */,
 				C6C91ED2189E563600AE6478 /* navigation_background.png in Resources */,
+				C686B5BA19382EEF008D2606 /* TapForAll_artwork.png in Resources */,
 				2949CD111458A21700728B87 /* ChatMessagesViewController.xib in Resources */,
 				2949CD121458A21700728B87 /* MyLocationViewController.xib in Resources */,
 				2949CD151458A21700728B87 /* PublicProfile.xib in Resources */,
 				29449C7B14C5860B004D8538 /* House_woody_cat_table.jpg in Resources */,
 				C6EABE1718B2D1CD00F50D19 /* BusinessTableViewCell.xib in Resources */,
+				C686B5AA19382B19008D2606 /* Icon-60@2x.png in Resources */,
 				29E693D014CC044B007E958F /* EnterBusiness.png in Resources */,
 				C6DE7D3B188A618D0048B496 /* ShakeHandWithBusinessViewController.xib in Resources */,
 				29ECC44C14CCC06C0098653A /* EnterBusiness@2x.png in Resources */,
+				C69298AB18DF903400B013E0 /* BillPayViewController.xib in Resources */,
 				2925109414ECC1C300866384 /* CoffeeStore.jpg in Resources */,
 				29D85FBC14EE452000BDE695 /* Grocery_Location.jpg in Resources */,
-				297575BB14FCD9FB009DF0D5 /* StoreMap.jpg in Resources */,
+				C600C49518DF8C4C0019E8EF /* ChatsFromBusinessTableViewController.xib in Resources */,
 				296804401502164000D15241 /* Businesses Property List.plist in Resources */,
 				290481BE150433CE0066002B /* ProductItemsTableViewController.xib in Resources */,
-				29C3A2E9153EC4AF00843CAC /* DetailBusinessViewController.xib in Resources */,
 				290CF8B01541E65A00E1B81F /* ServicesForBusinessTableViewController.xib in Resources */,
 				C6235F6318B1F62000C216CB /* navigation_button.png in Resources */,
 				2935D2991569E842003FB5CB /* LoginViewController.xib in Resources */,
+				C686B5B219382C12008D2606 /* Icon-76@2x.png in Resources */,
 				29397892157B607600D3D23D /* BubbleLefthand.png in Resources */,
 				29397893157B607600D3D23D /* BubbleRighthand.png in Resources */,
 				293FA98D1595BF8B00B6A29F /* Messages.png in Resources */,
+				C6EEA6D91941A5C000857B76 /* Icon-Spotlight-40@2x.png in Resources */,
 				293FA98E1595BF8B00B6A29F /* Messages@2x.png in Resources */,
 				29D4FCD415993CCE0034962C /* ConsumerProfileViewController.xib in Resources */,
 				C6FDD5CC187CDD2900F4D721 /* BusinessNotificationTableViewController.xib in Resources */,
@@ -789,6 +839,7 @@
 				29403659159E66E000487779 /* ProfileTabBarIcon@2x.png in Resources */,
 				29BA182E15C8634200C499FD /* bg_image.jpg in Resources */,
 				29AC066315DD9A490039C118 /* VoteToAddBusinessConfirmation.xib in Resources */,
+				C6C8ACAF18DF9BE5005DAFD6 /* TapForAllTests-Info.plist in Resources */,
 				29ECC44C14CCC06C00986566 /* ProductItemViewCell.xib in Resources */,
 				C6700CFD1859DAA4003814C9 /* NotificationTableViewCell.xib in Resources */,
 				C6AB1AFF18C7E7B2001FC051 /* DetailProductItemViewController.xib in Resources */,
@@ -801,7 +852,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2949CC6214589C7200728B87 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -858,48 +908,54 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2949CC4814589C7200728B87 /* main.m in Sources */,
 				C6235F6718B2242400C216CB /* BusinessTableViewCell.m in Sources */,
-				2949CC4F14589C7200728B87 /* TapTalk.xcdatamodeld in Sources */,
 				C69935D518B969F6008FCF8A /* VoteToAddBusinessConfirmation.m in Sources */,
-				C6C91ECF189E3EA700AE6478 /* BusinessListTableViewController.m in Sources */,
+				C6C91ECF189E3EA700AE6478 /* BusinessListViewController.m in Sources */,
+				C68FE1D418E64F9200FB4321 /* QRData.m in Sources */,
 				2949CD351458A9CC00728B87 /* Business.m in Sources */,
+				C600C49218DF8A850019E8EF /* ChatsFromBusinessTableViewController.m in Sources */,
 				C67D4D4218AEFFEE00D6DF6C /* ListofBusinesses.m in Sources */,
 				C6700CFB1859D74B003814C9 /* NotificationTableViewCell.m in Sources */,
-				C696970A18BC984300F0B4F5 /* BillPayViewController.m in Sources */,
 				C69935C318B969F6008FCF8A /* AskForSeviceViewController.m in Sources */,
 				295C3AFD14E65F42000FB813 /* BusinessCustomerProfileManager.m in Sources */,
 				291850CA153E8DA8008B6EBB /* DetailBusinessViewController.m in Sources */,
 				29D29A2015DB5AFA00990F62 /* GooglePlacesConnection.m in Sources */,
+				C69298A918DF8FFE00B013E0 /* BillPayViewController.m in Sources */,
 				29D29A2115DB5AFA00990F62 /* GooglePlacesObject.m in Sources */,
 				29ECC44C14CCC06C0098653D /* ProductItemViewCell.m in Sources */,
 				29ECC44C14CCC06C00986540 /* ProductItemsTableViewController.m in Sources */,
 				29ECC44C14CCC06C00986546 /* ChatMessagesViewController.m in Sources */,
+				C61E552518E794C1007027C7 /* CurrentBusiness.m in Sources */,
 				C69935B118B969F6008FCF8A /* BillViewController.m in Sources */,
 				C69935B018B969F6008FCF8A /* AppDelegate.m in Sources */,
-				29ECC44C14CCC06C00986549 /* ChatTableView.m in Sources */,
 				C69935D118B969F6008FCF8A /* StoreMapViewController.m in Sources */,
 				29ECC44C14CCC06C00986552 /* LoginViewController.m in Sources */,
 				C69935BB18B969F6008FCF8A /* DataModel.m in Sources */,
 				29ECC44C14CCC06C00986555 /* MessageTableViewCell.m in Sources */,
 				29ECC44C14CCC06C00986558 /* SpeechBubbleView.m in Sources */,
 				29ECC44C14CCC06C0098655B /* TapTalkChatMessage.m in Sources */,
+				C65A68AB191AFB1E00BBDC16 /* DetailProductItemViewController.m in Sources */,
+				C640AD391919F81E00DDA94D /* consumerProfileDataModel.m in Sources */,
 				C6FDD5D3187D087900F4D721 /* BusinessNotificationTableViewController.m in Sources */,
 				29ECC44C14CCC06C0098655E /* ConsumerProfileViewController.m in Sources */,
 				C69935D018B969F6008FCF8A /* StoreMap.m in Sources */,
 				C6FDD5CF187D079600F4D721 /* ServerInteractionManager.m in Sources */,
+				C6AF155118ED3D6C004DBEBA /* UtilityConsumerProfile.m in Sources */,
 				C69935CC18B969F6008FCF8A /* ServicesForBusinessTableViewController.m in Sources */,
 				29ECC44C14CCC06C00986564 /* PublicProfile.m in Sources */,
 				C69935C518B969F6008FCF8A /* MyLocationViewController.m in Sources */,
 				C69935CD18B969F6008FCF8A /* ShakeHandWithBusinessViewController.m in Sources */,
 				29ECC44C14CCC06C0098656C /* RateView.m in Sources */,
 				C69935C118B969F6008FCF8A /* MenuViewController.m in Sources */,
+				C68A65FB18D71049000ABBF8 /* ChatTableView.m in Sources */,
 				C69935C218B969F6008FCF8A /* MeowConfirmationViewController.m in Sources */,
 				29ECC44C14CCC06C0098656F /* TapTalkLooks.m in Sources */,
+				C67C6AE218DF9B03009EF996 /* TapForAll.xcdatamodeld in Sources */,
 				29ECC44C14CCC06C00986572 /* UIAlertView+TapTalkAlerts.m in Sources */,
-				29C1216715EB479B0093168B /* DetailProductItemViewController.m in Sources */,
 				2971AF4A16071AFA0022B72E /* NotificationPermissionViewController.m in Sources */,
+				C6C8ACA918DF9B8F005DAFD6 /* main.m in Sources */,
 				29CDC4B516293F5A002E3D5A /* BusinessProductsUtils.m in Sources */,
+				C6C8ACAD18DF9BBC005DAFD6 /* TapForAllTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -907,8 +963,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2949CC6514589C7200728B87 /* TapTalkTests.m in Sources */,
+				C6AF155218ED3D6C004DBEBA /* UtilityConsumerProfile.m in Sources */,
 				295C3AFE14E65F42000FB813 /* BusinessCustomerProfileManager.m in Sources */,
+				C61E552618E794C1007027C7 /* CurrentBusiness.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -923,18 +980,18 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		2949CC4414589C7200728B87 /* InfoPlist.strings */ = {
+		C6C8ACA418DF9B6B005DAFD6 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				2949CC4514589C7200728B87 /* en */,
+				C6C8ACA518DF9B6B005DAFD6 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		2949CC6014589C7200728B87 /* InfoPlist.strings */ = {
+		C6C8ACB118DF9C1A005DAFD6 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				2949CC6114589C7200728B87 /* en */,
+				C6C8ACB218DF9C1A005DAFD6 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -952,11 +1009,13 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1.1;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -996,11 +1055,13 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 1.1;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1028,17 +1089,22 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 99C03DCCF5AF411B99AB2278 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TapTalk/TapForAll-Prefix.pch";
+				GCC_PREFIX_HEADER = "TapForAll/TapForAll-Prefix.pch";
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "TapTalk/TapForAll-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/TapForAll/TapForAll-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=*]" = "";
+				PROVISIONING_PROFILE = "4CA1FC36-1D2A-429A-AF8F-0F0F1B9CCBEE";
+				"PROVISIONING_PROFILE[sdk=*]" = "4CA1FC36-1D2A-429A-AF8F-0F0F1B9CCBEE";
 				USER_HEADER_SEARCH_PATHS = "";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "";
 				WRAPPER_EXTENSION = app;
@@ -1049,17 +1115,22 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 99C03DCCF5AF411B99AB2278 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TapTalk/TapForAll-Prefix.pch";
+				GCC_PREFIX_HEADER = "TapForAll/TapForAll-Prefix.pch";
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "TapTalk/TapForAll-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/TapForAll/TapForAll-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "1A64A7ED-A950-44DB-924C-38FB03E636AA";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1068,34 +1139,32 @@
 		2949CC6C14589C7200728B87 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TapTalk.app/TapTalk";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TapForAll.app/TapForAll";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TapTalk/TapTalk-Prefix.pch";
-				INFOPLIST_FILE = "TapTalkTests/TapForAllTests-Info.plist";
+				GCC_PREFIX_HEADER = "TapForAll/TapForAll-Prefix.pch";
+				INFOPLIST_FILE = "TapForAllTests/TapForAllTests-Info.plist";
 				PRODUCT_NAME = TapForAllTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
 		2949CC6D14589C7200728B87 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TapTalk.app/TapTalk";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TapForAll.app/TapForAll";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TapTalk/TapTalk-Prefix.pch";
-				INFOPLIST_FILE = "TapTalkTests/TapForAllTests-Info.plist";
+				GCC_PREFIX_HEADER = "TapForAll/TapForAll-Prefix.pch";
+				INFOPLIST_FILE = "TapForAllTests/TapForAllTests-Info.plist";
 				PRODUCT_NAME = TapForAllTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};
@@ -1132,13 +1201,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		2949CC4D14589C7200728B87 /* TapTalk.xcdatamodeld */ = {
+		C67C6AE118DF9B03009EF996 /* TapForAll.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				2949CC4E14589C7200728B87 /* TapTalk.xcdatamodel */,
 			);
-			currentVersion = 2949CC4E14589C7200728B87 /* TapTalk.xcdatamodel */;
-			path = TapTalk.xcdatamodeld;
+			name = TapForAll.xcdatamodeld;
+			path = ../TapForAll/TapForAll.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

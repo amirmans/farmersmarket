@@ -1,6 +1,7 @@
 #import "LoginViewController.h"
 
 #import "DataModel.h"
+#import "CurrentBusiness.h"
 #import "MBProgressHUD.h"
 #import "TapTalkLooks.h"
 #import "UIAlertView+TapTalkAlerts.h"
@@ -23,15 +24,16 @@
 
     [TapTalkLooks setBackgroundImage:self.view];
     [TapTalkLooks setToTapTalkLooks:self.nicknameTextField isActionButton:NO makeItRound:YES];
+    [TapTalkLooks setToTapTalkLooks:self.actionNameButton isActionButton:YES makeItRound:NO];
 
     [businessforThisChatRoom setNumberOfLines:0];
     businessforThisChatRoom.text = [[DataModel sharedDataModelManager] businessName];
     businessforThisChatRoom.text = [businessforThisChatRoom.text stringByAppendingString:@"\'s chatroom"];
     [businessforThisChatRoom sizeToFit];
 
-    [actionNameButton setTitle:@"TapTalk!" forState:UIControlStateNormal];
+    [actionNameButton setTitle:@"Tap to Chat!" forState:UIControlStateNormal];
     self.nicknameTextField.text = [[DataModel sharedDataModelManager] nickname];
-    nicknameInfoLabel.text = @"You can always change your nickname in the account page";
+    nicknameInfoLabel.text = @"You can always change your nickname in the profile tab";
     actionInfoLabel.text = [actionInfoLabel.text stringByAppendingString:[[DataModel sharedDataModelManager] businessName]];
 }
 
@@ -61,7 +63,8 @@
     [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
 
     NSString *userIDString = [NSString stringWithFormat:@"%li", [DataModel sharedDataModelManager].userID];
-    NSDictionary *params = @{@"cmd":@"join",  @"userID":userIDString, @"code":[[DataModel sharedDataModelManager] businessName]};
+    NSString *businessIDString = [NSString stringWithFormat:@"%i",[CurrentBusiness sharedCurrentBusinessManager].business.businessID];
+    NSDictionary *params = @{@"cmd":@"join",  @"userID":userIDString, @"business_id":businessIDString};
     [manager GET:ChatSystemServer parameters:params
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -71,6 +74,7 @@
                   // If the HTTP response code is not "200 OK", then our server API
                   // complained about a problem. This shouldn't happen, but you never
                   // know. We must be prepared to handle such unexpected situations.
+                  NSLog(@"Registered in the chat system with response of %@",operation.responseString);
                   NSRange tempRange = [operation.responseString rangeOfString:@"OK"];
                   if (tempRange.location == NSNotFound) {
                       [UIAlertView showErrorAlert:NSLocalizedString(@"Warning in joining the chatsystem", nil)];
@@ -94,6 +98,8 @@
 - (IBAction)OKAction:(id)sender {
 //    self.cancelWasPushed = FALSE;
     [self postJoinRequest];
+    if ([DataModel sharedDataModelManager].businessMessages != nil)
+            [[DataModel sharedDataModelManager].businessMessages removeAllObjects];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

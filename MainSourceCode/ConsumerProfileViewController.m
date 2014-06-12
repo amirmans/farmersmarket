@@ -11,10 +11,15 @@
 #import "DataModel.h"
 #import "MBProgressHUD.h"
 #import "TapTalkLooks.h"
+#import "ConsumerProfileDataModel.h"
 
 #import "AFNetworking.h"
 
-@interface ConsumerProfileViewController ()
+@interface ConsumerProfileViewController () {
+    NSMutableDictionary *consumerProfileDataDic;
+}
+
+@property (nonatomic, strong) NSDictionary *consumerProfileDataDic;
 
 - (BOOL)validatePassword:(NSString *)pass;
 - (BOOL)validateAllUserInput;
@@ -22,6 +27,8 @@
 - (void)postSaveRequest;
 
 @end
+
+static NSArray *consumerProfileDataArray = nil;
 
 @implementation ConsumerProfileViewController
 
@@ -33,11 +40,21 @@
 @synthesize errorMessageLabel;
 @synthesize ageGroupSegmentedControl;
 @synthesize ageGroupTextField;
+@synthesize resetButton;
+@synthesize zipcodeLabel;
+@synthesize emailLabel;
+@synthesize zipcodeTextField;
+@synthesize emailTextField;
+
+@synthesize consumerProfileDataDic;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        consumerProfileDataDic = [[NSMutableDictionary alloc] init];
+        ConsumerProfileDataModel *consumerProfileDataModel = [[ConsumerProfileDataModel alloc] init];
+        consumerProfileDataArray = consumerProfileDataModel.consumerProfileDataArray;
     }
     return self;
 }
@@ -49,11 +66,28 @@
     [TapTalkLooks setBackgroundImage:self.view];
     [TapTalkLooks setToTapTalkLooks:self.topContainerButton isActionButton:NO makeItRound:YES];
     [TapTalkLooks setToTapTalkLooks:self.lowerContainerButton isActionButton:NO makeItRound:YES];
-
+    [TapTalkLooks setToTapTalkLooks:self.ageGroupSegmentedControl isActionButton:NO makeItRound:YES];
+    [TapTalkLooks setToTapTalkLooks:self.nicknameTextField isActionButton:NO makeItRound:YES];
+    [TapTalkLooks setToTapTalkLooks:self.ageGroupTextField isActionButton:NO makeItRound:YES];
+    [TapTalkLooks setToTapTalkLooks:self.resetButton isActionButton:YES makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:self.saveButton isActionButton:YES makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:emailLabel isActionButton:NO makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:zipcodeLabel isActionButton:NO makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:zipcodeTextField isActionButton:NO makeItRound:YES];
+    [TapTalkLooks setToTapTalkLooks:emailTextField isActionButton:NO makeItRound:YES];
+    
+    ageGroupSegmentedControl.tintColor = [UIColor colorWithRed: 0/255.0 green:0/255.0 blue:255.0f/255.0 alpha:1.0];
+    
     errorMessageLabel.hidden = TRUE;
 
     nicknameTextField.delegate = self;
     [nicknameTextField setReturnKeyType:UIReturnKeyDone];
+    
+    zipcodeTextField.delegate = self;
+    [zipcodeTextField setReturnKeyType:UIReturnKeyDone];
+
+    emailTextField.delegate = self;
+    [emailTextField setReturnKeyType:UIReturnKeyDone];
 
     passwordTextField.secureTextEntry = YES;
     [passwordTextField setReturnKeyType:UIReturnKeyDone];
@@ -110,7 +144,7 @@
 - (BOOL)validateAllUserInput
 {
     BOOL badInformation = FALSE;
-    short nVerificationSteps = 3;
+    short nVerificationSteps = 4;
     short loopIndex = 0;
     
     while ((loopIndex < nVerificationSteps) && (badInformation == FALSE)) {
@@ -124,18 +158,54 @@
                 }
                 
                 break;
-            case 1:
-                if (![self validatePassword:passwordTextField.text]) {
-                    badInformation = TRUE;
-                    errorMessageLabel.hidden = FALSE;
-                    errorMessageLabel.text = @"Password is invalid. Is it more than 5 chars?";
-                    errorMessageLabel.textColor = [UIColor redColor];
+//            case 1:
+//                if (![self validatePassword:passwordTextField.text]) {
+//                    badInformation = TRUE;
+//                    errorMessageLabel.hidden = FALSE;
+//                    errorMessageLabel.text = @"Password is invalid. Is it more than 5 chars?";
+//                    errorMessageLabel.textColor = [UIColor redColor];
+//                }
+//                break;
+//            case 2:
+//                if (![passwordTextField.text isEqualToString:passwordAgainTextField.text])
+//                    badInformation = TRUE;
+//                break;
+            case 2:
+                if (emailTextField.text.length > 0)
+                {
+                    NSString *emailRegEx = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+                    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx];
+                    
+                    if ([emailTest evaluateWithObject:emailTextField.text] == NO) {
+                        badInformation = TRUE;
+                        errorMessageLabel.hidden = FALSE;
+                        errorMessageLabel.text = @"Please enter valid email address";
+                        errorMessageLabel.textColor = [UIColor redColor];
+                    }
+                    else {
+                        
+                    }
                 }
                 break;
-            case 2:
-                if (![passwordTextField.text isEqualToString:passwordAgainTextField.text])
-                    badInformation = TRUE;
+
+            case 3:
+                if (zipcodeTextField.text.length > 0)
+                {
+                    NSString *zipcodeRegEx = @"^[1..9][0-9,-]{4,}?";
+                    NSPredicate *zipcodeTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", zipcodeRegEx];
+                    
+                    if ([zipcodeTest evaluateWithObject:zipcodeTextField.text] == NO) {
+                        badInformation = TRUE;
+                        errorMessageLabel.hidden = FALSE;
+                        errorMessageLabel.text = @"Please enter valid zipcode";
+                        errorMessageLabel.textColor = [UIColor redColor];
+                    }
+                    else {
+                        // it checks to add to the params
+                    }
+                }
                 break;
+
             default:
                 break;
         }
@@ -206,25 +276,30 @@
     NSInteger ageGroup = ageGroupSegmentedControl.selectedSegmentIndex;
     NSString *deviceToken = [[DataModel sharedDataModelManager] deviceToken];
     NSNumber *uid = [NSNumber numberWithLong:[DataModel sharedDataModelManager].userID];
+    
+    [consumerProfileDataDic setObject:emailTextField.text forKey:@"email"];
+    [consumerProfileDataDic setObject:zipcodeTextField.text forKey:@"zipcode"];
+    [consumerProfileDataDic setObject:nicknameTextField.text forKey:@"nickname"];
+    [consumerProfileDataDic setObject:[NSNumber numberWithInteger:ageGroup] forKey:@"age_group"];
+    
     if ([DataModel sharedDataModelManager].userID > 0)
     {
         // notice update method in our server, takes care of both situations with or without device_token
         if (deviceToken != nil)
-            params = @{@"cmd": @"update", @"uid": uid ,@"nickname": nicknameTextField.text,@"password": passwordTextField.text, @"age_group":[NSNumber numberWithInteger:ageGroup], @"device_token":deviceToken};
+            params = @{@"cmd": @"update", @"uid": uid, @"device_token":deviceToken};
         else
-            params = @{@"cmd": @"update", @"uid": uid ,@"nickname": nicknameTextField.text,
-                       @"password": passwordTextField.text, @"age_group":[NSNumber numberWithInteger:ageGroup]};
+            params = @{@"cmd": @"update", @"uid": uid};
     }
     else
     {
         if (deviceToken != nil)
-            params = @{@"cmd": @"join_with_devicetoken", @"nickname": nicknameTextField.text,@"password": passwordTextField.text, @"age_group":[NSNumber numberWithInteger:ageGroup], @"device_token":deviceToken};
+            params = @{@"cmd": @"join_with_devicetoken", @"device_token":deviceToken};
         else
-            params = @{@"cmd": @"join", @"nickname": nicknameTextField.text,
-                   @"password": passwordTextField.text, @"age_group":[NSNumber numberWithInteger:ageGroup]};
+            params = @{@"cmd": @"join"};
     }
+    [consumerProfileDataDic addEntriesFromDictionary:params];
     
-    return params;
+    return consumerProfileDataDic;
     
 }
 
@@ -254,14 +329,20 @@
             }
             else {
                 [[DataModel sharedDataModelManager] setNickname:nicknameTextField.text];
-                [[DataModel sharedDataModelManager] setPassword:passwordAgainTextField.text];
-                // uid is determine by the database. so we set DataModel after we talk to the server
+//                [[DataModel sharedDataModelManager] setPassword:passwordAgainTextField.text];
+                // we set two fields in the database after registering the user - now we are getting those fields
+                //uid is determine by the database. so we set DataModel after we talk to the server
+                //
                 NSDictionary *jsonDictResponse = (NSDictionary *) responseObject;
                 int userID = [[jsonDictResponse objectForKey:@"userID"] intValue];
                 // userID of 0 means, we updated a record with an existing user ID, so we sould not change the exiting userID
                 if (userID != 0)
                     [DataModel sharedDataModelManager].userID = userID;
                 [DataModel sharedDataModelManager].ageGroup = ageGroupSegmentedControl.selectedSegmentIndex;
+                NSString *qrImageFileName = [jsonDictResponse objectForKey:@"qrcode_file"];
+                if ((qrImageFileName != nil) && (qrImageFileName != (id)[NSNull null])) {
+                    [DataModel sharedDataModelManager].qrImageFileName = qrImageFileName;
+                }
                 
                 [UIAlertView showErrorAlert:@"Profile information saved successfully"];
             }

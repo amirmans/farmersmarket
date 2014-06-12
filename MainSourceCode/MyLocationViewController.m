@@ -9,14 +9,14 @@
 #import "MyLocationViewController.h"
 
 // Not good - but for now, this view holds the information about each business and passes them to other view controllers
-#import "Business.h"
-#import "ListofBusinesses.h"
+//#import "Business.h"
+//#import "ListofBusinesses.h"
 
 // To display deails for the business that was tapped
 #import "DetailBusinessViewController.h"
 
 // To display the businessList
-#import "BusinessListTableViewController.h"
+//#import "BusinessListTableViewController.h"
 
 @interface MyLocationViewController () {
 
@@ -65,6 +65,10 @@
 
         locationManager.desiredAccuracy = 10.0f;
         locationManager.distanceFilter = 200.0f;
+//        [locationManager requestAlwaysAuthorization];
+        #ifdef __IPHONE_8_0
+        [locationManager requestWhenInUseAuthorization];
+        #endif
         
         [locationManager startUpdatingLocation];
     }
@@ -79,8 +83,7 @@
     self.title = @"Where?";
     [mapActivityIndicator hidesWhenStopped];
     [mapActivityIndicator startAnimating];
-    ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
-    [businessArrays startGettingListofAllBusinesses];
+
     self.mapView.mapType = MKMapTypeStandard;   // also MKMapTypeSatellite or MKMapTypeHybrid
     [information setTextColor:[UIColor redColor]];
     
@@ -92,9 +95,12 @@
 
 - (void)displayListView:(UIBarButtonItem *)button
 {
-    BusinessListTableViewController *listTableView = [[BusinessListTableViewController alloc] initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:listTableView animated:YES];
-    listTableView = nil;
+//    BusinessListTableViewController *listTableView = [[BusinessListTableViewController alloc] initWithNibName:nil bundle:nil];
+//    [listTableView.listBusinessesActivityIndicator hidesWhenStopped];
+//    [listTableView.listBusinessesActivityIndicator startAnimating];
+//    [self.navigationController pushViewController:listTableView animated:YES];
+//    listTableView = nil;
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)viewDidUnload {
@@ -148,9 +154,9 @@
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation {
-    NSBundle *bundle = [NSBundle mainBundle];
-    NSString *pingImagePath = [bundle pathForResource:@"flag" ofType:@"png"];
-    UIImage *customerPinImage = [UIImage imageWithContentsOfFile:pingImagePath];
+//    NSBundle *bundle = [NSBundle mainBundle];
+//   NSString *pingImagePath = [bundle pathForResource:@"flag" ofType:@"png"];
+//    UIImage *customerPinImage = [UIImage imageWithContentsOfFile:pingImagePath];
     
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
         // We can return nil to let the MapView handle the default annotation view (blue dot):
@@ -186,7 +192,7 @@
         pinView.pinColor = MKPinAnnotationColorGreen;
     }
 
-    customerPinImage = nil;
+//    customerPinImage = nil;
     return pinView;
 }
 
@@ -196,7 +202,7 @@
     [mapActivityIndicator startAnimating];
     [self setResultsLoaded: NO];
     [locationManager startUpdatingLocation];
-    [mapActivityIndicator stopAnimating];
+//    [mapActivityIndicator stopAnimating];
 }
 
 
@@ -209,8 +215,9 @@
  */
 - (void)googlePlacesConnection:(GooglePlacesConnection *)conn didFinishLoadingWithGooglePlacesObjects:(NSMutableArray *)objects {
 
+    [mapActivityIndicator stopAnimating];
     if ([objects count] == 0) {
-        [mapActivityIndicator stopAnimating];
+
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No matches found near this location from google"
                                                         message:@"Try another place name or address"
                                                        delegate:nil cancelButtonTitle:@"OK"
@@ -227,8 +234,6 @@
         }
 
         [self addAnnotationsForBusinesses];
-        [mapActivityIndicator stopAnimating];
-        
     }
 }
 

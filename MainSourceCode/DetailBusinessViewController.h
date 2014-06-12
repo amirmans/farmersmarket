@@ -17,23 +17,27 @@
     int isCustomer;
     Business *biz;
 
-    __weak IBOutlet UIButton *addToCustomersOrService;
+    __weak IBOutlet UIButton *enterAndGetService;
 }
 
 @property(weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property(weak, nonatomic) IBOutlet UITextView *contactInfo;
 @property(weak, nonatomic) IBOutlet UITextField *rating;
 @property(weak, nonatomic) IBOutlet UITextView *typesOfBusiness;
+@property (weak, nonatomic) IBOutlet UIButton *showCodeButton;
 
 @property(atomic, retain) NSString *distanceInMileString;
 @property(atomic, retain) NSString *businessNameData;
 @property(atomic, retain) NSString *customerProfileName;
 @property(nonatomic, assign) int isCustomer;
+@property (strong, nonatomic) IBOutlet UILabel *ratingLabel;
 
 @property(atomic, retain) Business *biz;
 
 - (id)initWithBusinessObject:(Business *)biz;
-- (IBAction)addToCustomersOrShowServicePage:(id)sender;
+- (IBAction)enterAndGetServiceAction:(id)sender;
+- (IBAction)showCode:(id)sender;
+
 - (void)doPopulateDisplayFields;
 
 

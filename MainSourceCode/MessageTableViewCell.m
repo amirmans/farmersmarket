@@ -3,6 +3,7 @@
 #import "SpeechBubbleView.h"
 
 static UIColor *color = nil;
+static NSDateFormatter *formatter = nil;
 
 @implementation MessageTableViewCell
 
@@ -42,6 +43,7 @@ static UIColor *color = nil;
 - (void)dealloc {
     [bubbleView release];
     [label release];
+//    [formatter release];
     [super dealloc];
 }
 
@@ -68,6 +70,12 @@ static UIColor *color = nil;
         point.x = self.bounds.size.width - message.bubbleSize.width;
         label.textAlignment = NSTextAlignmentRight; //Compatibility
     }
+    else if ([message isSentByBusiness]) {
+        bubbleType = BubbleTypeCenter;
+        senderName = NSLocalizedString(@"Business", nil);
+        point.x = (self.bounds.size.width/3) - 10;
+        label.textAlignment = NSTextAlignmentCenter; //Compatibility
+    }
     else {
         bubbleType = BubbleTypeLefthand;
         senderName = message.sender;
@@ -84,17 +92,26 @@ static UIColor *color = nil;
     [bubbleView setText:tmpStr bubbleType:bubbleType];
 
     // Format the message date
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateStyle:NSDateFormatterShortStyle];
-    [formatter setTimeStyle:NSDateFormatterShortStyle];
-    [formatter setDoesRelativeDateFormatting:YES];
+    if (formatter == nil) {
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateStyle:NSDateFormatterShortStyle];
+        [formatter setTimeStyle:NSDateFormatterShortStyle];
+        [formatter setDoesRelativeDateFormatting:YES];
+    }
     NSString *dateString = [formatter stringFromDate:message.dateAdded];
-    [formatter release];
 
     // Set the sender's name and date on the label
     label.text = [NSString stringWithFormat:@"%@ @ %@", senderName, dateString];
     [label sizeToFit];
-    label.frame = CGRectMake(8, message.bubbleSize.height, self.contentView.bounds.size.width - 16, 16);
+
+//    label.frame = CGRectMake(8, message.bubbleSize.height, self.contentView.bounds.size.width - 16, 16);
+    if (bubbleType == BubbleTypeCenter) {
+        label.frame = CGRectMake(40, message.bubbleSize.height-8, self.contentView.bounds.size.width - 16, 16);
+    } else {
+        label.frame = CGRectMake(5, message.bubbleSize.height-8, self.contentView.bounds.size.width - 16, 16);
+    }
+    
+        
 //    NSLog(@"chat massages %@ was rect.size.width was: %f, message.bubbleSize was: %f", tmpStr, rect.size.width, message.bubbleSize.width);
 }
 

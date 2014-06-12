@@ -31,7 +31,7 @@
 @synthesize priceTextField;
 @synthesize ratingTextField;
 @synthesize complementaryProductsText;
-@synthesize otherBoughtButton;
+@synthesize similarItemsButton;
 @synthesize reducedPriceEndDate;
 @synthesize reducedPriceTextField;
 @synthesize reducedPriceLabel;
@@ -113,7 +113,18 @@
     complementaryProductsText.text = [productDictionary objectForKey:@"ComplementaryProducts"];
     NSURL *imageURL = [NSURL URLWithString:[productDictionary objectForKey:@"LargePicture"]];
     [largePicture setImageWithURL:imageURL placeholderImage:nil options:SDWebImageProgressiveDownload];
-    [TapTalkLooks setToTapTalkLooks:otherBoughtButton isActionButton:YES makeItRound:NO];
+    //conform the looks of all the boxes to tap for all's look
+    [TapTalkLooks setToTapTalkLooks:similarItemsButton isActionButton:YES makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:rewardsNeededToBuyTextField isActionButton:YES makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:ratingTextField isActionButton:YES makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:reducedPriceTextField isActionButton:YES makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:reducedPriceEndDate isActionButton:YES makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:rewardsTextField isActionButton:YES makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:longDescription isActionButton:YES makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:priceTextField isActionButton:YES makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:complementaryProductsText isActionButton:YES makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:longDescription isActionButton:NO makeItRound:YES];
+    
     [self displayReducedPrice];
     [self displayExpirationDate];
 }
@@ -135,12 +146,13 @@
     [self setRewardsNeededToBuyTextField:nil];
     [self setComplementaryProductsText:nil];
     [self setRecipesButton:nil];
-    [self setOtherBoughtButton:nil];
+//    [self setOtherBoughtButton:nil];
     [super viewDidUnload];
 }
 - (IBAction)recipesAction:(id)sender {
 }
 
-- (IBAction)otherBoughtAction:(id)sender {
+- (IBAction)similarItemsAction:(id)sender {
 }
+
 @end

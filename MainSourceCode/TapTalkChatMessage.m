@@ -10,6 +10,7 @@
 static NSString *const SenderNameKey = @"sender";
 static NSString *const DateKey = @"dateAdded";
 static NSString *const TextKey = @"textChat";
+static NSString *const senderIDKey = @"sender_id";
 
 
 // New additions for interact with central database to get others chat messages 
@@ -27,11 +28,12 @@ static NSString *const TextKey = @"textChat";
 @implementation TapTalkChatMessage
 
 @synthesize sender;
+@synthesize senderID;
 @synthesize dateAdded;
 @synthesize textChat;
 @synthesize bubbleSize;
 @synthesize myDelegate;
-@synthesize messages;
+//@synthesize messages;
 @synthesize connectionIsAvailable;
 @synthesize responseData;
 @synthesize connection;
@@ -56,8 +58,7 @@ static NSString *const TextKey = @"textChat";
         self.sender = [decoder decodeObjectForKey:SenderNameKey];
         self.dateAdded = [decoder decodeObjectForKey:DateKey];
         self.textChat = [decoder decodeObjectForKey:TextKey];
-
-        connectionIsAvailable = TRUE;
+        self.senderID = [[decoder decodeObjectForKey:senderIDKey] intValue];
     }
     return self;
 }
@@ -66,6 +67,7 @@ static NSString *const TextKey = @"textChat";
     [encoder encodeObject:self.sender forKey:SenderNameKey];
     [encoder encodeObject:self.dateAdded forKey:DateKey];
     [encoder encodeObject:self.textChat forKey:TextKey];
+    [encoder encodeObject:[NSString localizedStringWithFormat:@"%@", senderIDKey] forKey:senderIDKey];
 }
 
 - (id)initWithDelegate:(id)del {
@@ -87,6 +89,7 @@ static NSString *const TextKey = @"textChat";
 - (void)setValuesFrom:(NSDictionary *)messageDict {
     self.textChat = [messageDict valueForKey:TextKey];
     self.sender = [messageDict valueForKey:SenderNameKey];
+    self.senderID = [[messageDict valueForKey:senderIDKey] intValue];
 
     //date stuff
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -97,20 +100,36 @@ static NSString *const TextKey = @"textChat";
 }
 
 - (BOOL)isSentByUser {
-    NSString *tempName = [DataModel sharedDataModelManager].nickname;
-    return ((self.sender == nil) || ([self.sender isEqualToString:tempName]));
+//    NSString *tempName = [DataModel sharedDataModelManager].nickname;
+    NSInteger me = [DataModel sharedDataModelManager].userID;
+//    return ((self.sender == nil) || ([self.sender isEqualToString:tempName]));
+    return ((self.senderID == me)?TRUE:FALSE);
+}
+
+- (BOOL)isSentByBusiness {
+    NSInteger bizMasterChatter = [DataModel sharedDataModelManager].chat_master_uid;
+//    NSInteger userID = [DataModel sharedDataModelManager].userID;
+    return (bizMasterChatter == self.senderID);
+}
+
+
+- (void)doToggleUpdatingChatMessages {
+    if ([DataModel sharedDataModelManager].shouldDownloadChatMessages) {
+        [DataModel sharedDataModelManager].shouldDownloadChatMessages = false;
+    } else {
+        [DataModel sharedDataModelManager].shouldDownloadChatMessages = TRUE;
+        [self loadMessagesFromServer];
+    }
+    
 }
 
 
 - (void)loadMessagesFromServer {
     if (connectionIsAvailable != TRUE)
         return;
-//    MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    hud.labelText = NSLocalizedString(@"Loading messages", @"");
-    // remember chatSystemURL is loaded from the database
-    NSString *url = [DataModel sharedDataModelManager].chatSystemURL;
-    url = [url stringByAppendingString:LoadChatServerURL_APPENDIX];
-    url = [url stringByAppendingString:@"?past=0&t=1339093812"];
+
+    NSString *chatRoom = [DataModel sharedDataModelManager].chatSystemURL;
+    NSString *url = [NSString stringWithFormat:@"%@?chatroom=%@&past=%i&max_rows=%i", LoadChatServer,chatRoom, TimeIntervalForLoadingChatMessages, MaxRowsForLoadingChatMessages];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:10];
@@ -118,18 +137,13 @@ static NSString *const TextKey = @"textChat";
 
     NSLog(@"%@ was called to load messages", url);
 
-    // this method could be called even before joining the chat room so in order to fetch
-    // messages from the server we set it, knowing that joining will be done for sure
-//    [DataModel sharedDataModelManager].joinedChat = TRUE;
     connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
     if (connection) {
-//        responseData = [NSMutableData data];
         if (self.responseData != nil) {
             [self.responseData release];
         }
         self.responseData = [[NSMutableData data] retain];
         connectionIsAvailable = FALSE;
-
     }
     else {
         NSLog(@"connection to load chat messages failed");
@@ -157,11 +171,11 @@ static NSString *const TextKey = @"textChat";
     SBJsonParser *json = [[SBJsonParser alloc] init];
 
     NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-    self.messages = [json objectWithString:responseString];
-    if (self.messages != nil) {
+//    self.messages = [json objectWithString:responseString];
+    if (responseString != nil) {
 //        NSLog(@"Got %l messages from the server", self.messages.count);
 //        [DataModel sharedDataModelManager].messages  =  self.messages;
-        [myDelegate tapTalkChatMessageDidFinishLoadingData:self.messages];
+        [myDelegate tapTalkChatMessageDidFinishLoadingData:[json objectWithString:responseString]];
     }
     else {
         // TODO

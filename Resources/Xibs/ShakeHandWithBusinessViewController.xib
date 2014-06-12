@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1552" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <deployment defaultVersion="1792" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShakeHandWithBusinessViewController">
             <connections>
+                <outlet property="InstructionTextView" destination="7tz-O7-qEv" id="h14-rh-oW6"/>
+                <outlet property="cancelButton" destination="9Q8-Nd-HNL" id="Q6U-ij-r8x"/>
+                <outlet property="doneButton" destination="Hd8-jZ-UD5" id="AL1-XL-sM5"/>
                 <outlet property="feedbackTextView" destination="bL3-Z7-AdK" id="aE3-cM-iVp"/>
-                <outlet property="nextButton" destination="Hd8-jZ-UD5" id="UoD-vR-8s7"/>
+                <outlet property="instructionTextView" destination="7tz-O7-qEv" id="Gtu-SA-LQB"/>
                 <outlet property="qrImageView" destination="Ze7-eC-rVy" id="sSY-s1-eP1"/>
                 <outlet property="view" destination="1" id="3"/>
             </connections>
@@ -19,17 +22,18 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ze7-eC-rVy">
-                    <rect key="frame" x="40" y="177" width="240" height="152"/>
+                    <rect key="frame" x="60" y="162" width="200" height="200"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bL3-Z7-AdK">
-                    <rect key="frame" x="40" y="336" width="240" height="66"/>
+                    <rect key="frame" x="40" y="370" width="240" height="82"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="Let this QR code be scanned, then you're set to chat and get notifications (if you wish too). " translatesAutoresizingMaskIntoConstraints="NO" id="7tz-O7-qEv">
-                    <rect key="frame" x="40" y="95" width="240" height="76"/>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="Let this QR code be scanned, then you're set to chat and get notifications (if you wish too). " textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7tz-O7-qEv">
+                    <rect key="frame" x="40" y="81" width="240" height="76"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="1" green="0.80000000000000004" blue="0.40000000000000002" alpha="1" colorSpace="deviceRGB"/>
                     <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -37,11 +41,24 @@
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hd8-jZ-UD5">
-                    <rect key="frame" x="90" y="440" width="141" height="30"/>
+                    <rect key="frame" x="159" y="469" width="141" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Proceed">
+                    <state key="normal" title="Enter">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
+                    <connections>
+                        <action selector="DoneAction:" destination="-1" eventType="touchUpInside" id="HFn-8j-di3"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Q8-Nd-HNL">
+                    <rect key="frame" x="20" y="469" width="117" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Cancel">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="CancelAction:" destination="-1" eventType="touchUpInside" id="Xkw-IR-d35"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="0.80000000000000004" blue="0.40000000000000002" alpha="1" colorSpace="deviceRGB"/>
