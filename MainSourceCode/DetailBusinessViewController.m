@@ -16,10 +16,18 @@
 #import "TapTalkLooks.h"
 #import "CurrentBusiness.h"
 
+#import "KASlideShow.h"
+#import "JBKenBurnsView.h"
+#import "MBProgressHUD.h"
 
-@interface DetailBusinessViewController ()
+
+@interface DetailBusinessViewController () {
+    KASlideShow *picturesView;
+}
+
 
 @end
+
 
 @implementation DetailBusinessViewController
 
@@ -70,6 +78,7 @@
     return self;
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -80,8 +89,9 @@
     [TapTalkLooks setBackgroundImage:self.view];
     [TapTalkLooks setToTapTalkLooks:enterAndGetService isActionButton:YES makeItRound:NO];
     [TapTalkLooks setToTapTalkLooks:ratingLabel isActionButton:NO makeItRound:NO];
-//    ratingLabel.textColor = [UIColor blueColor];
-
+    
+    picturesView = nil;
+    
     if (self.isCustomer == 1) {
         [enterAndGetService setTitle:@"Enter" forState:UIControlStateNormal];
         showCodeButton.hidden = false;
@@ -108,7 +118,55 @@
     [activityIndicator startAnimating];
     self.title = businessNameData;
     
+    if (biz.picturesString != nil) {
+        CGRect picturesViewFrame = CGRectMake(9, 71, 302, 177);
+        picturesView = [[KASlideShow alloc] initWithFrame:picturesViewFrame];
+        [self.view addSubview:picturesView];
+        
+        [picturesView setDelay:3]; // Delay between transitions
+        [picturesView setTransitionDuration:2]; // Transition duration
+        [picturesView setTransitionType:KASlideShowTransitionFade]; // Choose a transition type (fade or slide)
+        [picturesView setImagesContentMode:UIViewContentModeScaleAspectFill]; // Choose a content mode for images to display
+
+        NSArray *bizpictureArray = [biz.picturesString componentsSeparatedByString:@","];
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *imageRelativePathString;
+            UIImage  *image;
+            for (imageRelativePathString in bizpictureArray) {
+                // construct the absolute path for the image
+                imageRelativePathString = [imageRelativePathString stringByTrimmingCharactersInSet:
+                                           [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                NSString *imageURLString = BusinessCustomerIndividualDirectory;
+                imageURLString = [imageURLString stringByAppendingFormat:@"//%i//%@",biz.businessID, imageRelativePathString];
+                image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURLString]]];
+                if (image != nil) {
+                    [picturesView addImage:image];
+                }
+                else {
+                    NSLog(@"Image %@ didn't exist", imageURLString);
+                }
+            }
+            picturesView.delegate = self;
+            
+            // we stated to show it in the parent view
+            //        [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [picturesView start];
+        });
+    }
+    else {
+        typesOfBusiness.hidden = FALSE;
+    }
+    
     [self doPopulateDisplayFields];
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    
+    if (picturesView != nil)
+        [picturesView stop];
+    
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidUnload {
@@ -118,6 +176,7 @@
     [self setTypesOfBusiness:nil];
     [self setActivityIndicator:nil];
     enterAndGetService = nil;
+    
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -163,27 +222,29 @@
 {
     [activityIndicator stopAnimating];
     if (biz.businessError) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No additional information was for this location from google"
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No additional information from google"
                                                         message:@"Try another place name or wait for a few minutes"
                                                        delegate:nil cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
-    } else {        
-        NSString *tempText = biz.businessTypes;
-        if (tempText == nil)
-        {
-            tempText =@"Business Types: Not Known";
+    } else {
+        if (! typesOfBusiness.isHidden) {
+            NSString *tempText = biz.businessTypes;
+            if (tempText == nil)
+            {
+                tempText =@"Business Types: Not Known";
+            }
+            if (distanceInMileString !=nil)
+                tempText = [NSString stringWithFormat:@"\n%@\n%@%@", tempText, distanceInMileString, @" miles from you"];
+            else if (biz.neighborhood)
+                tempText = [NSString stringWithFormat:@"%@\n\nNeighborhood: %@", tempText, biz.neighborhood];
+            else
+                tempText = [NSString stringWithFormat:@"%@\n%@", tempText, @"N/A"];
+            tempText = [tempText capitalizedString];
+            
+            typesOfBusiness.textAlignment =  NSTextAlignmentCenter;
+            typesOfBusiness.text = tempText;
         }
-        if (distanceInMileString !=nil)
-            tempText = [NSString stringWithFormat:@"%@\n%@%@", tempText, distanceInMileString, @" miles from you"];
-        else if (biz.neighborhood)
-            tempText = [NSString stringWithFormat:@"%@\nNeighborhood: %@", tempText, biz.neighborhood];
-        else
-            tempText = [NSString stringWithFormat:@"%@\n%@", tempText, @"N/A"];
-        tempText = [tempText capitalizedString];
-        
-        typesOfBusiness.textAlignment =  NSTextAlignmentCenter;
-        typesOfBusiness.text = tempText;
         
         if (biz.address == nil)
             contactInfo.text= @"Address not provided";

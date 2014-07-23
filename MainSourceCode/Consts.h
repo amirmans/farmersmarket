@@ -14,6 +14,9 @@
 #define ConsumerProfileServer @"http://mydoosts.com/taptalk/profilesystem/consumerprofile.php"
 //#define ConsumerProfileServer @"http://localhost/TapForAll/profilesystem/consumerprofile.php"
 #define ChatSystemServer @"http://mydoosts.com/taptalk/chatsystem/index.php"
+
+//data directories
+#define BusinessCustomerIndividualDirectory @"http://www.mydoosts.com/taptalk/customer_files/"
 #define BusinessCustomerIconDirectory @"http://www.mydoosts.com/taptalk/customer_files/icons/"
 #define QRImageDomain @"http://www.mydoosts.com/taptalk/consumer_files/qr_images/"
 #define BusinessCustomersMapDirectory @"http://www.mydoosts.com/taptalk/customer_files/maps/"
@@ -28,10 +31,8 @@
 static NSString *const NicknameKey = @"nickname";
 static NSString *const PasswordKey = @"password";
 static NSString *const JoinedChatKey = @"joinedChat";
-
 static NSString *const DeviceTokenKey = @"deviceToken";
 static NSString *const EmailAddressKey = @"email1";
-//TODO
 static NSString *const AgeGroupKey = @"age_group";
 static NSString *const UserIDKey = @"userID";
 

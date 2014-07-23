@@ -162,12 +162,13 @@
 {
     connectionIsActive          = NO;
 
-    SBJsonParser *json          = [[SBJsonParser alloc] init];
+//    SBJson4Parser *json          = [[SBJson4Parser alloc] init];
     
-	NSString *responseString    = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];	
+//	NSString *responseString    = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
 	NSError *jsonError          = nil;
 	
-	NSDictionary *parsedJSON    = [json objectWithString:responseString];
+//    NSDictionary *parsedJSON = [json objectWithString:responseString];
+    NSDictionary *parsedJSON = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
     
 	if (parsedJSON !=nil)
     {

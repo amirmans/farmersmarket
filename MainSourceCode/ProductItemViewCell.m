@@ -22,6 +22,12 @@
 @synthesize title;
 @synthesize descriptionTextView;
 @synthesize specialLabel;
+@synthesize field_1_label;
+@synthesize field_2_label;
+@synthesize field_1_textview;
+@synthesize field_2_textview;
+@synthesize priceTextField;
+
 
 
 - (id)initWithCoder:(NSCoder *)aDecoder

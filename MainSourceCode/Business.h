@@ -40,6 +40,7 @@
     NSString *paymentProcessingID;
     NSString *email;
     NSString *map_image_url;
+    NSString *picturesString;
     NSInteger chat_master_uid;
 
     GooglePlacesConnection *googlePlacesConnection;
@@ -80,6 +81,7 @@
 @property(nonatomic, retain) NSError *businessError;
 @property(atomic, assign) NSInteger chat_master_uid;
 @property(nonatomic, strong) NSString *map_image_url;
+@property(nonatomic, strong) NSString *picturesString;
 
 
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;

@@ -2,6 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Private</key>
+	<dict>
+		<key>main choices</key>
+		<dict>
+			<key>Tap For All</key>
+			<array>
+				<string>Inclusive, secure chat</string>
+				<string>Pay</string>
+			</array>
+		</dict>
+	</dict>
 	<key>boutique</key>
 	<dict>
 		<key>main choices</key>

@@ -54,7 +54,7 @@
 - (void)postJoinRequest {
     // Show an activity spinner that blocks the whole screen
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = NSLocalizedString(@"Connecting to join the chatroom", @"");
+    hud.labelText = NSLocalizedString(@"Joining the chatroom", @"");
 
     // Create the HTTP request object for our URL
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

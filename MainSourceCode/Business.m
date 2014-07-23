@@ -8,7 +8,7 @@
 
 #import "Business.h"
 #import "GooglePlacesConnection.h"
-#import "SBJsonParser.h"
+#import "SBJson4Parser.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIAlertView+TapTalkAlerts.h"
@@ -52,6 +52,7 @@
 @synthesize email;
 @synthesize chat_master_uid;
 @synthesize map_image_url;
+@synthesize picturesString;
 
 
 - (void)initMemberData {
@@ -77,6 +78,7 @@
     serverManager.postProcessesDelegate = self;
     chat_master_uid = 0;
     map_image_url = nil;
+    picturesString = nil;
 }
 
 - (int)isCustomer {
@@ -104,29 +106,10 @@
     //parse out the json data
     NSError* error =nil;
 
-    NSDictionary *tempBusinessProducts = [NSJSONSerialization
-                          JSONObjectWithData:responseData
-                          options:kNilOptions
-                          error:&error];
-    businessProducts = [tempBusinessProducts objectForKey:@"products"];
-
-    if ([businessProducts isKindOfClass: [NSDictionary class]]) {
-    }
-    else if ([businessProducts isKindOfClass:[NSString class]]) {
-        NSData* tempData = [(NSString* )businessProducts  dataUsingEncoding:NSUTF8StringEncoding];
-        NSPropertyListFormat format;
-        businessProducts = [NSPropertyListSerialization propertyListWithData:tempData options:NSPropertyListXMLFormat_v1_0 format:&format error:&error];
-        if(error){
-            NSLog(@"Error: %@",error);
-        }
-    }
-    else
-    {
-        NSLog(@"in Business:fetchResponseData for %@ - I don't know what I am.", businessName);
-        NSMutableDictionary* errorUserInfo = [NSMutableDictionary dictionary];
-        [errorUserInfo setValue:@"No product items found!" forKey:NSLocalizedDescriptionKey];
-        error = [NSError errorWithDomain:@"Business:loadProducts" code:-1 userInfo:errorUserInfo];
-    }
+    businessProducts = [NSJSONSerialization
+                        JSONObjectWithData:responseData
+                        options:kNilOptions
+                        error:&error];
     if (error)
     {
         [UIAlertView showErrorAlert:[error localizedDescription]];
@@ -203,6 +186,7 @@
     }
     businessTypes = [self mutableStringFromDataDictionary:data forKey:@"businessTypes"];
     neighborhood = [self stringFromDataDictionary:data forKey:@"neighborhood"];
+    address = [self stringFromDataDictionary:data forKey:@"address"];
     customerProfileName = [self stringFromDataDictionary:data forKey:@"customerProfileName"];
     image = [data objectForKey:@"icon"];
     businessName = [self stringFromDataDictionary:data forKey:@"name"];
@@ -210,6 +194,7 @@
     businessID = [[data objectForKey:@"businessID"] intValue];
     chat_master_uid = [self integerFromDataDictionary:data forKey:@"chat_master_uid"];
     map_image_url = [self stringFromDataDictionary:data forKey:@"map_image_url"];
+    picturesString = [self stringFromDataDictionary:data forKey:@"pictures"];
  
     return self;
 }
@@ -270,6 +255,7 @@
                         sms_no = phone;
                     }
                     map_image_url = [self stringFromDataDictionary:responseDictionary forKey:@"map_image_url"];
+                    picturesString = [self stringFromDataDictionary:responseDictionary forKey:@"pictures"];
 
                     NSString *iconPath = [NSString stringWithFormat:@"%@", [responseDictionary valueForKey:@"icon"]];
                     if (iconPath != nil) {

@@ -13,11 +13,22 @@
 #import "ProductItemsTableViewController.h"
 #import "StoreMapViewController.h"
 #import "TapTalkLooks.h"
+#import "MBProgressHUD.h"
+
+@interface ServicesForBusinessTableViewController ()
+
+
+@property (strong, nonatomic) NSTimer *timerToLoadProducts;
+
+- (void)displayProduct;
+
+@end
 
 
 @implementation ServicesForBusinessTableViewController
 
 @synthesize biz;
+@synthesize timerToLoadProducts;
 
 /*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -37,6 +48,7 @@
         mainChoices = onlyMainChoices;
         chosenMainMenu = chosenItem;
         biz = argBiz;
+        timerToLoadProducts = nil;
     }
 
     return self;
@@ -161,16 +173,36 @@
 
         if (whileIndex == 4) {
             if (([tmpStr rangeOfString:@"items"].location != NSNotFound) || ([tmpStr rangeOfString:@"have"].location != NSNotFound)) {
-                //at this point we should have already loaded the businessProducts
-                ProductItemsTableViewController *showItemsTableViewController = [[ProductItemsTableViewController alloc]
-                        initWithNibName:nil bundle:nil data:biz.businessProducts];
-                showItemsTableViewController.title = [NSString stringWithFormat:@"What %@ has for you", biz.businessName];
-                [self.navigationController pushViewController:showItemsTableViewController animated:YES];
+                if (biz.isProductListLoaded) {
+                    [self displayProduct];
+                }
+                else {
+                    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                    timerToLoadProducts = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(displayProduct) userInfo:nil repeats:YES];
+                }
             }
         }
 
         whileIndex++;
     }  // while
+
+}
+
+- (void)displayProduct {
+    if (biz.isProductListLoaded) {
+        //at this point we should have already loaded the businessProducts
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        ProductItemsTableViewController *showItemsTableViewController = [[ProductItemsTableViewController alloc]
+                                                                         initWithNibName:nil bundle:nil data:biz.businessProducts];
+        showItemsTableViewController.title = [NSString stringWithFormat:@"What %@ has for you", biz.businessName];
+        [self.navigationController pushViewController:showItemsTableViewController animated:YES];
+        
+        if (timerToLoadProducts != nil)
+        {
+            [timerToLoadProducts invalidate];
+            timerToLoadProducts = nil;
+        }
+    }
 
 }
 

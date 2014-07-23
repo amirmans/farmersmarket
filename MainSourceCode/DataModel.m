@@ -16,6 +16,7 @@
 @synthesize userID;
 @synthesize shouldDownloadChatMessages;
 @synthesize qrImageFileName;
+@synthesize zipcode;
 
 static DataModel *sharedDataModel = nil;
 
@@ -171,6 +172,10 @@ static DataModel *sharedDataModel = nil;
     [[NSUserDefaults standardUserDefaults] setObject:emailAddr forKey:EmailAddressKey];
 }
 
+- (NSString *)emailAddress {
+    return [[NSUserDefaults standardUserDefaults] stringForKey:EmailAddressKey];
+}
+
 
 - (NSString *)password {
     return [[NSUserDefaults standardUserDefaults] stringForKey:PasswordKey];
@@ -180,6 +185,15 @@ static DataModel *sharedDataModel = nil;
     [[NSUserDefaults standardUserDefaults] setObject:string forKey:PasswordKey];
 }
 
+- (NSString *)zipcode {
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"Zipcode"] == nil) {
+        return @"";
+    }
+    return [[NSUserDefaults standardUserDefaults] stringForKey:@"Zipcode"];
+}
 
+- (void)setZipcode:(NSString *)zip {
+    [[NSUserDefaults standardUserDefaults] setObject:zip forKey:@"Zipcode"];
+}
 
 @end

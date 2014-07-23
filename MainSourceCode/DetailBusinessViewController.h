@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "Business.h"
 #import "GooglePlacesConnection.h"
+#import "KASlideShow.h"
 
-@interface DetailBusinessViewController : UIViewController {
+@interface DetailBusinessViewController : UIViewController <KASlideShowDelegate> {
     NSString *businessNameData;
     NSString *customerProfileName;
     NSString *distanceInMileString;

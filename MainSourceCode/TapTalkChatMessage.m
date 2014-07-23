@@ -1,6 +1,6 @@
 #import "TapTalkChatMessage.h"
 #import "UIAlertView+TapTalkAlerts.h"
-#import "SBJsonParser.h"
+#import "SBJson4Parser.h"
 #import "DataModel.h"
 //
 //static NSString* const SenderNameKey = @"SenderName";
@@ -168,14 +168,16 @@ static NSString *const senderIDKey = @"sender_id";
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)conn {
-    SBJsonParser *json = [[SBJsonParser alloc] init];
+//    SBJson4Parser *json = [[SBJson4Parser alloc] init];
 
     NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
 //    self.messages = [json objectWithString:responseString];
     if (responseString != nil) {
+        NSError *jsonError;
 //        NSLog(@"Got %l messages from the server", self.messages.count);
 //        [DataModel sharedDataModelManager].messages  =  self.messages;
-        [myDelegate tapTalkChatMessageDidFinishLoadingData:[json objectWithString:responseString]];
+        NSMutableArray *parsedJSON = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&jsonError];
+        [myDelegate tapTalkChatMessageDidFinishLoadingData:parsedJSON];
     }
     else {
         // TODO

@@ -26,9 +26,7 @@
 @property(atomic, retain) NSArray *productItems;
 @property(nonatomic, retain) NSArray *filteredProductItems;
 @property(atomic, retain) NSArray *sections;
-
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
-
 @property (strong, nonatomic) IBOutlet UISearchDisplayController *searchDisplayController;
 
 

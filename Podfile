@@ -1,6 +1,6 @@
-platform :ios, '7.0'
+platform :ios, '8.0'
 pod 'AFNetworking'
-pod 'SBJson', '~>3.2'
+pod 'SBJson4', '~> 4.0.0'
 pod 'SDWebImage'
 pod 'MBProgressHUD'
 pod 'Reachability'

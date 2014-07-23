@@ -132,6 +132,8 @@ static NSArray *consumerProfileDataArray = nil;
     int ageGroupfromDefault = [[DataModel sharedDataModelManager] ageGroup];
     ageGroupSegmentedControl.selectedSegmentIndex = ageGroupfromDefault;
     ageGroupTextField.text = [ageGroupSegmentedControl titleForSegmentAtIndex:ageGroupfromDefault];
+    zipcodeTextField.text = [[DataModel sharedDataModelManager] zipcode];
+    emailTextField.text = [[DataModel sharedDataModelManager] emailAddress];
 }
 
 - (BOOL)validatePassword:(NSString *)pass {
@@ -343,6 +345,8 @@ static NSArray *consumerProfileDataArray = nil;
                 if ((qrImageFileName != nil) && (qrImageFileName != (id)[NSNull null])) {
                     [DataModel sharedDataModelManager].qrImageFileName = qrImageFileName;
                 }
+                [DataModel sharedDataModelManager].zipcode = zipcodeTextField.text;
+                [DataModel sharedDataModelManager].emailAddress = emailTextField.text;
                 
                 [UIAlertView showErrorAlert:@"Profile information saved successfully"];
             }

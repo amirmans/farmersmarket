@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JBKenBurnsView.h"
 
 @interface DetailProductItemViewController : UIViewController {
     NSDictionary *productDictionary;
@@ -19,20 +20,21 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *reducedPriceTextField;
 @property (nonatomic, retain) NSDictionary *productDictionary;
-@property (weak, nonatomic) IBOutlet UIImageView *largePicture;
+@property (strong, nonatomic) IBOutlet JBKenBurnsView *picturesView;
+
 @property (weak, nonatomic) IBOutlet UITextView *longDescription;
 @property (weak, nonatomic) IBOutlet UITextField *rewardsTextField;
 @property (weak, nonatomic) IBOutlet UITextField *priceTextField;
 @property (weak, nonatomic) IBOutlet UITextField *rewardsNeededToBuyTextField;
 @property (weak, nonatomic) IBOutlet UITextField *ratingTextField;
-@property (weak, nonatomic) IBOutlet UITextField *complementaryProductsText;
-@property (weak, nonatomic) IBOutlet UIButton *recipesButton;
-@property (strong, nonatomic) IBOutlet UIButton *similarItemsButton;
-
 @property (weak, nonatomic) IBOutlet UILabel *reducedPriceLabel;
+@property (strong, nonatomic) IBOutlet UILabel *runtimeField1Label;
+@property (strong, nonatomic) IBOutlet UITextField *runtimeField1TextField;
+@property (strong, nonatomic) IBOutlet UIButton *moreInformationLabel;
 
-- (IBAction)recipesAction:(id)sender;
-- (IBAction)similarItemsAction:(id)sender;
+
+
+- (IBAction)moreInformationAction:(id)sender;
 
 
 @end

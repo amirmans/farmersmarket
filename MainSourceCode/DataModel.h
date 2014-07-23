@@ -73,6 +73,7 @@
 @property(nonatomic, retain) NSMutableArray *businessMessages;
 @property(atomic, assign) BOOL shouldDownloadChatMessages;
 @property(nonatomic, strong) NSString *qrImageFileName;
+@property(nonatomic, strong) NSString *zipcode;
 
 - (void)buildBusinessChatMessages;
 

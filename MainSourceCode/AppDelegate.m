@@ -122,8 +122,12 @@
     messagesImage = nil;
     
     #ifdef __IPHONE_8_0
-    [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
     [[UIApplication sharedApplication] registerForRemoteNotifications];
+    UIUserNotificationType notifictionTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+    UIUserNotificationSettings *notificationSetting = [UIUserNotificationSettings settingsForTypes:notifictionTypes categories:nil];
+     
+    [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSetting];
+
     #else
 
     // Let the device know we want to receive push notifications
@@ -309,6 +313,7 @@
 #pragma mark - Methods for messages and notification stuff
 - (void)doUpdateForRemoteNotification:(NSDictionary *)userInfo updateUI:(BOOL)updateUI {
     
+    [self getReadyForNotification];
     notificationsTabBar.badgeValue = @"New";
     // Add the Message to the data model to be inserted to the UINotificationsViewtable later.
     [[DataModel sharedDataModelManager] addNotification:userInfo];
@@ -348,12 +353,13 @@
     // send a "join" request to the server before we have received the device
     // token. In that case, we silently send an "update" request to the server
     // API once we receive the token.
-
     NSString *oldToken = [[DataModel sharedDataModelManager] deviceToken];
-
     NSString *newToken = [deviceToken description];
     newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+//    BOOL justTesting = [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];
+//    UIUserNotificationSettings * notificationTypes = [[UIApplication sharedApplication] currentUserNotificationSettings];
+    
 
     NSLog(@"My token is: %@", newToken);
 
@@ -392,6 +398,24 @@
 
     [self doUpdateForRemoteNotification:userInfo updateUI:YES];
     
+}
+
+#ifdef __IPHONE_8_0
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+    // user has allowed receiving user notifications of the following types
+    UIUserNotificationType allowedTypes = [notificationSettings types];
+    NSInteger intAllowedTypes = [[NSNumber numberWithInteger:(NSInteger)allowedTypes] intValue];
+    NSLog(@"in didRegisterUserNotificationSettings - allowedTypes is : %i", intAllowedTypes);
+}
+#endif
+
+- (void)getReadyForNotification {
+    #ifdef __IPHONE_8_0
+    // check to make sure we still need to show notification
+    UIUserNotificationSettings *currentSettings = [[UIApplication sharedApplication] currentUserNotificationSettings];
+    NSLog(@"in getReadyForNotification - current Settings is : %@", currentSettings);
+//    [self checkSettings:currentSettings];
+    #endif
 }
 
 @end

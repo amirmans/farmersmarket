@@ -31,6 +31,7 @@
 @synthesize sections;
 
 
+
 #pragma mark - Utility methods
 //- (NSDictionary *)itemAtIndexPath:(NSIndexPath *)indexPath
 //{
@@ -220,13 +221,6 @@
         }
         
         [TapTalkLooks setToTapTalkLooks:cell.contentView isActionButton:NO makeItRound:NO];
-//        NSString *specialDeal = [[self itemAtIndexPath:indexPath] objectForKey:@"OnSpecial"];
-//        
-//        if ([specialDeal hasPrefix:@"T"] || [specialDeal hasPrefix:@"Y"])
-//            [cell.specialLabel setHidden:FALSE];
-//        else
-//            [cell.specialLabel setHidden:TRUE];
-
     }
 
     // Configure the cell...
@@ -246,9 +240,53 @@
     else
         [cell.specialLabel setHidden:TRUE];
     cell.title.text = [cellDict objectForKey:@"Name"];
-    [cell.packageInfoTextView setText:[cellDict objectForKey:@"Package"]];
-    [cell.locationTextView setText:[cellDict objectForKey:@"Location"]];
-    [cell.priceTextField setText:[cellDict objectForKey:@"Price"]];
+    
+    NSArray *runtimeFields;
+    NSDictionary *runtimeField1;
+    NSString *field_1_name;
+    NSString *field_1_value;
+    NSDictionary *runtimeField2;
+    NSString *field_2_name;
+    NSString *field_2_value;
+
+    
+    @try {
+        runtimeFields = [cellDict objectForKey:@"RuntimeFields"];
+        runtimeField1 = [runtimeFields objectAtIndex:0];
+        field_1_name = [runtimeField1 objectForKey:@"name"];
+        field_1_value = [runtimeField1 objectForKey:@"value"];
+        runtimeField2 = [runtimeFields objectAtIndex:1];
+        field_2_name = [runtimeField2 objectForKey:@"name"];
+        field_2_value = [runtimeField2 objectForKey:@"value"];
+    }
+    @catch (NSException *exception) {
+        // deal with the exception
+        NSLog(@"in productitemviewcell, runtime fields are empty for product item %@", [cellDict objectForKey:@"Name"]);
+    }
+    @finally {
+        // optional block of clean-up code
+        // executed whether or not an exception occurred
+        if ( (field_1_value == nil) || (field_2_value == nil) ) {
+            cell.field_1_label.hidden = TRUE;
+          cell.field_2_label.hidden = TRUE;
+        }
+        else {
+            cell.field_1_label.text = field_1_name;
+            cell.field_1_textview.text = field_1_value;
+            cell.field_2_label.text = field_2_name;
+            cell.field_2_textview.text = field_2_value;
+        }
+    }
+
+    //price could be an string or an real number
+    if ([[cellDict valueForKey:@"Price"] isKindOfClass:[NSString class]]) {
+       [cell.priceTextField setText:[cellDict objectForKey:@"Price"]];
+    }
+    else {
+        NSNumber *priceNumber = [cellDict objectForKey:@"Price"];
+        NSString *priceString = [priceNumber stringValue];
+        [cell.priceTextField setText:priceString];
+    }
     [cell.descriptionTextView setText:[cellDict objectForKey:@"ShortDescription"]];
     
     NSURL *imageURL = [NSURL URLWithString:[cellDict objectForKey:@"Picture"]];
