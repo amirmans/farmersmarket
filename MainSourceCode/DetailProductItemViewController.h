@@ -16,7 +16,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil data:(NSDictionary *)argDataModel;
 
 
-@property (weak, nonatomic) IBOutlet UITextField *reducedPriceEndDate;
+@property (weak, nonatomic) IBOutlet UITextField *saleEndDate;
 
 @property (weak, nonatomic) IBOutlet UITextField *reducedPriceTextField;
 @property (nonatomic, retain) NSDictionary *productDictionary;
@@ -30,11 +30,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *reducedPriceLabel;
 @property (strong, nonatomic) IBOutlet UILabel *runtimeField1Label;
 @property (strong, nonatomic) IBOutlet UITextField *runtimeField1TextField;
-@property (strong, nonatomic) IBOutlet UIButton *moreInformationLabel;
+@property (weak, nonatomic) IBOutlet UIButton *configurableActionButton;
+
+- (IBAction)configurableAction:(id)sender;
 
 
-
-- (IBAction)moreInformationAction:(id)sender;
 
 
 @end

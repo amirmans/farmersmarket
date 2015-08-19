@@ -1,5 +1,6 @@
 #import "LoginViewController.h"
 
+#import "Consts.h"
 #import "DataModel.h"
 #import "CurrentBusiness.h"
 #import "MBProgressHUD.h"
@@ -59,7 +60,7 @@
     // Create the HTTP request object for our URL
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
-    [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
+//    [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
 
     NSString *userIDString = [NSString stringWithFormat:@"%li", [DataModel sharedDataModelManager].userID];
@@ -77,7 +78,7 @@
                   NSLog(@"Registered in the chat system with response of %@",operation.responseString);
                   NSRange tempRange = [operation.responseString rangeOfString:@"OK"];
                   if (tempRange.location == NSNotFound) {
-                      [UIAlertView showErrorAlert:NSLocalizedString(@"Warning in joining the chatsystem", nil)];
+                      [UIAlertView showErrorAlert:NSLocalizedString(@"Warning in joining the chat system", nil)];
                   }
                   else {
                       [self userDidJoin];

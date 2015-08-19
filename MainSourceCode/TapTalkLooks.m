@@ -44,7 +44,7 @@
 
 
 + (void)setBackgroundImage:(UIView *)tempView {
-    // all these steps needs to be done to load the background image
+    // all these steps need to be done to load the background image
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *imagePath = [bundle pathForResource:@"bg_image" ofType:@"jpg"];
     UIImage *backgroundImage = [[UIImage alloc] initWithContentsOfFile:imagePath];

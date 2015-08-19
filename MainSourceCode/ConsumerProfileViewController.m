@@ -98,6 +98,9 @@ static NSArray *consumerProfileDataArray = nil;
     passwordAgainTextField.delegate = self;
 
     [self populateFieldsWithInitialValues];
+    nicknameTextField.keyboardAppearance = UIKeyboardAppearanceDark;
+    zipcodeTextField.keyboardAppearance = UIKeyboardAppearanceDark;
+    emailTextField.keyboardAppearance = UIKeyboardAppearanceDark;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -338,6 +341,7 @@ static NSArray *consumerProfileDataArray = nil;
                 NSDictionary *jsonDictResponse = (NSDictionary *) responseObject;
                 int userID = [[jsonDictResponse objectForKey:@"userID"] intValue];
                 // userID of 0 means, we updated a record with an existing user ID, so we sould not change the exiting userID
+                //TODO what if this is a join and userID comes back az zero?
                 if (userID != 0)
                     [DataModel sharedDataModelManager].userID = userID;
                 [DataModel sharedDataModelManager].ageGroup = ageGroupSegmentedControl.selectedSegmentIndex;

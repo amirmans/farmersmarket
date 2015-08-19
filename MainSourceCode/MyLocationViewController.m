@@ -170,8 +170,8 @@
         pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:myLocationIdentifiers];
         pinView.animatesDrop = YES;
         [pinView setCanShowCallout:YES];
-        if (((Business *) annotation).image != nil) {
-            UIImageView *iconView = [[UIImageView alloc] initWithImage:((Business *) annotation).image];
+        if (((Business *) annotation).iconRelativeURL != nil) {
+            UIImageView *iconView = [[UIImageView alloc] initWithImage:((Business *) annotation).iconImage];
             pinView.leftCalloutAccessoryView = iconView;
             iconView = nil;
         }

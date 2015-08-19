@@ -8,6 +8,7 @@
 
 #import "BusinessListViewController.h"
 #import "BusinessTableViewCell.h"
+#import "Consts.h"
 #import "TapTalkLooks.h"
 #import "DetailBusinessViewController.h"
 #import "ListofBusinesses.h"
@@ -177,7 +178,7 @@
     {
         NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:tmpIconName];
         NSURL *imageURL = [NSURL URLWithString:imageURLString];
-        [[cell businessIconImageView] setImageWithURL:imageURL placeholderImage:nil];
+        [[cell businessIconImageView] Compatible_setImageWithURL:imageURL placeholderImage:nil];
     }
     
     return cell;

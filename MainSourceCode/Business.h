@@ -19,7 +19,8 @@
     CLLocationCoordinate2D coordinate;
     NSString *title;
     NSString *subtitle;
-    UIImage *image;
+    NSString *iconRelativeURL;
+    UIImage *iconImage;
 
     GooglePlacesObject *googlePlacesObject;
     NSString *businessName;
@@ -42,6 +43,8 @@
     NSString *map_image_url;
     NSString *picturesString;
     NSInteger chat_master_uid;
+    NSInteger validate_chat;
+    BOOL inquiryForProduct;
 
     GooglePlacesConnection *googlePlacesConnection;
 
@@ -54,13 +57,15 @@
 @property(nonatomic, readonly) CLLocationCoordinate2D coordinate;
 @property(nonatomic, readonly, copy) NSString *title;
 @property(nonatomic, readonly, copy) NSString *subtitle;
-@property(nonatomic, retain) UIImage *image;
+@property(nonatomic, retain) NSString *iconRelativeURL;
+@property(nonatomic, strong) UIImage *iconImage;
 
 
 @property(nonatomic, retain) NSDictionary *businessProducts;
 @property(atomic, retain) GooglePlacesObject *googlePlacesObject;
 //@property(nonatomic, readonly) BusinessCustomerProfileManager *customerProfile;
 @property(nonatomic, retain) NSString *businessName;
+@property(nonatomic, retain) NSString *shortBusinessName;
 @property(atomic, retain) NSString *chatSystemURL;
 @property(atomic, retain) NSString *customerProfileName;
 @property(atomic, assign) int businessID;
@@ -82,6 +87,8 @@
 @property(atomic, assign) NSInteger chat_master_uid;
 @property(nonatomic, strong) NSString *map_image_url;
 @property(nonatomic, strong) NSString *picturesString;
+@property(atomic, assign) NSInteger validate_chat;
+@property(atomic, assign) BOOL inquiryForProduct;
 
 
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;

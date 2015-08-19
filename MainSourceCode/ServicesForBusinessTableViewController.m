@@ -7,13 +7,21 @@
 //
 
 #import "ServicesForBusinessTableViewController.h"
+#import "ServicesTableViewCell.h"
 #import "MenuViewController.h"
 #import "AskForSeviceViewController.h"
 #import "BillViewController.h"
 #import "ProductItemsTableViewController.h"
 #import "StoreMapViewController.h"
+#import "ChatMessagesViewController.h"
 #import "TapTalkLooks.h"
 #import "MBProgressHUD.h"
+#import "DataModel.h"
+#import "UIAlertView+TapTalkAlerts.h"
+#import "LoginViewController.h"
+#import "UtilityConsumerProfile.h"
+
+
 
 @interface ServicesForBusinessTableViewController ()
 
@@ -68,7 +76,7 @@
 
     // for some reason - setting the background color in the nib file didn't work
     [TapTalkLooks setBackgroundImage:self.tableView];
-    self.title = [NSString stringWithFormat:@"TapforAll - %@", biz.businessName];
+    self.title = [NSString stringWithFormat:@"TapforAll - %@", biz.shortBusinessName];
 
     NSArray *tempRows = [allChoices objectForKey:chosenMainMenu];
     if (tempRows == nil) {
@@ -116,21 +124,41 @@
     return ([tempArr count]);
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TapTalk"];
+- (ServicesTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    ServicesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TapTalk"];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"TapTalk"];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        cell.textLabel.textColor = [UIColor blueColor];
-        cell.accessoryView = [[ UIImageView alloc ] initWithImage:[UIImage imageNamed:@"indicator.png"]];
-//        [cell.accessoryView setFrame:CGRectMake(0, 0, 24, 46)];
-        [TapTalkLooks setToTapTalkLooks:cell isActionButton:NO makeItRound:NO];
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"ServicesTableViewCell" owner:nil options:nil];
+        
+        for (id currentObject in topLevelObjects)
+        {
+            if ([currentObject isKindOfClass:[UITableViewCell class]])
+            {
+                cell = (ServicesTableViewCell *) currentObject;
+                break;
+            }
+        }
+        //  bug in XCode - you have to make a uitextview editable to be able to change or set it's font
+        cell.iconImage.contentMode = UIViewContentModeScaleAspectFit;
+        cell.serviceTextView.editable = YES;
+        [cell.serviceTextView setFont:[UIFont boldSystemFontOfSize:16]];
+        cell.serviceTextView.editable = NO;
+        [TapTalkLooks setToTapTalkLooks:cell.contentView isActionButton:NO makeItRound:NO];
     }
 
-    cell.textLabel.text = [[allChoices objectForKey:chosenMainMenu] objectAtIndex:indexPath.row];
 
-
+    cell.serviceTextView.text = [[allChoices objectForKey:chosenMainMenu] objectAtIndex:indexPath.row];
+    
+    if (biz.iconRelativeURL != (id)[NSNull null] && biz.iconRelativeURL.length != 0 )
+    {
+        NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:biz.iconRelativeURL];
+        NSURL *imageURL = [NSURL URLWithString:imageURLString];
+        #ifdef __IPHONE_8_0
+            [cell.iconImage sd_setImageWithURL:imageURL placeholderImage:nil];
+        #else
+            [cell.iconImage setImageWithURL:imageURL placeholderImage:nil];
+        #endif
+    }
+    
     return cell;
 }
 
@@ -142,7 +170,7 @@
     NSString *tmpStr = [[allChoices objectForKey:chosenMainMenu] objectAtIndex:indexPath.row];
     tmpStr = [tmpStr lowercaseString];
     NSUInteger whileIndex = 0;
-    while (whileIndex < 5) {
+    while (whileIndex < 6) {
         if (whileIndex == 0) {
             if ([tmpStr rangeOfString:@"menu"].location != NSNotFound) {
                 MenuViewController *menuViewController = [[MenuViewController alloc] initWithNibName:nil bundle:nil];
@@ -166,13 +194,13 @@
         if (whileIndex == 3) {
             if ([tmpStr rangeOfString:@"map"].location != NSNotFound) {
                 StoreMapViewController *storeMapViewController = [[StoreMapViewController alloc] initWithNibName:nil bundle:nil];
-                storeMapViewController.title = [NSString stringWithFormat:@"Map of %@",biz.businessName];
+                storeMapViewController.title = [NSString stringWithFormat:@"Map of %@",biz.shortBusinessName];
                 [self.navigationController pushViewController:storeMapViewController animated:YES];
             }
         }
 
         if (whileIndex == 4) {
-            if (([tmpStr rangeOfString:@"items"].location != NSNotFound) || ([tmpStr rangeOfString:@"have"].location != NSNotFound)) {
+            if (([tmpStr rangeOfString:@"items"].location != NSNotFound) || ([tmpStr rangeOfString:@"have"].location != NSNotFound) || ([tmpStr rangeOfString:@"show"].location != NSNotFound)) {
                 if (biz.isProductListLoaded) {
                     [self displayProduct];
                 }
@@ -181,6 +209,33 @@
                     timerToLoadProducts = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(displayProduct) userInfo:nil repeats:YES];
                 }
             }
+        }
+        
+        if (whileIndex == 5) {
+            if ([tmpStr rangeOfString:@"chat"].location != NSNotFound) {
+                
+                if ([DataModel sharedDataModelManager].nickname.length < 1) {
+                    [UIAlertView showErrorAlert:@"You don't have a nick name yet.  Please go to the profile page and get one."];
+                }
+                else if (![UtilityConsumerProfile canUserChat]) {
+                    [UIAlertView showErrorAlert:@"You are NOT registered to particate in this chat.  Please ask the manager to add you."];
+                }
+                else {
+                    if (![[DataModel sharedDataModelManager] joinedChat]) {
+                        // show the user that are about to connect to a new business chatroom
+                        [DataModel sharedDataModelManager].shouldDownloadChatMessages = TRUE;
+                        LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
+                        loginController.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+                            
+                        [self presentViewController:loginController animated:YES completion:nil];
+                        loginController = nil;
+                    }
+                    
+                    ChatMessagesViewController *chatViewContoller = [[ChatMessagesViewController alloc] initWithNibName:nil bundle:nil];
+                    [self.navigationController pushViewController:chatViewContoller animated:YES];
+                }
+            }
+            
         }
 
         whileIndex++;
@@ -194,7 +249,7 @@
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         ProductItemsTableViewController *showItemsTableViewController = [[ProductItemsTableViewController alloc]
                                                                          initWithNibName:nil bundle:nil data:biz.businessProducts];
-        showItemsTableViewController.title = [NSString stringWithFormat:@"What %@ has for you", biz.businessName];
+        showItemsTableViewController.title = [NSString stringWithFormat:@"%@ products", biz.shortBusinessName];
         [self.navigationController pushViewController:showItemsTableViewController animated:YES];
         
         if (timerToLoadProducts != nil)

@@ -9,6 +9,7 @@
 #import "ProductItemsTableViewController.h"
 #import "ProductItemViewCell.h"
 #import "DetailProductItemViewController.h"
+#import "Consts.h"
 #import "TapTalkLooks.h"
 // github library to load the images asynchronously
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -268,7 +269,7 @@
         // executed whether or not an exception occurred
         if ( (field_1_value == nil) || (field_2_value == nil) ) {
             cell.field_1_label.hidden = TRUE;
-          cell.field_2_label.hidden = TRUE;
+            cell.field_2_label.hidden = TRUE;
         }
         else {
             cell.field_1_label.text = field_1_name;
@@ -290,7 +291,7 @@
     [cell.descriptionTextView setText:[cellDict objectForKey:@"ShortDescription"]];
     
     NSURL *imageURL = [NSURL URLWithString:[cellDict objectForKey:@"Picture"]];
-    [cell.productImageView setImageWithURL:imageURL placeholderImage:nil options:SDWebImageProgressiveDownload];
+    [cell.productImageView Compatible_setImageWithURL:imageURL placeholderImage:nil options:SDWebImageProgressiveDownload];
 
     return cell;
 }
@@ -301,8 +302,19 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSDictionary *tempDict;
+    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView])
+    {
+        tempDict = [filteredProductItems objectAtIndex:indexPath.row];
+                     
+    }
+    else
+    {
+        tempDict = [[self.productsAndCategories objectForKey:[self.sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    }
+
     // Navigation logic may go here. Create and push another view controller.
-    NSDictionary *tempDict = [[self.productsAndCategories objectForKey:[self.sections objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    
     
     DetailProductItemViewController *detailViewController = [[DetailProductItemViewController alloc] initWithNibName:nil bundle:nil data:tempDict];
     // ...

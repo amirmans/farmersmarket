@@ -7,6 +7,7 @@
 //
 
 #import "BusinessNotificationTableViewController.h"
+#import "Consts.h"
 #import "DataModel.h"
 #import "TapTalkChatMessage.h"
 #import "TapTalkLooks.h"
@@ -30,7 +31,7 @@
     dispatch_async(dispatch_get_main_queue(), ^(void) {
         [self.tableView reloadData];
     });
-    self.tabBarItem.badgeValue = nil;
+//    self.tabBarItem.badgeValue = nil;
 }
 
 
@@ -59,7 +60,6 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
 }
 
 - (void)viewDidLoad
@@ -76,14 +76,20 @@
     self.title = @"Notification Center";
     [TapTalkLooks setBackgroundImage:self.tableView];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    self.tableView.rowHeight = 142; // change this number whenever you change the ui in ProductItemViewCell
-    self.tabBarItem.badgeValue = nil;
+    self.tableView.rowHeight = 150; // change this number whenever you change the ui in NotificationTableViewCell
     
     // we want to show the notifications in the reverse chronological order: the last
     // one should be displayed first
 //    notificationsInReverseChronological = [[[[[DataModel sharedDataModelManager] notifications]
 //                                             reverseObjectEnumerator] allObjects] mutableCopy];
     notificationsInReverseChronological = [[[DataModel sharedDataModelManager] notifications]  mutableCopy];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    
+    [super viewWillDisappear:animated];
+    self.tabBarItem.badgeValue = nil;
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
@@ -129,6 +135,7 @@
         
 //        [TapTalkLooks setBackgroundImage:cell.contentView];
         [TapTalkLooks setToTapTalkLooks:cell.contentView isActionButton:NO makeItRound:NO];
+        [TapTalkLooks setToTapTalkLooks:cell.alertMessage isActionButton:NO makeItRound:NO];
     }
     
     // Configure the cell...
@@ -144,7 +151,7 @@
     //get image url from notification image name
     NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:[notification objectForKey:@"imageName"]];
     NSURL *imageURL = [NSURL URLWithString:imageURLString];
-    [cell.businessNotificationIcon setImageWithURL:imageURL placeholderImage:nil];
+    [cell.businessNotificationIcon Compatible_setImageWithURL:imageURL placeholderImage:nil];
  
     formatter = nil;
     return cell;

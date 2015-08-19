@@ -52,7 +52,7 @@
         if (imageDirectory != nil) {
             NSString *imageURLString = [QRImageDomain stringByAppendingString:imageDirectory];
             NSURL *imageURL = [NSURL URLWithString:imageURLString];
-            [qrImageView setImageWithURL:imageURL placeholderImage:nil];
+            [qrImageView Compatible_setImageWithURL:imageURL placeholderImage:nil];
         }
         else {
             NSString *urlString = ConsumerProfileServer;
@@ -80,7 +80,7 @@
                           [DataModel sharedDataModelManager].qrImageFileName  = imageDirectory;
                           NSString *imageURLString = [QRImageDomain stringByAppendingString:imageDirectory];
                           NSURL *imageURL = [NSURL URLWithString:imageURLString];
-                          [qrImageView setImageWithURL:imageURL placeholderImage:nil];
+                          [qrImageView Compatible_setImageWithURL:imageURL placeholderImage:nil];
                       }
                   }
                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -112,7 +112,9 @@
     
     [[DataModel sharedDataModelManager] setChatSystemURL:shakeHandBiz.chatSystemURL];
     [[DataModel sharedDataModelManager] setChat_master_uid:shakeHandBiz.chat_master_uid];
+    [[DataModel sharedDataModelManager] setValidate_chat:shakeHandBiz.validate_chat];
     [[DataModel sharedDataModelManager] setBusinessName:shakeHandBiz.businessName];
+    [[DataModel sharedDataModelManager] setShortBusinessName:shakeHandBiz.shortBusinessName];
     
     NSDictionary *allChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].allChoices;
     NSArray *mainChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].mainChoices;

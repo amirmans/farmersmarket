@@ -7,6 +7,7 @@
 //
 
 #import "UtilityConsumerProfile.h"
+#import "CurrentBusiness.h"
 
 @implementation UtilityConsumerProfile
 
@@ -16,6 +17,26 @@
     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
  
     return [emailTest evaluateWithObject:emailStr];
+}
+
++ (BOOL)canUserChat {
+    NSInteger validateStatus = [CurrentBusiness sharedCurrentBusinessManager].business.validate_chat;
+    
+    if (validateStatus == ChatValidationWorkflow_NoNeedToValidate) {
+        return TRUE;
+    }
+    else if (validateStatus == ChatValidationWorkflow_Validated) {
+        return TRUE;
+    }
+    else if (validateStatus == ChatValidationWorkflow_Not_Valid) {
+        return FALSE;
+    }
+    else if (validateStatus == ChatValidationWorkflow_ErrorFromServer) {
+        return FALSE;
+    }
+    else {
+        return FALSE;
+    }
 }
 
 

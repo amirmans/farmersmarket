@@ -16,6 +16,10 @@
 #import "ConsumerProfileViewController.h"
 #import "DataModel.h"
 #import "UIAlertView+TapTalkAlerts.h"
+#import "AFNetworkActivityIndicatorManager.h"
+#import "LoginViewController.h"
+#import "UtilityConsumerProfile.h"
+
 
 
 @interface AppDelegate () {
@@ -41,7 +45,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     // Override point for customization after application launch
     NSBundle *bundle = [NSBundle mainBundle];
     
@@ -60,8 +64,6 @@
     enterBusinessNav = [[UINavigationController alloc] initWithRootViewController:listTableView];
     listTableView = nil;
     
-    
-
     // messages from others
     imagePath = [bundle pathForResource:@"Messages" ofType:@"png"];
     UIImage *messagesImage = [[UIImage alloc] initWithContentsOfFile:imagePath];
@@ -147,6 +149,19 @@
     return YES;
 }
 
+
+//- (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+//    UIApplicationState state = [application applicationState];
+//    // user tapped notification while app was in background
+//    if (state == UIApplicationStateInactive || state == UIApplicationStateBackground) {
+//        // go to screen relevant to Notification content
+//        [self doUpdateForRemoteNotification:userInfo updateUI:TRUE];
+//    } else {
+//            // App is in UIApplicationStateActive (running in foreground)
+//            // perhaps show an UIAlertView
+//    }
+//}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     /*
      Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -161,7 +176,7 @@
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
     [[DataModel sharedDataModelManager] saveNotifications];
-//    NSLog(@"All contents of NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+    NSLog(@"All contents of NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
 //    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
 //    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 }
@@ -203,23 +218,38 @@
 }
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
+
+    BOOL returnVal = TRUE;
+    // Check to see if Chat tabbar is selected
     if (tabBarController.tabBar.selectedItem.tag == 1) {
+        returnVal = FALSE;
         if ([DataModel sharedDataModelManager].chatSystemURL == nil) {
             [UIAlertView showErrorAlert:@"Please enter a business first"];
-            return FALSE;
         }
-        UINavigationController *nav = [tabBarController.viewControllers objectAtIndex:1];
-        [nav popToRootViewControllerAnimated:YES];
+        else if ([DataModel sharedDataModelManager].nickname.length < 1) {
+            [UIAlertView showErrorAlert:@"You don't have a nick name yet.  Please go to the profile page and get one."];
+        }
+        else if (![UtilityConsumerProfile canUserChat]) {
+            [UIAlertView showErrorAlert:@"You are NOT registered to particate in this chat.  Please ask the manager to add you."];
+        }
+        else {
+            if (![[DataModel sharedDataModelManager] joinedChat]) {
+                // show the user that are about to connect to a new business chatroom
+                [DataModel sharedDataModelManager].shouldDownloadChatMessages = TRUE;
+                LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
+                loginController.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+                
+                [viewController presentViewController:loginController animated:YES completion:nil];
+                loginController = nil;
+            }
+            
+            UINavigationController *nav = [tabBarController.viewControllers objectAtIndex:1];
+            [nav popToRootViewControllerAnimated:YES];
+            returnVal = TRUE;
+        }
     }
 
-    if (tabBarController.tabBar.selectedItem.tag == 1) {
-        if ([DataModel sharedDataModelManager].nickname == nil) {
-            [UIAlertView showErrorAlert:@"You need a nickname to chat.  Please go to Profile page to get one"];
-            return FALSE;
-        }
-    }
-
-    return TRUE;
+    return returnVal;
 }
 
 
@@ -314,11 +344,12 @@
 - (void)doUpdateForRemoteNotification:(NSDictionary *)userInfo updateUI:(BOOL)updateUI {
     
     [self getReadyForNotification];
-    notificationsTabBar.badgeValue = @"New";
+    ((UINavigationController *)[self.tt_tabBarController.viewControllers objectAtIndex:3]).tabBarItem.badgeValue = @"New";
+    notificationsTabBar.badgeValue = @"New"; // stopped working
     // Add the Message to the data model to be inserted to the UINotificationsViewtable later.
     [[DataModel sharedDataModelManager] addNotification:userInfo];
     
-    // At this point, the notification is recieved when when the application is running.  So, lets update
+    // At this point, the notification is recieved when the application is running.  So, lets update
     // the notification table with the new entry
 	if (updateUI)
         [notificationDelegate updateUIWithNewNotification];
@@ -405,7 +436,7 @@
     // user has allowed receiving user notifications of the following types
     UIUserNotificationType allowedTypes = [notificationSettings types];
     NSInteger intAllowedTypes = [[NSNumber numberWithInteger:(NSInteger)allowedTypes] intValue];
-    NSLog(@"in didRegisterUserNotificationSettings - allowedTypes is : %i", intAllowedTypes);
+    NSLog(@"in didRegisterUserNotificationSettings - allowedTypes is : %li", (long)intAllowedTypes);
 }
 #endif
 

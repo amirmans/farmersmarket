@@ -25,7 +25,7 @@
     KASlideShow *picturesView;
 }
 
-
+@property (atomic, assign) BOOL viewIsDisplaying;
 @end
 
 
@@ -73,14 +73,24 @@
             self.customerProfileName = biz.customerProfileName;
             assert(self.customerProfileName);
         }
+        
+        self.viewIsDisplaying = false;
+        picturesView = nil;
     }
 
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (picturesView !=nil) {
+        [picturesView start];
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.viewIsDisplaying = TRUE;
     // Do any additional setup after loading the view from its nib.
     // setup looks of the ui elements
     [TapTalkLooks setToTapTalkLooks:typesOfBusiness isActionButton:NO makeItRound:YES];
@@ -90,8 +100,11 @@
     [TapTalkLooks setToTapTalkLooks:enterAndGetService isActionButton:YES makeItRound:NO];
     [TapTalkLooks setToTapTalkLooks:ratingLabel isActionButton:NO makeItRound:NO];
     
-    picturesView = nil;
-    
+//    picturesView = nil;
+
+//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    hud.labelText = NSLocalizedString(@"Loading detaili business information...", @"");
+
     if (self.isCustomer == 1) {
         [enterAndGetService setTitle:@"Enter" forState:UIControlStateNormal];
         showCodeButton.hidden = false;
@@ -119,7 +132,7 @@
     self.title = businessNameData;
     
     if (biz.picturesString != nil) {
-        CGRect picturesViewFrame = CGRectMake(9, 71, 302, 177);
+        CGRect picturesViewFrame = CGRectMake(9, 71, 302, 187);
         picturesView = [[KASlideShow alloc] initWithFrame:picturesViewFrame];
         [self.view addSubview:picturesView];
         
@@ -129,8 +142,8 @@
         [picturesView setImagesContentMode:UIViewContentModeScaleAspectFill]; // Choose a content mode for images to display
 
         NSArray *bizpictureArray = [biz.picturesString componentsSeparatedByString:@","];
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
+//        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0) , ^{
             NSString *imageRelativePathString;
             UIImage  *image;
             for (imageRelativePathString in bizpictureArray) {
@@ -151,7 +164,12 @@
             
             // we stated to show it in the parent view
             //        [MBProgressHUD hideHUDForView:self.view animated:YES];
-            [picturesView start];
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                if (self.viewIsDisplaying == TRUE) {
+                    [picturesView start];
+                }
+            });
+            
         });
     }
     else {
@@ -159,14 +177,16 @@
     }
     
     [self doPopulateDisplayFields];
+    
+//    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     
+    self.viewIsDisplaying = FALSE;
     if (picturesView != nil)
         [picturesView stop];
-    
-    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidUnload {
@@ -187,21 +207,28 @@
 }
 
 - (IBAction)enterAndGetServiceAction:(id)sender {
-
+//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    hud.labelText = NSLocalizedString(@"Preparing to deliver TapForAll services", @"");
+    NSLog(@"Enter a buiness is pressed");
     if (self.isCustomer == 1) {
         [[DataModel sharedDataModelManager] setJoinedChat:FALSE];
         [[CurrentBusiness sharedCurrentBusinessManager] setBusiness:biz];
         [[BusinessCustomerProfileManager sharedBusinessCustomerProfileManager] setCustomerProfileName:self.customerProfileName];
         NSDictionary *allChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].allChoices;
         NSArray *mainChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].mainChoices;
-        ServicesForBusinessTableViewController *detailInfo = [[ServicesForBusinessTableViewController alloc]
+        ServicesForBusinessTableViewController *services = [[ServicesForBusinessTableViewController alloc]
                 initWithData:allChoices :mainChoices :[mainChoices objectAtIndex:0] forBusiness:biz];
         [[DataModel sharedDataModelManager] setChatSystemURL:biz.chatSystemURL];
         [[DataModel sharedDataModelManager] setChat_master_uid:biz.chat_master_uid];
+        [[DataModel sharedDataModelManager] setValidate_chat:biz.validate_chat];
         [[DataModel sharedDataModelManager] setBusinessName:biz.businessName];
-        [biz startLoadingBusinessProductCategoriesAndProducts];
-        [self.navigationController pushViewController:detailInfo animated:YES];
+        [[DataModel sharedDataModelManager] setShortBusinessName:biz.shortBusinessName];
+        if ([BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].loadProducts)
+            [biz startLoadingBusinessProductCategoriesAndProducts];
+        [self.navigationController pushViewController:services animated:YES];
+        services = nil;
     }
+ //   [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 
@@ -255,7 +282,7 @@
             contactInfo.text = [contactInfo.text stringByAppendingString:biz.website];
         else
             contactInfo.text = [contactInfo.text stringByAppendingString:@"website not provided."];
-        contactInfo.text = [contactInfo.text stringByAppendingString:@"\n\n\n"];
+        contactInfo.text = [contactInfo.text stringByAppendingString:@"\n\n"];
         if (biz.phone != nil)
             contactInfo.text = [contactInfo.text stringByAppendingString:biz.phone];
         else

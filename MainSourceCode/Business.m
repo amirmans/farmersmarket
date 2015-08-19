@@ -1,4 +1,4 @@
- //
+//
 //  MyLocationAnnotation.m
 //  TapTalk
 //
@@ -12,6 +12,9 @@
 
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIAlertView+TapTalkAlerts.h"
+#import "Consts.h"
+#import "DataModel.h"
+#import "AFNetworking.h"
 
 @interface Business () {
     NSString *imageFileName;
@@ -33,7 +36,7 @@
 @implementation Business
 
 
-@synthesize image, coordinate, title, subtitle,businessName, customerProfileName, imageFileName, imageFileExt, googlePlacesObject, businessDelegate;
+@synthesize iconRelativeURL, iconImage, coordinate, title, subtitle,businessName, shortBusinessName, customerProfileName, imageFileName, imageFileExt, googlePlacesObject, businessDelegate;
 
 @synthesize rating;
 @synthesize website;
@@ -53,10 +56,12 @@
 @synthesize chat_master_uid;
 @synthesize map_image_url;
 @synthesize picturesString;
+@synthesize validate_chat;
+@synthesize inquiryForProduct;
 
 
 - (void)initMemberData {
-    self.image = nil;
+    self.iconRelativeURL = nil;
     self.isCustomer = -1;
     self.customerProfileName = nil;
     self.imageFileName = nil;
@@ -78,7 +83,9 @@
     serverManager.postProcessesDelegate = self;
     chat_master_uid = 0;
     map_image_url = nil;
+    validate_chat = FALSE;
     picturesString = nil;
+    iconImage = nil;
 }
 
 - (int)isCustomer {
@@ -112,7 +119,8 @@
                         error:&error];
     if (error)
     {
-        [UIAlertView showErrorAlert:[error localizedDescription]];
+        NSLog(@"Error in fetching product items.  Description of error is: %@", [error localizedDescription]);
+        [UIAlertView showErrorAlert: @"Error in fetching product items."];
     }
     isProductListLoaded = TRUE;
 }
@@ -188,14 +196,60 @@
     neighborhood = [self stringFromDataDictionary:data forKey:@"neighborhood"];
     address = [self stringFromDataDictionary:data forKey:@"address"];
     customerProfileName = [self stringFromDataDictionary:data forKey:@"customerProfileName"];
-    image = [data objectForKey:@"icon"];
+    iconRelativeURL = [data objectForKey:@"icon"];
     businessName = [self stringFromDataDictionary:data forKey:@"name"];
+    shortBusinessName = [self stringFromDataDictionary:data forKey:@"short_name"];
+    if (shortBusinessName == nil)
+        shortBusinessName = businessName;
     chatSystemURL = [self stringFromDataDictionary:data forKey:@"chatroom_table"];
     businessID = [[data objectForKey:@"businessID"] intValue];
     chat_master_uid = [self integerFromDataDictionary:data forKey:@"chat_master_uid"];
     map_image_url = [self stringFromDataDictionary:data forKey:@"map_image_url"];
     picturesString = [self stringFromDataDictionary:data forKey:@"pictures"];
- 
+    validate_chat = [[data objectForKey:@"validate_chat"] boolValue];
+    inquiryForProduct = [[data objectForKey:@"inquiry_for_product"] boolValue];
+    
+    if (validate_chat) {
+        validate_chat = ChatValidationWorkflow_InProcess; // means in the process of validation
+        // Create the HTTP request object for our URL
+        AFHTTPRequestOperationManager *manager;
+        manager = [AFHTTPRequestOperationManager manager];
+        
+        [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
+        [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
+        
+        NSInteger userID = [DataModel sharedDataModelManager].userID;
+        NSString *businessIDString = [NSString stringWithFormat:@"%i", businessID];
+        NSString  *userIDString = [NSString stringWithFormat:@"%lu", (unsigned long)userID];
+        NSDictionary *params = @{@"cmd":@"validate", @"business_id":businessIDString, @"userID":userIDString};
+        [manager POST:ChatSystemServer parameters:params
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  NSLog(@"Response from chat system server for validation the user:%@", responseObject);
+                  NSError *jsonError = nil;
+                  NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:kNilOptions error:&jsonError];
+                  NSInteger statusCode = [[jsonResponse objectForKey:@"status_code"] integerValue];
+                  NSInteger permissionCode = [[jsonResponse objectForKey:@"permission"] integerValue];
+                  
+                  if ( (operation.response.statusCode != 200) || (statusCode != 0) ) {
+                      [UIAlertView showErrorAlert:NSLocalizedString(@"No connection to Business's Chatroom", nil)];
+                      validate_chat = ChatValidationWorkflow_ErrorFromServer; // error
+                  }
+                  if (permissionCode == 1)
+                      validate_chat = ChatValidationWorkflow_Validated; //validated
+                  else
+                      validate_chat = ChatValidationWorkflow_Not_Valid; 
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  validate_chat = ChatValidationWorkflow_ErrorFromServer; //error
+                  NSLog(@"Response from chat system server for validation the user indicates error:%@", error);
+                  
+              }
+         ];
+        
+    } else {
+        validate_chat = ChatValidationWorkflow_NoNeedToValidate;
+    };
+    
     return self;
 }
 
@@ -256,27 +310,23 @@
                     }
                     map_image_url = [self stringFromDataDictionary:responseDictionary forKey:@"map_image_url"];
                     picturesString = [self stringFromDataDictionary:responseDictionary forKey:@"pictures"];
-
+                    
                     NSString *iconPath = [NSString stringWithFormat:@"%@", [responseDictionary valueForKey:@"icon"]];
-                    if (iconPath != nil) {
-                        NSURL *iconUrl = [NSURL URLWithString:iconPath];
-                        NSRange range = [[iconPath lowercaseString] rangeOfString:@"null"];
+                    if (iconPath != (id)[NSNull null] && iconPath.length != 0 ) {
+                        NSString *iconURLString = [BusinessCustomerIconDirectory stringByAppendingString:iconPath];
+                        NSURL *iconUrl = [NSURL URLWithString:iconURLString];
                         //We have a valid icon path - retrieve the image from our own server
-                        if (range.location == NSNotFound) {
-                            SDWebImageManager *manager = [SDWebImageManager sharedManager];
-
-                            [manager downloadWithURL:iconUrl
-                            options:0
-                            progress:nil
-                            completed:^(UIImage *webImage, NSError *error, SDImageCacheType cacheType, BOOL finished)
-                            {
-                                if (webImage)
-                                {
-                                    // do something with image
-                                    image = webImage;
-                                }
-                            }];
-                        }
+                        SDWebImageManager *manager = [SDWebImageManager sharedManager];
+                        [manager downloadImageWithURL:iconUrl
+                                         options:0
+                                        progress:nil
+                                       completed:^(UIImage *webImage, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *url)
+                         {
+                             if (webImage && finished)
+                             {
+                                 iconImage = webImage;
+                             }
+                         }];
                     }
                 }
             }
@@ -290,8 +340,8 @@
 }
 
 
-- (UIImage *)image {
-    return image;
+- (NSString *)iconRelativeURL {
+    return iconRelativeURL;
 }
 
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate {

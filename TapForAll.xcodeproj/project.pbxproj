@@ -87,6 +87,11 @@
 		C6235F6718B2242400C216CB /* BusinessTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6235F6518B2242400C216CB /* BusinessTableViewCell.m */; };
 		C632123418E834A30076D1DC /* DetailBusinessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C632123318E834A30076D1DC /* DetailBusinessViewController.xib */; };
 		C640AD391919F81E00DDA94D /* consumerProfileDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C640AD381919F81E00DDA94D /* consumerProfileDataModel.m */; };
+		C6504A7C19D0EB17007646EB /* ProductMoreInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6504A7A19D0EB17007646EB /* ProductMoreInformationViewController.m */; };
+		C6504A7F19D0EB91007646EB /* Tap4AllDisplayUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = C6504A7D19D0EB91007646EB /* Tap4AllDisplayUtil.m */; };
+		C6504A8119D0EC83007646EB /* ProductMoreInformationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6504A8019D0EC83007646EB /* ProductMoreInformationViewController.xib */; };
+		C6504A8419D1062B007646EB /* ServicesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6504A8219D1062B007646EB /* ServicesTableViewCell.m */; };
+		C6504A8619D10654007646EB /* ServicesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6504A8519D10654007646EB /* ServicesTableViewCell.xib */; };
 		C650705B18BCB88F00E5D06B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C650705A18BCB88F00E5D06B /* QuartzCore.framework */; };
 		C650705D18BD4CBD00E5D06B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C650705C18BD4CBD00E5D06B /* Default-568h@2x.png */; };
 		C65A68AB191AFB1E00BBDC16 /* DetailProductItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C65A68AA191AFB1E00BBDC16 /* DetailProductItemViewController.m */; };
@@ -94,7 +99,6 @@
 		C662DDFE18D8442F00683BBF /* BubbleCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = C662DDFD18D8442F00683BBF /* BubbleCenter.png */; };
 		C6700CFB1859D74B003814C9 /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6700CFA1859D74B003814C9 /* NotificationTableViewCell.m */; };
 		C6700CFD1859DAA4003814C9 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6700CFC1859DAA4003814C9 /* NotificationTableViewCell.xib */; };
-		C6756CDA196E130100852D74 /* KASlideShow.m in Sources */ = {isa = PBXBuildFile; fileRef = C6756CD8196E130100852D74 /* KASlideShow.m */; };
 		C67C6AE218DF9B03009EF996 /* TapForAll.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C67C6AE118DF9B03009EF996 /* TapForAll.xcdatamodeld */; };
 		C67D4D4218AEFFEE00D6DF6C /* ListofBusinesses.m in Sources */ = {isa = PBXBuildFile; fileRef = C67D4D4118AEFFEE00D6DF6C /* ListofBusinesses.m */; };
 		C686B5A919382B19008D2606 /* Icon-60.png in Resources */ = {isa = PBXBuildFile; fileRef = C686B5A719382B19008D2606 /* Icon-60.png */; };
@@ -240,7 +244,8 @@
 		29ECC44C14CCC06C00986571 /* UIAlertView+TapTalkAlerts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIAlertView+TapTalkAlerts.m"; path = "MainSourceCode/UIAlertView+TapTalkAlerts.m"; sourceTree = "<group>"; };
 		29EEAA2215EACCCD00988BA5 /* indicator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = indicator.png; sourceTree = "<group>"; };
 		7C842395C1AA4059895F19C5 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		99C03DCCF5AF411B99AB2278 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		992B80B955796F4F06393A9A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		B9484E51F484786857070C30 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		C600C48F18DF8A850019E8EF /* ChatsFromBusinessTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatsFromBusinessTableViewController.h; path = MainSourceCode/ChatsFromBusinessTableViewController.h; sourceTree = "<group>"; };
 		C600C49018DF8A850019E8EF /* ChatsFromBusinessTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatsFromBusinessTableViewController.m; path = MainSourceCode/ChatsFromBusinessTableViewController.m; sourceTree = "<group>"; };
 		C600C49418DF8C4C0019E8EF /* ChatsFromBusinessTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatsFromBusinessTableViewController.xib; sourceTree = "<group>"; };
@@ -252,6 +257,14 @@
 		C632123318E834A30076D1DC /* DetailBusinessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailBusinessViewController.xib; sourceTree = "<group>"; };
 		C640AD371919F81E00DDA94D /* consumerProfileDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = consumerProfileDataModel.h; path = MainSourceCode/consumerProfileDataModel.h; sourceTree = "<group>"; };
 		C640AD381919F81E00DDA94D /* consumerProfileDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = consumerProfileDataModel.m; path = MainSourceCode/consumerProfileDataModel.m; sourceTree = "<group>"; };
+		C6504A7A19D0EB17007646EB /* ProductMoreInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductMoreInformationViewController.m; sourceTree = "<group>"; };
+		C6504A7B19D0EB17007646EB /* ProductMoreInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductMoreInformationViewController.h; sourceTree = "<group>"; };
+		C6504A7D19D0EB91007646EB /* Tap4AllDisplayUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tap4AllDisplayUtil.m; path = MainSourceCode/Tap4AllDisplayUtil.m; sourceTree = "<group>"; };
+		C6504A7E19D0EB91007646EB /* Tap4AllDisplayUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tap4AllDisplayUtil.h; path = MainSourceCode/Tap4AllDisplayUtil.h; sourceTree = "<group>"; };
+		C6504A8019D0EC83007646EB /* ProductMoreInformationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductMoreInformationViewController.xib; sourceTree = "<group>"; };
+		C6504A8219D1062B007646EB /* ServicesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServicesTableViewCell.m; sourceTree = "<group>"; };
+		C6504A8319D1062B007646EB /* ServicesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServicesTableViewCell.h; sourceTree = "<group>"; };
+		C6504A8519D10654007646EB /* ServicesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ServicesTableViewCell.xib; sourceTree = "<group>"; };
 		C650705A18BCB88F00E5D06B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C650705C18BD4CBD00E5D06B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Xibs/Default-568h@2x.png"; sourceTree = "<group>"; };
 		C65A68A9191AFB1E00BBDC16 /* DetailProductItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailProductItemViewController.h; sourceTree = "<group>"; };
@@ -261,8 +274,6 @@
 		C6700CF91859D74B003814C9 /* NotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationTableViewCell.h; path = MainSourceCode/NotificationTableViewCell.h; sourceTree = "<group>"; };
 		C6700CFA1859D74B003814C9 /* NotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationTableViewCell.m; path = MainSourceCode/NotificationTableViewCell.m; sourceTree = "<group>"; };
 		C6700CFC1859DAA4003814C9 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
-		C6756CD8196E130100852D74 /* KASlideShow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KASlideShow.m; path = ../../../../../Devlopment_shared_files/KASlideShow/KASlideShow/KASlideShow.m; sourceTree = "<group>"; };
-		C6756CD9196E130100852D74 /* KASlideShow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KASlideShow.h; path = ../../../../../Devlopment_shared_files/KASlideShow/KASlideShow/KASlideShow.h; sourceTree = "<group>"; };
 		C67C6AE018DF9ADE009EF996 /* TapForAll-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TapForAll-Prefix.pch"; path = "TapForAll/TapForAll-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		C67D4D4018AEFFEE00D6DF6C /* ListofBusinesses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListofBusinesses.h; path = MainSourceCode/ListofBusinesses.h; sourceTree = "<group>"; };
 		C67D4D4118AEFFEE00D6DF6C /* ListofBusinesses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ListofBusinesses.m; path = MainSourceCode/ListofBusinesses.m; sourceTree = "<group>"; };
@@ -382,7 +393,7 @@
 				2949CC5D14589C7200728B87 /* TapForAllTests */,
 				2949CC3814589C7200728B87 /* Frameworks */,
 				2949CC3614589C7200728B87 /* Products */,
-				99C03DCCF5AF411B99AB2278 /* Pods.xcconfig */,
+				B947D4156987D01B8C96D212 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -518,6 +529,8 @@
 		2949CCDE1458A21700728B87 /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
+				C6504A8519D10654007646EB /* ServicesTableViewCell.xib */,
+				C6504A8019D0EC83007646EB /* ProductMoreInformationViewController.xib */,
 				C632123318E834A30076D1DC /* DetailBusinessViewController.xib */,
 				C69298AA18DF903400B013E0 /* BillPayViewController.xib */,
 				C6EABE1518B2D1CD00F50D19 /* BusinessTableViewCell.xib */,
@@ -583,8 +596,6 @@
 		29D2999D15DB58A800990F62 /* External */ = {
 			isa = PBXGroup;
 			children = (
-				C6756CD8196E130100852D74 /* KASlideShow.m */,
-				C6756CD9196E130100852D74 /* KASlideShow.h */,
 				C6D20610195A8A23006E12FE /* JBKenBurns */,
 				29D29A1615DB5AFA00990F62 /* GooglePlaces */,
 			);
@@ -605,6 +616,8 @@
 		29D29A2315DB77CB00990F62 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				C6504A7D19D0EB91007646EB /* Tap4AllDisplayUtil.m */,
+				C6504A7E19D0EB91007646EB /* Tap4AllDisplayUtil.h */,
 				29ECC44C14CCC06C00986571 /* UIAlertView+TapTalkAlerts.m */,
 				29ECC44C14CCC06C00986570 /* UIAlertView+TapTalkAlerts.h */,
 				29ECC44C14CCC06C0098656E /* TapTalkLooks.m */,
@@ -648,6 +661,15 @@
 			name = ConsumerProfile;
 			sourceTree = "<group>";
 		};
+		B947D4156987D01B8C96D212 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B9484E51F484786857070C30 /* Pods.debug.xcconfig */,
+				992B80B955796F4F06393A9A /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		C696970618BC97A300F0B4F5 /* Bill */ = {
 			isa = PBXGroup;
 			children = (
@@ -662,6 +684,10 @@
 		C699356118B969F6008FCF8A /* MainSourceCode */ = {
 			isa = PBXGroup;
 			children = (
+				C6504A8219D1062B007646EB /* ServicesTableViewCell.m */,
+				C6504A8319D1062B007646EB /* ServicesTableViewCell.h */,
+				C6504A7A19D0EB17007646EB /* ProductMoreInformationViewController.m */,
+				C6504A7B19D0EB17007646EB /* ProductMoreInformationViewController.h */,
 				C65A68A9191AFB1E00BBDC16 /* DetailProductItemViewController.h */,
 				C65A68AA191AFB1E00BBDC16 /* DetailProductItemViewController.m */,
 				C699356218B969F6008FCF8A /* AppDelegate.h */,
@@ -770,10 +796,15 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0510;
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0630;
 				TargetAttributes = {
 					2949CC3414589C7200728B87 = {
 						DevelopmentTeam = E79MNN58JH;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					2949CC5414589C7200728B87 = {
 						TestTargetID = 2949CC3414589C7200728B87;
@@ -806,6 +837,7 @@
 				C632123418E834A30076D1DC /* DetailBusinessViewController.xib in Resources */,
 				2949CCF21458A21700728B87 /* checkedRadioButton.png in Resources */,
 				2949CCF31458A21700728B87 /* flag.png in Resources */,
+				C6504A8619D10654007646EB /* ServicesTableViewCell.xib in Resources */,
 				2949CCF81458A21700728B87 /* House_woody_cat.jpg in Resources */,
 				2949CCFA1458A21700728B87 /* ImageOfABill.jpg in Resources */,
 				2949CCFB1458A21700728B87 /* kermit_empty.png in Resources */,
@@ -835,6 +867,7 @@
 				C686B5AA19382B19008D2606 /* Icon-60@2x.png in Resources */,
 				29E693D014CC044B007E958F /* EnterBusiness.png in Resources */,
 				C6DE7D3B188A618D0048B496 /* ShakeHandWithBusinessViewController.xib in Resources */,
+				C6504A8119D0EC83007646EB /* ProductMoreInformationViewController.xib in Resources */,
 				29ECC44C14CCC06C0098653A /* EnterBusiness@2x.png in Resources */,
 				C69298AB18DF903400B013E0 /* BillPayViewController.xib in Resources */,
 				2925109414ECC1C300866384 /* CoffeeStore.jpg in Resources */,
@@ -916,7 +949,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -938,7 +971,6 @@
 				295C3AFD14E65F42000FB813 /* BusinessCustomerProfileManager.m in Sources */,
 				C6D20613195A8A23006E12FE /* JBKenBurnsView.m in Sources */,
 				291850CA153E8DA8008B6EBB /* DetailBusinessViewController.m in Sources */,
-				C6756CDA196E130100852D74 /* KASlideShow.m in Sources */,
 				29D29A2015DB5AFA00990F62 /* GooglePlacesConnection.m in Sources */,
 				C69298A918DF8FFE00B013E0 /* BillPayViewController.m in Sources */,
 				29D29A2115DB5AFA00990F62 /* GooglePlacesObject.m in Sources */,
@@ -947,8 +979,10 @@
 				29ECC44C14CCC06C00986546 /* ChatMessagesViewController.m in Sources */,
 				C61E552518E794C1007027C7 /* CurrentBusiness.m in Sources */,
 				C69935B118B969F6008FCF8A /* BillViewController.m in Sources */,
+				C6504A7C19D0EB17007646EB /* ProductMoreInformationViewController.m in Sources */,
 				C69935B018B969F6008FCF8A /* AppDelegate.m in Sources */,
 				C69935D118B969F6008FCF8A /* StoreMapViewController.m in Sources */,
+				C6504A7F19D0EB91007646EB /* Tap4AllDisplayUtil.m in Sources */,
 				29ECC44C14CCC06C00986552 /* LoginViewController.m in Sources */,
 				C69935BB18B969F6008FCF8A /* DataModel.m in Sources */,
 				29ECC44C14CCC06C00986555 /* MessageTableViewCell.m in Sources */,
@@ -974,6 +1008,7 @@
 				29ECC44C14CCC06C00986572 /* UIAlertView+TapTalkAlerts.m in Sources */,
 				2971AF4A16071AFA0022B72E /* NotificationPermissionViewController.m in Sources */,
 				C6C8ACA918DF9B8F005DAFD6 /* main.m in Sources */,
+				C6504A8419D1062B007646EB /* ServicesTableViewCell.m in Sources */,
 				29CDC4B516293F5A002E3D5A /* BusinessProductsUtils.m in Sources */,
 				C6C8ACAD18DF9BBC005DAFD6 /* TapForAllTests.m in Sources */,
 			);
@@ -1038,6 +1073,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1083,6 +1119,7 @@
 				CURRENT_PROJECT_VERSION = 1.1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
@@ -1107,10 +1144,10 @@
 		};
 		2949CC6914589C7200728B87 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 99C03DCCF5AF411B99AB2278 /* Pods.xcconfig */;
+			baseConfigurationReference = B9484E51F484786857070C30 /* Pods.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1121,22 +1158,27 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/TapForAll/TapForAll-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4CA1FC36-1D2A-429A-AF8F-0F0F1B9CCBEE";
-				"PROVISIONING_PROFILE[sdk=*]" = "4CA1FC36-1D2A-429A-AF8F-0F0F1B9CCBEE";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=*]" = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "";
+				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		2949CC6A14589C7200728B87 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 99C03DCCF5AF411B99AB2278 /* Pods.xcconfig */;
+			baseConfigurationReference = 992B80B955796F4F06393A9A /* Pods.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1148,9 +1190,13 @@
 				INFOPLIST_FILE = "$(SRCROOT)/TapForAll/TapForAll-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1A64A7ED-A950-44DB-924C-38FB03E636AA";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1160,6 +1206,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TapForAll.app/TapForAll";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1168,6 +1215,8 @@
 				GCC_PREFIX_HEADER = "TapForAll/TapForAll-Prefix.pch";
 				INFOPLIST_FILE = "TapForAllTests/TapForAllTests-Info.plist";
 				PRODUCT_NAME = TapForAllTests;
+				PROVISIONING_PROFILE = "5c1169f1-d679-401f-ad33-dc059f78d030";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5c1169f1-d679-401f-ad33-dc059f78d030";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Debug;
@@ -1176,6 +1225,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TapForAll.app/TapForAll";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1184,6 +1234,7 @@
 				GCC_PREFIX_HEADER = "TapForAll/TapForAll-Prefix.pch";
 				INFOPLIST_FILE = "TapForAllTests/TapForAllTests-Info.plist";
 				PRODUCT_NAME = TapForAllTests;
+				PROVISIONING_PROFILE = "94201fef-1b85-4130-9df2-9907edaff0b4";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Release;

@@ -46,9 +46,9 @@
     NSString *imageURLString = [BusinessCustomersMapDirectory stringByAppendingString:mapSubDir];
     NSURL *imageURL = [NSURL URLWithString:imageURLString];
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
-    [manager downloadWithURL:imageURL options:SDWebImageRetryFailed progress:nil
-                   completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished) {
-                       if (image) {
+    [manager downloadImageWithURL:imageURL options:SDWebImageRetryFailed progress:nil
+                   completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *url) {
+                       if (image && finished) {
                            storeMapImageView.image = image;
                            self.mapScrollView.contentSize = storeMapImageView.image.size;
                            mapScrollView.clipsToBounds = YES;	// default is NO, we want to restrict drawing within our scrollview

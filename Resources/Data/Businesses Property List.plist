@@ -2,14 +2,32 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Private</key>
+	<key>collection</key>
 	<dict>
+		<key>product_offered</key>
+		<false/>
 		<key>main choices</key>
 		<dict>
 			<key>Tap For All</key>
 			<array>
-				<string>Inclusive, secure chat</string>
-				<string>Pay</string>
+				<string>Come on and Chat me!</string>
+				<string>Map me</string>
+				<string>Service me</string>
+			</array>
+		</dict>
+	</dict>
+	<key>service</key>
+	<dict>
+		<key>product_offered</key>
+		<false/>
+		<key>main choices</key>
+		<dict>
+			<key>Tap For All</key>
+			<array>
+				<string>Exclusive, secure chat</string>
+				<string>Ask for service</string>
+				<string>View bill and pay</string>
+				<string>Map</string>
 			</array>
 		</dict>
 	</dict>
@@ -19,8 +37,9 @@
 		<dict>
 			<key>Tap For All</key>
 			<array>
-				<string>Show items</string>
+				<string>Show me products</string>
 				<string>Ask for service</string>
+				<string>View bill and pay</string>
 			</array>
 		</dict>
 	</dict>

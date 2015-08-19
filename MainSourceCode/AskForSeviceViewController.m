@@ -23,6 +23,8 @@ static NSUInteger firstTime = TRUE;
 @synthesize cancelUIButton;
 @synthesize askUIButton;
 @synthesize myBusiness;
+@synthesize initialMessage;
+@synthesize scrollView;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil forBusiness:(Business *)biz {
@@ -30,7 +32,15 @@ static NSUInteger firstTime = TRUE;
     if (self) {
         // Custom initialization
         myBusiness = biz;
+        initialMessage = nil;
     }
+    return self;
+}
+
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil forBusiness:(Business *)biz intialMessage:(NSString *)message {
+    self = [self initWithNibName:nibNameOrNil bundle:nibBundleOrNil forBusiness:biz];
+    initialMessage = message;
     return self;
 }
 
@@ -61,7 +71,6 @@ static NSUInteger firstTime = TRUE;
         
         controller.recipients = [NSArray arrayWithObjects:my_sms_no, nil];
         controller.messageComposeDelegate = self;
-//       [self presentModalViewController:controller animated:NO];  //compatibility
         [self presentViewController:controller animated:YES completion:nil];
     }
 
@@ -74,7 +83,11 @@ static NSUInteger firstTime = TRUE;
         [self.errorMessageView setHidden:FALSE];
         return FALSE;
     }
-    else {
+    else if([text isEqualToString:@"\n"]) {
+        [errorMessageView setHidden:TRUE];
+        [textView resignFirstResponder];
+        return YES;
+    } else {
         [errorMessageView setHidden:TRUE];
         return TRUE;
     }
@@ -83,8 +96,11 @@ static NSUInteger firstTime = TRUE;
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     if (firstTime) {
         firstTime = FALSE;
-        textView.text = @"";
-        [textView setNeedsDisplay];
+        // if the initial message is set then don't clear the text, otherwise do (the default text is the instruction)
+        if (initialMessage.length < 1) {
+            textView.text = @"";
+            [textView setNeedsDisplay];
+        }
     }
 }
 
@@ -97,14 +113,20 @@ static NSUInteger firstTime = TRUE;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = [NSString stringWithFormat:@"Get service from %@", myBusiness.businessName];
+    self.title = [NSString stringWithFormat:@"Ask %@", myBusiness.businessName];
     // Do any additional setup after loading the view from its nib.
     [errorMessageView setHidden:TRUE];
     errorMessageView.text = @"Remember house Woody Cat can't read more than 250 characters";
     [TapTalkLooks setToTapTalkLooks:cancelUIButton isActionButton:YES makeItRound:NO];
     [TapTalkLooks setToTapTalkLooks:askUIButton isActionButton:YES makeItRound:NO];
+    if ((initialMessage.length > 1) && (initialMessage !=nil) )
+        self.orderView.text = initialMessage;
+    
+    orderView.delegate = self;
+    [orderView setReturnKeyType:UIReturnKeyDone];
+    orderView.keyboardAppearance = UIKeyboardAppearanceDark;
+    [self registerForKeyboardNotifications];
 
-//    [errorMessageView setNeedsDisplay];
 }
 
 - (void)viewDidUnload {
@@ -141,7 +163,6 @@ static NSUInteger firstTime = TRUE;
             break;
     }
     alert = nil;
-//    [self dismissModalViewControllerAnimated:YES]; Compatibility
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -165,50 +186,49 @@ static NSUInteger firstTime = TRUE;
     }
 }
 
-/*
-- (void)postJoinRequest
+
+
+- (void)registerForKeyboardNotifications
 {
-	MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-	hud.labelText = NSLocalizedString(@"Connecting", nil);
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
     
-	NSURL* url = [NSURL URLWithString:ServerApiURL];
-	__block ASIFormDataRequest* request = [ASIFormDataRequest requestWithURL:url];
-	[request setDelegate:self];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
     
-	[request setPostValue:@"join" forKey:@"cmd"];
-	[request setPostValue:[dataModel userID] forKey:@"userID"];
-	[request setPostValue:[dataModel deviceToken] forKey:@"token"];
-	[request setPostValue:[dataModel nickname] forKey:@"name"];
-	[request setPostValue:[dataModel secretCode] forKey:@"code"];
-    
-	[request setCompletionBlock:^
-     {
-         if ([self isViewLoaded])
-         {
-             [MBProgressHUD hideHUDForView:self.view animated:YES];
-             
-             if ([request responseStatusCode] != 200)
-             {
-                 ShowErrorAlert(NSLocalizedString(@"There was an error communicating with the server", nil));
-             }
-             else
-             {
-                 [self userDidJoin];
-             }
-         }
-     }];
-    
-	[request setFailedBlock:^
-     {
-         if ([self isViewLoaded])
-         {
-             [MBProgressHUD hideHUDForView:self.view animated:YES];
-             ShowErrorAlert([[request error] localizedDescription]);
-         }
-     }];
-    
-	[request startAsynchronous];
 }
-*/
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    scrollView.contentInset = contentInsets;
+    scrollView.scrollIndicatorInsets = contentInsets;
+    
+    // If active text field is hidden by keyboard, scroll it so it's visible
+    // Your app might not need or want this behavior.
+    CGRect aRect = self.view.frame;
+    aRect.size.height -= kbSize.height;
+    if (!CGRectContainsPoint(aRect, askUIButton.frame.origin) ) {
+        [self.scrollView scrollRectToVisible:askUIButton.frame animated:YES];
+    }
+    if (!CGRectContainsPoint(aRect, cancelUIButton.frame.origin) ) {
+        [self.scrollView scrollRectToVisible:cancelUIButton.frame animated:YES];
+    }
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    scrollView.contentInset = contentInsets;
+    scrollView.scrollIndicatorInsets = contentInsets;
+}
+
 
 @end

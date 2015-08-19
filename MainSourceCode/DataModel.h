@@ -63,6 +63,7 @@
 @property(nonatomic, assign) long userID; // determined and given by the server
 @property(nonatomic, retain) NSString *chatSystemURL;
 @property(nonatomic, retain) NSString *businessName;
+@property(nonatomic, retain) NSString *shortBusinessName;
 @property(nonatomic, assign) NSInteger chat_master_uid;
 
 @property(nonatomic, retain) NSString *password;
@@ -74,6 +75,7 @@
 @property(atomic, assign) BOOL shouldDownloadChatMessages;
 @property(nonatomic, strong) NSString *qrImageFileName;
 @property(nonatomic, strong) NSString *zipcode;
+@property(atomic, assign) BOOL validate_chat;
 
 - (void)buildBusinessChatMessages;
 

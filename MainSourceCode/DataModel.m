@@ -9,6 +9,7 @@
 @synthesize notifications;
 @synthesize chatSystemURL;
 @synthesize businessName;
+@synthesize shortBusinessName;
 @synthesize chat_master_uid;
 @synthesize ageGroup;
 @synthesize password;
@@ -17,6 +18,7 @@
 @synthesize shouldDownloadChatMessages;
 @synthesize qrImageFileName;
 @synthesize zipcode;
+@synthesize validate_chat;
 
 static DataModel *sharedDataModel = nil;
 
@@ -47,9 +49,10 @@ static DataModel *sharedDataModel = nil;
 - (id)init {
     if (self) {
         // Register default values for our settings
+//        notifications = [[NSMutableArray alloc] init];
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        notifications = [defaults objectForKey:@"Notifications"];
-        if (!notifications)
+        self.notifications = [[defaults objectForKey:@"Notifications"] mutableCopy];
+        if (notifications == nil || notifications.count <=0)
         {
             notifications = [[NSMutableArray alloc] init];
         }
@@ -62,6 +65,7 @@ static DataModel *sharedDataModel = nil;
 //         @{@"Notifications": @""}];
         // Load default defaults
 // from Internet        [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Defaults" ofType:@"plist"]]];
+        validate_chat = FALSE;
     }
     
     return self;
@@ -69,9 +73,9 @@ static DataModel *sharedDataModel = nil;
 
 - (void)sortNotificationsinReverseChronologicalOrder
 {
-    NSSortDescriptor *descriptor =
-    [[NSSortDescriptor alloc] initWithKey:@"dateTimeRecieved" ascending:NO];
-    [notifications sortUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"dateTimeRecieved" ascending:NO];
+    
+    [notifications sortUsingDescriptors:[NSArray arrayWithObject:descriptor]];
     descriptor = nil;
 }
 
@@ -87,7 +91,6 @@ static DataModel *sharedDataModel = nil;
     NSDate *dateAdded = [NSDate date];
     [notificationData setObject:dateAdded forKey:@"dateTimeRecieved"];
     //fetch the icon for the business identified by the given "business ID" from consumerprofile (database on our server)
-    
     
     [self.notifications addObject:notificationData];
 }

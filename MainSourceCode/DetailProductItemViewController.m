@@ -7,18 +7,34 @@
 //
 
 #import "DetailProductItemViewController.h"
+#import "ProductMoreInformationViewController.h"
+#import "AskForSeviceViewController.h"
 #import "TapTalkLooks.h"
+#import "Consts.h"
+#import "CurrentBusiness.h"
+#import "MBProgressHUD.h"
 
 // github library to load the images asynchronously
 #import <SDWebImage/UIImageView+WebCache.h>
 
+typedef NS_ENUM(NSUInteger, ConfigurableButtonType) {
+    Hide = (1 << 0),
+    MoreInformation = (1 << 1),
+    ContactForInquiry = (1<<2)
+};
 
 
-@interface DetailProductItemViewController ()
+@interface DetailProductItemViewController () {
+    
+}
+
+@property (nonatomic, assign) ConfigurableButtonType actionType;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 - (void)displayReducedPrice;
-- (void)displayExpirationDate;
+- (void)displayEndOfSaleDate;
+- (ConfigurableButtonType)determineConfigureableButtonType;
+
 @end
 
 
@@ -33,11 +49,11 @@
 @synthesize ratingTextField;
 @synthesize runtimeField1Label;
 @synthesize runtimeField1TextField;
-@synthesize reducedPriceEndDate;
+@synthesize saleEndDate;
 @synthesize reducedPriceTextField;
 @synthesize reducedPriceLabel;
-@synthesize moreInformationLabel;
-
+@synthesize configurableActionButton;
+@synthesize actionType;
 
 
 - (BOOL)isTherePriceReduction
@@ -55,16 +71,16 @@
     }
 }
 
-- (void)displayExpirationDate
+- (void)displayEndOfSaleDate
 {
     if (![self isTherePriceReduction])
     {
-        reducedPriceEndDate.text =@"NA";
+        saleEndDate.text =@"NA";
     }
     else
     {
-        reducedPriceEndDate.textColor = [UIColor redColor];
-        reducedPriceEndDate.text = [productDictionary objectForKey:@"ExpirationDate"];
+        saleEndDate.textColor = [UIColor redColor];
+        saleEndDate.text = [productDictionary objectForKey:@"ExpirationDate"];
     }
 }
 
@@ -124,6 +140,9 @@
     ratingTextField.text = [productDictionary objectForKey:@"Rating"];
     rewardsNeededToBuyTextField.text = @"NA";
     
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = NSLocalizedString(@"Loading detaili product information...", @"");
+    
     NSArray *runtimeFields;
     NSDictionary *runtimeField1;
     NSString *fieldName;
@@ -154,6 +173,8 @@
     NSString *stringOfPictures = [productDictionary objectForKey:@"PictureArray"];
     NSArray *pictureArray = [stringOfPictures componentsSeparatedByString:@","];
     if (pictureArray.count > 1) {
+        dispatch_queue_t loadImageQueue = dispatch_queue_create("com_mydoosts_com_queue",NULL);
+        dispatch_async(loadImageQueue, ^{
             picturesView.hidden = FALSE;
             NSString *imageURLString;
             UIImage *image;
@@ -167,32 +188,57 @@
             
             [picturesView animateWithImages:images transitionDuration:3 initialDelay:0 loop:YES isLandscape:NO];
             images = nil;
+        });
     } else {
         picturesView.hidden = TRUE;
         CGRect imageViewRect = [picturesView frame];
         UIImageView *onePictureImageView =[[UIImageView alloc] initWithFrame:imageViewRect];
         [self.view addSubview:onePictureImageView];
         NSURL *imageURL = [NSURL URLWithString:[pictureArray objectAtIndex:0]];
-        [onePictureImageView setImageWithURL:imageURL placeholderImage:nil options:SDWebImageProgressiveDownload];
+        [onePictureImageView Compatible_setImageWithURL:imageURL placeholderImage:nil options:SDWebImageProgressiveDownload];
     }
-    NSDictionary *moreInfo = [productDictionary objectForKey:@"MoreInformation"];
-    if (moreInfo == nil)
-    {
-        moreInformationLabel.hidden = TRUE;
+    
+    [TapTalkLooks setToTapTalkLooks:configurableActionButton isActionButton:YES makeItRound:NO];
+    actionType = [self determineConfigureableButtonType];
+    NSInteger noOfActionTypes = 3;
+    NSInteger checkStep = -1;
+    while (checkStep < noOfActionTypes) {
+        checkStep++;
+        if (checkStep == 0) {
+            if ((actionType & Hide) == Hide) {
+                configurableActionButton.hidden = TRUE;
+                break;
+            }
+            continue;
+        }
+        if (checkStep == 1) {
+            if ((actionType & MoreInformation) == MoreInformation) {
+                [configurableActionButton setTitle:@"More information" forState:UIControlStateNormal];
+                break;
+            }
+            continue;
+        }
+        if (checkStep == 2) {
+            if ((actionType & ContactForInquiry) == ContactForInquiry) {
+                [configurableActionButton setTitle:@"Contact For Inquiry" forState:UIControlStateNormal];
+                break;
+            }
+            continue;
+        }
     }
-    else {
-        [TapTalkLooks setToTapTalkLooks:moreInformationLabel isActionButton:YES makeItRound:NO];
-    }
+    
     [TapTalkLooks setToTapTalkLooks:rewardsNeededToBuyTextField isActionButton:YES makeItRound:NO];
     [TapTalkLooks setToTapTalkLooks:ratingTextField isActionButton:YES makeItRound:NO];
     [TapTalkLooks setToTapTalkLooks:reducedPriceTextField isActionButton:YES makeItRound:NO];
-    [TapTalkLooks setToTapTalkLooks:reducedPriceEndDate isActionButton:YES makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:saleEndDate isActionButton:YES makeItRound:NO];
     [TapTalkLooks setToTapTalkLooks:rewardsTextField isActionButton:YES makeItRound:NO];
     [TapTalkLooks setToTapTalkLooks:longDescription isActionButton:NO makeItRound:NO];
     [TapTalkLooks setToTapTalkLooks:runtimeField1TextField isActionButton:NO makeItRound:NO];
     
     [self displayReducedPrice];
-    [self displayExpirationDate];
+    [self displayEndOfSaleDate];
+    
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 
@@ -217,7 +263,40 @@
     [super viewDidUnload];
 }
 
-- (IBAction)moreInformationAction:(id)sender {
+- (ConfigurableButtonType)determineConfigureableButtonType {
+    ConfigurableButtonType tempActionType =0;
+    NSArray *moreInfo = [productDictionary objectForKey:@"MoreInformation"];
+    if ([moreInfo count] > 0)
+    {
+        tempActionType = tempActionType | MoreInformation;
+    }
+    if ([CurrentBusiness sharedCurrentBusinessManager].business.inquiryForProduct)
+    {
+        tempActionType = tempActionType | ContactForInquiry;
+    }
+    
+    if (tempActionType == 0)
+        tempActionType = Hide;
+
+    return tempActionType;
 }
+
+- (IBAction)configurableAction:(id)sender {
+    if ((actionType & MoreInformation) == MoreInformation) {
+        BOOL displayInquiry = ((actionType & ContactForInquiry) != 0);
+        ProductMoreInformationViewController *moreInfo = [[ProductMoreInformationViewController alloc] initWithNibName:nil bundle:nil data:productDictionary displayInquiryAction:displayInquiry];
+        [self.navigationController pushViewController:moreInfo animated:YES];
+    }
+    else if ((actionType & ContactForInquiry) == ContactForInquiry) {
+        //for now let's us it for seding an sms to the mananger of the business and iquiry about this product
+        NSString *message = [NSString stringWithFormat:@"I want to know more about %@ with SKU of %@ ", [productDictionary objectForKey:@"Name"], [productDictionary objectForKey:@"SKU"]];
+        AskForSeviceViewController *orderViewController = [[AskForSeviceViewController alloc] initWithNibName:nil bundle:nil forBusiness:[CurrentBusiness sharedCurrentBusinessManager].business];
+        orderViewController.initialMessage = message;
+        
+        [self.navigationController pushViewController:orderViewController animated:YES];
+    }
+    
+}
+
 
 @end

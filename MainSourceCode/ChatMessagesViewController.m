@@ -16,6 +16,7 @@
 #import "LoginViewController.h"
 #import "ChatsFromBusinessTableViewController.h"
 #import "TapTalkLooks.h"
+#import "CurrentBusiness.h"
 
 #import "AFNetworking.h"
 
@@ -24,11 +25,14 @@
     TapTalkChatMessage *ttChatMessage;
     NSTimer *chatTimer;
     ChatsFromBusinessTableViewController *chatFromBizTableView;
+    CGSize kbSize;
 }
 
 @property(atomic, strong) ChatsFromBusinessTableViewController *chatFromBizTableView;
+@property (assign) CGSize kbSize;
 
 - (void)doRunTimer;
+- (BOOL)canUserChat;
 
 @end
 
@@ -38,6 +42,7 @@
 @synthesize composeMessageTextField;
 @synthesize toggleUpdatingChatMessages;
 @synthesize chatFromBizTableView;
+@synthesize kbSize;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -76,7 +81,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.    
+    // Do any additional setup after loading the view from its nib.
+    // we have to set the title in the ViewWillAppear since each load could be for a diferent business - ViewDidLoad is called onces
+//    NSString *viewControllerTitle = [[DataModel sharedDataModelManager] shortBusinessName];
+//    self.title = [viewControllerTitle stringByAppendingString:@" all chat"];
+    
+    [[DataModel sharedDataModelManager] setJoinedChat:TRUE];
+    [ttChatMessage loadMessagesFromServer];
+    
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = NSLocalizedString(@"Loading messages", @"");
     
     [chatTableView setBackgroundColor:[UIColor colorWithRed:219 / 255.0 green:226 / 255.0 blue:237 / 255.0 alpha:1.0]];
     [TapTalkLooks setBackgroundImage:self.view];
@@ -96,29 +110,42 @@
     UIBarButtonItem *displayBusinessMessagesButton = [[UIBarButtonItem alloc] initWithTitle:@"Biz" style:UIBarButtonItemStyleDone target:self action:@selector(displaybusinessMessages)];
     self.navigationItem.leftBarButtonItem = displayBusinessMessagesButton;
     displayBusinessMessagesButton = nil;
+    
+    [self registerForKeyboardNotifications];
+//    self.tabBarItem.title = [[DataModel sharedDataModelManager] shortBusinessName];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+//    if ([DataModel sharedDataModelManager].nickname.length < 1) {
+//        [UIAlertView showErrorAlert:@"You don't have a nick name yet.  Please go to the profile page and get one."];
+//        [self.navigationController popViewControllerAnimated:YES];
+//        return;
+//    }
+//    
+//    if (![[DataModel sharedDataModelManager] joinedChat]) {
+//        // show the user that are about to connect to a new business chatroom
+//        if (![self canUserChat]) {
+//            [UIAlertView showErrorAlert:@"You are NOT registered to particate in this chat.  Please ask the manager to add you."];
+//            [self.navigationController popViewControllerAnimated:YES];
+//            return;
+//        }
+// TODO - Commented out for now
+//        [DataModel sharedDataModelManager].shouldDownloadChatMessages = TRUE;
+//        LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
+//        loginController.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+//
+//        [self presentViewController:loginController animated:YES completion:nil];
+//        loginController = nil;
+//    
+        NSString *viewControllerTitle = [[DataModel sharedDataModelManager] shortBusinessName];
+        self.title = [viewControllerTitle stringByAppendingString:@" all chat"];
     
-    if (![[DataModel sharedDataModelManager] joinedChat]) {
-        // show the user that are about to connect to a new business chatroom
-        [DataModel sharedDataModelManager].shouldDownloadChatMessages = TRUE;
-        LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
-        loginController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-
-        [self presentViewController:loginController animated:YES completion:nil];
-        loginController = nil;
-        
-//        NSString *viewControllerTitle = [[DataModel sharedDataModelManager] businessName];
-//        self.title = viewControllerTitle;
-        self.title = @"All messages";
-        
         [[DataModel sharedDataModelManager] setJoinedChat:TRUE];
         [ttChatMessage loadMessagesFromServer];
 
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.labelText = NSLocalizedString(@"Loading messages", @"");
-    }
+//        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        hud.labelText = NSLocalizedString(@"Loading messages", @"");
+//    }
 }
 
 - (void)viewDidUnload {
@@ -191,19 +218,6 @@
 //    }
 }
 
-//????
-//- (void)userDidCompose:(NSString *)text {
-//    // Create a new Message object
-//    TapTalkChatMessage *message = [[TapTalkChatMessage alloc] init];
-//
-//    message.sender = [DataModel sharedDataModelManager].nickname;
-//    message.dateAdded = [NSDate date];
-//    message.textChat = text;
-//
-//    // Add the Message to the data model's list of messages
-////????    [[DataModel sharedDataModelManager] addMessage:message];
-//}
-//
 
 - (void)sendChatMessageToServer {
     // Show an activity spinner that blocks the whole screen
@@ -291,19 +305,19 @@
     return YES;
 }
 
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    [self animateTextField:textField up:YES];
-}
-
-
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    [self animateTextField:textField up:NO];
-}
+// FORNOW
+//- (void)textFieldDidBeginEditing:(UITextField *)textField {
+//    [self animateTextField:textField up:YES];
+//}
+//
+//
+//- (void)textFieldDidEndEditing:(UITextField *)textField {
+//    [self animateTextField:textField up:NO];
+//}
 
 - (void)animateTextField:(UITextField *)textField up:(BOOL)up {
-    const int movementDistance = 175; // tweak as needed
-    const float movementDuration = 0.3f; // tweak as needed
+    const int movementDistance =  kbSize.height; //200; // tweak as needed
+    const float movementDuration = 0.03f; // tweak as needed
 
     int movement = (up ? -movementDistance : movementDistance);
 
@@ -328,6 +342,26 @@
 - (void)timerCallBack {
     if ([DataModel sharedDataModelManager].shouldDownloadChatMessages)
         [ttChatMessage loadMessagesFromServer];
+}
+
+- (BOOL)canUserChat {
+    NSInteger validateStatus = [CurrentBusiness sharedCurrentBusinessManager].business.validate_chat;
+    
+    if (validateStatus == ChatValidationWorkflow_NoNeedToValidate) {
+        return TRUE;
+    }
+    else if (validateStatus == ChatValidationWorkflow_Validated) {
+        return TRUE;
+    }
+    else if (validateStatus == ChatValidationWorkflow_Not_Valid) {
+        return FALSE;
+    }
+    else if (validateStatus == ChatValidationWorkflow_ErrorFromServer) {
+        return FALSE;
+    }
+    else {
+        return FALSE;
+    }
 }
 
 #pragma mark -
@@ -371,6 +405,51 @@
     [[DataModel sharedDataModelManager] setJoinedChat:FALSE];
 }
 
+
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    kbSize.height -= 53;
+    [self animateTextField:composeMessageTextField up:YES];
+    
+//    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+//    scrollView.contentInset = contentInsets;
+//    scrollView.scrollIndicatorInsets = contentInsets;
+//    
+//    // If active text field is hidden by keyboard, scroll it so it's visible
+//    // Your app might not need or want this behavior.
+//    CGRect aRect = self.view.frame;
+//    aRect.size.height -= kbSize.height;
+//    if (!CGRectContainsPoint(aRect, askUIButton.frame.origin) ) {
+//        [self.scrollView scrollRectToVisible:askUIButton.frame animated:YES];
+//    }
+//    if (!CGRectContainsPoint(aRect, cancelUIButton.frame.origin) ) {
+//        [self.scrollView scrollRectToVisible:cancelUIButton.frame animated:YES];
+//    }
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    [self animateTextField:composeMessageTextField up:NO];
+//    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+//    scrollView.contentInset = contentInsets;
+//    scrollView.scrollIndicatorInsets = contentInsets;
+}
 
 
 @end

@@ -5,15 +5,20 @@
 
 #define AddChatServer @"http://mydoosts.com/taptalk/chatrooms/addchatmessage.php"
 #define LoadChatServer @"http://mydoosts.com/taptalk/chatrooms/loadchatmessages.php"
+#define ChatSystemServer @"http://mydoosts.com/taptalk/chatsystem/index.php"
+//#define ChatSystemServer @"http://127.0.0.1/TapForAll/chatsystem/index.php"
 #define MaxRowsForLoadingChatMessages 150 // max number of messages
 #define TimeIntervalForLoadingChatMessages 1440 //Hours - 1440 means 2 months
-
+#define ChatValidationWorkflow_NoNeedToValidate 0
+#define ChatValidationWorkflow_InProcess 1
+#define ChatValidationWorkflow_Validated 2
+#define ChatValidationWorkflow_Not_Valid 3
+#define ChatValidationWorkflow_ErrorFromServer -1
 
 
 #define BusinessInformationServer @"http://mydoosts.com/taptalk/businessinfo/index.php"
 #define ConsumerProfileServer @"http://mydoosts.com/taptalk/profilesystem/consumerprofile.php"
 //#define ConsumerProfileServer @"http://localhost/TapForAll/profilesystem/consumerprofile.php"
-#define ChatSystemServer @"http://mydoosts.com/taptalk/chatsystem/index.php"
 
 //data directories
 #define BusinessCustomerIndividualDirectory @"http://www.mydoosts.com/taptalk/customer_files/"
@@ -23,6 +28,7 @@
 
 //payment processing
 #define STRIPE_TEST_PUBLIC_KEY @"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi"
+//NSString * const StripePublishableKey = @"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi";
 #define TapForAllPaymentServer @"http://mydoosts.com/taptalk/paymentsystem/charge.php"
 
 
@@ -44,3 +50,10 @@ static int NumberOfMessagesOnOnePage = 6;
 // a push notification is limited to 256 bytes and that includes the JSON 
 // overhead and the name of the sender.
 #define MaxMessageLength 190
+
+// compatibility between different ios
+#ifdef __IPHONE_8_0
+#define Compatible_setImageWithURL sd_setImageWithURL
+#else
+#define Compatible_setImageWithURL setImageWithURL
+#endif

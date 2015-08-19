@@ -11,7 +11,7 @@
 #import "DataModel.h"
 #import "MessageTableViewCell.h"
 #import "ChatsFromBusinessTableViewController.h"
-#import "LoginViewController.h"
+//#import "LoginViewController.h"
 #import "MBProgressHUD.h"
 
 
@@ -71,7 +71,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {    
     [super viewWillAppear:animated];
-    self.title = [DataModel sharedDataModelManager].businessName;
+    self.title = [DataModel sharedDataModelManager].shortBusinessName;
     [[DataModel sharedDataModelManager] buildBusinessChatMessages];
     [self scrollToNewestMessage];
 

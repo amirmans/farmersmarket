@@ -11,5 +11,6 @@
 @interface UtilityConsumerProfile : NSObject
 
 + (BOOL)validateEmail:(NSString *)emailStr;
++ (BOOL)canUserChat;
 
 @end

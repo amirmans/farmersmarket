@@ -14,6 +14,7 @@
 @synthesize customerProfileName;
 @synthesize loadInfo; //If true, business has been changed so load customer profile information again
 @synthesize mainChoices, allChoices/*, productItems*/;
+@synthesize loadProducts;
 
 
 static BusinessCustomerProfileManager *sharedChoicesManager = nil;
@@ -74,7 +75,14 @@ static BusinessCustomerProfileManager *sharedChoicesManager = nil;
 
         NSString *path = [bundle pathForResource:@"Businesses Property List" ofType:@"plist"];
         NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:path];
+
         NSDictionary *tempAllChoices = [dictionary objectForKey:self.customerProfileName];
+        NSNumber *tempNumberProductOffered = [tempAllChoices objectForKey:@"product_offered"];
+        if (tempNumberProductOffered != nil)
+            loadProducts = [tempNumberProductOffered boolValue];
+        else
+            loadProducts = 1; // default value, load products and later display to the consumers
+
         allChoices = [tempAllChoices objectForKey:@"main choices"];
 //        NSLog(@"Here are our main choices: %@", allChoices);
         self.loadInfo = NO;
@@ -82,6 +90,8 @@ static BusinessCustomerProfileManager *sharedChoicesManager = nil;
 
     return allChoices;
 }
+
+
 
 
 - (NSArray *)mainChoices {
