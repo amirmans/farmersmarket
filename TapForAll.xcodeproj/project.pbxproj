@@ -796,7 +796,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0510;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 				TargetAttributes = {
 					2949CC3414589C7200728B87 = {
 						DevelopmentTeam = E79MNN58JH;
@@ -1071,6 +1071,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1.1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -1162,6 +1163,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mydoosts.tapforallv2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=*]" = "";
@@ -1194,6 +1196,7 @@
 					"$(inherited)",
 					"-ObjC",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mydoosts.tapforallv2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1214,6 +1217,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TapForAll/TapForAll-Prefix.pch";
 				INFOPLIST_FILE = "TapForAllTests/TapForAllTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "MyDoosts.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = TapForAllTests;
 				PROVISIONING_PROFILE = "5c1169f1-d679-401f-ad33-dc059f78d030";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5c1169f1-d679-401f-ad33-dc059f78d030";
@@ -1233,6 +1237,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TapForAll/TapForAll-Prefix.pch";
 				INFOPLIST_FILE = "TapForAllTests/TapForAllTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "MyDoosts.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = TapForAllTests;
 				PROVISIONING_PROFILE = "94201fef-1b85-4130-9df2-9907edaff0b4";
 				TEST_HOST = "$(BUNDLE_LOADER)";
