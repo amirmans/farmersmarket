@@ -17,14 +17,14 @@
 #import "AFNetworking.h"
 
 @interface Business () {
-    NSString *imageFileName;
-    NSString *imageFileExt;
+//    NSString *imageFileName;
+//    NSString *imageFileExt;
 @private
 
 }
 
-@property(nonatomic, retain) NSString *imageFileName;
-@property(nonatomic, retain) NSString *imageFileExt;
+//@property(nonatomic, retain) NSString *imageFileName;
+//@property(nonatomic, retain) NSString *imageFileExt;
 
 
 - (void)fetchResponseData:(NSData *)responseData;
@@ -53,11 +53,11 @@
 @synthesize paymentProcessingEmail;
 @synthesize paymentProcessingID;
 @synthesize email;
-@synthesize chat_master_uid;
+@synthesize chat_masters;
 @synthesize map_image_url;
 @synthesize picturesString;
 @synthesize validate_chat;
-@synthesize inquiryForProduct;
+@synthesize inquiryForProduct, needsBizChat;
 
 
 - (void)initMemberData {
@@ -81,11 +81,12 @@
     neighborhood = nil;
     ServerInteractionManager *serverManager = [[ServerInteractionManager alloc] init];
     serverManager.postProcessesDelegate = self;
-    chat_master_uid = 0;
+    chat_masters = nil;
     map_image_url = nil;
     validate_chat = FALSE;
     picturesString = nil;
     iconImage = nil;
+    needsBizChat = true;
 }
 
 - (int)isCustomer {
@@ -99,6 +100,7 @@
 - (void)startLoadingBusinessProductCategoriesAndProducts {
     NSString *urlString = [NSString stringWithFormat:@"%@?businessID=%i", BusinessInformationServer, businessID];
     urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    //urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlString];
 
 //    isProductListLoaded = TRUE;
@@ -120,7 +122,7 @@
     if (error)
     {
         NSLog(@"Error in fetching product items.  Description of error is: %@", [error localizedDescription]);
-        [UIAlertView showErrorAlert: @"Error in fetching product items."];
+        [UIAlertController showErrorAlert: @"Error in fetching product items."];
     }
     isProductListLoaded = TRUE;
 }
@@ -172,6 +174,28 @@
 }
 
 
+- (NSArray *)nsArrayFromDataDictionary:(NSDictionary *)data forKey:(NSString *)key {
+    NSString *jsonString = [data objectForKey:key];
+    
+    NSData * jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError * error=nil;
+    id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
+    
+    NSArray *jsonArray = nil;
+    if ([jsonObject isKindOfClass:[NSArray class]]) {
+        NSLog(@"its an array!");
+        jsonArray = (NSArray *)jsonObject;
+        NSLog(@"jsonArray - %@",jsonArray);
+    }
+    else {
+        NSLog(@"its probably a dictionary");
+        NSDictionary *jsonDictionary = (NSDictionary *)jsonObject;
+        NSLog(@"jsonDictionary - %@",jsonDictionary);
+    }
+
+    
+    return jsonArray;
+}
 
 - (id)initWithDataFromDatabase:(NSDictionary *)data {
 //    [self initMemberData];
@@ -203,7 +227,7 @@
         shortBusinessName = businessName;
     chatSystemURL = [self stringFromDataDictionary:data forKey:@"chatroom_table"];
     businessID = [[data objectForKey:@"businessID"] intValue];
-    chat_master_uid = [self integerFromDataDictionary:data forKey:@"chat_master_uid"];
+    chat_masters = [self nsArrayFromDataDictionary:data forKey:@"chat_masters"];
     map_image_url = [self stringFromDataDictionary:data forKey:@"map_image_url"];
     picturesString = [self stringFromDataDictionary:data forKey:@"pictures"];
     validate_chat = [[data objectForKey:@"validate_chat"] boolValue];
@@ -231,7 +255,7 @@
                   NSInteger permissionCode = [[jsonResponse objectForKey:@"permission"] integerValue];
                   
                   if ( (operation.response.statusCode != 200) || (statusCode != 0) ) {
-                      [UIAlertView showErrorAlert:NSLocalizedString(@"No connection to Business's Chatroom", nil)];
+                      [UIAlertController showErrorAlert:NSLocalizedString(@"No connection to Business's Chatroom", nil)];
                       validate_chat = ChatValidationWorkflow_ErrorFromServer; // error
                   }
                   if (permissionCode == 1)
@@ -278,7 +302,8 @@
     NSString *urlString = BusinessInformationServer;
     NSString *getValues = [NSString stringWithFormat:@"?businessName=%@", businessName];
     urlString = [urlString stringByAppendingString:getValues];
-    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    //urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request =
             [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadRevalidatingCacheData timeoutInterval:10];
@@ -303,7 +328,7 @@
                     self.businessID = [[responseDictionary valueForKey:@"businessID"] intValue];
                     customerProfileName = [responseDictionary valueForKey:@"customerProfileName"];
                     self.chatSystemURL = [responseDictionary valueForKey:@"chatroom_table"];
-                    self.chat_master_uid = [self integerFromDataDictionary:responseDictionary forKey:@"chat_master_uid"];
+                    self.chat_masters = [self nsArrayFromDataDictionary:responseDictionary forKey:@"chat_masters"];
                     sms_no = [self stringFromDataDictionary:responseDictionary forKey:@"sms_no"];
                     if ((sms_no == nil) && (phone != nil)) {
                         sms_no = phone;

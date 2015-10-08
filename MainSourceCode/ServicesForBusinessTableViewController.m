@@ -168,40 +168,46 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *tmpStr = [[allChoices objectForKey:chosenMainMenu] objectAtIndex:indexPath.row];
-    tmpStr = [tmpStr lowercaseString];
+    [self loadNextViewController:tmpStr forBusiness:self.biz inNavigationController:self.navigationController];
+}
+
+
+
+- (void)loadNextViewController:(NSString *)service forBusiness:(Business *)function_biz inNavigationController:(UINavigationController *)navigationController {
+    NSString* tmpStr = [service lowercaseString];
     NSUInteger whileIndex = 0;
     while (whileIndex < 6) {
         if (whileIndex == 0) {
             if ([tmpStr rangeOfString:@"menu"].location != NSNotFound) {
                 MenuViewController *menuViewController = [[MenuViewController alloc] initWithNibName:nil bundle:nil];
-                [self.navigationController pushViewController:menuViewController animated:YES];
+                [navigationController pushViewController:menuViewController animated:YES];
             }
         }
         if (whileIndex == 1) {
             if (([tmpStr rangeOfString:@"food or drink"].location != NSNotFound) || ([tmpStr rangeOfString:@"service"].location != NSNotFound)) {
-                AskForSeviceViewController *orderViewController = [[AskForSeviceViewController alloc] initWithNibName:nil bundle:nil forBusiness:biz];
-                [self.navigationController pushViewController:orderViewController animated:YES];
+                AskForSeviceViewController *orderViewController = [[AskForSeviceViewController alloc] initWithNibName:nil bundle:nil forBusiness:function_biz];
+                [navigationController pushViewController:orderViewController animated:YES];
             }
         }
-
+        
         if (whileIndex == 2) {
             if ([tmpStr rangeOfString:@"bill"].location != NSNotFound) {
-                BillViewController *billViewController = [[BillViewController alloc] initWithNibName:nil bundle:nil forBusiness:biz];
-                [self.navigationController pushViewController:billViewController animated:YES];
+                BillViewController *billViewController = [[BillViewController alloc] initWithNibName:nil bundle:nil forBusiness:function_biz];
+                [navigationController pushViewController:billViewController animated:YES];
             }
         }
-
+        
         if (whileIndex == 3) {
             if ([tmpStr rangeOfString:@"map"].location != NSNotFound) {
                 StoreMapViewController *storeMapViewController = [[StoreMapViewController alloc] initWithNibName:nil bundle:nil];
-                storeMapViewController.title = [NSString stringWithFormat:@"Map of %@",biz.shortBusinessName];
-                [self.navigationController pushViewController:storeMapViewController animated:YES];
+                storeMapViewController.title = [NSString stringWithFormat:@"Map of %@",function_biz.shortBusinessName];
+                [navigationController pushViewController:storeMapViewController animated:YES];
             }
         }
-
+        
         if (whileIndex == 4) {
             if (([tmpStr rangeOfString:@"items"].location != NSNotFound) || ([tmpStr rangeOfString:@"have"].location != NSNotFound) || ([tmpStr rangeOfString:@"show"].location != NSNotFound)) {
-                if (biz.isProductListLoaded) {
+                if (function_biz.isProductListLoaded) {
                     [self displayProduct];
                 }
                 else {
@@ -215,10 +221,10 @@
             if ([tmpStr rangeOfString:@"chat"].location != NSNotFound) {
                 
                 if ([DataModel sharedDataModelManager].nickname.length < 1) {
-                    [UIAlertView showErrorAlert:@"You don't have a nick name yet.  Please go to the profile page and get one."];
+                    [UIAlertController showErrorAlert:@"You don't have a nick name yet.  Please go to the profile page and get one."];
                 }
                 else if (![UtilityConsumerProfile canUserChat]) {
-                    [UIAlertView showErrorAlert:@"You are NOT registered to particate in this chat.  Please ask the manager to add you."];
+                    [UIAlertController showErrorAlert:@"You are NOT registered to particate in this chat.  Please ask the manager to add you."];
                 }
                 else {
                     if (![[DataModel sharedDataModelManager] joinedChat]) {
@@ -226,22 +232,23 @@
                         [DataModel sharedDataModelManager].shouldDownloadChatMessages = TRUE;
                         LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
                         loginController.modalTransitionStyle = UIModalTransitionStylePartialCurl;
-                            
+                        
                         [self presentViewController:loginController animated:YES completion:nil];
                         loginController = nil;
                     }
                     
                     ChatMessagesViewController *chatViewContoller = [[ChatMessagesViewController alloc] initWithNibName:nil bundle:nil];
-                    [self.navigationController pushViewController:chatViewContoller animated:YES];
+                    [navigationController pushViewController:chatViewContoller animated:YES];
                 }
             }
             
         }
-
+        
         whileIndex++;
     }  // while
 
 }
+
 
 - (void)displayProduct {
     if (biz.isProductListLoaded) {

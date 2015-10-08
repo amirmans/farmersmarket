@@ -8,7 +8,7 @@
 
 #import "UIAlertView+TapTalkAlerts.h"
 
-@implementation UIAlertView (TapTalkAlerts)
+@implementation UIAlertController (TapTalkAlerts)
 
 + (void)showErrorAlert:(NSString *)text {
     UIAlertView *alertView = [[UIAlertView alloc]
@@ -18,5 +18,19 @@
     [alertView show];
     alertView = nil;
 }
+
++ (void)showOKAlertForViewController:(UIViewController *)vc withText:(NSString *)text {
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:@"Please enter a business first."
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {}];
+    
+    [alert addAction:defaultAction];
+    [vc presentViewController:alert animated:YES completion:nil];
+}
+
 
 @end

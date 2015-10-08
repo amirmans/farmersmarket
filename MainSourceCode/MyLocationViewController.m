@@ -14,6 +14,7 @@
 
 // To display deails for the business that was tapped
 #import "DetailBusinessViewController.h"
+#import "UIAlertView+TapTalkAlerts.h"
 
 // To display the businessList
 //#import "BusinessListTableViewController.h"
@@ -182,14 +183,18 @@
     }
     // set the color of the pin
     if (((Business *) annotation).isCustomer == 1) {
-        pinView.pinColor = MKPinAnnotationColorRed;
+        //pinView.pinColor = MKPinAnnotationColorRed;
+        //pinView.image = [UIImage imageNamed:@"customer_pin.png"];
+        pinView.pinTintColor = [UIColor redColor];
+        
 
     }
     else if (((Business *) annotation).isCustomer == 0) {
-        pinView.pinColor = MKPinAnnotationColorPurple;
+//        pinView.image = [UIImage imageNamed:@"customer_pin.png"];
+        pinView.pinTintColor = [UIColor purpleColor];
     }
     else {
-        pinView.pinColor = MKPinAnnotationColorGreen;
+        pinView.pinTintColor = [UIColor grayColor];
     }
 
 //    customerPinImage = nil;
@@ -240,11 +245,12 @@
 
 - (void)googlePlacesConnection:(GooglePlacesConnection *)conn didFailWithError:(NSError *)error {
     [mapActivityIndicator stopAnimating];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error receiving your place info from google - Try again"
-                                                    message:[error localizedDescription]
-                                                   delegate:nil cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error receiving your place info from google - Try again"
+//                                                    message:[error localizedDescription]
+//                                                   delegate:nil cancelButtonTitle:@"OK"
+//                                          otherButtonTitles:nil];
+//    [alert show];
+    [UIAlertController showOKAlertForViewController:self withText:@"Error receiving your place info from google - Try again."];
 }
 
 

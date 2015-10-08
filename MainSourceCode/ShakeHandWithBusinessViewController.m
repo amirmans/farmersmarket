@@ -111,7 +111,7 @@
     [[BusinessCustomerProfileManager sharedBusinessCustomerProfileManager] setCustomerProfileName:shakeHandBiz.customerProfileName];
     
     [[DataModel sharedDataModelManager] setChatSystemURL:shakeHandBiz.chatSystemURL];
-    [[DataModel sharedDataModelManager] setChat_master_uid:shakeHandBiz.chat_master_uid];
+    [[DataModel sharedDataModelManager] setChat_masters:shakeHandBiz.chat_masters];
     [[DataModel sharedDataModelManager] setValidate_chat:shakeHandBiz.validate_chat];
     [[DataModel sharedDataModelManager] setBusinessName:shakeHandBiz.businessName];
     [[DataModel sharedDataModelManager] setShortBusinessName:shakeHandBiz.shortBusinessName];

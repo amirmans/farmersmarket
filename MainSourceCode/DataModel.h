@@ -64,7 +64,7 @@
 @property(nonatomic, retain) NSString *chatSystemURL;
 @property(nonatomic, retain) NSString *businessName;
 @property(nonatomic, retain) NSString *shortBusinessName;
-@property(nonatomic, assign) NSInteger chat_master_uid;
+@property(nonatomic, retain) NSArray *chat_masters;
 
 @property(nonatomic, retain) NSString *password;
 @property(atomic, assign) short ageGroup;

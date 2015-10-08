@@ -1,3 +1,4 @@
+
 //
 //  AppDelegate.m
 //  TapTalk
@@ -224,13 +225,45 @@
     if (tabBarController.tabBar.selectedItem.tag == 1) {
         returnVal = FALSE;
         if ([DataModel sharedDataModelManager].chatSystemURL == nil) {
-            [UIAlertView showErrorAlert:@"Please enter a business first"];
+//            [UIAlertController alertControllerWithTitle:nil message:@"Please enter a business first." preferredStyle:UIAlertControllerStyleAlert];
+//            UIAlertController * alert=   [UIAlertController
+//                                          alertControllerWithTitle:@""
+//                                          message:@"Please enter a business first."
+//                                          preferredStyle:UIAlertControllerStyleAlert];
+//            
+//            [viewController presentViewController:alert animated:YES completion:nil];
+            
+            
+            
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                           message:@"Please enter a business first."
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                                  handler:^(UIAlertAction * action) {}];
+            
+            [alert addAction:defaultAction];
+            [[tabBarController.viewControllers objectAtIndex:1] presentViewController:alert animated:YES completion:nil];
+            
+            
+            
+            
+            
+            
+            
+            
+//            [UIAlertView showErrorAlert:@"Please enter a business first"];
         }
         else if ([DataModel sharedDataModelManager].nickname.length < 1) {
-            [UIAlertView showErrorAlert:@"You don't have a nick name yet.  Please go to the profile page and get one."];
+            [UIAlertController showErrorAlert:@"You don't have a nickname yet.  Please go to the profile page and get one."];
         }
         else if (![UtilityConsumerProfile canUserChat]) {
-            [UIAlertView showErrorAlert:@"You are NOT registered to particate in this chat.  Please ask the manager to add you."];
+            [UIAlertController alertControllerWithTitle:nil message:@"You are NOT registered to particate in this chat.  Please ask the manager to add you." preferredStyle:UIAlertControllerStyleAlert];
+            
+            
+            
+            
+//            [UIAlertView showErrorAlert:@"You are NOT registered to particate in this chat.  Please ask the manager to add you."];
         }
         else {
             if (![[DataModel sharedDataModelManager] joinedChat]) {

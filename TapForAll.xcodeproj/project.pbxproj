@@ -81,6 +81,7 @@
 		29EEAA2315EACCCD00988BA5 /* indicator.png in Resources */ = {isa = PBXBuildFile; fileRef = 29EEAA2215EACCCD00988BA5 /* indicator.png */; };
 		C600C49218DF8A850019E8EF /* ChatsFromBusinessTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C600C49018DF8A850019E8EF /* ChatsFromBusinessTableViewController.m */; };
 		C600C49518DF8C4C0019E8EF /* ChatsFromBusinessTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C600C49418DF8C4C0019E8EF /* ChatsFromBusinessTableViewController.xib */; };
+		C6060DF31BA6265E0084D612 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6060DF21BA6265E0084D612 /* Images.xcassets */; settings = {ASSET_TAGS = (); }; };
 		C61E552518E794C1007027C7 /* CurrentBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C61E552418E794C1007027C7 /* CurrentBusiness.m */; };
 		C61E552618E794C1007027C7 /* CurrentBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C61E552418E794C1007027C7 /* CurrentBusiness.m */; };
 		C6235F6318B1F62000C216CB /* navigation_button.png in Resources */ = {isa = PBXBuildFile; fileRef = C6235F6218B1F62000C216CB /* navigation_button.png */; };
@@ -99,6 +100,7 @@
 		C662DDFE18D8442F00683BBF /* BubbleCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = C662DDFD18D8442F00683BBF /* BubbleCenter.png */; };
 		C6700CFB1859D74B003814C9 /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6700CFA1859D74B003814C9 /* NotificationTableViewCell.m */; };
 		C6700CFD1859DAA4003814C9 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6700CFC1859DAA4003814C9 /* NotificationTableViewCell.xib */; };
+		C67BC4B31BA808ED00C66AF8 /* customer_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = C67BC4B21BA808ED00C66AF8 /* customer_pin.png */; settings = {ASSET_TAGS = (); }; };
 		C67C6AE218DF9B03009EF996 /* TapForAll.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C67C6AE118DF9B03009EF996 /* TapForAll.xcdatamodeld */; };
 		C67D4D4218AEFFEE00D6DF6C /* ListofBusinesses.m in Sources */ = {isa = PBXBuildFile; fileRef = C67D4D4118AEFFEE00D6DF6C /* ListofBusinesses.m */; };
 		C686B5A919382B19008D2606 /* Icon-60.png in Resources */ = {isa = PBXBuildFile; fileRef = C686B5A719382B19008D2606 /* Icon-60.png */; };
@@ -138,6 +140,7 @@
 		C6EABE1818B2D1CD00F50D19 /* BusinessListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6EABE1618B2D1CD00F50D19 /* BusinessListViewController.xib */; };
 		C6EEA6D81941A5C000857B76 /* Icon-Spotlight-40.png in Resources */ = {isa = PBXBuildFile; fileRef = C6EEA6D61941A5C000857B76 /* Icon-Spotlight-40.png */; };
 		C6EEA6D91941A5C000857B76 /* Icon-Spotlight-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C6EEA6D71941A5C000857B76 /* Icon-Spotlight-40@2x.png */; };
+		C6F0F9041BA52AE900FD2EF0 /* -568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C6F0F9031BA52AE900FD2EF0 /* -568h@2x.png */; settings = {ASSET_TAGS = (); }; };
 		C6FDD5CC187CDD2900F4D721 /* BusinessNotificationTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6FDD5CB187CDD2900F4D721 /* BusinessNotificationTableViewController.xib */; };
 		C6FDD5CF187D079600F4D721 /* ServerInteractionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FDD5CD187D079600F4D721 /* ServerInteractionManager.m */; };
 		C6FDD5D3187D087900F4D721 /* BusinessNotificationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FDD5D1187D087900F4D721 /* BusinessNotificationTableViewController.m */; };
@@ -249,6 +252,7 @@
 		C600C48F18DF8A850019E8EF /* ChatsFromBusinessTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChatsFromBusinessTableViewController.h; path = MainSourceCode/ChatsFromBusinessTableViewController.h; sourceTree = "<group>"; };
 		C600C49018DF8A850019E8EF /* ChatsFromBusinessTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChatsFromBusinessTableViewController.m; path = MainSourceCode/ChatsFromBusinessTableViewController.m; sourceTree = "<group>"; };
 		C600C49418DF8C4C0019E8EF /* ChatsFromBusinessTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatsFromBusinessTableViewController.xib; sourceTree = "<group>"; };
+		C6060DF21BA6265E0084D612 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = TapForAll/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		C61E552318E794C1007027C7 /* CurrentBusiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurrentBusiness.h; path = MainSourceCode/CurrentBusiness.h; sourceTree = "<group>"; };
 		C61E552418E794C1007027C7 /* CurrentBusiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurrentBusiness.m; path = MainSourceCode/CurrentBusiness.m; sourceTree = "<group>"; };
 		C6235F6218B1F62000C216CB /* navigation_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigation_button.png; sourceTree = "<group>"; };
@@ -274,6 +278,7 @@
 		C6700CF91859D74B003814C9 /* NotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationTableViewCell.h; path = MainSourceCode/NotificationTableViewCell.h; sourceTree = "<group>"; };
 		C6700CFA1859D74B003814C9 /* NotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationTableViewCell.m; path = MainSourceCode/NotificationTableViewCell.m; sourceTree = "<group>"; };
 		C6700CFC1859DAA4003814C9 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
+		C67BC4B21BA808ED00C66AF8 /* customer_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = customer_pin.png; sourceTree = "<group>"; };
 		C67C6AE018DF9ADE009EF996 /* TapForAll-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TapForAll-Prefix.pch"; path = "TapForAll/TapForAll-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		C67D4D4018AEFFEE00D6DF6C /* ListofBusinesses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListofBusinesses.h; path = MainSourceCode/ListofBusinesses.h; sourceTree = "<group>"; };
 		C67D4D4118AEFFEE00D6DF6C /* ListofBusinesses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ListofBusinesses.m; path = MainSourceCode/ListofBusinesses.m; sourceTree = "<group>"; };
@@ -334,6 +339,7 @@
 		C6EABE1618B2D1CD00F50D19 /* BusinessListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessListViewController.xib; sourceTree = "<group>"; };
 		C6EEA6D61941A5C000857B76 /* Icon-Spotlight-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Spotlight-40.png"; path = "icons/Icon-Spotlight-40.png"; sourceTree = "<group>"; };
 		C6EEA6D71941A5C000857B76 /* Icon-Spotlight-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Spotlight-40@2x.png"; path = "icons/Icon-Spotlight-40@2x.png"; sourceTree = "<group>"; };
+		C6F0F9031BA52AE900FD2EF0 /* -568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "-568h@2x.png"; sourceTree = "<group>"; };
 		C6FDD5CB187CDD2900F4D721 /* BusinessNotificationTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessNotificationTableViewController.xib; sourceTree = "<group>"; };
 		C6FDD5CD187D079600F4D721 /* ServerInteractionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerInteractionManager.m; path = MainSourceCode/ServerInteractionManager.m; sourceTree = "<group>"; };
 		C6FDD5CE187D079600F4D721 /* ServerInteractionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerInteractionManager.h; path = MainSourceCode/ServerInteractionManager.h; sourceTree = "<group>"; };
@@ -380,6 +386,7 @@
 		2949CC2A14589C7100728B87 = {
 			isa = PBXGroup;
 			children = (
+				C6F0F9031BA52AE900FD2EF0 /* -568h@2x.png */,
 				29D29A2315DB77CB00990F62 /* Utility */,
 				C699356118B969F6008FCF8A /* MainSourceCode */,
 				C6EABE1918B2E19D00F50D19 /* Business */,
@@ -432,6 +439,7 @@
 			children = (
 				C67C6AE118DF9B03009EF996 /* TapForAll.xcdatamodeld */,
 				C67C6AE018DF9ADE009EF996 /* TapForAll-Prefix.pch */,
+				C6060DF21BA6265E0084D612 /* Images.xcassets */,
 				2949CC4214589C7200728B87 /* Supporting Files */,
 			);
 			name = TapForAll;
@@ -489,6 +497,7 @@
 		2949CCC61458A21700728B87 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				C67BC4B21BA808ED00C66AF8 /* customer_pin.png */,
 				C6EEA6D61941A5C000857B76 /* Icon-Spotlight-40.png */,
 				C6EEA6D71941A5C000857B76 /* Icon-Spotlight-40@2x.png */,
 				C686B5B919382EEF008D2606 /* TapForAll_artwork.png */,
@@ -760,6 +769,7 @@
 				2949CC3214589C7200728B87 /* Frameworks */,
 				2949CC3314589C7200728B87 /* Resources */,
 				FF63121F93494DB984BFA5F2 /* Copy Pods Resources */,
+				88B8B7BA0636735F23C82687 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -804,6 +814,9 @@
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
+							com.apple.Push = {
+								enabled = 1;
+							};
 						};
 					};
 					2949CC5414589C7200728B87 = {
@@ -835,6 +848,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C632123418E834A30076D1DC /* DetailBusinessViewController.xib in Resources */,
+				C6060DF31BA6265E0084D612 /* Images.xcassets in Resources */,
 				2949CCF21458A21700728B87 /* checkedRadioButton.png in Resources */,
 				2949CCF31458A21700728B87 /* flag.png in Resources */,
 				C6504A8619D10654007646EB /* ServicesTableViewCell.xib in Resources */,
@@ -853,7 +867,9 @@
 				C686B5A919382B19008D2606 /* Icon-60.png in Resources */,
 				2949CD081458A21700728B87 /* BillViewController.xib in Resources */,
 				2949CD0E1458A21700728B87 /* MenuViewController.xib in Resources */,
+				C67BC4B31BA808ED00C66AF8 /* customer_pin.png in Resources */,
 				C686B5B119382C12008D2606 /* Icon-76.png in Resources */,
+				C6F0F9041BA52AE900FD2EF0 /* -568h@2x.png in Resources */,
 				2949CD0F1458A21700728B87 /* MeowConfirmationViewController.xib in Resources */,
 				C6EABE1818B2D1CD00F50D19 /* BusinessListViewController.xib in Resources */,
 				2949CD101458A21700728B87 /* AskForSeviceViewController.xib in Resources */,
@@ -922,6 +938,21 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
+		88B8B7BA0636735F23C82687 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		BF96C16A18D54DAFB4AB062A /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -934,7 +965,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "";
 			showEnvVarsInLog = 0;
 		};
 		FF63121F93494DB984BFA5F2 /* Copy Pods Resources */ = {
@@ -1093,11 +1124,12 @@
 					"”$(TARGET_BUILD_DIR)/usr/local/lib/include”/**",
 					"”$(OBJROOT)/UninstalledProducts/include”/**",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "AB12D30F-9193-40F1-8012-321E2C070612";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AB12D30F-9193-40F1-8012-321E2C070612";
+				PROVISIONING_PROFILE = "b630710e-752d-41de-ab24-3e0788d40db9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1133,11 +1165,12 @@
 					"”$(TARGET_BUILD_DIR)/usr/local/lib/include”/**",
 					"”$(OBJROOT)/UninstalledProducts/include”/**",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "15604803-28B1-4D42-9046-9AF35A82783A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "15604803-28B1-4D42-9046-9AF35A82783A";
+				PROVISIONING_PROFILE = "b630710e-752d-41de-ab24-3e0788d40db9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1147,8 +1180,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B9484E51F484786857070C30 /* Pods.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1158,15 +1192,15 @@
 				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/TapForAll/TapForAll-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mydoosts.tapforallv2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mydoosts.tapforall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=*]" = "";
+				PROVISIONING_PROFILE = "b630710e-752d-41de-ab24-3e0788d40db9";
+				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "";
@@ -1179,8 +1213,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 992B80B955796F4F06393A9A /* Pods.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1190,15 +1225,16 @@
 				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/TapForAll/TapForAll-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mydoosts.tapforallv2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mydoosts.tapforall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "7d35c57e-874f-4bf1-a9fa-fcb92e9961d6";
+				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;

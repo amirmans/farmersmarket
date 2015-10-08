@@ -10,7 +10,7 @@
 @synthesize chatSystemURL;
 @synthesize businessName;
 @synthesize shortBusinessName;
-@synthesize chat_master_uid;
+@synthesize chat_masters;
 @synthesize ageGroup;
 @synthesize password;
 @synthesize emailAddress;
@@ -111,16 +111,30 @@ static DataModel *sharedDataModel = nil;
 - (void)buildBusinessChatMessages {
     [[DataModel sharedDataModelManager].businessMessages removeAllObjects];
     
-    NSDictionary *arrayElement;
+    NSMutableDictionary *arrayElement;
     TapTalkChatMessage *chatMessage = [TapTalkChatMessage alloc];
     
-    for (arrayElement in [DataModel sharedDataModelManager].messages) {
+    
+    for (int i = 0; i < [DataModel sharedDataModelManager].messages.count; i++) {
+        arrayElement = [[[DataModel sharedDataModelManager].messages objectAtIndex:i] mutableCopy];
+        
         chatMessage = [chatMessage initWithMessage:arrayElement];
-        if ([chatMessage isSentByBusiness]) {
+        NSString *bizNameForChatMessage = [chatMessage businessNameIfMessageSentByBusiness];
+        if ([bizNameForChatMessage length] > 0 ) {
+            [arrayElement setObject:bizNameForChatMessage forKey:@"business_name"];
             [[DataModel sharedDataModelManager].businessMessages addObject:arrayElement];
         }
     }
-    chatMessage = nil;
+    
+//    for (arrayElement in [DataModel sharedDataModelManager].messages) {
+//        chatMessage = [chatMessage initWithMessage:arrayElement];
+//        NSString *bizNameForChatMessage = [chatMessage businessNameIfMessageSentByBusiness];
+//        if ([bizNameForChatMessage length] > 0 ) {
+//            [arrayElement setObject:bizNameForChatMessage forKey:@"business_name"];
+//            [[DataModel sharedDataModelManager].businessMessages addObject:arrayElement];
+//        }
+//    }
+//    chatMessage = nil;
 }
 
 - (NSString *)nickname {
@@ -197,6 +211,20 @@ static DataModel *sharedDataModel = nil;
 
 - (void)setZipcode:(NSString *)zip {
     [[NSUserDefaults standardUserDefaults] setObject:zip forKey:@"Zipcode"];
+}
+
+
+- (void)setChat_masters:(NSArray *)ids {
+    chat_masters = ids;
+}
+
+- (NSArray *)chat_masters {
+    return chat_masters;
+}
+
+- (NSString *)businessNameForChatMasterId:(NSInteger)businessID {
+    //TODO
+    return @"";
 }
 
 @end

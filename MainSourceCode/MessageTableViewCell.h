@@ -8,6 +8,6 @@
     UILabel *label;
 }
 
-- (void)insertMessage:(TapTalkChatMessage *)message;
+- (void)insertMessage:(TapTalkChatMessage *)message forBusiness:(NSString *)bizName;
 
 @end

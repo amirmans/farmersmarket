@@ -78,7 +78,7 @@
                   NSLog(@"Registered in the chat system with response of %@",operation.responseString);
                   NSRange tempRange = [operation.responseString rangeOfString:@"OK"];
                   if (tempRange.location == NSNotFound) {
-                      [UIAlertView showErrorAlert:NSLocalizedString(@"Warning in joining the chat system", nil)];
+                      [UIAlertController showErrorAlert:NSLocalizedString(@"Warning in joining the chat system", nil)];
                   }
                   else {
                       [self userDidJoin];
@@ -89,7 +89,7 @@
               NSLog(@"Error in login to the ChatSystem with error of %@ The response from the server was: %@", error, operation.responseString);
               if ([self isViewLoaded]) {
                   [MBProgressHUD hideHUDForView:self.view animated:YES];
-                  [UIAlertView showErrorAlert:operation.description];
+                  [UIAlertController showErrorAlert:operation.description];
               }
           }
     ];

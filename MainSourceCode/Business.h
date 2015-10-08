@@ -41,9 +41,12 @@
     NSString *paymentProcessingID;
     NSString *email;
     NSString *map_image_url;
+    NSString *imageFileName;
+    NSString *imageFileExt;
     NSString *picturesString;
-    NSInteger chat_master_uid;
+    NSArray *chat_masters;
     NSInteger validate_chat;
+    BOOL needsBizChat;
     BOOL inquiryForProduct;
 
     GooglePlacesConnection *googlePlacesConnection;
@@ -84,11 +87,14 @@
 @property(atomic, retain) NSString *neighborhood;
 @property(atomic, retain) NSMutableString * businessTypes;
 @property(nonatomic, retain) NSError *businessError;
-@property(atomic, assign) NSInteger chat_master_uid;
+@property(atomic, strong) NSArray *chat_masters;
 @property(nonatomic, strong) NSString *map_image_url;
+@property(nonatomic, strong) NSString *imageFileName;
+@property(nonatomic, retain) NSString *imageFileExt;
 @property(nonatomic, strong) NSString *picturesString;
 @property(atomic, assign) NSInteger validate_chat;
 @property(atomic, assign) BOOL inquiryForProduct;
+@property(atomic, assign) BOOL needsBizChat;
 
 
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;

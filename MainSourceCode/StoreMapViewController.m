@@ -39,7 +39,8 @@
     mapScrollView.delegate = self;
     NSString *mapSubDir = [CurrentBusiness sharedCurrentBusinessManager].business.map_image_url;
     if (mapSubDir == nil) {
-        [UIAlertView showErrorAlert:@"Map is not given to us."];
+//        [UIAlertView showErrorAlert:@"Map is not given to us."];
+        [UIAlertController showOKAlertForViewController:self withText:@"Map is not given to us."];
         return;
     }
         

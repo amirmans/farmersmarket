@@ -45,14 +45,17 @@
     return self;
 }
 
+- (void)methodThatCallsScrollToRow {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([DataModel sharedDataModelManager].businessMessages.count - 1) inSection:0];
+   [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+}
 
 - (void)scrollToNewestMessage {
     // The newest message is at the bottom of the table
     if ([DataModel sharedDataModelManager].businessMessages.count < NumberOfMessagesOnOnePage)
         return;
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:([DataModel sharedDataModelManager].businessMessages.count - 1) inSection:0];
     //    NSLog(@"indexPath at scrollToNewestMessage is: %i, %i", indexPath.section, indexPath.row);
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    [self performSelector:@selector(methodThatCallsScrollToRow) withObject:nil afterDelay:2.5];
 }
 
 
@@ -102,7 +105,7 @@
     if ([DataModel sharedDataModelManager].businessMessages.count > NumberOfMessagesOnOnePage) {
         toggleUpdatingBusinessChatMessages = [[UIBarButtonItem alloc]
                                               initWithTitle:loadToggleButtonTitle
-                                              style:UIBarButtonItemStyleBordered
+                                              style:UIBarButtonItemStylePlain
                                               target:self
                                               action:@selector(doToggleUpdatingBusinessChatMessages)];
         self.navigationItem.rightBarButtonItem = toggleUpdatingBusinessChatMessages;
@@ -179,7 +182,8 @@
     
     //TapTalkChatMessage* message = [[DataModel sharedDataModelManager].messages objectAtIndex:indexPath.row];
     [ttChatMessage setValuesFrom:[[DataModel sharedDataModelManager].businessMessages objectAtIndex:indexPath.row]];
-    [cell insertMessage:ttChatMessage];
+//    NSString *bizNameForChat = [[[DataModel sharedDataModelManager].chat_masters objectAtIndex:indexPath.row] objectForKey:@"business_name"];
+    [cell insertMessage:ttChatMessage forBusiness:@""];
     
     return cell;
 }

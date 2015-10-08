@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIAlertView (TapTalkAlerts)
+@interface UIAlertController (TapTalkAlerts)
 
 + (void)showErrorAlert:(NSString *)text;
++ (void)showOKAlertForViewController:(UIViewController *)vc withText:(NSString *)text;
 
 @end

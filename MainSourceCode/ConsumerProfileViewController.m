@@ -227,7 +227,7 @@ static NSArray *consumerProfileDataArray = nil;
     BOOL badInformation = [self validateAllUserInput];
 
     if (badInformation) {
-        [UIAlertView showErrorAlert:@"There are errors in your input. Please fix them first"];
+        [UIAlertController showErrorAlert:@"There are errors in your input. Please fix them first"];
     }
     else {
         [self postSaveRequest];
@@ -330,7 +330,7 @@ static NSArray *consumerProfileDataArray = nil;
             NSLog(@"operation (saving profile information) response status code: %ld", (long)operation.response.statusCode);
             //status code = 200 is html code for OK - so anything else means not OK
             if (operation.response.statusCode != 200) {
-                [UIAlertView showErrorAlert:NSLocalizedString(@"Error in generatin user ID.  Please try agin a few min later", nil)];
+                [UIAlertController showErrorAlert:NSLocalizedString(@"Error in generatin user ID.  Please try agin a few min later", nil)];
             }
             else {
                 [[DataModel sharedDataModelManager] setNickname:nicknameTextField.text];
@@ -351,8 +351,16 @@ static NSArray *consumerProfileDataArray = nil;
                 }
                 [DataModel sharedDataModelManager].zipcode = zipcodeTextField.text;
                 [DataModel sharedDataModelManager].emailAddress = emailTextField.text;
+
+                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                               message:@"Profile information saved successfully."
+                                                                        preferredStyle:UIAlertControllerStyleAlert];
                 
-                [UIAlertView showErrorAlert:@"Profile information saved successfully"];
+                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                                      handler:^(UIAlertAction * action) {}];
+                
+                [alert addAction:defaultAction];
+                [self presentViewController:alert animated:YES completion:nil];
             }
         }
     }
@@ -360,7 +368,7 @@ static NSArray *consumerProfileDataArray = nil;
           NSLog(@"Error: %@", error);
           if ([self isViewLoaded]) {
               [MBProgressHUD hideHUDForView:self.view animated:YES];
-              [UIAlertView showErrorAlert:@"Error in accessing profile system.  Please try again in a few min"];
+              [UIAlertController showErrorAlert:@"Error in accessing profile system.  Please try again in a few min"];
           }
           
     }];

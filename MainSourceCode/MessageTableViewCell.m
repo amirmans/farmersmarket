@@ -55,7 +55,7 @@ static NSDateFormatter *formatter = nil;
 
 
 // Remember TapTalkChatMessage:message is NOT key/value pair - it's an object with getter and setters and the date is actually NSDate 
-- (void)insertMessage:(TapTalkChatMessage *)message {
+- (void)insertMessage:(TapTalkChatMessage *)message forBusiness:(NSString *)bizName {
     CGPoint point = CGPointZero;
 
     // We display messages that are sent by the user on the right-hand side of
@@ -64,17 +64,20 @@ static NSDateFormatter *formatter = nil;
     BubbleType bubbleType;
     //TODO
     message.bubbleSize = [SpeechBubbleView sizeForText:message.textChat];
-    if ([message isSentByUser]) {
+    if ([message businessNameIfMessageSentByBusiness].length > 0) {
+        bubbleType = BubbleTypeCenter;
+        senderName = NSLocalizedString([message businessNameIfMessageSentByBusiness], nil);
+        //TODO
+        
+        
+        point.x = (self.bounds.size.width/3) - 10;
+        label.textAlignment = NSTextAlignmentCenter; //Compatibility
+    }
+    else if ([message isSentByUser]) {
         bubbleType = BubbleTypeRighthand;
         senderName = NSLocalizedString(@"You", nil);
         point.x = self.bounds.size.width - message.bubbleSize.width;
         label.textAlignment = NSTextAlignmentRight; //Compatibility
-    }
-    else if ([message isSentByBusiness]) {
-        bubbleType = BubbleTypeCenter;
-        senderName = NSLocalizedString(@"Business", nil);
-        point.x = (self.bounds.size.width/3) - 10;
-        label.textAlignment = NSTextAlignmentCenter; //Compatibility
     }
     else {
         bubbleType = BubbleTypeLefthand;

@@ -40,7 +40,7 @@
 // Determines whether this message as sent by the user of the app. We will
 // display such messages on the right-hand side of the screen.
 - (BOOL)isSentByUser;
-- (BOOL)isSentByBusiness;
+- (NSString *)businessNameIfMessageSentByBusiness;
 - (void)doToggleUpdatingChatMessages;
 
 @end

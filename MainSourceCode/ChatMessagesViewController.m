@@ -13,7 +13,7 @@
 #import "MessageTableViewCell.h"
 #import "SpeechBubbleView.h"
 #import "UIAlertView+TapTalkAlerts.h"
-#import "LoginViewController.h"
+//#import "LoginViewController.h"
 #import "ChatsFromBusinessTableViewController.h"
 #import "TapTalkLooks.h"
 #import "CurrentBusiness.h"
@@ -107,9 +107,11 @@
                                   action:@selector(doToggleUpdatingChatMessages)];
     self.navigationItem.rightBarButtonItem = toggleUpdatingChatMessages;
     
-    UIBarButtonItem *displayBusinessMessagesButton = [[UIBarButtonItem alloc] initWithTitle:@"Biz" style:UIBarButtonItemStyleDone target:self action:@selector(displaybusinessMessages)];
-    self.navigationItem.leftBarButtonItem = displayBusinessMessagesButton;
-    displayBusinessMessagesButton = nil;
+//    if ([CurrentBusiness sharedCurrentBusinessManager].business.needsBizChat) {
+//        UIBarButtonItem *displayBusinessMessagesButton = [[UIBarButtonItem alloc] initWithTitle:@"Biz" style:UIBarButtonItemStyleDone target:self action:@selector(displaybusinessMessages)];
+//        self.navigationItem.leftBarButtonItem = displayBusinessMessagesButton;
+//        displayBusinessMessagesButton = nil;
+//    }
     
     [self registerForKeyboardNotifications];
 //    self.tabBarItem.title = [[DataModel sharedDataModelManager] shortBusinessName];
@@ -136,12 +138,19 @@
 //
 //        [self presentViewController:loginController animated:YES completion:nil];
 //        loginController = nil;
-//    
-        NSString *viewControllerTitle = [[DataModel sharedDataModelManager] shortBusinessName];
-        self.title = [viewControllerTitle stringByAppendingString:@" all chat"];
+//
     
-        [[DataModel sharedDataModelManager] setJoinedChat:TRUE];
-        [ttChatMessage loadMessagesFromServer];
+    if ([CurrentBusiness sharedCurrentBusinessManager].business.needsBizChat) {
+        UIBarButtonItem *displayBusinessMessagesButton = [[UIBarButtonItem alloc] initWithTitle:@"Biz" style:UIBarButtonItemStyleDone target:self action:@selector(displaybusinessMessages)];
+        self.navigationItem.leftBarButtonItem = displayBusinessMessagesButton;
+        displayBusinessMessagesButton = nil;
+    }
+
+    NSString *viewControllerTitle = [[DataModel sharedDataModelManager] shortBusinessName];
+    self.title = [viewControllerTitle stringByAppendingString:@" all chat"];
+
+    [[DataModel sharedDataModelManager] setJoinedChat:TRUE];
+    [ttChatMessage loadMessagesFromServer];
 
 //        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 //        hud.labelText = NSLocalizedString(@"Loading messages", @"");
@@ -180,7 +189,7 @@
 
     [ttChatMessage setValuesFrom:[[DataModel sharedDataModelManager].messages objectAtIndex:indexPath.row]];
 
-    [cell insertMessage:ttChatMessage];
+    [cell insertMessage:ttChatMessage forBusiness:@""];
     return cell;
 }
 
@@ -252,7 +261,7 @@
                   // complained about a problem. This shouldn't happen, but you never
                   // know. We must be prepared to handle such unexpected situations.
                   if (operation.response.statusCode != 200) {
-                      [UIAlertView showErrorAlert:NSLocalizedString(@"No connection to Business's Chatroom", nil)];
+                      [UIAlertController showErrorAlert:NSLocalizedString(@"No connection to Business's Chatroom", nil)];
                   }
                   else {
                 
@@ -262,7 +271,7 @@
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             if ([self isViewLoaded]) {
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
-                [UIAlertView showErrorAlert:@"You are not in the business's chat room"];
+                [UIAlertController showErrorAlert:@"You are not in the business's chat room"];
             }
                 
           }
@@ -400,7 +409,7 @@
 - (void)tapTalkChatMessageDidFailWithError:(NSError *)error {
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     NSString *alertMessage = [[NSString alloc] initWithFormat:@"No connection to %@\'s chat server", [[DataModel sharedDataModelManager] businessName]];
-    [UIAlertView showErrorAlert:NSLocalizedString(alertMessage, nil)];
+    [UIAlertController showErrorAlert:NSLocalizedString(alertMessage, nil)];
     alertMessage = nil;
     [[DataModel sharedDataModelManager] setJoinedChat:FALSE];
 }

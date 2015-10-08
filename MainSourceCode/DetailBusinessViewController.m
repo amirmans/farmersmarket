@@ -16,6 +16,11 @@
 #import "TapTalkLooks.h"
 #import "CurrentBusiness.h"
 
+#import "UIAlertView+TapTalkAlerts.h"
+#import "LoginViewController.h"
+#import "ChatMessagesViewController.h"
+#import "UtilityConsumerProfile.h"
+
 #import "KASlideShow.h"
 #import "JBKenBurnsView.h"
 #import "MBProgressHUD.h"
@@ -206,27 +211,73 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+
+- (void)pushNextViewController {
+    NSDictionary *allChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].allChoices;
+    NSArray *mainChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].mainChoices;
+    
+    // needs to mainChoices and allChoices
+    if ([BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].loadProducts)
+        [biz startLoadingBusinessProductCategoriesAndProducts];
+    NSArray *tempNSArray = [allChoices objectForKey:@"Tap For All"];
+    if (tempNSArray.count == 1 ) {
+        
+        if ([DataModel sharedDataModelManager].nickname.length < 1) {
+            [UIAlertController showErrorAlert:@"You don't have a nick name yet.  Please go to the profile page and get one."];
+        }
+        else if (![UtilityConsumerProfile canUserChat]) {
+            [UIAlertController showErrorAlert:@"You are NOT registered to particate in this chat.  Please ask the manager to add you."];
+        }
+        else {
+            if (![[DataModel sharedDataModelManager] joinedChat]) {
+                biz.needsBizChat = false;
+                // show the user that are about to connect to a new business chatroom
+                [DataModel sharedDataModelManager].shouldDownloadChatMessages = TRUE;
+                LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
+                loginController.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+                
+                [self presentViewController:loginController animated:YES completion:nil];
+                loginController = nil;
+            }
+            
+            ChatMessagesViewController *chatViewContoller = [[ChatMessagesViewController alloc] initWithNibName:nil bundle:nil];
+            [self.navigationController pushViewController:chatViewContoller animated:YES];
+        }        
+        
+    }
+    else {
+        biz.needsBizChat = true;
+        ServicesForBusinessTableViewController *services = [[ServicesForBusinessTableViewController alloc]
+                                                        initWithData:allChoices :mainChoices :[mainChoices objectAtIndex:0] forBusiness:biz];
+        [self.navigationController pushViewController:services animated:YES];
+        services = nil;
+    }
+}
+
 - (IBAction)enterAndGetServiceAction:(id)sender {
 //    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 //    hud.labelText = NSLocalizedString(@"Preparing to deliver TapForAll services", @"");
-    NSLog(@"Enter a buiness is pressed");
+   // NSLog(@"Enter a business is pressed");
     if (self.isCustomer == 1) {
         [[DataModel sharedDataModelManager] setJoinedChat:FALSE];
         [[CurrentBusiness sharedCurrentBusinessManager] setBusiness:biz];
         [[BusinessCustomerProfileManager sharedBusinessCustomerProfileManager] setCustomerProfileName:self.customerProfileName];
-        NSDictionary *allChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].allChoices;
-        NSArray *mainChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].mainChoices;
-        ServicesForBusinessTableViewController *services = [[ServicesForBusinessTableViewController alloc]
-                initWithData:allChoices :mainChoices :[mainChoices objectAtIndex:0] forBusiness:biz];
+//        NSDictionary *allChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].allChoices;
+//        NSArray *mainChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].mainChoices;
+//        ServicesForBusinessTableViewController *services = [[ServicesForBusinessTableViewController alloc]
+//                initWithData:allChoices :mainChoices :[mainChoices objectAtIndex:0] forBusiness:biz];
         [[DataModel sharedDataModelManager] setChatSystemURL:biz.chatSystemURL];
-        [[DataModel sharedDataModelManager] setChat_master_uid:biz.chat_master_uid];
+        [[DataModel sharedDataModelManager] setChat_masters:biz.chat_masters];
         [[DataModel sharedDataModelManager] setValidate_chat:biz.validate_chat];
         [[DataModel sharedDataModelManager] setBusinessName:biz.businessName];
         [[DataModel sharedDataModelManager] setShortBusinessName:biz.shortBusinessName];
-        if ([BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].loadProducts)
-            [biz startLoadingBusinessProductCategoriesAndProducts];
-        [self.navigationController pushViewController:services animated:YES];
-        services = nil;
+//        if ([BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].loadProducts)
+//            [biz startLoadingBusinessProductCategoriesAndProducts];
+        [self pushNextViewController];
+//        ServicesForBusinessTableViewController *services = [[ServicesForBusinessTableViewController alloc]
+//                                                            initWithData:allChoices :mainChoices :[mainChoices objectAtIndex:0] forBusiness:biz];
+//        [self.navigationController pushViewController:services animated:YES];
+//        services = nil;
     }
  //   [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
@@ -249,11 +300,13 @@
 {
     [activityIndicator stopAnimating];
     if (biz.businessError) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No additional information from google"
-                                                        message:@"Try another place name or wait for a few minutes"
-                                                       delegate:nil cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No additional information from google"
+//                                                        message:@"Try another place or wait for a few minutes"
+//                                                       delegate:nil cancelButtonTitle:@"OK"
+//                                              otherButtonTitles:nil];
+//        [alert show];
+        
+        [UIAlertController showOKAlertForViewController:self withText:@"No additional information from google.  Please try another place."];
     } else {
         if (! typesOfBusiness.isHidden) {
             NSString *tempText = biz.businessTypes;
@@ -302,11 +355,12 @@
 }
 
 - (void)googlePlacesConnection:(GooglePlacesConnection *)conn didFailWithError:(NSError *)error {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting more information from Google - Try again"
-                                                    message:[error localizedDescription]
-                                                   delegate:nil cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil];
-    [alert show];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting more information from Google - Try again"
+//                                                    message:[error localizedDescription]
+//                                                   delegate:nil cancelButtonTitle:@"OK"
+//                                          otherButtonTitles:nil];
+//    [alert show];
+    [UIAlertController showOKAlertForViewController:self withText:@"Error getting more information from Google - Try again."];
 
     [activityIndicator stopAnimating];
 }

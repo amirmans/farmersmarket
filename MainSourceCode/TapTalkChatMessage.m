@@ -106,10 +106,18 @@ static NSString *const senderIDKey = @"sender_id";
     return ((self.senderID == me)?TRUE:FALSE);
 }
 
-- (BOOL)isSentByBusiness {
-    NSInteger bizMasterChatter = [DataModel sharedDataModelManager].chat_master_uid;
-//    NSInteger userID = [DataModel sharedDataModelManager].userID;
-    return (bizMasterChatter == self.senderID);
+- (NSString *)businessNameIfMessageSentByBusiness {
+    NSString *returnVal = nil;
+    
+    for (int i = 0; i <  [DataModel sharedDataModelManager].chat_masters.count; i++) {
+        int id  = [[[[DataModel sharedDataModelManager].chat_masters objectAtIndex:i] valueForKey:@"id"] intValue];
+        if (id == self.senderID) {
+            returnVal = [[[DataModel sharedDataModelManager].chat_masters objectAtIndex:i] valueForKey:@"business_name"];
+            break;
+        }
+    }
+    
+    return returnVal;
 }
 
 
