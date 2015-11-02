@@ -189,7 +189,7 @@ static NSString *const senderIDKey = @"sender_id";
     }
     else {
         // TODO
-        [UIAlertView showErrorAlert:NSLocalizedString(@"Error in recieving messages from the server", nil)];
+        [UIAlertController showErrorAlert:NSLocalizedString(@"Error in recieving messages from the server", nil)];
     }
 
     [connection cancel];

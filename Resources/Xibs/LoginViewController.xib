@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="14A361c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15B30a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController">
@@ -19,12 +20,17 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" alpha="0.89999997615814209" contentMode="scaleToFill" fixedFrame="YES" image="bg_image.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="29">
+                <imageView userInteractionEnabled="NO" alpha="0.89999997615814209" contentMode="scaleToFill" image="bg_image.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="29">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <animations/>
                 </imageView>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" minimumScaleFactor="0.5" preferredMaxLayoutWidth="267" translatesAutoresizingMaskIntoConstraints="NO" id="8" userLabel="Label - You don't have a nick name.  Please go to the account page and get one.">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" minimumScaleFactor="0.5" preferredMaxLayoutWidth="267" translatesAutoresizingMaskIntoConstraints="NO" id="8" userLabel="Label - You don't have a nick name.  Please go to the account page and get one.">
                     <rect key="frame" x="27" y="173" width="267" height="45"/>
+                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="1JY-05-rxD"/>
+                    </constraints>
                     <string key="text">You don't have a nick name. 
 Please go to the account page and get one.</string>
                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
@@ -33,24 +39,33 @@ Please go to the account page and get one.</string>
                     <color key="shadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <size key="shadowOffset" width="0.0" height="1"/>
                 </label>
-                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your Nickname" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5">
+                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Your Nickname" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5">
                     <rect key="frame" x="62" y="138" width="200" height="30"/>
+                    <animations/>
                     <color key="backgroundColor" red="1" green="0.80000007149999997" blue="0.40000003579999999" alpha="1" colorSpace="deviceRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                 </textField>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="With people around you at " textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" minimumScaleFactor="0.5" preferredMaxLayoutWidth="215" translatesAutoresizingMaskIntoConstraints="NO" id="17" userLabel="Label - With people around you at">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="With people around you at " textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" minimumScaleFactor="0.5" preferredMaxLayoutWidth="215" translatesAutoresizingMaskIntoConstraints="NO" id="17" userLabel="Label - With people around you at">
                     <rect key="frame" x="55" y="316" width="215" height="33"/>
+                    <animations/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="33" id="kkI-d0-6H1"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                     <color key="textColor" red="0.099442161619999997" green="0.1482879221" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                     <color key="shadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <size key="shadowOffset" width="0.0" height="1"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" highlighted="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="26">
+                <button opaque="NO" contentMode="scaleToFill" highlighted="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="26">
                     <rect key="frame" x="99" y="264" width="126" height="44"/>
+                    <animations/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="9Av-CR-8Ee"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                     <state key="normal" title="OK to TapForAll!">
                         <color key="titleColor" red="1" green="0.68442062039999996" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
@@ -63,22 +78,43 @@ Please go to the account page and get one.</string>
                         <action selector="OKAction:" destination="-1" eventType="touchUpInside" id="35"/>
                     </connections>
                 </button>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Business" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="30">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Business" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="30">
                     <rect key="frame" x="40" y="57" width="241" height="22"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="22" id="l72-Bu-F2D"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
+            <animations/>
+            <constraints>
+                <constraint firstItem="30" firstAttribute="top" secondItem="1" secondAttribute="top" constant="57" id="3H1-UB-OR8"/>
+                <constraint firstItem="5" firstAttribute="top" secondItem="30" secondAttribute="bottom" constant="59" id="60C-71-BsE"/>
+                <constraint firstItem="29" firstAttribute="centerX" secondItem="30" secondAttribute="centerX" id="Dxc-cX-d9Z"/>
+                <constraint firstItem="26" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="99" id="PSz-fz-g9y"/>
+                <constraint firstAttribute="trailing" secondItem="29" secondAttribute="trailing" id="QCy-1i-sOI"/>
+                <constraint firstItem="26" firstAttribute="centerX" secondItem="17" secondAttribute="centerX" id="SIp-GQ-kRq"/>
+                <constraint firstItem="17" firstAttribute="top" secondItem="26" secondAttribute="bottom" constant="8" symbolic="YES" id="XQW-gw-H8w"/>
+                <constraint firstItem="26" firstAttribute="top" secondItem="8" secondAttribute="bottom" constant="46" id="YnY-dn-xpu"/>
+                <constraint firstItem="8" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="5" id="Zem-bN-F0S"/>
+                <constraint firstAttribute="bottom" secondItem="29" secondAttribute="bottom" id="adv-36-URS"/>
+                <constraint firstItem="17" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="55" id="dbt-kB-msG"/>
+                <constraint firstItem="30" firstAttribute="centerX" secondItem="8" secondAttribute="centerX" id="ddc-G4-REU"/>
+                <constraint firstItem="29" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="gus-ub-qNu"/>
+                <constraint firstItem="29" firstAttribute="top" secondItem="1" secondAttribute="top" id="jrs-5v-eZP"/>
+                <constraint firstItem="8" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="27" id="kWp-v2-qn5"/>
+                <constraint firstItem="5" firstAttribute="centerX" secondItem="26" secondAttribute="centerX" id="nqW-jY-oeU"/>
+                <constraint firstAttribute="trailing" secondItem="17" secondAttribute="trailing" constant="50" id="pa5-wi-Yka"/>
+                <constraint firstItem="5" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="62" id="vce-In-e0N"/>
+                <constraint firstItem="30" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="40" id="vm1-OA-hGA"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
         </view>
     </objects>
     <resources>
-        <image name="bg_image.jpg" width="640" height="1136"/>
+        <image name="bg_image.jpg" width="1242" height="2148"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

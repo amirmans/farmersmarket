@@ -47,6 +47,8 @@
 @synthesize biz;
 @synthesize isCustomer;
 @synthesize showCodeButton;
+@synthesize voteTobeCustomerButton;
+@synthesize picturesView_KSSlide;
 
 // we don't have access to biz.isCustomer in all the methods of the class
 - (void)setIsCustomer:(int)isCust {
@@ -93,51 +95,19 @@
     }
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     self.viewIsDisplaying = TRUE;
-    // Do any additional setup after loading the view from its nib.
-    // setup looks of the ui elements
-    [TapTalkLooks setToTapTalkLooks:typesOfBusiness isActionButton:NO makeItRound:YES];
-    [TapTalkLooks setToTapTalkLooks:contactInfo isActionButton:NO makeItRound:YES];
-    [TapTalkLooks setToTapTalkLooks:rating isActionButton:NO makeItRound:NO];
-    [TapTalkLooks setBackgroundImage:self.view];
-    [TapTalkLooks setToTapTalkLooks:enterAndGetService isActionButton:YES makeItRound:NO];
-    [TapTalkLooks setToTapTalkLooks:ratingLabel isActionButton:NO makeItRound:NO];
-    
-//    picturesView = nil;
-
-//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    hud.labelText = NSLocalizedString(@"Loading detaili business information...", @"");
-
-    if (self.isCustomer == 1) {
-        [enterAndGetService setTitle:@"Enter" forState:UIControlStateNormal];
-        showCodeButton.hidden = false;
-        [TapTalkLooks setToTapTalkLooks:showCodeButton isActionButton:YES makeItRound:NO];
-    }
-    else {
-        showCodeButton.hidden = TRUE;
-        enterAndGetService.hidden = TRUE;
-
-        CGRect buttonFrame = enterAndGetService.frame;
-        UIButton *voteToAddAsACustomer = [UIButton buttonWithType:UIButtonTypeCustom];
-        [voteToAddAsACustomer addTarget:self action:@selector(addToCustomers) forControlEvents:UIControlEventTouchUpInside];
-        buttonFrame.origin.x = 45;
-        buttonFrame.size.width = 235;
-        voteToAddAsACustomer.frame = buttonFrame;
-        [voteToAddAsACustomer setTitle:@"Add as a customer" forState:UIControlStateNormal];
-        voteToAddAsACustomer.titleLabel.font = [UIFont boldSystemFontOfSize:15];
-        
-        [TapTalkLooks setToTapTalkLooks:voteToAddAsACustomer isActionButton:YES makeItRound:NO];
-        [self.view addSubview:voteToAddAsACustomer];
-    }
-
     [activityIndicator setHidesWhenStopped:TRUE];
     [activityIndicator startAnimating];
-    self.title = businessNameData;
     
     if (biz.picturesString != nil) {
-        CGRect picturesViewFrame = CGRectMake(9, 71, 302, 187);
+        //CGRect transformedBounds = CGRectApplyAffineTransform(picturesView_KSSlide.bounds, picturesView_KSSlide.transform);
+        //        CGRect picturesViewFrame = CGRectMake(9, 71, 302, 187);
+        CGRect picturesViewFrame = picturesView_KSSlide.frame;
         picturesView = [[KASlideShow alloc] initWithFrame:picturesViewFrame];
         [self.view addSubview:picturesView];
         
@@ -145,12 +115,13 @@
         [picturesView setTransitionDuration:2]; // Transition duration
         [picturesView setTransitionType:KASlideShowTransitionFade]; // Choose a transition type (fade or slide)
         [picturesView setImagesContentMode:UIViewContentModeScaleAspectFill]; // Choose a content mode for images to display
-
+        
         NSArray *bizpictureArray = [biz.picturesString componentsSeparatedByString:@","];
-//        dispatch_async(dispatch_get_main_queue(), ^{
+        //        dispatch_async(dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0) , ^{
             NSString *imageRelativePathString;
             UIImage  *image;
+            //[[self view] bringSubviewToFront:picturesView_KSSlide];
             for (imageRelativePathString in bizpictureArray) {
                 // construct the absolute path for the image
                 imageRelativePathString = [imageRelativePathString stringByTrimmingCharactersInSet:
@@ -182,16 +153,118 @@
     }
     
     [self doPopulateDisplayFields];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = businessNameData;
+    //self.viewIsDisplaying = TRUE;
+    //[[self view] bringSubviewToFront:typesOfBusiness];
+    picturesView_KSSlide.hidden = true;
+    // Do any additional setup after loading the view from its nib.
+    // setup looks of the ui elements
+    [TapTalkLooks setToTapTalkLooks:typesOfBusiness isActionButton:NO makeItRound:YES];
+    [TapTalkLooks setToTapTalkLooks:contactInfo isActionButton:NO makeItRound:YES];
+    [TapTalkLooks setToTapTalkLooks:rating isActionButton:NO makeItRound:NO];
+    //[TapTalkLooks setBackgroundImage:self.view]; zzzzz
+    [TapTalkLooks setToTapTalkLooks:enterAndGetService isActionButton:YES makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:ratingLabel isActionButton:NO makeItRound:NO];
     
+//    picturesView = nil;
+
+//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    hud.labelText = NSLocalizedString(@"Loading detaili business information...", @"");
+
+    if (self.isCustomer == 1) {
+        [enterAndGetService setTitle:@"Enter" forState:UIControlStateNormal];
+        showCodeButton.hidden = false;
+        voteTobeCustomerButton.hidden = true;
+        [TapTalkLooks setToTapTalkLooks:showCodeButton isActionButton:YES makeItRound:NO];
+    }
+    else {
+        showCodeButton.hidden = TRUE;
+        enterAndGetService.hidden = TRUE;
+        voteTobeCustomerButton.hidden = false;
+
+//        CGRect buttonFrame = enterAndGetService.frame;
+//        UIButton *voteToAddAsACustomer = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [voteToAddAsACustomer addTarget:self action:@selector(addToCustomers) forControlEvents:UIControlEventTouchUpInside];
+        //buttonFrame.origin.x = 45;  zzzz
+        //buttonFrame.size.width = 235; zzzz
+        [voteTobeCustomerButton setTitle:@"Add as a customer" forState:UIControlStateNormal];
+        //voteTobeCustomerButton.titleLabel.font = [UIFont boldSystemFontOfSize:15];
+        
+        [TapTalkLooks setToTapTalkLooks:voteTobeCustomerButton isActionButton:YES makeItRound:NO];
+    }
+
+//    [activityIndicator setHidesWhenStopped:TRUE];
+//    [activityIndicator startAnimating];
+//    self.title = businessNameData;
+//    
+//    if (biz.picturesString != nil) {
+//        [picturesView_KSSlide setNeedsLayout];
+//        [picturesView_KSSlide layoutIfNeeded ];
+//        CGRect transformedBounds = CGRectApplyAffineTransform(picturesView_KSSlide.bounds, picturesView_KSSlide.transform);
+////        CGRect picturesViewFrame = CGRectMake(9, 71, 302, 187);
+//        CGRect picturesViewFrame = picturesView_KSSlide.frame;
+//        picturesView = [[KASlideShow alloc] initWithFrame:transformedBounds];
+//        [self.view addSubview:picturesView];
+//        
+//        [picturesView setDelay:3]; // Delay between transitions
+//        [picturesView setTransitionDuration:2]; // Transition duration
+//        [picturesView setTransitionType:KASlideShowTransitionFade]; // Choose a transition type (fade or slide)
+//        [picturesView setImagesContentMode:UIViewContentModeScaleAspectFill]; // Choose a content mode for images to display
+//
+//        NSArray *bizpictureArray = [biz.picturesString componentsSeparatedByString:@","];
+////        dispatch_async(dispatch_get_main_queue(), ^{
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0) , ^{
+//            NSString *imageRelativePathString;
+//            UIImage  *image;
+//            //[[self view] bringSubviewToFront:picturesView_KSSlide];
+//            for (imageRelativePathString in bizpictureArray) {
+//                // construct the absolute path for the image
+//                imageRelativePathString = [imageRelativePathString stringByTrimmingCharactersInSet:
+//                                           [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//                NSString *imageURLString = BusinessCustomerIndividualDirectory;
+//                imageURLString = [imageURLString stringByAppendingFormat:@"//%i//%@",biz.businessID, imageRelativePathString];
+//                image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURLString]]];
+//                if (image != nil) {
+//                    [picturesView addImage:image];
+//                }
+//                else {
+//                    NSLog(@"Image %@ didn't exist", imageURLString);
+//                }
+//            }
+//            picturesView.delegate = self;
+//            
+//            // we stated to show it in the parent view
+//            //        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//            dispatch_sync(dispatch_get_main_queue(), ^{
+//                if (self.viewIsDisplaying == TRUE) {
+//                    [picturesView start];
+//                }
+//            });
+//            
+//        });
+//    }
+//    else {
+//        typesOfBusiness.hidden = FALSE;
+//    }
+//    
+//    [self doPopulateDisplayFields];
+//    
 //    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
+
     self.viewIsDisplaying = FALSE;
-    if (picturesView != nil)
+    if (picturesView != nil) {
         [picturesView stop];
+        picturesView = nil;
+    }
+    
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewDidUnload {
@@ -283,15 +356,20 @@
 }
 
 
-- (void)addToCustomers {
-    VoteToAddBusinessConfirmation *confirmation = [[VoteToAddBusinessConfirmation alloc] initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:confirmation animated:YES];
-
-}
+//- (void)addToCustomers {
+//    VoteToAddBusinessConfirmation *confirmation = [[VoteToAddBusinessConfirmation alloc] initWithNibName:nil bundle:nil];
+//    [self.navigationController pushViewController:confirmation animated:YES];
+//
+//}
 
 - (IBAction)showCode:(id)sender {
     ShakeHandWithBusinessViewController *shakeHandViewController = [[ShakeHandWithBusinessViewController alloc] initWithNibName:nil bundle:nil businessObject:biz];
     [self.navigationController pushViewController:shakeHandViewController animated:YES];
+}
+
+- (IBAction)voteTobeCustomerAction:(id)sender {
+    VoteToAddBusinessConfirmation *confirmation = [[VoteToAddBusinessConfirmation alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:confirmation animated:YES];
 }
 
 

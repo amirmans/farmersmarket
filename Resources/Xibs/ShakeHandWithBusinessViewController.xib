@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="14A361c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15B38b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShakeHandWithBusinessViewController">
@@ -20,24 +22,40 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ze7-eC-rVy">
-                    <rect key="frame" x="60" y="162" width="200" height="200"/>
+                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="bg_image.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="BxO-He-qRx">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                    <animations/>
                 </imageView>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bL3-Z7-AdK">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ze7-eC-rVy">
+                    <rect key="frame" x="60" y="162" width="200" height="200"/>
+                    <animations/>
+                </imageView>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bL3-Z7-AdK">
                     <rect key="frame" x="40" y="370" width="240" height="82"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="bL3-Z7-AdK" secondAttribute="height" multiplier="120:41" id="qNx-e5-6dW"/>
+                        <constraint firstAttribute="width" constant="240" id="xBr-oh-QQa"/>
+                    </constraints>
                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
-                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" text="Let this QR code be scanned, then you're set to chat and get notifications (if you wish too). " textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7tz-O7-qEv">
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Let this QR code be scanned, then you're set to chat and get notifications (if you wish too). " textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7tz-O7-qEv">
                     <rect key="frame" x="40" y="81" width="240" height="76"/>
+                    <animations/>
                     <color key="backgroundColor" red="1" green="0.80000000000000004" blue="0.40000000000000002" alpha="1" colorSpace="deviceRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="240" id="I8p-iE-CWy"/>
+                        <constraint firstAttribute="height" constant="76" id="zBz-tP-ZA7"/>
+                    </constraints>
                     <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hd8-jZ-UD5">
+                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hd8-jZ-UD5">
                     <rect key="frame" x="159" y="469" width="141" height="30"/>
+                    <animations/>
                     <state key="normal" title="Enter">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -45,8 +63,13 @@
                         <action selector="DoneAction:" destination="-1" eventType="touchUpInside" id="HFn-8j-di3"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Q8-Nd-HNL">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Q8-Nd-HNL">
                     <rect key="frame" x="20" y="469" width="117" height="30"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="117" id="NGV-5W-xFL"/>
+                        <constraint firstAttribute="width" secondItem="9Q8-Nd-HNL" secondAttribute="height" multiplier="39:10" id="Xcc-BO-8eO"/>
+                    </constraints>
                     <state key="normal" title="Cancel">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -55,14 +78,31 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="1" green="0.80000000000000004" blue="0.40000000000000002" alpha="1" colorSpace="deviceRGB"/>
+            <animations/>
+            <constraints>
+                <constraint firstItem="9Q8-Nd-HNL" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" id="1eX-xP-aHd"/>
+                <constraint firstItem="BxO-He-qRx" firstAttribute="top" secondItem="1" secondAttribute="top" id="2em-WB-a85"/>
+                <constraint firstAttribute="trailing" secondItem="Hd8-jZ-UD5" secondAttribute="trailing" constant="20" id="2kN-9F-JbZ"/>
+                <constraint firstItem="Hd8-jZ-UD5" firstAttribute="centerY" secondItem="9Q8-Nd-HNL" secondAttribute="centerY" id="3Su-rx-cuB"/>
+                <constraint firstItem="Ze7-eC-rVy" firstAttribute="height" secondItem="1" secondAttribute="height" constant="-324" id="6XQ-g5-bRm"/>
+                <constraint firstItem="bL3-Z7-AdK" firstAttribute="top" secondItem="1" secondAttribute="top" constant="370" id="8MF-t8-cUH"/>
+                <constraint firstAttribute="bottom" secondItem="BxO-He-qRx" secondAttribute="bottom" id="9XP-d8-9RG"/>
+                <constraint firstItem="bL3-Z7-AdK" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="MO8-zZ-HCe"/>
+                <constraint firstItem="Ze7-eC-rVy" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="PvX-RN-5HU"/>
+                <constraint firstItem="Hd8-jZ-UD5" firstAttribute="leading" secondItem="9Q8-Nd-HNL" secondAttribute="trailing" constant="22" id="T1y-dF-OPb"/>
+                <constraint firstItem="9Q8-Nd-HNL" firstAttribute="top" secondItem="bL3-Z7-AdK" secondAttribute="bottom" constant="17" id="UaT-Gn-hCg"/>
+                <constraint firstItem="7tz-O7-qEv" firstAttribute="top" secondItem="1" secondAttribute="top" constant="81" id="W9f-s3-rnE"/>
+                <constraint firstAttribute="trailing" secondItem="BxO-He-qRx" secondAttribute="trailing" id="YtI-x8-eHv"/>
+                <constraint firstItem="Ze7-eC-rVy" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="60" id="fOe-1L-Ygb"/>
+                <constraint firstItem="7tz-O7-qEv" firstAttribute="centerX" secondItem="1" secondAttribute="centerX" id="hfI-xy-Vci"/>
+                <constraint firstItem="Ze7-eC-rVy" firstAttribute="top" secondItem="7tz-O7-qEv" secondAttribute="bottom" constant="5" id="rms-tw-ceO"/>
+                <constraint firstItem="BxO-He-qRx" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="zoI-OJ-1Fs"/>
+            </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
         </view>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
+    <resources>
+        <image name="bg_image.jpg" width="1242" height="2148"/>
+    </resources>
 </document>

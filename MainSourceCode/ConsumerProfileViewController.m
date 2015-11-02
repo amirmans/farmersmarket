@@ -59,10 +59,10 @@ static NSArray *consumerProfileDataArray = nil;
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    // all these steps needs to be done to load the background image
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
     [TapTalkLooks setBackgroundImage:self.view];
     [TapTalkLooks setToTapTalkLooks:self.topContainerButton isActionButton:NO makeItRound:YES];
     [TapTalkLooks setToTapTalkLooks:self.lowerContainerButton isActionButton:NO makeItRound:YES];
@@ -77,6 +77,27 @@ static NSArray *consumerProfileDataArray = nil;
     [TapTalkLooks setToTapTalkLooks:emailTextField isActionButton:NO makeItRound:YES];
     
     ageGroupSegmentedControl.tintColor = [UIColor colorWithRed: 0/255.0 green:0/255.0 blue:255.0f/255.0 alpha:1.0];
+    
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    // all these steps needs to be done to load the background image
+//    [TapTalkLooks setBackgroundImage:self.view];
+//    [TapTalkLooks setToTapTalkLooks:self.topContainerButton isActionButton:NO makeItRound:YES];
+//    [TapTalkLooks setToTapTalkLooks:self.lowerContainerButton isActionButton:NO makeItRound:YES];
+//    [TapTalkLooks setToTapTalkLooks:self.ageGroupSegmentedControl isActionButton:NO makeItRound:YES];
+//    [TapTalkLooks setToTapTalkLooks:self.nicknameTextField isActionButton:NO makeItRound:YES];
+//    [TapTalkLooks setToTapTalkLooks:self.ageGroupTextField isActionButton:NO makeItRound:YES];
+////    [TapTalkLooks setToTapTalkLooks:self.resetButton isActionButton:YES makeItRound:NO];
+////    [TapTalkLooks setToTapTalkLooks:self.saveButton isActionButton:YES makeItRound:NO];
+//    [TapTalkLooks setToTapTalkLooks:emailLabel isActionButton:NO makeItRound:NO];
+//    [TapTalkLooks setToTapTalkLooks:zipcodeLabel isActionButton:NO makeItRound:NO];
+//    [TapTalkLooks setToTapTalkLooks:zipcodeTextField isActionButton:NO makeItRound:YES];
+//    [TapTalkLooks setToTapTalkLooks:emailTextField isActionButton:NO makeItRound:YES];
+//    
+//    ageGroupSegmentedControl.tintColor = [UIColor colorWithRed: 0/255.0 green:0/255.0 blue:255.0f/255.0 alpha:1.0];
     
     errorMessageLabel.hidden = TRUE;
 
@@ -239,6 +260,7 @@ static NSArray *consumerProfileDataArray = nil;
 - (IBAction)ageGroupSegmentedControlAction:(id)sender {
     ageGroupTextField.text = [ageGroupSegmentedControl titleForSegmentAtIndex:ageGroupSegmentedControl.selectedSegmentIndex];
 }
+
 
 - (IBAction)resetButtonAction:(id)sender {
     [self populateFieldsWithInitialValues];

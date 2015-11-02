@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ServerInteractionManager.h"
 
-@interface BusinessListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchDisplayDelegate, UISearchBarDelegate> {
+@interface BusinessListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate> {
     
 }
 

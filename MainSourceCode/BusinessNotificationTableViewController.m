@@ -62,6 +62,11 @@
     [super viewWillAppear:animated];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [TapTalkLooks setBackgroundImage:self.tableView];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -74,7 +79,9 @@
     
     // for some reason - setting the background color in the nib file didn't work
     self.title = @"Notification Center";
-    [TapTalkLooks setBackgroundImage:self.tableView];
+    //resizing for different screen size (done by adding constraint and add chosing auto layout in the xib file)
+    //happens after viewDidLoad and before viewDidAppear, so I moved the following method to viewDidAppear
+//    [TapTalkLooks setBackgroundImage:self.tableView];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     self.tableView.rowHeight = 150; // change this number whenever you change the ui in NotificationTableViewCell
     

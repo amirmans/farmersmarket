@@ -10,7 +10,8 @@
 #import "BusinessCustomerProfileManager.h"
 
 
-@interface ProductItemsTableViewController : UITableViewController <UISearchDisplayDelegate, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface ProductItemsTableViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate>
+{
     
     NSArray *productItems;
     NSMutableArray *filteredProductItems;
@@ -27,7 +28,8 @@
 @property(nonatomic, retain) NSArray *filteredProductItems;
 @property(atomic, retain) NSArray *sections;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (strong, nonatomic) IBOutlet UISearchDisplayController *searchDisplayController;
+@property (strong, nonatomic) IBOutlet UISearchController *searchController;
+@property (nonatomic, strong) NSMutableArray *searchResults; // Filtered search results
 
 
 @end

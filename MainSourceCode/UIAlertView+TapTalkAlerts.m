@@ -22,7 +22,7 @@
 + (void)showOKAlertForViewController:(UIViewController *)vc withText:(NSString *)text {
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
-                                                                   message:@"Please enter a business first."
+                                                                   message:text
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault

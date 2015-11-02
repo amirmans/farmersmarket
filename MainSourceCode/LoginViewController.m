@@ -22,8 +22,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 //    self.cancelWasPushed = FALSE;
-
-    [TapTalkLooks setBackgroundImage:self.view];
+    
+    //resizing for different screen size (done by adding constraint and add chosing auto layout in the xib file)
+    //happens after viewDidLoad and before viewDidAppear, so I moved the following method to viewDidAppear
+//    [TapTalkLooks setBackgroundImage:self.view];
     [TapTalkLooks setToTapTalkLooks:self.nicknameTextField isActionButton:NO makeItRound:YES];
     [TapTalkLooks setToTapTalkLooks:self.actionNameButton isActionButton:YES makeItRound:NO];
 
@@ -36,6 +38,11 @@
     self.nicknameTextField.text = [[DataModel sharedDataModelManager] nickname];
     nicknameInfoLabel.text = @"You can always change your nickname in the profile tab";
     actionInfoLabel.text = [actionInfoLabel.text stringByAppendingString:[[DataModel sharedDataModelManager] businessName]];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [TapTalkLooks setBackgroundImage:self.view];
 }
 
 

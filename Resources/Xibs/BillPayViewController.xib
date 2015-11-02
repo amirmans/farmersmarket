@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15C27e" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BillPayViewController">
@@ -18,15 +18,20 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TmP-kp-Uyx">
-                    <rect key="frame" x="20" y="248" width="84" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TmP-kp-Uyx">
+                    <rect key="frame" x="20" y="288" width="123" height="30"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="123" id="BrK-wF-4Wv"/>
+                    </constraints>
                     <state key="normal" title="Pay"/>
                     <connections>
                         <action selector="payAction:" destination="-1" eventType="touchUpInside" id="9f6-Vg-Z6k"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z3S-xZ-sAw">
-                    <rect key="frame" x="209" y="248" width="91" height="30"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z3S-xZ-sAw">
+                    <rect key="frame" x="177" y="288" width="123" height="30"/>
+                    <animations/>
                     <state key="normal" title="Change Card">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -34,20 +39,40 @@
                         <action selector="changeCardAction:" destination="-1" eventType="touchUpInside" id="d3D-rl-2r2"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tcH-G7-KfA">
-                    <rect key="frame" x="101" y="175" width="75" height="30"/>
-                    <color key="backgroundColor" red="1" green="0.80000000000000004" blue="0.40000000000000002" alpha="1" colorSpace="deviceRGB"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tcH-G7-KfA">
+                    <rect key="frame" x="101" y="144" width="75" height="30"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="75" id="ZnK-WF-ifw"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Amount: $" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MpI-qc-ShT">
-                    <rect key="frame" x="20" y="179" width="95" height="21"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount: $" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MpI-qc-ShT">
+                    <rect key="frame" x="20" y="148" width="95" height="21"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="h2L-dC-om6"/>
+                        <constraint firstAttribute="width" constant="95" id="qGK-3W-JKR"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="TmP-kp-Uyx" firstAttribute="baseline" secondItem="Z3S-xZ-sAw" secondAttribute="baseline" id="7Tp-PY-Vox"/>
+                <constraint firstItem="tcH-G7-KfA" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="101" id="EAD-Bn-33Q"/>
+                <constraint firstItem="MpI-qc-ShT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="KbU-b6-wem"/>
+                <constraint firstAttribute="bottom" secondItem="TmP-kp-Uyx" secondAttribute="bottom" constant="250" id="L5d-rz-qOY"/>
+                <constraint firstAttribute="trailing" secondItem="Z3S-xZ-sAw" secondAttribute="trailing" constant="20" id="X5i-iH-axa"/>
+                <constraint firstItem="tcH-G7-KfA" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="144" id="eyr-zO-Oov"/>
+                <constraint firstItem="TmP-kp-Uyx" firstAttribute="leading" secondItem="MpI-qc-ShT" secondAttribute="leading" id="hRb-VH-nIh"/>
+                <constraint firstItem="Z3S-xZ-sAw" firstAttribute="leading" secondItem="TmP-kp-Uyx" secondAttribute="trailing" constant="34" id="kR1-5Q-RGG"/>
+                <constraint firstItem="tcH-G7-KfA" firstAttribute="centerY" secondItem="MpI-qc-ShT" secondAttribute="centerY" id="zmD-y4-wah"/>
+            </constraints>
         </view>
     </objects>
 </document>

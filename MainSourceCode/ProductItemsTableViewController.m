@@ -28,7 +28,8 @@
 @synthesize productItems;
 @synthesize filteredProductItems;
 @synthesize searchBar;
-@synthesize searchDisplayController;
+@synthesize searchController;
+@synthesize searchResults;
 @synthesize sections;
 
 
@@ -79,12 +80,46 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // title set in the caller 
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"ScopeButtonCountry",@"Country"),
+                                                          NSLocalizedString(@"ScopeButtonCapital",@"Capital")];
+    self.searchController.searchBar.delegate = self;
+    self.searchController.searchBar.delegate = self;
+    
+    self.tableView.tableHeaderView = self.searchController.searchBar;
+    
+    self.definesPresentationContext = YES;
+    
+    // The search bar does not seem to set its size automatically
+    // which causes it to have zero height when there is no scope
+    // bar. If you remove the scopeButtonTitles above and the
+    // search bar is no longer visible make sure you force the
+    // search bar to size itself (make sure you do this after
+    // you add it to the view hierarchy).
+    [self.searchController.searchBar sizeToFit];
+    
+    
+//    self.searchResults = [NSMutableArray arrayWithCapacity:businessListArray.count];
+    
+    
+    
+    
+    
+    
+    
+    // Do any additional setup after loading the view, typically from a nib.
+    //self.tableView.backgroundColor = [UIColor clearColor];
+    //self.view.backgroundColor = [UIColor blueColor];
+    
+    // title set in the caller
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     self.tableView.scrollEnabled = YES;
-    searchDisplayController.delegate = self;
-    searchDisplayController.searchResultsDataSource = self;
-    searchDisplayController.searchResultsDelegate = self;
+//    searchDisplayController.delegate = self;
+//    searchDisplayController.searchResultsDataSource = self;
+//    searchDisplayController.searchResultsDelegate = self;
     
     // Uncomment the following line to preserve selection between presentations.
     self.clearsSelectionOnViewWillAppear = NO;
@@ -92,7 +127,9 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    [TapTalkLooks setBackgroundImage:self.tableView];
+    //resizing for different screen size (done by adding constraint and add chosing auto layout in the xib file)
+    //happens after viewDidLoad and before viewDidAppear, so I moved the following method to viewDidAppear
+//    [TapTalkLooks setBackgroundImage:self.tableView];
 //    [self.tableView setSectionFooterHeight:0];
 }
 
@@ -111,6 +148,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [TapTalkLooks setBackgroundImage:self.tableView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -134,7 +172,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    if (tableView == self.tableView)
+    if (!self.searchController.active)
         return [sections count];
     else
         return 1;
@@ -143,7 +181,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSInteger nRows = 0;
-    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView])
+    if (self.searchController.active)
     {
         nRows = [filteredProductItems count];
     }
@@ -167,7 +205,7 @@
     
     UILabel *label = [[UILabel alloc] init];
     
-    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView])
+    if (self.searchController.active)
     {
         label = nil;
     }
@@ -177,10 +215,10 @@
         
         // Create label with section title
         label.frame = CGRectMake(80, 0, [sectionTitle length], [self.tableView sectionHeaderHeight]);
-        label.textColor = [UIColor blueColor];
+        label.textColor = [UIColor whiteColor];
         label.font = [UIFont fontWithName:@"Helvetica" size:20];
         label.text = sectionTitle;
-        label.backgroundColor = [UIColor clearColor];
+        label.backgroundColor = [UIColor colorWithRed:(189/255.f) green:(177/255.f) blue:(243/255.f) alpha:1.0f];
         
         /*I also want the header to throw a shadow on the rest of the table*/
         label.layer.shadowColor = [[UIColor orangeColor] CGColor];
@@ -194,7 +232,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView])
+    if (self.searchController.active)
         return 0;
     else
         return 32.0f;
@@ -226,7 +264,7 @@
 
     // Configure the cell...
     NSDictionary *cellDict;
-    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView])
+    if (self.searchController.active)
     {
         cellDict = [filteredProductItems objectAtIndex:indexPath.row];
     }
@@ -303,7 +341,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *tempDict;
-    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView])
+    if (self.searchController.active)
     {
         tempDict = [filteredProductItems objectAtIndex:indexPath.row];
                      
@@ -365,20 +403,37 @@
 
 #pragma mark - UISearchDisplayController Delegate Methods
 
--(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
+//-(BOOL)searchDisplayController:(UISearchController *)controller shouldReloadTableForSearchString:(NSString *)searchString {
+//    
+//    [self filterContentForSearchText:searchString scope:
+//     [[self.searchController.searchBar scopeButtonTitles] objectAtIndex:[self.searchController.searchBar selectedScopeButtonIndex]]];
+//    
+//    return YES;
+//}
+
+- (void)updateSearchResultsForSearchController:(UISearchController *)arg_searchController
+{
+    NSString *searchString = arg_searchController.searchBar.text;
+    [self filterContentForSearchText:searchString scope:@"ScopeButtonCountry"];
+    //    [[self filterContentForSearchText:[arg_searchController.searchBar scopeButtonTitles] objectAtIndex:[self.searchController.searchBar selectedScopeButtonIndex]]];
+    NSLog(@"in updateSearchResultsForSearchController: filtered results: %@***%@", [[self.searchController.searchBar scopeButtonTitles] objectAtIndex:[self.searchController.searchBar selectedScopeButtonIndex]], filteredProductItems);
+ //         [self filterContentForSearchText:searchString scope:[self.searchController.searchBar scopeButtonTitles]]);
     
-    [self filterContentForSearchText:searchString scope:
-     [[self.searchDisplayController.searchBar scopeButtonTitles] objectAtIndex:[self.searchDisplayController.searchBar selectedScopeButtonIndex]]];
+    [self filterContentForSearchText:searchString scope:[[self.searchController.searchBar scopeButtonTitles] objectAtIndex:[self.searchController.searchBar selectedScopeButtonIndex]]];
     
-    return YES;
+ NSLog(@"in the second updateSearchResultsForSearchController: filtered results: %@***%@", [[self.searchController.searchBar scopeButtonTitles] objectAtIndex:[self.searchController.searchBar selectedScopeButtonIndex]], filteredProductItems);
+    
+    [self.tableView reloadData];
 }
 
-- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller {
-//    [controller.searchResultsTableView setDelegate:self];
-    [TapTalkLooks setBackgroundImage:controller.searchResultsTableView];
-    controller.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-//    [controller.searchResultsTableView setTableHeaderView:nil];
-//    [controller.searchResultsTableView setSectionHeaderHeight:0.0];
-}
+
+
+//- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller {
+////    [controller.searchResultsTableView setDelegate:self];
+//    [TapTalkLooks setBackgroundImage:controller.searchResultsTableView];
+//    controller.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+////    [controller.searchResultsTableView setTableHeaderView:nil];
+////    [controller.searchResultsTableView setSectionHeaderHeight:0.0];
+//}
 
 @end

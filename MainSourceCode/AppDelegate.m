@@ -234,16 +234,17 @@
 //            [viewController presentViewController:alert animated:YES completion:nil];
             
             
-            
-            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
-                                                                           message:@"Please enter a business first."
-                                                                    preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                                  handler:^(UIAlertAction * action) {}];
-            
-            [alert addAction:defaultAction];
-            [[tabBarController.viewControllers objectAtIndex:1] presentViewController:alert animated:YES completion:nil];
+//            
+//            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+//                                                                           message:@"Please enter a business first."
+//                                                                    preferredStyle:UIAlertControllerStyleAlert];
+//            
+//            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+//                                                                  handler:^(UIAlertAction * action) {}];
+//            
+//            [alert addAction:defaultAction];
+//            [[tabBarController.viewControllers objectAtIndex:1] presentViewController:alert animated:YES completion:nil];
+            [UIAlertController showErrorAlert:@"Please enter a business first."];
             
             
             

@@ -1,43 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15B30a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BusinessListViewController"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="130" id="KGk-i7-Jjw" customClass="BusinessTableViewCell">
+        <tableViewCell contentMode="scaleAspectFit" selectionStyle="default" indentationWidth="10" rowHeight="130" id="KGk-i7-Jjw" customClass="BusinessTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="129.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="indicator.png" translatesAutoresizingMaskIntoConstraints="NO" id="MTZ-yX-qf8">
-                        <rect key="frame" x="287" y="30" width="27" height="70"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="indicator.png" translatesAutoresizingMaskIntoConstraints="NO" id="MTZ-yX-qf8">
+                        <rect key="frame" x="292" y="30" width="27" height="70"/>
+                        <animations/>
                         <accessibility key="accessibilityConfiguration">
                             <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
                         </accessibility>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="27" id="w8k-6e-8s7"/>
+                        </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6AB-k9-2VU">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6AB-k9-2VU">
                         <rect key="frame" x="0.0" y="6" width="121" height="117"/>
+                        <animations/>
                         <accessibility key="accessibilityConfiguration">
                             <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
                         </accessibility>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="121" id="mbd-kg-dF5"/>
+                        </constraints>
                     </imageView>
-                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fdk-sk-SsP">
+                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fdk-sk-SsP">
                         <rect key="frame" x="124" y="6" width="153" height="30"/>
+                        <animations/>
                         <accessibility key="accessibilityConfiguration">
                             <accessibilityTraits key="traits" notEnabled="YES"/>
                             <bool key="isElement" value="NO"/>
                         </accessibility>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="AMn-TH-53E"/>
+                        </constraints>
                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
-                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BpI-qU-ds7">
+                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BpI-qU-ds7">
                         <rect key="frame" x="124" y="50" width="161" height="30"/>
+                        <animations/>
                         <accessibility key="accessibilityConfiguration">
                             <accessibilityTraits key="traits" notEnabled="YES"/>
                             <bool key="isElement" value="NO"/>
@@ -46,8 +60,9 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
-                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zh7-Je-eXN">
+                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zh7-Je-eXN">
                         <rect key="frame" x="124" y="93" width="153" height="30"/>
+                        <animations/>
                         <accessibility key="accessibilityConfiguration">
                             <accessibilityTraits key="traits" notEnabled="YES"/>
                             <bool key="isElement" value="NO"/>
@@ -57,14 +72,36 @@
                         <textInputTraits key="textInputTraits"/>
                     </textField>
                 </subviews>
+                <animations/>
                 <color key="backgroundColor" red="1" green="0.80000000000000004" blue="0.40000000000000002" alpha="1" colorSpace="deviceRGB"/>
+                <constraints>
+                    <constraint firstItem="BpI-qU-ds7" firstAttribute="centerY" secondItem="6AB-k9-2VU" secondAttribute="centerY" id="0IR-30-R3x"/>
+                    <constraint firstItem="6AB-k9-2VU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-2" id="3my-ff-Cac"/>
+                    <constraint firstItem="6AB-k9-2VU" firstAttribute="top" secondItem="Fdk-sk-SsP" secondAttribute="top" id="8Ng-1a-cL2"/>
+                    <constraint firstItem="Zh7-Je-eXN" firstAttribute="leading" secondItem="BpI-qU-ds7" secondAttribute="leading" id="9Gb-fL-Al1"/>
+                    <constraint firstItem="MTZ-yX-qf8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="22" id="ADH-so-qJh"/>
+                    <constraint firstItem="6AB-k9-2VU" firstAttribute="bottom" secondItem="Zh7-Je-eXN" secondAttribute="bottom" id="F0k-az-eU2"/>
+                    <constraint firstItem="6AB-k9-2VU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="FR4-ci-UDP"/>
+                    <constraint firstItem="Fdk-sk-SsP" firstAttribute="leading" secondItem="BpI-qU-ds7" secondAttribute="leading" id="FdJ-ox-1oG"/>
+                    <constraint firstItem="MTZ-yX-qf8" firstAttribute="leading" secondItem="Fdk-sk-SsP" secondAttribute="trailing" constant="15" id="GIM-6F-56z"/>
+                    <constraint firstItem="Zh7-Je-eXN" firstAttribute="top" secondItem="BpI-qU-ds7" secondAttribute="bottom" constant="13" id="Hcq-2a-WXv"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="MTZ-yX-qf8" secondAttribute="trailing" constant="-7" id="Rf1-vr-M6J"/>
+                    <constraint firstItem="Fdk-sk-SsP" firstAttribute="leading" secondItem="6AB-k9-2VU" secondAttribute="trailing" constant="3" id="U4t-fF-9h2"/>
+                    <constraint firstItem="BpI-qU-ds7" firstAttribute="top" secondItem="Fdk-sk-SsP" secondAttribute="bottom" constant="14" id="bk5-qi-b4L"/>
+                    <constraint firstItem="Zh7-Je-eXN" firstAttribute="trailing" secondItem="Fdk-sk-SsP" secondAttribute="trailing" id="fhB-CU-H6p"/>
+                    <constraint firstItem="MTZ-yX-qf8" firstAttribute="centerY" secondItem="BpI-qU-ds7" secondAttribute="centerY" id="hub-eL-aa8"/>
+                    <constraint firstItem="BpI-qU-ds7" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="tAw-dk-FaD"/>
+                    <constraint firstItem="MTZ-yX-qf8" firstAttribute="leading" secondItem="BpI-qU-ds7" secondAttribute="trailing" constant="7" id="tnu-zS-OCe"/>
+                </constraints>
             </tableViewCellContentView>
+            <animations/>
             <connections>
                 <outlet property="businessIconImageView" destination="6AB-k9-2VU" id="A63-M5-Gme"/>
                 <outlet property="businessNameTextField" destination="Fdk-sk-SsP" id="00h-vr-gCz"/>
                 <outlet property="businessTypesTextField" destination="BpI-qU-ds7" id="KyD-s5-sqG"/>
                 <outlet property="neighborhoodTextField" destination="Zh7-Je-eXN" id="XMa-j7-VOg"/>
             </connections>
+            <point key="canvasLocation" x="105" y="366"/>
         </tableViewCell>
     </objects>
     <resources>

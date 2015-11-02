@@ -11,7 +11,7 @@
 #import "TapTalkLooks.h"
 #import "AskForSeviceViewController.h"
 #import "Business.h"
-//#import "BillPayViewController.h"
+#import "BillPayViewController.h"
 
 @implementation BillViewController
 
@@ -81,7 +81,7 @@
     // now add the history button to the navigation controller bar
     UIBarButtonItem *billsHistoryButton = [[UIBarButtonItem alloc]
                                    initWithTitle:@"Bill history"
-                                   style:UIBarButtonItemStyleBordered
+                                   style:UIBarButtonItemStylePlain
                                    target:self
                                    action:@selector(loadBillHistory)];
     self.navigationItem.rightBarButtonItem = billsHistoryButton;
@@ -114,8 +114,8 @@
 }
 
 - (IBAction)readyToPayAction:(id)sender {
-//    BillPayViewController *payBillViewController = [[BillPayViewController alloc] initWithNibName:nil bundle:nil withAmount:billInDollar forBusiness:billBusiness];
-//    [self.navigationController pushViewController:payBillViewController animated:YES];
+    BillPayViewController *payBillViewController = [[BillPayViewController alloc] initWithNibName:nil bundle:nil withAmount:billInDollar forBusiness:billBusiness];
+    [self.navigationController pushViewController:payBillViewController animated:YES];
 }
 
 - (IBAction)questionsAction:(id)sender {

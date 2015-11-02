@@ -45,17 +45,38 @@
 
 + (void)setBackgroundImage:(UIView *)tempView {
     // all these steps need to be done to load the background image
-    NSBundle *bundle = [NSBundle mainBundle];
-    NSString *imagePath = [bundle pathForResource:@"bg_image" ofType:@"jpg"];
-    UIImage *backgroundImage = [[UIImage alloc] initWithContentsOfFile:imagePath];
+//    NSBundle *bundle = [NSBundle mainBundle];
+//    NSString *imagePath = [bundle pathForResource:@"bg_image" ofType:@"jpg"];
+//    UIImage *backgroundImage = [[UIImage alloc] initWithContentsOfFile:imagePath];
+//
+//    UIGraphicsBeginImageContext(tempView.frame.size);
+//    [backgroundImage drawInRect:tempView.bounds];
+//    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//
+//    tempView.backgroundColor = [UIColor colorWithPatternImage:image];
+//    backgroundImage = nil;
+    
+    
+    UIImageView *backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_image.jpg"]];
+    [backgroundView setContentMode: UIViewContentModeScaleAspectFit];
+    [tempView addSubview:backgroundView];
+    [tempView sendSubviewToBack: backgroundView];
 
-    UIGraphicsBeginImageContext(tempView.frame.size);
-    [backgroundImage drawInRect:tempView.bounds];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
-    tempView.backgroundColor = [UIColor colorWithPatternImage:image];
-    backgroundImage = nil;
+    
+//    UIGraphicsBeginImageContext(tempView.frame.size);
+//    [[UIImage imageNamed:@"bg_image.jpg"] drawInRect:tempView.bounds];
+//    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    
+//    tempView.backgroundColor = [UIColor colorWithPatternImage:image];
+//    
+    
+//    tempView.backgroundColor = [UIColor clearColor];
+//    tempView.opaque = NO;
+//    tempView.backgroundView= [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg_image.jpg"]];
+//
+  
 }
 
 @end

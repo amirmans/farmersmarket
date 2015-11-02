@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15B38b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductItemsTableViewController"/>
@@ -14,68 +15,143 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="234.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" image="Grocery_Location.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="16">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" image="Grocery_Location.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="16">
                         <rect key="frame" x="0.0" y="45" width="128" height="135"/>
+                        <animations/>
                     </imageView>
-                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Name" minimumFontSize="19" translatesAutoresizingMaskIntoConstraints="NO" id="17">
+                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Name" minimumFontSize="19" translatesAutoresizingMaskIntoConstraints="NO" id="17">
                         <rect key="frame" x="3" y="8" width="171" height="35"/>
+                        <animations/>
                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                     </textField>
-                    <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Description" translatesAutoresizingMaskIntoConstraints="NO" id="18">
+                    <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" text="Description" translatesAutoresizingMaskIntoConstraints="NO" id="18">
                         <rect key="frame" x="3" y="183" width="297" height="41"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="41" id="a81-iw-OPk"/>
+                        </constraints>
                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Price" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="27">
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Price" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="27">
                         <rect key="frame" x="243" y="10" width="69" height="30"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="69" id="m4j-RW-vAH"/>
+                        </constraints>
                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
-                    <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" fixedFrame="YES" editable="NO" text="Field1 value" translatesAutoresizingMaskIntoConstraints="NO" id="29">
+                    <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" misplaced="YES" editable="NO" text="Field1 value" translatesAutoresizingMaskIntoConstraints="NO" id="29">
                         <rect key="frame" x="130" y="68" width="146" height="56"/>
+                        <animations/>
                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>
-                    <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" fixedFrame="YES" editable="NO" text="Field2 value" translatesAutoresizingMaskIntoConstraints="NO" id="33">
+                    <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" editable="NO" text="Field2 value" translatesAutoresizingMaskIntoConstraints="NO" id="33">
                         <rect key="frame" x="130" y="153" width="155" height="27"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="27" id="VGp-O2-G66"/>
+                        </constraints>
                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Price: $" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Price: $" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31">
                         <rect key="frame" x="182" y="14" width="59" height="21"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="59" id="uZR-Xn-cN4"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="highlightedColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" image="indicator.png" translatesAutoresizingMaskIntoConstraints="NO" id="32">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" image="indicator.png" translatesAutoresizingMaskIntoConstraints="NO" id="32">
                         <rect key="frame" x="284" y="77" width="36" height="66"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="36" id="eCl-S5-4Na"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Field1:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tgf-aE-Eak">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Field1:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tgf-aE-Eak">
                         <rect key="frame" x="130" y="45" width="119" height="12"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="DJD-Hp-zq9"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Field2:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yTL-hk-VSc">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Field2:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yTL-hk-VSc">
                         <rect key="frame" x="130" y="133" width="84" height="12"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="9g0-MC-Y3C"/>
+                            <constraint firstAttribute="width" constant="84" id="oz5-rj-fvK"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Special" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85o-Mh-Knc">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Special" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85o-Mh-Knc">
                         <rect key="frame" x="268" y="42" width="50" height="18"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="ZZs-PN-67p"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="85o-Mh-Knc" secondAttribute="trailing" constant="-6" id="0f7-Z2-fdb"/>
+                    <constraint firstItem="27" firstAttribute="leading" secondItem="31" secondAttribute="trailing" constant="2" id="5SN-I4-pgf"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="33" secondAttribute="trailing" constant="27" id="85e-Bo-K7M"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="18" secondAttribute="trailing" constant="12" id="9D9-c5-HG1"/>
+                    <constraint firstItem="29" firstAttribute="top" secondItem="85o-Mh-Knc" secondAttribute="bottom" constant="8" symbolic="YES" id="Awo-ib-MkW"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="18" secondAttribute="bottom" constant="2.5" id="E0i-lm-4CO"/>
+                    <constraint firstItem="18" firstAttribute="leading" secondItem="17" secondAttribute="leading" id="IF4-S1-IGd"/>
+                    <constraint firstItem="yTL-hk-VSc" firstAttribute="top" secondItem="29" secondAttribute="bottom" constant="9" id="KTe-9z-d9h"/>
+                    <constraint firstItem="32" firstAttribute="top" secondItem="85o-Mh-Knc" secondAttribute="bottom" constant="17" id="KYk-I4-0Cy"/>
+                    <constraint firstItem="18" firstAttribute="top" secondItem="32" secondAttribute="bottom" constant="40" id="L2L-D6-xkm"/>
+                    <constraint firstItem="33" firstAttribute="top" secondItem="yTL-hk-VSc" secondAttribute="bottom" constant="8" symbolic="YES" id="Lbh-Zb-CzI"/>
+                    <constraint firstItem="31" firstAttribute="leading" secondItem="17" secondAttribute="trailing" constant="8" symbolic="YES" id="MuO-fg-qx3"/>
+                    <constraint firstItem="27" firstAttribute="centerY" secondItem="31" secondAttribute="centerY" id="Ozu-vo-JcG"/>
+                    <constraint firstItem="33" firstAttribute="leading" secondItem="yTL-hk-VSc" secondAttribute="leading" id="Pu1-1d-AXs"/>
+                    <constraint firstItem="29" firstAttribute="leading" secondItem="yTL-hk-VSc" secondAttribute="leading" id="Qdf-yh-aHg"/>
+                    <constraint firstItem="85o-Mh-Knc" firstAttribute="leading" secondItem="tgf-aE-Eak" secondAttribute="trailing" constant="19" id="Uo1-ET-qCG"/>
+                    <constraint firstItem="29" firstAttribute="top" secondItem="tgf-aE-Eak" secondAttribute="bottom" constant="11" id="WDq-1y-8jE"/>
+                    <constraint firstItem="32" firstAttribute="leading" secondItem="29" secondAttribute="trailing" constant="8" symbolic="YES" id="WmJ-Jd-iUc"/>
+                    <constraint firstItem="tgf-aE-Eak" firstAttribute="leading" secondItem="29" secondAttribute="leading" id="Wz7-Up-0kl"/>
+                    <constraint firstItem="17" firstAttribute="top" secondItem="Egb-tq-KrU" secondAttribute="topMargin" id="Y6y-cL-LyE"/>
+                    <constraint firstItem="85o-Mh-Knc" firstAttribute="top" secondItem="27" secondAttribute="bottom" constant="2" id="bDG-aM-FxK"/>
+                    <constraint firstItem="27" firstAttribute="trailing" secondItem="Egb-tq-KrU" secondAttribute="trailingMargin" id="bdc-G3-EZg"/>
+                    <constraint firstItem="17" firstAttribute="leading" secondItem="Egb-tq-KrU" secondAttribute="leadingMargin" constant="-5" id="dPK-Aj-Oa6"/>
+                    <constraint firstItem="16" firstAttribute="top" secondItem="17" secondAttribute="bottom" constant="2" id="ddI-yg-TGW"/>
+                    <constraint firstItem="tgf-aE-Eak" firstAttribute="top" secondItem="31" secondAttribute="bottom" constant="10" id="fg2-Zg-znh"/>
+                    <constraint firstItem="tgf-aE-Eak" firstAttribute="leading" secondItem="16" secondAttribute="trailing" constant="2" id="gmY-Gz-rgO"/>
+                    <constraint firstItem="32" firstAttribute="leading" secondItem="yTL-hk-VSc" secondAttribute="trailing" constant="70" id="mVV-yJ-Yrh"/>
+                    <constraint firstItem="18" firstAttribute="top" secondItem="16" secondAttribute="bottom" constant="3" id="qIV-kd-KYp"/>
+                    <constraint firstItem="85o-Mh-Knc" firstAttribute="centerY" secondItem="tgf-aE-Eak" secondAttribute="centerY" id="rxT-rW-voA"/>
+                    <constraint firstItem="17" firstAttribute="baseline" secondItem="31" secondAttribute="baseline" id="umn-fl-8oY"/>
+                    <constraint firstItem="16" firstAttribute="bottom" secondItem="33" secondAttribute="bottom" id="vHR-PO-HCG"/>
+                    <constraint firstAttribute="trailing" secondItem="32" secondAttribute="trailing" id="vQV-2K-zoo"/>
+                    <constraint firstItem="16" firstAttribute="top" secondItem="tgf-aE-Eak" secondAttribute="top" id="vV5-9r-gye"/>
+                    <constraint firstItem="17" firstAttribute="centerY" secondItem="27" secondAttribute="centerY" id="wBL-IL-yGc"/>
+                    <constraint firstItem="16" firstAttribute="leading" secondItem="Egb-tq-KrU" secondAttribute="leading" id="y3l-9V-6z4"/>
+                </constraints>
             </tableViewCellContentView>
+            <animations/>
             <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
             <connections>
                 <outlet property="descriptionTextView" destination="18" id="26"/>

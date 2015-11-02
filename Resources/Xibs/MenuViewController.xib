@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="14A361c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15B30a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MenuViewController">
@@ -16,8 +17,9 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="32" userLabel="Toolbar">
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="32" userLabel="Toolbar">
                     <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                    <animations/>
                     <items>
                         <barButtonItem title="Back" id="33">
                             <connections>
@@ -42,22 +44,31 @@
                         </barButtonItem>
                     </items>
                 </toolbar>
-                <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="30">
+                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="30">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
+                    <animations/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                 </webView>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="51">
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="51">
                     <rect key="frame" x="138" y="156" width="37" height="37"/>
+                    <animations/>
                     <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                 </activityIndicatorView>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="30" firstAttribute="leading" secondItem="27" secondAttribute="leading" id="BJb-hF-Nro"/>
+                <constraint firstItem="32" firstAttribute="top" secondItem="30" secondAttribute="bottom" id="KE1-tm-S2Z"/>
+                <constraint firstItem="32" firstAttribute="trailing" secondItem="30" secondAttribute="trailing" id="KJW-m6-xHU"/>
+                <constraint firstItem="30" firstAttribute="leading" secondItem="32" secondAttribute="leading" id="Nwa-bS-ofo"/>
+                <constraint firstItem="51" firstAttribute="leading" secondItem="27" secondAttribute="leading" constant="138" id="Rt1-RL-C53"/>
+                <constraint firstAttribute="bottom" secondItem="32" secondAttribute="bottom" id="WeG-mi-lbz"/>
+                <constraint firstItem="30" firstAttribute="top" secondItem="27" secondAttribute="top" id="gPJ-8S-fnQ"/>
+                <constraint firstItem="51" firstAttribute="top" secondItem="27" secondAttribute="top" constant="156" id="oKg-j7-rR9"/>
+                <constraint firstAttribute="trailing" secondItem="32" secondAttribute="trailing" id="tl9-KC-Id1"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
         </view>
     </objects>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
-    </simulatedMetricsContainer>
 </document>

@@ -26,18 +26,21 @@
 @property(weak, nonatomic) IBOutlet UITextField *rating;
 @property(weak, nonatomic) IBOutlet UITextView *typesOfBusiness;
 @property (weak, nonatomic) IBOutlet UIButton *showCodeButton;
+@property (weak, nonatomic) IBOutlet UIButton *voteTobeCustomerButton;
 
 @property(atomic, retain) NSString *distanceInMileString;
 @property(atomic, retain) NSString *businessNameData;
 @property(atomic, retain) NSString *customerProfileName;
 @property(nonatomic, assign) int isCustomer;
 @property (strong, nonatomic) IBOutlet UILabel *ratingLabel;
+@property (weak, nonatomic) IBOutlet UIView *picturesView_KSSlide;
 
 @property(atomic, retain) Business *biz;
 
 - (id)initWithBusinessObject:(Business *)biz;
 - (IBAction)enterAndGetServiceAction:(id)sender;
 - (IBAction)showCode:(id)sender;
+- (IBAction)voteTobeCustomerAction:(id)sender;
 
 - (void)doPopulateDisplayFields;
 

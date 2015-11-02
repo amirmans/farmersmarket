@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15B38b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
@@ -9,47 +9,56 @@
             <connections>
                 <outlet property="bizTableView" destination="4" id="3Nc-gQ-Gau"/>
                 <outlet property="listBusinessesActivityIndicator" destination="JEF-X8-ZUf" id="aUJ-ey-lzV"/>
-                <outlet property="searchDisplayController" destination="e0C-Xg-2Tl" id="eKD-99-Fpl"/>
                 <outlet property="view" destination="AG0-dN-m2b" id="B5J-xg-B7Z"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <searchDisplayController id="e0C-Xg-2Tl">
-            <connections>
-                <outlet property="delegate" destination="-1" id="jCl-vG-lF3"/>
-                <outlet property="searchBar" destination="Eab-WM-IxX" id="CbS-9R-13H"/>
-                <outlet property="searchContentsController" destination="-1" id="kPO-aV-5pm"/>
-                <outlet property="searchResultsDataSource" destination="-1" id="TnW-b0-Q0h"/>
-                <outlet property="searchResultsDelegate" destination="-1" id="acM-mI-Dns"/>
-            </connections>
-        </searchDisplayController>
-        <view contentMode="scaleToFill" id="AG0-dN-m2b">
+        <view contentMode="scaleAspectFit" id="AG0-dN-m2b">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" bouncesZoom="NO" style="plain" rowHeight="130" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="4">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="bg_image.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="9WA-O1-Ihu">
+                    <rect key="frame" x="0.0" y="0.0" width="640" height="960"/>
+                    <animations/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="640" id="MTC-Pb-ye1"/>
+                        <constraint firstAttribute="height" constant="960" id="TzE-Sy-lGm"/>
+                    </constraints>
+                </imageView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="JEF-X8-ZUf">
+                    <rect key="frame" x="141" y="183" width="37" height="37"/>
+                    <animations/>
+                </activityIndicatorView>
+                <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFit" bouncesZoom="NO" style="plain" rowHeight="130" sectionHeaderHeight="20" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="4">
+                    <rect key="frame" x="0.0" y="64" width="320" height="454"/>
+                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <color key="separatorColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <searchBar key="tableHeaderView" contentMode="redraw" id="Eab-WM-IxX">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                        <textInputTraits key="textInputTraits"/>
-                        <connections>
-                            <outlet property="delegate" destination="-1" id="YeI-BO-esf"/>
-                        </connections>
-                    </searchBar>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="6"/>
                         <outlet property="delegate" destination="-1" id="7"/>
                     </connections>
                 </tableView>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="JEF-X8-ZUf">
-                    <rect key="frame" x="141" y="183" width="37" height="37"/>
-                </activityIndicatorView>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <animations/>
+            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="9WA-O1-Ihu" firstAttribute="top" secondItem="AG0-dN-m2b" secondAttribute="top" id="3m0-va-VDW"/>
+                <constraint firstAttribute="bottom" secondItem="4" secondAttribute="bottom" constant="50" id="8hn-tR-gFd"/>
+                <constraint firstItem="4" firstAttribute="centerX" secondItem="JEF-X8-ZUf" secondAttribute="centerX" id="LdD-A1-jnw"/>
+                <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" id="WGy-3O-ZdB"/>
+                <constraint firstItem="9WA-O1-Ihu" firstAttribute="leading" secondItem="4" secondAttribute="leading" id="XaR-qE-64s"/>
+                <constraint firstItem="JEF-X8-ZUf" firstAttribute="top" secondItem="AG0-dN-m2b" secondAttribute="top" constant="183" id="tbX-LA-BQd"/>
+                <constraint firstItem="4" firstAttribute="leading" secondItem="AG0-dN-m2b" secondAttribute="leading" id="uEf-Wm-qiR"/>
+                <constraint firstItem="4" firstAttribute="top" secondItem="AG0-dN-m2b" secondAttribute="top" constant="64" id="xRz-wj-9Et"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+            <point key="canvasLocation" x="247" y="354"/>
         </view>
     </objects>
+    <resources>
+        <image name="bg_image.jpg" width="1242" height="2148"/>
+    </resources>
 </document>

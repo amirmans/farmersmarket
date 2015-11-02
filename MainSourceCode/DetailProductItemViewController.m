@@ -119,6 +119,44 @@ typedef NS_ENUM(NSUInteger, ConfigurableButtonType) {
     return self;
 }
 
+
+
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    self.picturesView.layer.borderWidth = 1;
+    self.picturesView.layer.borderColor = [UIColor blueColor].CGColor;
+    NSString *stringOfPictures = [productDictionary objectForKey:@"PictureArray"];
+    NSArray *pictureArray = [stringOfPictures componentsSeparatedByString:@","];
+    if (pictureArray.count > 1) {
+        dispatch_queue_t loadImageQueue = dispatch_queue_create("com_mydoosts_com_queue",NULL);
+        dispatch_async(loadImageQueue, ^{
+            picturesView.hidden = FALSE;
+            NSString *imageURLString;
+            UIImage *image;
+            NSMutableArray *images = [[NSMutableArray alloc] init];
+            for (imageURLString in pictureArray) {
+                imageURLString = [imageURLString stringByTrimmingCharactersInSet:
+                                  [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURLString]]];
+                [images addObject:image];
+            }
+            
+            [picturesView animateWithImages:images transitionDuration:3 initialDelay:0 loop:YES isLandscape:NO];
+            images = nil;
+        });
+    } else {
+        picturesView.hidden = TRUE;
+        CGRect imageViewRect = [picturesView frame];
+        UIImageView *onePictureImageView =[[UIImageView alloc] initWithFrame:imageViewRect];
+        [self.view addSubview:onePictureImageView];
+        NSURL *imageURL = [NSURL URLWithString:[pictureArray objectAtIndex:0]];
+        [onePictureImageView Compatible_setImageWithURL:imageURL placeholderImage:nil options:SDWebImageProgressiveDownload];
+    }
+
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -168,35 +206,35 @@ typedef NS_ENUM(NSUInteger, ConfigurableButtonType) {
         }
     }
     
-    self.picturesView.layer.borderWidth = 1;
-    self.picturesView.layer.borderColor = [UIColor blueColor].CGColor;
-    NSString *stringOfPictures = [productDictionary objectForKey:@"PictureArray"];
-    NSArray *pictureArray = [stringOfPictures componentsSeparatedByString:@","];
-    if (pictureArray.count > 1) {
-        dispatch_queue_t loadImageQueue = dispatch_queue_create("com_mydoosts_com_queue",NULL);
-        dispatch_async(loadImageQueue, ^{
-            picturesView.hidden = FALSE;
-            NSString *imageURLString;
-            UIImage *image;
-            NSMutableArray *images = [[NSMutableArray alloc] init];
-            for (imageURLString in pictureArray) {
-                imageURLString = [imageURLString stringByTrimmingCharactersInSet:
-                                  [NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURLString]]];
-                [images addObject:image];
-            }
-            
-            [picturesView animateWithImages:images transitionDuration:3 initialDelay:0 loop:YES isLandscape:NO];
-            images = nil;
-        });
-    } else {
-        picturesView.hidden = TRUE;
-        CGRect imageViewRect = [picturesView frame];
-        UIImageView *onePictureImageView =[[UIImageView alloc] initWithFrame:imageViewRect];
-        [self.view addSubview:onePictureImageView];
-        NSURL *imageURL = [NSURL URLWithString:[pictureArray objectAtIndex:0]];
-        [onePictureImageView Compatible_setImageWithURL:imageURL placeholderImage:nil options:SDWebImageProgressiveDownload];
-    }
+//    self.picturesView.layer.borderWidth = 1;
+//    self.picturesView.layer.borderColor = [UIColor blueColor].CGColor;
+//    NSString *stringOfPictures = [productDictionary objectForKey:@"PictureArray"];
+//    NSArray *pictureArray = [stringOfPictures componentsSeparatedByString:@","];
+//    if (pictureArray.count > 1) {
+//        dispatch_queue_t loadImageQueue = dispatch_queue_create("com_mydoosts_com_queue",NULL);
+//        dispatch_async(loadImageQueue, ^{
+//            picturesView.hidden = FALSE;
+//            NSString *imageURLString;
+//            UIImage *image;
+//            NSMutableArray *images = [[NSMutableArray alloc] init];
+//            for (imageURLString in pictureArray) {
+//                imageURLString = [imageURLString stringByTrimmingCharactersInSet:
+//                                  [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//                image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURLString]]];
+//                [images addObject:image];
+//            }
+//            
+//            [picturesView animateWithImages:images transitionDuration:3 initialDelay:0 loop:YES isLandscape:NO];
+//            images = nil;
+//        });
+//    } else {
+//        picturesView.hidden = TRUE;
+//        CGRect imageViewRect = [picturesView frame];
+//        UIImageView *onePictureImageView =[[UIImageView alloc] initWithFrame:imageViewRect];
+//        [self.view addSubview:onePictureImageView];
+//        NSURL *imageURL = [NSURL URLWithString:[pictureArray objectAtIndex:0]];
+//        [onePictureImageView Compatible_setImageWithURL:imageURL placeholderImage:nil options:SDWebImageProgressiveDownload];
+//    }
     
     [TapTalkLooks setToTapTalkLooks:configurableActionButton isActionButton:YES makeItRound:NO];
     actionType = [self determineConfigureableButtonType];

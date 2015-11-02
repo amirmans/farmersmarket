@@ -61,18 +61,18 @@ static NSUInteger firstTime = TRUE;
     if ((my_sms_no == nil) || (my_sms_no = (id)[NSNull null]))
     {
         NSString *message = [NSString stringWithFormat:@"%@ has not given us their service number yet!", businessName];
+//
+//        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+//                                                                       message:message
+//                                                                preferredStyle:UIAlertControllerStyleAlert];
+//        
+//        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+//                                                              handler:^(UIAlertAction * action) {}];
+//        
+//        [alert addAction:defaultAction];
+//        [self presentViewController:alert animated:YES completion:nil];
         
-        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
-                                                                       message:message
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                              handler:^(UIAlertAction * action) {}];
-        
-        [alert addAction:defaultAction];
-        [self presentViewController:alert animated:YES completion:nil];
-        
-        
+        [UIAlertController showErrorAlert:message];
         
         
 //        [UIAlertView showErrorAlert:message];

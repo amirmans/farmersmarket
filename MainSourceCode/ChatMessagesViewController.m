@@ -102,7 +102,7 @@
     // now add the history button to the navigation controller bar
     toggleUpdatingChatMessages = [[UIBarButtonItem alloc]
                                   initWithTitle:@"Stop"
-                                  style:UIBarButtonItemStyleBordered
+                                  style:UIBarButtonItemStylePlain
                                   target:self
                                   action:@selector(doToggleUpdatingChatMessages)];
     self.navigationItem.rightBarButtonItem = toggleUpdatingChatMessages;
