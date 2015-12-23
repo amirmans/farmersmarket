@@ -270,7 +270,6 @@
         return;
     }
     STPCard *card = [[STPCard alloc] init];
-    NSString *zzzz = self.paymentView.cvcPlaceholder;
     card.number = self.paymentView.card.number;
     card.expMonth = self.paymentView.card.expMonth;
     card.expYear = self.paymentView.card.expYear;
