@@ -9,8 +9,10 @@ typedef enum {
 @interface SpeechBubbleView : UIView {
     NSString *text;
     BubbleType bubbleType;
+    UITextView *textView;
 }
 
+@property (nonatomic, strong) UITextView *textView;
 // Calculates how big the speech bubble needs to be to fit the specified text
 + (CGSize)sizeForText:(NSString *)text;
 

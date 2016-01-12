@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15B30a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -17,7 +17,6 @@
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="indicator.png" translatesAutoresizingMaskIntoConstraints="NO" id="MTZ-yX-qf8">
                         <rect key="frame" x="292" y="30" width="27" height="70"/>
-                        <animations/>
                         <accessibility key="accessibilityConfiguration">
                             <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
                         </accessibility>
@@ -27,7 +26,6 @@
                     </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6AB-k9-2VU">
                         <rect key="frame" x="0.0" y="6" width="121" height="117"/>
-                        <animations/>
                         <accessibility key="accessibilityConfiguration">
                             <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
                         </accessibility>
@@ -37,7 +35,6 @@
                     </imageView>
                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Fdk-sk-SsP">
                         <rect key="frame" x="124" y="6" width="153" height="30"/>
-                        <animations/>
                         <accessibility key="accessibilityConfiguration">
                             <accessibilityTraits key="traits" notEnabled="YES"/>
                             <bool key="isElement" value="NO"/>
@@ -51,7 +48,6 @@
                     </textField>
                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BpI-qU-ds7">
                         <rect key="frame" x="124" y="50" width="161" height="30"/>
-                        <animations/>
                         <accessibility key="accessibilityConfiguration">
                             <accessibilityTraits key="traits" notEnabled="YES"/>
                             <bool key="isElement" value="NO"/>
@@ -62,7 +58,6 @@
                     </textField>
                     <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zh7-Je-eXN">
                         <rect key="frame" x="124" y="93" width="153" height="30"/>
-                        <animations/>
                         <accessibility key="accessibilityConfiguration">
                             <accessibilityTraits key="traits" notEnabled="YES"/>
                             <bool key="isElement" value="NO"/>
@@ -72,7 +67,6 @@
                         <textInputTraits key="textInputTraits"/>
                     </textField>
                 </subviews>
-                <animations/>
                 <color key="backgroundColor" red="1" green="0.80000000000000004" blue="0.40000000000000002" alpha="1" colorSpace="deviceRGB"/>
                 <constraints>
                     <constraint firstItem="BpI-qU-ds7" firstAttribute="centerY" secondItem="6AB-k9-2VU" secondAttribute="centerY" id="0IR-30-R3x"/>
@@ -94,7 +88,6 @@
                     <constraint firstItem="MTZ-yX-qf8" firstAttribute="leading" secondItem="BpI-qU-ds7" secondAttribute="trailing" constant="7" id="tnu-zS-OCe"/>
                 </constraints>
             </tableViewCellContentView>
-            <animations/>
             <connections>
                 <outlet property="businessIconImageView" destination="6AB-k9-2VU" id="A63-M5-Gme"/>
                 <outlet property="businessNameTextField" destination="Fdk-sk-SsP" id="00h-vr-gCz"/>

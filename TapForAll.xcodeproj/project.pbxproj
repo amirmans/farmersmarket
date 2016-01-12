@@ -86,6 +86,10 @@
 		C61E552618E794C1007027C7 /* CurrentBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C61E552418E794C1007027C7 /* CurrentBusiness.m */; };
 		C6235F6318B1F62000C216CB /* navigation_button.png in Resources */ = {isa = PBXBuildFile; fileRef = C6235F6218B1F62000C216CB /* navigation_button.png */; };
 		C6235F6718B2242400C216CB /* BusinessTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6235F6518B2242400C216CB /* BusinessTableViewCell.m */; };
+		C6308DE11C3E52D000B6B8B0 /* EventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6308DE01C3E52D000B6B8B0 /* EventTableViewCell.xib */; };
+		C6308DE41C3E52EC00B6B8B0 /* EventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6308DE31C3E52EC00B6B8B0 /* EventTableViewCell.m */; };
+		C6371A351C3B98F100AC5A84 /* EventsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6371A341C3B98F100AC5A84 /* EventsTableViewController.m */; };
+		C6371A371C3B997500AC5A84 /* ShoppingCartTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6371A361C3B997500AC5A84 /* ShoppingCartTableViewController.xib */; };
 		C640AD391919F81E00DDA94D /* consumerProfileDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C640AD381919F81E00DDA94D /* consumerProfileDataModel.m */; };
 		C6504A7C19D0EB17007646EB /* ProductMoreInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6504A7A19D0EB17007646EB /* ProductMoreInformationViewController.m */; };
 		C6504A7F19D0EB91007646EB /* Tap4AllDisplayUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = C6504A7D19D0EB91007646EB /* Tap4AllDisplayUtil.m */; };
@@ -116,6 +120,8 @@
 		C6936B591BD2FAE60007E118 /* TapForAll_LaunchImage_2208 x 1242.png in Resources */ = {isa = PBXBuildFile; fileRef = C6936B571BD2FAE60007E118 /* TapForAll_LaunchImage_2208 x 1242.png */; };
 		C6936B5C1BD2FFF40007E118 /* TapForAll_LaunchImge_640x1136.png in Resources */ = {isa = PBXBuildFile; fileRef = C6936B5A1BD2FFF40007E118 /* TapForAll_LaunchImge_640x1136.png */; };
 		C6936B5D1BD2FFF40007E118 /* TapForAll_LaunchImage_640x960.png in Resources */ = {isa = PBXBuildFile; fileRef = C6936B5B1BD2FFF40007E118 /* TapForAll_LaunchImage_640x960.png */; };
+		C69653481C2A011B001A29DB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C69653471C2A011B001A29DB /* StoreKit.framework */; };
+		C696534B1C2A012A001A29DB /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C696534A1C2A012A001A29DB /* PassKit.framework */; };
 		C69935B018B969F6008FCF8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C699356318B969F6008FCF8A /* AppDelegate.m */; };
 		C69935B118B969F6008FCF8A /* BillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C699356518B969F6008FCF8A /* BillViewController.m */; };
 		C69935BB18B969F6008FCF8A /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C699357A18B969F6008FCF8A /* DataModel.m */; };
@@ -266,6 +272,12 @@
 		C6235F6218B1F62000C216CB /* navigation_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigation_button.png; sourceTree = "<group>"; };
 		C6235F6418B2242400C216CB /* BusinessTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BusinessTableViewCell.h; path = MainSourceCode/BusinessTableViewCell.h; sourceTree = "<group>"; };
 		C6235F6518B2242400C216CB /* BusinessTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BusinessTableViewCell.m; path = MainSourceCode/BusinessTableViewCell.m; sourceTree = "<group>"; };
+		C6308DE01C3E52D000B6B8B0 /* EventTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventTableViewCell.xib; sourceTree = "<group>"; };
+		C6308DE21C3E52EC00B6B8B0 /* EventTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTableViewCell.h; sourceTree = "<group>"; };
+		C6308DE31C3E52EC00B6B8B0 /* EventTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventTableViewCell.m; sourceTree = "<group>"; };
+		C6371A331C3B98F100AC5A84 /* EventsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsTableViewController.h; sourceTree = "<group>"; };
+		C6371A341C3B98F100AC5A84 /* EventsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsTableViewController.m; sourceTree = "<group>"; };
+		C6371A361C3B997500AC5A84 /* ShoppingCartTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShoppingCartTableViewController.xib; sourceTree = "<group>"; };
 		C640AD371919F81E00DDA94D /* consumerProfileDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = consumerProfileDataModel.h; path = MainSourceCode/consumerProfileDataModel.h; sourceTree = "<group>"; };
 		C640AD381919F81E00DDA94D /* consumerProfileDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = consumerProfileDataModel.m; path = MainSourceCode/consumerProfileDataModel.m; sourceTree = "<group>"; };
 		C6504A7A19D0EB17007646EB /* ProductMoreInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductMoreInformationViewController.m; sourceTree = "<group>"; };
@@ -306,6 +318,9 @@
 		C6936B571BD2FAE60007E118 /* TapForAll_LaunchImage_2208 x 1242.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TapForAll_LaunchImage_2208 x 1242.png"; path = "Resources/Images/TapForAll_LaunchImage_2208 x 1242.png"; sourceTree = SOURCE_ROOT; };
 		C6936B5A1BD2FFF40007E118 /* TapForAll_LaunchImge_640x1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TapForAll_LaunchImge_640x1136.png; path = Resources/Images/TapForAll_LaunchImge_640x1136.png; sourceTree = SOURCE_ROOT; };
 		C6936B5B1BD2FFF40007E118 /* TapForAll_LaunchImage_640x960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TapForAll_LaunchImage_640x960.png; path = Resources/Images/TapForAll_LaunchImage_640x960.png; sourceTree = SOURCE_ROOT; };
+		C69653471C2A011B001A29DB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		C69653491C2A011E001A29DB /* TapForAll.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TapForAll.entitlements; path = TapForAll/TapForAll.entitlements; sourceTree = SOURCE_ROOT; };
+		C696534A1C2A012A001A29DB /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		C699356218B969F6008FCF8A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C699356318B969F6008FCF8A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		C699356418B969F6008FCF8A /* BillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BillViewController.h; path = MainSourceCode/BillViewController.h; sourceTree = "<group>"; };
@@ -381,6 +396,8 @@
 				295F5BDF1458C5CC00832AE8 /* MapKit.framework in Frameworks */,
 				2949CC3A14589C7200728B87 /* UIKit.framework in Frameworks */,
 				2949CC3C14589C7200728B87 /* Foundation.framework in Frameworks */,
+				C696534B1C2A012A001A29DB /* PassKit.framework in Frameworks */,
+				C69653481C2A011B001A29DB /* StoreKit.framework in Frameworks */,
 				2949CC4014589C7200728B87 /* CoreData.framework in Frameworks */,
 				023CEA36F88042EF998F5F66 /* libPods.a in Frameworks */,
 			);
@@ -431,6 +448,8 @@
 		2949CC3814589C7200728B87 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C696534A1C2A012A001A29DB /* PassKit.framework */,
+				C69653471C2A011B001A29DB /* StoreKit.framework */,
 				C650705A18BCB88F00E5D06B /* QuartzCore.framework */,
 				29496BDC15EFDE1200127A05 /* ImageIO.framework */,
 				298A6C7A156C76B800986F29 /* libz.1.2.5.dylib */,
@@ -452,6 +471,7 @@
 		2949CC4114589C7200728B87 /* TapForAll */ = {
 			isa = PBXGroup;
 			children = (
+				C69653491C2A011E001A29DB /* TapForAll.entitlements */,
 				C67C6AE118DF9B03009EF996 /* TapForAll.xcdatamodeld */,
 				C67C6AE018DF9ADE009EF996 /* TapForAll-Prefix.pch */,
 				C6060DF21BA6265E0084D612 /* Images.xcassets */,
@@ -562,6 +582,8 @@
 		2949CCDE1458A21700728B87 /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
+				C6308DE01C3E52D000B6B8B0 /* EventTableViewCell.xib */,
+				C6371A361C3B997500AC5A84 /* ShoppingCartTableViewController.xib */,
 				C6504A8519D10654007646EB /* ServicesTableViewCell.xib */,
 				C6504A8019D0EC83007646EB /* ProductMoreInformationViewController.xib */,
 				C67622341BC9F96200B2F434 /* DetailBusinessViewController.xib */,
@@ -717,6 +739,10 @@
 		C699356118B969F6008FCF8A /* MainSourceCode */ = {
 			isa = PBXGroup;
 			children = (
+				C6308DE21C3E52EC00B6B8B0 /* EventTableViewCell.h */,
+				C6308DE31C3E52EC00B6B8B0 /* EventTableViewCell.m */,
+				C6371A331C3B98F100AC5A84 /* EventsTableViewController.h */,
+				C6371A341C3B98F100AC5A84 /* EventsTableViewController.m */,
 				C6504A8219D1062B007646EB /* ServicesTableViewCell.m */,
 				C6504A8319D1062B007646EB /* ServicesTableViewCell.h */,
 				C6504A7A19D0EB17007646EB /* ProductMoreInformationViewController.m */,
@@ -838,7 +864,16 @@
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+							com.apple.OMC = {
+								enabled = 1;
+							};
 							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.Wallet = {
 								enabled = 1;
 							};
 						};
@@ -886,6 +921,7 @@
 				C6936B5C1BD2FFF40007E118 /* TapForAll_LaunchImge_640x1136.png in Resources */,
 				C6C8ACA618DF9B6B005DAFD6 /* InfoPlist.strings in Resources */,
 				C650705D18BD4CBD00E5D06B /* Default-568h@2x.png in Resources */,
+				C6308DE11C3E52D000B6B8B0 /* EventTableViewCell.xib in Resources */,
 				C6C8ACB318DF9C1A005DAFD6 /* InfoPlist.strings in Resources */,
 				C6EEA6D81941A5C000857B76 /* Icon-Spotlight-40.png in Resources */,
 				2949CCFD1458A21700728B87 /* kermit_half.png in Resources */,
@@ -898,6 +934,7 @@
 				2949CD0F1458A21700728B87 /* MeowConfirmationViewController.xib in Resources */,
 				C6EABE1818B2D1CD00F50D19 /* BusinessListViewController.xib in Resources */,
 				2949CD101458A21700728B87 /* AskForSeviceViewController.xib in Resources */,
+				C6371A371C3B997500AC5A84 /* ShoppingCartTableViewController.xib in Resources */,
 				C6C91ED2189E563600AE6478 /* navigation_background.png in Resources */,
 				C686B5BA19382EEF008D2606 /* TapForAll_artwork.png in Resources */,
 				2949CD111458A21700728B87 /* ChatMessagesViewController.xib in Resources */,
@@ -1024,6 +1061,7 @@
 			files = (
 				C6235F6718B2242400C216CB /* BusinessTableViewCell.m in Sources */,
 				C69935D518B969F6008FCF8A /* VoteToAddBusinessConfirmation.m in Sources */,
+				C6308DE41C3E52EC00B6B8B0 /* EventTableViewCell.m in Sources */,
 				C6C91ECF189E3EA700AE6478 /* BusinessListViewController.m in Sources */,
 				C68FE1D418E64F9200FB4321 /* QRData.m in Sources */,
 				2949CD351458A9CC00728B87 /* Business.m in Sources */,
@@ -1063,6 +1101,7 @@
 				C69935C518B969F6008FCF8A /* MyLocationViewController.m in Sources */,
 				C69935CD18B969F6008FCF8A /* ShakeHandWithBusinessViewController.m in Sources */,
 				29ECC44C14CCC06C0098656C /* RateView.m in Sources */,
+				C6371A351C3B98F100AC5A84 /* EventsTableViewController.m in Sources */,
 				C69935C118B969F6008FCF8A /* MenuViewController.m in Sources */,
 				C68A65FB18D71049000ABBF8 /* ChatTableView.m in Sources */,
 				C69935C218B969F6008FCF8A /* MeowConfirmationViewController.m in Sources */,
@@ -1137,8 +1176,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1.1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1166,7 +1205,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "b630710e-752d-41de-ab24-3e0788d40db9";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1186,8 +1225,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 1.1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1207,7 +1246,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "b630710e-752d-41de-ab24-3e0788d40db9";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1222,8 +1261,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1240,7 +1280,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mydoosts.tapforall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b630710e-752d-41de-ab24-3e0788d40db9";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1256,8 +1296,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
+				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1275,7 +1316,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mydoosts.tapforall;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "7d35c57e-874f-4bf1-a9fa-fcb92e9961d6";
+				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";

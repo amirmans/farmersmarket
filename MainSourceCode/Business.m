@@ -27,7 +27,7 @@
 //@property(nonatomic, retain) NSString *imageFileExt;
 
 
-- (void)fetchResponseData:(NSData *)responseData;
+- (void)fetchProductData:(NSData *)responseData;
 - (void)prepareToGetGoogleDetailedData;
 
 @end
@@ -45,6 +45,7 @@
 @synthesize sms_no;
 @synthesize isProductListLoaded, businessID;
 @synthesize businessProducts;
+@synthesize businessEvents;
 @synthesize chatSystemURL;
 @synthesize referenceData;
 @synthesize businessTypes;
@@ -70,6 +71,7 @@
     self.googlePlacesObject = nil;
     self.isProductListLoaded = FALSE;
     self.businessProducts = nil;
+    self.businessEvents = nil;
     self.businessID = -1;  // -1 is invalid like nil -  0 is a valid businessID
     self.chatSystemURL = nil;
     self.website = nil;
@@ -106,12 +108,12 @@
 //    isProductListLoaded = TRUE;
     dispatch_async(TT_CommunicationWithServerQ, ^{
         NSData* data = [NSData dataWithContentsOfURL:url];
-        [self performSelectorOnMainThread:@selector(fetchResponseData:) withObject:data waitUntilDone:YES];
+        [self performSelectorOnMainThread:@selector(fetchProductData:) withObject:data waitUntilDone:YES];
     });
     
 }
 
-- (void)fetchResponseData:(NSData *)responseData {
+- (void)fetchProductData:(NSData *)responseData {
     //parse out the json data
     NSError* error =nil;
 
@@ -136,6 +138,45 @@
     return businessProducts;
 }
 
+
+- (void)startLoadingBusinessEvents {
+    NSString *urlString = [NSString stringWithFormat:@"%@?businessID=%i", BusinessInformationServer, businessID];
+    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    //urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    //    isProductListLoaded = TRUE;
+    dispatch_async(TT_CommunicationWithServerQ, ^{
+        NSData* data = [NSData dataWithContentsOfURL:url];
+        [self performSelectorOnMainThread:@selector(fetchProductData:) withObject:data waitUntilDone:YES];
+    });
+    
+}
+
+- (void)fetchEventData:(NSData *)responseData {
+    //parse out the json data
+    NSError* error =nil;
+    
+    businessEvents  = [NSJSONSerialization
+                       JSONObjectWithData:responseData
+                       options:kNilOptions
+                       error:&error];
+    if (error)
+    {
+        NSLog(@"Error in fetching event information.  Description of error is: %@", [error localizedDescription]);
+        [UIAlertController showErrorAlert: @"Error in fetching events."];
+    }
+    isProductListLoaded = TRUE;
+}
+
+
+- (NSDictionary *)businessEvents {
+    if (businessProducts == nil) {
+        [self startLoadingBusinessEvents];
+    }
+    
+    return businessEvents;
+}
 
 - (NSString *)stringFromDataDictionary:(NSDictionary *)data forKey:(NSString *)key
 {

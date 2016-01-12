@@ -31,9 +31,11 @@
 @property (strong, nonatomic) IBOutlet UILabel *runtimeField1Label;
 @property (strong, nonatomic) IBOutlet UITextField *runtimeField1TextField;
 @property (weak, nonatomic) IBOutlet UIButton *configurableActionButton;
+@property (strong, nonatomic) IBOutlet UIButton *shoppingCart_btn;
 
 - (IBAction)configurableAction:(id)sender;
 
+- (IBAction)addToShoppingCart:(id)sender;
 
 
 

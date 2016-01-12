@@ -20,6 +20,7 @@
 #import "UIAlertView+TapTalkAlerts.h"
 #import "LoginViewController.h"
 #import "UtilityConsumerProfile.h"
+#import "EventsTableViewController.h"
 
 
 
@@ -176,7 +177,7 @@
 - (void)loadNextViewController:(NSString *)service forBusiness:(Business *)function_biz inNavigationController:(UINavigationController *)navigationController {
     NSString* tmpStr = [service lowercaseString];
     NSUInteger whileIndex = 0;
-    while (whileIndex < 6) {
+    while (whileIndex < 8) {
         if (whileIndex == 0) {
             if ([tmpStr rangeOfString:@"menu"].location != NSNotFound) {
                 MenuViewController *menuViewController = [[MenuViewController alloc] initWithNibName:nil bundle:nil];
@@ -242,6 +243,19 @@
                 }
             }
             
+        }
+        
+        if (whileIndex == 6) {
+            if ([tmpStr rangeOfString:@"event"].location != NSNotFound) {
+                EventsTableViewController *eventTableViewController = [[EventsTableViewController alloc] initWithNibName:nil bundle:nil forBusiness:function_biz];
+                [navigationController pushViewController:eventTableViewController animated:YES];
+
+            }
+            
+        }
+        if (whileIndex == 7) {
+            if (([tmpStr rangeOfString:@"history"].location != NSNotFound) || ([tmpStr rangeOfString:@"shopping"].location != NSNotFound)) {
+            }
         }
         
         whileIndex++;

@@ -54,6 +54,7 @@ typedef NS_ENUM(NSUInteger, ConfigurableButtonType) {
 @synthesize reducedPriceLabel;
 @synthesize configurableActionButton;
 @synthesize actionType;
+@synthesize shoppingCart_btn;
 
 
 - (BOOL)isTherePriceReduction
@@ -125,7 +126,7 @@ typedef NS_ENUM(NSUInteger, ConfigurableButtonType) {
 {
     [super viewDidAppear:animated];
     
-    self.picturesView.layer.borderWidth = 1;
+    self.picturesView.layer.borderWidth = 0;
     self.picturesView.layer.borderColor = [UIColor blueColor].CGColor;
     NSString *stringOfPictures = [productDictionary objectForKey:@"PictureArray"];
     NSArray *pictureArray = [stringOfPictures componentsSeparatedByString:@","];
@@ -237,6 +238,8 @@ typedef NS_ENUM(NSUInteger, ConfigurableButtonType) {
 //    }
     
     [TapTalkLooks setToTapTalkLooks:configurableActionButton isActionButton:YES makeItRound:NO];
+    [TapTalkLooks setToTapTalkLooks:shoppingCart_btn isActionButton:YES makeItRound:NO];
+    
     actionType = [self determineConfigureableButtonType];
     NSInteger noOfActionTypes = 3;
     NSInteger checkStep = -1;
@@ -244,7 +247,8 @@ typedef NS_ENUM(NSUInteger, ConfigurableButtonType) {
         checkStep++;
         if (checkStep == 0) {
             if ((actionType & Hide) == Hide) {
-                configurableActionButton.hidden = TRUE;
+//                configurableActionButton.hidden = TRUE;
+                [configurableActionButton setTitle:@"Buy now" forState:UIControlStateNormal];
                 break;
             }
             continue;
@@ -334,6 +338,9 @@ typedef NS_ENUM(NSUInteger, ConfigurableButtonType) {
         [self.navigationController pushViewController:orderViewController animated:YES];
     }
     
+}
+
+- (IBAction)addToShoppingCart:(id)sender {
 }
 
 

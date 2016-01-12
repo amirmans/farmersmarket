@@ -19,6 +19,13 @@ static NSDateFormatter *formatter = nil;
 
         // Create the speech bubble view
         bubbleView = [[SpeechBubbleView alloc] initWithFrame:CGRectZero];
+        bubbleView.textView = [[UITextView alloc] initWithFrame:CGRectZero];
+        
+        bubbleView.textView.editable = NO;
+        bubbleView.textView.dataDetectorTypes = UIDataDetectorTypeAll;
+        
+       
+        [bubbleView addSubview:bubbleView.textView];
         bubbleView.backgroundColor = color;
         bubbleView.opaque = YES;
         bubbleView.clearsContextBeforeDrawing = NO;
@@ -90,7 +97,15 @@ static NSDateFormatter *formatter = nil;
     CGRect rect;
     rect.origin = point;
     rect.size = [SpeechBubbleView sizeForText:message.textChat];
-    bubbleView.frame = rect;
+    
+    
+    CGRect bubbleRect = rect;
+//
+//    bubbleRect.size.height = 85;
+    bubbleRect.size.width = rect.size.width+ 30;
+    
+    bubbleView.frame = bubbleRect;
+    bubbleView.textView.frame = rect;
     NSString *tmpStr = [message.textChat stringByReplacingOccurrencesOfString:@"\\'" withString:@"'"];
     [bubbleView setText:tmpStr bubbleType:bubbleType];
 

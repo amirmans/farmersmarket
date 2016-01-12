@@ -206,9 +206,27 @@
     NSDictionary *tempMessage = [[DataModel sharedDataModelManager].messages objectAtIndex:indexPath.row];
     [ttChatMessage setValuesFrom:tempMessage];
     //TODO: cleanup
-    ttChatMessage.bubbleSize = [SpeechBubbleView sizeForText:ttChatMessage.textChat];
+//    ttChatMessage.bubbleSize = [SpeechBubbleView sizeForText:ttChatMessage.textChat];
 
-    return ttChatMessage.bubbleSize.height + 16;
+    //return ttChatMessage.bubbleSize.height + 16;
+//    return 96;
+    
+    
+    
+    NSString *comment = ttChatMessage.textChat;
+    CGFloat whidt =  300;
+    UIFont *FONT = [UIFont systemFontOfSize:12];
+    NSAttributedString *attributedText =[[NSAttributedString alloc]  initWithString:comment  attributes:@  {      NSFontAttributeName: FONT }];
+    CGRect rect = [attributedText boundingRectWithSize:(CGSize){whidt, MAXFLOAT}
+                                               options:NSStringDrawingUsesLineFragmentOrigin
+                                               context:nil];
+    CGSize size = rect.size;
+    return size.height +55;
+    
+    
+    
+    
+    
 }
 
 

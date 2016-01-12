@@ -65,6 +65,8 @@
 
 
 @property(nonatomic, retain) NSDictionary *businessProducts;
+@property(nonatomic, retain) NSDictionary *businessEvents;
+
 @property(atomic, retain) GooglePlacesObject *googlePlacesObject;
 //@property(nonatomic, readonly) BusinessCustomerProfileManager *customerProfile;
 @property(nonatomic, retain) NSString *businessName;

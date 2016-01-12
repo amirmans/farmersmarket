@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15B30a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D9c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChatMessagesViewController">
@@ -19,12 +19,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="bg_image.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Dgy-0d-y9I">
-                    <rect key="frame" x="-569" y="-973" width="1242" height="2148"/>
-                    <animations/>
+                    <rect key="frame" x="-50" y="-10" width="425" height="710"/>
                 </imageView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="6" customClass="ChatTableView">
                     <rect key="frame" x="0.0" y="56" width="320" height="421"/>
-                    <animations/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <color key="separatorColor" cocoaTouchSystemColor="darkTextColor"/>
                     <connections>
@@ -34,7 +32,6 @@
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7">
                     <rect key="frame" x="246" y="484" width="72" height="31"/>
-                    <animations/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="72" id="eSp-h5-xkK"/>
@@ -53,7 +50,6 @@
                 </button>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="22">
                     <rect key="frame" x="0.0" y="485" width="238" height="30"/>
-                    <animations/>
                     <color key="backgroundColor" white="0.95750378020000004" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="done"/>
@@ -62,15 +58,14 @@
                     </connections>
                 </textField>
             </subviews>
-            <animations/>
             <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
             <constraints>
                 <constraint firstItem="22" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="15o-xY-M1o"/>
                 <constraint firstItem="6" firstAttribute="top" secondItem="1" secondAttribute="top" constant="56" id="1kq-MN-MPU"/>
-                <constraint firstItem="Dgy-0d-y9I" firstAttribute="top" secondItem="1" secondAttribute="top" constant="-973" id="6lZ-Fa-SID"/>
+                <constraint firstItem="Dgy-0d-y9I" firstAttribute="top" secondItem="1" secondAttribute="top" constant="-10" id="6lZ-Fa-SID"/>
                 <constraint firstItem="22" firstAttribute="bottom" secondItem="7" secondAttribute="bottom" id="9xO-p4-RDT"/>
                 <constraint firstItem="7" firstAttribute="leading" secondItem="22" secondAttribute="trailing" constant="8" symbolic="YES" id="Ige-hd-IG1"/>
-                <constraint firstItem="Dgy-0d-y9I" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="-569" id="MdG-5n-f1H"/>
+                <constraint firstItem="Dgy-0d-y9I" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="-50" id="MdG-5n-f1H"/>
                 <constraint firstItem="7" firstAttribute="centerY" secondItem="22" secondAttribute="centerY" id="Mv4-Ha-icN"/>
                 <constraint firstAttribute="trailing" secondItem="7" secondAttribute="trailing" constant="2" id="X8v-nK-9Lq"/>
                 <constraint firstItem="22" firstAttribute="top" secondItem="6" secondAttribute="bottom" constant="8" symbolic="YES" id="eLD-mg-ZdP"/>
@@ -82,6 +77,6 @@
         </view>
     </objects>
     <resources>
-        <image name="bg_image.jpg" width="1242" height="2148"/>
+        <image name="bg_image.jpg" width="425" height="710"/>
     </resources>
 </document>

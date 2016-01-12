@@ -21,7 +21,7 @@ const CGFloat TextBottomMargin = 11;
 const CGFloat MinBubbleWidth = 50;   // minimum width of the bubble
 const CGFloat MinBubbleHeight = 40;  // minimum height of the bubble
 
-const CGFloat WrapWidth = 200;       // maximum width of text in the bubble
+const CGFloat WrapWidth = 220;       // maximum width of text in the bubble
 
 @interface SpeechBubbleView() {
     
@@ -33,6 +33,8 @@ const CGFloat WrapWidth = 200;       // maximum width of text in the bubble
 
 
 @implementation SpeechBubbleView
+
+@synthesize textView;
 
 + (void)initialize {
     if (self == [SpeechBubbleView class]) {
@@ -69,7 +71,7 @@ const CGFloat WrapWidth = 200;       // maximum width of text in the bubble
 + (CGSize)sizeForText:(NSString *)text {
     CGSize textSize = [SpeechBubbleView text:text sizeWithFont:font
                              constrainedToSize:CGSizeMake(WrapWidth, 9999)
-                    ];
+                      ];
     
     CGSize bubbleSize;
     bubbleSize.width = textSize.width + TextLeftMargin + TextRightMargin;
@@ -135,10 +137,17 @@ const CGFloat WrapWidth = 200;       // maximum width of text in the bubble
     }
     
     [text drawInRect:textRect withAttributes:attributes];
+    self.textView.frame = CGRectInset(textRect, 0, -2);
+    font = [UIFont systemFontOfSize:11];
+//    font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+
+    [textView setFont:font];
 }
 
+
 - (void)setText:(NSString *)newText bubbleType:(BubbleType)newBubbleType {
-    text = [newText copy];
+//    text = [newText copy];
+    textView.text = [newText copy];
     bubbleType = newBubbleType;
     [self setNeedsDisplay];
 }

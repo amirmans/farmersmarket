@@ -9,7 +9,7 @@
 #import "BusinessNotificationTableViewController.h"
 #import "Consts.h"
 #import "DataModel.h"
-#import "TapTalkChatMessage.h"
+//#import "TapTalkChatMessage.h"
 #import "TapTalkLooks.h"
 #import "NotificationTableViewCell.h"
 #import "AppDelegate.h"
