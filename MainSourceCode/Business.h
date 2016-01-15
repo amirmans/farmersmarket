@@ -21,6 +21,7 @@
     NSString *subtitle;
     NSString *iconRelativeURL;
     UIImage *iconImage;
+    NSString *tableCell_bg_image;
 
     GooglePlacesObject *googlePlacesObject;
     NSString *businessName;
@@ -61,6 +62,7 @@
 @property(nonatomic, readonly, copy) NSString *title;
 @property(nonatomic, readonly, copy) NSString *subtitle;
 @property(nonatomic, retain) NSString *iconRelativeURL;
+@property(nonatomic, retain) NSString *tableCell_bg_image;
 @property(nonatomic, strong) UIImage *iconImage;
 
 

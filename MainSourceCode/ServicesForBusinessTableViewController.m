@@ -143,12 +143,12 @@
         cell.serviceTextView.editable = YES;
         [cell.serviceTextView setFont:[UIFont boldSystemFontOfSize:16]];
         cell.serviceTextView.editable = NO;
-        [TapTalkLooks setToTapTalkLooks:cell.contentView isActionButton:NO makeItRound:NO];
+    
+        [TapTalkLooks setToTapTalkLooks:cell.contentView isActionButton:NO makeItRound:YES];
     }
 
 
     cell.serviceTextView.text = [[allChoices objectForKey:chosenMainMenu] objectAtIndex:indexPath.row];
-    
     if (biz.iconRelativeURL != (id)[NSNull null] && biz.iconRelativeURL.length != 0 )
     {
         NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:biz.iconRelativeURL];
@@ -157,6 +157,7 @@
             [cell.iconImage sd_setImageWithURL:imageURL placeholderImage:nil];
         #else
             [cell.iconImage setImageWithURL:imageURL placeholderImage:nil];
+
         #endif
     }
     
@@ -165,6 +166,13 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 
+    NSString *bgImageURL = @"";
+    if (biz.tableCell_bg_image)
+        bgImageURL = [BusinessCustomerIconDirectory stringByAppendingString:biz.tableCell_bg_image];
+    UIImage *cellBackgroundImage =[UIImage imageWithData:[NSData dataWithContentsOfURL: [NSURL URLWithString:bgImageURL]]];
+
+    cell.contentView.backgroundColor = [UIColor colorWithPatternImage:cellBackgroundImage];
+//    cell.selectionStyle = UITableViewCellSelectionStyleGray;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

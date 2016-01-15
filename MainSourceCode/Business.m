@@ -59,6 +59,7 @@
 @synthesize picturesString;
 @synthesize validate_chat;
 @synthesize inquiryForProduct, needsBizChat;
+@synthesize tableCell_bg_image;
 
 
 - (void)initMemberData {
@@ -273,6 +274,7 @@
     picturesString = [self stringFromDataDictionary:data forKey:@"pictures"];
     validate_chat = [[data objectForKey:@"validate_chat"] boolValue];
     inquiryForProduct = [[data objectForKey:@"inquiry_for_product"] boolValue];
+    tableCell_bg_image = [self stringFromDataDictionary:data forKey:@"service_bg_image"];
     
     if (validate_chat) {
         validate_chat = ChatValidationWorkflow_InProcess; // means in the process of validation

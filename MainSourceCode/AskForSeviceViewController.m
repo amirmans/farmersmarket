@@ -58,7 +58,7 @@ static NSUInteger firstTime = TRUE;
     
     NSString *my_sms_no = myBusiness.sms_no;
     NSString *businessName = myBusiness.businessName;
-    if ((my_sms_no == nil) || (my_sms_no = (id)[NSNull null]))
+    if ((my_sms_no == nil) || (my_sms_no == (id)[NSNull null]))
     {
         NSString *message = [NSString stringWithFormat:@"%@ has not given us their service number yet!", businessName];
 //
