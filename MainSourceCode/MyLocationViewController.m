@@ -13,7 +13,7 @@
 //#import "ListofBusinesses.h"
 
 // To display deails for the business that was tapped
-#import "DetailBusinessViewController.h"
+#import "DetailBusinessViewControllerII.h"
 #import "UIAlertView+TapTalkAlerts.h"
 
 // To display the businessList
@@ -149,7 +149,7 @@
 #pragma mark MKMapViewDelegate
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
 
-    DetailBusinessViewController *detailBizInfo = [[DetailBusinessViewController alloc] initWithBusinessObject:((Business *) view.annotation)];
+    DetailBusinessViewControllerII *detailBizInfo = [[DetailBusinessViewControllerII alloc] initWithBusinessObject:((Business *) view.annotation)];
     [self.navigationController pushViewController:detailBizInfo animated:YES];
     detailBizInfo = nil;
 }

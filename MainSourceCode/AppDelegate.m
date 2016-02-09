@@ -7,6 +7,7 @@
 //  Copyright (c) 2011 MyDoosts.com All rights reserved.
 //
 
+@import GoogleMaps;
 #import "AppDelegate.h"
 
 #import "ListofBusinesses.h"
@@ -20,6 +21,7 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "LoginViewController.h"
 #import "UtilityConsumerProfile.h"
+#import "BillViewController.h"
 
 
 
@@ -46,6 +48,10 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    
+    [GMSServices provideAPIKey:@"AIzaSyBjJcsPVsRERXqA5SKas-nseCmrZaajEeE"];
+    
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     // Override point for customization after application launch
     NSBundle *bundle = [NSBundle mainBundle];
@@ -90,9 +96,14 @@
     notificationController.tabBarItem = notificationsTabBar;
     UINavigationController *notificationNav = [[UINavigationController alloc] initWithRootViewController:notificationController];
     
+    UIImage *payImage = [UIImage imageNamed:@"bill_tabbar_icon.jpg"];
+    BillViewController *payViewController = [[BillViewController alloc] initWithNibName:nil bundle:nil];
+    UITabBarItem *payTabBar = [[UITabBarItem alloc] initWithTitle:@"Pay" image:payImage tag:4];
+    payViewController.tabBarItem = payTabBar;
+    
     // setup main window with the tabbarcontroller
     self.tt_tabBarController = [[UITabBarController alloc] init];
-    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, chatNav, consumerProfileViewController, notificationNav, nil];
+    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, chatNav, consumerProfileViewController, notificationNav, payViewController, nil];
 
     
     // Override point for customization after application launch.

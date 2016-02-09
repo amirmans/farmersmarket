@@ -13,16 +13,27 @@
 #import "Business.h"
 #import "BillPayViewController.h"
 
+
+@interface BillPayViewController() {
+ 
+    NSDictionary *orderDict;
+}
+
+@property (nonatomic, retain) NSDictionary *orderDict;
+
+@end
+
 @implementation BillViewController
 
 @synthesize rateView = _rateView;
 @synthesize ratingString;
-@synthesize billImageView, billScrollView;
+//@synthesize billImageView, billScrollView;
 @synthesize cancelUIButton;
 @synthesize payUIButton;
 @synthesize questionsUIButton;
 @synthesize billBusiness;
 @synthesize billInDollar;
+@synthesize orderTableView;
 
 //TODO
 - (void)pullBillInformationFromBusiness
@@ -51,6 +62,13 @@
 
 #pragma mark - View lifecycle
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [TapTalkLooks setBackgroundImage:self.view withBackgroundImage:billBusiness.bg_image];
+//    [TapTalkLooks setBackgroundImage:self.orderTableView withBackgroundImage:billBusiness.bg_image];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -69,14 +87,14 @@
     _rateView.maxRating = 5;
     _rateView.delegate = self;
 
-    [billScrollView setBackgroundColor:[UIColor blackColor]];
-    [billScrollView setCanCancelContentTouches:NO];
-    billScrollView.clipsToBounds = YES;
+//    [billScrollView setBackgroundColor:[UIColor blackColor]];
+//    [billScrollView setCanCancelContentTouches:NO];
+//    billScrollView.clipsToBounds = YES;
 
-    billScrollView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
-    CGSize billSize = CGSizeMake(billImageView.frame.size.width, billImageView.frame.size.height);
-    [billScrollView setContentSize:billSize];
-    [billScrollView addSubview:billImageView];
+//    billScrollView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
+//    CGSize billSize = CGSizeMake(billImageView.frame.size.width, billImageView.frame.size.height);
+//    [billScrollView setContentSize:billSize];
+//    [billScrollView addSubview:billImageView];
     
     // now add the history button to the navigation controller bar
     UIBarButtonItem *billsHistoryButton = [[UIBarButtonItem alloc]
@@ -93,8 +111,8 @@
 }
 
 - (void)viewDidUnload {
-    billScrollView = nil;
-    billImageView = nil;
+//    billScrollView = nil;
+//    billImageView = nil;
     [self setPayUIButton:nil];
     [self setQuestionsUIButton:nil];
     [self setCancelUIButton:nil];
@@ -148,6 +166,63 @@
     }
 
     ratingString.text = strRating;
+}
+
+
+- (NSDictionary *)orderDict {
+    if (!self.orderDict) {
+     
+        
+    }
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 0;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+
+    return 3;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *CellIdentifier = @"BillTableViewCellIdentifier";
+    
+    UITableViewCell *cell = [orderTableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
+    return cell;
+}
+
+
+#pragma mark -
+#pragma mark UITableView Delegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // This function is called before cellForRowAtIndexPath, once for each cell.
+    // We calculate the size of the speech bubble here and then cache it in the
+    // Message object, so we don't have to repeat those calculations every time
+    // we draw the cell. We add 16px for the label that sits under the bubble.
+//    NSDictionary *tempMessage = [[DataModel sharedDataModelManager].messages objectAtIndex:indexPath.row];
+//    [ttChatMessage setValuesFrom:tempMessage];
+//    //TODO: cleanup
+//    //    ttChatMessage.bubbleSize = [SpeechBubbleView sizeForText:ttChatMessage.textChat];
+//    
+//    //return ttChatMessage.bubbleSize.height + 16;
+//    //    return 96;
+//    
+//    
+//    
+//    NSString *comment = ttChatMessage.textChat;
+//    CGFloat whidt =  300;
+//    UIFont *FONT = [UIFont systemFontOfSize:12];
+//    NSAttributedString *attributedText =[[NSAttributedString alloc]  initWithString:comment  attributes:@  {      NSFontAttributeName: FONT }];
+//    CGRect rect = [attributedText boundingRectWithSize:(CGSize){whidt, MAXFLOAT}
+//                                               options:NSStringDrawingUsesLineFragmentOrigin
+//                                               context:nil];
+//    CGSize size = rect.size;
+//    return size.height +55;
+    
 }
 
 

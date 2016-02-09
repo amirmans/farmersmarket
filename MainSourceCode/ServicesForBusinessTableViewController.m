@@ -22,12 +22,17 @@
 #import "UtilityConsumerProfile.h"
 #import "EventsTableViewController.h"
 
+// github library to load the images asynchronously
+#import "Consts.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+
 
 
 @interface ServicesForBusinessTableViewController ()
 
 
 @property (strong, nonatomic) NSTimer *timerToLoadProducts;
+
 
 - (void)displayProduct;
 
@@ -38,6 +43,7 @@
 
 @synthesize biz;
 @synthesize timerToLoadProducts;
+//@synthesize cellBackGroundImageForCustomer;
 
 /*
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -76,7 +82,6 @@
     [super viewDidLoad];
 
     // for some reason - setting the background color in the nib file didn't work
-    [TapTalkLooks setBackgroundImage:self.tableView];
     self.title = [NSString stringWithFormat:@"TapforAll - %@", biz.shortBusinessName];
 
     NSArray *tempRows = [allChoices objectForKey:chosenMainMenu];
@@ -99,6 +104,10 @@
     self.tableView.rowHeight = rowHeight;
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [TapTalkLooks setBackgroundImage:self.tableView withBackgroundImage:biz.bg_image];
+}
 
 - (void)viewWillAppear:(BOOL)animated {
 
@@ -145,6 +154,7 @@
         cell.serviceTextView.editable = NO;
     
         [TapTalkLooks setToTapTalkLooks:cell.contentView isActionButton:NO makeItRound:YES];
+        [TapTalkLooks setFontColorForView:cell.contentView toColor:[UIColor whiteColor]];
     }
 
 
@@ -166,12 +176,8 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    NSString *bgImageURL = @"";
-    if (biz.tableCell_bg_image)
-        bgImageURL = [BusinessCustomerIconDirectory stringByAppendingString:biz.tableCell_bg_image];
-    UIImage *cellBackgroundImage =[UIImage imageWithData:[NSData dataWithContentsOfURL: [NSURL URLWithString:bgImageURL]]];
-
-    cell.contentView.backgroundColor = [UIColor colorWithPatternImage:cellBackgroundImage];
+    cell.backgroundColor = [UIColor clearColor];
+    cell.contentView.backgroundColor = [UIColor clearColor];
 //    cell.selectionStyle = UITableViewCellSelectionStyleGray;
 }
 
@@ -193,14 +199,15 @@
             }
         }
         if (whileIndex == 1) {
-            if (([tmpStr rangeOfString:@"food or drink"].location != NSNotFound) || ([tmpStr rangeOfString:@"service"].location != NSNotFound)) {
+            if ([tmpStr rangeOfString:@"service"].location != NSNotFound) {
                 AskForSeviceViewController *orderViewController = [[AskForSeviceViewController alloc] initWithNibName:nil bundle:nil forBusiness:function_biz];
                 [navigationController pushViewController:orderViewController animated:YES];
             }
         }
         
         if (whileIndex == 2) {
-            if ([tmpStr rangeOfString:@"bill"].location != NSNotFound) {
+            if ( ([tmpStr rangeOfString:@"bill"].location != NSNotFound) ||
+                    ([tmpStr rangeOfString:@"pay"].location != NSNotFound) ) {
                 BillViewController *billViewController = [[BillViewController alloc] initWithNibName:nil bundle:nil forBusiness:function_biz];
                 [navigationController pushViewController:billViewController animated:YES];
             }
@@ -215,14 +222,22 @@
         }
         
         if (whileIndex == 4) {
-            if (([tmpStr rangeOfString:@"items"].location != NSNotFound) || ([tmpStr rangeOfString:@"have"].location != NSNotFound) || ([tmpStr rangeOfString:@"show"].location != NSNotFound)) {
-                if (function_biz.isProductListLoaded) {
-                    [self displayProduct];
-                }
-                else {
-                    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                    timerToLoadProducts = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(displayProduct) userInfo:nil repeats:YES];
-                }
+            
+            if (([tmpStr rangeOfString:@"items"].location != NSNotFound)
+                || ([tmpStr rangeOfString:@"have"].location != NSNotFound)
+                || ([tmpStr rangeOfString:@"show"].location != NSNotFound)
+                || ([tmpStr rangeOfString:@"food"].location != NSNotFound)
+                || ([tmpStr rangeOfString:@"item"].location != NSNotFound)
+                || ([tmpStr rangeOfString:@"product"].location != NSNotFound)
+                )
+            {
+                    if (function_biz.isProductListLoaded) {
+                        [self displayProduct];
+                    }
+                    else {
+                        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                        timerToLoadProducts = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(displayProduct) userInfo:nil repeats:YES];
+                    }
             }
         }
         
@@ -277,7 +292,7 @@
         //at this point we should have already loaded the businessProducts
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         ProductItemsTableViewController *showItemsTableViewController = [[ProductItemsTableViewController alloc]
-                                                                         initWithNibName:nil bundle:nil data:biz.businessProducts];
+                                                                         initWithNibName:nil bundle:nil data:biz];
         showItemsTableViewController.title = [NSString stringWithFormat:@"%@ products", biz.shortBusinessName];
         [self.navigationController pushViewController:showItemsTableViewController animated:YES];
         

@@ -31,6 +31,7 @@
 @synthesize searchController;
 @synthesize searchResults;
 @synthesize sections;
+@synthesize biz;
 
 
 
@@ -44,12 +45,13 @@
 
 
 #pragma mark - init methods
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil data:(NSDictionary *)argProducts
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil data:(Business *)arg_biz
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        productsAndCategories = argProducts;
+        biz = arg_biz;
+        productsAndCategories = arg_biz.businessProducts;
         sections = [productsAndCategories allKeys];
 //        [self initModel]; 
     }
@@ -84,8 +86,8 @@
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
     self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"ScopeButtonCountry",@"Country"),
-                                                          NSLocalizedString(@"ScopeButtonCapital",@"Capital")];
+    self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"ScopeButtonCountry",@"Category"),
+                                                          NSLocalizedString(@"ScopeButtonCapital",@"Item")];
     self.searchController.searchBar.delegate = self;
     self.searchController.searchBar.delegate = self;
     
@@ -148,7 +150,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [TapTalkLooks setBackgroundImage:self.tableView];
+//    [TapTalkLooks setBackgroundImage:self.tableView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -197,7 +199,16 @@
     
     // for some odd reason when the table is reload after a search row height doesn't get its value from the nib
     // file - so I had to do this - the value should correspond to the value in the cell xib file
-    return 245;
+//    return 245;
+    return 250;
+}
+
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [TapTalkLooks setBackgroundImage:self.tableView withBackgroundImage:biz.bg_image];
+    [TapTalkLooks setFontColorForLabelsInView:self.tableView toColor:[UIColor whiteColor]];
+    [TapTalkLooks setFontColorForTextsInView:self.tableView toColor:[UIColor whiteColor]];
 }
 
 
@@ -218,7 +229,7 @@
         label.textColor = [UIColor whiteColor];
         label.font = [UIFont fontWithName:@"Helvetica" size:20];
         label.text = sectionTitle;
-        label.backgroundColor = [UIColor colorWithRed:(189/255.f) green:(177/255.f) blue:(243/255.f) alpha:1.0f];
+// zzzzz        label.backgroundColor = [UIColor colorWithRed:(189/255.f) green:(177/255.f) blue:(243/255.f) alpha:1.0f];
         
         /*I also want the header to throw a shadow on the rest of the table*/
         label.layer.shadowColor = [[UIColor orangeColor] CGColor];
@@ -259,7 +270,8 @@
             }
         }
         
-        [TapTalkLooks setToTapTalkLooks:cell.contentView isActionButton:NO makeItRound:NO];
+        [TapTalkLooks setToTapTalkLooks:cell.contentView isActionButton:NO makeItRound:YES];
+        [TapTalkLooks setFontColorForView:cell.contentView toColor:[UIColor whiteColor]];
     }
 
     // Configure the cell...
@@ -335,6 +347,14 @@
 }
 
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    // both has to be cleared?
+    cell.backgroundColor = [UIColor clearColor];
+    cell.contentView.backgroundColor = [UIColor clearColor];
+    //    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+}
+
 
 #pragma mark - Table view delegate
 
@@ -352,7 +372,6 @@
     }
 
     // Navigation logic may go here. Create and push another view controller.
-    
     
     DetailProductItemViewController *detailViewController = [[DetailProductItemViewController alloc] initWithNibName:nil bundle:nil data:tempDict];
     // ...

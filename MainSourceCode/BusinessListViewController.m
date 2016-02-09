@@ -10,7 +10,8 @@
 #import "BusinessTableViewCell.h"
 #import "Consts.h"
 #import "TapTalkLooks.h"
-#import "DetailBusinessViewController.h"
+#import "DetailBusinessViewControllerII.h"
+#import "ServicesForBusinessTableViewController.h"
 #import "ListofBusinesses.h"
 #import "Business.h"
 
@@ -133,8 +134,15 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+}
+
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
     [TapTalkLooks setBackgroundImage:bizTableView];
 }
+
 
 - (void)displayMapView:(UIBarButtonItem *)button
 {
@@ -201,7 +209,7 @@
                 break;
             }
         }
-        [TapTalkLooks setToTapTalkLooks:cell.contentView isActionButton:NO makeItRound:NO];
+        [TapTalkLooks setToTapTalkLooks:cell.contentView isActionButton:NO makeItRound:YES];
     }
     
  //    NSLog(@"in business list: business name is: %@ and types are: %@", [[businessListArray objectAtIndex:indexPath.row] objectForKey:@"name"], businessTypes);
@@ -225,13 +233,19 @@
     {
         cell.businessTypesTextField.text = businessTypes;
     }
-
-    NSString *neighborhood = [cellDict objectForKey:@"neighborhood"];
+//zzzz
+//    NSString *neighborhood = [cellDict objectForKey:@"neighborhood"];
+//    if (neighborhood != (id)[NSNull null] && neighborhood != nil )
+//    {
+//        cell.neighborhoodTextField.text = neighborhood;
+//    }
+//
+    NSString *neighborhood = [cellDict objectForKey:@"marketing_statement"];
     if (neighborhood != (id)[NSNull null] && neighborhood != nil )
     {
         cell.neighborhoodTextField.text = neighborhood;
     }
-   
+    
     NSString *tmpIconName = [cellDict objectForKey:@"icon"];
     if (tmpIconName != (id)[NSNull null] && tmpIconName.length != 0 )
     {
@@ -296,8 +310,21 @@
     {
         biz = [[Business alloc] initWithDataFromDatabase:[businessListArray objectAtIndex:indexPath.row]];
     }
-    DetailBusinessViewController *detailBizInfo = [[DetailBusinessViewController alloc] initWithBusinessObject:biz];
-    [self.navigationController pushViewController:detailBizInfo animated:YES];
+
+//    if (biz.is_collection) {
+        DetailBusinessViewControllerII *detailBizInfo = [[DetailBusinessViewControllerII alloc] initWithBusinessObject:biz];
+        [self.navigationController pushViewController:detailBizInfo animated:YES];
+//    } else {
+//        NSDictionary *allChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].allChoices;
+//        NSArray *mainChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].mainChoices;
+//
+//        biz.needsBizChat = true;
+//        ServicesForBusinessTableViewController *services = [[ServicesForBusinessTableViewController alloc]
+//                                                            initWithData:allChoices :mainChoices :[mainChoices objectAtIndex:0] forBusiness:biz];
+//        [self.navigationController pushViewController:services animated:YES];
+//        services = nil;
+//    }
+    
 }
 
 #pragma mark Content Filtering

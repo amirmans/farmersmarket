@@ -19,6 +19,7 @@
 }
 
 @property(atomic, retain) Business *biz;
+//@property (strong, nonatomic) UIImage *cellBackGroundImageForCustomer;
 
 - (id)initWithData:(NSDictionary *)allChoices :(NSArray *)mainChoices :(NSString *)chosenMainMenu forBusiness:(Business *)argBiz;
 

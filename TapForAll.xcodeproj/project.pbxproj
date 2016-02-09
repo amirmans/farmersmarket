@@ -84,8 +84,11 @@
 		C6060DF31BA6265E0084D612 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6060DF21BA6265E0084D612 /* Images.xcassets */; };
 		C61E552518E794C1007027C7 /* CurrentBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C61E552418E794C1007027C7 /* CurrentBusiness.m */; };
 		C61E552618E794C1007027C7 /* CurrentBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C61E552418E794C1007027C7 /* CurrentBusiness.m */; };
+		C620412C1C49959D001D0DD7 /* DetailBusinessViewControllerII.m in Sources */ = {isa = PBXBuildFile; fileRef = C620412B1C49959D001D0DD7 /* DetailBusinessViewControllerII.m */; };
+		C620412E1C4995B5001D0DD7 /* DetailBusinessViewControllerII.xib in Resources */ = {isa = PBXBuildFile; fileRef = C620412D1C4995B5001D0DD7 /* DetailBusinessViewControllerII.xib */; };
 		C6235F6318B1F62000C216CB /* navigation_button.png in Resources */ = {isa = PBXBuildFile; fileRef = C6235F6218B1F62000C216CB /* navigation_button.png */; };
 		C6235F6718B2242400C216CB /* BusinessTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6235F6518B2242400C216CB /* BusinessTableViewCell.m */; };
+		C63060601C4CD30800591BA5 /* bill_tapbar_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C630605F1C4CD30800591BA5 /* bill_tapbar_icon.jpg */; };
 		C6308DE11C3E52D000B6B8B0 /* EventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6308DE01C3E52D000B6B8B0 /* EventTableViewCell.xib */; };
 		C6308DE41C3E52EC00B6B8B0 /* EventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6308DE31C3E52EC00B6B8B0 /* EventTableViewCell.m */; };
 		C6371A351C3B98F100AC5A84 /* EventsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6371A341C3B98F100AC5A84 /* EventsTableViewController.m */; };
@@ -145,6 +148,9 @@
 		C6C91ECF189E3EA700AE6478 /* BusinessListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C91ECD189E3EA700AE6478 /* BusinessListViewController.m */; };
 		C6C91ED2189E563600AE6478 /* navigation_background.png in Resources */ = {isa = PBXBuildFile; fileRef = C6C91ED1189E563600AE6478 /* navigation_background.png */; };
 		C6D20613195A8A23006E12FE /* JBKenBurnsView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6D20612195A8A23006E12FE /* JBKenBurnsView.m */; };
+		C6D5F74A1C4B81EC00DD37D3 /* koi_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = C6D5F7471C4B81EC00DD37D3 /* koi_bg.png */; };
+		C6D5F74B1C4B81EC00DD37D3 /* koi_cell_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = C6D5F7481C4B81EC00DD37D3 /* koi_cell_bg.png */; };
+		C6D5F74C1C4B81EC00DD37D3 /* koi_cell_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C6D5F7491C4B81EC00DD37D3 /* koi_cell_bg@2x.png */; };
 		C6DE7D3B188A618D0048B496 /* ShakeHandWithBusinessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6DE7D3A188A618D0048B496 /* ShakeHandWithBusinessViewController.xib */; };
 		C6E7C8A91BC8616F00B35BC6 /* TapForAll_LaunchImage_750x1334.png in Resources */ = {isa = PBXBuildFile; fileRef = C6E7C8A81BC8616F00B35BC6 /* TapForAll_LaunchImage_750x1334.png */; };
 		C6E7C8AB1BC8635E00B35BC6 /* TapForAll_LaunchImage_1242x2208.png in Resources */ = {isa = PBXBuildFile; fileRef = C6E7C8AA1BC8635E00B35BC6 /* TapForAll_LaunchImage_1242x2208.png */; };
@@ -269,9 +275,13 @@
 		C6060DF21BA6265E0084D612 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = TapForAll/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		C61E552318E794C1007027C7 /* CurrentBusiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurrentBusiness.h; path = MainSourceCode/CurrentBusiness.h; sourceTree = "<group>"; };
 		C61E552418E794C1007027C7 /* CurrentBusiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurrentBusiness.m; path = MainSourceCode/CurrentBusiness.m; sourceTree = "<group>"; };
+		C620412A1C49959D001D0DD7 /* DetailBusinessViewControllerII.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailBusinessViewControllerII.h; path = MainSourceCode/DetailBusinessViewControllerII.h; sourceTree = "<group>"; };
+		C620412B1C49959D001D0DD7 /* DetailBusinessViewControllerII.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailBusinessViewControllerII.m; path = MainSourceCode/DetailBusinessViewControllerII.m; sourceTree = "<group>"; };
+		C620412D1C4995B5001D0DD7 /* DetailBusinessViewControllerII.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DetailBusinessViewControllerII.xib; sourceTree = "<group>"; };
 		C6235F6218B1F62000C216CB /* navigation_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigation_button.png; sourceTree = "<group>"; };
 		C6235F6418B2242400C216CB /* BusinessTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BusinessTableViewCell.h; path = MainSourceCode/BusinessTableViewCell.h; sourceTree = "<group>"; };
 		C6235F6518B2242400C216CB /* BusinessTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BusinessTableViewCell.m; path = MainSourceCode/BusinessTableViewCell.m; sourceTree = "<group>"; };
+		C630605F1C4CD30800591BA5 /* bill_tapbar_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bill_tapbar_icon.jpg; sourceTree = "<group>"; };
 		C6308DE01C3E52D000B6B8B0 /* EventTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventTableViewCell.xib; sourceTree = "<group>"; };
 		C6308DE21C3E52EC00B6B8B0 /* EventTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTableViewCell.h; sourceTree = "<group>"; };
 		C6308DE31C3E52EC00B6B8B0 /* EventTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventTableViewCell.m; sourceTree = "<group>"; };
@@ -361,6 +371,9 @@
 		C6C91ED1189E563600AE6478 /* navigation_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigation_background.png; sourceTree = "<group>"; };
 		C6D20611195A8A23006E12FE /* JBKenBurnsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JBKenBurnsView.h; sourceTree = "<group>"; };
 		C6D20612195A8A23006E12FE /* JBKenBurnsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JBKenBurnsView.m; sourceTree = "<group>"; };
+		C6D5F7471C4B81EC00DD37D3 /* koi_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = koi_bg.png; sourceTree = "<group>"; };
+		C6D5F7481C4B81EC00DD37D3 /* koi_cell_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = koi_cell_bg.png; sourceTree = "<group>"; };
+		C6D5F7491C4B81EC00DD37D3 /* koi_cell_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "koi_cell_bg@2x.png"; sourceTree = "<group>"; };
 		C6DE7D3A188A618D0048B496 /* ShakeHandWithBusinessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShakeHandWithBusinessViewController.xib; sourceTree = "<group>"; };
 		C6E7C8A81BC8616F00B35BC6 /* TapForAll_LaunchImage_750x1334.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TapForAll_LaunchImage_750x1334.png; path = Resources/Images/TapForAll_LaunchImage_750x1334.png; sourceTree = SOURCE_ROOT; };
 		C6E7C8AA1BC8635E00B35BC6 /* TapForAll_LaunchImage_1242x2208.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = TapForAll_LaunchImage_1242x2208.png; path = Resources/Images/TapForAll_LaunchImage_1242x2208.png; sourceTree = SOURCE_ROOT; };
@@ -541,6 +554,10 @@
 		2949CCC61458A21700728B87 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				C630605F1C4CD30800591BA5 /* bill_tapbar_icon.jpg */,
+				C6D5F7471C4B81EC00DD37D3 /* koi_bg.png */,
+				C6D5F7481C4B81EC00DD37D3 /* koi_cell_bg.png */,
+				C6D5F7491C4B81EC00DD37D3 /* koi_cell_bg@2x.png */,
 				C67BC4B21BA808ED00C66AF8 /* customer_pin.png */,
 				C6EEA6D61941A5C000857B76 /* Icon-Spotlight-40.png */,
 				C6EEA6D71941A5C000857B76 /* Icon-Spotlight-40@2x.png */,
@@ -582,6 +599,7 @@
 		2949CCDE1458A21700728B87 /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
+				C620412D1C4995B5001D0DD7 /* DetailBusinessViewControllerII.xib */,
 				C6308DE01C3E52D000B6B8B0 /* EventTableViewCell.xib */,
 				C6371A361C3B997500AC5A84 /* ShoppingCartTableViewController.xib */,
 				C6504A8519D10654007646EB /* ServicesTableViewCell.xib */,
@@ -790,6 +808,8 @@
 		C6EABE1918B2E19D00F50D19 /* Business */ = {
 			isa = PBXGroup;
 			children = (
+				C620412A1C49959D001D0DD7 /* DetailBusinessViewControllerII.h */,
+				C620412B1C49959D001D0DD7 /* DetailBusinessViewControllerII.m */,
 				29711A1A15DB7FF20094F086 /* Business.h */,
 				2949CD231458A9CC00728B87 /* Business.m */,
 				295C3AFB14E65F42000FB813 /* BusinessCustomerProfileManager.h */,
@@ -923,6 +943,7 @@
 				C650705D18BD4CBD00E5D06B /* Default-568h@2x.png in Resources */,
 				C6308DE11C3E52D000B6B8B0 /* EventTableViewCell.xib in Resources */,
 				C6C8ACB318DF9C1A005DAFD6 /* InfoPlist.strings in Resources */,
+				C6D5F74C1C4B81EC00DD37D3 /* koi_cell_bg@2x.png in Resources */,
 				C6EEA6D81941A5C000857B76 /* Icon-Spotlight-40.png in Resources */,
 				2949CCFD1458A21700728B87 /* kermit_half.png in Resources */,
 				2949CCFF1458A21700728B87 /* Notifications.png in Resources */,
@@ -938,6 +959,7 @@
 				C6C91ED2189E563600AE6478 /* navigation_background.png in Resources */,
 				C686B5BA19382EEF008D2606 /* TapForAll_artwork.png in Resources */,
 				2949CD111458A21700728B87 /* ChatMessagesViewController.xib in Resources */,
+				C6D5F74B1C4B81EC00DD37D3 /* koi_cell_bg.png in Resources */,
 				2949CD121458A21700728B87 /* MyLocationViewController.xib in Resources */,
 				2949CD151458A21700728B87 /* PublicProfile.xib in Resources */,
 				29449C7B14C5860B004D8538 /* House_woody_cat_table.jpg in Resources */,
@@ -945,6 +967,7 @@
 				C6EABE1718B2D1CD00F50D19 /* BusinessTableViewCell.xib in Resources */,
 				C686B5AA19382B19008D2606 /* Icon-60@2x.png in Resources */,
 				29E693D014CC044B007E958F /* EnterBusiness.png in Resources */,
+				C620412E1C4995B5001D0DD7 /* DetailBusinessViewControllerII.xib in Resources */,
 				C6DE7D3B188A618D0048B496 /* ShakeHandWithBusinessViewController.xib in Resources */,
 				C6E7C8AF1BC8671C00B35BC6 /* TapForAll_brandImage_1920x720.png in Resources */,
 				C6504A8119D0EC83007646EB /* ProductMoreInformationViewController.xib in Resources */,
@@ -953,10 +976,12 @@
 				2925109414ECC1C300866384 /* CoffeeStore.jpg in Resources */,
 				29D85FBC14EE452000BDE695 /* Grocery_Location.jpg in Resources */,
 				C600C49518DF8C4C0019E8EF /* ChatsFromBusinessTableViewController.xib in Resources */,
+				C6D5F74A1C4B81EC00DD37D3 /* koi_bg.png in Resources */,
 				296804401502164000D15241 /* Businesses Property List.plist in Resources */,
 				290481BE150433CE0066002B /* ProductItemsTableViewController.xib in Resources */,
 				290CF8B01541E65A00E1B81F /* ServicesForBusinessTableViewController.xib in Resources */,
 				C6235F6318B1F62000C216CB /* navigation_button.png in Resources */,
+				C63060601C4CD30800591BA5 /* bill_tapbar_icon.jpg in Resources */,
 				2935D2991569E842003FB5CB /* LoginViewController.xib in Resources */,
 				C6E7C8B01BC8671C00B35BC6 /* TapForAll_brandImage_1280x768.png in Resources */,
 				C686B5B219382C12008D2606 /* Icon-76@2x.png in Resources */,
@@ -1085,6 +1110,7 @@
 				C69935D118B969F6008FCF8A /* StoreMapViewController.m in Sources */,
 				C6504A7F19D0EB91007646EB /* Tap4AllDisplayUtil.m in Sources */,
 				29ECC44C14CCC06C00986552 /* LoginViewController.m in Sources */,
+				C620412C1C49959D001D0DD7 /* DetailBusinessViewControllerII.m in Sources */,
 				C69935BB18B969F6008FCF8A /* DataModel.m in Sources */,
 				29ECC44C14CCC06C00986555 /* MessageTableViewCell.m in Sources */,
 				29ECC44C14CCC06C00986558 /* SpeechBubbleView.m in Sources */,
@@ -1168,6 +1194,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -1217,6 +1244,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;

@@ -100,10 +100,9 @@
 		<dict>
 			<key>Tap For All</key>
 			<array>
-				<string>Show me food</string>
-				<string>Ask for service</string>
-				<string>Shopping cart</string>
-				<string>Upcoming events</string>
+				<string>Order Food &amp; Drink</string>
+				<string>Request Service</string>
+				<string>Events Calendar</string>
 			</array>
 		</dict>
 	</dict>

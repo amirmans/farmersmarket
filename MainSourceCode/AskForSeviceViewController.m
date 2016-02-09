@@ -125,6 +125,12 @@ static NSUInteger firstTime = TRUE;
 
 #pragma mark - View lifecycle
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [TapTalkLooks setBackgroundImage:self.view withBackgroundImage:myBusiness.bg_image];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = [NSString stringWithFormat:@"Ask %@", myBusiness.businessName];

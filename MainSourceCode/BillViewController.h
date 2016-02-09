@@ -10,12 +10,12 @@
 #import "RateView.h"
 @class Business;
 
-@interface BillViewController : UIViewController <RateViewDelegate> {
+@interface BillViewController : UIViewController <RateViewDelegate, UITableViewDelegate, UITableViewDataSource> {
     RateView *rateView;
     UILabel *ratingString;
 
-    __weak IBOutlet UIImageView *billImageView;
-    __weak IBOutlet UIScrollView *billScrollView;
+//    __weak IBOutlet UIImageView *billImageView;
+//    __weak IBOutlet UIScrollView *billScrollView;
     NSDecimalNumber *billInDollar;
 }
 
@@ -32,10 +32,11 @@
 @property(retain) IBOutlet RateView *rateView;
 @property(atomic, retain) IBOutlet UILabel *ratingString;
 
-@property(weak, atomic) IBOutlet UIScrollView *billScrollView;
-@property(weak, atomic) IBOutlet UIImageView *billImageView;
+//@property(weak, atomic) IBOutlet UIScrollView *billScrollView;
+//@property(weak, atomic) IBOutlet UIImageView *billImageView;
 @property(strong, atomic) IBOutlet Business *billBusiness;
 @property(strong, atomic) NSDecimalNumber *billInDollar;
+@property (strong, nonatomic) IBOutlet UITableView *orderTableView;
 
 
 @end

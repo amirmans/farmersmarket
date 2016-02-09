@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Business.h"
 #import "BusinessCustomerProfileManager.h"
 
 
@@ -17,14 +18,16 @@
     NSMutableArray *filteredProductItems;
     // newly added
     NSDictionary *productsAndCategories;
+    Business *biz;
     NSArray *sections;
 
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil data:(NSDictionary *)products;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil data:(Business *)arg_biz;
 
 @property(nonatomic, retain) NSDictionary *productsAndCategories;
 @property(atomic, retain) NSArray *productItems;
+@property(atomic, retain) Business *biz;
 @property(nonatomic, retain) NSArray *filteredProductItems;
 @property(atomic, retain) NSArray *sections;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;

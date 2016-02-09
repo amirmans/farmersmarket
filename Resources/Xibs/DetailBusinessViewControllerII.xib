@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15E27e" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment version="2304" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailBusinessViewControllerII">
+            <connections>
+                <outlet property="activityIndicator" destination="75" id="76"/>
+                <outlet property="contactInfo" destination="0wP-ZA-JSi" id="HMH-yA-0co"/>
+                <outlet property="enterAndGetService" destination="57" id="A3f-1Z-jNI"/>
+                <outlet property="mapView" destination="rrM-pp-g4G" id="yWk-Gb-WKf"/>
+                <outlet property="rating" destination="71" id="72"/>
+                <outlet property="ratingLabel" destination="70" id="RjC-Yx-aLB"/>
+                <outlet property="view" destination="56" id="58"/>
+                <outlet property="voteTobeCustomerButton" destination="prn-ds-S18" id="84w-CL-geF"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="56">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleAspectFit" highlighted="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="57">
+                    <rect key="frame" x="90" y="480" width="140" height="30"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                    <state key="normal" title="Enter"/>
+                    <state key="highlighted">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="enterAndGetServiceAction:" destination="-1" eventType="touchUpInside" id="Adl-PK-9WQ"/>
+                    </connections>
+                </button>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="75">
+                    <rect key="frame" x="142" y="154" width="37" height="37"/>
+                    <color key="color" red="0.74117647060000003" green="0.69411764710000001" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
+                </activityIndicatorView>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0wP-ZA-JSi">
+                    <rect key="frame" x="8" y="255" width="302" height="145"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="145" id="9Iv-Hr-SHv"/>
+                    </constraints>
+                    <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
+                </textView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="prn-ds-S18">
+                    <rect key="frame" x="65" y="479" width="189" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <state key="normal" title="History"/>
+                    <connections>
+                        <action selector="voteTobeCustomerAction:" destination="-1" eventType="touchUpInside" id="yhm-99-Tev"/>
+                    </connections>
+                </button>
+                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="rrM-pp-g4G">
+                    <rect key="frame" x="0.0" y="65" width="320" height="169"/>
+                </mapView>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Rating:" lineBreakMode="tailTruncation" baselineAdjustment="none" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="70">
+                    <rect key="frame" x="88" y="422" width="54" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="54" id="YGc-dg-yuG"/>
+                        <constraint firstAttribute="height" constant="21" id="bYe-5N-QqX"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="71">
+                    <rect key="frame" x="163" y="421" width="64" height="28"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="75" firstAttribute="centerX" secondItem="rrM-pp-g4G" secondAttribute="centerX" id="Cpp-nH-feT"/>
+                <constraint firstItem="70" firstAttribute="leading" secondItem="56" secondAttribute="leading" constant="88" id="Fdd-Ty-Tav"/>
+                <constraint firstItem="0wP-ZA-JSi" firstAttribute="top" secondItem="75" secondAttribute="bottom" constant="64" id="JeA-Dp-bm0"/>
+                <constraint firstItem="prn-ds-S18" firstAttribute="top" secondItem="71" secondAttribute="bottom" constant="30" id="Mlt-4Z-32P"/>
+                <constraint firstItem="71" firstAttribute="leading" secondItem="70" secondAttribute="trailing" constant="21" id="Mzi-sH-a1y"/>
+                <constraint firstItem="70" firstAttribute="top" secondItem="0wP-ZA-JSi" secondAttribute="bottom" constant="22" id="N5n-eL-7ur"/>
+                <constraint firstItem="prn-ds-S18" firstAttribute="centerX" secondItem="0wP-ZA-JSi" secondAttribute="centerX" id="O75-b8-6Yu"/>
+                <constraint firstItem="71" firstAttribute="top" secondItem="0wP-ZA-JSi" secondAttribute="bottom" constant="21" id="SHP-Uv-Spf"/>
+                <constraint firstItem="0wP-ZA-JSi" firstAttribute="leading" secondItem="56" secondAttribute="leadingMargin" id="TcQ-RX-lyG"/>
+                <constraint firstItem="prn-ds-S18" firstAttribute="top" secondItem="70" secondAttribute="bottom" constant="36" id="U2E-uq-Smm"/>
+                <constraint firstItem="57" firstAttribute="leading" secondItem="56" secondAttribute="leading" constant="90" id="UvC-og-ixk"/>
+                <constraint firstItem="prn-ds-S18" firstAttribute="leading" secondItem="56" secondAttribute="leading" constant="65" id="dp0-nN-tmM"/>
+                <constraint firstItem="rrM-pp-g4G" firstAttribute="top" secondItem="56" secondAttribute="top" constant="65" id="eXZ-zT-Zue"/>
+                <constraint firstAttribute="trailing" secondItem="71" secondAttribute="trailing" constant="93" id="gdK-P1-UnH"/>
+                <constraint firstItem="75" firstAttribute="centerX" secondItem="57" secondAttribute="centerX" id="gmI-2E-dxf"/>
+                <constraint firstAttribute="trailing" secondItem="rrM-pp-g4G" secondAttribute="trailing" id="jgv-z2-TvX"/>
+                <constraint firstItem="rrM-pp-g4G" firstAttribute="leading" secondItem="56" secondAttribute="leading" id="mJp-I2-QAs"/>
+                <constraint firstItem="0wP-ZA-JSi" firstAttribute="top" secondItem="rrM-pp-g4G" secondAttribute="bottom" constant="21" id="oCS-aa-eWG"/>
+                <constraint firstItem="57" firstAttribute="top" secondItem="71" secondAttribute="bottom" constant="31" id="r0P-rj-taD"/>
+                <constraint firstAttribute="bottom" secondItem="prn-ds-S18" secondAttribute="bottom" constant="55" id="uf3-3h-ltk"/>
+                <constraint firstItem="prn-ds-S18" firstAttribute="centerX" secondItem="57" secondAttribute="centerX" id="waT-is-Xv7"/>
+                <constraint firstAttribute="bottom" secondItem="57" secondAttribute="bottom" constant="58" id="yjZ-s4-LSA"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+        </view>
+    </objects>
+</document>

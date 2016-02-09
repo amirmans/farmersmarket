@@ -3,9 +3,9 @@
 
 #define TT_CommunicationWithServerQ dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
-#define AddChatServer @"http://mydoosts.com/taptalk/chatrooms/addchatmessage.php"
-#define LoadChatServer @"http://mydoosts.com/taptalk/chatrooms/loadchatmessages.php"
-#define ChatSystemServer @"http://mydoosts.com/taptalk/chatsystem/index.php"
+#define AddChatServer @"http://amirmansoury.com/chatrooms/addchatmessage.php"
+#define LoadChatServer @"http://amirmansoury.com/chatrooms/loadchatmessages.php"
+#define ChatSystemServer @"http://amirmansoury.com/chatsystem/index.php"
 //#define ChatSystemServer @"http://127.0.0.1/TapForAll/chatsystem/index.php"
 #define MaxRowsForLoadingChatMessages 150 // max number of messages
 #define TimeIntervalForLoadingChatMessages 1440 //Hours - 1440 means 2 months
@@ -16,20 +16,20 @@
 #define ChatValidationWorkflow_ErrorFromServer -1
 
 
-#define BusinessInformationServer @"http://mydoosts.com/taptalk/businessinfo/index.php"
-#define ConsumerProfileServer @"http://mydoosts.com/taptalk/profilesystem/consumerprofile.php"
-//#define ConsumerProfileServer @"http://localhost/TapForAll/profilesystem/consumerprofile.php"
+#define BusinessInformationServer @"http://amirmansoury.com/businessinfo/index.php"
+#define ConsumerProfileServer @"http://amirmansoury.com/profilesystem/consumerprofile.php"
 
 //data directories
-#define BusinessCustomerIndividualDirectory @"http://www.mydoosts.com/taptalk/customer_files/"
-#define BusinessCustomerIconDirectory @"http://www.mydoosts.com/taptalk/customer_files/icons/"
-#define QRImageDomain @"http://www.mydoosts.com/taptalk/consumer_files/qr_images/"
-#define BusinessCustomersMapDirectory @"http://www.mydoosts.com/taptalk/customer_files/maps/"
+#define BusinessCustomerIndividualDirectory @"http://amirmansoury.com/customer_files/"
+#define BusinessCustomerIconDirectory @"http://amirmansoury.com/customer_files/icons/"
+#define BusinessCustomerBGImageDirectory @"http://amirmansoury.com/customer_files/bg_images/"
+#define QRImageDomain @"http://amirmansoury.com/consumer_files/qr_images/"
+#define BusinessCustomersMapDirectory @"http://amirmansoury.com/customer_files/maps/"
 
 //payment processing
 #define STRIPE_TEST_PUBLIC_KEY @"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi"
 //NSString * const StripePublishableKey = @"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi";
-#define TapForAllPaymentServer @"http://mydoosts.com/taptalk/paymentsystem/charge.php"
+#define TapForAllPaymentServer @"http://amirmansoury.com/paymentsystem/charge.php"
 
 
 

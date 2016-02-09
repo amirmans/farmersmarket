@@ -79,4 +79,92 @@
   
 }
 
+
++ (void)setBackgroundImage:(UIView *)tempView withBackgroundImage:(UIImage *)bgImage {
+    
+    if (bgImage) {
+        UIGraphicsBeginImageContext(tempView.frame.size);
+        [bgImage drawInRect:tempView.bounds];
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        UIColor *bgColor = [UIColor colorWithPatternImage:image];
+        
+        [tempView setBackgroundColor:bgColor];
+    }
+    else {
+        [tempView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_image.jpg"]]];
+    }
+    
+//    UIImageView *backgroundView = [[UIImageView alloc] initWithImage:bgImage];
+//    [backgroundView setContentMode: UIViewContentModeScaleAspectFit];
+//    [tempView addSubview:backgroundView];
+//    [tempView sendSubviewToBack: backgroundView];
+}
+
++ (void)setFontColorForView:(UIView *)tempView toColor:(UIColor *)color {
+
+    //Get all UIViews in self.view.subViews
+    for (UIView *view in [tempView subviews]) {
+        //Check if the view is of UILabel class
+        if ([view isKindOfClass:[UILabel class]]) {
+            //Cast the view to a UILabel
+            UILabel *label = (UILabel *)view;
+            //Set the color to label
+            label.textColor = color;
+        }
+        if ([view isKindOfClass:[UITextField class]]) {
+            //Cast the view to a UILabel
+            UITextField *textField = (UITextField *)view;
+            //Set the color to label
+            textField.textColor = color;
+        }
+        if ([view isKindOfClass:[UITextView class]]) {
+            //Cast the view to a UILabel
+            UITextView *textView = (UITextView *)view;
+            //Set the color to label
+            textView.textColor = color;
+        }
+
+    }
+}
+
++ (void)setFontColorForLabelsInView:(UIView *)tempView toColor:(UIColor *)color {
+    
+    //Get all UIViews in self.view.subViews
+    for (UIView *view in [tempView subviews]) {
+        //Check if the view is of UILabel class
+        if ([view isKindOfClass:[UILabel class]]) {
+            //Cast the view to a UILabel
+            UILabel *label = (UILabel *)view;
+            //Set the color to label
+            label.textColor = color;
+        }
+        
+    }
+}
+
+
++ (void)setFontColorForTextsInView:(UIView *)tempView toColor:(UIColor *)color {
+    
+    //Get all UIViews in self.view.subViews
+    for (UIView *view in [tempView subviews]) {
+        //Check if the view is of UILabel class
+         if ([view isKindOfClass:[UITextField class]]) {
+            //Cast the view to a UILabel
+            UITextField *textField = (UITextField *)view;
+            //Set the color to label
+            textField.textColor = color;
+        }
+        if ([view isKindOfClass:[UITextView class]]) {
+            //Cast the view to a UILabel
+            UITextView *textView = (UITextView *)view;
+            //Set the color to label
+            textView.textColor = color;
+        }
+        
+    }
+}
+
+
+
 @end

@@ -13,6 +13,7 @@
 #import "Consts.h"
 #import "CurrentBusiness.h"
 #import "MBProgressHUD.h"
+#import "BillPayViewController.h"
 
 // github library to load the images asynchronously
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -121,13 +122,20 @@ typedef NS_ENUM(NSUInteger, ConfigurableButtonType) {
 }
 
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [TapTalkLooks setBackgroundImage:self.view withBackgroundImage:[CurrentBusiness sharedCurrentBusinessManager].business.bg_image];
+}
+
+
+
 
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
     self.picturesView.layer.borderWidth = 0;
-    self.picturesView.layer.borderColor = [UIColor blueColor].CGColor;
+    self.picturesView.layer.borderColor = [UIColor clearColor].CGColor;
     NSString *stringOfPictures = [productDictionary objectForKey:@"PictureArray"];
     NSArray *pictureArray = [stringOfPictures componentsSeparatedByString:@","];
     if (pictureArray.count > 1) {
@@ -161,6 +169,10 @@ typedef NS_ENUM(NSUInteger, ConfigurableButtonType) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    ///zzzzzzz
+    shoppingCart_btn.hidden = true;
     // Do any additional setup after loading the view from its nib.
     self.title = [productDictionary objectForKey:@"Name"];
     longDescription.text = [productDictionary objectForKey:@"LongDescription"];
@@ -336,6 +348,14 @@ typedef NS_ENUM(NSUInteger, ConfigurableButtonType) {
         orderViewController.initialMessage = message;
         
         [self.navigationController pushViewController:orderViewController animated:YES];
+    }
+    else {
+        Business *biz = [CurrentBusiness sharedCurrentBusinessManager].business;
+        int r = arc4random() % 10000;
+        NSDecimalNumber *billInDollar = [[NSDecimalNumber alloc] initWithInt:r];
+        BillPayViewController *payBillViewController = [[BillPayViewController alloc] initWithNibName:nil bundle:nil withAmount:billInDollar forBusiness:biz];
+        [self.navigationController pushViewController:payBillViewController animated:YES];
+        billInDollar = nil;
     }
     
 }

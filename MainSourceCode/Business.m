@@ -59,7 +59,7 @@
 @synthesize picturesString;
 @synthesize validate_chat;
 @synthesize inquiryForProduct, needsBizChat;
-@synthesize tableCell_bg_image;
+@synthesize bg_image, marketing_statement;
 
 
 - (void)initMemberData {
@@ -89,7 +89,9 @@
     validate_chat = FALSE;
     picturesString = nil;
     iconImage = nil;
+    bg_image = nil;
     needsBizChat = true;
+    marketing_statement = nil;
 }
 
 - (int)isCustomer {
@@ -273,8 +275,12 @@
     map_image_url = [self stringFromDataDictionary:data forKey:@"map_image_url"];
     picturesString = [self stringFromDataDictionary:data forKey:@"pictures"];
     validate_chat = [[data objectForKey:@"validate_chat"] boolValue];
+    is_collection = [[data objectForKey:@"is_collection"] boolValue];
     inquiryForProduct = [[data objectForKey:@"inquiry_for_product"] boolValue];
-    tableCell_bg_image = [self stringFromDataDictionary:data forKey:@"service_bg_image"];
+    
+    NSString* bg_image_URLString = [self stringFromDataDictionary:data forKey:@"bg_image"];
+    [self setBGImageFromString:bg_image_URLString];
+    marketing_statement = [self stringFromDataDictionary:data forKey:@"marketing_statement"];
     
     if (validate_chat) {
         validate_chat = ChatValidationWorkflow_InProcess; // means in the process of validation
@@ -469,6 +475,28 @@
             phone = @"Phone number not provided.";
     }
     
+}
+
+- (void)setBGImageFromString:(NSString *)bgImageString {
+    if (!bgImageString) {
+        bg_image = [UIImage imageNamed:@"bg_image"];
+        return;
+    }
+    
+    NSString *iconURLString = [BusinessCustomerBGImageDirectory stringByAppendingString:bgImageString];
+    NSURL *iconUrl = [NSURL URLWithString:iconURLString];
+    //We have a valid icon path - retrieve the image from our own server
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    [manager downloadImageWithURL:iconUrl
+                          options:0
+                         progress:nil
+                        completed:^(UIImage *webImage, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *url)
+     {
+         if (webImage && finished)
+         {
+             bg_image = webImage;
+         }
+     }];
 }
 
 - (void)googlePlacesConnection:(GooglePlacesConnection *)conn didFailWithError:(NSError *)gError {

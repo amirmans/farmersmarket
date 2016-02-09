@@ -21,7 +21,7 @@
     NSString *subtitle;
     NSString *iconRelativeURL;
     UIImage *iconImage;
-    NSString *tableCell_bg_image;
+    UIImage *bg_image;
 
     GooglePlacesObject *googlePlacesObject;
     NSString *businessName;
@@ -47,6 +47,7 @@
     NSString *picturesString;
     NSArray *chat_masters;
     NSInteger validate_chat;
+    NSInteger is_collection;
     BOOL needsBizChat;
     BOOL inquiryForProduct;
 
@@ -62,7 +63,7 @@
 @property(nonatomic, readonly, copy) NSString *title;
 @property(nonatomic, readonly, copy) NSString *subtitle;
 @property(nonatomic, retain) NSString *iconRelativeURL;
-@property(nonatomic, retain) NSString *tableCell_bg_image;
+@property(nonatomic, retain) UIImage *bg_image;
 @property(nonatomic, strong) UIImage *iconImage;
 
 
@@ -97,8 +98,10 @@
 @property(nonatomic, retain) NSString *imageFileExt;
 @property(nonatomic, strong) NSString *picturesString;
 @property(atomic, assign) NSInteger validate_chat;
+@property(atomic, assign) NSInteger is_collection;
 @property(atomic, assign) BOOL inquiryForProduct;
 @property(atomic, assign) BOOL needsBizChat;
+@property(nonatomic, retain) NSString *marketing_statement;
 
 
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;
