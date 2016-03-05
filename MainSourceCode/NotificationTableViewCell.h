@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface NotificationTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UITextField *sender;
-@property (weak, nonatomic) IBOutlet UITextField *dateAdded;
-@property (weak, nonatomic) IBOutlet UIButton *readStatus;
-@property (weak, nonatomic) IBOutlet UITextView *alertMessage;
-@property (weak, nonatomic) IBOutlet UIImageView *businessNotificationIcon;
+
+@property (strong, nonatomic) IBOutlet UILabel *lblEventTitle;
+@property (strong, nonatomic) IBOutlet UILabel *lblDistance;
+@property (strong, nonatomic) IBOutlet UILabel *lblDiscription;
+@property (strong, nonatomic) IBOutlet UIImageView *imgEventImage;
+@property (strong, nonatomic) IBOutlet UIButton *btnLocation;
+@property (strong, nonatomic) IBOutlet UIButton *btnAddToCalendar;
+
 
 @end

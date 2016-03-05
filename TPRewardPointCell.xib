@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TPRewardPointCell" id="KGk-i7-Jjw" customClass="TPRewardPointCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FEB 29" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hFF-p5-1bh">
+                        <rect key="frame" x="4" y="11" width="52" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="ij6-xf-Qru"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:33 PM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9w7-Rp-ksu">
+                        <rect key="frame" x="66" y="11" width="65" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="pSI-F9-1rr"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You Redeemed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scC-OA-xO2">
+                        <rect key="frame" x="139" y="11" width="127" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="HcU-aL-IAT"/>
+                            <constraint firstAttribute="width" constant="127" id="JT0-sY-jeg"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lOp-qh-pj3">
+                        <rect key="frame" x="256" y="9" width="56" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="56" id="7f1-IP-2WE"/>
+                            <constraint firstAttribute="height" constant="25" id="Apk-Hv-qST"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                        <state key="normal" title="2" backgroundImage="bg_reward_points">
+                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                        <state key="selected" image="bg_reward_points_selected"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="lOp-qh-pj3" secondAttribute="trailing" id="8fi-bH-byN"/>
+                    <constraint firstItem="hFF-p5-1bh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="PZK-Os-ez8"/>
+                    <constraint firstItem="lOp-qh-pj3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="aeN-8b-eh5"/>
+                    <constraint firstItem="scC-OA-xO2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="l8X-f1-5AD"/>
+                    <constraint firstItem="scC-OA-xO2" firstAttribute="leading" secondItem="9w7-Rp-ksu" secondAttribute="trailing" constant="8" id="lN0-CL-OgY"/>
+                    <constraint firstItem="hFF-p5-1bh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-4" id="mTD-ZG-10F"/>
+                    <constraint firstItem="lOp-qh-pj3" firstAttribute="leading" secondItem="scC-OA-xO2" secondAttribute="trailing" constant="-10" id="tLr-rO-Zga"/>
+                    <constraint firstItem="9w7-Rp-ksu" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="xgp-vE-Jlh"/>
+                    <constraint firstItem="9w7-Rp-ksu" firstAttribute="leading" secondItem="hFF-p5-1bh" secondAttribute="trailing" constant="10" id="zO8-6J-d06"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="bg_reward_points" width="42" height="22"/>
+        <image name="bg_reward_points_selected" width="42" height="22"/>
+    </resources>
+</document>

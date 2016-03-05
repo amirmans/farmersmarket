@@ -43,6 +43,7 @@
 
 @synthesize biz;
 @synthesize timerToLoadProducts;
+
 //@synthesize cellBackGroundImageForCustomer;
 
 /*
@@ -65,7 +66,6 @@
         biz = argBiz;
         timerToLoadProducts = nil;
     }
-
     return self;
 }
 
@@ -105,6 +105,7 @@
 }
 
 - (void)viewDidLayoutSubviews {
+    
     [super viewDidLayoutSubviews];
     [TapTalkLooks setBackgroundImage:self.tableView withBackgroundImage:biz.bg_image];
 }
@@ -134,7 +135,9 @@
     return ([tempArr count]);
 }
 
-- (ServicesTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     ServicesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TapTalk"];
     if (cell == nil) {
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"ServicesTableViewCell" owner:nil options:nil];
@@ -182,8 +185,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     NSString *tmpStr = [[allChoices objectForKey:chosenMainMenu] objectAtIndex:indexPath.row];
     [self loadNextViewController:tmpStr forBusiness:self.biz inNavigationController:self.navigationController];
+    
 }
 
 

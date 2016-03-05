@@ -12,10 +12,14 @@
 #import "Consts.h"
 #import "DataModel.h"
 #import "AppDelegate.h"
+#import <EventKitUI/EventKitUI.h>
 
 @interface EventsTableViewController ()
-
+{
+    NSMutableArray *eventArray;
+}
 @end
+
 
 @implementation EventsTableViewController
 
@@ -29,13 +33,21 @@
         biz = argBiz;
     }
     return self;
-    
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    eventArray = [[NSMutableArray alloc] init];
+    
+    self.title = @"Events";
+    
+    UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
+    self.navigationItem.leftBarButtonItem = BackButton;
+    BackButton.tintColor = [UIColor whiteColor];
+
+    
+    [self addEventData];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -48,26 +60,47 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction) backBUttonClicked: (id) sender;
+{
+    [self.navigationController popViewControllerAnimated:true];
+//    [self.navigationController popToRootViewControllerAnimated:true];
+}
+
+
+- (void) addEventData {
+    NSDictionary *dict1 = @{@"title":@"Event 1",@"distance":@"1000 m",@"discription":@"Event 1 Discription",@"eventImage":@"",@"location":@"New york"};
+    NSDictionary *dict2 = @{@"title":@"Event 2",@"distance":@"1500 m",@"discription":@"Event 2 Discription",@"eventImage":@"",@"location":@"London"};
+    NSDictionary *dict3 = @{@"title":@"Event 3",@"distance":@"1700 m",@"discription":@"Event 3 Discription",@"eventImage":@"",@"location":@"Miami"};
+    NSDictionary *dict4 = @{@"title":@"Event 4",@"distance":@"8750 m",@"discription":@"Event 4 Discription",@"eventImage":@"",@"location":@"Miami"};
+    
+    [eventArray addObject:dict1];
+    [eventArray addObject:dict2];
+    [eventArray addObject:dict3];
+    [eventArray addObject:dict4];
+    
+    [self.tableView reloadData];
+}
+
 #pragma mark - Table view data source
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 220;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return [eventArray count];
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    
+ 
     static NSString *CellIdentifier = @"NotificationCell";
     EventTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"NotificationTableViewCell" owner:nil options:nil];
+        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"EventTableViewCell" owner:nil options:nil];
         
         for (id currentObject in topLevelObjects)
         {
@@ -77,31 +110,108 @@
                 break;
             }
         }
-        
-        //        [TapTalkLooks setBackgroundImage:cell.contentView];
-        [TapTalkLooks setToTapTalkLooks:cell.contentView isActionButton:NO makeItRound:NO];
-        [TapTalkLooks setToTapTalkLooks:cell.alertMessage isActionButton:NO makeItRound:NO];
     }
     
-    // Configure the cell...
-    NSDictionary *notification;
-    cell.sender.text = [notification objectForKey:@"sender"];
-    cell.alertMessage.text = [notification objectForKey:@"alert"];
+    NSDictionary *eventDict = [eventArray objectAtIndex:indexPath.row];
     
-    NSDateFormatter *formatter = [NSDateFormatter new];
-    [formatter setDateFormat:@"MMM dd, yyyy hh:mm a"];
-    NSString *timeString = [formatter stringFromDate:[notification objectForKey:@"dateTimeRecieved"]];
-    cell.dateAdded.text = timeString;
+    cell.lblEventTitle.text = [eventDict valueForKey:@"title"];
+    cell.lblDistance.text = [eventDict valueForKey:@"distance"];
+    cell.lblDiscription.text = [eventDict valueForKey:@"discription"];
     
-    //get image url from notification image name
-//    NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:[notification objectForKey:@"imageName"]];
-//    NSURL *imageURL = [NSURL URLWithString:imageURLString];
-//    [cell.businessNotificationIcon Compatible_setImageWithURL:imageURL placeholderImage:nil];
+    cell.btnLocation.tag = indexPath.row;
+    [cell.btnLocation addTarget:self action:@selector(btnLocationClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    formatter = nil;
+    cell.btnAddToCalendar.tag = indexPath.row;
+    [cell.btnAddToCalendar addTarget:self action:@selector(btnAddToCalendarClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
     return cell;
 }
 
+-(void)btnLocationClicked:(UIButton *)sender
+{
+    NSInteger index = sender.tag;
+    NSDictionary *eventDict = [eventArray objectAtIndex:index];
+    NSString *location = [eventDict valueForKey:@"location"];
+    
+    NSString *urlString =[NSString stringWithFormat:@"http://maps.apple.com/?q=%@",[location stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLUserAllowedCharacterSet]]] ;
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    [[UIApplication sharedApplication] openURL:url];
+}
+
+-(void)btnAddToCalendarClicked:(UIButton *)sender
+{
+    NSInteger index = sender.tag;
+    NSDictionary *eventDict = [eventArray objectAtIndex:index];
+
+    EKEventStore *store = [[EKEventStore alloc] init];
+    
+    if([store respondsToSelector:@selector(requestAccessToEntityType:completion:)])
+    {
+        // iOS 6
+        [store requestAccessToEntityType:EKEntityTypeEvent
+                              completion:^(BOOL granted, NSError *error) {
+                                  if (granted)
+                                  {
+                                      dispatch_async(dispatch_get_main_queue(), ^{
+//                                          [self createEventAndPresentViewController:store];
+                                          [self createEventAndPresentViewController:store calendarEvent:eventDict];
+                                      });
+                                  }
+                              }];
+    }
+}
+
+- (void)createEventAndPresentViewController:(EKEventStore *)store calendarEvent : (NSDictionary *) eventDict
+{
+    EKEvent *event = [self createEvent:store calendarEvent:eventDict];
+    
+    EKEventEditViewController *controller = [[EKEventEditViewController alloc] init];
+    controller.event = event;
+    controller.eventStore = store;
+    controller.editViewDelegate = self;
+    
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (EKEvent *)createEvent:(EKEventStore *)store calendarEvent : (NSDictionary *) eventDict
+{
+    
+    
+    NSString *title = [eventDict valueForKey:@"title"];
+//    NSString *distance = [eventDict valueForKey:@"distance"];
+    NSString *discription = [eventDict valueForKey:@"discription"];
+    NSString *location = [eventDict valueForKey:@"location"];
+    
+    // try to find an event
+    
+    EKEvent *event = [EKEvent eventWithEventStore:store];
+
+    event.title = title;
+    event.notes = discription;
+    event.location = location;
+    event.calendar = [store defaultCalendarForNewEvents];
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    components.hour = 4;
+    event.startDate = [calendar dateByAddingComponents:components
+                                                toDate:[NSDate date]
+                                               options:0];
+    components.hour = 1;
+    event.endDate = [calendar dateByAddingComponents:components
+                                              toDate:event.startDate
+                                             options:0];
+    
+    return event;
+}
+
+
+- (void)eventEditViewController:(EKEventEditViewController *)controller didCompleteWithAction:(EKEventEditViewAction)action
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 /*
 // Override to support conditional editing of the table view.

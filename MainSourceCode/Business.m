@@ -9,18 +9,18 @@
 #import "Business.h"
 #import "GooglePlacesConnection.h"
 #import "SBJson4Parser.h"
-
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIAlertView+TapTalkAlerts.h"
 #import "Consts.h"
 #import "DataModel.h"
 #import "AFNetworking.h"
+#import "APIUtility.h"
 
 @interface Business () {
-//    NSString *imageFileName;
-//    NSString *imageFileExt;
+    //    NSString *imageFileName;
+    //    NSString *imageFileExt;
 @private
-
+    
 }
 
 //@property(nonatomic, retain) NSString *imageFileName;
@@ -41,9 +41,12 @@
 @synthesize rating;
 @synthesize website;
 @synthesize address;
+@synthesize city;
+@synthesize state;
 @synthesize phone;
 @synthesize sms_no;
-@synthesize isProductListLoaded, businessID;
+@synthesize isProductListLoaded, businessID, branch;
+@synthesize lat,lng;
 @synthesize businessProducts;
 @synthesize businessEvents;
 @synthesize chatSystemURL;
@@ -59,8 +62,10 @@
 @synthesize picturesString;
 @synthesize validate_chat;
 @synthesize inquiryForProduct, needsBizChat;
-@synthesize bg_image, marketing_statement;
-
+@synthesize bg_image;
+@synthesize marketing_statement;
+@synthesize closing_time,opening_time;
+@synthesize is_collection;
 
 - (void)initMemberData {
     self.iconRelativeURL = nil;
@@ -74,11 +79,17 @@
     self.businessProducts = nil;
     self.businessEvents = nil;
     self.businessID = -1;  // -1 is invalid like nil -  0 is a valid businessID
+    self.branch = 0;  // 0 is no main bussiness branch - not 0 is under main business branch
+    
+    self.lat = 0;
+    self.lng = 0;
     self.chatSystemURL = nil;
     self.website = nil;
     self.phone = nil;
     self.sms_no = nil;
     self.address = nil;
+    self.city = nil;
+    self.state = nil;
     businessError = nil;
     googlePlacesConnection = [[GooglePlacesConnection alloc] initWithDelegate:self];
     neighborhood = nil;
@@ -92,6 +103,8 @@
     bg_image = nil;
     needsBizChat = true;
     marketing_statement = nil;
+    opening_time = nil;
+    closing_time = nil;
 }
 
 - (int)isCustomer {
@@ -107,8 +120,8 @@
     urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlString];
-
-//    isProductListLoaded = TRUE;
+    
+    //    isProductListLoaded = TRUE;
     dispatch_async(TT_CommunicationWithServerQ, ^{
         NSData* data = [NSData dataWithContentsOfURL:url];
         [self performSelectorOnMainThread:@selector(fetchProductData:) withObject:data waitUntilDone:YES];
@@ -119,7 +132,7 @@
 - (void)fetchProductData:(NSData *)responseData {
     //parse out the json data
     NSError* error =nil;
-
+    
     businessProducts = [NSJSONSerialization
                         JSONObjectWithData:responseData
                         options:kNilOptions
@@ -137,7 +150,7 @@
     if (businessProducts == nil) {
         [self startLoadingBusinessProductCategoriesAndProducts];
     }
-
+    
     return businessProducts;
 }
 
@@ -190,7 +203,7 @@
     }
     
     return field;
-
+    
 }
 
 - (NSMutableString *)mutableStringFromDataDictionary:(NSDictionary *)data forKey:(NSString *)key
@@ -236,13 +249,13 @@
         NSDictionary *jsonDictionary = (NSDictionary *)jsonObject;
         NSLog(@"jsonDictionary - %@",jsonDictionary);
     }
-
+    
     
     return jsonArray;
 }
 
 - (id)initWithDataFromDatabase:(NSDictionary *)data {
-//    [self initMemberData];
+    //    [self initMemberData];
     isCustomer = 1;
     
     // since these values are coming from db, we should take care "[Null]" - database marks for null
@@ -263,6 +276,8 @@
     businessTypes = [self mutableStringFromDataDictionary:data forKey:@"businessTypes"];
     neighborhood = [self stringFromDataDictionary:data forKey:@"neighborhood"];
     address = [self stringFromDataDictionary:data forKey:@"address"];
+    city = [self stringFromDataDictionary:data forKey:@"city"];
+    state = [self stringFromDataDictionary:data forKey:@"state"];
     customerProfileName = [self stringFromDataDictionary:data forKey:@"customerProfileName"];
     iconRelativeURL = [data objectForKey:@"icon"];
     businessName = [self stringFromDataDictionary:data forKey:@"name"];
@@ -271,6 +286,10 @@
         shortBusinessName = businessName;
     chatSystemURL = [self stringFromDataDictionary:data forKey:@"chatroom_table"];
     businessID = [[data objectForKey:@"businessID"] intValue];
+    branch = [[data objectForKey:@"branch"] intValue];
+    lat = [[data objectForKey:@"lat"] doubleValue];
+    lng = [[data objectForKey:@"lng"] doubleValue];
+    
     chat_masters = [self nsArrayFromDataDictionary:data forKey:@"chat_masters"];
     map_image_url = [self stringFromDataDictionary:data forKey:@"map_image_url"];
     picturesString = [self stringFromDataDictionary:data forKey:@"pictures"];
@@ -281,6 +300,15 @@
     NSString* bg_image_URLString = [self stringFromDataDictionary:data forKey:@"bg_image"];
     [self setBGImageFromString:bg_image_URLString];
     marketing_statement = [self stringFromDataDictionary:data forKey:@"marketing_statement"];
+    opening_time = [self stringFromDataDictionary:data forKey:@"opening_time"];
+//    if (opening_time != nil) {
+//        opening_time = [[APIUtility sharedInstance]GMTToLocalTime:[self stringFromDataDictionary:data forKey:@"opening_time"]];
+//    }
+    closing_time = [self stringFromDataDictionary:data forKey:@"closing_time"];
+//    if (closing_time != nil) {
+//        closing_time = [[APIUtility sharedInstance]GMTToLocalTime:[self stringFromDataDictionary:data forKey:@"closing_time"]];
+//    }
+    
     
     if (validate_chat) {
         validate_chat = ChatValidationWorkflow_InProcess; // means in the process of validation
@@ -310,7 +338,7 @@
                   if (permissionCode == 1)
                       validate_chat = ChatValidationWorkflow_Validated; //validated
                   else
-                      validate_chat = ChatValidationWorkflow_Not_Valid; 
+                      validate_chat = ChatValidationWorkflow_Not_Valid;
               }
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   validate_chat = ChatValidationWorkflow_ErrorFromServer; //error
@@ -335,7 +363,7 @@
     rating = googleObject.rating;
     address = googleObject.vicinity;
     phone = googleObject.formattedPhoneNumber;
-
+    
     self.googlePlacesObject = googleObject;
     self.businessName = googleObject.name;
     coordinate = googleObject.coordinate;
@@ -355,8 +383,8 @@
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request =
-            [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadRevalidatingCacheData timeoutInterval:10];
-
+    [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadRevalidatingCacheData timeoutInterval:10];
+    
     NSURLResponse *resp = nil;
     NSError *err = nil;
     NSData *responseData;
@@ -365,7 +393,7 @@
     isCustomer = 0;
     if (!err) {
         NSDictionary *responseDictionaryWithStatus = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&err];
-
+        
         if (nil != responseDictionaryWithStatus) {
             if ([[responseDictionaryWithStatus objectForKey:@"status"] integerValue ] == 0)  {
                 NSDictionary *responseDictionary = [responseDictionaryWithStatus objectForKey:@"data"];
@@ -392,9 +420,9 @@
                         //We have a valid icon path - retrieve the image from our own server
                         SDWebImageManager *manager = [SDWebImageManager sharedManager];
                         [manager downloadImageWithURL:iconUrl
-                                         options:0
-                                        progress:nil
-                                       completed:^(UIImage *webImage, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *url)
+                                              options:0
+                                             progress:nil
+                                            completed:^(UIImage *webImage, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *url)
                          {
                              if (webImage && finished)
                              {
@@ -449,8 +477,8 @@
     if ([objects count] == 0) {
         NSDictionary *userInfo = @{NSLocalizedDescriptionKey : @"Error in getting detailed information from google."};
         businessError = [NSError errorWithDomain:@"Business"
-                                                   code:-10
-                                               userInfo:userInfo];
+                                            code:-10
+                                        userInfo:userInfo];
     } else {
         //        locations = objects;
         //UPDATED locationFilterResults for filtering later on

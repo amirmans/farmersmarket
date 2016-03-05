@@ -18,7 +18,7 @@ const CGFloat TextTopMargin = 10;
 const CGFloat TextBottomMargin = 11;
 
 
-const CGFloat MinBubbleWidth = 50;   // minimum width of the bubble
+const CGFloat MinBubbleWidth = 150;   // minimum width of the bubble
 const CGFloat MinBubbleHeight = 40;  // minimum height of the bubble
 
 const CGFloat WrapWidth = 220;       // maximum width of text in the bubble
@@ -44,7 +44,7 @@ const CGFloat WrapWidth = 220;       // maximum width of text in the bubble
         paragraphStyle.alignment = NSTextAlignmentLeft;
         
         attributes = @{NSFontAttributeName: font, NSParagraphStyleAttributeName: paragraphStyle};
-
+        
     }
 }
 
@@ -63,7 +63,6 @@ const CGFloat WrapWidth = 220;       // maximum width of text in the bubble
                                         options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
                                      attributes:attributesDictionary
                                         context:nil];
-    
     return frame.size;
 }
 
@@ -74,7 +73,7 @@ const CGFloat WrapWidth = 220;       // maximum width of text in the bubble
                       ];
     
     CGSize bubbleSize;
-    bubbleSize.width = textSize.width + TextLeftMargin + TextRightMargin;
+    bubbleSize.width =  textSize.width + TextLeftMargin + TextRightMargin + 30;
     bubbleSize.height = textSize.height + TextTopMargin + TextBottomMargin;
 
     if (bubbleSize.width < MinBubbleWidth)
@@ -97,7 +96,7 @@ const CGFloat WrapWidth = 220;       // maximum width of text in the bubble
 
     CGRect textRect;
     textRect.origin.y = bubbleRect.origin.y + TextTopMargin;
-    textRect.size.width = bubbleRect.size.width - TextLeftMargin - TextRightMargin;
+    textRect.size.width =  bubbleRect.size.width - TextLeftMargin - TextRightMargin - 30 ;
     textRect.size.height = bubbleRect.size.height - TextTopMargin - TextBottomMargin;
 
     if (bubbleType == BubbleTypeLefthand) {
@@ -109,9 +108,11 @@ const CGFloat WrapWidth = 220;       // maximum width of text in the bubble
                 stretchableImageWithLeftCapWidth:20 topCapHeight:19];
         }
         
-        [lefthandImage drawInRect:bubbleRect];
-        textRect.origin.x = bubbleRect.origin.x + TextLeftMargin;
+        [lefthandImage drawInRect:CGRectMake(bubbleRect.origin.x + 30, bubbleRect.origin.y, bubbleRect.size.width - 30 , bubbleRect.size.height)];
+//        [lefthandImage drawInRect:bubbleRect];
+        textRect.origin.x = 30 + bubbleRect.origin.x + TextLeftMargin ;
     }
+    
     else if (bubbleType == BubbleTypeRighthand) {
         
         if (righthandImage == nil) {
@@ -120,9 +121,10 @@ const CGFloat WrapWidth = 220;       // maximum width of text in the bubble
             righthandImage = [[UIImage imageWithContentsOfFile:path]
                 stretchableImageWithLeftCapWidth:20 topCapHeight:19];
         }
-        [righthandImage drawInRect:bubbleRect];
-
-        textRect.origin.x = bubbleRect.origin.x + TextRightMargin;
+//        [righthandImage drawInRect:bubbleRect];
+        [righthandImage drawInRect:CGRectMake(bubbleRect.origin.x + 60, bubbleRect.origin.y, bubbleRect.size.width - 60 , bubbleRect.size.height)];
+        textRect.origin.x = bubbleRect.origin.x + TextRightMargin + 60;
+        textRect.size.width = textRect.size.width - 30;
     }
     else {
         if (centerImage == nil) {

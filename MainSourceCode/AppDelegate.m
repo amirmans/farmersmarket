@@ -8,11 +8,11 @@
 //
 
 @import GoogleMaps;
-#import "AppDelegate.h"
 
+#import "AppDelegate.h"
 #import "ListofBusinesses.h"
 #import "BusinessListViewController.h"
-
+#import "TPRewardPointController.h"
 #import "ChatMessagesViewController.h"
 #import "BusinessNotificationTableViewController.h"
 #import "ConsumerProfileViewController.h"
@@ -22,17 +22,14 @@
 #import "LoginViewController.h"
 #import "UtilityConsumerProfile.h"
 #import "BillViewController.h"
-
-
+#import "AppData.h"
+#import <Stripe/Stripe.h>
 
 @interface AppDelegate () {
     BusinessNotificationTableViewController *notificationController;
     UITabBarItem *notificationsTabBar;
 }
-
 @end
-
-
 
 @implementation AppDelegate
 
@@ -42,88 +39,119 @@
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize notificationDelegate;
 
-
 @synthesize enterBusinessNav, tt_tabBarController;
 
-
+static AppDelegate *sharedObj;
++ (AppDelegate *) sharedInstance
+{
+    if(sharedObj == nil)
+    {
+        sharedObj = [[AppDelegate alloc] init];
+    }
+    return sharedObj;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+//    [GMSServices provideAPIKey:@"AIzaSyD7WfHjPssiG_nJi5P0rF4GJHUxxrFCono"];
+//      [GMSServices provideAPIKey:@"AIzaSyAnP9ELVL1xHQqJGhba_3gH9nWLXV5N5n8"];
     
-    [GMSServices provideAPIKey:@"AIzaSyBjJcsPVsRERXqA5SKas-nseCmrZaajEeE"];
+    [GMSServices provideAPIKey:@"AIzaSyAcCD7rG0woreg6af3_AyFsa3V1J1vgK_k"];
+    [Stripe setDefaultPublishableKey:@"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi"];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    _locationManager = [[CLLocationManager alloc] init];
+    if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [_locationManager requestWhenInUseAuthorization];
+    }
+    _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    _locationManager.distanceFilter = 500; // meters
+    _locationManager.delegate = self;
+    [_locationManager requestWhenInUseAuthorization];
+    [_locationManager startUpdatingLocation];
+
+    [[AppData sharedInstance] getCurruntLocation];
+    
+//    [GMSServices provideAPIKey:@"AIzaSyBjJcsPVsRERXqA5SKas-nseCmrZaajEeE"];
     
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     // Override point for customization after application launch
-    NSBundle *bundle = [NSBundle mainBundle];
+//    NSBundle *bundle = [NSBundle mainBundle];
     
     ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
     [businessArrays startGettingListofAllBusinesses];
-    
     
     BusinessListViewController *listTableView = [[BusinessListViewController alloc] initWithNibName:nil bundle:nil];
     [listTableView.listBusinessesActivityIndicator hidesWhenStopped];
     [listTableView.listBusinessesActivityIndicator startAnimating];
     
-    NSString *imagePath = [bundle pathForResource:@"EnterBusiness" ofType:@"png"];
-    UIImage *locationImage = [[UIImage alloc] initWithContentsOfFile:imagePath];
-    UITabBarItem *locationTabBar = [[UITabBarItem alloc] initWithTitle:@"Where?" image:locationImage tag:0];
+    UIImage *locationImage = [UIImage imageNamed:@"ic_biz_partners_normal.png"];
+    UITabBarItem *locationTabBar = [[UITabBarItem alloc] initWithTitle:@"Biz Partners" image:locationImage tag:0];
     listTableView.tabBarItem = locationTabBar;
+    locationTabBar.selectedImage = [UIImage imageNamed:@"ic_biz_partners_selected.png"];
     enterBusinessNav = [[UINavigationController alloc] initWithRootViewController:listTableView];
+    enterBusinessNav.navigationBar.barTintColor = [UIColor blackColor];
+    enterBusinessNav.navigationBar.translucent = true;
+    enterBusinessNav.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     listTableView = nil;
-    
+
     // messages from others
-    imagePath = [bundle pathForResource:@"Messages" ofType:@"png"];
-    UIImage *messagesImage = [[UIImage alloc] initWithContentsOfFile:imagePath];
+    UIImage *messagesImage = [UIImage imageNamed:@"ic_messages_normal.png"];
     UITabBarItem *chatTabBar = [[UITabBarItem alloc] initWithTitle:@"Messages" image:messagesImage tag:1];
     ChatMessagesViewController *chatViewContoller = [[ChatMessagesViewController alloc] initWithNibName:nil bundle:nil];
     chatViewContoller.tabBarItem = chatTabBar;
+    chatTabBar.selectedImage = [UIImage  imageNamed:@"ic_messages_selected.png"];
     UINavigationController *chatNav = [[UINavigationController alloc] initWithRootViewController:chatViewContoller];
 
     //consumer profile tab
-    imagePath = [bundle pathForResource:@"ProfileTabBarIcon" ofType:@"png"];
-    UIImage *profileTabBarImage = [[UIImage alloc] initWithContentsOfFile:imagePath];
+    UIImage *profileTabBarImage = [UIImage imageNamed:@"ic_profile_normal.png"];
     UITabBarItem *consumerProfileTabBar = [[UITabBarItem alloc] initWithTitle:@"Profile" image:profileTabBarImage tag:2];
+    consumerProfileTabBar.selectedImage = [UIImage imageNamed:@"ic_profile_selected.png"];
     ConsumerProfileViewController *consumerProfileViewController = [[ConsumerProfileViewController alloc] initWithNibName:nil bundle:nil];
     consumerProfileViewController.tabBarItem = consumerProfileTabBar;
     profileTabBarImage = nil;
+    UINavigationController *profileNav = [[UINavigationController alloc] initWithRootViewController:consumerProfileViewController];
+    profileNav.navigationBar.barTintColor = [UIColor blackColor];
+    profileNav.navigationBar.translucent = true;
+    profileNav.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+
 
     // notifications from businesses
-    imagePath = [bundle pathForResource:@"Notifications" ofType:@"png"];
-    UIImage *notificationImage = [[UIImage alloc] initWithContentsOfFile:imagePath];
+    UIImage *notificationImage = [UIImage imageNamed:@"ic_notifications_normal.png"];
     notificationsTabBar = [[UITabBarItem alloc] initWithTitle:@"Notifications" image:notificationImage tag:3];
-
+    notificationsTabBar.selectedImage = [UIImage imageNamed:@"ic_notifications_selected.png"];
     notificationController = [[BusinessNotificationTableViewController alloc] initWithNibName:nil bundle:nil];
     notificationController.tabBarItem = notificationsTabBar;
     UINavigationController *notificationNav = [[UINavigationController alloc] initWithRootViewController:notificationController];
-    
-    UIImage *payImage = [UIImage imageNamed:@"bill_tabbar_icon.jpg"];
-    BillViewController *payViewController = [[BillViewController alloc] initWithNibName:nil bundle:nil];
-    UITabBarItem *payTabBar = [[UITabBarItem alloc] initWithTitle:@"Pay" image:payImage tag:4];
+    notificationNav.navigationBar.barTintColor = [UIColor blackColor];
+    notificationNav.navigationBar.translucent = true;
+    notificationNav.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+
+
+    UIImage *payImage = [UIImage imageNamed:@"ic_pay_normal.png"];
+    TPRewardPointController *payViewController = [[TPRewardPointController alloc] initWithNibName:nil bundle:nil];
+    UITabBarItem *payTabBar = [[UITabBarItem alloc] initWithTitle:@"Reward" image:payImage tag:4];
+    payTabBar.selectedImage = [UIImage imageNamed:@"ic_pay_selected.png"];
+    [payTabBar setBadgeValue:@"10"];
+//    payTabBar.
     payViewController.tabBarItem = payTabBar;
+
+//Lalith Old Tab
+//    UIImage *payImage = [UIImage imageNamed:@"ic_pay_normal.png"];
+//    BillViewController *payViewController = [[BillViewController alloc] initWithNibName:nil bundle:nil];
+//    UITabBarItem *payTabBar = [[UITabBarItem alloc] initWithTitle:@"Point" image:payImage tag:4];
+//    payTabBar.selectedImage = [UIImage imageNamed:@"ic_pay_selected.png"];
+//    [payTabBar setBadgeValue:@"10"];
+//    payViewController.tabBarItem = payTabBar;
+    
     
     // setup main window with the tabbarcontroller
     self.tt_tabBarController = [[UITabBarController alloc] init];
-    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, chatNav, consumerProfileViewController, notificationNav, payViewController, nil];
-
+//    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, chatNav, consumerProfileViewController, notificationNav, payViewController, nil];
+    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, chatNav, profileNav, notificationNav, payViewController, nil];
     
-    // Override point for customization after application launch.
-//    UIImage *navBackgroundImage = [UIImage imageNamed:@"navigation_background.png"];
-//    [[UINavigationBar appearance] setBackgroundImage:navBackgroundImage forBarMetrics:UIBarMetricsDefault];
-//    [[UINavigationBar appearance] setTitleTextAttributes: [NSDictionary dictionaryWithObjectsAndKeys:
-//                                                           [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0], UITextAttributeTextColor,
-//                                                           [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8],UITextAttributeTextShadowColor,
-//                                                           [NSValue valueWithUIOffset:UIOffsetMake(0, 1)],
-//                                                           UITextAttributeTextShadowOffset,
-//                                                           [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:20.0f], UITextAttributeFont, nil]];
-//
-//    UIImage *backBarBackgroundImage = [UIImage imageNamed:@"Navigation_button.png"]; //] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
-//    [[UIBarButtonItem appearance] setBackgroundImage:backBarBackgroundImage forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-//    [[UIBarButtonItem appearance] setTitleTextAttributes: [
-//                                                           NSDictionary dictionaryWithObjectsAndKeys: [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:255.0/255.0 alpha:1.0],
-//                                                           UITextAttributeTextColor, [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8],
-//                                                           UITextAttributeTextShadowColor, [NSValue valueWithUIOffset:UIOffsetMake(0, 1)],
-//                                                           UITextAttributeTextShadowOffset, [UIFont fontWithName:@"Verdana" size:16.0f],
-//                                                           UITextAttributeFont, nil] forState:UIControlStateNormal];
+    self.tt_tabBarController.tabBar.tintColor = [UIColor whiteColor];
+    self.tt_tabBarController.tabBar.backgroundImage = [UIImage imageNamed:@"bgTabBar.png"];
 
     tt_tabBarController.delegate = self;
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -159,6 +187,36 @@
     }
     
     return YES;
+}
+
+
+#pragma mark - CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"didFailWithError: %@", error);
+}
+
+-(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    NSString *myString = [NSString stringWithFormat:[CLLocationManager locationServicesEnabled] ? @"YES" : @"NO"];
+    NSLog(@"%@",myString);
+    NSLog(@"LocationManagerStatus %i",[CLLocationManager authorizationStatus]);
+    
+    
+    
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    NSLog(@"didUpdateToLocation: %@", newLocation);
+    CLLocation* location = newLocation;
+    
+    // saving new location in nsuserdefaults
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[NSNumber numberWithDouble:location.coordinate.latitude] forKey:@"latitude"];
+    [defaults setObject:[NSNumber numberWithDouble:location.coordinate.longitude] forKey:@"longitude"];
+    [defaults synchronize];
 }
 
 
@@ -211,7 +269,9 @@
 }
 
 - (void)saveContext {
+    
     NSError *error = nil;
+    
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
     if (managedObjectContext != nil) {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
@@ -223,6 +283,21 @@
             abort();
         }
     }
+}
+
+-(NSArray *)getRecord
+{
+    NSFetchRequest *fetchreq=[[NSFetchRequest alloc]init];
+    
+    NSEntityDescription *entity=[NSEntityDescription entityForName:@"MyCartItem" inManagedObjectContext:self.managedObjectContext];
+    
+    [fetchreq setEntity:entity];
+    
+    NSError *err;
+    
+    NSArray *fetcheRecord=[self.managedObjectContext executeFetchRequest:fetchreq error:&err];
+    return fetcheRecord;
+
 }
 
 #pragma mark - UITabBarControllerDelegate
@@ -297,9 +372,14 @@
     return returnVal;
 }
 
-
-
 #pragma mark - Core Data stack
+
+
+- (NSURL *)applicationDocumentsDirectory {
+    
+    // The directory the application uses to store the Core Data store file. This code uses a directory named "stu.coredata_model" in the application's documents directory.
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
 
 /**
  Returns the managed object context for the application.
@@ -312,8 +392,10 @@
 
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
+        
         __managedObjectContext = [[NSManagedObjectContext alloc] init];
         [__managedObjectContext setPersistentStoreCoordinator:coordinator];
+        
     }
     return __managedObjectContext;
 }
@@ -322,28 +404,43 @@
  Returns the managed object model for the application.
  If the model doesn't already exist, it is created from the application's model.
  */
+
 - (NSManagedObjectModel *)managedObjectModel {
+    // The managed object model for the application. It is a fatal error for the application not to be able to find and load its model.
     if (__managedObjectModel != nil) {
+        
         return __managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"TapTalk" withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"TapForAll" withExtension:@"momd"];
+    
+    NSLog(@"%@",modelURL);
     __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return __managedObjectModel;
 }
+
 
 /**
  Returns the persistent store coordinator for the application.
  If the coordinator doesn't already exist, it is created and the application's store added to it.
  */
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
+    
     if (__persistentStoreCoordinator != nil) {
         return __persistentStoreCoordinator;
     }
 
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"TapTalk.sqlite"];
-
-    NSError *error = nil;
+    // Create the coordinator and store
+    
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"TapForAll.sqlite"];
+
+    NSLog(@"%@",storeURL);
+    
+    NSError *error = nil;
+    
+    NSString *failureReason = @"There was an error creating or loading the application's saved data.";
+    
     if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
         /*
          Replace this implementation with code to handle the error appropriately.
@@ -368,10 +465,16 @@
          Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
          
          */
+        
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        dict[NSLocalizedDescriptionKey] = @"Failed to initialize the application's saved data";
+        dict[NSLocalizedFailureReasonErrorKey] = failureReason;
+        dict[NSUnderlyingErrorKey] = error;
+        error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:9999 userInfo:dict];
+        
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-
     return __persistentStoreCoordinator;
 }
 
@@ -380,10 +483,6 @@
 /**
  Returns the URL to the application's Documents directory.
  */
-- (NSURL *)applicationDocumentsDirectory {
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-}
-
 
 #pragma mark - Methods for messages and notification stuff
 - (void)doUpdateForRemoteNotification:(NSDictionary *)userInfo updateUI:(BOOL)updateUI {
@@ -475,6 +574,9 @@
     [self doUpdateForRemoteNotification:userInfo updateUI:YES];
     
 }
+
+
+
 
 #ifdef __IPHONE_8_0
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {

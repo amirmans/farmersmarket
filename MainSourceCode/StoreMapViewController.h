@@ -10,12 +10,14 @@
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
-@interface StoreMapViewController : UIViewController <UIScrollViewDelegate, SDWebImageManagerDelegate> {
+@interface StoreMapViewController : UIViewController <UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate , SDWebImageManagerDelegate> {
     __weak IBOutlet UIScrollView *mapScrollView;
     __weak IBOutlet UIImageView *storeMapImageView;
 }
 
 @property(weak, nonatomic) IBOutlet UIImageView *storeMapImageView;
 @property(weak, nonatomic) IBOutlet UIScrollView *mapScrollView;
+@property (strong, nonatomic) IBOutlet UITableView *tblStore;
 
+@property (strong, nonatomic) NSMutableArray *bussinessListByBranch;
 @end

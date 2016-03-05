@@ -120,7 +120,6 @@ static NSString *const senderIDKey = @"sender_id";
     return returnVal;
 }
 
-
 - (void)doToggleUpdatingChatMessages {
     if ([DataModel sharedDataModelManager].shouldDownloadChatMessages) {
         [DataModel sharedDataModelManager].shouldDownloadChatMessages = false;
@@ -131,8 +130,8 @@ static NSString *const senderIDKey = @"sender_id";
     
 }
 
-
 - (void)loadMessagesFromServer {
+    
     if (connectionIsAvailable != TRUE)
         return;
 
@@ -146,8 +145,11 @@ static NSString *const senderIDKey = @"sender_id";
     NSLog(@"%@ was called to load messages", url);
 
     connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+    
     if (connection) {
+        
         if (self.responseData != nil) {
+            
             [self.responseData release];
         }
         self.responseData = [[NSMutableData data] retain];
@@ -168,6 +170,7 @@ static NSString *const senderIDKey = @"sender_id";
 }
 
 - (void)connection:(NSURLConnection *)conn didFailWithError:(NSError *)error {
+    
     [connection cancel];
     [connection release];
     connection = nil;
@@ -199,6 +202,7 @@ static NSString *const senderIDKey = @"sender_id";
 }
 
 - (void)dealloc {
+    
     [sender release];
     [dateAdded release];
     [textChat release];

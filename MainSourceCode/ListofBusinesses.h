@@ -13,10 +13,10 @@
 @interface ListofBusinesses : NSObject <PostProcesses> {
     Business *aBusiness;
     ServerInteractionManager *myServer;
-    NSArray *businessListArray;
+    NSMutableArray *businessListArray;
 }
 
-@property (strong, atomic) NSArray *businessListArray;
+@property (strong, atomic) NSMutableArray *businessListArray;
 
 - (void)startGettingListofAllBusinesses;
 

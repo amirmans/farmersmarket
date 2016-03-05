@@ -8,12 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ConsumerProfileViewController : UIViewController <UITextFieldDelegate>
+@interface ConsumerProfileViewController : UIViewController <UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @property(weak, nonatomic) IBOutlet UITextField *nicknameTextField;
 @property(weak, nonatomic) IBOutlet UITextField *passwordTextField;
-@property(weak, nonatomic) IBOutlet UIButton *topContainerButton;
-@property(weak, nonatomic) IBOutlet UIButton *lowerContainerButton;
 @property(weak, nonatomic) IBOutlet UILabel *errorMessageLabel;
 @property(weak, nonatomic) IBOutlet UITextField *passwordAgainTextField;
 @property (weak, nonatomic) IBOutlet UITextField *ageGroupTextField;
@@ -34,5 +32,8 @@
 
 //- (IBAction)resetButtonAction:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UIView *topView;
+@property (strong, nonatomic) IBOutlet UIView *bottomView;
+@property (strong, nonatomic) IBOutlet UITableView *savedCardTable;
 
 @end

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "Business.h"
+#import <EventKitUI/EventKitUI.h>
 
-@interface EventsTableViewController : UITableViewController
+@interface EventsTableViewController : UITableViewController <EKEventEditViewDelegate>
 
 @property(atomic, retain) Business *biz;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil forBusiness:(Business *)biz;

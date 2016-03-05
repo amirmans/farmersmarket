@@ -12,7 +12,7 @@
 #import "MBProgressHUD.h"
 #import "TapTalkLooks.h"
 #import "ConsumerProfileDataModel.h"
-
+#import "SavedCardTableCell.h"
 #import "AFNetworking.h"
 
 @interface ConsumerProfileViewController () {
@@ -28,6 +28,8 @@
 
 @end
 
+NSMutableArray *savedCardDataArray;
+
 static NSArray *consumerProfileDataArray = nil;
 
 @implementation ConsumerProfileViewController
@@ -35,8 +37,6 @@ static NSArray *consumerProfileDataArray = nil;
 @synthesize nicknameTextField;
 @synthesize passwordTextField;
 @synthesize passwordAgainTextField;
-@synthesize topContainerButton;
-@synthesize lowerContainerButton;
 @synthesize errorMessageLabel;
 @synthesize ageGroupSegmentedControl;
 @synthesize ageGroupTextField;
@@ -63,20 +63,20 @@ static NSArray *consumerProfileDataArray = nil;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [TapTalkLooks setBackgroundImage:self.view];
-    [TapTalkLooks setToTapTalkLooks:self.topContainerButton isActionButton:NO makeItRound:YES];
-    [TapTalkLooks setToTapTalkLooks:self.lowerContainerButton isActionButton:NO makeItRound:YES];
-    [TapTalkLooks setToTapTalkLooks:self.ageGroupSegmentedControl isActionButton:NO makeItRound:YES];
-    [TapTalkLooks setToTapTalkLooks:self.nicknameTextField isActionButton:NO makeItRound:YES];
-    [TapTalkLooks setToTapTalkLooks:self.ageGroupTextField isActionButton:NO makeItRound:YES];
-    [TapTalkLooks setToTapTalkLooks:self.resetButton isActionButton:YES makeItRound:NO];
-    [TapTalkLooks setToTapTalkLooks:self.saveButton isActionButton:YES makeItRound:NO];
-    [TapTalkLooks setToTapTalkLooks:emailLabel isActionButton:NO makeItRound:NO];
-    [TapTalkLooks setToTapTalkLooks:zipcodeLabel isActionButton:NO makeItRound:NO];
-    [TapTalkLooks setToTapTalkLooks:zipcodeTextField isActionButton:NO makeItRound:YES];
-    [TapTalkLooks setToTapTalkLooks:emailTextField isActionButton:NO makeItRound:YES];
-    
-    ageGroupSegmentedControl.tintColor = [UIColor colorWithRed: 0/255.0 green:0/255.0 blue:255.0f/255.0 alpha:1.0];
+//    [TapTalkLooks setBackgroundImage:self.view];
+//    [TapTalkLooks setToTapTalkLooks:self.topContainerButton isActionButton:NO makeItRound:YES];
+//    [TapTalkLooks setToTapTalkLooks:self.lowerContainerButton isActionButton:NO makeItRound:YES];
+//    [TapTalkLooks setToTapTalkLooks:self.ageGroupSegmentedControl isActionButton:NO makeItRound:YES];
+//    [TapTalkLooks setToTapTalkLooks:self.nicknameTextField isActionButton:NO makeItRound:YES];
+//    [TapTalkLooks setToTapTalkLooks:self.ageGroupTextField isActionButton:NO makeItRound:YES];
+//    [TapTalkLooks setToTapTalkLooks:self.resetButton isActionButton:YES makeItRound:NO];
+//    [TapTalkLooks setToTapTalkLooks:self.saveButton isActionButton:YES makeItRound:NO];
+//    [TapTalkLooks setToTapTalkLooks:emailLabel isActionButton:NO makeItRound:NO];
+//    [TapTalkLooks setToTapTalkLooks:zipcodeLabel isActionButton:NO makeItRound:NO];
+//    [TapTalkLooks setToTapTalkLooks:zipcodeTextField isActionButton:NO makeItRound:YES];
+//    [TapTalkLooks setToTapTalkLooks:emailTextField isActionButton:NO makeItRound:YES];
+//
+//    ageGroupSegmentedControl.tintColor = [UIColor colorWithRed: 0/255.0 green:0/255.0 blue:255.0f/255.0 alpha:1.0];
     
 }
 
@@ -98,6 +98,8 @@ static NSArray *consumerProfileDataArray = nil;
 //    [TapTalkLooks setToTapTalkLooks:emailTextField isActionButton:NO makeItRound:YES];
 //    
 //    ageGroupSegmentedControl.tintColor = [UIColor colorWithRed: 0/255.0 green:0/255.0 blue:255.0f/255.0 alpha:1.0];
+    
+    savedCardDataArray = [[NSMutableArray alloc] init];
     
     errorMessageLabel.hidden = TRUE;
 
@@ -122,6 +124,26 @@ static NSArray *consumerProfileDataArray = nil;
     nicknameTextField.keyboardAppearance = UIKeyboardAppearanceDark;
     zipcodeTextField.keyboardAppearance = UIKeyboardAppearanceDark;
     emailTextField.keyboardAppearance = UIKeyboardAppearanceDark;
+    
+    
+    self.topView.layer.borderWidth = 2.0;
+    self.topView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.topView.layer.cornerRadius = 10.0;
+    
+    self.bottomView.layer.borderWidth = 2.0;
+    self.bottomView.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.bottomView.layer.cornerRadius = 10.0;
+    
+    self.title = @"Profile";
+    
+    self.savedCardTable.delegate = self;
+    self.savedCardTable.dataSource = self;
+    
+    self.savedCardTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+
+    
+    [self getStripeDataArray];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -137,13 +159,20 @@ static NSArray *consumerProfileDataArray = nil;
     [self setNicknameTextField:nil];
     [self setPasswordTextField:nil];
     [self setPasswordAgainTextField:nil];
-    [self setTopContainerButton:nil];
-    [self setLowerContainerButton:nil];
     [self setErrorMessageLabel:nil];
     [self setPasswordAgainTextField:nil];
     [self setAgeGroupSegmentedControl:nil];
 
     [super viewDidUnload];
+}
+
+- (void) getStripeDataArray {
+    [savedCardDataArray removeAllObjects];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:stripeArrayKey] != nil) {
+        [savedCardDataArray addObjectsFromArray:[defaults objectForKey:stripeArrayKey]];
+        [self.savedCardTable reloadData];
+    }
 }
 
 
@@ -265,6 +294,39 @@ static NSArray *consumerProfileDataArray = nil;
 - (IBAction)resetButtonAction:(id)sender {
     [self populateFieldsWithInitialValues];
 }
+
+#pragma mark - TableView DataSource / Delegate
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [savedCardDataArray count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *simpleTableIdentifier = @"SavedCardTableCell";
+    
+    SavedCardTableCell *cell = (SavedCardTableCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    if (cell == nil)
+    {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SavedCardTableCell" owner:self options:nil];
+        cell = [nib objectAtIndex:0];
+    }
+    
+    NSDictionary *cardDict = [savedCardDataArray objectAtIndex:indexPath.row];
+    
+    NSString *cardNo = [cardDict valueForKey:@"number"];
+    
+    NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
+    
+    NSString *cardDisplayNumber = [NSString stringWithFormat:@"XXXX XXXX XXXX %@",trimmedString];
+    
+    cell.lblCardNo.text = cardDisplayNumber;
+    cell.lblMonthYear.text = [NSString stringWithFormat:@"%@/%@",[cardDict valueForKey:@"expMonth"],[cardDict valueForKey:@"expYear"]];
+    cell.lblCVC.text = @"XXX";
+    
+    return cell;
+}
+
 
 #pragma mark
 #pragma UITextFieldDelegate

@@ -65,7 +65,8 @@
     // take care of Title
     if ([DataModel sharedDataModelManager].shouldDownloadChatMessages) {
         toggleUpdatingChatMessages.title = @"Start";
-    } else {
+    }
+    else {
         toggleUpdatingChatMessages.title = @"Stop";
     }
     // take care of data - inside this method shouldDownloadChatMessages
@@ -100,12 +101,17 @@
     [composeMessageTextField setClipsToBounds:YES];
     
     // now add the history button to the navigation controller bar
+    
     toggleUpdatingChatMessages = [[UIBarButtonItem alloc]
                                   initWithTitle:@"Stop"
                                   style:UIBarButtonItemStylePlain
                                   target:self
                                   action:@selector(doToggleUpdatingChatMessages)];
     self.navigationItem.rightBarButtonItem = toggleUpdatingChatMessages;
+    
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+    
+    [self.composeMessageTextField setAutocorrectionType:UITextAutocorrectionTypeNo];
     
 //    if ([CurrentBusiness sharedCurrentBusinessManager].business.needsBizChat) {
 //        UIBarButtonItem *displayBusinessMessagesButton = [[UIBarButtonItem alloc] initWithTitle:@"Biz" style:UIBarButtonItemStyleDone target:self action:@selector(displaybusinessMessages)];
@@ -172,7 +178,6 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-
 #pragma mark -
 #pragma mark UITableViewDataSource
 
@@ -222,11 +227,6 @@
                                                context:nil];
     CGSize size = rect.size;
     return size.height +55;
-    
-    
-    
-    
-    
 }
 
 
@@ -422,7 +422,6 @@
         chatTimer = nil;
         [[DataModel sharedDataModelManager] setJoinedChat:NO];
     }
-
 }
 
 - (void)tapTalkChatMessageDidFailWithError:(NSError *)error {

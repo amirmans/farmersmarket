@@ -15,7 +15,8 @@
     NSMutableArray *notificationsInReverseChronological;
     
 }
-
+@property (strong, atomic) NSMutableArray *businessListArray;
+@property (strong, atomic) NSMutableArray *ResponseDataArray;
 @property (nonatomic, retain) NSArray *notificationsInReverseChronological;
 
 - (void)didSaveMessage:(NSString *)message atIndex:(int)index;

@@ -84,6 +84,8 @@ static BusinessCustomerProfileManager *sharedChoicesManager = nil;
             loadProducts = 1; // default value, load products and later display to the consumers
 
         allChoices = [tempAllChoices objectForKey:@"main choices"];
+        NSLog(@"%@",allChoices.debugDescription);
+        
 //        NSLog(@"Here are our main choices: %@", allChoices);
         self.loadInfo = NO;
     }

@@ -22,16 +22,22 @@
     NSString *iconRelativeURL;
     UIImage *iconImage;
     UIImage *bg_image;
-
+    
     GooglePlacesObject *googlePlacesObject;
     NSString *businessName;
     NSString *customerProfileName;
     NSString *chatSystemURL;
     int isCustomer;
     int businessID;
+    int branch;
+    double lat;
+    double lng;
     
     NSString *rating;
     NSString *address;
+    NSString *city;
+    NSString *state;
+
     NSString *website;
     NSString *phone;
     NSString *sms_no;
@@ -50,9 +56,12 @@
     NSInteger is_collection;
     BOOL needsBizChat;
     BOOL inquiryForProduct;
-
+    
+    NSString *opening_time;
+    NSString *closing_time;
+    
     GooglePlacesConnection *googlePlacesConnection;
-
+    
     NSDictionary *businessProducts;
     NSError *businessError;
 }
@@ -77,12 +86,19 @@
 @property(atomic, retain) NSString *chatSystemURL;
 @property(atomic, retain) NSString *customerProfileName;
 @property(atomic, assign) int businessID;
+@property(atomic, assign) int branch;
+
+@property(atomic, assign) double lat;
+@property(atomic, assign) double lng;
+
 @property(nonatomic, assign) int isCustomer;
 @property(nonatomic, assign) BOOL isProductListLoaded;
 
 @property(nonatomic, retain) NSString *rating;
 @property(nonatomic, retain) NSString *website;
 @property(nonatomic, retain) NSString *address;
+@property(nonatomic, retain) NSString *city;
+@property(nonatomic, retain) NSString *state;
 @property(nonatomic, retain) NSString *phone;
 @property(nonatomic, retain) NSString *sms_no;
 @property(nonatomic, retain) NSString *paymentProcessingEmail;
@@ -102,6 +118,8 @@
 @property(atomic, assign) BOOL inquiryForProduct;
 @property(atomic, assign) BOOL needsBizChat;
 @property(nonatomic, retain) NSString *marketing_statement;
+@property(nonatomic, retain) NSString *opening_time;
+@property(nonatomic, retain) NSString *closing_time;
 
 
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;

@@ -157,6 +157,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.title = businessNameData;
     //self.viewIsDisplaying = TRUE;
     //[[self view] bringSubviewToFront:typesOfBusiness];
@@ -286,13 +287,17 @@
 
 
 - (void)pushNextViewController {
+    
     NSDictionary *allChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].allChoices;
     NSArray *mainChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].mainChoices;
     
     // needs to mainChoices and allChoices
     if ([BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].loadProducts)
         [biz startLoadingBusinessProductCategoriesAndProducts];
+    
     NSArray *tempNSArray = [allChoices objectForKey:@"Tap For All"];
+    
+    NSLog(@"%@",tempNSArray.debugDescription);
     if (tempNSArray.count == 1 ) {
         
         if ([DataModel sharedDataModelManager].nickname.length < 1) {

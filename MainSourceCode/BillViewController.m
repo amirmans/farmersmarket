@@ -68,20 +68,19 @@
 //    [TapTalkLooks setBackgroundImage:self.orderTableView withBackgroundImage:billBusiness.bg_image];
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    NSString *titleString = [NSString stringWithFormat:@"Bill from %@", billBusiness.businessName];
-    self.title = titleString;
+//    NSString *titleString = [NSString stringWithFormat:@"Bill from %@", billBusiness.businessName];
+//    self.title = titleString;
     [self pullBillInformationFromBusiness];
     [TapTalkLooks setToTapTalkLooks:payUIButton isActionButton:YES makeItRound:YES];
     [TapTalkLooks setToTapTalkLooks:cancelUIButton isActionButton:YES makeItRound:YES];
     [TapTalkLooks setToTapTalkLooks:questionsUIButton isActionButton:YES makeItRound:YES];
 
-    _rateView.notSelectedImage = [UIImage imageNamed:@"kermit_empty.png"];
-    _rateView.halfSelectedImage = [UIImage imageNamed:@"kermit_half.png"];
-    _rateView.fullSelectedImage = [UIImage imageNamed:@"kermit_full.png"];
+    _rateView.notSelectedImage = [UIImage imageNamed:@"Star.png"];
+    _rateView.halfSelectedImage = [UIImage imageNamed:@"Star_Half_Empty.png"];
+    _rateView.fullSelectedImage = [UIImage imageNamed:@"Star_Filled.png"];
     _rateView.rating = 0;
     _rateView.editable = YES;
     _rateView.maxRating = 5;
@@ -128,15 +127,18 @@
 
 
 - (IBAction)cancel:(id)sender {
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)readyToPayAction:(id)sender {
+    
     BillPayViewController *payBillViewController = [[BillPayViewController alloc] initWithNibName:nil bundle:nil withAmount:billInDollar forBusiness:billBusiness];
     [self.navigationController pushViewController:payBillViewController animated:YES];
 }
 
 - (IBAction)questionsAction:(id)sender {
+    
     AskForSeviceViewController *orderViewController = [[AskForSeviceViewController alloc] initWithNibName:nil bundle:nil forBusiness:billBusiness];
     [self.navigationController pushViewController:orderViewController animated:YES];
 }
@@ -164,16 +166,15 @@
         default:
             strRating = @"No opinion";
     }
-
     ratingString.text = strRating;
 }
-
 
 - (NSDictionary *)orderDict {
     if (!self.orderDict) {
      
         
     }
+    return @{@"":@""};
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -222,7 +223,7 @@
 //                                               context:nil];
 //    CGSize size = rect.size;
 //    return size.height +55;
-    
+    return 0.0;
 }
 
 

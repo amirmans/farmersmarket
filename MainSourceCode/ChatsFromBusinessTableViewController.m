@@ -114,7 +114,8 @@
     else {
         self.navigationItem.rightBarButtonItem = nil;
     }
-
+    
+    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;

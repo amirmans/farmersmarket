@@ -89,6 +89,7 @@
     [information setTextColor:[UIColor redColor]];
     
     UIBarButtonItem *displayListButton = [[UIBarButtonItem alloc] initWithTitle:@"List view" style:UIBarButtonItemStyleDone target:self action:@selector(displayListView:)];
+    displayListButton.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = displayListButton;
     displayListButton = nil;
 }

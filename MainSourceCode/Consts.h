@@ -19,6 +19,9 @@
 #define BusinessInformationServer @"http://amirmansoury.com/businessinfo/index.php"
 #define ConsumerProfileServer @"http://amirmansoury.com/profilesystem/consumerprofile.php"
 
+#define SetFavoriteServer @"http://www.amirmansoury.com//include/model/model.php"
+
+
 //data directories
 #define BusinessCustomerIndividualDirectory @"http://amirmansoury.com/customer_files/"
 #define BusinessCustomerIconDirectory @"http://amirmansoury.com/customer_files/icons/"
@@ -44,7 +47,7 @@ static NSString *const UserIDKey = @"userID";
 
 static int NumberOfMessagesOnOnePage = 6;
 
-
+static NSString *const stripeArrayKey = @"stripeDataArray";
 
 // Maximum number of bytes that a text message may have. The payload data of
 // a push notification is limited to 256 bytes and that includes the JSON 

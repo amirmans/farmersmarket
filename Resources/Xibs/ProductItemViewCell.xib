@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15E27e" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -12,14 +12,17 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="235"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="23" id="Egb-tq-KrU">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="234.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="234"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" image="Grocery_Location.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="16">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="Grocery_Location.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="16">
                         <rect key="frame" x="0.0" y="45" width="128" height="135"/>
                     </imageView>
-                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Name" minimumFontSize="19" translatesAutoresizingMaskIntoConstraints="NO" id="17">
+                    <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Name" minimumFontSize="19" translatesAutoresizingMaskIntoConstraints="NO" id="17">
                         <rect key="frame" x="3" y="8" width="171" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="UDZ-po-wiB"/>
+                        </constraints>
                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
@@ -33,7 +36,7 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Price" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="27">
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Price" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="27">
                         <rect key="frame" x="243" y="10" width="69" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="69" id="m4j-RW-vAH"/>
@@ -42,7 +45,7 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
-                    <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" misplaced="YES" editable="NO" text="Field1 value" translatesAutoresizingMaskIntoConstraints="NO" id="29">
+                    <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" editable="NO" text="Field1 value" translatesAutoresizingMaskIntoConstraints="NO" id="29">
                         <rect key="frame" x="130" y="68" width="146" height="56"/>
                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -57,7 +60,7 @@
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Price: $" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Price: $" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31">
                         <rect key="frame" x="182" y="14" width="59" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="59" id="uZR-Xn-cN4"/>
@@ -66,13 +69,13 @@
                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="highlightedColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" image="indicator.png" translatesAutoresizingMaskIntoConstraints="NO" id="32">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="indicator.png" translatesAutoresizingMaskIntoConstraints="NO" id="32">
                         <rect key="frame" x="284" y="77" width="36" height="66"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="36" id="eCl-S5-4Na"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Field1:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tgf-aE-Eak">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Field1:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tgf-aE-Eak">
                         <rect key="frame" x="130" y="45" width="119" height="12"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="12" id="DJD-Hp-zq9"/>
@@ -91,7 +94,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Special" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85o-Mh-Knc">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Special" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85o-Mh-Knc">
                         <rect key="frame" x="268" y="42" width="50" height="18"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="ZZs-PN-67p"/>

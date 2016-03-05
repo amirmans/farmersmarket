@@ -11,17 +11,29 @@
 #import "Business.h"
 #import "GooglePlacesConnection.h"
 #import "KASlideShow.h"
+#import "SMCalloutView.h"
+#import "SMClassicCalloutView.h"
 
-@interface DetailBusinessViewControllerII : UIViewController <KASlideShowDelegate, GMSMapViewDelegate> {
+@interface DetailBusinessViewControllerII : UIViewController <KASlideShowDelegate, GMSMapViewDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate> {
     NSString *businessNameData;
     NSString *customerProfileName;
     NSString *distanceInMileString;
     int isCustomer;
     Business *biz;
+    Business *selectedBiz;
+    CLLocationManager *locationManager;
+    CLLocation *currentLocation;
+    MKCoordinateRegion region;
 
     __weak IBOutlet UIButton *enterAndGetService;
 }
 
+@property ( strong, nonatomic) NSMutableArray *bussinessListByBranch;
+@property ( strong, nonatomic) NSMutableArray *markerArray;
+@property (strong, nonatomic) IBOutlet UIView *viewMap;
+
+@property(nonatomic,retain) CLLocationManager *locationManager;
+@property (strong, nonatomic) SMCalloutView *calloutView;
 @property(weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property(weak, nonatomic) IBOutlet UITextView *contactInfo;
 @property(weak, nonatomic) IBOutlet UITextField *rating;
@@ -36,7 +48,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *ratingLabel;
 
 @property(atomic, retain) Business *biz;
-
 - (id)initWithBusinessObject:(Business *)biz;
 - (IBAction)enterAndGetServiceAction:(id)sender;
 - (IBAction)showCode:(id)sender;
@@ -44,5 +55,6 @@
 
 - (void)doPopulateDisplayFields;
 
+@property (weak, nonatomic) IBOutlet UITableView *detailTableView;
 
 @end

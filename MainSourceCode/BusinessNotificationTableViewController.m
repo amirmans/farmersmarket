@@ -13,8 +13,12 @@
 #import "TapTalkLooks.h"
 #import "NotificationTableViewCell.h"
 #import "AppDelegate.h"
-
+#import "DetailBusinessVCTableViewCell.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "ListofBusinesses.h"
+#import "Business.h"
+#import "APIUtility.h"
+#import "AppData.h"
 
 @interface BusinessNotificationTableViewController ()
 
@@ -25,6 +29,8 @@
 @synthesize notificationsInReverseChronological;
 
 // delegate Method for NewNotificationWhileRunning
+
+#pragma mark - Life Cycle
 - (void)updateUIWithNewNotification
 {
     notificationsInReverseChronological = [[[DataModel sharedDataModelManager] notifications] mutableCopy];
@@ -33,7 +39,6 @@
     });
 //    self.tabBarItem.badgeValue = nil;
 }
-
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -64,7 +69,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [TapTalkLooks setBackgroundImage:self.tableView];
+//    [TapTalkLooks setBackgroundImage:self.tableView];
 }
 
 - (void)viewDidLoad
@@ -75,7 +80,9 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.editButtonItem.tintColor = [UIColor whiteColor];
     
+    notificationsInReverseChronological = [[NSMutableArray alloc] init];
     
     // for some reason - setting the background color in the nib file didn't work
     self.title = @"Notification Center";
@@ -83,13 +90,13 @@
     //happens after viewDidLoad and before viewDidAppear, so I moved the following method to viewDidAppear
 //    [TapTalkLooks setBackgroundImage:self.tableView];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    self.tableView.rowHeight = 150; // change this number whenever you change the ui in NotificationTableViewCell
+    self.tableView.rowHeight = 120; // change this number whenever you change the ui in NotificationTableViewCell
     
+    [self setNotificationsData];
     // we want to show the notifications in the reverse chronological order: the last
     // one should be displayed first
 //    notificationsInReverseChronological = [[[[[DataModel sharedDataModelManager] notifications]
 //                                             reverseObjectEnumerator] allObjects] mutableCopy];
-    notificationsInReverseChronological = [[[DataModel sharedDataModelManager] notifications]  mutableCopy];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -99,21 +106,18 @@
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated
-{
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
     return 1;
 }
@@ -124,43 +128,55 @@
     return notificationsInReverseChronological.count;
 }
 
-- (NotificationTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"NotificationCell";
-    NotificationTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"NotificationTableViewCell" owner:nil options:nil];
-        
-        for (id currentObject in topLevelObjects)
-        {
-            if ([currentObject isKindOfClass:[UITableViewCell class]])
-            {
-                cell = (NotificationTableViewCell *) currentObject;
-                break;
-            }
-        }
-        
-//        [TapTalkLooks setBackgroundImage:cell.contentView];
-        [TapTalkLooks setToTapTalkLooks:cell.contentView isActionButton:NO makeItRound:NO];
-        [TapTalkLooks setToTapTalkLooks:cell.alertMessage isActionButton:NO makeItRound:NO];
+    static NSString *simpleTableIdentifier = @"DetailBusinessVCTableViewCell";
+    DetailBusinessVCTableViewCell *cell = (DetailBusinessVCTableViewCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    if (cell == nil)
+    {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"DetailBusinessVCTableViewCell" owner:self options:nil];
+        cell = [nib objectAtIndex:0];
     }
     
-    // Configure the cell...
-    NSDictionary *notification = [notificationsInReverseChronological objectAtIndex:indexPath.row];
-    cell.sender.text = [notification objectForKey:@"sender"];
-    cell.alertMessage.text = [notification objectForKey:@"alert"];
+    Business *biz1 = [[Business alloc] initWithDataFromDatabase:[self.notificationsInReverseChronological objectAtIndex:indexPath.row]];
     
-    NSDateFormatter *formatter = [NSDateFormatter new];
-    [formatter setDateFormat:@"MMM dd, yyyy hh:mm a"];
-    NSString *timeString = [formatter stringFromDate:[notification objectForKey:@"dateTimeRecieved"]];
-    cell.dateAdded.text = timeString;
+    cell.lblOpenCloseDate.text =[[APIUtility sharedInstance]getOpenCloseTime:biz1.opening_time CloseTime:biz1.closing_time];
     
-    //get image url from notification image name
-    NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:[notification objectForKey:@"imageName"]];
-    NSURL *imageURL = [NSURL URLWithString:imageURLString];
-    [cell.businessNotificationIcon Compatible_setImageWithURL:imageURL placeholderImage:nil];
- 
-    formatter = nil;
+    NSString *tmpIconName = biz1.iconRelativeURL;
+    if (tmpIconName != (id)[NSNull null] && tmpIconName.length != 0 )
+    {
+        NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:tmpIconName];
+        NSURL *imageURL = [NSURL URLWithString:imageURLString];
+        [[cell imgBusinessIcon] Compatible_setImageWithURL:imageURL placeholderImage:nil];
+    }
+    
+    cell.rateView.notSelectedImage = [UIImage imageNamed:@"Star.png"];
+    cell.rateView.halfSelectedImage = [UIImage imageNamed:@"Star_Half_Empty.png"];
+    cell.rateView.fullSelectedImage = [UIImage imageNamed:@"Star_Filled.png"];
+    cell.rateView.rating = 0;
+    cell.rateView.editable = NO;
+    cell.rateView.maxRating = 5;
+    
+    cell.titleLabel.text = biz1.title;
+    cell.subtitleLabel.text = biz1.address;
+    cell.bussinessType.text = biz1.businessTypes;
+    cell.bussinessAddress.text = biz1.neighborhood;
+    
+    cell.distance.text = [NSString stringWithFormat:@"%.1f m",[[AppData sharedInstance]getDistance:biz1.lat longitude:biz1.lng]];
+    cell.rateView.rating = [biz1.rating floatValue];
+    
+    if([[APIUtility sharedInstance]isOpenBussiness:biz1.opening_time CloseTime:biz1.closing_time]){
+        cell.lblOpenClose.text = @"OPEN NOW";
+        cell.lblOpenClose.textColor = [UIColor greenColor];
+    }else{
+        cell.lblOpenClose.text = @"CLOSE";
+        cell.lblOpenClose.textColor = [UIColor redColor];
+    }
+    
+    cell.btnFevorite.tag = indexPath.row;
+    [cell.btnFevorite  addTarget:self action:@selector(FevoriteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+
+    
     return cell;
 }
 
@@ -188,40 +204,126 @@
     }   
 }
 
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return  120;
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+- (IBAction)FevoriteButtonClicked:(UIButton *) sender
 {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Table view delegate
-
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-
-    // Pass the selected object to the new view controller.
+//    NSInteger index = sender.tag;
+//    Business *business = [[Business alloc] initWithDataFromDatabase:[self.bussinessListByBranch objectAtIndex:index]];
     
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
+    if(sender.selected) {
+//        [self setFavoriteAPICallWithBusinessId:[NSString stringWithFormat:@"%d",business.businessID] rating:@"0"];
+        sender.selected = false;
+    }
+    else {
+//        [self setFavoriteAPICallWithBusinessId:[NSString stringWithFormat:@"%d",business.businessID] rating:@"5"];
+        sender.selected = true;
+    }
 }
- 
- */
+
+#pragma mark - Custom Methods
+
+- (void) setNotificationsData {
+    NSDictionary *business1 = @{
+                                @"active" : @"1",
+                                @"address" : @"Price dropped by 10%",
+                                @"bg_image" : @"koi_bg_image.png",
+                                @"branch" : @"0",
+                                @"businessID" : @"1",
+                                @"businessTypes" : @"Mobile Food",
+                                @"chat_masters" : @"[{\n    \"id\": \"1234567853\",\n    \"business_name\": \"KOI Fusion\"\n}]",
+                                @"chatroom_table" : @"chatitems_koi",
+                                @"city" : @"Portland",
+                                @"closing_time" : @"13:00:00",
+                                @"customerProfileName" : @"mobile food",
+                                @"date_added" : @"2015-12-26",
+                                @"date_dropped" : @"<null>",
+                                @"description" : @"Beta customer",
+                                @"email" : @"<null>",
+                                @"exclusive" : @"0",
+                                @"external_reference_no" : @"<null>",
+                                @"hours" : @"",
+                                @"icon" : @"KoiFusion_logo.png",
+                                @"inquiry_for_product" : @"0",
+                                @"lat" : @"45.55409990",
+                                @"lng" : @"-122.83644930",
+                                @"map_image_url" : @"<null>",
+                                @"marketing_statement" : @"Authentic Korean Flavors with a Twist",
+                                @"name" : @"KOI Fusion",
+                                @"neighborhood" : @"Portland",
+                                @"opening_time" : @"11:00:00",
+                                @"operating_hours" : @"<null>",
+                                @"payment_processing_email" : @"<null>",
+                                @"payment_processing_id" : @"<null>",
+                                @"phone" : @"415-867-6326",
+                                @"pictures" : @"koi_food1.jpg, koi_food2.jpg, koi_food3.jpg, koi_food4.jpg, koi_food5.jpg, koi_food6.jpg",
+                                @"rating" : @"4",
+                                @"short_name" : @"KOI",
+                                @"should_tip" : @"1",
+                                @"sms_no" : @"415-867-6326",
+                                @"state" : @"OR",
+                                @"ti_rating" : @"0",
+                                @"validate_chat" : @"0",
+                                @"website" : @"http://koifusionpdx.com",
+                                @"zipcode" : @"97229",
+                                };
+    
+    NSDictionary *business2 = @{
+                                @"active" : @"1",
+                                @"address" : @"Every thing at flat 15% discount",
+                                @"bg_image" : @"koi_bg_image.png",
+                                @"branch" : @"0",
+                                @"businessID" : @"1",
+                                @"businessTypes" : @"Mobile Food",
+                                @"chat_masters" : @"[{\n    \"id\": \"1234567853\",\n    \"business_name\": \"KOI Fusion\"\n}]",
+                                @"chatroom_table" : @"chatitems_koi",
+                                @"city" : @"Portland",
+                                @"closing_time" : @"13:00:00",
+                                @"customerProfileName" : @"mobile food",
+                                @"date_added" : @"2015-12-26",
+                                @"date_dropped" : @"<null>",
+                                @"description" : @"Beta customer",
+                                @"email" : @"<null>",
+                                @"exclusive" : @"0",
+                                @"external_reference_no" : @"<null>",
+                                @"hours" : @"",
+                                @"icon" : @"KoiFusion_logo.png",
+                                @"inquiry_for_product" : @"0",
+                                @"lat" : @"45.55409990",
+                                @"lng" : @"-122.83644930",
+                                @"map_image_url" : @"<null>",
+                                @"marketing_statement" : @"Authentic Korean Flavors with a Twist",
+                                @"name" : @"Grocery",
+                                @"neighborhood" : @"Portland",
+                                @"opening_time" : @"11:00:00",
+                                @"operating_hours" : @"<null>",
+                                @"payment_processing_email" : @"<null>",
+                                @"payment_processing_id" : @"<null>",
+                                @"phone" : @"415-867-6326",
+                                @"pictures" : @"koi_food1.jpg, koi_food2.jpg, koi_food3.jpg, koi_food4.jpg, koi_food5.jpg, koi_food6.jpg",
+                                @"rating" : @"4",
+                                @"short_name" : @"KOI",
+                                @"should_tip" : @"1",
+                                @"sms_no" : @"415-867-6326",
+                                @"state" : @"OR",
+                                @"ti_rating" : @"0",
+                                @"validate_chat" : @"0",
+                                @"website" : @"http://koifusionpdx.com",
+                                @"zipcode" : @"97229",
+                                };
+
+    
+    [notificationsInReverseChronological addObject:business1];
+    [notificationsInReverseChronological addObject:business2];
+    
+    NSLog(@"%ld",[notificationsInReverseChronological count]);
+    
+//    notificationsInReverseChronological = [[[DataModel sharedDataModelManager] notifications]  mutableCopy];
+    [self.tableView reloadData];
+
+}
 
 
 //TODO

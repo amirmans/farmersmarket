@@ -64,6 +64,7 @@
 }
 
 - (void)saveUserChoices {
+    
     NSUserDefaults *profileValues = [NSUserDefaults standardUserDefaults];
     bool boolValue = nameButton.isSelected;
     [profileValues setBool:boolValue forKey:NAME];

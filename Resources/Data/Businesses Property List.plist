@@ -100,7 +100,7 @@
 		<dict>
 			<key>Tap For All</key>
 			<array>
-				<string>Order Food &amp; Drink</string>
+				<string>Order Food</string>
 				<string>Request Service</string>
 				<string>Events Calendar</string>
 			</array>

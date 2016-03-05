@@ -12,19 +12,22 @@
 
 @class Business;
 
-@interface BillPayViewController : UIViewController <STPPaymentCardTextFieldDelegate, UIAlertViewDelegate, UITextFieldDelegate> {
+@interface BillPayViewController : UIViewController <STPPaymentCardTextFieldDelegate, UIAlertViewDelegate, UITextFieldDelegate, UITableViewDataSource,UITableViewDelegate> {
     
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil withAmount:(NSDecimalNumber *)amt forBusiness:(Business *)biz;
 
 
-@property STPPaymentCardTextField* paymentView;
+//@property STPPaymentCardTextField* paymentView;
+@property (strong, nonatomic) IBOutlet STPPaymentCardTextField *paymentView;
+
 @property (strong, nonatomic) STPCard* stripeCard;
 
-@property (strong, nonatomic) STPPaymentCardTextField* paymentTextField;
+//@property (strong, nonatomic) STPPaymentCardTextField* paymentTextField;
 
 @property (strong, nonatomic) IBOutlet UITextField *amountTextField;
+@property (strong, nonatomic) IBOutlet UITextField *txtZipCode;
 @property (weak, nonatomic) IBOutlet UIButton *payButton;
 @property (weak, nonatomic) IBOutlet UIButton *changeCardButton;
 
@@ -33,6 +36,9 @@
 
 @property (nonatomic, weak) Business* business;
 @property (nonatomic, weak) NSDecimalNumber* totalBillInDollars;
+
+@property (strong, nonatomic) IBOutlet UITableView *cardsTable;
+
 
 //@property (nonatomic, weak) id<STPBackendCharging> backendCharger;
 

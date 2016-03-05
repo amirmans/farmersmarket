@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ServicesTableViewCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UIImageView *iconImage;
 
 @property (weak, nonatomic) IBOutlet UITextView *serviceTextView;

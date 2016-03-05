@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SavedCardTableCell" rowHeight="36" id="KGk-i7-Jjw" customClass="SavedCardTableCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="36"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card No:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2lk-aR-3e5">
+                        <rect key="frame" x="14" y="8" width="71" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="2hY-pi-qqd"/>
+                            <constraint firstAttribute="width" constant="71" id="6Nd-tU-het"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XXXX XXXX XXXX XXXX" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xm1-Rh-ppg">
+                        <rect key="frame" x="93" y="8" width="219" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="HZp-Us-rNS"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Month/Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ts0-tz-OxN">
+                        <rect key="frame" x="14" y="44" width="298" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="CVC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h00-T3-QtR">
+                        <rect key="frame" x="14" y="80" width="298" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="xm1-Rh-ppg" secondAttribute="trailing" constant="8" id="LSi-4O-w24"/>
+                    <constraint firstItem="2lk-aR-3e5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="cFe-jG-i5R"/>
+                    <constraint firstItem="2lk-aR-3e5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="eBw-gC-Xbu"/>
+                    <constraint firstItem="xm1-Rh-ppg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="gbN-q8-XEJ"/>
+                    <constraint firstItem="xm1-Rh-ppg" firstAttribute="leading" secondItem="2lk-aR-3e5" secondAttribute="trailing" constant="8" id="okT-Ez-XF8"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="lblCVC" destination="h00-T3-QtR" id="jQq-7W-egi"/>
+                <outlet property="lblCardNo" destination="xm1-Rh-ppg" id="AQo-8W-g8o"/>
+                <outlet property="lblMonthYear" destination="Ts0-tz-OxN" id="gJX-kr-wBE"/>
+            </connections>
+            <point key="canvasLocation" x="514" y="387"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -7,14 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "RateView.h"
 @interface BusinessTableViewCell : UITableViewCell {
     
 }
 
-@property (weak, nonatomic) IBOutlet UITextField *businessNameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *businessTypesTextField;
-@property (weak, nonatomic) IBOutlet UITextField *neighborhoodTextField;
 @property (weak, nonatomic) IBOutlet UIImageView *businessIconImageView;
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic) IBOutlet UILabel *subtitleLabel;
+@property (strong, nonatomic) IBOutlet RateView *rateView;
+@property (strong, nonatomic) IBOutlet UILabel *businessType;
+@property (strong, nonatomic) IBOutlet UILabel *businessAddress;
+@property (strong, nonatomic) IBOutlet UILabel *distance;
 
 @end
