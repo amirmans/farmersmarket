@@ -7,6 +7,8 @@
 #define LoadChatServer @"http://amirmansoury.com/chatrooms/loadchatmessages.php"
 #define ChatSystemServer @"http://amirmansoury.com/chatsystem/index.php"
 //#define ChatSystemServer @"http://127.0.0.1/TapForAll/chatsystem/index.php"
+//#define OrderServerURL @"http://tapit-servers.dev/businessinfo/model.php"
+#define OrderServerURL @"http://www.amirmansoury.com/include/model.php"
 #define MaxRowsForLoadingChatMessages 150 // max number of messages
 #define TimeIntervalForLoadingChatMessages 1440 //Hours - 1440 means 2 months
 #define ChatValidationWorkflow_NoNeedToValidate 0
@@ -14,16 +16,15 @@
 #define ChatValidationWorkflow_Validated 2
 #define ChatValidationWorkflow_Not_Valid 3
 #define ChatValidationWorkflow_ErrorFromServer -1
-
-
 #define BusinessInformationServer @"http://amirmansoury.com/businessinfo/index.php"
 #define ConsumerProfileServer @"http://amirmansoury.com/profilesystem/consumerprofile.php"
-
-#define SetFavoriteServer @"http://www.amirmansoury.com//include/model/model.php"
-
+#define SetFavoriteServer @"http://www.amirmansoury.com/include/model/model.php"
+#define GetRewardPoints @"http://www.amirmansoury.com/include/model.php"
 
 //data directories
+
 #define BusinessCustomerIndividualDirectory @"http://amirmansoury.com/customer_files/"
+#define BusinessCustomerIndividualDirectory_ProductItems @"products"
 #define BusinessCustomerIconDirectory @"http://amirmansoury.com/customer_files/icons/"
 #define BusinessCustomerBGImageDirectory @"http://amirmansoury.com/customer_files/bg_images/"
 #define QRImageDomain @"http://amirmansoury.com/consumer_files/qr_images/"

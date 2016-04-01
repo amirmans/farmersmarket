@@ -37,6 +37,31 @@ static APIUtility *sharedObj;
     [AppData showAlert:@"Message" message:@"No internet connection" buttonTitle:@"Ok"];
 }
 
+
+- (void)orderToServer:(NSDictionary *)data server:(NSString *)url completiedBlock:(void (^)(NSDictionary *response))finished
+{
+    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+    {
+        return;
+    }
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+
+    [manager POST:url
+       parameters:data
+          success:^(NSURLSessionDataTask *task, id responseObject) {
+              NSLog(@"JSON: %@", responseObject);
+          }
+          failure:^(NSURLSessionDataTask *task, NSError *error) {
+              
+              NSLog(@"Error in sending order to the server: %@", error.description);
+          }];
+}
+
+
+
+
 -(void)BusinessListAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished
 {
     if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
@@ -77,7 +102,7 @@ static APIUtility *sharedObj;
         return;
     }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager POST:[NSString stringWithFormat:@"%@",SetFavoriteServer] parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:[NSString stringWithFormat:@"%@",SetFavoriteServer] parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"get %@", responseObject);
         if (finished) {
             finished((NSDictionary*)responseObject);
@@ -102,6 +127,40 @@ static APIUtility *sharedObj;
         }
     }];
 }
+
+
+-(void)getRevardpointsForBusiness:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished {
+    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+    {
+        return;
+    }
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"get %@", responseObject);
+        if (finished) {
+            finished((NSDictionary*)responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
+        NSDictionary *temp = @{};
+        
+        if([error code] == -1004) {
+            
+            if (finished) {
+                finished(dic);
+            }
+        }
+        else
+        {
+            if (finished) {
+                finished(temp);
+            }
+        }
+    }];
+}
+
 
 
 - (NSString *) GMTToLocalTime: (NSString *)GMTTime{

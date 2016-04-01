@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TPRewardPointController">
             <connections>
+                <outlet property="lblLevel" destination="VjO-3d-TGV" id="dw9-ig-gRD"/>
+                <outlet property="lblPoints" destination="e30-gc-ob7" id="21f-8m-iuF"/>
                 <outlet property="tableView" destination="gAf-Yq-G2U" id="Squ-MZ-gnG"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -96,16 +98,40 @@
                                 <constraint firstAttribute="width" constant="115" id="x0S-AW-302"/>
                             </constraints>
                         </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e30-gc-ob7">
+                            <rect key="frame" x="109" y="69" width="103" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="103" id="N0n-zd-NCh"/>
+                                <constraint firstAttribute="height" constant="21" id="xZY-ex-zSg"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VjO-3d-TGV">
+                            <rect key="frame" x="109" y="90" width="103" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="3nb-nc-QdC"/>
+                                <constraint firstAttribute="width" constant="103" id="JoX-bl-ewb"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" red="0.2901960784" green="0.70588235290000001" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstItem="e30-gc-ob7" firstAttribute="top" secondItem="1TN-x8-Thi" secondAttribute="top" constant="69" id="0Ru-eO-asF"/>
                         <constraint firstItem="LeH-Xa-0hV" firstAttribute="top" secondItem="c7M-Vv-SmE" secondAttribute="bottom" constant="8" id="3mh-pN-dcu"/>
+                        <constraint firstItem="e30-gc-ob7" firstAttribute="centerX" secondItem="1TN-x8-Thi" secondAttribute="centerX" id="5Rt-7j-ajV"/>
                         <constraint firstItem="c7M-Vv-SmE" firstAttribute="top" secondItem="dwX-uw-kg7" secondAttribute="bottom" id="C7c-G9-2RT"/>
                         <constraint firstItem="dwX-uw-kg7" firstAttribute="centerX" secondItem="1TN-x8-Thi" secondAttribute="centerX" constant="-0.5" id="DSZ-oD-Fc1"/>
                         <constraint firstAttribute="height" constant="286" id="DTK-0Z-EQK"/>
                         <constraint firstItem="c7M-Vv-SmE" firstAttribute="centerX" secondItem="1TN-x8-Thi" secondAttribute="centerX" id="ISr-sy-Hpi"/>
                         <constraint firstItem="dwX-uw-kg7" firstAttribute="top" secondItem="1TN-x8-Thi" secondAttribute="top" constant="22" id="a0v-rL-sbU"/>
                         <constraint firstItem="LeH-Xa-0hV" firstAttribute="centerX" secondItem="1TN-x8-Thi" secondAttribute="centerX" id="isz-be-t5X"/>
+                        <constraint firstItem="VjO-3d-TGV" firstAttribute="top" secondItem="e30-gc-ob7" secondAttribute="bottom" id="jHp-pg-zYo"/>
+                        <constraint firstItem="VjO-3d-TGV" firstAttribute="centerX" secondItem="1TN-x8-Thi" secondAttribute="centerX" id="jzh-Q4-7qr"/>
                         <constraint firstItem="UJj-5f-hn1" firstAttribute="centerX" secondItem="1TN-x8-Thi" secondAttribute="centerX" id="q29-5h-MpR"/>
                         <constraint firstItem="UJj-5f-hn1" firstAttribute="top" secondItem="LeH-Xa-0hV" secondAttribute="bottom" constant="8" id="z1K-0p-WxF"/>
                     </constraints>

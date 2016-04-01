@@ -19,16 +19,20 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="JEF-X8-ZUf">
-                    <rect key="frame" x="141" y="183" width="37" height="37"/>
+                    <rect key="frame" x="141" y="266" width="37" height="37"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="37" id="02f-q6-A17"/>
+                        <constraint firstAttribute="height" constant="37" id="gW7-c2-LMO"/>
+                    </constraints>
                 </activityIndicatorView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YS2-Hn-a0P" customClass="GMSMapView">
                     <rect key="frame" x="0.0" y="64" width="320" height="228"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="228" id="BW1-aM-Lcj"/>
+                        <constraint firstAttribute="height" constant="228" id="hq8-Yr-drc"/>
                     </constraints>
                 </view>
-                <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFit" bouncesZoom="NO" style="plain" separatorStyle="none" rowHeight="130" sectionHeaderHeight="20" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="4">
+                <tableView autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFit" bouncesZoom="NO" style="plain" separatorStyle="none" rowHeight="130" sectionHeaderHeight="20" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="4">
                     <rect key="frame" x="0.0" y="292" width="320" height="276"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
@@ -39,15 +43,15 @@
             </subviews>
             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="4" secondAttribute="bottom" id="8hn-tR-gFd"/>
-                <constraint firstAttribute="trailing" secondItem="YS2-Hn-a0P" secondAttribute="trailing" id="Dgk-DV-yhn"/>
-                <constraint firstItem="4" firstAttribute="centerX" secondItem="JEF-X8-ZUf" secondAttribute="centerX" id="LdD-A1-jnw"/>
-                <constraint firstItem="4" firstAttribute="top" secondItem="YS2-Hn-a0P" secondAttribute="bottom" id="Q4k-t3-HzZ"/>
-                <constraint firstItem="YS2-Hn-a0P" firstAttribute="leading" secondItem="AG0-dN-m2b" secondAttribute="leading" id="V5a-TH-C8W"/>
-                <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" id="WGy-3O-ZdB"/>
-                <constraint firstItem="YS2-Hn-a0P" firstAttribute="top" secondItem="AG0-dN-m2b" secondAttribute="top" constant="64" id="pas-ub-dQm"/>
-                <constraint firstItem="JEF-X8-ZUf" firstAttribute="top" secondItem="AG0-dN-m2b" secondAttribute="top" constant="183" id="tbX-LA-BQd"/>
-                <constraint firstItem="4" firstAttribute="leading" secondItem="AG0-dN-m2b" secondAttribute="leading" id="uEf-Wm-qiR"/>
+                <constraint firstItem="YS2-Hn-a0P" firstAttribute="top" secondItem="AG0-dN-m2b" secondAttribute="top" constant="64" id="85j-C9-7ll"/>
+                <constraint firstItem="4" firstAttribute="top" secondItem="YS2-Hn-a0P" secondAttribute="bottom" id="APj-Of-njF"/>
+                <constraint firstItem="JEF-X8-ZUf" firstAttribute="centerX" secondItem="AG0-dN-m2b" secondAttribute="centerX" id="CGm-ms-EGV"/>
+                <constraint firstItem="YS2-Hn-a0P" firstAttribute="leading" secondItem="AG0-dN-m2b" secondAttribute="leading" id="Ki4-DQ-ycl"/>
+                <constraint firstItem="JEF-X8-ZUf" firstAttribute="centerY" secondItem="AG0-dN-m2b" secondAttribute="centerY" id="Rb4-aO-ARh"/>
+                <constraint firstAttribute="trailing" secondItem="YS2-Hn-a0P" secondAttribute="trailing" id="Ygv-xo-3yK"/>
+                <constraint firstAttribute="bottom" secondItem="4" secondAttribute="bottom" id="kG9-o6-fBR"/>
+                <constraint firstAttribute="trailing" secondItem="4" secondAttribute="trailing" id="kOK-hU-DaW"/>
+                <constraint firstItem="4" firstAttribute="leading" secondItem="AG0-dN-m2b" secondAttribute="leading" id="xrt-YD-yKL"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <point key="canvasLocation" x="247" y="354"/>

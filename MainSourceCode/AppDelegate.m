@@ -95,13 +95,13 @@ static AppDelegate *sharedObj;
     enterBusinessNav.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     listTableView = nil;
 
-    // messages from others
-    UIImage *messagesImage = [UIImage imageNamed:@"ic_messages_normal.png"];
-    UITabBarItem *chatTabBar = [[UITabBarItem alloc] initWithTitle:@"Messages" image:messagesImage tag:1];
-    ChatMessagesViewController *chatViewContoller = [[ChatMessagesViewController alloc] initWithNibName:nil bundle:nil];
-    chatViewContoller.tabBarItem = chatTabBar;
-    chatTabBar.selectedImage = [UIImage  imageNamed:@"ic_messages_selected.png"];
-    UINavigationController *chatNav = [[UINavigationController alloc] initWithRootViewController:chatViewContoller];
+    // messages from others - chat to be offered in the next release
+//    UIImage *messagesImage = [UIImage imageNamed:@"ic_messages_normal.png"];
+//    UITabBarItem *chatTabBar = [[UITabBarItem alloc] initWithTitle:@"Messages" image:messagesImage tag:1];
+//    ChatMessagesViewController *chatViewContoller = [[ChatMessagesViewController alloc] initWithNibName:nil bundle:nil];
+//    chatViewContoller.tabBarItem = chatTabBar;
+//    chatTabBar.selectedImage = [UIImage  imageNamed:@"ic_messages_selected.png"];
+//    UINavigationController *chatNav = [[UINavigationController alloc] initWithRootViewController:chatViewContoller];
 
     //consumer profile tab
     UIImage *profileTabBarImage = [UIImage imageNamed:@"ic_profile_normal.png"];
@@ -132,7 +132,7 @@ static AppDelegate *sharedObj;
     TPRewardPointController *payViewController = [[TPRewardPointController alloc] initWithNibName:nil bundle:nil];
     UITabBarItem *payTabBar = [[UITabBarItem alloc] initWithTitle:@"Reward" image:payImage tag:4];
     payTabBar.selectedImage = [UIImage imageNamed:@"ic_pay_selected.png"];
-    [payTabBar setBadgeValue:@"10"];
+    [payTabBar setBadgeValue:@"1"];
 //    payTabBar.
     payViewController.tabBarItem = payTabBar;
 
@@ -148,7 +148,7 @@ static AppDelegate *sharedObj;
     // setup main window with the tabbarcontroller
     self.tt_tabBarController = [[UITabBarController alloc] init];
 //    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, chatNav, consumerProfileViewController, notificationNav, payViewController, nil];
-    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, chatNav, profileNav, notificationNav, payViewController, nil];
+    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, /*chatNav,*/ profileNav, notificationNav, payViewController, nil];
     
     self.tt_tabBarController.tabBar.tintColor = [UIColor whiteColor];
     self.tt_tabBarController.tabBar.backgroundImage = [UIImage imageNamed:@"bgTabBar.png"];
@@ -161,13 +161,12 @@ static AppDelegate *sharedObj;
     locationImage = nil;
     profileTabBarImage = nil;
     notificationImage = nil;
-    messagesImage = nil;
+    /*messagesImage = nil;  chat to be offered in the next release */
     
     #ifdef __IPHONE_8_0
     [[UIApplication sharedApplication] registerForRemoteNotifications];
     UIUserNotificationType notifictionTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
     UIUserNotificationSettings *notificationSetting = [UIUserNotificationSettings settingsForTypes:notifictionTypes categories:nil];
-     
     [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSetting];
 
     #else
@@ -202,9 +201,7 @@ static AppDelegate *sharedObj;
     NSString *myString = [NSString stringWithFormat:[CLLocationManager locationServicesEnabled] ? @"YES" : @"NO"];
     NSLog(@"%@",myString);
     NSLog(@"LocationManagerStatus %i",[CLLocationManager authorizationStatus]);
-    
-    
-    
+   
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
@@ -218,7 +215,6 @@ static AppDelegate *sharedObj;
     [defaults setObject:[NSNumber numberWithDouble:location.coordinate.longitude] forKey:@"longitude"];
     [defaults synchronize];
 }
-
 
 //- (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
 //    UIApplicationState state = [application applicationState];
@@ -238,7 +234,6 @@ static AppDelegate *sharedObj;
      Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
      */
 }
-
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     /*
@@ -288,6 +283,10 @@ static AppDelegate *sharedObj;
 -(NSArray *)getRecord
 {
     NSFetchRequest *fetchreq=[[NSFetchRequest alloc]init];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"productname" ascending:YES selector:@selector(localizedStandardCompare:)];
+
+    [fetchreq setSortDescriptors:@[sortDescriptor]];
     
     NSEntityDescription *entity=[NSEntityDescription entityForName:@"MyCartItem" inManagedObjectContext:self.managedObjectContext];
     
@@ -367,6 +366,19 @@ static AppDelegate *sharedObj;
             [nav popToRootViewControllerAnimated:YES];
             returnVal = TRUE;
         }
+    }
+    
+    if (tabBarController.tabBar.selectedItem.tag == 4) {
+        Business *b =   [CurrentBusiness sharedCurrentBusinessManager].business;
+        if(b.businessName == nil){
+         [UIAlertController showErrorAlert:@"Please enter a business first."];
+            returnVal = FALSE;
+
+        }else if ([DataModel sharedDataModelManager].nickname.length < 1) {
+            [UIAlertController showErrorAlert:@"You don't have a nickname yet.  Please go to the profile page and get one."];
+            returnVal = FALSE;
+        }
+   
     }
 
     return returnVal;
@@ -566,11 +578,11 @@ static AppDelegate *sharedObj;
 
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    
+
     for (id key in userInfo) {
         NSLog(@"key: %@, value: %@", key, [userInfo objectForKey:key]);
+        NSLog(@"%@",[[userInfo objectForKey:key]valueForKey:@"type"]);
     }
-
     [self doUpdateForRemoteNotification:userInfo updateUI:YES];
     
 }

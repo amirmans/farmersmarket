@@ -8,15 +8,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DetailBusinessViewControllerII">
             <connections>
                 <outlet property="activityIndicator" destination="75" id="76"/>
-                <outlet property="contactInfo" destination="0wP-ZA-JSi" id="HMH-yA-0co"/>
                 <outlet property="detailTableView" destination="ZhA-ul-kRe" id="W60-V7-YcU"/>
-                <outlet property="enterAndGetService" destination="57" id="A3f-1Z-jNI"/>
                 <outlet property="mapView" destination="rrM-pp-g4G" id="yWk-Gb-WKf"/>
-                <outlet property="rating" destination="71" id="72"/>
-                <outlet property="ratingLabel" destination="70" id="RjC-Yx-aLB"/>
                 <outlet property="view" destination="56" id="58"/>
                 <outlet property="viewMap" destination="Blf-cF-c3S" id="aEZ-5b-qaa"/>
-                <outlet property="voteTobeCustomerButton" destination="prn-ds-S18" id="84w-CL-geF"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -24,54 +19,12 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <button hidden="YES" opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" highlighted="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="57">
-                    <rect key="frame" x="90" y="480" width="140" height="30"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                    <state key="normal" title="Enter"/>
-                    <state key="highlighted">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="enterAndGetServiceAction:" destination="-1" eventType="touchUpInside" id="Adl-PK-9WQ"/>
-                    </connections>
-                </button>
-                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="75">
-                    <rect key="frame" x="142" y="154" width="37" height="37"/>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="75">
+                    <rect key="frame" x="142" y="157" width="37" height="37"/>
                     <color key="color" red="0.74117647060000003" green="0.69411764710000001" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
                 </activityIndicatorView>
-                <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0wP-ZA-JSi">
-                    <rect key="frame" x="0.0" y="211" width="302" height="145"/>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <color key="tintColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                    <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
-                </textView>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="prn-ds-S18">
-                    <rect key="frame" x="65" y="479" width="189" height="34"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <state key="normal" title="History"/>
-                    <connections>
-                        <action selector="voteTobeCustomerAction:" destination="-1" eventType="touchUpInside" id="yhm-99-Tev"/>
-                    </connections>
-                </button>
-                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Rating:" lineBreakMode="tailTruncation" baselineAdjustment="none" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="70">
-                    <rect key="frame" x="88" y="422" width="54" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <textField hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="71">
-                    <rect key="frame" x="163" y="421" width="64" height="28"/>
-                    <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
                 <mapView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="rrM-pp-g4G">
                     <rect key="frame" x="0.0" y="64" width="320" height="223"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="223" id="oe4-ur-JI0"/>
-                    </constraints>
                 </mapView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Blf-cF-c3S">
                     <rect key="frame" x="0.0" y="64" width="320" height="223"/>
@@ -87,17 +40,20 @@
                 </tableView>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="ZhA-ul-kRe" secondAttribute="trailing" id="9Vq-Zj-qJu"/>
-                <constraint firstItem="rrM-pp-g4G" firstAttribute="leading" secondItem="56" secondAttribute="leading" id="DrX-HF-vVF"/>
-                <constraint firstItem="Blf-cF-c3S" firstAttribute="top" secondItem="56" secondAttribute="top" constant="64" id="Gca-Ci-FGz"/>
-                <constraint firstItem="ZhA-ul-kRe" firstAttribute="leading" secondItem="56" secondAttribute="leading" id="TZk-yi-t8z"/>
-                <constraint firstAttribute="bottom" secondItem="ZhA-ul-kRe" secondAttribute="bottom" id="Vst-Yy-Itd"/>
-                <constraint firstItem="ZhA-ul-kRe" firstAttribute="top" secondItem="Blf-cF-c3S" secondAttribute="bottom" id="Yh0-bV-eGq"/>
-                <constraint firstItem="rrM-pp-g4G" firstAttribute="top" secondItem="56" secondAttribute="top" constant="64" id="o4X-nN-ylg"/>
-                <constraint firstItem="ZhA-ul-kRe" firstAttribute="top" secondItem="rrM-pp-g4G" secondAttribute="bottom" id="tVU-Gh-Anh"/>
-                <constraint firstAttribute="trailing" secondItem="rrM-pp-g4G" secondAttribute="trailing" id="yFy-9D-FRn"/>
-                <constraint firstAttribute="trailing" secondItem="Blf-cF-c3S" secondAttribute="trailing" id="zBi-mX-0xO"/>
-                <constraint firstItem="Blf-cF-c3S" firstAttribute="leading" secondItem="56" secondAttribute="leading" id="zYt-ju-KQb"/>
+                <constraint firstItem="ZhA-ul-kRe" firstAttribute="leading" secondItem="Blf-cF-c3S" secondAttribute="leading" identifier="DTL_ID10" id="4zo-sF-hhu"/>
+                <constraint firstItem="ZhA-ul-kRe" firstAttribute="top" secondItem="75" secondAttribute="bottom" constant="93" identifier="DTL_ID11" id="5HX-oV-o36"/>
+                <constraint firstItem="75" firstAttribute="centerY" secondItem="rrM-pp-g4G" secondAttribute="centerY" identifier="DTL_ID8" id="Bni-ST-m1I"/>
+                <constraint firstItem="ZhA-ul-kRe" firstAttribute="trailing" secondItem="Blf-cF-c3S" secondAttribute="trailing" identifier="DTL_ID12" id="Byd-UH-FKK"/>
+                <constraint firstItem="rrM-pp-g4G" firstAttribute="leading" secondItem="Blf-cF-c3S" secondAttribute="leading" identifier="DTL_ID4" id="Eql-12-iuB"/>
+                <constraint firstItem="Blf-cF-c3S" firstAttribute="top" secondItem="rrM-pp-g4G" secondAttribute="top" identifier="DTL_ID1" id="FqF-tI-2Zb"/>
+                <constraint firstItem="75" firstAttribute="centerX" secondItem="rrM-pp-g4G" secondAttribute="centerX" identifier="DTL_ID9" id="IMV-9F-U22"/>
+                <constraint firstAttribute="trailing" secondItem="rrM-pp-g4G" secondAttribute="trailing" identifier="DTL_ID5" id="LPG-WD-euQ"/>
+                <constraint firstItem="rrM-pp-g4G" firstAttribute="top" secondItem="56" secondAttribute="top" constant="64" identifier="DTL_ID6" id="PQs-G9-awp"/>
+                <constraint firstItem="ZhA-ul-kRe" firstAttribute="top" secondItem="Blf-cF-c3S" secondAttribute="bottom" identifier="DTL_ID13" id="SCj-1j-vcH"/>
+                <constraint firstItem="Blf-cF-c3S" firstAttribute="leading" secondItem="56" secondAttribute="leading" identifier="DTL_ID2" id="WhF-px-JTL"/>
+                <constraint firstItem="Blf-cF-c3S" firstAttribute="bottom" secondItem="rrM-pp-g4G" secondAttribute="bottom" identifier="DTL_ID3" id="bdP-Ef-XUZ"/>
+                <constraint firstAttribute="bottom" secondItem="ZhA-ul-kRe" secondAttribute="bottom" identifier="DTL_ID14" id="lzG-62-M7h"/>
+                <constraint firstItem="rrM-pp-g4G" firstAttribute="trailing" secondItem="Blf-cF-c3S" secondAttribute="trailing" identifier="DTL_ID7" id="m3h-8X-x4h"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <nil key="simulatedBottomBarMetrics"/>

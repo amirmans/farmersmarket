@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "NewNotificationProtocol.h"
 #import "ServerInteractionManager.h"
-
+#import "CurrentBusiness.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate, UITabBarControllerDelegate, UIActionSheetDelegate, PostProcesses, UIApplicationDelegate> {
     IBOutlet UIWindow *window;

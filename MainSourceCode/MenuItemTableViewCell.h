@@ -15,7 +15,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *ImageView;
 @property (strong, nonatomic) IBOutlet UIImageView *Content_back_view;
 @property (strong, nonatomic) IBOutlet UILabel *lbl_title;
-@property (strong, nonatomic) IBOutlet UILabel *lbl_description;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_description;
 @property (strong, nonatomic) IBOutlet UIView *line_view;
 @property (strong, nonatomic) IBOutlet UILabel *lbl_Pts;
 @property (strong, nonatomic) IBOutlet UILabel *lbl_money;

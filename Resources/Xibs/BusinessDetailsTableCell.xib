@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -69,35 +69,35 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="zGY-xA-hXh" firstAttribute="top" secondItem="XWo-Jj-8DT" secondAttribute="top" constant="18" id="1F1-kc-vd6"/>
-                            <constraint firstAttribute="trailing" secondItem="viV-vP-0Cy" secondAttribute="trailing" constant="89" id="32x-2J-xKa"/>
-                            <constraint firstAttribute="bottom" secondItem="viV-vP-0Cy" secondAttribute="bottom" constant="9" id="DaC-hl-CvG"/>
-                            <constraint firstItem="viV-vP-0Cy" firstAttribute="top" secondItem="XWo-Jj-8DT" secondAttribute="top" constant="10" id="IaE-Su-hD0"/>
-                            <constraint firstAttribute="bottom" secondItem="hwj-II-OSd" secondAttribute="bottom" constant="14" id="JFM-jI-hFX"/>
-                            <constraint firstAttribute="width" constant="90" id="Odd-CH-Pq5"/>
-                            <constraint firstItem="viV-vP-0Cy" firstAttribute="leading" secondItem="XWo-Jj-8DT" secondAttribute="leading" id="QRO-kB-FFO"/>
-                            <constraint firstAttribute="trailing" secondItem="zGY-xA-hXh" secondAttribute="trailing" constant="46" id="e8x-KT-pJd"/>
-                            <constraint firstAttribute="trailing" secondItem="hwj-II-OSd" secondAttribute="trailing" constant="3" id="f9l-rY-7Py"/>
-                            <constraint firstItem="zGY-xA-hXh" firstAttribute="leading" secondItem="viV-vP-0Cy" secondAttribute="trailing" constant="8" symbolic="YES" id="nYH-bt-a5U"/>
-                            <constraint firstItem="hwj-II-OSd" firstAttribute="leading" secondItem="viV-vP-0Cy" secondAttribute="trailing" constant="5" id="oZf-D5-fwF"/>
-                            <constraint firstItem="hwj-II-OSd" firstAttribute="top" secondItem="zGY-xA-hXh" secondAttribute="bottom" constant="1" id="pUm-2j-Bjl"/>
-                            <constraint firstAttribute="height" constant="98" id="yAS-Xk-Fbf"/>
+                            <constraint firstItem="zGY-xA-hXh" firstAttribute="top" secondItem="XWo-Jj-8DT" secondAttribute="top" constant="18" identifier="BDC_7" id="1F1-kc-vd6"/>
+                            <constraint firstAttribute="trailing" secondItem="viV-vP-0Cy" secondAttribute="trailing" constant="89" identifier="BDC_3" id="32x-2J-xKa"/>
+                            <constraint firstAttribute="bottom" secondItem="viV-vP-0Cy" secondAttribute="bottom" constant="9" identifier="BDC_4" id="DaC-hl-CvG"/>
+                            <constraint firstItem="viV-vP-0Cy" firstAttribute="top" secondItem="XWo-Jj-8DT" secondAttribute="top" constant="10" identifier="BDC_5" id="IaE-Su-hD0"/>
+                            <constraint firstAttribute="bottom" secondItem="hwj-II-OSd" secondAttribute="bottom" constant="14" identifier="BDC_10" id="JFM-jI-hFX"/>
+                            <constraint firstAttribute="width" constant="90" identifier="BDC_1" id="Odd-CH-Pq5"/>
+                            <constraint firstItem="viV-vP-0Cy" firstAttribute="leading" secondItem="XWo-Jj-8DT" secondAttribute="leading" identifier="BDC_6" id="QRO-kB-FFO"/>
+                            <constraint firstAttribute="trailing" secondItem="zGY-xA-hXh" secondAttribute="trailing" constant="46" identifier="BDC_8" id="e8x-KT-pJd"/>
+                            <constraint firstAttribute="trailing" secondItem="hwj-II-OSd" secondAttribute="trailing" constant="3" identifier="BDC_11" id="f9l-rY-7Py"/>
+                            <constraint firstItem="zGY-xA-hXh" firstAttribute="leading" secondItem="viV-vP-0Cy" secondAttribute="trailing" constant="8" symbolic="YES" identifier="BDC_9" id="nYH-bt-a5U"/>
+                            <constraint firstItem="hwj-II-OSd" firstAttribute="leading" secondItem="viV-vP-0Cy" secondAttribute="trailing" constant="5" identifier="BDC_12" id="oZf-D5-fwF"/>
+                            <constraint firstItem="hwj-II-OSd" firstAttribute="top" secondItem="zGY-xA-hXh" secondAttribute="bottom" constant="1" identifier="BDC_13" id="pUm-2j-Bjl"/>
+                            <constraint firstAttribute="height" constant="98" identifier="BDC_2" id="yAS-Xk-Fbf"/>
                         </constraints>
                     </view>
                 </subviews>
                 <color key="backgroundColor" red="0.29019607843137252" green="0.70588235294117641" blue="0.70588235294117641" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
-                    <constraint firstItem="O7s-CJ-h4x" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="4C4-l0-bLL"/>
-                    <constraint firstItem="7qx-Nq-7oJ" firstAttribute="leading" secondItem="laM-ER-azU" secondAttribute="trailing" constant="20" id="9ca-HG-d74"/>
-                    <constraint firstAttribute="trailing" secondItem="XWo-Jj-8DT" secondAttribute="trailing" id="Dif-hs-tui"/>
-                    <constraint firstItem="laM-ER-azU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="EcG-Bp-V7d"/>
-                    <constraint firstItem="laM-ER-azU" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="TcY-fk-YYa"/>
-                    <constraint firstAttribute="trailing" secondItem="O7s-CJ-h4x" secondAttribute="trailing" id="cdG-PA-oBa"/>
-                    <constraint firstAttribute="bottom" secondItem="O7s-CJ-h4x" secondAttribute="bottom" constant="-1" id="hCA-WK-rvA"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="7qx-Nq-7oJ" secondAttribute="bottom" constant="21" id="kAt-eQ-gLZ"/>
-                    <constraint firstItem="7qx-Nq-7oJ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="tAk-RK-QUJ"/>
-                    <constraint firstItem="XWo-Jj-8DT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="yaJ-7I-tKq"/>
-                    <constraint firstAttribute="trailing" secondItem="7qx-Nq-7oJ" secondAttribute="trailing" constant="10" id="ywI-j7-YGa"/>
+                    <constraint firstItem="O7s-CJ-h4x" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" identifier="BDC_26" id="4C4-l0-bLL"/>
+                    <constraint firstItem="7qx-Nq-7oJ" firstAttribute="leading" secondItem="laM-ER-azU" secondAttribute="trailing" constant="20" identifier="BDC_22" id="9ca-HG-d74"/>
+                    <constraint firstAttribute="trailing" secondItem="XWo-Jj-8DT" secondAttribute="trailing" identifier="BDC_29" id="Dif-hs-tui"/>
+                    <constraint firstItem="laM-ER-azU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" identifier="BDC_20" id="EcG-Bp-V7d"/>
+                    <constraint firstItem="laM-ER-azU" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" identifier="BDC_21" id="TcY-fk-YYa"/>
+                    <constraint firstAttribute="trailing" secondItem="O7s-CJ-h4x" secondAttribute="trailing" identifier="BDC_27" id="cdG-PA-oBa"/>
+                    <constraint firstAttribute="bottom" secondItem="O7s-CJ-h4x" secondAttribute="bottom" constant="-1" identifier="BDC_28" id="hCA-WK-rvA"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="7qx-Nq-7oJ" secondAttribute="bottom" constant="21" identifier="BDC_23" id="kAt-eQ-gLZ"/>
+                    <constraint firstItem="7qx-Nq-7oJ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" identifier="BDC_24" id="tAk-RK-QUJ"/>
+                    <constraint firstItem="XWo-Jj-8DT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" identifier="BDC_20" id="yaJ-7I-tKq"/>
+                    <constraint firstAttribute="trailing" secondItem="7qx-Nq-7oJ" secondAttribute="trailing" constant="10" identifier="BDC_25" id="ywI-j7-YGa"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

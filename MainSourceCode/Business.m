@@ -116,7 +116,8 @@
 }
 
 - (void)startLoadingBusinessProductCategoriesAndProducts {
-    NSString *urlString = [NSString stringWithFormat:@"%@?businessID=%i", BusinessInformationServer, businessID];
+    NSString *consumer_id = [NSString stringWithFormat: @"%ld", [DataModel sharedDataModelManager].userID];
+    NSString *urlString = [NSString stringWithFormat:@"%@?businessID=%i&consumer_id=%@", BusinessInformationServer, businessID, consumer_id];
     urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -143,6 +144,8 @@
         [UIAlertController showErrorAlert: @"Error in fetching product items."];
     }
     isProductListLoaded = TRUE;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"GotProductData" object:nil];
+    
 }
 
 

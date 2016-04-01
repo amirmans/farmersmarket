@@ -59,7 +59,7 @@
     int status = [[responseData objectForKey:@"status"] intValue];
         NSAssert(status == 0, @"We could not get list of our businesses");
     businessListArray = [responseData objectForKey:@"data"];
-    NSLog(@"The status is: %i and our list of businesses is: %@", status, businessListArray);
+//    NSLog(@"The status is: %i and our list of businesses is: %@", status, businessListArray);
 }
 
 

@@ -139,7 +139,7 @@ static AppData *sharedObj;
     CLLocation *currentLocation = [[CLLocation alloc] initWithLatitude:[latitudeString doubleValue] longitude:[longitudeString doubleValue]];
     CLLocation *destinationLocation = [[CLLocation alloc] initWithLatitude:lat longitude:lng];
     CLLocationDistance distance = [AppData getDistanceFromLocation:currentLocation Destination:destinationLocation];
-    NSLog(@"%f KM",distance/1000);
+//    NSLog(@"%f KM",distance/1000);
     return distance/1609.344;
 }
 

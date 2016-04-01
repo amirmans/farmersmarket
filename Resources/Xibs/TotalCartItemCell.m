@@ -24,4 +24,9 @@
 }
 - (IBAction)btn_minus_clicked:(id)sender {
 }
+- (IBAction)minusButtonClicked:(id)sender {
+}
+
+- (IBAction)plusButtonClicked:(id)sender {
+}
 @end

@@ -34,6 +34,8 @@
 @property(nonatomic, retain) NSString *category_name;
 @property(nonatomic,strong) NSMutableArray *optionArray;
 @property(nonatomic,retain) NSString *totalcount;
+@property(nonatomic, assign) double ti_rating;
 @property(nonatomic, strong) NSMutableArray *arrOptions;
+@property(nonatomic, assign) NSInteger quantity;
 
 @end

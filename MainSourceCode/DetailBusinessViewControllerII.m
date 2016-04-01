@@ -38,6 +38,19 @@ static NSString * const pinImage = @"pinIma";
 static const CGFloat CalloutYOffset = 50.0f;
 static const CGFloat DefaultZoom = 12.0f;
 
+@interface NSLayoutConstraint (Description)
+
+@end
+
+@implementation NSLayoutConstraint (Description)
+
+-(NSString *)description {
+    return [NSString stringWithFormat:@"id: %@, constant: %f", self.identifier, self.constant];
+}
+
+@end
+
+
 @interface DetailBusinessViewControllerII () {
     KASlideShow *picturesView;
 //    GMSMapView *mapView_;
@@ -103,6 +116,11 @@ static const CGFloat DefaultZoom = 12.0f;
 - (void)viewWillLayoutSubviews {
     
     [super viewWillLayoutSubviews];
+     //    mapViews = [[GMSMapView alloc]initWithFrame:CGRectMake(0,0,[UIScreen mainScreen].bounds.size.width ,self.viewMap.bounds.size.height)];
+    
+//    mapViews.delegate = self;
+//    mapViews.mapType =  kGMSTypeNormal;
+
     
 //    self.mapView.padding =
 //    UIEdgeInsetsMake(self.topLayoutGuide.length + 5,
@@ -237,14 +255,20 @@ static const CGFloat DefaultZoom = 12.0f;
 //                                                                    longitude:[longitudeString doubleValue]
 //                                                                         zoom:DefaultZoom];
 
+//    GMSCameraPosition *cameraPosition = [GMSCameraPosition cameraWithLatitude:45.55409990
+//                                                                    longitude:-122.83644930
+//                                                                         zoom:DefaultZoom];
+//
+//    mapViews = [GMSMapView mapWithFrame:CGRectMake(0,0,[UIScreen mainScreen].bounds.size.width ,self.viewMap.bounds.size.height) camera:cameraPosition];
+//    
+//    mapViews = [[GMSMapView alloc]initWithFrame:CGRectMake(0,0,[UIScreen mainScreen].bounds.size.width ,self.viewMap.bounds.size.height)];
     GMSCameraPosition *cameraPosition = [GMSCameraPosition cameraWithLatitude:45.55409990
                                                                     longitude:-122.83644930
                                                                          zoom:DefaultZoom];
-
+    
     mapViews = [GMSMapView mapWithFrame:CGRectMake(0,0,[UIScreen mainScreen].bounds.size.width ,self.viewMap.bounds.size.height) camera:cameraPosition];
     
-//    mapViews = [[GMSMapView alloc]initWithFrame:CGRectMake(0,0,[UIScreen mainScreen].bounds.size.width ,self.viewMap.bounds.size.height)];
-    
+
     mapViews.delegate = self;
     mapViews.mapType =  kGMSTypeNormal;
     [self.viewMap addSubview:mapViews];
@@ -383,7 +407,7 @@ static const CGFloat DefaultZoom = 12.0f;
     for (NSDictionary *markerInfo in self.bussinessListByBranch) {
         GMSMarker *marker = [[GMSMarker alloc] init];
         
-        UIImage *pinImages = [UIImage imageNamed:@"pin2"];
+        UIImage *pinImages = [UIImage imageNamed:@"pin3"];
         
         CLLocationCoordinate2D center;
         center= [[APIUtility sharedInstance]getLocationFromAddressString:[markerInfo valueForKeyPath:@"address"]];
@@ -467,7 +491,7 @@ static const CGFloat DefaultZoom = 12.0f;
     
     if (self.isCustomer == 1) {
         [[DataModel sharedDataModelManager] setJoinedChat:FALSE];
-        [[CurrentBusiness sharedCurrentBusinessManager] setBusiness:biz];
+        [[CurrentBusiness sharedCurrentBusinessManager] setBusiness:selectedBiz];
         [[BusinessCustomerProfileManager sharedBusinessCustomerProfileManager] setCustomerProfileName:self.customerProfileName];
         
         [[DataModel sharedDataModelManager] setChatSystemURL:biz.chatSystemURL];
@@ -507,31 +531,37 @@ static const CGFloat DefaultZoom = 12.0f;
     calloutRect.size = CGSizeZero;
     
     if(marker.userData != nil){
-    self.calloutView.title = marker.title;
-    self.calloutView.subtitle = [marker.userData valueForKeyPath:@"customerProfileName"];
-    self.calloutView.calloutOffset = CGPointMake(0, -CalloutYOffset);
-    self.calloutView.hidden = NO;
-    UIImageView *thumbView = [[UIImageView alloc] init];
-    NSString *tmpIconName = [marker.userData valueForKeyPath:@"icon"];
-    NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:tmpIconName];
-    NSURL *imageURL = [NSURL URLWithString:imageURLString];
-    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-    thumbView.image = [UIImage imageWithData:imageData];
-    thumbView.layer.cornerRadius = 2.0;
-    thumbView.layer.masksToBounds = YES;
-    
-    // wrap it in a blue background on iOS 7+
-    UIButton *blueView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    blueView.backgroundColor = [UIColor clearColor];
-    
-    //[blueView addTarget:self action:@selector(carClicked) forControlEvents:UIControlEventTouchUpInside];
-    thumbView.frame = CGRectMake(0, 0, 44, 44);
-    [blueView addSubview:thumbView];
-    
-    self.calloutView.leftAccessoryView = blueView;
-    self.calloutView.leftAccessoryView = thumbView;
+        self.calloutView.title = marker.title;
+        self.calloutView.subtitle = [marker.userData valueForKeyPath:@"customerProfileName"];
+        self.calloutView.calloutOffset = CGPointMake(0, -CalloutYOffset);
+        self.calloutView.hidden = NO;
+        UIImageView *thumbView = [[UIImageView alloc] init];
+        NSString *tmpIconName = [marker.userData valueForKeyPath:@"icon"];
+        //    NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:tmpIconName];
+        //    NSURL *imageURL = [NSURL URLWithString:imageURLString];
+        //    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+        if (tmpIconName != (id)[NSNull null] && tmpIconName.length != 0 )
+        {
+            NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:tmpIconName];
+            NSURL *imageURL = [NSURL URLWithString:imageURLString];
+            [thumbView Compatible_setImageWithURL:imageURL placeholderImage:nil];
+        }
+        
+        thumbView.layer.cornerRadius = 2.0;
+        thumbView.layer.masksToBounds = YES;
+        
+        // wrap it in a blue background on iOS 7+
+        UIButton *blueView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        blueView.backgroundColor = [UIColor clearColor];
+        
+        //[blueView addTarget:self action:@selector(carClicked) forControlEvents:UIControlEventTouchUpInside];
+        thumbView.frame = CGRectMake(0, 0, 44, 44);
+        [blueView addSubview:thumbView];
+        
+        self.calloutView.leftAccessoryView = blueView;
+        self.calloutView.leftAccessoryView = thumbView;
     }else{
-         self.calloutView.title = @"My Location";
+        self.calloutView.title = @"My Location";
     }
     [self.calloutView presentCalloutFromRect:calloutRect
                                       inView:mapView
@@ -593,7 +623,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 }
 
 - (void)pushNextViewController {
-    
+      biz = selectedBiz;
     NSDictionary *allChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].allChoices;
     NSArray *mainChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].mainChoices;
     
@@ -688,6 +718,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     NSDictionary *cellDict;
     cellDict = [self.bussinessListByBranch objectAtIndex:indexPath.row];
     Business *biz1 = [[Business alloc] initWithDataFromDatabase:[self.bussinessListByBranch objectAtIndex:indexPath.row]];
+//    cell.biz = biz1;
     
     cell.lblOpenCloseDate.text =[[APIUtility sharedInstance]getOpenCloseTime:biz1.opening_time CloseTime:biz1.closing_time];
     
@@ -748,8 +779,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     
     
 //        BusinessDetailsContoller *BusinessDetailsVC = [[BusinessDetailsContoller alloc] initWithNibName:@"BusinessDetailsContoller" bundle:nil];
-      Business *biz1 = [[Business alloc] initWithDataFromDatabase:[self.bussinessListByBranch objectAtIndex:indexPath.row]];
-    selectedBiz  =biz1;
+    selectedBiz = [[Business alloc] initWithDataFromDatabase:[self.bussinessListByBranch objectAtIndex:indexPath.row]];
     [self enterAndGetServiceAction:self];
 }
 

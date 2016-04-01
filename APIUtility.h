@@ -25,8 +25,11 @@
 
 -(CLLocationCoordinate2D) getLocationFromAddressString: (NSString*) addressStr;
 
+- (void)orderToServer:(NSDictionary *)data server:(NSString *)url completiedBlock:(void (^)(NSDictionary *response))finished;
+
 -(void)BusinessListAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished;
 
 -(void)setFavoriteAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished;
 
+-(void)getRevardpointsForBusiness:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished ;
 @end

@@ -6,14 +6,19 @@
 //
 //
 
-#import "MenuItemViewController.h"
-#import "MenuItemTableViewCell.h"
-#import "SHMultipleSelect.h"
 #import "APIUtility.h"
-#import "TPBusinessDetail.h"
-#import <BBBadgeBarButtonItem.h>
 #import "AppDelegate.h"
+#import "CurrentBusiness.h"
+#import "DataModel.h"
+#import "MenuItemTableViewCell.h"
+#import "MenuItemViewController.h"
+#import "SHMultipleSelect.h"
 #import "TotalCartItemController.h"
+#import "TPBusinessDetail.h"
+#import "UIAlertView+TapTalkAlerts.h"
+#import "UIImageView+WebCache.h"
+#import <BBBadgeBarButtonItem.h>
+
 
 @interface MenuItemViewController ()
 
@@ -25,6 +30,7 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize favesBeenInit;
 
 #pragma mark - Life Cycle
 
@@ -36,17 +42,30 @@
     return self;
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(BusinessListAPICall)
+                                                     name:@"GotProductData"
+                                                   object:nil];
+    
+    
+    [self setMyCartValue];
+}
+
+
 - (void)viewDidLoad {
-    
+
     [super viewDidLoad];
-    
-    flagstr = @"false";
+
+    //flagstr = @"false";
+    favesBeenInit = false;
     self.title = @"Menu";
     self.navigationItem.hidesBackButton = true;
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
-    
+
     UIButton *customButton = [[UIButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-85, 20, 80, 40)];
     [customButton setTitle:@"My Cart" forState:UIControlStateNormal];
     [customButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -54,37 +73,37 @@
     self.rightButton.badgeOriginX = 70.0f;
     self.rightButton.badgeOriginY = 2.0f;
     self.navigationItem.rightBarButtonItem = self.rightButton;
-    
-    
+
+
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.MenuItemTableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
 
-    
+
     [customButton  addTarget:self action:@selector(myCartButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
     self.MenuItemTableView.delegate = self;
     self.MenuItemTableView.dataSource = self;
-    
+
     self.MainArray = [[NSMutableArray alloc]init];
     self.businessListDetailArray = [[NSMutableArray alloc]init];
     [self BusinessListAPICall];
     [self setMyCartValue];
-    
+
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
+
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.delegate = self;
     self.searchController.searchResultsUpdater = self;
     self.searchController.dimsBackgroundDuringPresentation = NO;
     self.searchController.searchBar.delegate = self;
-    
+
     self.MenuItemTableView.tableHeaderView = self.searchController.searchBar;
     self.searchController.hidesNavigationBarDuringPresentation = false;
 
     self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x,
                                                        self.searchController.searchBar.frame.origin.y,
                                                        self.searchController.searchBar.frame.size.width, 44.0);
-    
+
     self.definesPresentationContext = YES;
 }
 
@@ -136,11 +155,20 @@
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
+    
+    NSMutableArray *mainCategoryArray = [[NSMutableArray alloc] init];
+    
+    for (NSArray *tempSection in self.MainArray) {
+        for (TPBusinessDetail *businessDetail in tempSection) {
+            [mainCategoryArray addObject:businessDetail];
+        }
+    }
+    
     [self.filteredResult removeAllObjects];
     NSPredicate *filter = [NSPredicate predicateWithFormat:@"name beginswith[c] %@",
                            searchText];
     NSArray * dataArray = [[NSArray alloc]init];
-    dataArray = [self.businessListDetailArray filteredArrayUsingPredicate:filter];
+    dataArray = [mainCategoryArray filteredArrayUsingPredicate:filter];
     self.filteredResult = [[NSMutableArray alloc]initWithArray:dataArray];
     NSLog(@"%ld",self.filteredResult.count);
 }
@@ -156,9 +184,9 @@
 - (void)updateSearchResultsForSearchController:(UISearchController *)arg_searchController
 {
     NSString *searchString = arg_searchController.searchBar.text;
-    
+
     [self filterContentForSearchText:searchString scope:[[self.searchController.searchBar scopeButtonTitles] objectAtIndex:[self.searchController.searchBar selectedScopeButtonIndex]]];
-    
+
     [self.MenuItemTableView reloadData];
 }
 
@@ -170,7 +198,7 @@
 //        self.navigationController.navigationBar.frame = CGRectMake(0, yDiff, 320, self.navigationController.navigationBar.frame.size.height);
 //        self.navigationController.navigationBar.hidden = true;
 //    }];
-//    
+//
 //}
 //
 //-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
@@ -187,6 +215,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
 {
+    if (self.sectionKeyArray == nil) return  0;
     if (self.searchController.active) {
         //    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
         return 1;
@@ -194,14 +223,15 @@
     else {
         return self.sectionKeyArray.count;
     }
-    return 1;    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if (self.sectionKeyArray == nil) return  0;
+
     if (self.searchController.active) {
         //    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
-        NSLog(@"%lda",self.filteredResult.count);
+//        NSLog(@"%ld",self.filteredResult.count);
         return self.filteredResult.count;
     }
     else {
@@ -209,10 +239,11 @@
 //        NSPredicate *pred = [NSPredicate predicateWithFormat:@"category_name =[cd] %@", cat];
 //        NSArray * catArray = [self.businessListDetailArray filteredArrayUsingPredicate:pred];
 //        return catArray.count;
-//        
-        return [[self.MainArray objectAtIndex:section] count];
+//
+        NSString *menuName = [self.sectionKeyArray objectAtIndex:section];
+        NSInteger nRows = [[[[CurrentBusiness sharedCurrentBusinessManager].business.businessProducts objectForKey:@"data"] objectForKey:menuName] count];
+        return nRows;
     }
-    return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -227,7 +258,8 @@
     UIView *headerView;
     if (self.searchController.active) {
         headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,tableView.frame.size.width,0)];
-    }else{
+    }
+    else{
         headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,tableView.frame.size.width,30)];
     }
     headerView.backgroundColor = [[UIColor colorWithRed:98.0/255.0f green:200.0/255.0f blue:207.0/255.0f alpha:1]colorWithAlphaComponent:1.0f];
@@ -242,7 +274,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+
     static NSString *simpleTableIdentifier = @"MenuItemCell";
     MenuItemTableViewCell *cell = (MenuItemTableViewCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     if (cell == nil)
@@ -250,83 +282,123 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MenuItemTableViewCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
-    
-//    NSArray *catArray = [self.MainArray objectAtIndex:indexPath.section];
-    
+
+    NSArray *catArray = [self.MainArray objectAtIndex:indexPath.section];
+
 
     if (self.searchController.active)
         //    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView])
     {
         TPBusinessDetail *businessDetail = [self.filteredResult objectAtIndex:indexPath.row];
-        
+
         cell.ImageView.tag = 1;
+
+//        NSString* short_desc = businessDetail.short_description;
+        if(![businessDetail.short_description isKindOfClass:[NSNull class]])
+            cell.lbl_description.text = businessDetail.short_description;
+        else
+            cell.lbl_description.text = @"";
         
-        cell.lbl_description.text = businessDetail.short_description;
         cell.lbl_title.text = businessDetail.name;
-        
+
         cell.lbl_money.text = businessDetail.price;
-        
+
         CGFloat val = [businessDetail.price floatValue];
         int rounded_down = floorf(val * 100) / 10;
         cell.lbl_Pts.text = [NSString stringWithFormat:@"%d Pts",rounded_down];
-        
-        
-        cell.btnFevorite.tag = indexPath.row;
-        [cell.btnFevorite  addTarget:self action:@selector(FevoriteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        
-        cell.btn_minus.tag = indexPath.row;
-        cell.btn_minus.section = indexPath.section;
-        cell.btn_minus.row = indexPath.row;
-        
-        [cell.btn_minus addTarget:self action:@selector(MinusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        
-        cell.btn_plus.tag = indexPath.row;
-        cell.btn_plus.section = indexPath.section;
-        cell.btn_plus.row = indexPath.row;
-        [cell.btn_plus addTarget:self action:@selector(PlusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+//
+//
+//        cell.btnFevorite.tag = indexPath.row;
+//        [cell.btnFevorite  addTarget:self action:@selector(FevoriteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+//
+//        cell.btn_minus.tag = indexPath.row;
+//        cell.btn_minus.section = indexPath.section;
+//        cell.btn_minus.row = indexPath.row;
+//
+//        [cell.btn_minus addTarget:self action:@selector(MinusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+//
+//        cell.btn_plus.tag = indexPath.row;
+//        cell.btn_plus.section = indexPath.section;
+//        cell.btn_plus.row = indexPath.row;
+//        [cell.btn_plus addTarget:self action:@selector(PlusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
     }
     else
     {
-        NSArray *catArray = [self.MainArray objectAtIndex:indexPath.section];
+//        NSString *selectionKey = [self.sectionKeyArray objectAtIndex:indexPath.section];
+//        NSArray *catArray = [[[CurrentBusiness sharedCurrentBusinessManager].business.businessProducts objectForKey:@"data"] objectForKey:selectionKey];
+//        if (!favesBeenInit) {
+        cell.btnFevorite.selected = NO;
         
+        id idRating = [catArray[indexPath.row] valueForKey:@"ti_rating"];
+//        NSString *className = NSStringFromClass([stringRating class]);
+        if ([idRating isKindOfClass:[NSString class]]) {
+            if (idRating != (id)[NSNull null]) {
+                if ([idRating doubleValue] > 4.5) {
+                    cell.btnFevorite.selected = YES;
+                }
+            }
+        }
+        else {
+            if ([idRating doubleValue] > 4.5) {
+                cell.btnFevorite.selected = YES;
+            }
+                
+        }
+    
         cell.ImageView.tag = 1;
-        
-        cell.lbl_description.text = [catArray[indexPath.row] valueForKey:@"short_description"];
+
+        NSString *imageURLString = BusinessCustomerIndividualDirectory;
+        NSString *pictureURL = [catArray[indexPath.row] valueForKey:@"pictures"];
+        if (pictureURL != (id)[NSNull null] && pictureURL.length != 0 ) {
+            
+            imageURLString = [imageURLString stringByAppendingFormat:@"%@/%@/%@",
+                              [catArray[indexPath.row] valueForKey:@"businessID"], BusinessCustomerIndividualDirectory_ProductItems,
+                              pictureURL];
+            
+        }
+        NSLog(@"before display image of the menu item, the url of the image is: %@ ___________",imageURLString);
+        [cell.ImageView sd_setImageWithURL:[NSURL URLWithString:imageURLString] placeholderImage:[UIImage imageNamed:@"img.png"]];
+
+        NSString* short_desc = [catArray[indexPath.row] valueForKey:@"short_description"];
+        if(![short_desc isKindOfClass:[NSNull class]])
+            cell.lbl_description.text = short_desc;
+        else
+            cell.lbl_description.text = @"";
         cell.lbl_title.text = [catArray[indexPath.row] valueForKey:@"name"];
-        
+
         cell.lbl_money.text = [catArray[indexPath.row] valueForKey:@"price"];
-        
+
         CGFloat val = [[catArray[indexPath.row] valueForKey:@"price"] floatValue];
         int rounded_down = floorf(val * 100) / 10;
         cell.lbl_Pts.text = [NSString stringWithFormat:@"%d Pts",rounded_down];
-        
+
         cell.btnFevorite.tag = indexPath.row;
         cell.btnFevorite.section = indexPath.section;
         cell.btnFevorite.row = indexPath.row;
         [cell.btnFevorite  addTarget:self action:@selector(FevoriteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        
+
         cell.btn_minus.tag = indexPath.row;
         cell.btn_minus.section = indexPath.section;
         cell.btn_minus.row = indexPath.row;
-        
+
         [cell.btn_minus addTarget:self action:@selector(MinusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        
+
         cell.btn_plus.tag = indexPath.row;
         cell.btn_plus.section = indexPath.section;
         cell.btn_plus.row = indexPath.row;
         [cell.btn_plus addTarget:self action:@selector(PlusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
-    
+
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
+
+
 //    SHMultipleSelect *multipleSelect = [[SHMultipleSelect alloc] init];
 //    TPBusinessDetail *BusinessDetail = [self.MainArray[indexPath.section] objectAtIndex:indexPath.row];
-//    
+//
 //    if (BusinessDetail.arrOptions.count > 0) {
 //        _dataSource = BusinessDetail.arrOptions;
 //        NSLog(@"datasource %@",_dataSource);
@@ -336,12 +408,12 @@
 //        [multipleSelect show];
 //    }
 //    else {
-//        
+//
 //        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Message" message:@"No Options to Dispaly" preferredStyle:UIAlertControllerStyleAlert];
-//        
+//
 //        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
 //        [alertController addAction:ok];
-//        
+//
 //        [self presentViewController:alertController animated:YES completion:nil];
 //    }
 }
@@ -350,25 +422,39 @@
 
 - (IBAction)FevoriteButtonClicked:(CustomUIButton *)sender
 {
+    long uid = [[DataModel sharedDataModelManager] userID];
+    if (uid <= 0) {
+        [UIAlertController showErrorAlert:@"Provide a profile nickname to set your favorites. \nYou can order them next time around."];
+        return;
+    }
+    favesBeenInit = true;
+    NSString *stringUid = [NSString stringWithFormat:@"%ld", uid];
     NSInteger section = sender.section;
     NSInteger row = sender.row;
-    if(sender.selected)
+    NSString *rating = @"";
+    if(sender.selected) {
         sender.selected = false;
-    else
+        rating = @"0.0";
+        [[[self.MainArray objectAtIndex:section] objectAtIndex:row] setValue:@"0.0" forKey:@"ti_rating"];
+    }
+    else {
         sender.selected = true;
-    
+        rating = @"5.0";
+        [[[self.MainArray objectAtIndex:section] objectAtIndex:row] setValue:@"5.0" forKey:@"ti_rating"];
+    }
+
     if (self.searchController.active) {
         NSArray *businessArray = [self.filteredResult objectAtIndex:section];
         TPBusinessDetail *businessDetail = [businessArray objectAtIndex:row];
-        
-        [self setFavoriteAPICallWithBusinessId:[NSString stringWithFormat:@"%@",businessDetail.product_id] rating:@"0"];
+
+        [self setFavoriteAPICallWithBusinessId:[NSString stringWithFormat:@"%@",businessDetail.product_id] rating:rating forUser:stringUid];
     }
     else {
         NSArray *businessArray = [self.MainArray objectAtIndex:section];
         TPBusinessDetail *businessDetail = [businessArray objectAtIndex:row];
-        [self setFavoriteAPICallWithBusinessId:[NSString stringWithFormat:@"%@",businessDetail.product_id] rating:@"0"];
+        [self setFavoriteAPICallWithBusinessId:[NSString stringWithFormat:@"%@",businessDetail.product_id] rating:rating forUser:stringUid];
     }
-    
+
 
 //    if(sender.selected) {
 //        [self setFavoriteAPICallWithBusinessId:[NSString stringWithFormat:@"%d",business.businessID] rating:@"0"];
@@ -381,23 +467,24 @@
 }
 
 - (IBAction)MinusButtonClicked:(CustomUIButton *)sender {
-    
+
     NSLog(@"Minus Button Clicked");
     NSLog(@"%@", [[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"name"]);
     TPBusinessDetail *BusinessDetail = [self.MainArray[sender.section] objectAtIndex:sender.row];
     NSManagedObjectContext *context = [self managedObjectContext];
-    NSLog(@"%@",_managedObjectContext.persistentStoreCoordinator.managedObjectModel.entities);
+//    NSLog(@"%@",_managedObjectContext.persistentStoreCoordinator.managedObjectModel.entities);
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
-    
+
     self.FetchedRecordArray = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
+    NSLog(@"%lu",(unsigned long)_FetchedRecordArray.count);
     NSLog(@"%@",_FetchedRecordArray.description);
-    
+
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"MyCartItem"];
     NSError *error = nil;
     NSArray *results = [context executeFetchRequest:request error:&error];
-    
+
     if (error != nil) {
-        
+
     }
     else {
         BOOL itemFound = false;
@@ -437,11 +524,18 @@
 }
 
 - (IBAction)PlusButtonClicked:(CustomUIButton *)sender {
-    
+
     NSLog(@"%@", [[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"name"]);
     SHMultipleSelect *multipleSelect = [[SHMultipleSelect alloc] init];
-    TPBusinessDetail *BusinessDetail = [self.MainArray[sender.section] objectAtIndex:sender.row];
+    TPBusinessDetail *BusinessDetail;
     
+    if (self.searchController.active) {
+        BusinessDetail = [self.filteredResult objectAtIndex:sender.row];
+    }
+    else {
+        BusinessDetail = [self.MainArray[sender.section] objectAtIndex:sender.row];
+    }
+
     if (BusinessDetail.arrOptions.count > 0) {
         _dataSource = BusinessDetail.arrOptions;
         selectedButton = sender;
@@ -461,22 +555,22 @@
 {
     menu.menuButton.isActive = false;
     [menu.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-    
+
     TotalCartItemController *TotalCartItemVC = [[TotalCartItemController alloc] initWithNibName:@"TotalCartItemController" bundle:nil];
     [self.navigationController pushViewController:TotalCartItemVC animated:YES];
 }
 
 #pragma mark - Custom Methods
 
-- (void)setFavoriteAPICallWithBusinessId : (NSString *) businessId rating : (NSString *) favRating {
-    
+- (void)setFavoriteAPICallWithBusinessId : (NSString *) businessId rating : (NSString *) rating forUser: (NSString *) stringUid {
+
     //    NSDictionary *data = [[NSDictionary alloc]initWithObjectsAndKeys:@"2",@"businessID", nil];
-    
-    NSDictionary *param = @{@"cmd":@"setRatings",@"consumer_id":@"1",@"rating":favRating,@"id":businessId,@"type":@"2"};
+
+    NSDictionary *param = @{@"cmd":@"setRatings",@"consumer_id":stringUid,@"rating":rating,@"id":businessId,@"type":@"2"};
     NSLog(@"param=%@",param);
-    
+
     [[APIUtility sharedInstance]setFavoriteAPICall:param completiedBlock:^(NSDictionary *response) {
-        
+
     }];
 }
 
@@ -495,26 +589,35 @@
 }
 
 
+
+//*****************************
 - (void)BusinessListAPICall {
-    
-    NSDictionary *data = [[NSDictionary alloc]initWithObjectsAndKeys:@"2",@"businessID", nil];
-    [[APIUtility sharedInstance]BusinessListAPICall:data completiedBlock:^(NSDictionary *response) {
-        NSLog(@"asd");
-        
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSDictionary *response = [CurrentBusiness sharedCurrentBusinessManager].business.businessProducts;
+
+//    NSDictionary *data = [[NSDictionary alloc]initWithObjectsAndKeys:@"2",@"businessID", nil];
+//    [[APIUtility sharedInstance]BusinessListAPICall:data completiedBlock:^(NSDictionary *response) {
+//        NSLog(@"asd");
+
         [self.businessListDetailArray removeAllObjects];
-        
+
         NSInteger status = [[response valueForKey:@"status"] integerValue];
-        
+
         if (status == 1) {
             NSDictionary *data = [response valueForKey:@"data"];
+            if (data.count <1)
+            {
+                NSLog(@"For %d product items not loaded or don't exist.", [CurrentBusiness sharedCurrentBusinessManager].business.businessID);
+                return;
+            }
             self.sectionKeyArray = [data allKeys];
             [self.MainArray removeAllObjects];
-            NSMutableArray *catArray = [[NSMutableArray alloc] init];
-            
+//            NSMutableArray *catArray = [[NSMutableArray alloc] init];
+
             for (NSString *categoryString in self.sectionKeyArray) {
                 NSArray *categoryArray = [data valueForKey:categoryString];
-                [catArray removeAllObjects];
-                
+//                [catArray removeAllObjects];
+                NSMutableArray *catArray = [[NSMutableArray alloc] init];
                 for (NSDictionary* responseData  in categoryArray) {
                     TPBusinessDetail *BusinessDetail = [[TPBusinessDetail alloc]init];
                     BusinessDetail.product_id = [responseData objectForKey:@"product_id"];
@@ -524,23 +627,34 @@
                     BusinessDetail.short_description = [responseData objectForKey:@"short_description"];
                     BusinessDetail.long_description = [responseData objectForKey:@"long_description"];
                     
+                    NSString* field = [responseData objectForKey:@"ti_rating"];
+                    if (field == (id)[NSNull null] || field.length == 0 )
+                    {
+                        BusinessDetail.ti_rating = 0.0;
+                    }
+                    else {
+                        BusinessDetail.ti_rating = [[responseData objectForKey:@"ti_rating"] doubleValue];
+                    }
+
                     BusinessDetail.price = [responseData objectForKey:@"price"];
                     BusinessDetail.category_name = [responseData objectForKey:@"category_name"];
                     NSMutableArray * arr = [responseData objectForKey:@"options"];
-                    
+
                     NSLog(@"%@",responseData);
                     NSMutableArray *arrOP = [responseData objectForKey:@"options"];
                     BusinessDetail.arrOptions = arrOP;
-                    
+
                     NSLog(@"%@",arr.debugDescription);
                     BusinessDetail.optionArray = arr;
-                    
+
                     [catArray addObject:BusinessDetail];
                 }
                 [self.MainArray addObject:catArray];
+                catArray = nil;
+//                [self.MainArray addObject:[data valueForKey:categoryString]];
             }
-            
-            
+
+
             //            for (NSDictionary* responseData in response) {
             //
             //                TPBusinessDetail *BusinessDetail = [[TPBusinessDetail alloc]init];
@@ -567,12 +681,12 @@
             //
             //                NSLog(@"%@",[responseData objectForKey:@"price"]);
             //            }
-            
+
             //            NSArray *states = [self.businessListDetailArray valueForKey:@"category_name"];
             //            NSOrderedSet *orderedSet = [NSOrderedSet orderedSetWithArray:states];
             //            NSSet *uniqueStates = [orderedSet set];
             //            self.sectionKeyArray = [uniqueStates allObjects];
-            
+
             CGRect frame = CGRectMake(0.0, 0.0, 200.0, self.navigationController.navigationBar.bounds.size.height);
             menu = [[SINavigationMenuView alloc] initWithFrame:frame title:@"Menu"];
             [menu displayMenuInView:self.navigationController.view];
@@ -580,8 +694,8 @@
             menu.delegate = self;
             self.navigationItem.titleView = menu;
             [MenuItemTableView reloadData];
-            
-            
+
+
             //            [self.MainArray removeAllObjects];
             //            for(int i = 0 ; i < self.sectionKeyArray.count; i++){
             //                NSString *cat = self.sectionKeyArray[i];
@@ -591,12 +705,15 @@
             //            }
             //            [MenuItemTableView reloadData];
         }
-    }];
+//    }];
     [self setMyCartValue];
 }
 
+//*******************************
+//
+//
 - (void)AddItemInCart : (TPBusinessDetail *)BusinessDetail CustomUIButton:(CustomUIButton *)sender {
-    
+
     NSManagedObjectContext *context = [self managedObjectContext];
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
     self.FetchedRecordArray = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
@@ -604,7 +721,7 @@
     NSError *error = nil;
     NSArray *results = [context executeFetchRequest:request error:&error];
     if (error != nil) {
-        
+
     }
     else {
         BOOL itemFound = false;
@@ -621,7 +738,7 @@
                 int ItemQty = [[dictionary valueForKey:@"quantity"]intValue];
                 [context deleteObject:obj];
                 ItemQty = ItemQty + 1;
-                
+
                 NSManagedObject *failedBankInfo = [NSEntityDescription
                                                    insertNewObjectForEntityForName:@"MyCartItem"
                                                    inManagedObjectContext:context];
@@ -638,7 +755,7 @@
                 break;
             }
         }
-        
+
         if(!itemFound){
             NSManagedObject *failedBankInfo = [NSEntityDescription
                                                insertNewObjectForEntityForName:@"MyCartItem"
@@ -655,24 +772,24 @@
             }
         }
     }
-    
+
     NSIndexPath *ip = [NSIndexPath indexPathForRow:sender.row inSection:sender.section];
     [self addToCartTapped:ip];
     [self setMyCartValue];
 }
 
 - (void)addToCartTapped:(NSIndexPath*)indexPath {
-    
+
     // grab the cell using indexpath
     UITableViewCell *cell = [MenuItemTableView cellForRowAtIndexPath:indexPath];
     // grab the imageview using cell
     UIImageView *imgV = (UIImageView*)[cell viewWithTag:1];
-    
+
     // get the exact location of image
     CGRect rect = [imgV.superview convertRect:imgV.frame fromView:nil];
     rect = CGRectMake(5, (rect.origin.y*-1)-10, imgV.frame.size.width, imgV.frame.size.height);
     NSLog(@"rect is %f,%f,%f,%f",rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
-    
+
     // create new duplicate image
     UIImageView *starView = [[UIImageView alloc] initWithImage:imgV.image];
     [starView setFrame:rect];
@@ -680,7 +797,7 @@
     starView.layer.borderColor=[[UIColor blackColor]CGColor];
     starView.layer.borderWidth=1;
     [self.view addSubview:starView];
-    
+
     // begin ---- apply position animation
     CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
     pathAnimation.calculationMode = kCAAnimationPaced;
@@ -688,36 +805,36 @@
     pathAnimation.removedOnCompletion = NO;
     pathAnimation.duration=0.65;
     pathAnimation.delegate=self;
-    
+
     // tab-bar right side item frame-point = end point
     CGPoint endPoint = CGPointMake(200+rect.size.width/2, 50);
-    
+
     CGMutablePathRef curvedPath = CGPathCreateMutable();
     CGPathMoveToPoint(curvedPath, NULL, starView.frame.origin.x, starView.frame.origin.y);
     CGPathAddCurveToPoint(curvedPath, NULL, endPoint.x-100, starView.frame.origin.y-100, endPoint.x-100, starView.frame.origin.y-100, endPoint.x, endPoint.y);
     pathAnimation.path = curvedPath;
     CGPathRelease(curvedPath);
     // end ---- apply position animation
-    
+
     // apply transform animation
     CABasicAnimation *basic=[CABasicAnimation animationWithKeyPath:@"transform"];
     [basic setToValue:[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.25, 0.25, 0.25)]];
     [basic setAutoreverses:NO];
     [basic setDuration:0.65];
-    
+
     [starView.layer addAnimation:pathAnimation forKey:@"curveAnimation"];
     [starView.layer addAnimation:basic forKey:@"transform"];
-    
+
     [starView performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:0.65];
     //  [self performSelector:@selector(reloadBadgeNumber) withObject:nil afterDelay:0.65];
-    
+
 }
 
 
 #pragma mark - SHMultipleSelectDelegate
 
 - (void)multipleSelectView:(SHMultipleSelect*)multipleSelectView clickedBtnAtIndex:(NSInteger)clickedBtnIndex withSelectedIndexPaths:(NSArray *)selectedIndexPaths {
-    
+
 
     if (clickedBtnIndex == 1) { // ADD TO ORDER Button
         [self AddItemInCart:selectedBusinessDetail  CustomUIButton:selectedButton];
@@ -728,21 +845,21 @@
 }
 
 - (NSString*)multipleSelectView:(SHMultipleSelect*)multipleSelectView titleForRowAtIndexPath:(NSIndexPath*)indexPath {
-    
+
     NSString *str = [NSString stringWithFormat:@"%@ ($%@)",[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"name"],[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"price"]];
-    
+
     return str;
 }
 
 //- (NSString*)multipleSelectView:(SHMultipleSelect*)multipleSelectView titleForRowAtIndexPath:(NSIndexPath*)indexPath {
-//    
+//
 //    return _dataSource[indexPath.row];
 //}
 
 - (BOOL)multipleSelectView:(SHMultipleSelect*)multipleSelectView setSelectedForRowAtIndexPath:(NSIndexPath*)indexPath {
-    
+
     BOOL canSelect = NO;
-    
+
     if (indexPath.row == _dataSource.count) { // last object
         canSelect = YES;
     }

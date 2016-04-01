@@ -22,5 +22,6 @@
 @property (weak, nonatomic) IBOutlet RateView *rateView;
 @property (weak, nonatomic) IBOutlet UIButton *btnFevorite;
 @property (strong, nonatomic) IBOutlet UILabel *lblOpenCloseDate;
+//@property (strong, nonatomic) Business *biz;
 
 @end

@@ -8,7 +8,7 @@
 
 #import "ServicesForBusinessTableViewController.h"
 #import "ServicesTableViewCell.h"
-#import "MenuViewController.h"
+//#import "MenuViewController.h"
 #import "AskForSeviceViewController.h"
 #import "BillViewController.h"
 #import "ProductItemsTableViewController.h"
@@ -199,8 +199,8 @@
     while (whileIndex < 8) {
         if (whileIndex == 0) {
             if ([tmpStr rangeOfString:@"menu"].location != NSNotFound) {
-                MenuViewController *menuViewController = [[MenuViewController alloc] initWithNibName:nil bundle:nil];
-                [navigationController pushViewController:menuViewController animated:YES];
+//                MenuViewController *menuViewController = [[MenuViewController alloc] initWithNibName:nil bundle:nil];
+//                [navigationController pushViewController:menuViewController animated:YES];
             }
         }
         if (whileIndex == 1) {

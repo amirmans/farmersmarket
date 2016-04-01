@@ -16,6 +16,7 @@
 @protocol TaptalkBusinessDelegate;
 
 @interface Business : NSObject <MKAnnotation, NSURLConnectionDelegate, GooglePlacesConnectionDelegate,  PostProcesses> {
+    
     CLLocationCoordinate2D coordinate;
     NSString *title;
     NSString *subtitle;
@@ -37,7 +38,6 @@
     NSString *address;
     NSString *city;
     NSString *state;
-
     NSString *website;
     NSString *phone;
     NSString *sms_no;

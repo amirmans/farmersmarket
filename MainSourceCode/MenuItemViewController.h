@@ -17,7 +17,7 @@
     int myCartCount;
     UIButton *_btn;
     NSMutableArray *_dataSource;
-    NSString * flagstr;
+    //NSString * flagstr;
     SINavigationMenuView *menu;
     
     CustomUIButton *selectedButton;
@@ -49,6 +49,7 @@
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (strong,nonatomic)NSMutableArray *FetchedRecordArray;
 @property (strong) NSManagedObject *currentObject;
+@property (assign) BOOL favesBeenInit;
 
 
 

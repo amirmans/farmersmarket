@@ -18,7 +18,7 @@
 #import "KASlideShow.h"
 #import <MBProgressHUD.h>
 #import "AskForSeviceViewController.h"
-#import "MenuViewController.h"
+//#import "MenuViewController.h"
 #import "BillViewController.h"
 #import "StoreMapViewController.h"
 #import "EventsTableViewController.h"
@@ -65,7 +65,7 @@ UIBarButtonItem *btn_heart;
     [btn_heart setImage:image];
     [self.navigationItem setRightBarButtonItem:btn_heart];
     
-    self.title = @"KOI Fusion";
+    self.title = @"KOI Fusion"; //TODO
     
     UIBarButtonItem *barBtnItem = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector(backButtonPressed)];
     barBtnItem.tintColor = [UIColor whiteColor];

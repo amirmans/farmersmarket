@@ -19,6 +19,20 @@
 #import "APIUtility.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "DataModel.h"
+#import "BusinessDetailsContoller.h"
+#import "CurrentBusiness.h"
+
+@interface NSLayoutConstraint (Description)
+
+@end
+
+@implementation NSLayoutConstraint (Description)
+
+-(NSString *)description {
+    return [NSString stringWithFormat:@"id: %@, constant: %f", self.identifier, self.constant];
+}
+
+@end
 
 @interface BusinessListViewController () {
 
@@ -134,7 +148,7 @@ Business *biz;
     
     
     if (businessListArray.count <= 0 ) {
-        bizListTimer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(timerCallBack) userInfo:nil repeats:YES];
+        bizListTimer = [NSTimer scheduledTimerWithTimeInterval:0.001 target:self selector:@selector(timerCallBack) userInfo:nil repeats:YES];
     } else {
         [listBusinessesActivityIndicator stopAnimating];
     }
@@ -169,13 +183,13 @@ Business *biz;
     //Get Current Location
     NSString *latitudeString = [[NSUserDefaults standardUserDefaults] objectForKey:@"latitude"];
     NSString *longitudeString = [[NSUserDefaults standardUserDefaults] objectForKey:@"longitude"];
-    NSLog(@"current location lat = %@ long = %@", latitudeString, longitudeString);
-//        GMSCameraPosition *cameraPosition = [GMSCameraPosition cameraWithLatitude:[latitudeString doubleValue]
+//    NSLog(@"current location lat = %@ long = %@", latitudeString, longitudeString);
+//  GMSCameraPosition *cameraPosition = [GMSCameraPosition cameraWithLatitude:[latitudeString doubleValue]
 //                                                                        longitude:[longitudeString doubleValue]
 //                                                                             zoom:DefaultZoom];
 
-//    latitudeString = @"47.6210177";
-//    longitudeString = @"-122.3268878";
+//  latitudeString = @"47.6210177";
+//  longitudeString = @"-122.3268878";
 
     [self setMapCameraTo:[latitudeString doubleValue] lng:[longitudeString doubleValue] mile:40];
     self.mapView.delegate = self;
@@ -186,11 +200,11 @@ Business *biz;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    NSLog(@"%ld",[DataModel sharedDataModelManager].userID);
+//    NSLog(@"%ld",[DataModel sharedDataModelManager].userID);
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    NSLog(@"ViewillAppear Method Call");
+//    NSLog(@"ViewillAppear Method Call");
 }
 
 - (void)viewWillLayoutSubviews {
@@ -241,7 +255,7 @@ Business *biz;
     for (NSDictionary *markerInfo in self.businessListArray) {
         GMSMarker *marker = [[GMSMarker alloc] init];
         
-        UIImage *pinImages = [UIImage imageNamed:@"pin2"];
+        UIImage *pinImages = [UIImage imageNamed:@"pin3"];
         
         CLLocationCoordinate2D center;
         center= [[APIUtility sharedInstance]getLocationFromAddressString:[markerInfo valueForKeyPath:@"address"]];
@@ -303,10 +317,20 @@ Business *biz;
         self.calloutView.hidden = NO;
         UIImageView *thumbView = [[UIImageView alloc] init];
         NSString *tmpIconName = [marker.userData valueForKeyPath:@"icon"];
-        NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:tmpIconName];
-        NSURL *imageURL = [NSURL URLWithString:imageURLString];
-        NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-        thumbView.image = [UIImage imageWithData:imageData];
+//        NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:tmpIconName];
+//        NSURL *imageURL = [NSURL URLWithString:imageURLString];
+//        NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+        
+        if (tmpIconName != (id)[NSNull null] && tmpIconName.length != 0 )
+        {
+            NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:tmpIconName];
+            NSURL *imageURL = [NSURL URLWithString:imageURLString];
+            [thumbView Compatible_setImageWithURL:imageURL placeholderImage:nil];
+        }
+
+        
+        
+        
         thumbView.layer.cornerRadius = 2.0;
         thumbView.layer.masksToBounds = YES;
         
@@ -358,7 +382,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 
 - (void)locationManager:(CLLocationManager *)manager
        didFailWithError:(NSError *)error {
-    NSLog(@"OldLocation");
+//    NSLog(@"OldLocation");
 }
 
 - (void)calulateAndDisplayLocationFor:(CLLocation *)argLocation {
@@ -437,6 +461,9 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         }
 //        [TapTalkLooks setToTapTalkLooks:cell.contentView isActionButton:NO makeItRound:NO];
     }
+    
+    
+    
     NSDictionary *cellDict;
     if (self.searchController.active)
 //    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView])
@@ -448,7 +475,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         cellDict = [businessListArray objectAtIndex:indexPath.row];
     }
     
-    NSLog(@"%@",cellDict);
+//    NSLog(@"%@",cellDict);
     
     // Configure the cell...
 //    cell.businessNameTextField.text = [cellDict objectForKey:@"name"];
@@ -604,9 +631,31 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
                 [branchArray addObject:[self.ResponseDataArray objectAtIndex:i]];
         }
     }
-    DetailBusinessViewControllerII *detailBizInfo = [[DetailBusinessViewControllerII alloc] initWithBusinessObject:biz];
-    detailBizInfo.bussinessListByBranch = branchArray;
-    [self.navigationController pushViewController:detailBizInfo animated:YES];
+    
+    if (branchArray.count > 1) {
+        DetailBusinessViewControllerII *detailBizInfo = [[DetailBusinessViewControllerII alloc] initWithBusinessObject:biz];
+        detailBizInfo.bussinessListByBranch = branchArray;
+        [self.navigationController pushViewController:detailBizInfo animated:YES];
+    }else{
+        Business *selectedBiz = [[Business alloc] initWithDataFromDatabase:[branchArray objectAtIndex:0]];
+        [[DataModel sharedDataModelManager] setJoinedChat:FALSE];
+        [[CurrentBusiness sharedCurrentBusinessManager] setBusiness:selectedBiz];
+        [[BusinessCustomerProfileManager sharedBusinessCustomerProfileManager] setCustomerProfileName:selectedBiz.customerProfileName];
+        [[DataModel sharedDataModelManager] setChatSystemURL:selectedBiz.chatSystemURL];
+        [[DataModel sharedDataModelManager] setChat_masters:selectedBiz.chat_masters];
+        [[DataModel sharedDataModelManager] setValidate_chat:selectedBiz.validate_chat];
+        [[DataModel sharedDataModelManager] setBusinessName:selectedBiz.businessName];
+        [[DataModel sharedDataModelManager] setShortBusinessName:selectedBiz.shortBusinessName];
+ 
+        NSDictionary *allChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].allChoices;
+        NSArray *mainChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].mainChoices;
+
+        BusinessDetailsContoller *services = [[BusinessDetailsContoller alloc]
+                                              initWithData:allChoices :mainChoices :[mainChoices objectAtIndex:0] forBusiness:selectedBiz];
+      
+        [self.navigationController pushViewController:services animated:YES];
+
+    }
 }
 
 #pragma mark Content Filtering
@@ -663,19 +712,6 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     
     [self.bizTableView reloadData];
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

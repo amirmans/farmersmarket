@@ -27,4 +27,9 @@
 
 @property (weak, nonatomic) IBOutlet CustomUIButton *btn_plus;
 
+
+- (IBAction)minusButtonClicked:(id)sender;
+- (IBAction)plusButtonClicked:(id)sender;
+
+
 @end

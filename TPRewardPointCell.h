@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface TPRewardPointCell : UITableViewCell
+@property (strong, nonatomic) IBOutlet UILabel *lbldate;
+@property (strong, nonatomic) IBOutlet UILabel *lblreddemed;
+@property (strong, nonatomic) IBOutlet UIButton *btnpoints;
 
 @end
