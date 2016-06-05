@@ -51,7 +51,27 @@ static NSUInteger firstTime = TRUE;
     // Release any cached data, images, etc that aren't in use.
 }
 
+
+
 #pragma mark - methods added by Amir
+
+- (IBAction)btn_AddressClicked:(id)sender {
+    NSString *baseUrl = @"http://maps.apple.com/?q=";
+    
+    NSString *addressString = self.btn_Address.titleLabel.text;
+    
+    NSString *encodedUrl = [addressString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    
+    NSString *finalurl = [NSString stringWithFormat:@"%@%@",baseUrl,encodedUrl];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:finalurl]];
+}
+
+- (IBAction)btn_WebsiteClicked:(id)sender {
+    NSString *websiteUrl = self.btn_Website.titleLabel.text;
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:websiteUrl]];
+}
 
 - (IBAction)meow {
     [orderView resignFirstResponder];
@@ -87,7 +107,6 @@ static NSUInteger firstTime = TRUE;
         controller.messageComposeDelegate = self;
         [self presentViewController:controller animated:YES completion:nil];
     }
-
 }
 
 
@@ -127,7 +146,7 @@ static NSUInteger firstTime = TRUE;
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    [TapTalkLooks setBackgroundImage:self.view withBackgroundImage:myBusiness.bg_image];
+//    [TapTalkLooks setBackgroundImage:self.view withBackgroundImage:myBusiness.bg_image];
 }
 
 
@@ -137,16 +156,33 @@ static NSUInteger firstTime = TRUE;
     // Do any additional setup after loading the view from its nib.
     [errorMessageView setHidden:TRUE];
     errorMessageView.text = @"Remember house Woody Cat can't read more than 250 characters";
-    [TapTalkLooks setToTapTalkLooks:cancelUIButton isActionButton:YES makeItRound:NO];
-    [TapTalkLooks setToTapTalkLooks:askUIButton isActionButton:YES makeItRound:NO];
+//    [TapTalkLooks setToTapTalkLooks:cancelUIButton isActionButton:YES makeItRound:NO];
+//    [TapTalkLooks setToTapTalkLooks:askUIButton isActionButton:YES makeItRound:NO];
     if ((initialMessage.length > 1) && (initialMessage !=nil) )
         self.orderView.text = initialMessage;
+    
+    self.businessBackgroundImage.image = myBusiness.bg_image;
+    
+    [AppData setBusinessBackgroundColor:self.cancelUIButton];
+    [AppData setBusinessBackgroundColor:self.askUIButton];
     
     orderView.delegate = self;
     [orderView setReturnKeyType:UIReturnKeyDone];
     orderView.keyboardAppearance = UIKeyboardAppearanceDark;
     [self registerForKeyboardNotifications];
+    
+    UIBarButtonItem *barBtnItem = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector(backButtonPressed)];
+    barBtnItem.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = barBtnItem;
 
+    self.ratingView.notSelectedImage = [UIImage imageNamed:@"Star.png"];
+    self.ratingView.halfSelectedImage = [UIImage imageNamed:@"Star_Half_Empty.png"];
+    self.ratingView.fullSelectedImage = [UIImage imageNamed:@"Star_Filled.png"];
+    self.ratingView.rating = 0;
+    self.ratingView.editable = NO;
+    self.ratingView.maxRating = 5;
+    
+    [self setBusinessCustomerInformation];
 }
 
 - (void)viewDidUnload {
@@ -186,12 +222,16 @@ static NSUInteger firstTime = TRUE;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void) backButtonPressed {
+    
+    NSLog(@"backButtonPressed");
+    [self.navigationController popViewControllerAnimated:TRUE];
+}
 
 - (IBAction)Cancel:(id)sender {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Clear your text?" message:@"Sure?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
     [alert show];
 }
-
 
 #pragma UIAlertViewDelegate method
 
@@ -205,8 +245,6 @@ static NSUInteger firstTime = TRUE;
         // do nothing
     }
 }
-
-
 
 - (void)registerForKeyboardNotifications
 {
@@ -250,5 +288,36 @@ static NSUInteger firstTime = TRUE;
     scrollView.scrollIndicatorInsets = contentInsets;
 }
 
+- (void) setBusinessCustomerInformation{
+    
+    self.ratingView.rating = [self.myBusiness.rating floatValue];
+    
+    [self.btn_Address setTitle:self.myBusiness.address forState:UIControlStateNormal];
+    
+    if([self.myBusiness.website  isEqual: @""]) {
+        [self.btn_Website setTitle:@"" forState:UIControlStateNormal];
+    }
+    else {
+        [self.btn_Website setTitle:self.myBusiness.website forState:UIControlStateNormal];
+    }
+    
+    self.lbl_SubTitle.text = self.myBusiness.customerProfileName;
+    [self.lbl_SubTitle sizeToFit];
+    NSLog(@"%@",self.myBusiness.customerProfileName);
+    NSLog(@"%@ %.1f m",self.myBusiness.state,[[AppData sharedInstance]getDistance:self.myBusiness.lat longitude:self.myBusiness.lng]);
+    //    self.lbl_StateAndDist.text = [NSString stringWithFormat:@"%@ %.1f m",biz.state,[[AppData sharedInstance]getDistance:biz.lat longitude:biz.lng]];
+    
+    self.lbl_StateAndDist.text = self.myBusiness.neighborhood;
+    
+    
+    if([[APIUtility sharedInstance]isOpenBussiness:self.myBusiness.opening_time CloseTime:self.myBusiness.closing_time]){
+        self.lbl_OpenNow.text = @"OPEN NOW";
+        self.lbl_OpenNow.textColor = [UIColor greenColor];
+    }else{
+        self.lbl_OpenNow.text = @"CLOSED";
+        self.lbl_OpenNow.textColor = [UIColor redColor];
+    }
+    self.lbl_Time.text = [[APIUtility sharedInstance]getOpenCloseTime:self.myBusiness.opening_time CloseTime:self.myBusiness.closing_time];
+}
 
 @end

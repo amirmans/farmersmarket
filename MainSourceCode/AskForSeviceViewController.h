@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppData.h"
+#import "RateView.h"
+#import "APIUtility.h"
 @class Business;
 
 @interface AskForSeviceViewController : UIViewController <UITextViewDelegate, UITextFieldDelegate, MFMessageComposeViewControllerDelegate, UIAlertViewDelegate> {
@@ -27,6 +30,19 @@
 @property(nonatomic, strong) NSString *initialMessage;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
+@property (strong, nonatomic) IBOutlet UIImageView *businessBackgroundImage;
+
+@property (weak, nonatomic) IBOutlet UIButton *btn_Address;
+@property (weak, nonatomic) IBOutlet UIButton *btn_Website;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_Time;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_StateAndDist;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_SubTitle;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_OpenNow;
+
+@property (weak, nonatomic) IBOutlet RateView *ratingView;
+
+- (IBAction)btn_AddressClicked:(id)sender;
+- (IBAction)btn_WebsiteClicked:(id)sender;
 
 - (IBAction)meow;
 - (IBAction)Cancel:(id)sender;

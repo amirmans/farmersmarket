@@ -20,8 +20,9 @@
 @property (nonatomic, weak) id <SINavigationMenuDelegate> delegate;
 @property (nonatomic, strong) NSArray *items;
 @property (nonatomic, strong) SIMenuButton *menuButton;
+@property (nonatomic, strong) SIMenuTable *table;
 
 - (id)initWithFrame:(CGRect)frame title:(NSString *)title;
 - (void)displayMenuInView:(UIView *)view;
-
+- (void)onHandleMenuTap:(id)sender;
 @end

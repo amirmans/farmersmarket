@@ -10,7 +10,7 @@
                 <outlet property="view" destination="1QZ-D0-DPM" id="jLm-wH-fQ7"/>
             </connections>
         </placeholder>
-        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="120" sectionHeaderHeight="1" sectionFooterHeight="1" id="1QZ-D0-DPM">
+        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="130" sectionHeaderHeight="1" sectionFooterHeight="1" id="1QZ-D0-DPM">
             <rect key="frame" x="0.0" y="64" width="320" height="480"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

@@ -7,18 +7,18 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SavedCardTableCell" rowHeight="36" id="KGk-i7-Jjw" customClass="SavedCardTableCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SavedCardTableCell" rowHeight="36" id="KGk-i7-Jjw" customClass="SavedCardTableCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="36"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card No:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2lk-aR-3e5">
-                        <rect key="frame" x="14" y="8" width="71" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Visa" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="2lk-aR-3e5">
+                        <rect key="frame" x="14" y="8" width="66" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="2hY-pi-qqd"/>
-                            <constraint firstAttribute="width" constant="71" id="6Nd-tU-het"/>
+                            <constraint firstAttribute="width" constant="66" id="6Nd-tU-het"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -51,11 +51,12 @@
                     <constraint firstItem="2lk-aR-3e5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="cFe-jG-i5R"/>
                     <constraint firstItem="2lk-aR-3e5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="eBw-gC-Xbu"/>
                     <constraint firstItem="xm1-Rh-ppg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="gbN-q8-XEJ"/>
-                    <constraint firstItem="xm1-Rh-ppg" firstAttribute="leading" secondItem="2lk-aR-3e5" secondAttribute="trailing" constant="8" id="okT-Ez-XF8"/>
+                    <constraint firstItem="xm1-Rh-ppg" firstAttribute="leading" secondItem="2lk-aR-3e5" secondAttribute="trailing" constant="13" id="okT-Ez-XF8"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="lblCVC" destination="h00-T3-QtR" id="jQq-7W-egi"/>
+                <outlet property="lblCardName" destination="2lk-aR-3e5" id="GTX-tx-5b3"/>
                 <outlet property="lblCardNo" destination="xm1-Rh-ppg" id="AQo-8W-g8o"/>
                 <outlet property="lblMonthYear" destination="Ts0-tz-OxN" id="gJX-kr-wBE"/>
             </connections>

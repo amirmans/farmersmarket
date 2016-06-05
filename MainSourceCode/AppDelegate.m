@@ -21,9 +21,10 @@
 #import "AFNetworkActivityIndicatorManager.h"
 #import "LoginViewController.h"
 #import "UtilityConsumerProfile.h"
-#import "BillViewController.h"
 #import "AppData.h"
 #import <Stripe/Stripe.h>
+
+
 
 @interface AppDelegate () {
     BusinessNotificationTableViewController *notificationController;
@@ -57,7 +58,7 @@ static AppDelegate *sharedObj;
 //      [GMSServices provideAPIKey:@"AIzaSyAnP9ELVL1xHQqJGhba_3gH9nWLXV5N5n8"];
     
     [GMSServices provideAPIKey:@"AIzaSyAcCD7rG0woreg6af3_AyFsa3V1J1vgK_k"];
-    [Stripe setDefaultPublishableKey:@"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi"];
+//    [Stripe setDefaultPublishableKey:@"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi"];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     _locationManager = [[CLLocationManager alloc] init];
@@ -70,7 +71,7 @@ static AppDelegate *sharedObj;
     [_locationManager requestWhenInUseAuthorization];
     [_locationManager startUpdatingLocation];
 
-    [[AppData sharedInstance] getCurruntLocation];
+//    [[AppData sharedInstance] getCurruntLocation];
     
 //    [GMSServices provideAPIKey:@"AIzaSyBjJcsPVsRERXqA5SKas-nseCmrZaajEeE"];
     
@@ -82,11 +83,11 @@ static AppDelegate *sharedObj;
     [businessArrays startGettingListofAllBusinesses];
     
     BusinessListViewController *listTableView = [[BusinessListViewController alloc] initWithNibName:nil bundle:nil];
-    [listTableView.listBusinessesActivityIndicator hidesWhenStopped];
-    [listTableView.listBusinessesActivityIndicator startAnimating];
+//    [listTableView.listBusinessesActivityIndicator hidesWhenStopped];
+//    [listTableView.listBusinessesActivityIndicator startAnimating];
     
     UIImage *locationImage = [UIImage imageNamed:@"ic_biz_partners_normal.png"];
-    UITabBarItem *locationTabBar = [[UITabBarItem alloc] initWithTitle:@"Biz Partners" image:locationImage tag:0];
+    UITabBarItem *locationTabBar = [[UITabBarItem alloc] initWithTitle:@"Home" image:locationImage tag:0];
     listTableView.tabBarItem = locationTabBar;
     locationTabBar.selectedImage = [UIImage imageNamed:@"ic_biz_partners_selected.png"];
     enterBusinessNav = [[UINavigationController alloc] initWithRootViewController:listTableView];
@@ -114,11 +115,13 @@ static AppDelegate *sharedObj;
     profileNav.navigationBar.barTintColor = [UIColor blackColor];
     profileNav.navigationBar.translucent = true;
     profileNav.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
-
+    
 
     // notifications from businesses
     UIImage *notificationImage = [UIImage imageNamed:@"ic_notifications_normal.png"];
     notificationsTabBar = [[UITabBarItem alloc] initWithTitle:@"Notifications" image:notificationImage tag:3];
+    
+    
     notificationsTabBar.selectedImage = [UIImage imageNamed:@"ic_notifications_selected.png"];
     notificationController = [[BusinessNotificationTableViewController alloc] initWithNibName:nil bundle:nil];
     notificationController.tabBarItem = notificationsTabBar;
@@ -132,7 +135,7 @@ static AppDelegate *sharedObj;
     TPRewardPointController *payViewController = [[TPRewardPointController alloc] initWithNibName:nil bundle:nil];
     UITabBarItem *payTabBar = [[UITabBarItem alloc] initWithTitle:@"Reward" image:payImage tag:4];
     payTabBar.selectedImage = [UIImage imageNamed:@"ic_pay_selected.png"];
-    [payTabBar setBadgeValue:@"1"];
+//    [payTabBar setBadgeValue:@"1"];
 //    payTabBar.
     payViewController.tabBarItem = payTabBar;
 
@@ -147,6 +150,7 @@ static AppDelegate *sharedObj;
     
     // setup main window with the tabbarcontroller
     self.tt_tabBarController = [[UITabBarController alloc] init];
+    
 //    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, chatNav, consumerProfileViewController, notificationNav, payViewController, nil];
     self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, /*chatNav,*/ profileNav, notificationNav, payViewController, nil];
     
@@ -191,8 +195,7 @@ static AppDelegate *sharedObj;
 
 #pragma mark - CLLocationManagerDelegate
 
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     NSLog(@"didFailWithError: %@", error);
 }
 
@@ -282,21 +285,20 @@ static AppDelegate *sharedObj;
 
 -(NSArray *)getRecord
 {
-    NSFetchRequest *fetchreq=[[NSFetchRequest alloc]init];
+    NSFetchRequest *fetchreq = [NSFetchRequest fetchRequestWithEntityName:@"MyCartItem"];
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"productname" ascending:YES selector:@selector(localizedStandardCompare:)];
 
     [fetchreq setSortDescriptors:@[sortDescriptor]];
     
-    NSEntityDescription *entity=[NSEntityDescription entityForName:@"MyCartItem" inManagedObjectContext:self.managedObjectContext];
+//    NSEntityDescription *entity = [NSEntityDescription entityForName:@"MyCartItem" inManagedObjectContext:self.managedObjectContext];
     
-    [fetchreq setEntity:entity];
+//    [fetchreq setEntity:entity];
     
     NSError *err;
     
-    NSArray *fetcheRecord=[self.managedObjectContext executeFetchRequest:fetchreq error:&err];
+    NSArray *fetcheRecord = [self.managedObjectContext executeFetchRequest:fetchreq error:&err];
     return fetcheRecord;
-
 }
 
 #pragma mark - UITabBarControllerDelegate
@@ -306,86 +308,96 @@ static AppDelegate *sharedObj;
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
 
     BOOL returnVal = TRUE;
-    // Check to see if Chat tabbar is selected
-    if (tabBarController.tabBar.selectedItem.tag == 1) {
-        returnVal = FALSE;
-        if ([DataModel sharedDataModelManager].chatSystemURL == nil) {
-//            [UIAlertController alertControllerWithTitle:nil message:@"Please enter a business first." preferredStyle:UIAlertControllerStyleAlert];
-//            UIAlertController * alert=   [UIAlertController
-//                                          alertControllerWithTitle:@""
-//                                          message:@"Please enter a business first."
-//                                          preferredStyle:UIAlertControllerStyleAlert];
+//    // Check to see if Chat tabbar is selected
+//    if (tabBarController.tabBar.selectedItem.tag == 1) {
+//        returnVal = FALSE;
+//        if ([DataModel sharedDataModelManager].chatSystemURL == nil) {
+////            [UIAlertController alertControllerWithTitle:nil message:@"Please enter a business first." preferredStyle:UIAlertControllerStyleAlert];
+////            UIAlertController * alert=   [UIAlertController
+////                                          alertControllerWithTitle:@""
+////                                          message:@"Please enter a business first."
+////                                          preferredStyle:UIAlertControllerStyleAlert];
+////            
+////            [viewController presentViewController:alert animated:YES completion:nil];
 //            
-//            [viewController presentViewController:alert animated:YES completion:nil];
-            
-            
 //            
-//            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
-//                                                                           message:@"Please enter a business first."
-//                                                                    preferredStyle:UIAlertControllerStyleAlert];
+////            
+////            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+////                                                                           message:@"Please enter a business first."
+////                                                                    preferredStyle:UIAlertControllerStyleAlert];
+////            
+////            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+////                                                                  handler:^(UIAlertAction * action) {}];
+////            
+////            [alert addAction:defaultAction];
+////            [[tabBarController.viewControllers objectAtIndex:1] presentViewController:alert animated:YES completion:nil];
+//            [UIAlertController showErrorAlert:@"Please enter a business first."];
 //            
-//            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-//                                                                  handler:^(UIAlertAction * action) {}];
 //            
-//            [alert addAction:defaultAction];
-//            [[tabBarController.viewControllers objectAtIndex:1] presentViewController:alert animated:YES completion:nil];
-            [UIAlertController showErrorAlert:@"Please enter a business first."];
-            
-            
-            
-            
-            
-            
-            
-            
-//            [UIAlertView showErrorAlert:@"Please enter a business first"];
-        }
-        else if ([DataModel sharedDataModelManager].nickname.length < 1) {
-            [UIAlertController showErrorAlert:@"You don't have a nickname yet.  Please go to the profile page and get one."];
-        }
-        else if (![UtilityConsumerProfile canUserChat]) {
-            [UIAlertController alertControllerWithTitle:nil message:@"You are NOT registered to particate in this chat.  Please ask the manager to add you." preferredStyle:UIAlertControllerStyleAlert];
-            
-            
-            
-            
-//            [UIAlertView showErrorAlert:@"You are NOT registered to particate in this chat.  Please ask the manager to add you."];
-        }
-        else {
-            if (![[DataModel sharedDataModelManager] joinedChat]) {
-                // show the user that are about to connect to a new business chatroom
-                [DataModel sharedDataModelManager].shouldDownloadChatMessages = TRUE;
-                LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
-                loginController.modalTransitionStyle = UIModalTransitionStylePartialCurl;
-                
-                [viewController presentViewController:loginController animated:YES completion:nil];
-                loginController = nil;
-            }
-            
-            UINavigationController *nav = [tabBarController.viewControllers objectAtIndex:1];
-            [nav popToRootViewControllerAnimated:YES];
-            returnVal = TRUE;
-        }
-    }
-    
-    if (tabBarController.tabBar.selectedItem.tag == 4) {
-        Business *b =   [CurrentBusiness sharedCurrentBusinessManager].business;
-        if(b.businessName == nil){
-         [UIAlertController showErrorAlert:@"Please enter a business first."];
-            returnVal = FALSE;
-
-        }else if ([DataModel sharedDataModelManager].nickname.length < 1) {
-            [UIAlertController showErrorAlert:@"You don't have a nickname yet.  Please go to the profile page and get one."];
-            returnVal = FALSE;
-        }
-   
-    }
-
+//            
+//            
+//            
+//            
+//            
+//            
+////            [UIAlertView showErrorAlert:@"Please enter a business first"];
+//        }
+//        else if ([DataModel sharedDataModelManager].nickname.length < 1) {
+//            [UIAlertController showErrorAlert:@"You don't have a nickname yet.  Please go to the profile page and get one."];
+//        }
+//        else if (![UtilityConsumerProfile canUserChat]) {
+//            [UIAlertController alertControllerWithTitle:nil message:@"You are NOT registered to particate in this chat.  Please ask the manager to add you." preferredStyle:UIAlertControllerStyleAlert];
+//            
+//            
+//            
+//            
+////            [UIAlertView showErrorAlert:@"You are NOT registered to particate in this chat.  Please ask the manager to add you."];
+//        }
+//        else {
+//            if (![[DataModel sharedDataModelManager] joinedChat]) {
+//                // show the user that are about to connect to a new business chatroom
+//                [DataModel sharedDataModelManager].shouldDownloadChatMessages = TRUE;
+//                LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
+//                loginController.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+//                
+//                [viewController presentViewController:loginController animated:YES completion:nil];
+//                loginController = nil;
+//            }
+//            
+//            UINavigationController *nav = [tabBarController.viewControllers objectAtIndex:1];
+//            [nav popToRootViewControllerAnimated:YES];
+//            returnVal = TRUE;
+//        }
+//    }
+//    
+////    if (tabBarController.tabBar.selectedItem.tag == 3) {
+////        Business *b =   [CurrentBusiness sharedCurrentBusinessManager].business;
+////        if(b.businessName == nil){
+////            [UIAlertController showErrorAlert:@"Please enter a business first."];
+////            returnVal = FALSE;
+////            
+////        }else if ([DataModel sharedDataModelManager].nickname.length < 1) {
+////            [UIAlertController showErrorAlert:@"You don't have a nickname yet.  Please go to the profile page and get one."];
+////            returnVal = FALSE;
+////        }
+////    }
+//    
+//    if (tabBarController.tabBar.selectedItem.tag == 4) {
+//        Business *b =   [CurrentBusiness sharedCurrentBusinessManager].business;
+//        if(b.businessName == nil){
+//         [UIAlertController showErrorAlert:@"Please enter a business first."];
+//            returnVal = FALSE;
+//
+//        }else if ([DataModel sharedDataModelManager].nickname.length < 1) {
+//            [UIAlertController showErrorAlert:@"You don't have a nickname yet.  Please go to the profile page and get one."];
+//            returnVal = FALSE;
+//        }
+//    }
+//
     return returnVal;
 }
 
 #pragma mark - Core Data stack
-
 
 - (NSURL *)applicationDocumentsDirectory {
     
@@ -443,6 +455,11 @@ static AppDelegate *sharedObj;
 
     // Create the coordinator and store
     
+    NSDictionary *options = @{
+                              NSMigratePersistentStoresAutomaticallyOption : @YES,
+                              NSInferMappingModelAutomaticallyOption : @YES
+                              };
+    
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"TapForAll.sqlite"];
@@ -453,7 +470,7 @@ static AppDelegate *sharedObj;
     
     NSString *failureReason = @"There was an error creating or loading the application's saved data.";
     
-    if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+    if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
         /*
          Replace this implementation with code to handle the error appropriately.
          
@@ -500,8 +517,9 @@ static AppDelegate *sharedObj;
 - (void)doUpdateForRemoteNotification:(NSDictionary *)userInfo updateUI:(BOOL)updateUI {
     
     [self getReadyForNotification];
-    ((UINavigationController *)[self.tt_tabBarController.viewControllers objectAtIndex:3]).tabBarItem.badgeValue = @"New";
+//    ((UINavigationController *)[self.tt_tabBarController.viewControllers objectAtIndex:3]).tabBarItem.badgeValue = @"New";
     notificationsTabBar.badgeValue = @"New"; // stopped working
+    
     // Add the Message to the data model to be inserted to the UINotificationsViewtable later.
     [[DataModel sharedDataModelManager] addNotification:userInfo];
     
@@ -509,11 +527,9 @@ static AppDelegate *sharedObj;
     // the notification table with the new entry
 	if (updateUI)
         [notificationDelegate updateUIWithNewNotification];
-
 }
 
-- (void) postProcessForSuccess:(long)givenUserID
-{
+- (void) postProcessForSuccess:(long)givenUserID {
     [DataModel sharedDataModelManager].userID = givenUserID;
 }
 
@@ -546,7 +562,6 @@ static AppDelegate *sharedObj;
     newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
 //    BOOL justTesting = [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];
 //    UIUserNotificationSettings * notificationTypes = [[UIApplication sharedApplication] currentUserNotificationSettings];
-    
 
     NSLog(@"My token is: %@", newToken);
 
@@ -585,6 +600,61 @@ static AppDelegate *sharedObj;
     }
     [self doUpdateForRemoteNotification:userInfo updateUI:YES];
     
+    UINavigationController *navController = [self.tt_tabBarController.viewControllers objectAtIndex:0];
+    
+    NSDictionary *aps = [userInfo valueForKey:@"aps"];
+    
+//    NSNumber *notification_type = [aps objectForKey:@"notification_type"];
+    
+//    NSString *notification_type = [aps valueForKey:@"notification_type"];
+    
+//    NSInteger notification_type = ;
+    
+    int notification_type = [[aps valueForKey:@"notification_type"] intValue];
+    
+    if (notification_type == 1 || notification_type == 2) {
+        
+        [self.tt_tabBarController setSelectedIndex:0];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Standard notification arrive" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {
+                                                                  [alert dismissViewControllerAnimated:YES completion:nil];
+                                                              }];
+        [alert addAction:defaultAction];
+        UIWindow *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        alertWindow.rootViewController = [[UIViewController alloc] init];
+        alertWindow.windowLevel = UIWindowLevelAlert + 1;
+        [alertWindow makeKeyAndVisible];
+        [alertWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+    }
+    else if (notification_type == 3) {
+        if ([CurrentBusiness sharedCurrentBusinessManager].business != nil) {
+            NSInteger businessID = [[aps valueForKey:@"business_id"] integerValue];
+            NSLog(@"%d",[CurrentBusiness sharedCurrentBusinessManager].business.businessID);
+            if ([CurrentBusiness sharedCurrentBusinessManager].business.businessID == businessID) {
+                [[CurrentBusiness sharedCurrentBusinessManager].business startLoadingBusinessProductCategoriesAndProducts];
+                MenuItemViewController *menuItemVC = [[MenuItemViewController alloc] initWithNibName:nil bundle:nil];
+                [navController.visibleViewController.navigationController pushViewController:menuItemVC animated:true];
+            }
+        }
+    }
+    
+//    Business *biz = [Business new];
+//    biz.businessID = [[aps valueForKey:@"business_id"] integerValue];
+//    [CurrentBusiness sharedCurrentBusinessManager].business = biz;
+//    NSString *businessID = [NSString stringWithFormat:@"%d",[[aps valueForKey:@"business_id"] integerValue]] ;
+//    [biz startLoadingBusinessProductCategoriesAndProductsWithBusincessID:businessID];
+//    MenuItemViewController *menuItemVC = [[MenuItemViewController alloc] initWithNibName:nil bundle:nil];
+//    [navController.visibleViewController.navigationController pushViewController:menuItemVC animated:true];
+
+    
+//    if ([type isEqualToString:@"6"]) {
+//        NSString *businessID = [type valueForKey:@"business_id"];
+//        [[CurrentBusiness sharedCurrentBusinessManager].business startLoadingBusinessProductCategoriesAndProductsWithBusincessID:businessID];
+//        UINavigationController *navController = (UINavigationController *)self.window.rootViewController;
+//        MenuItemViewController *menuItemVC = [[MenuItemViewController alloc] initWithNibName:nil bundle:nil];
+//        [navController.visibleViewController.navigationController pushViewController:menuItemVC animated:true];
+//    }
 }
 
 

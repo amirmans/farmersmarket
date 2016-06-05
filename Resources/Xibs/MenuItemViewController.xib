@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G7a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MenuItemViewController">
             <connections>
                 <outlet property="MenuItemTableView" destination="OrU-Jf-U2L" id="SsF-yP-cIy"/>
+                <outlet property="removeFromCartContainerView" destination="oG5-T5-kaO" id="Mn5-a3-oEj"/>
                 <outlet property="searchDisplayController" destination="AEY-e8-00k" id="2fa-UA-62B"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -56,17 +57,25 @@
                         <constraint firstAttribute="bottom" secondItem="PfY-gd-UcB" secondAttribute="bottom" constant="17" id="zGe-T6-jsS"/>
                     </constraints>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="242" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OrU-Jf-U2L">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="242" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OrU-Jf-U2L">
                     <rect key="frame" x="0.0" y="64" width="320" height="498"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oG5-T5-kaO">
+                    <rect key="frame" x="8" y="134" width="304" height="350"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="OrU-Jf-U2L" firstAttribute="top" secondItem="C7G-Es-tzN" secondAttribute="bottom" id="4fh-Ex-bum"/>
                 <constraint firstAttribute="bottom" secondItem="OrU-Jf-U2L" secondAttribute="bottom" constant="6" id="4tF-rV-w6K"/>
+                <constraint firstItem="oG5-T5-kaO" firstAttribute="top" secondItem="C7G-Es-tzN" secondAttribute="bottom" constant="70" id="94n-5B-25y"/>
+                <constraint firstAttribute="trailing" secondItem="oG5-T5-kaO" secondAttribute="trailing" constant="8" id="PM8-1w-O1x"/>
+                <constraint firstAttribute="bottom" secondItem="oG5-T5-kaO" secondAttribute="bottom" constant="84" id="UgI-UE-Xdq"/>
                 <constraint firstItem="C7G-Es-tzN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ZrD-M6-Fj2"/>
                 <constraint firstItem="C7G-Es-tzN" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="eel-ql-xh2"/>
+                <constraint firstItem="oG5-T5-kaO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="fUe-3h-eWA"/>
                 <constraint firstItem="OrU-Jf-U2L" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="gW5-oI-fEY"/>
                 <constraint firstAttribute="trailing" secondItem="OrU-Jf-U2L" secondAttribute="trailing" id="mOK-qr-Tef"/>
                 <constraint firstAttribute="trailing" secondItem="C7G-Es-tzN" secondAttribute="trailing" id="vJd-x8-5pS"/>

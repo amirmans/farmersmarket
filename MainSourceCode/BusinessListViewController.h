@@ -13,10 +13,13 @@
 #import "KASlideShow.h"
 #import "SMCalloutView.h"
 #import "SMClassicCalloutView.h"
+#import "RewardDetailsModel.h"
 
+@class MBProgressHUD;
 
 @interface BusinessListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate,GMSMapViewDelegate,CLLocationManagerDelegate> {
     
+        MBProgressHUD *HUD;
 }
 
 @property (strong, atomic) NSMutableArray *ResponseDataArray;

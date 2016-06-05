@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AppData.h"
 
 @interface SIMenuConfiguration : NSObject
 //Menu width

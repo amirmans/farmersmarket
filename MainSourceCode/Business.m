@@ -26,7 +26,6 @@
 //@property(nonatomic, retain) NSString *imageFileName;
 //@property(nonatomic, retain) NSString *imageFileExt;
 
-
 - (void)fetchProductData:(NSData *)responseData;
 - (void)prepareToGetGoogleDetailedData;
 
@@ -63,11 +62,17 @@
 @synthesize validate_chat;
 @synthesize inquiryForProduct, needsBizChat;
 @synthesize bg_image;
+@synthesize text_color, bg_color;
+@synthesize business_bg_color;
+@synthesize business_text_color;
 @synthesize marketing_statement;
 @synthesize closing_time,opening_time;
+@synthesize bg_image_name;
 @synthesize is_collection;
+@synthesize process_time;
 
 - (void)initMemberData {
+    
     self.iconRelativeURL = nil;
     self.isCustomer = -1;
     self.customerProfileName = nil;
@@ -101,10 +106,16 @@
     picturesString = nil;
     iconImage = nil;
     bg_image = nil;
+    text_color = nil;
+    bg_color = nil;
+    business_bg_color = nil;
+    business_text_color = nil;
     needsBizChat = true;
     marketing_statement = nil;
     opening_time = nil;
     closing_time = nil;
+    bg_image_name = nil;
+    process_time = nil;
 }
 
 - (int)isCustomer {
@@ -116,8 +127,12 @@
 }
 
 - (void)startLoadingBusinessProductCategoriesAndProducts {
+    // At this point even if isProductListLoaded is true.  we want to set to false.  So other modules wait for the new result.
+    isProductListLoaded = false;
+    businessProducts = nil;
+    
     NSString *consumer_id = [NSString stringWithFormat: @"%ld", [DataModel sharedDataModelManager].userID];
-    NSString *urlString = [NSString stringWithFormat:@"%@?businessID=%i&consumer_id=%@", BusinessInformationServer, businessID, consumer_id];
+    NSString *urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%i&consumerID=%@", BusinessAndProductionInformationServer, businessID, consumer_id];
     urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -127,7 +142,24 @@
         NSData* data = [NSData dataWithContentsOfURL:url];
         [self performSelectorOnMainThread:@selector(fetchProductData:) withObject:data waitUntilDone:YES];
     });
+}
+
+- (void) startLoadingBusinessProductCategoriesAndProductsWithBusincessID : (NSString *) busiID {
+    isProductListLoaded = false;
+    businessProducts = nil;
     
+    NSString *consumer_id = [NSString stringWithFormat: @"%ld", [DataModel sharedDataModelManager].userID];
+    NSString *urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%@&consumerID=%@", BusinessAndProductionInformationServer, busiID, consumer_id];
+    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    //urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    //    isProductListLoaded = TRUE;
+    dispatch_async(TT_CommunicationWithServerQ, ^{
+        NSData* data = [NSData dataWithContentsOfURL:url];
+        [self performSelectorOnMainThread:@selector(fetchProductData:) withObject:data waitUntilDone:YES];
+    });
+
 }
 
 - (void)fetchProductData:(NSData *)responseData {
@@ -145,20 +177,18 @@
     }
     isProductListLoaded = TRUE;
     [[NSNotificationCenter defaultCenter] postNotificationName:@"GotProductData" object:nil];
-    
 }
 
-
 - (NSDictionary *)businessProducts {
+    
     if (businessProducts == nil) {
         [self startLoadingBusinessProductCategoriesAndProducts];
     }
-    
     return businessProducts;
 }
 
-
 - (void)startLoadingBusinessEvents {
+    
     NSString *urlString = [NSString stringWithFormat:@"%@?businessID=%i", BusinessInformationServer, businessID];
     urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
@@ -167,15 +197,16 @@
     //    isProductListLoaded = TRUE;
     dispatch_async(TT_CommunicationWithServerQ, ^{
         NSData* data = [NSData dataWithContentsOfURL:url];
-        [self performSelectorOnMainThread:@selector(fetchProductData:) withObject:data waitUntilDone:YES];
+        [self performSelectorOnMainThread:@selector(fetchEventData:) withObject:data waitUntilDone:YES];
     });
-    
 }
 
 - (void)fetchEventData:(NSData *)responseData {
+
     //parse out the json data
+
     NSError* error =nil;
-    
+
     businessEvents  = [NSJSONSerialization
                        JSONObjectWithData:responseData
                        options:kNilOptions
@@ -185,28 +216,27 @@
         NSLog(@"Error in fetching event information.  Description of error is: %@", [error localizedDescription]);
         [UIAlertController showErrorAlert: @"Error in fetching events."];
     }
-    isProductListLoaded = TRUE;
 }
 
 
 - (NSDictionary *)businessEvents {
-    if (businessProducts == nil) {
+    
+    if (businessEvents == nil) {
         [self startLoadingBusinessEvents];
     }
-    
     return businessEvents;
+    
 }
 
 - (NSString *)stringFromDataDictionary:(NSDictionary *)data forKey:(NSString *)key
 {
+    
     NSString* field = [data objectForKey:key];
     if (field == (id)[NSNull null] || field.length == 0 )
     {
         field = nil;
     }
-    
     return field;
-    
 }
 
 - (NSMutableString *)mutableStringFromDataDictionary:(NSDictionary *)data forKey:(NSString *)key
@@ -216,11 +246,8 @@
     {
         field = nil;
     }
-    
     return field;
-    
 }
-
 
 - (NSInteger)integerFromDataDictionary:(NSDictionary *)data forKey:(NSString *)key
 {
@@ -229,14 +256,12 @@
     {
         field = @"0";
     }
-    
     return [field intValue];
 }
 
-
 - (NSArray *)nsArrayFromDataDictionary:(NSDictionary *)data forKey:(NSString *)key {
-    NSString *jsonString = [data objectForKey:key];
     
+    NSString *jsonString = [data objectForKey:key];
     NSData * jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     NSError * error=nil;
     id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
@@ -252,13 +277,13 @@
         NSDictionary *jsonDictionary = (NSDictionary *)jsonObject;
         NSLog(@"jsonDictionary - %@",jsonDictionary);
     }
-    
-    
+  
     return jsonArray;
 }
 
 - (id)initWithDataFromDatabase:(NSDictionary *)data {
-    //    [self initMemberData];
+//  [self initMemberData];
+    
     isCustomer = 1;
     
     // since these values are coming from db, we should take care "[Null]" - database marks for null
@@ -273,9 +298,11 @@
     email = [self stringFromDataDictionary:data forKey:@"email"];
     paymentProcessingID = [self stringFromDataDictionary:data forKey:@"payment_processing_id"];
     paymentProcessingEmail = [self stringFromDataDictionary:data forKey:@"payment_processing_email"];
+   
     if ((paymentProcessingEmail == nil) && (email != nil)) {
         paymentProcessingEmail = email;
     }
+    
     businessTypes = [self mutableStringFromDataDictionary:data forKey:@"businessTypes"];
     neighborhood = [self stringFromDataDictionary:data forKey:@"neighborhood"];
     address = [self stringFromDataDictionary:data forKey:@"address"];
@@ -293,7 +320,13 @@
     lat = [[data objectForKey:@"lat"] doubleValue];
     lng = [[data objectForKey:@"lng"] doubleValue];
     
-    chat_masters = [self nsArrayFromDataDictionary:data forKey:@"chat_masters"];
+//    if ([data objectForKey:@"chat_masters"] != [NSNull null]) {
+//        chat_masters = [self nsArrayFromDataDictionary:data forKey:@"chat_masters"];
+//    }
+//    else {
+//        chat_masters =  @[];
+//    }
+    
     map_image_url = [self stringFromDataDictionary:data forKey:@"map_image_url"];
     picturesString = [self stringFromDataDictionary:data forKey:@"pictures"];
     validate_chat = [[data objectForKey:@"validate_chat"] boolValue];
@@ -301,17 +334,33 @@
     inquiryForProduct = [[data objectForKey:@"inquiry_for_product"] boolValue];
     
     NSString* bg_image_URLString = [self stringFromDataDictionary:data forKey:@"bg_image"];
+    bg_image_name = bg_image_URLString;
     [self setBGImageFromString:bg_image_URLString];
+    
+    bg_color = [self stringFromDataDictionary:data forKey:@"bg_color"];
+    text_color = [self stringFromDataDictionary:data forKey:@"text_color"];
+    
+    /*
+     
+     bg_colorRGB {
+        r = "",
+        g = "",
+        b = ""
+     }
+     
+     */
+    
+    business_bg_color =  [self setUIColorFromString:bg_color];
+    business_text_color = [self setUIColorFromString:text_color];
+    
     marketing_statement = [self stringFromDataDictionary:data forKey:@"marketing_statement"];
     opening_time = [self stringFromDataDictionary:data forKey:@"opening_time"];
-//    if (opening_time != nil) {
-//        opening_time = [[APIUtility sharedInstance]GMTToLocalTime:[self stringFromDataDictionary:data forKey:@"opening_time"]];
-//    }
+
     closing_time = [self stringFromDataDictionary:data forKey:@"closing_time"];
-//    if (closing_time != nil) {
-//        closing_time = [[APIUtility sharedInstance]GMTToLocalTime:[self stringFromDataDictionary:data forKey:@"closing_time"]];
-//    }
-    
+    process_time = [self stringFromDataDictionary:data forKey:@"process_time"];
+    if (process_time == nil)
+        process_time = Default_Process_Time;
+
     
     if (validate_chat) {
         validate_chat = ChatValidationWorkflow_InProcess; // means in the process of validation
@@ -346,14 +395,12 @@
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   validate_chat = ChatValidationWorkflow_ErrorFromServer; //error
                   NSLog(@"Response from chat system server for validation the user indicates error:%@", error);
-                  
               }
          ];
         
     } else {
         validate_chat = ChatValidationWorkflow_NoNeedToValidate;
     };
-    
     return self;
 }
 
@@ -394,6 +441,7 @@
     responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&err];
     
     isCustomer = 0;
+  
     if (!err) {
         NSDictionary *responseDictionaryWithStatus = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&err];
         
@@ -415,7 +463,7 @@
                     }
                     map_image_url = [self stringFromDataDictionary:responseDictionary forKey:@"map_image_url"];
                     picturesString = [self stringFromDataDictionary:responseDictionary forKey:@"pictures"];
-                    
+                    self.process_time = [responseDictionary valueForKey:@"process_time"];
                     NSString *iconPath = [NSString stringWithFormat:@"%@", [responseDictionary valueForKey:@"icon"]];
                     if (iconPath != (id)[NSNull null] && iconPath.length != 0 ) {
                         NSString *iconURLString = [BusinessCustomerIconDirectory stringByAppendingString:iconPath];
@@ -423,7 +471,7 @@
                         //We have a valid icon path - retrieve the image from our own server
                         SDWebImageManager *manager = [SDWebImageManager sharedManager];
                         [manager downloadImageWithURL:iconUrl
-                                              options:0
+                                              options:SDWebImageRefreshCached
                                              progress:nil
                                             completed:^(UIImage *webImage, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *url)
                          {
@@ -511,6 +559,7 @@
 - (void)setBGImageFromString:(NSString *)bgImageString {
     if (!bgImageString) {
         bg_image = [UIImage imageNamed:@"bg_image"];
+        self.businessBackgroundImage = [UIImage imageNamed:@"bg_image"];
         return;
     }
     
@@ -519,15 +568,33 @@
     //We have a valid icon path - retrieve the image from our own server
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     [manager downloadImageWithURL:iconUrl
-                          options:0
+                          options:SDWebImageRefreshCached
                          progress:nil
                         completed:^(UIImage *webImage, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *url)
      {
          if (webImage && finished)
          {
              bg_image = webImage;
+             self.businessBackgroundImage = webImage;
          }
      }];
+}
+
+- (UIColor *) setUIColorFromString : (NSString *) colorString {
+    
+    NSCharacterSet *trim = [NSCharacterSet characterSetWithCharactersInString:@"rgb( )"];
+    
+    NSString *removeRGBCharacter = [[colorString componentsSeparatedByCharactersInSet:trim] componentsJoinedByString:@""];
+    
+    NSLog(@"%@",removeRGBCharacter);
+ 
+    NSArray *rgbArray = [removeRGBCharacter componentsSeparatedByString:@","];
+    
+    NSInteger rColor = [[rgbArray objectAtIndex:0] integerValue];
+    NSInteger gColor = [[rgbArray objectAtIndex:1] integerValue];
+    NSInteger bColor = [[rgbArray objectAtIndex:2] integerValue];
+    
+    return [UIColor colorWithRed:rColor/255.0 green:gColor/255.0 blue:bColor/255.0 alpha:1];
 }
 
 - (void)googlePlacesConnection:(GooglePlacesConnection *)conn didFailWithError:(NSError *)gError {

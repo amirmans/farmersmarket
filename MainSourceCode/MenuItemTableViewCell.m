@@ -34,6 +34,7 @@
 //          _lbl_money.text = [NSString stringWithFormat:@"%d",value];
 //      }
 }
+
 - (IBAction)btn_plus:(id)sender {
     
 //    int value = [_lbl_money.text intValue];

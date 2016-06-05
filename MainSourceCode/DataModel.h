@@ -58,7 +58,7 @@
 // to send an "update" request to the server.
 - (NSString *)deviceToken;- (void)setDeviceToken:(NSString *)token;
 
-
+- (NSMutableArray *) sortNotificationsinReverseChronologicalOrder : (NSMutableArray *) notificationArray;
 
 @property(nonatomic, assign) long userID; // determined and given by the server
 @property(nonatomic, retain) NSString *chatSystemURL;

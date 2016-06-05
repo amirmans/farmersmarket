@@ -11,7 +11,7 @@
 #import "Consts.h"
 #import "TapTalkLooks.h"
 #import "DetailBusinessViewControllerII.h"
-#import "ServicesForBusinessTableViewController.h"
+//#import "ServicesForBusinessTableViewController.h"
 #import "ListofBusinesses.h"
 #import "Business.h"
 #import "AppData.h"
@@ -21,6 +21,7 @@
 #import "DataModel.h"
 #import "BusinessDetailsContoller.h"
 #import "CurrentBusiness.h"
+#import "MBProgressHUD.h"
 
 @interface NSLayoutConstraint (Description)
 
@@ -51,7 +52,7 @@
 
 @synthesize businessListArray;
 @synthesize filteredBusinessListArray;
-@synthesize listBusinessesActivityIndicator;
+//@synthesize listBusinessesActivityIndicator;
 @synthesize bizListTimer;
 @synthesize bizTableView;
 @synthesize searchController;
@@ -76,7 +77,7 @@ Business *biz;
         if (businessListArray.count > 0 ) {
             [bizListTimer invalidate];
             bizListTimer = nil;
-            [listBusinessesActivityIndicator stopAnimating];
+    [HUD hide:YES];
             NSMutableArray *SortByLocationArray = [self getSortByLocationTapForApp];
             [self.businessListArray removeAllObjects];
             self.businessListArray = SortByLocationArray;
@@ -91,6 +92,7 @@ Business *biz;
     if (self) {
         // Custom initialization
      }
+//    [listBusinessesActivityIndicator startAnimating];
     return self;
 }
 
@@ -108,28 +110,42 @@ Business *biz;
         }
     }
     
+//    UIBarButtonItem *barBtnItem = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector(backButtonPressed)];
+//    barBtnItem.tintColor = [UIColor whiteColor];
+//    self.navigationItem.leftBarButtonItem = barBtnItem;
+
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    self.mapView.delegate = self;
+    
+    locationManager.desiredAccuracy = 10.0f;
+    locationManager.distanceFilter = 200.0f;
+    [locationManager requestWhenInUseAuthorization];
+    [locationManager startUpdatingLocation];
+
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.bizTableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
     
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-//    self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"ScopeButtonCountry",@"Country"),
-//                                                          NSLocalizedString(@"ScopeButtonCapital",@"Capital")];
-    self.searchController.searchBar.delegate = self;
-    [self.searchController.searchBar setPlaceholder:@"What Are You Looking For"];
-//    self.searchController.searchBar.barTintColor = [UIColor blackColor];
-    
-//    self.bizTableView.tableHeaderView = self.searchController.searchBar;
-    
-    self.navigationItem.titleView = searchController.searchBar;
-    
-    self.searchController.hidesNavigationBarDuringPresentation = false;
-    self.searchController.searchBar.frame = CGRectMake(40,
-                                                       self.searchController.searchBar.frame.origin.y,
-                                                       (self.view.frame.size.width - 40), 44.0);
+    //ToDO for a leter release
+//    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+//    self.searchController.searchResultsUpdater = self;
+//    self.searchController.dimsBackgroundDuringPresentation = NO;
+////    self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"ScopeButtonCountry",@"Country"),
+////                                                          NSLocalizedString(@"ScopeButtonCapital",@"Capital")];
+//    self.searchController.searchBar.delegate = self;
+//    [self.searchController.searchBar setPlaceholder:@"What Are You Looking For"];
+////    self.searchController.searchBar.barTintColor = [UIColor blackColor];
+//    
+////    self.bizTableView.tableHeaderView = self.searchController.searchBar;
+//    
+//    self.navigationItem.titleView = searchController.searchBar;
+//    
+//    self.searchController.hidesNavigationBarDuringPresentation = false;
+//    self.searchController.searchBar.frame = CGRectMake(40,
+//                                                       self.searchController.searchBar.frame.origin.y,
+//                                                       (self.view.frame.size.width - 40), 44.0);
     
     self.definesPresentationContext = YES;
     
@@ -145,22 +161,30 @@ Business *biz;
 //    searchController.hidesNavigationBarDuringPresentation = NO;
 //    searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
 //    self.bizTableView.tableHeaderView = self.searchController.searchBar;
-    
-    
-    if (businessListArray.count <= 0 ) {
-        bizListTimer = [NSTimer scheduledTimerWithTimeInterval:0.001 target:self selector:@selector(timerCallBack) userInfo:nil repeats:YES];
-    } else {
-        [listBusinessesActivityIndicator stopAnimating];
-    }
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    HUD.labelText = @"Updating businesess with the lastest...";
+    HUD.detailsLabelText = @"It is worth the wait!";
+    HUD.color =[UIColor orangeColor];
+    HUD.mode = MBProgressHUDModeIndeterminate;
+    [self.view addSubview:HUD];
+    [HUD show:YES];
 
+    if (businessListArray.count <= 0 ) {
+        bizListTimer = [NSTimer scheduledTimerWithTimeInterval:0.02 target:self selector:@selector(timerCallBack) userInfo:nil repeats:YES];
+    } else {
+       [HUD hide:YES];
+    }
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     filteredBusinessListArray = [[NSMutableArray alloc] initWithCapacity:businessListArray.count];
-    UIBarButtonItem *displayMapButton = [[UIBarButtonItem alloc] initWithTitle:@"Map view" style:UIBarButtonItemStyleDone target:self action:@selector(displayMapView:)];
-    displayMapButton.tintColor = [UIColor whiteColor];
-    self.navigationItem.rightBarButtonItem = displayMapButton;
-    displayMapButton = nil;
-    self.title = @"Biz Partners";
+    // TODO for a later release
+//    UIBarButtonItem *displayMapButton = [[UIBarButtonItem alloc] initWithTitle:@"Map view" style:UIBarButtonItemStyleDone target:self action:@selector(displayMapView:)];
+//    displayMapButton.tintColor = [UIColor whiteColor];
+//    self.navigationItem.rightBarButtonItem = displayMapButton;
+//    displayMapButton = nil;
+//    self.title = @"Biz Partners";
+    
+    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tap-in-logo-navigation-bar"]];
     
     self.calloutView = [[SMCalloutView alloc] init];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
@@ -170,14 +194,6 @@ Business *biz;
      forControlEvents:UIControlEventTouchUpInside];
     self.calloutView.rightAccessoryView = button;
 
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    self.mapView.delegate = self;
-    
-    locationManager.desiredAccuracy = 10.0f;
-    locationManager.distanceFilter = 200.0f;
-    [locationManager requestWhenInUseAuthorization];
-    [locationManager startUpdatingLocation];
     //    self.mapView.mapType = MKMapTypeStandard;
     
     //Get Current Location
@@ -196,21 +212,21 @@ Business *biz;
     self.mapView.mapType =  kGMSTypeNormal;
     emptyCalloutView = [[UIView alloc] initWithFrame:CGRectZero];
     [self addMarkersToMap];
+
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-//    NSLog(@"%ld",[DataModel sharedDataModelManager].userID);
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-//    NSLog(@"ViewillAppear Method Call");
-}
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
 //    [TapTalkLooks setBackgroundImage:bizTableView];
 }
+
+- (void) backButtonPressed {
+    
+    NSLog(@"backButtonPressed");
+    [self.navigationController popViewControllerAnimated:TRUE];
+}
+
 
 -(NSMutableArray *)getSortByLocationTapForApp
 {
@@ -220,7 +236,7 @@ Business *biz;
     NSString *longitudeString = [[NSUserDefaults standardUserDefaults] objectForKey:@"longitude"];
     CLLocation *myLocation = [[CLLocation alloc] initWithLatitude:[latitudeString doubleValue] longitude:[longitudeString doubleValue]];
     
-    NSArray *orderedUsers = [testLocations sortedArrayUsingComparator:^(id a,id b) {
+    NSArray *orderedUsers = [testLocations sortedArrayUsingComparator:^(NSDictionary *a,NSDictionary *b) {
         Business *userA = [[Business alloc] initWithDataFromDatabase:a];
         Business *userB = [[Business alloc] initWithDataFromDatabase:b];
         CLLocation *location1 = [[CLLocation alloc] initWithLatitude:userA.lat  longitude:userA.lng];
@@ -283,6 +299,15 @@ Business *biz;
     CLLocationCoordinate2D southWest = CLLocationCoordinate2DMake(region.center.latitude + region.span.latitudeDelta/1.00, region.center.longitude + region.span.longitudeDelta/1.15);
     GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc]initWithCoordinate:southWest coordinate:northEast];
     self.mapView.camera = [self.mapView cameraForBounds:bounds insets:UIEdgeInsetsMake(10, 0, 0, 0)];
+    
+}
+
+- (void) centerTapedMarker :(double)lat lng:(double)lng {
+    CGFloat currentZoom = self.mapView.camera.zoom;
+    GMSCameraPosition *sydney = [GMSCameraPosition cameraWithLatitude:lat
+                                                            longitude:lng
+                                                                 zoom:currentZoom];
+    [self.mapView setCamera:sydney];
 }
 
 - (void)focusMapToShowAllMarkers
@@ -309,7 +334,7 @@ Business *biz;
     CGRect calloutRect = CGRectZero;
     calloutRect.origin = point;
     calloutRect.size = CGSizeZero;
-    
+        
     if(marker.userData != nil){
         self.calloutView.title = marker.title;
         self.calloutView.subtitle = [marker.userData valueForKeyPath:@"customerProfileName"];
@@ -317,6 +342,21 @@ Business *biz;
         self.calloutView.hidden = NO;
         UIImageView *thumbView = [[UIImageView alloc] init];
         NSString *tmpIconName = [marker.userData valueForKeyPath:@"icon"];
+        
+        NSString *bg_color = [marker.userData valueForKeyPath:@"bg_color"];
+        
+        UIColor *businessColor = [[AppData sharedInstance] setUIColorFromString:bg_color];
+        self.calloutView.backgroundView.containerView.backgroundColor = businessColor;
+        
+//        self.whiteArrowImage = [self image:self.blackArrowImage withColor:[AppData businessBackgroundColor]];
+        
+        self.calloutView.backgroundView.whiteArrowImage = [self.calloutView.backgroundView image:self.calloutView.backgroundView.blackArrowImage withColor:businessColor];
+        
+        self.calloutView.backgroundView.arrowImageView = [[UIImageView alloc] initWithImage:self.calloutView.backgroundView.whiteArrowImage];
+        [self.calloutView.backgroundView.arrowView addSubview:self.calloutView.backgroundView.arrowImageView];
+        
+//        self.calloutView.backgroundView.arrowView.backgroundColor = businessColor;
+//        self.calloutView.backgroundView.containerView
 //        NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:tmpIconName];
 //        NSURL *imageURL = [NSURL URLWithString:imageURLString];
 //        NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
@@ -328,9 +368,6 @@ Business *biz;
             [thumbView Compatible_setImageWithURL:imageURL placeholderImage:nil];
         }
 
-        
-        
-        
         thumbView.layer.cornerRadius = 2.0;
         thumbView.layer.masksToBounds = YES;
         
@@ -344,9 +381,11 @@ Business *biz;
         
         self.calloutView.leftAccessoryView = blueView;
         self.calloutView.leftAccessoryView = thumbView;
-    }else{
+    }
+    else {
         self.calloutView.title = @"My Location";
     }
+    
     [self.calloutView presentCalloutFromRect:calloutRect
                                       inView:mapView
                            constrainedToView:mapView
@@ -371,12 +410,26 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     NSString *lat = [dataDict valueForKey:@"lat"];
     NSString *lng = [dataDict valueForKey:@"lng"];
     
-    [self setMapCameraTo:[lat doubleValue] lng:[lng doubleValue] mile:40];
+//    [self setMapCameraTo:[lat doubleValue] lng:[lng doubleValue] mile:40];
+    [self centerTapedMarker:[lat doubleValue] lng:[lng doubleValue]];
     self.mapView.selectedMarker = marker;
     return YES;
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+    
+    NSString *latitudeString = [[NSUserDefaults standardUserDefaults] objectForKey:@"latitude"];
+    NSString *longitudeString = [[NSUserDefaults standardUserDefaults] objectForKey:@"longitude"];
+    //    NSLog(@"current location lat = %@ long = %@", latitudeString, longitudeString);
+    //  GMSCameraPosition *cameraPosition = [GMSCameraPosition cameraWithLatitude:[latitudeString doubleValue]
+    //                                                                        longitude:[longitudeString doubleValue]
+    //                                                                             zoom:DefaultZoom];
+    
+    //  latitudeString = @"47.6210177";
+    //  longitudeString = @"-122.3268878";
+    
+    [self setMapCameraTo:[latitudeString doubleValue] lng:[longitudeString doubleValue] mile:40];
+
     [self calulateAndDisplayLocationFor:newLocation];
 }
 
@@ -396,16 +449,15 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     region.span = span;
     region.center = argLocation.coordinate;
     
-    GMSMarker *marker1 = [[GMSMarker alloc] init];
-    marker1.position = CLLocationCoordinate2DMake(region.center.latitude, region.center.longitude);
-    marker1.title = @"Koi Fusion";
-    marker1.snippet = @"Bethany";
-    marker1.map = self.mapView;
+//    GMSMarker *marker1 = [[GMSMarker alloc] init];
+//    marker1.position = CLLocationCoordinate2DMake(region.center.latitude, region.center.longitude);
+//    marker1.title = @"Koi Fusion";
+//    marker1.snippet = @"Bethany";
+//    marker1.map = self.mapView;
     
     currentLocation = argLocation;
     
 }
-
 
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
@@ -443,10 +495,10 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 //    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
         cell = [tableView dequeueReusableCellWithIdentifier:searchCellIdentifier];
     }
-    else
-    {
+    else {
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     }
+    
     if (cell == nil) {
         
         NSArray *topLevelObjects = [[NSBundle mainBundle] loadNibNamed:@"BusinessTableViewCell" owner:nil options:nil];
@@ -461,9 +513,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         }
 //        [TapTalkLooks setToTapTalkLooks:cell.contentView isActionButton:NO makeItRound:NO];
     }
-    
-    
-    
+ 
     NSDictionary *cellDict;
     if (self.searchController.active)
 //    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView])
@@ -487,7 +537,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 //        cell.businessTypesTextField.text = businessTypes;
         cell.businessType.text = businessTypes;
     }
-//zzzz
+//
 //    NSString *neighborhood = [cellDict objectForKey:@"neighborhood"];
 //    if (neighborhood != (id)[NSNull null] && neighborhood != nil )
 //    {
@@ -539,7 +589,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 //    [cell.btnFevorite  addTarget:self action:@selector(FevoriteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
- }
+}
 
 - (IBAction)FevoriteButtonClicked:(UIButton *)sender
 {
@@ -590,11 +640,39 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         
         Business * biz =[[Business alloc] initWithDataFromDatabase: userData];
         
-        DetailBusinessViewControllerII *detailBizInfo = [[DetailBusinessViewControllerII alloc] initWithBusinessObject:biz];
         NSMutableArray *branchArray = [[NSMutableArray alloc]initWithObjects:userData, nil];
-        
-        detailBizInfo.bussinessListByBranch = branchArray;
-        [self.navigationController pushViewController:detailBizInfo animated:YES];
+
+        if (self.ResponseDataArray.count > 0 ) {
+            for (int i = 0; i < self.ResponseDataArray.count ; i++) {
+                if([[[self.ResponseDataArray objectAtIndex:i]valueForKey:@"branch"] isEqualToString:[NSString stringWithFormat:@"%d",biz.businessID]])
+                    [branchArray addObject:[self.ResponseDataArray objectAtIndex:i]];
+            }
+        }
+
+        if (branchArray.count > 1) {
+            DetailBusinessViewControllerII *detailBizInfo = [[DetailBusinessViewControllerII alloc] initWithBusinessObject:biz];
+            detailBizInfo.bussinessListByBranch = branchArray;
+            [self.navigationController pushViewController:detailBizInfo animated:YES];
+        }else{
+            Business *selectedBiz = [[Business alloc] initWithDataFromDatabase:[branchArray objectAtIndex:0]];
+            [[DataModel sharedDataModelManager] setJoinedChat:FALSE];
+            [[CurrentBusiness sharedCurrentBusinessManager] setBusiness:selectedBiz];
+            [[BusinessCustomerProfileManager sharedBusinessCustomerProfileManager] setCustomerProfileName:selectedBiz.customerProfileName];
+            [[DataModel sharedDataModelManager] setChatSystemURL:selectedBiz.chatSystemURL];
+            [[DataModel sharedDataModelManager] setChat_masters:selectedBiz.chat_masters];
+            [[DataModel sharedDataModelManager] setValidate_chat:selectedBiz.validate_chat];
+            [[DataModel sharedDataModelManager] setBusinessName:selectedBiz.businessName];
+            [[DataModel sharedDataModelManager] setShortBusinessName:selectedBiz.shortBusinessName];
+            
+            NSDictionary *allChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].allChoices;
+            NSArray *mainChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].mainChoices;
+            
+            BusinessDetailsContoller *services = [[BusinessDetailsContoller alloc]
+                                                  initWithData:allChoices :mainChoices :[mainChoices objectAtIndex:0] forBusiness:selectedBiz];
+            
+            [self.navigationController pushViewController:services animated:YES];
+        }
+
 
 //        NSLog(@"Title: %@",userData[TitleKey]);
 //        NSLog(@"Info: %@",userData[InfoKey]);
@@ -633,10 +711,12 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     }
     
     if (branchArray.count > 1) {
+        
         DetailBusinessViewControllerII *detailBizInfo = [[DetailBusinessViewControllerII alloc] initWithBusinessObject:biz];
         detailBizInfo.bussinessListByBranch = branchArray;
         [self.navigationController pushViewController:detailBizInfo animated:YES];
     }else{
+
         Business *selectedBiz = [[Business alloc] initWithDataFromDatabase:[branchArray objectAtIndex:0]];
         [[DataModel sharedDataModelManager] setJoinedChat:FALSE];
         [[CurrentBusiness sharedCurrentBusinessManager] setBusiness:selectedBiz];
@@ -649,12 +729,23 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
  
         NSDictionary *allChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].allChoices;
         NSArray *mainChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].mainChoices;
-
+        
+        [[RewardDetailsModel sharedInstance] getRewardData:biz completiedBlock:^(NSDictionary *response, bool success) {
+            if (success) {
+                if(response != nil) {
+                    NSDictionary *reward = response;
+                    NSLog(@"%@",reward);
+                    NSString *total_available_points = [[[reward valueForKey:@"data"] valueForKey:@"total_available_points"] stringValue];
+                    
+                    [[self.tabBarController.tabBar.items objectAtIndex:3] setBadgeValue:total_available_points];
+                }
+            }
+        }];
+        
         BusinessDetailsContoller *services = [[BusinessDetailsContoller alloc]
                                               initWithData:allChoices :mainChoices :[mainChoices objectAtIndex:0] forBusiness:selectedBiz];
       
         [self.navigationController pushViewController:services animated:YES];
-
     }
 }
 

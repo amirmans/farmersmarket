@@ -106,7 +106,6 @@
     [self textView:profileTextView replaceTextWith:@""];
 }
 
-
 - (IBAction)togglePublicPicture:(id)sender {
     if (pictureButton.isSelected) {
         pictureButton.selected = FALSE;

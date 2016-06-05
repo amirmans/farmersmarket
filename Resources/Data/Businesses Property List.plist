@@ -73,10 +73,38 @@
 		<dict>
 			<key>Tap For All</key>
 			<array>
-				<string>See what we have</string>
-				<string>Ask for service</string>
-				<string>Ask for the bill</string>
-				<string>Look at the map of the store</string>
+				<dict>
+					<key>name</key>
+					<string>Order Food</string>
+					<key>display_name</key>
+					<string>Order Food</string>
+					<key>icon</key>
+					<string>Order Food.png</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Request Service</string>
+					<key>display_name</key>
+					<string>Request Service</string>
+					<key>icon</key>
+					<string>Request Service.png</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Events Calendar</string>
+					<key>icon</key>
+					<string>Events Calendar.png</string>
+					<key>display_name</key>
+					<string>Events Calendar</string>
+				</dict>
+				<dict>
+					<key>name</key>
+					<string>Catering</string>
+					<key>display_name</key>
+					<string>Catering</string>
+					<key>icon</key>
+					<string>Catering.png</string>
+				</dict>
 			</array>
 		</dict>
 	</dict>
@@ -100,10 +128,30 @@
 		<dict>
 			<key>Tap For All</key>
 			<array>
-				<string>Order Food</string>
-				<string>Request Service</string>
-				<string>Events Calendar</string>
-				<string>Catering</string>
+				<dict>
+					<key>name</key>
+					<string>Order Food</string>
+					<key>display_name</key>
+					<string>Order Food</string>
+					<key>icon</key>
+					<string>Order Food.png</string>
+				</dict>
+				<dict>
+					<key>display_name</key>
+					<string>Text us</string>
+					<key>name</key>
+					<string>Request Service</string>
+					<key>icon</key>
+					<string>waitingToServe.png</string>
+				</dict>
+				<dict>
+					<key>display_name</key>
+					<string>Catering</string>
+					<key>name</key>
+					<string>Catering</string>
+					<key>icon</key>
+					<string>Catering.png</string>
+				</dict>
 			</array>
 		</dict>
 	</dict>

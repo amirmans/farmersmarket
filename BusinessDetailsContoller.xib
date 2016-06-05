@@ -13,6 +13,7 @@
                 <outlet property="btn_Call" destination="1uq-xB-PLv" id="6Af-Kg-AFn"/>
                 <outlet property="btn_GetDirection" destination="uDp-pz-dZK" id="awS-fd-B3D"/>
                 <outlet property="btn_Website" destination="ZqP-Ph-pWk" id="GFd-Gn-5Bs"/>
+                <outlet property="busicessBackgroundImage" destination="Lak-xz-bfA" id="bcc-mi-AZJ"/>
                 <outlet property="businessTableView" destination="uFL-DH-42Z" id="ixN-LO-hv0"/>
                 <outlet property="imageView" destination="5HG-Zt-ee5" id="t0V-Bl-86w"/>
                 <outlet property="img_BusinessImage" destination="7Oi-qx-EYK" id="MsC-zC-Kun"/>
@@ -99,11 +100,11 @@
                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11am-12pm" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="nTp-ud-v3P">
-                            <rect key="frame" x="229" y="30" width="91" height="18"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11am-12pm" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="nTp-ud-v3P">
+                            <rect key="frame" x="222" y="30" width="83" height="18"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="18" id="BQj-dH-bKA"/>
-                                <constraint firstAttribute="width" constant="91" id="xLF-7x-xaU"/>
+                                <constraint firstAttribute="width" constant="83" id="xLF-7x-xaU"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -128,7 +129,26 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authentic Korean Flavors with a Twist" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="X5b-2b-Bpa">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kerns, 0.25 miles  " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V6A-0S-dc8">
+                            <rect key="frame" x="107" y="30" width="107" height="17"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="17" id="8h9-n2-ZZy"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Food Cart" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X6X-dR-dbj">
+                            <rect key="frame" x="12" y="30" width="87" height="17"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="17" id="NRp-fk-Unz"/>
+                                <constraint firstAttribute="width" constant="87" id="WLD-9D-dzX"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.63921568627450975" green="0.24313725490196078" blue="0.99607843137254903" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Authentic Korean Flavors with a Twist" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5b-2b-Bpa">
                             <rect key="frame" x="12" y="10" width="233" height="17"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="17" id="Sz8-5p-j7R"/>
@@ -137,30 +157,10 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kerns, 0.25 miles  " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="V6A-0S-dc8">
-                            <rect key="frame" x="105" y="30" width="129" height="17"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="129" id="0AN-uj-WfN"/>
-                                <constraint firstAttribute="height" constant="17" id="8h9-n2-ZZy"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Food Cart" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X6X-dR-dbj">
-                            <rect key="frame" x="12" y="30" width="90" height="17"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="17" id="NRp-fk-Unz"/>
-                                <constraint firstAttribute="width" constant="90" id="tSN-tc-QDX"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                            <color key="textColor" red="0.63921568627450975" green="0.24313725490196078" blue="0.99607843137254903" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="V6A-0S-dc8" firstAttribute="leading" secondItem="X6X-dR-dbj" secondAttribute="trailing" constant="3" id="0Iv-Wz-7Hi"/>
+                        <constraint firstItem="V6A-0S-dc8" firstAttribute="leading" secondItem="X6X-dR-dbj" secondAttribute="trailing" constant="8" id="0Iv-Wz-7Hi"/>
                         <constraint firstItem="X5b-2b-Bpa" firstAttribute="leading" secondItem="BJU-0g-I3d" secondAttribute="leading" constant="12" id="33c-OD-uGA"/>
                         <constraint firstItem="nTp-ud-v3P" firstAttribute="leading" secondItem="V6A-0S-dc8" secondAttribute="trailing" constant="16" id="5O2-Cf-42k"/>
                         <constraint firstItem="4X0-Ku-fAF" firstAttribute="top" secondItem="BJU-0g-I3d" secondAttribute="top" constant="10" id="6nL-vT-ocT"/>
@@ -174,12 +174,13 @@
                         <constraint firstItem="Yrl-3k-zRJ" firstAttribute="leading" secondItem="X5b-2b-Bpa" secondAttribute="trailing" constant="24" id="W6Z-On-bjB"/>
                         <constraint firstAttribute="bottom" secondItem="dpR-Dv-Y1E" secondAttribute="bottom" constant="10" id="bUF-jM-OyO"/>
                         <constraint firstItem="eTm-tB-tdM" firstAttribute="top" secondItem="MIJ-t5-Myk" secondAttribute="top" id="cXk-Rk-veh"/>
-                        <constraint firstAttribute="trailing" secondItem="nTp-ud-v3P" secondAttribute="trailing" id="d9K-IC-F7Q"/>
+                        <constraint firstAttribute="trailing" secondItem="nTp-ud-v3P" secondAttribute="trailing" constant="15" id="d9K-IC-F7Q"/>
                         <constraint firstAttribute="bottom" secondItem="MIJ-t5-Myk" secondAttribute="bottom" constant="10" id="dNe-XN-dxm"/>
                         <constraint firstAttribute="bottom" secondItem="eTm-tB-tdM" secondAttribute="bottom" constant="11" id="gJh-nj-VPz"/>
                         <constraint firstItem="Yrl-3k-zRJ" firstAttribute="top" secondItem="BJU-0g-I3d" secondAttribute="top" constant="10" id="jRF-U8-GPx"/>
                         <constraint firstItem="4X0-Ku-fAF" firstAttribute="leading" secondItem="Yrl-3k-zRJ" secondAttribute="trailing" id="mRe-fu-URh"/>
                         <constraint firstItem="X6X-dR-dbj" firstAttribute="leading" secondItem="BJU-0g-I3d" secondAttribute="leading" constant="12" id="oAo-ew-bzY"/>
+                        <constraint firstAttribute="trailing" secondItem="V6A-0S-dc8" secondAttribute="trailing" constant="106" id="oCR-uf-iv6"/>
                         <constraint firstItem="eTm-tB-tdM" firstAttribute="leading" secondItem="BJU-0g-I3d" secondAttribute="leading" constant="12" id="rUg-TU-t9b"/>
                         <constraint firstItem="eTm-tB-tdM" firstAttribute="top" secondItem="dpR-Dv-Y1E" secondAttribute="top" id="thN-ma-wnG"/>
                         <constraint firstAttribute="height" constant="86" id="vwj-eV-3Sj"/>
@@ -211,18 +212,18 @@
                         <constraint firstItem="7Oi-qx-EYK" firstAttribute="top" secondItem="5HG-Zt-ee5" secondAttribute="top" id="xXy-QY-Jmv"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gVq-iu-VRW" userLabel="TableView">
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gVq-iu-VRW" userLabel="TableView">
                     <rect key="frame" x="0.0" y="283" width="320" height="285"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="restaurant.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Lak-xz-bfA">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lak-xz-bfA" customClass="SDWebImage">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="285"/>
                         </imageView>
                         <tableView clipsSubviews="YES" alpha="0.90000000000000002" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uFL-DH-42Z">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="285"/>
-                            <color key="backgroundColor" red="0.2901960784" green="0.70588235290000001" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </tableView>
                     </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="Lak-xz-bfA" firstAttribute="leading" secondItem="gVq-iu-VRW" secondAttribute="leading" id="0pX-15-tCq"/>
@@ -256,7 +257,7 @@
                 <constraint firstAttribute="trailing" secondItem="5HG-Zt-ee5" secondAttribute="trailing" id="wHT-gI-XxC"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-            <nil key="simulatedBottomBarMetrics"/>
+            <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <variation key="default">
                 <mask key="constraints">
@@ -268,7 +269,6 @@
         </view>
     </objects>
     <resources>
-        <image name="restaurant.jpg" width="670" height="480"/>
         <image name="tempImage.jpeg" width="197" height="125"/>
     </resources>
 </document>

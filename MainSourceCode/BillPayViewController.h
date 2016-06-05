@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Stripe/Stripe.h>
-
+#import "APIUtility.h"
 
 @class Business;
 
@@ -35,9 +35,11 @@
 - (IBAction)changeCardAction:(id)sender;
 
 @property (nonatomic, weak) Business* business;
-@property (nonatomic, weak) NSDecimalNumber* totalBillInDollars;
+@property (nonatomic, strong) NSDecimalNumber* totalBillInDollars;
 
 @property (strong, nonatomic) IBOutlet UITableView *cardsTable;
+
+@property (strong, nonatomic) NSDictionary *orderInfoDict;
 
 
 //@property (nonatomic, weak) id<STPBackendCharging> backendCharger;

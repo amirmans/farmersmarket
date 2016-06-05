@@ -10,6 +10,8 @@
 #import "NewNotificationProtocol.h"
 #import "ServerInteractionManager.h"
 #import "CurrentBusiness.h"
+#import "MenuItemViewController.h"
+
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate, UITabBarControllerDelegate, UIActionSheetDelegate, PostProcesses, UIApplicationDelegate> {
     IBOutlet UIWindow *window;
@@ -19,6 +21,7 @@
     
     NSString *lat;
     NSString *lng;
+
 }
 
 + (AppDelegate *) sharedInstance;

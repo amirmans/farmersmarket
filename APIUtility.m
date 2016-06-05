@@ -52,15 +52,14 @@ static APIUtility *sharedObj;
        parameters:data
           success:^(NSURLSessionDataTask *task, id responseObject) {
               NSLog(@"JSON: %@", responseObject);
+              finished(responseObject);
           }
           failure:^(NSURLSessionDataTask *task, NSError *error) {
               
               NSLog(@"Error in sending order to the server: %@", error.description);
+              finished(@{@"error":error.description});
           }];
 }
-
-
-
 
 -(void)BusinessListAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished
 {
@@ -97,6 +96,7 @@ static APIUtility *sharedObj;
 }
 
 -(void)setFavoriteAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished {
+    
     if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
     {
         return;
@@ -105,7 +105,7 @@ static APIUtility *sharedObj;
     [manager GET:[NSString stringWithFormat:@"%@",SetFavoriteServer] parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"get %@", responseObject);
         if (finished) {
-            finished((NSDictionary*)responseObject);
+            finished(@{@"success":@"YES"});
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -128,13 +128,13 @@ static APIUtility *sharedObj;
     }];
 }
 
-
 -(void)getRevardpointsForBusiness:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished {
     if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
     {
         return;
     }
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
     [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"get %@", responseObject);
         if (finished) {
@@ -161,6 +161,150 @@ static APIUtility *sharedObj;
     }];
 }
 
+- (void) getPreviousOrderListWithConsumerID  :(NSString *) consumer_id BusinessID : (NSString *) business_id completiedBlock:(void (^)(NSDictionary *response))finished {
+    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+    {
+        return;
+    }
+    
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@?cmd=previous_order&consumer_id=%@&business_id=%@",GetPrevious_order,consumer_id,business_id];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"get %@", responseObject);
+        if (finished) {
+            finished((NSDictionary*)responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
+//        NSDictionary *temp = @{};
+        
+        if([error code] == -1004) {
+            
+            if (finished) {
+                finished(dic);
+            }
+        }
+        else
+        {
+            if (finished) {
+                finished(dic);
+            }
+        }
+    }];
+}
+
+- (void) save_cc_info :(NSDictionary *) param completiedBlock:(void (^)(NSDictionary *response))finished {
+    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+    {
+        return;
+    }
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    [manager POST:Save_cc_info
+       parameters:param
+          success:^(NSURLSessionDataTask *task, id responseObject) {
+              NSLog(@"JSON: %@", responseObject);
+              finished(responseObject);
+          }
+          failure:^(NSURLSessionDataTask *task, NSError *error) {
+              
+              NSLog(@"Error saving credit card in the server: %@", error.description);
+              finished(@{@"error":error.description});
+          }];
+
+    
+//
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    [manager POST:Save_cc_info parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        NSLog(@"get %@", responseObject);
+//        if (finished) {
+//            finished((NSDictionary*)responseObject);
+//        }
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        
+//        NSLog(@"Error: %@", error);
+//        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
+//        //        NSDictionary *temp = @{};
+//        
+//        if([error code] == -1004) {
+//            
+//            if (finished) {
+//                finished(dic);
+//            }
+//        }
+//        else
+//        {
+//            if (finished) {
+//                finished(dic);
+//            }
+//        }
+//    }];
+}
+
+- (void) getNotificationForConsumer  :(NSString *) consumer_id BusinessID : (NSString *) business_id completiedBlock:(void (^)(NSDictionary *response))finished {
+    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+    {
+        return;
+    }
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@?cmd=get_all_notifications_for_consumer&consumer_id=%@",Get_notifications,consumer_id];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"get %@", responseObject);
+        if (finished) {
+            finished((NSDictionary*)responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
+        //        NSDictionary *temp = @{};
+        
+        if([error code] == -1004) {
+            
+            if (finished) {
+                finished(dic);
+            }
+        }
+        else
+        {
+            if (finished) {
+                finished(dic);
+            }
+        }
+    }];
+}
+
+- (void) save_notifications_for_consumer_in_business :(NSDictionary *) param completiedBlock:(void (^)(NSDictionary *response))finished {
+    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+    {
+        return;
+    }
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    [manager POST:save_notifications
+       parameters:param
+          success:^(NSURLSessionDataTask *task, id responseObject) {
+              NSLog(@"JSON: %@", responseObject);
+              finished(responseObject);
+          }
+          failure:^(NSURLSessionDataTask *task, NSError *error) {
+              
+              NSLog(@"Error saving credit card in the server: %@", error.description);
+              finished(@{@"error":error.description});
+          }];
+}
 
 
 - (NSString *) GMTToLocalTime: (NSString *)GMTTime{
@@ -223,7 +367,7 @@ static APIUtility *sharedObj;
     NSDate *date2 = [formatter dateFromString:time2];
     
     NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
-    timeFormatter.dateFormat = @"hh:a";
+    timeFormatter.dateFormat = @"h a";
     
     NSLog(@"%@",[timeFormatter stringFromDate:date2]);
     

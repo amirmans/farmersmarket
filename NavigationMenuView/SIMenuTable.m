@@ -18,8 +18,6 @@
     CGRect startFrame;
     NSIndexPath *currentIndexPath;
 }
-@property (nonatomic, strong) UITableView *table;
-@property (nonatomic, strong) NSArray *items;
 @end
 
 @implementation SIMenuTable

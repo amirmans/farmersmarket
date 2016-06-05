@@ -596,11 +596,8 @@ NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView = 1.0/3.0;
 //
 
 @interface SMCalloutMaskedBackgroundView ()
-@property (nonatomic, strong) UIView *containerView, *containerBorderView, *arrowView;
-@property (nonatomic, strong) UIImageView *arrowImageView, *arrowHighlightedImageView, *arrowBorderView;
 @end
 
-static UIImage *blackArrowImage = nil, *whiteArrowImage = nil, *grayArrowImage = nil;
 
 @implementation SMCalloutMaskedBackgroundView
 
@@ -611,7 +608,8 @@ static UIImage *blackArrowImage = nil, *whiteArrowImage = nil, *grayArrowImage =
         // The hierarchy and view/layer values were discovered by inspecting map kit using Reveal.app
         
         self.containerView = [UIView new];
-        self.containerView.backgroundColor = [UIColor colorWithRed:123.0/255.0 green:0 blue:254.0/255.0 alpha:1.0f];
+//        self.containerView.backgroundColor = [UIColor colorWithRed:123.0/255.0 green:0 blue:254.0/255.0 alpha:1.0f];
+        [AppData setBusinessBackgroundColor:self.containerView];
         self.containerView.alpha = 0.96;
         self.containerView.layer.cornerRadius = 8;
         self.containerView.layer.shadowRadius = 30;
@@ -622,21 +620,23 @@ static UIImage *blackArrowImage = nil, *whiteArrowImage = nil, *grayArrowImage =
         self.containerBorderView.layer.borderWidth = 0.5;
         self.containerBorderView.layer.cornerRadius = 8.5;
         
-        if (!blackArrowImage) {
-            blackArrowImage = [SMCalloutBackgroundView embeddedImageNamed:@"CalloutArrow"];
-            whiteArrowImage = [self image:blackArrowImage withColor:[UIColor colorWithRed:123.0/255.0 green:0 blue:254.0/255.0 alpha:1.0f]];
-            grayArrowImage = [self image:blackArrowImage withColor:[UIColor colorWithWhite:0.85 alpha:1]];
+        if (!self.blackArrowImage) {
+            self.blackArrowImage = [SMCalloutBackgroundView embeddedImageNamed:@"CalloutArrow"];
+            self.whiteArrowImage = [self image:self.blackArrowImage withColor:[UIColor colorWithRed:123.0/255.0 green:0 blue:254.0/255.0 alpha:1.0f]];
+//            self.whiteArrowImage = [self image:self.blackArrowImage withColor:[AppData businessBackgroundColor]];
+
+            self.grayArrowImage = [self image:self.blackArrowImage withColor:[UIColor colorWithWhite:0.85 alpha:1]];
         }
         
         self.anchorHeight = 13;
         self.anchorMargin = 27;
         
-        self.arrowView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, blackArrowImage.size.width, blackArrowImage.size.height)];
+        self.arrowView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.blackArrowImage.size.width, self.blackArrowImage.size.height)];
         self.arrowView.alpha = 0.96;
-        self.arrowImageView = [[UIImageView alloc] initWithImage:whiteArrowImage];
-        self.arrowHighlightedImageView = [[UIImageView alloc] initWithImage:grayArrowImage];
+        self.arrowImageView = [[UIImageView alloc] initWithImage:self.whiteArrowImage];
+        self.arrowHighlightedImageView = [[UIImageView alloc] initWithImage:self.grayArrowImage];
         self.arrowHighlightedImageView.hidden = YES;
-        self.arrowBorderView = [[UIImageView alloc] initWithImage:blackArrowImage];
+        self.arrowBorderView = [[UIImageView alloc] initWithImage:self.blackArrowImage];
         self.arrowBorderView.alpha = 0.1;
         self.arrowBorderView.frameY = 0.5;
         

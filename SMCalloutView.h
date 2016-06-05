@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
+#import "AppData.h"
 
 /*
 
@@ -139,9 +140,18 @@ extern NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView;
 //
 // Background view - default draws the iOS 7 system background style (translucent white with rounded arrow).
 //
+//static UIImage *blackArrowImage = nil, *whiteArrowImage = nil, *grayArrowImage = nil;
 
 /// Abstract base class
 @interface SMCalloutBackgroundView : UIView
+
+@property (nonatomic, strong) UIImage *blackArrowImage;
+@property (nonatomic, strong) UIImage *whiteArrowImage;
+@property (nonatomic, strong) UIImage *grayArrowImage;
+
+@property (nonatomic, strong) UIView *containerView, *containerBorderView, *arrowView;
+@property (nonatomic, strong) UIImageView *arrowImageView, *arrowHighlightedImageView, *arrowBorderView;
+
 /// indicates where the tip of the arrow should be drawn, as a pixel offset
 @property (nonatomic, assign) CGPoint arrowPoint;
 /// will be set by the callout when the callout is in a highlighted state
@@ -152,6 +162,9 @@ extern NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView;
 @property (nonatomic, assign) CGFloat anchorHeight;
 /// the smallest possible distance from the edge of our control to the "tip" of the anchor, from either left or right
 @property (nonatomic, assign) CGFloat anchorMargin;
+
+- (UIImage *)image:(UIImage *)image withColor:(UIColor *)color;
+
 @end
 
 /// Default for iOS 7, this reproduces the "masked" behavior of the iOS 7-style callout view.

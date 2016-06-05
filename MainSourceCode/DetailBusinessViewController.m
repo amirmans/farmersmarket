@@ -10,8 +10,9 @@
 //#import "ServicesForBusinessViewController.h"
 //#import "GooglePlacesObject.h"
 #import "DetailBusinessViewController.h"
-#import "ServicesForBusinessTableViewController.h"
-#import "ShakeHandWithBusinessViewController.h"
+#import "BusinessDetailsContoller.h"
+//#import "ServicesForBusinessTableViewController.h"
+//#import "ShakeHandWithBusinessViewController.h"
 #import "DataModel.h"
 #import "TapTalkLooks.h"
 #import "CurrentBusiness.h"
@@ -292,6 +293,10 @@
     NSArray *mainChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].mainChoices;
     
     // needs to mainChoices and allChoices
+    
+    NSLog(@"====8=8=8=8=8=8=8==88=8=%d",[BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].loadProducts);
+   
+    
     if ([BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].loadProducts)
         [biz startLoadingBusinessProductCategoriesAndProducts];
     
@@ -321,11 +326,10 @@
             ChatMessagesViewController *chatViewContoller = [[ChatMessagesViewController alloc] initWithNibName:nil bundle:nil];
             [self.navigationController pushViewController:chatViewContoller animated:YES];
         }        
-        
     }
     else {
         biz.needsBizChat = true;
-        ServicesForBusinessTableViewController *services = [[ServicesForBusinessTableViewController alloc]
+        BusinessDetailsContoller *services = [[BusinessDetailsContoller alloc]
                                                         initWithData:allChoices :mainChoices :[mainChoices objectAtIndex:0] forBusiness:biz];
         [self.navigationController pushViewController:services animated:YES];
         services = nil;
@@ -368,8 +372,8 @@
 //}
 
 - (IBAction)showCode:(id)sender {
-    ShakeHandWithBusinessViewController *shakeHandViewController = [[ShakeHandWithBusinessViewController alloc] initWithNibName:nil bundle:nil businessObject:biz];
-    [self.navigationController pushViewController:shakeHandViewController animated:YES];
+//    ShakeHandWithBusinessViewController *shakeHandViewController = [[ShakeHandWithBusinessViewController alloc] initWithNibName:nil bundle:nil businessObject:biz];
+//    [self.navigationController pushViewController:shakeHandViewController animated:YES];
 }
 
 - (IBAction)voteTobeCustomerAction:(id)sender {
@@ -434,7 +438,6 @@
             rating.text = @"N/A";
 
     }
-
 }
 
 - (void)googlePlacesConnection:(GooglePlacesConnection *)conn didFailWithError:(NSError *)error {

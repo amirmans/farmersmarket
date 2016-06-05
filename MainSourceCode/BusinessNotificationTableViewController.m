@@ -28,15 +28,17 @@
 
 @synthesize notificationsInReverseChronological;
 
+Business *currentBiz;
+
 // delegate Method for NewNotificationWhileRunning
 
 #pragma mark - Life Cycle
 - (void)updateUIWithNewNotification
 {
-    notificationsInReverseChronological = [[[DataModel sharedDataModelManager] notifications] mutableCopy];
-    dispatch_async(dispatch_get_main_queue(), ^(void) {
-        [self.tableView reloadData];
-    });
+//    notificationsInReverseChronological = [[[DataModel sharedDataModelManager] notifications] mutableCopy];
+//    dispatch_async(dispatch_get_main_queue(), ^(void) {
+//        [self.tableView reloadData];
+//    });
 //    self.tabBarItem.badgeValue = nil;
 }
 
@@ -50,7 +52,6 @@
                                        
     }
     return self;
-
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -62,16 +63,6 @@
     return self;
 }
 
-- (void) viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-//    [TapTalkLooks setBackgroundImage:self.tableView];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -79,28 +70,52 @@
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.editButtonItem.tintColor = [UIColor whiteColor];
+//    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+//    self.editButtonItem.tintColor = [UIColor whiteColor];
     
     notificationsInReverseChronological = [[NSMutableArray alloc] init];
     
     // for some reason - setting the background color in the nib file didn't work
-    self.title = @"Notification Center";
+    self.title = @"Notifications";
     //resizing for different screen size (done by adding constraint and add chosing auto layout in the xib file)
     //happens after viewDidLoad and before viewDidAppear, so I moved the following method to viewDidAppear
 //    [TapTalkLooks setBackgroundImage:self.tableView];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-    self.tableView.rowHeight = 120; // change this number whenever you change the ui in NotificationTableViewCell
+//    self.tableView.rowHeight = 130; // change this number whenever you change the ui in NotificationTableViewCell
     
-    [self setNotificationsData];
+//    [self setNotificationsData];
     // we want to show the notifications in the reverse chronological order: the last
     // one should be displayed first
 //    notificationsInReverseChronological = [[[[[DataModel sharedDataModelManager] notifications]
 //                                             reverseObjectEnumerator] allObjects] mutableCopy];
+    
+
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    self.businessListArray = [[NSMutableArray alloc] init];
+    currentBiz = [CurrentBusiness sharedCurrentBusinessManager].business;
+
+    [self getNotificationForConsumer];
+    
+    ListofBusinesses* businesses = [ListofBusinesses sharedListofBusinesses];
+    NSArray *businessArray = [businesses businessListArray];
+    
+    for (NSDictionary *businessDict in businessArray) {
+        Business *biz = [[Business alloc] initWithDataFromDatabase:businessDict];
+        [self.businessListArray addObject:biz];
+    }
+    //    [TapTalkLooks setBackgroundImage:self.tableView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    
     [super viewWillDisappear:animated];
     self.tabBarItem.badgeValue = nil;
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
@@ -130,24 +145,29 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *simpleTableIdentifier = @"DetailBusinessVCTableViewCell";
-    DetailBusinessVCTableViewCell *cell = (DetailBusinessVCTableViewCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    static NSString *simpleTableIdentifier = @"BusinessNotificationCell";
+    BusinessNotificationCell *cell = (BusinessNotificationCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     if (cell == nil)
     {
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"DetailBusinessVCTableViewCell" owner:self options:nil];
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"BusinessNotificationCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
     
-    Business *biz1 = [[Business alloc] initWithDataFromDatabase:[self.notificationsInReverseChronological objectAtIndex:indexPath.row]];
+    NotificationDetailModel *notification = [self.notificationsInReverseChronological objectAtIndex:indexPath.row];
     
-    cell.lblOpenCloseDate.text =[[APIUtility sharedInstance]getOpenCloseTime:biz1.opening_time CloseTime:biz1.closing_time];
+//    Business *biz1 = [self.notificationsInReverseChronological objectAtIndex:indexPath.row];
     
-    NSString *tmpIconName = biz1.iconRelativeURL;
-    if (tmpIconName != (id)[NSNull null] && tmpIconName.length != 0 )
-    {
-        NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:tmpIconName];
-        NSURL *imageURL = [NSURL URLWithString:imageURLString];
-        [[cell imgBusinessIcon] Compatible_setImageWithURL:imageURL placeholderImage:nil];
+//    cell.lblOpenCloseDate.text =[[APIUtility sharedInstance]getOpenCloseTime:biz1.opening_time CloseTime:biz1.closing_time];
+    
+    
+    
+    
+    Business *selectedBusiness;
+    
+    for (Business *biz in self.businessListArray) {
+        if (biz.businessID == notification.business_id) {
+            selectedBusiness = biz;
+        }
     }
     
     cell.rateView.notSelectedImage = [UIImage imageNamed:@"Star.png"];
@@ -157,29 +177,56 @@
     cell.rateView.editable = NO;
     cell.rateView.maxRating = 5;
     
-    cell.titleLabel.text = biz1.title;
-    cell.subtitleLabel.text = biz1.address;
-    cell.bussinessType.text = biz1.businessTypes;
-    cell.bussinessAddress.text = biz1.neighborhood;
+    NSString *tmpIconName = selectedBusiness.iconRelativeURL;
+    if (tmpIconName != (id)[NSNull null] && tmpIconName.length != 0 )
+    {
+        NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:tmpIconName];
+        NSURL *imageURL = [NSURL URLWithString:imageURLString];
+        [[cell imgBusinessIcon] Compatible_setImageWithURL:imageURL placeholderImage:nil];
+    }
+
     
-    cell.distance.text = [NSString stringWithFormat:@"%.1f m",[[AppData sharedInstance]getDistance:biz1.lat longitude:biz1.lng]];
-    cell.rateView.rating = [biz1.rating floatValue];
+    cell.titleLabel.text = selectedBusiness.title;
+    cell.subtitleLabel.text = notification.message;
+    cell.bussinessType.text = selectedBusiness.businessTypes;
+    cell.bussinessAddress.text = selectedBusiness.neighborhood;
     
-    if([[APIUtility sharedInstance]isOpenBussiness:biz1.opening_time CloseTime:biz1.closing_time]){
+    cell.distance.text = [NSString stringWithFormat:@"%.1f m",[[AppData sharedInstance]getDistance:selectedBusiness.lat longitude:selectedBusiness.lng]];
+    cell.rateView.rating = [selectedBusiness.rating floatValue];
+    
+    if([[APIUtility sharedInstance]isOpenBussiness:selectedBusiness.opening_time CloseTime:selectedBusiness.closing_time]){
         cell.lblOpenClose.text = @"OPEN NOW";
         cell.lblOpenClose.textColor = [UIColor greenColor];
     }else{
-        cell.lblOpenClose.text = @"CLOSE";
+        cell.lblOpenClose.text = @"NOW CLOSED";
         cell.lblOpenClose.textColor = [UIColor redColor];
     }
     
     cell.btnFevorite.tag = indexPath.row;
     [cell.btnFevorite  addTarget:self action:@selector(FevoriteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
+    if (!notification.isRead)
+    {
+        cell.notificationBadgeView.backgroundColor = [UIColor redColor];
+    }
+    else {
+        cell.notificationBadgeView.backgroundColor = [UIColor grayColor];
+    }
+    
+    NSDateFormatter *serverDateFormatter = [[NSDateFormatter alloc] init];
+    serverDateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    serverDateFormatter.timeZone = [NSTimeZone systemTimeZone];
+    
+    NSString *dateString = notification.time_sent;
+    
+    NSDate *serverTimeSent = [serverDateFormatter dateFromString:dateString];
+    
+    NSString *localDateTime = [AppData getTimeDifferentStringFromDataTime:serverTimeSent];
+    
+    cell.lblSentTime.text = localDateTime;
     
     return cell;
 }
-
 
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -188,24 +235,39 @@
     return YES;
 }
 
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
+        
+        NotificationDetailModel *notification = [self.notificationsInReverseChronological objectAtIndex:indexPath.row];
+        notification.isDelete = true;
+        [self saveNotificationForConsumer:notification index:indexPath.row];
         [notificationsInReverseChronological removeObjectAtIndex:indexPath.row];
         [[DataModel sharedDataModelManager] setNotifications:notificationsInReverseChronological];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
+    }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return  120;
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    //minimum size of your cell, it should be single line of label if you are not clear min. then return UITableViewAutomaticDimension;
+    return 130;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:false];
+    NotificationDetailModel *notification = [self.notificationsInReverseChronological objectAtIndex:indexPath.row];
+    notification.isRead = true;
+    [self saveNotificationForConsumer:notification index:indexPath.row];
+    [self.tableView reloadData];
 }
 
 - (IBAction)FevoriteButtonClicked:(UIButton *) sender
@@ -225,107 +287,6 @@
 
 #pragma mark - Custom Methods
 
-- (void) setNotificationsData {
-    NSDictionary *business1 = @{
-                                @"active" : @"1",
-                                @"address" : @"Price dropped by 10%",
-                                @"bg_image" : @"koi_bg_image.png",
-                                @"branch" : @"0",
-                                @"businessID" : @"1",
-                                @"businessTypes" : @"Mobile Food",
-                                @"chat_masters" : @"[{\n    \"id\": \"1234567853\",\n    \"business_name\": \"KOI Fusion\"\n}]",
-                                @"chatroom_table" : @"chatitems_koi",
-                                @"city" : @"Portland",
-                                @"closing_time" : @"13:00:00",
-                                @"customerProfileName" : @"mobile food",
-                                @"date_added" : @"2015-12-26",
-                                @"date_dropped" : @"<null>",
-                                @"description" : @"Beta customer",
-                                @"email" : @"<null>",
-                                @"exclusive" : @"0",
-                                @"external_reference_no" : @"<null>",
-                                @"hours" : @"",
-                                @"icon" : @"KoiFusion_logo.png",
-                                @"inquiry_for_product" : @"0",
-                                @"lat" : @"45.55409990",
-                                @"lng" : @"-122.83644930",
-                                @"map_image_url" : @"<null>",
-                                @"marketing_statement" : @"Authentic Korean Flavors with a Twist",
-                                @"name" : @"KOI Fusion",
-                                @"neighborhood" : @"Portland",
-                                @"opening_time" : @"11:00:00",
-                                @"operating_hours" : @"<null>",
-                                @"payment_processing_email" : @"<null>",
-                                @"payment_processing_id" : @"<null>",
-                                @"phone" : @"415-867-6326",
-                                @"pictures" : @"koi_food1.jpg, koi_food2.jpg, koi_food3.jpg, koi_food4.jpg, koi_food5.jpg, koi_food6.jpg",
-                                @"rating" : @"4",
-                                @"short_name" : @"KOI",
-                                @"should_tip" : @"1",
-                                @"sms_no" : @"415-867-6326",
-                                @"state" : @"OR",
-                                @"ti_rating" : @"0",
-                                @"validate_chat" : @"0",
-                                @"website" : @"http://koifusionpdx.com",
-                                @"zipcode" : @"97229",
-                                };
-    
-    NSDictionary *business2 = @{
-                                @"active" : @"1",
-                                @"address" : @"Every thing at flat 15% discount",
-                                @"bg_image" : @"koi_bg_image.png",
-                                @"branch" : @"0",
-                                @"businessID" : @"1",
-                                @"businessTypes" : @"Mobile Food",
-                                @"chat_masters" : @"[{\n    \"id\": \"1234567853\",\n    \"business_name\": \"KOI Fusion\"\n}]",
-                                @"chatroom_table" : @"chatitems_koi",
-                                @"city" : @"Portland",
-                                @"closing_time" : @"13:00:00",
-                                @"customerProfileName" : @"mobile food",
-                                @"date_added" : @"2015-12-26",
-                                @"date_dropped" : @"<null>",
-                                @"description" : @"Beta customer",
-                                @"email" : @"<null>",
-                                @"exclusive" : @"0",
-                                @"external_reference_no" : @"<null>",
-                                @"hours" : @"",
-                                @"icon" : @"KoiFusion_logo.png",
-                                @"inquiry_for_product" : @"0",
-                                @"lat" : @"45.55409990",
-                                @"lng" : @"-122.83644930",
-                                @"map_image_url" : @"<null>",
-                                @"marketing_statement" : @"Authentic Korean Flavors with a Twist",
-                                @"name" : @"Grocery",
-                                @"neighborhood" : @"Portland",
-                                @"opening_time" : @"11:00:00",
-                                @"operating_hours" : @"<null>",
-                                @"payment_processing_email" : @"<null>",
-                                @"payment_processing_id" : @"<null>",
-                                @"phone" : @"415-867-6326",
-                                @"pictures" : @"koi_food1.jpg, koi_food2.jpg, koi_food3.jpg, koi_food4.jpg, koi_food5.jpg, koi_food6.jpg",
-                                @"rating" : @"4",
-                                @"short_name" : @"KOI",
-                                @"should_tip" : @"1",
-                                @"sms_no" : @"415-867-6326",
-                                @"state" : @"OR",
-                                @"ti_rating" : @"0",
-                                @"validate_chat" : @"0",
-                                @"website" : @"http://koifusionpdx.com",
-                                @"zipcode" : @"97229",
-                                };
-
-    
-    [notificationsInReverseChronological addObject:business1];
-    [notificationsInReverseChronological addObject:business2];
-    
-    NSLog(@"%ld",[notificationsInReverseChronological count]);
-    
-//    notificationsInReverseChronological = [[[DataModel sharedDataModelManager] notifications]  mutableCopy];
-    [self.tableView reloadData];
-
-}
-
-
 //TODO
 - (void)didSaveMessage:(NSString *)message atIndex:(int)index
 {
@@ -340,5 +301,68 @@
 	}
 }
 
+- (void) getNotificationForConsumer {
+    
+    NSString *businessID = [NSString stringWithFormat:@"%d",currentBiz.businessID];
+    NSString *consumerID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
+    
+    [notificationsInReverseChronological removeAllObjects];
+    [self.tableView reloadData];
+    
+    [[APIUtility sharedInstance] getNotificationForConsumer:consumerID BusinessID:businessID completiedBlock:^(NSDictionary *response) {
+        
+        if (![[response valueForKey:@"success"] isEqual: @"NO"]) {
+            if ([[response valueForKey:@"status"] integerValue] == 1) {
+                NSArray *dataArray = [response valueForKey:@"data"];
+                //                previousOrderCount = [dataArray count];
+                
+                NSMutableArray *notificationArray = [[NSMutableArray alloc] init];
+                
+                for (NSDictionary *notificationDetail in dataArray) {
+                    NotificationDetailModel *notification = [NotificationDetailModel new];
+                    
+                    notification.business_id = [[notificationDetail valueForKey:@"business_id"] integerValue];
+                    notification.consumer_id = [[notificationDetail valueForKey:@"consumer_id"] integerValue];
+                    notification.image = [notificationDetail valueForKey:@"image"] ;
+                    notification.message = [notificationDetail valueForKey:@"message"];
+                    notification.notification_id = [[notificationDetail valueForKey:@"notification_id"] integerValue];
+                    notification.time_read = [notificationDetail valueForKey:@"time_read"];
+                    notification.time_sent = [notificationDetail valueForKey:@"time_sent"];
+                    if ([notification.time_read isEqualToString:@"0000-00-00 00:00:00"]) {
+                        notification.isRead = false;
+                    }
+                    else {
+                        notification.isRead = true;
+                    }
+                    
+                    [notificationArray addObject:notification];
+                }
+                
+                notificationsInReverseChronological = notificationArray;
+//                if (notificationArray.count > 0) {
+//                    notificationsInReverseChronological = [[DataModel sharedDataModelManager] sortNotificationsinReverseChronologicalOrder:notificationArray];
+//                }
+            }
+        }
+        [self.tableView reloadData];
+    }];
+}
 
+- (void) saveNotificationForConsumer : (NotificationDetailModel *) notification index : (NSInteger) index {
+    
+    NSString *businessID = [NSString stringWithFormat:@"%ld",(long)notification.business_id];
+    NSString *consumerID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
+    
+    NSString *readTime = [AppData getUTCFormateDate:[NSDate date]];
+    
+    NSDictionary *dataDict = @{@"notification_id":[NSString stringWithFormat:@"%ld",(long)notification.notification_id] ,@"message":notification.message,@"image":@"",@"time_sent":notification.time_sent,@"time_read":readTime, @"business_id":businessID,@"is_deleted":[NSString stringWithFormat:@"%d",notification.isDelete]};
+
+//    NSDictionary *param = @{@"cmd":@"save_all_notifications_for_consumer",consumerID:consumerID,@"business_id":businessID, @"notification_id" :[NSString stringWithFormat:@"%ld",notification.notification_id], @"is_read" : [NSString stringWithFormat:@"%d",notification.isRead],@"is_delete":[NSString stringWithFormat:@"%d",notification.isDelete]};
+    
+    NSDictionary *param = @{@"cmd":@"save_all_notifications_for_consumer",@"consumer_id":consumerID,@"data":@[dataDict]};
+    
+    [[APIUtility sharedInstance] save_notifications_for_consumer_in_business:param completiedBlock:^(NSDictionary *response) {
+        
+    }];
+}
 @end

@@ -59,11 +59,18 @@
     
     NSString *opening_time;
     NSString *closing_time;
+    NSString *bg_image_name;
+    NSString *text_color;
+    NSString *bg_color;
+    
+    UIColor *business_bg_color;
+    UIColor *business_text_color;
     
     GooglePlacesConnection *googlePlacesConnection;
     
     NSDictionary *businessProducts;
     NSError *businessError;
+    NSString *process_time;
 }
 
 @property(nonatomic, weak) id <TaptalkBusinessDelegate> businessDelegate;
@@ -120,10 +127,19 @@
 @property(nonatomic, retain) NSString *marketing_statement;
 @property(nonatomic, retain) NSString *opening_time;
 @property(nonatomic, retain) NSString *closing_time;
+@property(nonatomic, retain) NSString *bg_image_name;
+@property(nonatomic, strong) NSString *text_color;
+@property(nonatomic, strong) NSString *bg_color;
+@property(nonatomic, strong) UIImage *businessBackgroundImage;
+
+@property(nonatomic, strong) UIColor *business_bg_color;
+@property(nonatomic, strong) UIColor *business_text_color;
+@property(nonatomic, strong) NSString *process_time;
 
 
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;
 - (void)startLoadingBusinessProductCategoriesAndProducts;
+- (void) startLoadingBusinessProductCategoriesAndProductsWithBusincessID : (NSString *) busiID;
 
 - (id)initWithGooglePlacesObject:(GooglePlacesObject *)googleObject;
 - (id)initWithDataFromDatabase:(NSDictionary *)data;

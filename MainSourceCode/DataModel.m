@@ -79,6 +79,15 @@ static DataModel *sharedDataModel = nil;
     descriptor = nil;
 }
 
+- (NSMutableArray *) sortNotificationsinReverseChronologicalOrder : (NSMutableArray *) notificationArray {
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"time_sent" ascending:NO];
+    
+    [notificationArray sortUsingDescriptors:[NSArray arrayWithObject:descriptor]];
+    descriptor = nil;
+    
+    return notificationArray;
+}
+
 - (void)setNotifications:(NSMutableArray *)notificationArray
 {
     notifications = notificationArray;

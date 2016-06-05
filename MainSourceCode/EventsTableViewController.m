@@ -18,6 +18,7 @@
 {
     NSMutableArray *eventArray;
 }
+
 @end
 
 
@@ -46,8 +47,9 @@
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
 
-    
     [self addEventData];
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -60,18 +62,17 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction) backBUttonClicked: (id) sender;
-{
+- (IBAction) backBUttonClicked: (id) sender; {
     [self.navigationController popViewControllerAnimated:true];
 //    [self.navigationController popToRootViewControllerAnimated:true];
 }
 
 
 - (void) addEventData {
-    NSDictionary *dict1 = @{@"title":@"Event 1",@"distance":@"1000 m",@"discription":@"Event 1 Discription",@"eventImage":@"",@"location":@"New york"};
-    NSDictionary *dict2 = @{@"title":@"Event 2",@"distance":@"1500 m",@"discription":@"Event 2 Discription",@"eventImage":@"",@"location":@"London"};
-    NSDictionary *dict3 = @{@"title":@"Event 3",@"distance":@"1700 m",@"discription":@"Event 3 Discription",@"eventImage":@"",@"location":@"Miami"};
-    NSDictionary *dict4 = @{@"title":@"Event 4",@"distance":@"8750 m",@"discription":@"Event 4 Discription",@"eventImage":@"",@"location":@"Miami"};
+    NSDictionary *dict1 = @{@"title":@"Event 1",@"distance":@"APR 10, 7PM-10PM",@"discription":@"Event 1 ASDASDASDASDASDASDASDJN ASDNASJBDASBDASB CDAS CDASDBASDBASJBDAS DASBDJASD AS ASDBASDAS DAS DABJSDN ASD ASBD AS ASJBD AS DAS DASD ASDAS DASD ASDBASBDAS DAS DASBD",@"eventImage":@"",@"location":@"New york"};
+    NSDictionary *dict2 = @{@"title":@"Event 2",@"distance":@"APR 10, 7PM-10PM",@"discription":@"Event 2 Discription",@"eventImage":@"",@"location":@"London"};
+    NSDictionary *dict3 = @{@"title":@"Event 3",@"distance":@"APR 10, 7PM-10PM",@"discription":@"Event 3 Discription",@"eventImage":@"",@"location":@"Miami"};
+    NSDictionary *dict4 = @{@"title":@"Event 4",@"distance":@"APR 10, 7PM-10PM",@"discription":@"Event 4 Discription",@"eventImage":@"",@"location":@"Miami"};
     
     [eventArray addObject:dict1];
     [eventArray addObject:dict2];
@@ -84,7 +85,7 @@
 #pragma mark - Table view data source
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 220;
+    return UITableViewAutomaticDimension;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -115,8 +116,10 @@
     NSDictionary *eventDict = [eventArray objectAtIndex:indexPath.row];
     
     cell.lblEventTitle.text = [eventDict valueForKey:@"title"];
-    cell.lblDistance.text = [eventDict valueForKey:@"distance"];
+    cell.lblDateTime.text = [eventDict valueForKey:@"distance"];
     cell.lblDiscription.text = [eventDict valueForKey:@"discription"];
+
+    [cell.btnEmail setTitle:biz.email forState:UIControlStateNormal];
     
     cell.btnLocation.tag = indexPath.row;
     [cell.btnLocation addTarget:self action:@selector(btnLocationClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -127,13 +130,18 @@
     return cell;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    //minimum size of your cell, it should be single line of label if you are not clear min. then return UITableViewAutomaticDimension;
+    return 300;
+}
+
 -(void)btnLocationClicked:(UIButton *)sender
 {
     NSInteger index = sender.tag;
     NSDictionary *eventDict = [eventArray objectAtIndex:index];
     NSString *location = [eventDict valueForKey:@"location"];
     
-    NSString *urlString =[NSString stringWithFormat:@"http://maps.apple.com/?q=%@",[location stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLUserAllowedCharacterSet]]] ;
+    NSString *urlString =[NSString stringWithFormat:@"http://maps.apple.com/?q=%@",[location stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLUserAllowedCharacterSet]]];
     
     NSURL *url = [NSURL URLWithString:urlString];
     
@@ -175,10 +183,7 @@
     [self presentViewController:controller animated:YES completion:nil];
 }
 
-- (EKEvent *)createEvent:(EKEventStore *)store calendarEvent : (NSDictionary *) eventDict
-{
-    
-    
+- (EKEvent *)createEvent:(EKEventStore *)store calendarEvent : (NSDictionary *) eventDict {
     NSString *title = [eventDict valueForKey:@"title"];
 //    NSString *distance = [eventDict valueForKey:@"distance"];
     NSString *discription = [eventDict valueForKey:@"discription"];

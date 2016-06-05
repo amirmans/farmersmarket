@@ -285,7 +285,6 @@
     [googlePlacesConnection getGoogleObjects:CLLocationCoordinate2DMake(currentLocation.coordinate.latitude, currentLocation.coordinate.longitude) andTypes:searchLocations];
 }
 
-
 - (void)addAnnotationsForBusinesses {
     //    if (locationManager.location)
     {
@@ -293,7 +292,6 @@
         self.mapView.showsUserLocation = YES;
         [self setResultsLoaded:NO];
     }
-
 }
 
 

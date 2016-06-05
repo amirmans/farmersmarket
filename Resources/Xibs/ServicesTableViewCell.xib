@@ -55,6 +55,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="indicator.png" width="20" height="80"/>
+        <image name="indicator.png" width="425" height="710"/>
     </resources>
 </document>

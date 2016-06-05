@@ -3,12 +3,14 @@
 
 #define TT_CommunicationWithServerQ dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
-#define AddChatServer @"http://amirmansoury.com/chatrooms/addchatmessage.php"
-#define LoadChatServer @"http://amirmansoury.com/chatrooms/loadchatmessages.php"
-#define ChatSystemServer @"http://amirmansoury.com/chatsystem/index.php"
+#define AddChatServer @"http://artdoost.com/tapin-server-staging/chatrooms/addchatmessage.php"
+#define LoadChatServer @"http://artdoost.com/tapin-server-staging/chatrooms/loadchatmessages.php"
+#define ChatSystemServer @"http://artdoost.com/tapin-server-staging/chatsystem/index.php"
 //#define ChatSystemServer @"http://127.0.0.1/TapForAll/chatsystem/index.php"
 //#define OrderServerURL @"http://tapit-servers.dev/businessinfo/model.php"
-#define OrderServerURL @"http://www.amirmansoury.com/include/model.php"
+#define OrderServerURL @"http://artdoost.com/tapin-server-staging/include/model.php"
+
+
 #define MaxRowsForLoadingChatMessages 150 // max number of messages
 #define TimeIntervalForLoadingChatMessages 1440 //Hours - 1440 means 2 months
 #define ChatValidationWorkflow_NoNeedToValidate 0
@@ -16,26 +18,36 @@
 #define ChatValidationWorkflow_Validated 2
 #define ChatValidationWorkflow_Not_Valid 3
 #define ChatValidationWorkflow_ErrorFromServer -1
-#define BusinessInformationServer @"http://amirmansoury.com/businessinfo/index.php"
-#define ConsumerProfileServer @"http://amirmansoury.com/profilesystem/consumerprofile.php"
-#define SetFavoriteServer @"http://www.amirmansoury.com/include/model/model.php"
-#define GetRewardPoints @"http://www.amirmansoury.com/include/model.php"
-
+#define BusinessAndProductionInformationServer @"http://artdoost.com/tapin-server-staging/include/model.php"
+#define BusinessInformationServer @"http://artdoost.com/tapin-server-staging/businessinfo/index.php"
+#define ConsumerProfileServer @"http://artdoost.com/tapin-server-staging/profilesystem/consumerprofile.php"
+#define SetFavoriteServer @"http://artdoost.com/tapin-server-staging/include/model.php"
+#define GetRewardPoints @"http://artdoost.com/tapin-server-staging/include/model.php"
+#define GetPrevious_order @"http://artdoost.com/tapin-server-staging/include/model.php"
+#define Save_cc_info @"http://artdoost.com/tapin-server-staging/include/model.php"
+#define save_notifications @"http://artdoost.com/tapin-server-staging/include/model.php"
+#define Get_notifications @"http://artdoost.com/tapin-server-staging/include/model.php"
 //data directories
 
-#define BusinessCustomerIndividualDirectory @"http://amirmansoury.com/customer_files/"
+#define BusinessCustomerIndividualDirectory @"http://artdoost.com/tapin-server-staging/customer_files/"
 #define BusinessCustomerIndividualDirectory_ProductItems @"products"
-#define BusinessCustomerIconDirectory @"http://amirmansoury.com/customer_files/icons/"
-#define BusinessCustomerBGImageDirectory @"http://amirmansoury.com/customer_files/bg_images/"
-#define QRImageDomain @"http://amirmansoury.com/consumer_files/qr_images/"
-#define BusinessCustomersMapDirectory @"http://amirmansoury.com/customer_files/maps/"
+#define BusinessCustomerIconDirectory @"http://artdoost.com/tapin-server-staging/customer_files/icons/"
+#define BusinessCustomerBGImageDirectory @"http://artdoost.com/tapin-server-staging/customer_files/bg_images/"
+#define QRImageDomain @"http://artdoost.com/tapin-server-staging/consumer_files/qr_images/"
+#define BusinessCustomersMapDirectory @"http://artdoost.com/tapin-server-staging/customer_files/maps/"
 
 //payment processing
-#define STRIPE_TEST_PUBLIC_KEY @"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi"
+//#define STRIPE_TEST_PUBLIC_KEY @"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi"
 //NSString * const StripePublishableKey = @"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi";
-#define TapForAllPaymentServer @"http://amirmansoury.com/paymentsystem/charge.php"
+#define TapForAllPaymentServer @"http://artdoost.com/tapin-server-staging/paymentsystem/charge.php"
 
 
+#define TapInApplicationThemeColor [UIColor colorWithRed:74.0/255.0 green:182.0/255.0 blue:190.0/255.0 alpha:1];
+
+#define IsFromTotalCartNotification @"IsFromTotalCartNotification"
+#define RedeemPoints @"RedeemPoints"
+
+#define NoLogoForMenuItems 1
 
 // We store our settings in the NSUserDefaults dictionary using these keys
 static NSString *const NicknameKey = @"nickname";
@@ -45,13 +57,16 @@ static NSString *const DeviceTokenKey = @"deviceToken";
 static NSString *const EmailAddressKey = @"email1";
 static NSString *const AgeGroupKey = @"age_group";
 static NSString *const UserIDKey = @"userID";
-
 static int NumberOfMessagesOnOnePage = 6;
 
 static NSString *const stripeArrayKey = @"stripeDataArray";
+static NSString *const StripeDefaultCard = @"stripeDefaultCard";
+static NSString *const Default_Process_Time = @"Average wait time: 25 min";
+
+
 
 // Maximum number of bytes that a text message may have. The payload data of
-// a push notification is limited to 256 bytes and that includes the JSON 
+// a push notification is limited to 256 bytes and that includes the JSON
 // overhead and the name of the sender.
 #define MaxMessageLength 190
 

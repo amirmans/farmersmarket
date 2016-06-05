@@ -39,28 +39,38 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iQt-7m-3JV">
                                 <rect key="frame" x="0.0" y="69" width="220" height="14"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cr7-mf-6ry" userLabel="Bussiness Type">
-                                        <rect key="frame" x="9" y="0.0" width="72" height="14"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K51-Kj-rHg" userLabel="Bussiness Address">
+                                        <rect key="frame" x="49" y="0.0" width="33" height="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="0.25 Miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D2j-FA-vJ7" userLabel="Distance">
+                                        <rect key="frame" x="91" y="0.0" width="129" height="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cr7-mf-6ry" userLabel="Bussiness Type">
+                                        <rect key="frame" x="8" y="0.0" width="33" height="14"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" red="0.63921568630000003" green="0.24313725489999999" blue="0.99607843139999996" alpha="1" colorSpace="deviceRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K51-Kj-rHg" userLabel="Bussiness Address">
-                                        <rect key="frame" x="81" y="0.0" width="73" height="14"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0.25 Miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D2j-FA-vJ7" userLabel="Distance">
-                                        <rect key="frame" x="155" y="0.0" width="65" height="14"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="K51-Kj-rHg" firstAttribute="top" secondItem="iQt-7m-3JV" secondAttribute="top" id="0Bh-Wc-O7A"/>
+                                    <constraint firstItem="cr7-mf-6ry" firstAttribute="top" secondItem="iQt-7m-3JV" secondAttribute="top" id="4XG-g5-ETI"/>
+                                    <constraint firstAttribute="bottom" secondItem="cr7-mf-6ry" secondAttribute="bottom" id="6sv-Gf-A6O"/>
+                                    <constraint firstItem="D2j-FA-vJ7" firstAttribute="top" secondItem="iQt-7m-3JV" secondAttribute="top" id="Azz-mA-faQ"/>
                                     <constraint firstAttribute="height" constant="14" id="BCM-an-2zc"/>
+                                    <constraint firstAttribute="trailing" secondItem="D2j-FA-vJ7" secondAttribute="trailing" id="OCr-O1-3NE"/>
+                                    <constraint firstItem="cr7-mf-6ry" firstAttribute="leading" secondItem="iQt-7m-3JV" secondAttribute="leading" constant="8" id="Oo7-U5-qLu"/>
+                                    <constraint firstAttribute="bottom" secondItem="K51-Kj-rHg" secondAttribute="bottom" id="Pkn-7M-Asw"/>
+                                    <constraint firstAttribute="bottom" secondItem="D2j-FA-vJ7" secondAttribute="bottom" id="gct-4Y-VBH"/>
+                                    <constraint firstItem="K51-Kj-rHg" firstAttribute="leading" secondItem="cr7-mf-6ry" secondAttribute="trailing" constant="8" id="l5a-fG-pGG"/>
+                                    <constraint firstItem="D2j-FA-vJ7" firstAttribute="leading" secondItem="K51-Kj-rHg" secondAttribute="trailing" constant="9" id="nWe-vh-ShL"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y5J-cg-fOD" customClass="RateView">

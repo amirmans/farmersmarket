@@ -21,6 +21,8 @@
 #import <Stripe/Stripe.h>
 #import "TPReceiptController.h"
 #import "SavedCardTableCell.h"
+#import "AppDelegate.h"
+#import "STPCardValidator.h"
 
 @interface BillPayViewController () {
     NSNumberFormatter *currencyFormatter;
@@ -31,7 +33,6 @@
 NSMutableArray *cardDataArray;
 
 @implementation BillPayViewController
-
 @synthesize payButton;
 @synthesize changeCardButton;
 @synthesize amountTextField;
@@ -60,29 +61,10 @@ NSMutableArray *cardDataArray;
 {
     [super viewDidLoad];
     
-    
-    //    // Setup payment view
-    //    //STPPaymentCardTextField *paymentTextField = [[STPPaymentCardTextField alloc] initWithFrame:CGRectMake(15, 15, CGRectGetWidth(self.view.frame) - 30, 44)];
-    //
-    //    paymentTextField.delegate = self;
-    //    self.paymentView = paymentTextField;
-    //    [self.view addSubview:paymentView];
-    //    [TapTalkLooks setToTapTalkLooks:paymentView isActionButton:NO makeItRound:YES];
-    
-    //    STPPaymentCardTextField *paymentTextField = [[STPPaymentCardTextField alloc] init];
-    //    paymentTextField.delegate = self;
-    //    self.paymentView = paymentTextField;
-    //    [self addStripView];
     paymentView.delegate = self;
     
     cardDataArray = [[NSMutableArray alloc] init];
     self.title = [NSString stringWithFormat:@"Pay %@", business.businessName];
-    // Do any additional setup after loading the view from its nib.
-    //    [TapTalkLooks setBackgroundImage:self.view];
-    //    [TapTalkLooks setToTapTalkLooks:payButton isActionButton:YES makeItRound:YES];
-    //    [TapTalkLooks setToTapTalkLooks:changeCardButton isActionButton:YES makeItRound:YES];
-    //    [TapTalkLooks setToTapTalkLooks:amountTextField isActionButton:NO makeItRound:YES];
-    
     [self getStripeDataArray];
 
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
@@ -101,44 +83,7 @@ NSMutableArray *cardDataArray;
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    //    CGFloat padding = 30;
-    //    CGFloat width = CGRectGetWidth(self.view.frame) - (padding * 2);
-    //    float screenWidth = [[UIScreen mainScreen] bounds].size.width;
-    //    float xPosition = (screenWidth - width)/2;
-    //    self.paymentView.frame = CGRectMake(xPosition, padding*3, width, padding);
-    
-    //    self.activityIndicator.center = self.view.center;
-    //    [self addStripView];
 }
-
-
-//- (IBAction)save:(id)sender {
-//    STPCardParams *card = [[STPCardParams alloc] init];
-//    card.number = self.paymentView.card.number;
-//    card.expMonth = self.paymentView.card.expMonth;
-//    card.expYear = self.paymentView.card.expYear;
-//    card.cvc = self.paymentView.card.cvc;
-//    [[STPAPIClient sharedClient] createTokenWithCard:card
-//                                          completion:^(STPToken *token, NSError *error) {
-//                                              if (error) {
-//                                                  [self handleError:error];
-//                                              } else {
-//                                                  [self createBackendChargeWithToken:token];
-//                                              }
-//                                          }];
-//}
-
-
-// end
-
-
-
-//-(BOOL)textFieldShouldReturn:(UITextField *)textField
-//{
-//    [textField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
-//    [textField reloadInputViews];
-//    return YES;
-//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -159,34 +104,83 @@ NSMutableArray *cardDataArray;
     //    [TapTalkLooks setToTapTalkLooks:button isActionButton:YES makeItRound:TRUE];
 }
 
-- (void)addStripView {
-    //    self.paymentView = [[PTKView alloc] initWithFrame:CGRectMake(15,70,290,105)
-    //                                              andKey:STRIPE_TEST_PUBLIC_KEY];
-    //    self.paymentView = [[STPCard alloc] initWithFrame:CGRectMake(15,70,290,105)];
-    //
-    //    self.paymentView = [[STPPaymentCardTextField alloc] init];
-    //
-    //    self.paymentView.delegate = self;
-    //    [self.view addSubview:self.paymentView];
-    //    self.paymentView = [[STPPaymentCardTextField alloc] initWithFrame:CGRectMake(15, 15, CGRectGetWidth(self.view.frame) - 30, 44)];
-    //    self.paymentView.delegate = self;
-    //    [self.view addSubview:self.paymentView];
-    //
-    //    STPPaymentCardTextField *paymentTextField = [[STPPaymentCardTextField alloc] init];
-    //    paymentTextField.delegate = self;
+- (void) postOrderToServer {
+    [[APIUtility sharedInstance] orderToServer:self.orderInfoDict server:OrderServerURL completiedBlock:^(NSDictionary *response) {
+        
+        if([response valueForKey:@"data"] != nil) {
+            
+            NSDictionary *dataDict = [response valueForKey:@"data"];
+            
+            NSMutableArray *fetchedOrders = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
+            
+            NSMutableArray *fetchedOrderArray = [[NSMutableArray alloc] init];
+            
+            for (NSManagedObject *obj in fetchedOrders) {
+                NSArray *keys = [[[obj entity] attributesByName] allKeys];
+                NSDictionary *dictionary = [obj dictionaryWithValuesForKeys:keys];
+                
+                [fetchedOrderArray addObject:dictionary];
+            }
+            
+//            STPCardParams *card = [[STPCardParams alloc] init];
+            
+
+            NSString *cardName = [self getNameFromCardNumber:self.paymentView.cardParams.number];
+            
+            NSString *cardNo = self.paymentView.cardParams.number;
+            
+            NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
+            
+            NSString *cardDisplayNumber = [NSString stringWithFormat:@"XXXX XXXX XXXX %@",trimmedString];
+
+            NSString *expDate =  [NSString stringWithFormat:@"%lu/%lu",(unsigned long)self.paymentView.cardParams.expMonth,(unsigned long)self.paymentView.cardParams.expYear];
+            
+            TPReceiptController *receiptVC = [[TPReceiptController alloc] initWithNibName:@"TPReceiptController" bundle:nil];
+            receiptVC.fetchedRecordArray = fetchedOrderArray;
+            receiptVC.order_id = [[dataDict valueForKey:@"order_id"] stringValue];
+            receiptVC.reward_point = [[dataDict valueForKey:@"points"] stringValue];
+            receiptVC.cardName = cardName;
+            receiptVC.cardNumber = cardDisplayNumber;
+            receiptVC.cardExpDate = expDate;
+            [self removeAllOrderFromCoreData];
+            
+            [self.navigationController pushViewController:receiptVC animated:YES];
+
+        }
+    }];
+}
+
+//- (void)addStripView {
+//     paymentView = [[STPPaymentCardTextField alloc] init];
+//    paymentView.delegate = self;
+//
+//    //   self.paymentView = paymentTextField;
+//    CGFloat padding = 30;
+//    CGFloat width = CGRectGetWidth(self.view.frame) - (padding * 2);
+//    float screenWidth = [[UIScreen mainScreen] bounds].size.width;
+//    float xPosition = (screenWidth - width)/2;
+//    self.paymentView.frame = CGRectMake(xPosition, padding*3, width, padding);
+//    [self.view addSubview:self.paymentView];
+//    [TapTalkLooks setToTapTalkLooks:paymentView isActionButton:NO makeItRound:YES];
+//    //    paymentTextField = nil;
+//}
+
+
+- (void) removeAllOrderFromCoreData {
     
-    paymentView = [[STPPaymentCardTextField alloc] init];
-    paymentView.delegate = self;
+    NSManagedObjectContext *managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
     
-    //   self.paymentView = paymentTextField;
-    CGFloat padding = 30;
-    CGFloat width = CGRectGetWidth(self.view.frame) - (padding * 2);
-    float screenWidth = [[UIScreen mainScreen] bounds].size.width;
-    float xPosition = (screenWidth - width)/2;
-    self.paymentView.frame = CGRectMake(xPosition, padding*3, width, padding);
-    [self.view addSubview:self.paymentView];
-    [TapTalkLooks setToTapTalkLooks:paymentView isActionButton:NO makeItRound:YES];
-    //    paymentTextField = nil;
+    NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"MyCartItem"];
+    NSError *error = nil;
+    NSArray *results = [managedObjectContext executeFetchRequest:request error:&error];
+    
+    for (NSManagedObject *object in results)
+    {
+        [managedObjectContext deleteObject:object];
+    }
+    
+    error = nil;
+    [managedObjectContext save:&error];
 }
 
 
@@ -196,6 +190,7 @@ NSMutableArray *cardDataArray;
 {
     [self.navigationController popViewControllerAnimated:true];
 //    [self.navigationController popToRootViewControllerAnimated:true];
+    
 }
 
 - (IBAction)payAction:(id)sender {
@@ -205,38 +200,40 @@ NSMutableArray *cardDataArray;
         [self greyoutView:payButton];
         [self greyoutView:changeCardButton];
         //
-        NSString *message = [NSString stringWithFormat:@"Paying %@ to %@", amountTextField.text, business.businessName];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:message message:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
-        [alert setTag:1]; // to identify this alert in the delegate method
-        [alert show];
-        alert = nil;
-        self.stripeCard = [[STPCard alloc] init];
+        if ([self.paymentView isValid]) {
+            STPCardParams *card = [[STPCardParams alloc] init];
+            
+            card.number = self.paymentView.cardParams.number;
+            card.expMonth = self.paymentView.cardParams.expMonth;
+            card.expYear = self.paymentView.cardParams.expYear;
+            card.cvc = self.paymentView.cardParams.cvc;
+            
+            [self checkForUniqeCard:card];
+//            [self.navigationController popViewControllerAnimated:true];
+        }
+        
+//        NSString *message = [NSString stringWithFormat:@"Paying %@ to %@", amountTextField.text, business.businessName];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:message message:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+//        [alert setTag:1]; // to identify this alert in the delegate method
+//        [alert show];
+//        alert = nil;
+//        self.stripeCard = [[STPCard alloc] init];
     }
     else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Stop!" message:@"Please enter valid Zipcode to continue your payment." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alert show];
-
     }
-    
-//    self.stripeCard.name = self.nameTextField.text;
-//    self.stripeCard.number = self.cardNumber.text;
-//    self.stripeCard.cvc = self.CVCNumber.text;
-//    self.stripeCard.expMonth = self.paymentView.card.expMonth;
-//    self.stripeCard.expYear = [self.selectedYear integerValue];
-//    
-//    //2
-//    if ([self validateCustomerInfo]) {
-//        [self performStripeOperation];
-//    }
 }
 
 
 
 - (IBAction)changeCardAction:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
-    [alert setTag:0];
-    [alert show];
-    alert = nil;
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+//    [alert setTag:0];
+//    [alert show];
+//    alert = nil;
+    
+    [self.navigationController popViewControllerAnimated:true];
 }
 
 #pragma mark - Stripe Payment Delegate
@@ -273,12 +270,9 @@ NSMutableArray *cardDataArray;
     [self handlePaymentAuthorizationWithPayment:payment completion:completion];
 }
 
-
 - (void)paymentAuthorizationViewControllerDidFinish:(PKPaymentAuthorizationViewController *)controller {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
-
 
 - (void)createBackendChargeWithToken:(STPToken *)token
                           completion:(void (^)(PKPaymentAuthorizationStatus))completion {
@@ -303,12 +297,7 @@ NSMutableArray *cardDataArray;
 
 - (void)paymentCardTextFieldDidChange:(STPPaymentCardTextField *)textField {
     if (textField.isValid) {
-        //        STPCard *card = [[STPCard alloc] init];
-        //        card.number = textField.cardNumber;
-        //        card.expMonth = textField.expirationMonth;
-        //        card.expYear = textField.expirationYear;
-        //        card.cvc = textField.cvc;
-        //        [self doSomethingWithCard:card];
+
         [self enableView:payButton];
     }
 }
@@ -334,63 +323,54 @@ NSMutableArray *cardDataArray;
     card.expMonth = self.paymentView.cardParams.expMonth;
     card.expYear = self.paymentView.cardParams.expYear;
     card.cvc = self.paymentView.cardParams.cvc;
-    NSLog(@"%@",self.paymentView);
     
     [self checkForUniqeCard:card];
-    
-//    STPCard *card = [[STPCard alloc] init];
-//    card.number =
-//    card.expMonth = self.paymentView.card.expMonth;
-//    card.expYear = self.paymentView.card.expYear;
-//    card.cvc = self.paymentView.card.cvc;
-    
-    
-    
-    
-//    [Stripe createTokenWithCard:card publishableKey:@"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi" completion:^(STPToken *token, NSError *error) {
-//        if (error) {
-//            // Handle error
-//            [self handleStripeError:error];
-//        } else {
-//            // Send off token to your server
-//            [self postStripeToken:token];
-//        }
-//    }];
 }
 
 
-//- (void)save:(id)sender {
-//    if (![self.paymentTextField isValid]) {
-//        return;
-//    }
-//    if (![Stripe defaultPublishableKey]) {
-//        NSError *error = [NSError errorWithDomain:StripeDomain
-//                                             code:STPInvalidRequestError
-//                                         userInfo:@{
-//                                                    NSLocalizedDescriptionKey: @"Please specify a Stripe Publishable Key in Constants.m"
-//                                                    }];
-//        [self.delegate paymentViewController:self didFinish:error];
-//        return;
-//    }
-////    [self.activityIndicator startAnimating];
-//    [[STPAPIClient sharedClient] createTokenWithCard:self.paymentTextField.card
-//                                          completion:^(STPToken *token, NSError *error) {
-//                                              [self.activityIndicator stopAnimating];
-//                                              if (error) {
-//                                                  [self.delegate paymentViewController:self didFinish:error];
-//                                              }
-//                                              [self.backendCharger createBackendChargeWithToken:token
-//                                                                                     completion:^(STPBackendChargeResult result, NSError *error) {
-//                                                                                         if (error) {
-//                                                                                             [self.delegate paymentViewController:self didFinish:error];
-//                                                                                             return;
-//                                                                                         }
-//                                                                                         [self.delegate paymentViewController:self didFinish:nil];
-//                                                                                     }];
-//                                          }];
-//}
-
-
+- (NSString *) getNameFromCardNumber : (NSString *) cardNumber  {
+    STPCardBrand brand = [STPCardValidator brandForNumber:cardNumber];
+    
+    switch (brand) {
+        case STPCardBrandVisa:
+            NSLog(@"Visa");
+            return @"Visa";
+            break;
+        case STPCardBrandAmex:
+            NSLog(@"Amex");
+            return @"Amex";
+            //do something
+            break;
+        case STPCardBrandMasterCard:
+            NSLog(@"Master Card");
+            return @"Master Card";
+            //do something
+            break;
+        case STPCardBrandDiscover:
+            //do something
+            NSLog(@"Discover");
+            return @"Discover";
+            break;
+        case STPCardBrandJCB:
+            //do something
+            NSLog(@"JCB");
+            return @"JCB";
+            break;
+        case STPCardBrandDinersClub:
+            //do something
+            NSLog(@"DinersClub");
+            return @"Diners Club";
+            break;
+        case STPCardBrandUnknown:
+            //do something
+            NSLog(@"Unknown");
+            return @"Unknown";
+            break;
+        default:
+            return @"Unknown";
+            break;
+    }
+}
 
 - (void)handleStripeError:(NSError *)error
 {
@@ -418,10 +398,12 @@ NSMutableArray *cardDataArray;
     
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self saveStripeCard:card];
-        [self createStripeTokenWithCard:card];
+        [self saveAsDefaultCard:card];
+//        [self createStripeTokenWithCard:card];
     }];
     UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self createStripeTokenWithCard:card];
+        [self saveAsDefaultCard:card];
+//        [self createStripeTokenWithCard:card];
     }];
     
     [alert addAction:noAction];
@@ -430,6 +412,22 @@ NSMutableArray *cardDataArray;
     [self presentViewController:alert animated:true completion:^{
         
     }];
+}
+
+- (void) saveAsDefaultCard : (STPCardParams *) card {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *cardNumber = card.number;
+    NSString *cardExpMonth = [NSString stringWithFormat:@"%tu",card.expMonth];
+    NSString *cardExpYear = [NSString stringWithFormat:@"%tu",card.expYear];
+    NSString *cardCvc = card.cvc;
+    NSString *cardName = [self getNameFromCardNumber:cardNumber];
+    
+    NSDictionary *cardDataDict = @{ @"number":cardNumber,@"cardName":cardName,@"expMonth":cardExpMonth,@"expYear":cardExpYear ,@"cvc":cardCvc };
+    
+    [defaults setObject:cardDataDict forKey:StripeDefaultCard];
+    [self.navigationController popViewControllerAnimated:true];
+//    [self.navigationController popViewControllerAnimated:true];
 }
 
 - (void) checkForUniqeCard : (STPCardParams *) cardData {
@@ -447,9 +445,10 @@ NSMutableArray *cardDataArray;
         
         NSArray *dataArray = [[stripeDataArray filteredArrayUsingPredicate:predicate] mutableCopy];
         
-        NSLog(@"%ld",[dataArray count]);
+        NSLog(@"%ld",(unsigned long)[dataArray count]);
         if ([dataArray count] > 0) {
-            [self createStripeTokenWithCard:cardData];
+            [self saveAsDefaultCard:cardData];
+//            [self createStripeTokenWithCard:cardData];
         }
         else {
             [self showAlertForAddingCard:cardData];
@@ -461,17 +460,21 @@ NSMutableArray *cardDataArray;
     
 //    STPCardParams *param = cardData;
     
+    [self saveCardToServer:cardData];
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     NSString *cardNumber = cardData.number;
     NSString *cardExpMonth = [NSString stringWithFormat:@"%tu",cardData.expMonth];
     NSString *cardExpYear = [NSString stringWithFormat:@"%tu",cardData.expYear];
     NSString *cardCvc = cardData.cvc;
+    NSString *cardName = [self getNameFromCardNumber:cardData.number];
     
-    NSDictionary *cardDataDict = @{ @"number":cardNumber,@"expMonth":cardExpMonth,@"expYear":cardExpYear ,@"cvc":cardCvc };
+    NSDictionary *cardDataDict = @{ @"number":cardNumber,@"cardName":cardName,@"expMonth":cardExpMonth,@"expYear":cardExpYear ,@"cvc":cardCvc };
+
+//    NSDictionary *cardDataDict = @{ @"number":cardNumber,@"expMonth":cardExpMonth,@"expYear":cardExpYear ,@"cvc":cardCvc };
     
     if ([defaults objectForKey:stripeArrayKey] == nil) {
-        
         NSMutableArray *stripeDataArray = [[NSMutableArray alloc] init];
         [stripeDataArray addObject:cardDataDict];
         [defaults setObject:stripeDataArray forKey:stripeArrayKey];
@@ -480,12 +483,35 @@ NSMutableArray *cardDataArray;
     else {
         NSMutableArray *stripeDataArray = [[NSMutableArray alloc] initWithArray: [defaults objectForKey:stripeArrayKey]];
         [stripeDataArray addObject:cardDataDict];
-        NSLog(@"%ld",[stripeDataArray count]);
+        NSLog(@"%ld",(unsigned long)[stripeDataArray count]);
         
         [defaults setObject:stripeDataArray forKey:stripeArrayKey];
         [defaults synchronize];
     }
     [self getStripeDataArray];
+}
+
+- (void) saveCardToServer : (STPCardParams *) cardData {
+    
+    NSString *cardNumber = cardData.number;
+    NSString *cardExpMonth = [NSString stringWithFormat:@"%tu",cardData.expMonth];
+//    NSString *cardExpYear = [NSString stringWithFormat:@"%tu",cardData.expYear];
+    if ([cardExpMonth length] < 2)
+    {
+        cardExpMonth = [NSString stringWithFormat:@"0%@",cardExpMonth];
+    }
+    
+    NSString *expiration_date = [NSString stringWithFormat:@"20%tu-%@-01",  cardData.expYear, cardExpMonth];
+    
+    NSString *cardCvc = cardData.cvc;
+//    NSString *cardName = [self getNameFromCardNumber:cardData.number];
+    NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
+    
+    NSDictionary *param = @{@"cmd":@"save_cc_info",@"consumer_id":userID,@"cc_no":cardNumber,@"expiration_date":expiration_date,@"cvv":cardCvc,@"zip_code":self.txtZipCode.text};
+    
+    [[APIUtility sharedInstance]save_cc_info:param completiedBlock:^(NSDictionary *response) {
+        
+    }];
 }
 
 - (void) createStripeTokenWithCard : (STPCardParams *) card {
@@ -598,12 +624,12 @@ NSMutableArray *cardDataArray;
                                    alert.tag = 5;
                                    [alert show];
                                    
+                                   [self postOrderToServer];
                                    [self greyoutView:payButton];
                                    [self greyoutView:changeCardButton];
                                    
                                    paymentView.enabled = FALSE;
                                    [paymentView setBackgroundColor:[UIColor grayColor]];
-                                   
                                }
                            }];
 }
@@ -633,6 +659,8 @@ NSMutableArray *cardDataArray;
     
     NSString *cardDisplayNumber = [NSString stringWithFormat:@"XXXX XXXX XXXX %@",trimmedString];
     
+    NSString *cardName = [cardDict valueForKey:@"cardName"];
+    cell.lblCardName.text = cardName;
     cell.lblCardNo.text = cardDisplayNumber;
     cell.lblMonthYear.text = [NSString stringWithFormat:@"%@/%@",[cardDict valueForKey:@"expMonth"],[cardDict valueForKey:@"expYear"]];
     cell.lblCVC.text = @"XXX";
@@ -640,36 +668,63 @@ NSMutableArray *cardDataArray;
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *cardDict = [cardDataArray objectAtIndex:indexPath.row];
+    NSString *cardNo = [cardDict valueForKey:@"number"];
+    NSString *expMonth = [cardDict valueForKey:@"expMonth"];
+    NSString *expYear = [cardDict valueForKey:@"expYear"];
+    NSString *cardCvc = [cardDict valueForKey:@"cvc"];
+//    NSString *cardName = [self getNameFromCardNumber:card.number];
+    STPCardParams *card = [[STPCardParams alloc] init];
+    
+    card.number = cardNo;
+    card.expMonth = [expMonth integerValue];
+    card.expYear = [expYear integerValue];
+    card.cvc = cardCvc;
+    
+    [self saveAsDefaultCard:card];
+//    [self.navigationController popViewControllerAnimated:true];
+}
 
 #pragma mark - AlertView Delegate
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (alertView.tag == 1) {
         // this is called for the payment option
         if (buttonIndex == 1) {
             [self prepareToGetStripeToken];
         }
-        else
-        {
+        else {
             //Cancelled enable the buttons
             [self enableView:payButton];
             [self enableView:changeCardButton];
         }
     }
     else if(alertView.tag == 5){
-        TPReceiptController *RewarsVC = [[TPReceiptController alloc] initWithNibName:@"TPReceiptController" bundle:nil];
-        [self.navigationController pushViewController:RewarsVC animated:YES];
         
+//        NSMutableArray *fetchedOrders = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
+//        
+//        NSMutableArray *fetchedOrderArray = [[NSMutableArray alloc] init];
+//        
+//        for (NSManagedObject *obj in fetchedOrders) {
+//            NSArray *keys = [[[obj entity] attributesByName] allKeys];
+//            NSDictionary *dictionary = [obj dictionaryWithValuesForKeys:keys];
+//            
+//            [fetchedOrderArray addObject:dictionary];
+//        }
+//        TPReceiptController *receiptVC = [[TPReceiptController alloc] initWithNibName:@"TPReceiptController" bundle:nil];
+//        receiptVC.FetchedRecordArray = fetchedOrderArray;
+//        
+//        [self removeAllOrderFromCoreData];
+//        
+//        [self.navigationController pushViewController:receiptVC animated:YES];
     }
     else{
         // this is called for clearing the card information
         if (buttonIndex == 1) {
-            // now we need to clear the card box.
-//            [paymentView removeFromSuperview];
-//            paymentView = nil;
+
             [paymentView clear];
-//            [self addStripView];
+
             [self greyoutView:payButton];
             [self.view setNeedsDisplay];
         }
@@ -677,16 +732,6 @@ NSMutableArray *cardDataArray;
         }
     }
 }
-
-//- (void)paymentView:(PTKView *)view withCard:(PTKCard *)card isValid:(BOOL)valid
-//{
-//    if (valid) {
-//        [self enableView:payButton];
-//    } else {
-//        [UIAlertView showErrorAlert:@"Error from server - please try again"];
-//    }
-//}
-
 
 
 @end

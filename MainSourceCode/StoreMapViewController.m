@@ -95,13 +95,15 @@
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     storeMapImageView = nil;
     [self setStoreMapImageView:nil];
     mapScrollView = nil;
     [self setMapScrollView:nil];
     SDImageCache *imageCache = [SDImageCache sharedImageCache];
     [imageCache clearMemory];
-    [imageCache clearDisk];}
+    [imageCache clearDisk];
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations
@@ -116,6 +118,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
     [mapScrollView setZoomScale:1.0 animated:YES];
 }
 

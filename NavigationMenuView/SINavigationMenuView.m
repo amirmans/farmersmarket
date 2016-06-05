@@ -12,7 +12,6 @@
 #import "SIMenuConfiguration.h"
 
 @interface SINavigationMenuView  ()
-@property (nonatomic, strong) SIMenuTable *table;
 @property (nonatomic, strong) UIView *menuContainer;
 @end
 
@@ -79,6 +78,7 @@
 
 #pragma mark -
 #pragma mark Delegate methods
+
 - (void)didSelectItemAtIndex:(NSUInteger)index
 {
     self.menuButton.isActive = !self.menuButton.isActive;

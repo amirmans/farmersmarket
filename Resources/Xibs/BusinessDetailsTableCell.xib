@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -43,21 +43,21 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zGY-xA-hXh">
-                                <rect key="frame" x="9" y="18" width="35" height="35"/>
+                                <rect key="frame" x="28" y="18" width="35" height="35"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="white_Heart" translatesAutoresizingMaskIntoConstraints="NO" id="LGR-fk-adR">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="previous_order" translatesAutoresizingMaskIntoConstraints="NO" id="LGR-fk-adR">
                                         <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="sM4-7a-zor">
-                                        <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                        <color key="textColor" red="0.2901960784" green="0.70588235290000001" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="sM4-7a-zor">
+                                        <rect key="frame" x="0.0" y="0.0" width="37" height="37"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="14"/>
+                                        <color key="textColor" red="1" green="0.80000000000000004" blue="0.40000000000000002" alpha="1" colorSpace="deviceRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Re-Order Fevorite Items" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwj-II-OSd">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Previous Order" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwj-II-OSd">
                                 <rect key="frame" x="6" y="54" width="81" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="BA8-Lm-nAG"/>
@@ -66,26 +66,33 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sbV-Jx-TAq">
+                                <rect key="frame" x="0.0" y="0.0" width="90" height="98"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="zGY-xA-hXh" firstAttribute="top" secondItem="XWo-Jj-8DT" secondAttribute="top" constant="18" identifier="BDC_7" id="1F1-kc-vd6"/>
                             <constraint firstAttribute="trailing" secondItem="viV-vP-0Cy" secondAttribute="trailing" constant="89" identifier="BDC_3" id="32x-2J-xKa"/>
+                            <constraint firstAttribute="bottom" secondItem="sbV-Jx-TAq" secondAttribute="bottom" id="3bG-07-tny"/>
                             <constraint firstAttribute="bottom" secondItem="viV-vP-0Cy" secondAttribute="bottom" constant="9" identifier="BDC_4" id="DaC-hl-CvG"/>
                             <constraint firstItem="viV-vP-0Cy" firstAttribute="top" secondItem="XWo-Jj-8DT" secondAttribute="top" constant="10" identifier="BDC_5" id="IaE-Su-hD0"/>
                             <constraint firstAttribute="bottom" secondItem="hwj-II-OSd" secondAttribute="bottom" constant="14" identifier="BDC_10" id="JFM-jI-hFX"/>
                             <constraint firstAttribute="width" constant="90" identifier="BDC_1" id="Odd-CH-Pq5"/>
                             <constraint firstItem="viV-vP-0Cy" firstAttribute="leading" secondItem="XWo-Jj-8DT" secondAttribute="leading" identifier="BDC_6" id="QRO-kB-FFO"/>
-                            <constraint firstAttribute="trailing" secondItem="zGY-xA-hXh" secondAttribute="trailing" constant="46" identifier="BDC_8" id="e8x-KT-pJd"/>
+                            <constraint firstAttribute="trailing" secondItem="zGY-xA-hXh" secondAttribute="trailing" constant="27" identifier="BDC_8" id="e8x-KT-pJd"/>
                             <constraint firstAttribute="trailing" secondItem="hwj-II-OSd" secondAttribute="trailing" constant="3" identifier="BDC_11" id="f9l-rY-7Py"/>
-                            <constraint firstItem="zGY-xA-hXh" firstAttribute="leading" secondItem="viV-vP-0Cy" secondAttribute="trailing" constant="8" symbolic="YES" identifier="BDC_9" id="nYH-bt-a5U"/>
+                            <constraint firstItem="sbV-Jx-TAq" firstAttribute="leading" secondItem="XWo-Jj-8DT" secondAttribute="leading" id="jVQ-lT-Fn3"/>
+                            <constraint firstItem="zGY-xA-hXh" firstAttribute="leading" secondItem="viV-vP-0Cy" secondAttribute="trailing" constant="27" identifier="BDC_9" id="nYH-bt-a5U"/>
                             <constraint firstItem="hwj-II-OSd" firstAttribute="leading" secondItem="viV-vP-0Cy" secondAttribute="trailing" constant="5" identifier="BDC_12" id="oZf-D5-fwF"/>
                             <constraint firstItem="hwj-II-OSd" firstAttribute="top" secondItem="zGY-xA-hXh" secondAttribute="bottom" constant="1" identifier="BDC_13" id="pUm-2j-Bjl"/>
+                            <constraint firstItem="sbV-Jx-TAq" firstAttribute="top" secondItem="XWo-Jj-8DT" secondAttribute="top" id="qGp-KY-zk7"/>
+                            <constraint firstAttribute="trailing" secondItem="sbV-Jx-TAq" secondAttribute="trailing" id="skX-ZL-xPy"/>
                             <constraint firstAttribute="height" constant="98" identifier="BDC_2" id="yAS-Xk-Fbf"/>
                         </constraints>
                     </view>
                 </subviews>
-                <color key="backgroundColor" red="0.29019607843137252" green="0.70588235294117641" blue="0.70588235294117641" alpha="1" colorSpace="calibratedRGB"/>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="O7s-CJ-h4x" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" identifier="BDC_26" id="4C4-l0-bLL"/>
                     <constraint firstItem="7qx-Nq-7oJ" firstAttribute="leading" secondItem="laM-ER-azU" secondAttribute="trailing" constant="20" identifier="BDC_22" id="9ca-HG-d74"/>
@@ -103,13 +110,15 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="FoodView" destination="XWo-Jj-8DT" id="u8H-AA-avO"/>
+                <outlet property="btn_PreviousOrder" destination="sbV-Jx-TAq" id="HPs-TP-lFu"/>
                 <outlet property="img_Profile" destination="laM-ER-azU" id="p5n-AI-a02"/>
+                <outlet property="lbl_previousOrderCount" destination="sM4-7a-zor" id="UqK-ip-061"/>
                 <outlet property="lbl_profileName" destination="7qx-Nq-7oJ" id="d9h-8d-kyW"/>
             </connections>
             <point key="canvasLocation" x="287" y="333"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="white_Heart" width="52" height="52"/>
+        <image name="previous_order" width="24" height="23"/>
     </resources>
 </document>

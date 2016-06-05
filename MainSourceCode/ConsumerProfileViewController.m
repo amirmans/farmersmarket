@@ -209,7 +209,7 @@ static NSArray *consumerProfileDataArray = nil;
                     badInformation = TRUE;
                     errorMessageLabel.hidden = FALSE;
                     errorMessageLabel.text = @"Nickname must be more the 2 chars long.";
-                    errorMessageLabel.textColor = [UIColor redColor];
+                    errorMessageLabel.textColor = [UIColor blueColor];
                 }
                 
                 break;
@@ -235,11 +235,16 @@ static NSArray *consumerProfileDataArray = nil;
                         badInformation = TRUE;
                         errorMessageLabel.hidden = FALSE;
                         errorMessageLabel.text = @"Please enter valid email address";
-                        errorMessageLabel.textColor = [UIColor redColor];
+                        errorMessageLabel.textColor = [UIColor blueColor];
                     }
                     else {
                         
                     }
+                } else {
+                    badInformation = TRUE;
+                    errorMessageLabel.hidden = FALSE;
+                    errorMessageLabel.text = @"Please enter valid email address";
+                    errorMessageLabel.textColor = [UIColor blueColor];
                 }
                 break;
 
@@ -252,8 +257,8 @@ static NSArray *consumerProfileDataArray = nil;
                     if ([zipcodeTest evaluateWithObject:zipcodeTextField.text] == NO) {
                         badInformation = TRUE;
                         errorMessageLabel.hidden = FALSE;
-                        errorMessageLabel.text = @"Please enter valid zipcode";
-                        errorMessageLabel.textColor = [UIColor redColor];
+                        errorMessageLabel.text = @"Please enter valid zip code";
+                        errorMessageLabel.textColor = [UIColor blueColor];
                     }
                     else {
                         // it checks to add to the params
@@ -346,7 +351,7 @@ static NSArray *consumerProfileDataArray = nil;
     errorMessageLabel.hidden = FALSE;
     if (![textToCompare isEqualToString:textField.text]) {
         errorMessageLabel.text = @"Passwords Don't match.";
-        errorMessageLabel.textColor = [UIColor redColor];
+        errorMessageLabel.textColor = [UIColor blueColor];
     }
     else {
         errorMessageLabel.text = @"Passwords matched.";

@@ -9,8 +9,8 @@
 //#import "ServicesForBusinessViewController.h"
 //#import "GooglePlacesObject.h"
 #import "DetailBusinessViewControllerII.h"
-#import "ServicesForBusinessTableViewController.h"
-#import "ShakeHandWithBusinessViewController.h"
+//#import "ServicesForBusinessTableViewController.h"
+//#import "ShakeHandWithBusinessViewController.h"
 #import "DataModel.h"
 #import "TapTalkLooks.h"
 #import "CurrentBusiness.h"
@@ -27,6 +27,7 @@
 #import "BusinessDetailsContoller.h"
 // github library to load the images asynchronously
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "RewardDetailsModel.h"
 
 static NSString * const TitleKey = @"title";
 static NSString * const SubTitleKey = @"Subtitle";
@@ -77,6 +78,7 @@ static const CGFloat DefaultZoom = 12.0f;
 @synthesize showCodeButton;
 @synthesize voteTobeCustomerButton;
 @synthesize locationManager;
+
 // we don't have access to biz.isCustomer in all the methods of the class
 - (void)setIsCustomer:(int)isCust {
     NSAssert ((isCust == 0 || isCust ==1),@"the only valid values are 0 or 1");
@@ -267,7 +269,6 @@ static const CGFloat DefaultZoom = 12.0f;
                                                                          zoom:DefaultZoom];
     
     mapViews = [GMSMapView mapWithFrame:CGRectMake(0,0,[UIScreen mainScreen].bounds.size.width ,self.viewMap.bounds.size.height) camera:cameraPosition];
-    
 
     mapViews.delegate = self;
     mapViews.mapType =  kGMSTypeNormal;
@@ -304,7 +305,6 @@ static const CGFloat DefaultZoom = 12.0f;
     //    marker1.snippet = @"Bethany";
     //    marker1.map = self.mapView;
     
-    
     [TapTalkLooks setBackgroundImage:self.view withBackgroundImage:biz.bg_image];
     [TapTalkLooks setFontColorForLabelsInView:self.view toColor:[UIColor whiteColor]];
 }
@@ -339,8 +339,11 @@ static const CGFloat DefaultZoom = 12.0f;
     // e.g. self.myOutlet = nil;
 }
 
-
 #pragma mark - Custom Methods
+
+- (void)deleteOrderData {
+
+}
 
 - (void)setFavoriteAPICallWithBusinessId : (NSString *) businessId rating : (NSString *) favRating {
     
@@ -451,7 +454,9 @@ static const CGFloat DefaultZoom = 12.0f;
         //        [alert show];
         
         [UIAlertController showOKAlertForViewController:self withText:@"No additional information from google.  Please try another place."];
+    
     } else {
+        
         if (biz.address == nil)
             contactInfo.text= @"Address not provided";
         else
@@ -475,15 +480,12 @@ static const CGFloat DefaultZoom = 12.0f;
         }
         else
             rating.text = @"N/A";
-        
     }
 }
 
-
 #pragma mark - Button Actions
 
-- (IBAction) backBUttonClicked: (id) sender;
-{
+- (IBAction) backBUttonClicked: (id) sender {
     [self.navigationController popViewControllerAnimated:true];
 }
 
@@ -493,7 +495,6 @@ static const CGFloat DefaultZoom = 12.0f;
         [[DataModel sharedDataModelManager] setJoinedChat:FALSE];
         [[CurrentBusiness sharedCurrentBusinessManager] setBusiness:selectedBiz];
         [[BusinessCustomerProfileManager sharedBusinessCustomerProfileManager] setCustomerProfileName:self.customerProfileName];
-        
         [[DataModel sharedDataModelManager] setChatSystemURL:biz.chatSystemURL];
         [[DataModel sharedDataModelManager] setChat_masters:biz.chat_masters];
         [[DataModel sharedDataModelManager] setValidate_chat:biz.validate_chat];
@@ -511,8 +512,8 @@ static const CGFloat DefaultZoom = 12.0f;
 //}
 
 - (IBAction)showCode:(id)sender {
-    ShakeHandWithBusinessViewController *shakeHandViewController = [[ShakeHandWithBusinessViewController alloc] initWithNibName:nil bundle:nil businessObject:biz];
-    [self.navigationController pushViewController:shakeHandViewController animated:YES];
+//    ShakeHandWithBusinessViewController *shakeHandViewController = [[ShakeHandWithBusinessViewController alloc] initWithNibName:nil bundle:nil businessObject:biz];
+//    [self.navigationController pushViewController:shakeHandViewController animated:YES];
 }
 
 - (IBAction)voteTobeCustomerAction:(id)sender {
@@ -520,9 +521,9 @@ static const CGFloat DefaultZoom = 12.0f;
     [self.navigationController pushViewController:confirmation animated:YES];
 }
 
-
 #pragma mark - GMSMapViewDelegate
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
+   
     CLLocationCoordinate2D anchor = marker.position;
     
     CGPoint point = [mapView.projection pointForCoordinate:anchor];
@@ -535,11 +536,27 @@ static const CGFloat DefaultZoom = 12.0f;
         self.calloutView.subtitle = [marker.userData valueForKeyPath:@"customerProfileName"];
         self.calloutView.calloutOffset = CGPointMake(0, -CalloutYOffset);
         self.calloutView.hidden = NO;
+        
+        
+        NSString *bg_color = [marker.userData valueForKeyPath:@"bg_color"];
+        
+        UIColor *businessColor = [[AppData sharedInstance] setUIColorFromString:bg_color];
+        self.calloutView.backgroundView.containerView.backgroundColor = businessColor;
+        
+        //        self.whiteArrowImage = [self image:self.blackArrowImage withColor:[AppData businessBackgroundColor]];
+        
+        self.calloutView.backgroundView.whiteArrowImage = [self.calloutView.backgroundView image:self.calloutView.backgroundView.blackArrowImage withColor:businessColor];
+        
+        self.calloutView.backgroundView.arrowImageView = [[UIImageView alloc] initWithImage:self.calloutView.backgroundView.whiteArrowImage];
+        [self.calloutView.backgroundView.arrowView addSubview:self.calloutView.backgroundView.arrowImageView];
+
         UIImageView *thumbView = [[UIImageView alloc] init];
         NSString *tmpIconName = [marker.userData valueForKeyPath:@"icon"];
+        
         //    NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:tmpIconName];
         //    NSURL *imageURL = [NSURL URLWithString:imageURLString];
         //    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+        
         if (tmpIconName != (id)[NSNull null] && tmpIconName.length != 0 )
         {
             NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:tmpIconName];
@@ -560,9 +577,11 @@ static const CGFloat DefaultZoom = 12.0f;
         
         self.calloutView.leftAccessoryView = blueView;
         self.calloutView.leftAccessoryView = thumbView;
+        
     }else{
         self.calloutView.title = @"My Location";
     }
+    
     [self.calloutView presentCalloutFromRect:calloutRect
                                       inView:mapView
                            constrainedToView:mapView
@@ -587,7 +606,9 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     NSString *lat = [dataDict valueForKey:@"lat"];
     NSString *lng = [dataDict valueForKey:@"lng"];
     
-    [self setMapCameraTo:[lat doubleValue] lng:[lng doubleValue] mile:40];
+//    [self setMapCameraTo:[lat doubleValue] lng:[lng doubleValue] mile:40];
+    
+    [self centerTapedMarker:[lat doubleValue] lng:[lng doubleValue]];
     mapViews.selectedMarker = marker;
     return YES;
 }
@@ -619,7 +640,6 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     marker1.map = mapViews;
 
     currentLocation = argLocation;
-
 }
 
 - (void)pushNextViewController {
@@ -627,9 +647,26 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     NSDictionary *allChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].allChoices;
     NSArray *mainChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].mainChoices;
     
+    
+    NSLog(@"=8=8=8=8=8=8=8=8==88=8= %d",[BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].loadProducts);
     // needs to mainChoices and allChoices
     if ([BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].loadProducts)
+    {
         [biz startLoadingBusinessProductCategoriesAndProducts];
+//        [[RewardDetailsModel sharedInstance] getRewardData:biz];
+        [[RewardDetailsModel sharedInstance] getRewardData:biz completiedBlock:^(NSDictionary *response, bool success) {
+            if (success) {
+                NSDictionary *reward = response;
+                NSLog(@"%@",reward);
+                NSString *total_available_points = [[[reward valueForKey:@"data"] valueForKey:@"total_available_points"] stringValue];
+                
+                [[self.tabBarController.tabBar.items objectAtIndex:3] setBadgeValue:total_available_points];
+                
+            }
+
+        }];
+    }
+    
     NSArray *tempNSArray = [allChoices objectForKey:@"Tap For All"];
     if (tempNSArray.count == 1 ) {
         
@@ -653,14 +690,12 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
             
             ChatMessagesViewController *chatViewContoller = [[ChatMessagesViewController alloc] initWithNibName:nil bundle:nil];
             [self.navigationController pushViewController:chatViewContoller animated:YES];
-        }        
-        
+        }
     }
     else {
         biz.needsBizChat = true;
         BusinessDetailsContoller *services = [[BusinessDetailsContoller alloc]
                                               initWithData:allChoices :mainChoices :[mainChoices objectAtIndex:0] forBusiness:selectedBiz];
-        
         //        NSString *bgImageURL = @"";
         //        if (biz.bg_image)
         //            bgImageURL = [BusinessCustomerIconDirectory stringByAppendingString:biz.bg_image];
@@ -678,6 +713,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 }
 
 - (void)setMapCameraTo :(double)lat lng:(double)lng mile:(float)mile{
+    
     mile = mile + 1.0;
     CLLocationCoordinate2D center = CLLocationCoordinate2DMake(lat, lng);
         double radius = mile * 621.371;
@@ -688,6 +724,14 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     GMSCoordinateBounds *bounds = [[GMSCoordinateBounds alloc]initWithCoordinate:southWest coordinate:northEast];
     
     mapViews.camera = [mapViews cameraForBounds:bounds insets:UIEdgeInsetsMake(10, 0, 0, 0)];
+}
+
+- (void) centerTapedMarker :(double)lat lng:(double)lng {
+    CGFloat currentZoom = self.mapView.camera.zoom;
+    GMSCameraPosition *sydney = [GMSCameraPosition cameraWithLatitude:lat
+                                                            longitude:lng
+                                                                 zoom:currentZoom];
+    [self.mapView setCamera:sydney];
 }
 
 
@@ -749,7 +793,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         cell.lblOpenClose.text = @"OPEN NOW";
         cell.lblOpenClose.textColor = [UIColor greenColor];
     }else{
-        cell.lblOpenClose.text = @"CLOSE";
+        cell.lblOpenClose.text = @"CLOSED";
         cell.lblOpenClose.textColor = [UIColor redColor];
     }
     

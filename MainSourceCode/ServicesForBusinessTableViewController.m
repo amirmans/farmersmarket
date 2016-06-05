@@ -110,9 +110,6 @@
     [TapTalkLooks setBackgroundImage:self.tableView withBackgroundImage:biz.bg_image];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Return YES for supported orientations

@@ -12,6 +12,11 @@
 #import "CustomUIButton.h"
 #import "TPBusinessDetail.h"
 #import "SINavigationMenuView.h"
+#import "AppData.h"
+#import "MenuOptionItemModel.h"
+#import "MenuItemOptionsCell.h"
+#import "MenuItemNoImageTableViewCell.h"
+@class MBProgressHUD;
 
 @interface MenuItemViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,SHMultipleSelectDelegate, SINavigationMenuDelegate, UITextFieldDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate> {
     int myCartCount;
@@ -22,6 +27,8 @@
     
     CustomUIButton *selectedButton;
     TPBusinessDetail *selectedBusinessDetail;
+    Business *business;
+    MBProgressHUD *HUD;
 }
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
@@ -32,16 +39,19 @@
 @property (strong, nonatomic) IBOutlet UILabel *lbl_menuItems;
 @property (strong, nonatomic) IBOutlet UITableView *MenuItemTableView;
 @property (strong,nonatomic) NSMutableArray *nameArray;
-@property (strong,nonatomic)NSMutableArray *discriptionArray;
+@property (strong,nonatomic) NSMutableArray *discriptionArray;
 
-@property (strong,nonatomic)NSMutableArray *MainArray;
-@property (strong,nonatomic)NSMutableArray *businessListDetailArray;
-@property (strong,nonatomic)NSMutableArray *filteredResult;
+@property (nonatomic, strong) NSMutableArray *arrayForBool;
+
+@property (strong,nonatomic) NSMutableArray *MainArray;
+@property (strong,nonatomic) NSMutableArray *businessListDetailArray;
+@property (strong,nonatomic) NSMutableArray *filteredResult;
 
 @property (strong, atomic) NSMutableArray *filteredBusinessListArray;
 
 
-@property (strong,nonatomic)NSArray *sectionKeyArray;
+@property (strong,nonatomic)NSMutableArray *sectionKeyArray;
+@property (strong,nonatomic) NSMutableArray *sectionKeysWithCountArray;
 @property (strong,nonatomic)BBBadgeBarButtonItem *rightButton;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
@@ -51,6 +61,43 @@
 @property (strong) NSManagedObject *currentObject;
 @property (assign) BOOL favesBeenInit;
 
+@property (strong, nonatomic) IBOutlet UIView *removeFromCartView;
+@property (strong, nonatomic) IBOutlet UITableView *tblRemoveFromCart;
+@property (strong, nonatomic) IBOutlet UIView *removeFromCartContainerView;
 
+@property (strong, nonatomic) IBOutlet UIView *menuItemOptionsView;
+
+#pragma mark - Tabs
+
+
+- (IBAction)btnCancelRemoveFromCartViewClicked:(id)sender;
+
+- (IBAction)btnCancelMenuItemOptionClicked:(id)sender;
+
+- (IBAction)btnAddToCartMenuItemOptionClicked:(id)sender;
+
+@property (strong, nonatomic) IBOutlet UIView *menuItemOptionViewBackground;
+
+@property (strong, nonatomic) IBOutlet UIView *optionTab1View;
+@property (strong, nonatomic) IBOutlet UIView *optionTab2View;
+@property (strong, nonatomic) IBOutlet UIView *optionTab3View;
+
+- (IBAction)optionTab1Clicked:(id)sender;
+- (IBAction)optionTab2Clicked:(id)sender;
+- (IBAction)optionTab3Clicked:(id)sender;
+
+@property (strong, nonatomic) IBOutlet UIButton *btnOptionTab1;
+@property (strong, nonatomic) IBOutlet UIButton *btnOptionTab2;
+@property (strong, nonatomic) IBOutlet UIButton *btnOptionTab3;
+
+@property (strong, nonatomic) NSMutableArray *optionTab1Array;
+@property (strong, nonatomic) NSMutableArray *optionTab2Array;
+@property (strong, nonatomic) NSMutableArray *optionTab3Array;
+
+@property (assign, nonatomic) BOOL isOptionTab1Selected;
+@property (assign, nonatomic) BOOL isOptionTab2Selected;
+@property (assign, nonatomic) BOOL isOptionTab3Selected;
+
+@property (strong, nonatomic) IBOutlet UITableView *tblMenuItemOption;
 
 @end

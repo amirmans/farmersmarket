@@ -10,8 +10,11 @@
 #import "RateView.h"
 #import "Business.h"
 #import "KASlideShow.h"
+#import "DataModel.h"
+#import "AppDelegate.h"
+#import "TotalCartItemController.h"
 
-@interface BusinessDetailsContoller : UIViewController <UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate, KASlideShowDelegate> {
+@interface BusinessDetailsContoller : UIViewController <UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate, KASlideShowDelegate, MFMessageComposeViewControllerDelegate, UIAlertViewDelegate> {
 
     NSDictionary *allChoices;
     NSArray *mainChoices;
@@ -23,6 +26,10 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *ImageProgress;
 
 @property (weak, nonatomic) IBOutlet UILabel *lbl_Title;
+
+@property (weak, nonatomic) IBOutlet UIButton *btn_Address;
+@property (weak, nonatomic) IBOutlet UIButton *btn_Website;
+
 @property (weak, nonatomic) IBOutlet UILabel *lbl_SubTitle;
 @property (weak, nonatomic) IBOutlet UILabel *lbl_StateAndDist;
 
@@ -44,8 +51,6 @@
 
 - (IBAction)btn_CallClicked:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *btn_Call;
-
-@property (strong, nonatomic) IBOutlet UIButton *btn_Website;
 - (IBAction)btn_Website_clicked:(id)sender;
 
 @property (strong, nonatomic) IBOutlet UIView *addressView;
@@ -58,6 +63,12 @@
 @property (strong, nonatomic) IBOutlet UIImageView *img_BusinessImage;
 @property (strong, nonatomic) IBOutlet UITableView *businessTableView;
 @property (strong, nonatomic) IBOutlet UILabel *lblHeaderTitle;
+
+@property (strong, nonatomic) IBOutlet UIImageView *busicessBackgroundImage;
+
+- (IBAction)btn_AddressClicked:(id)sender;
+
+- (IBAction)btn_WebsiteClicked:(id)sender;
 
 @property(strong,nonatomic)NSArray *img_Array;
 @property(strong,nonatomic)NSArray *name_Array;

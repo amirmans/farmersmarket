@@ -10,7 +10,6 @@
 
 @interface TPBusinessDetail : NSObject
 
-
 @property(nonatomic, retain) NSString *product_id;
 @property(nonatomic, retain) NSString *customer_product_id;
 @property(nonatomic, retain) NSString *businessID;
@@ -23,19 +22,23 @@
 @property(nonatomic, retain) NSString *more_information;
 @property(nonatomic, retain) NSString *runtime_fields;
 @property(nonatomic, retain) NSString *runtime_fields_detail;
-@property(nonatomic, retain) NSString *price;
+@property(nonatomic, assign) NSString *price;
 @property(nonatomic, retain) NSString *sales_price;
 @property(nonatomic, retain) NSString *sales_start_date;
 @property(nonatomic, retain) NSString *sales_end_date;
-@property(nonatomic, retain) NSString *availability_status;
+@property(nonatomic, assign) NSInteger availability_status;
 @property(nonatomic, retain) NSString *has_option;
 @property(nonatomic, retain) NSString *detail_information;
 @property(nonatomic, retain) NSString *bought_with_rewards;
 @property(nonatomic, retain) NSString *category_name;
-@property(nonatomic,strong) NSMutableArray *optionArray;
-@property(nonatomic,retain) NSString *totalcount;
+@property(nonatomic, strong) NSMutableArray *optionArray;
+@property(nonatomic, retain) NSString *totalcount;
 @property(nonatomic, assign) double ti_rating;
 @property(nonatomic, strong) NSMutableArray *arrOptions;
 @property(nonatomic, assign) NSInteger quantity;
-
+@property(nonatomic, strong) NSString *product_option;
+@property(nonatomic, assign) NSInteger product_option_total;
+@property(nonatomic, assign) NSInteger product_order_id;
+@property(nonatomic, strong) NSMutableArray *selected_ProductID_array;
+@property(nonatomic, retain) NSString *note;
 @end

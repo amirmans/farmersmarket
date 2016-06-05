@@ -40,6 +40,8 @@ static AppData *sharedObj;
 {
     if ([CLLocationManager locationServicesEnabled])
     {
+        
+        
         locationManager = [[CLLocationManager alloc]init];
         locationManager.delegate = self;
         
@@ -164,5 +166,102 @@ static AppData *sharedObj;
     [[AFNetworkReachabilityManager sharedManager] startMonitoring];
     
     return networkStatus;
+}
+
++ (void) setBusinessBackgroundColor : (UIView *) view {
+    
+    Business *biz = [CurrentBusiness sharedCurrentBusinessManager].business;
+    
+    [view setBackgroundColor:biz.business_bg_color];
+}
+
++ (UIColor *) businessBackgroundColor {
+    Business *biz = [CurrentBusiness sharedCurrentBusinessManager].business;
+    return biz.business_bg_color;
+}
+
+- (UIColor *) setUIColorFromString : (NSString *) colorString {
+    
+    NSCharacterSet *trim = [NSCharacterSet characterSetWithCharactersInString:@"rgb( )"];
+    
+    NSString *removeRGBCharacter = [[colorString componentsSeparatedByCharactersInSet:trim] componentsJoinedByString:@""];
+    
+    NSLog(@"%@",removeRGBCharacter);
+    
+    NSArray *rgbArray = [removeRGBCharacter componentsSeparatedByString:@","];
+    
+    NSInteger rColor = [[rgbArray objectAtIndex:0] integerValue];
+    NSInteger gColor = [[rgbArray objectAtIndex:1] integerValue];
+    NSInteger bColor = [[rgbArray objectAtIndex:2] integerValue];
+    
+    return [UIColor colorWithRed:rColor/255.0 green:gColor/255.0 blue:bColor/255.0 alpha:1];
+}
+
++ (int) calculateRoundPoints : (CGFloat) value {
+    int rounded_down = floorf(value * 100) / 10;
+    return rounded_down;
+}
+
++ (CGFloat) calculateRoundPrice : (CGFloat) value {
+    CGFloat rounded_down = floorf(value * 100) / 100;
+    return rounded_down;
+}
+
++ (NSString *)getTimeDifferentStringFromDataTime:(NSDate *) dateTime
+{
+    NSDictionary *timeScale = @{@"s"  :@1,
+                                @"minute"  :@60,
+                                @"hour"  :@3600,
+                                @"day"  :@86400,
+                                @"week"  :@605800,
+                                @"month"  :@2629743,
+                                @"year"  :@31556926
+                                };
+    NSString *scale;
+    int timeAgo = abs(0 - (int)[dateTime timeIntervalSinceNow]);
+    if (timeAgo < 60) {
+        scale = @"s";
+    } else
+        if (timeAgo < 3600) {
+            scale = @"minute";
+        } else if (timeAgo < 86400) {
+            scale = @"hour";
+        } else if (timeAgo < 605800) {
+            scale = @"day";
+        } else if (timeAgo < 2629743) {
+            scale = @"week";
+        }else if (timeAgo < 31556926) {
+            scale = @"month";
+        } else {
+            scale = @"year";
+        }
+    
+    if([scale isEqualToString:@"month" ] && timeAgo > 3600) {
+        timeAgo = timeAgo/2629743;
+    }
+    else {
+        timeAgo = timeAgo/[[timeScale objectForKey:scale] integerValue];
+    }
+    
+    NSString *s = @"ago";
+    if (timeAgo > 1) {
+        scale = [scale stringByAppendingString:@"s"];
+    }
+    
+    return [NSString stringWithFormat:@"%d %@ %@", timeAgo, scale,s];
+}
+
++ (NSString *)getUTCFormateDate:(NSDate *)localDate
+{
+    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    [dateFormatter setCalendar:gregorianCalendar];
+    [dateFormatter setTimeZone:timeZone];
+    [dateFormatter setLocale:locale];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *dateString = [dateFormatter stringFromDate:localDate];
+    return dateString;
 }
 @end
