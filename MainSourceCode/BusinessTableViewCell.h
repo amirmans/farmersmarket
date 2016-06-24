@@ -19,5 +19,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *businessType;
 @property (strong, nonatomic) IBOutlet UILabel *businessAddress;
 @property (strong, nonatomic) IBOutlet UILabel *distance;
+@property (strong, nonatomic) IBOutlet UILabel *lblOpenCloseDate;
+@property (weak, nonatomic) IBOutlet UILabel *lblOpenClose;
 
 @end

@@ -88,8 +88,6 @@ Business *currentBiz;
     // one should be displayed first
 //    notificationsInReverseChronological = [[[[[DataModel sharedDataModelManager] notifications]
 //                                             reverseObjectEnumerator] allObjects] mutableCopy];
-    
-
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -160,8 +158,6 @@ Business *currentBiz;
 //    cell.lblOpenCloseDate.text =[[APIUtility sharedInstance]getOpenCloseTime:biz1.opening_time CloseTime:biz1.closing_time];
     
     
-    
-    
     Business *selectedBusiness;
     
     for (Business *biz in self.businessListArray) {
@@ -184,7 +180,6 @@ Business *currentBiz;
         NSURL *imageURL = [NSURL URLWithString:imageURLString];
         [[cell imgBusinessIcon] Compatible_setImageWithURL:imageURL placeholderImage:nil];
     }
-
     
     cell.titleLabel.text = selectedBusiness.title;
     cell.subtitleLabel.text = notification.message;
@@ -194,12 +189,24 @@ Business *currentBiz;
     cell.distance.text = [NSString stringWithFormat:@"%.1f m",[[AppData sharedInstance]getDistance:selectedBusiness.lat longitude:selectedBusiness.lng]];
     cell.rateView.rating = [selectedBusiness.rating floatValue];
     
-    if([[APIUtility sharedInstance]isOpenBussiness:selectedBusiness.opening_time CloseTime:selectedBusiness.closing_time]){
-        cell.lblOpenClose.text = @"OPEN NOW";
-        cell.lblOpenClose.textColor = [UIColor greenColor];
-    }else{
-        cell.lblOpenClose.text = @"NOW CLOSED";
-        cell.lblOpenClose.textColor = [UIColor redColor];
+    if ([selectedBusiness.opening_time isEqual:[NSNull null]] || [selectedBusiness.closing_time isEqual:[NSNull null]]) {
+        cell.lblOpenClose.hidden = true;
+        cell.lblOpenCloseDate.hidden = true;
+    }
+    else {
+        cell.lblOpenClose.hidden = false;
+        cell.lblOpenCloseDate.hidden = false;
+        
+        if([[APIUtility sharedInstance]isOpenBussiness:selectedBusiness.opening_time CloseTime:selectedBusiness.closing_time]){
+            cell.lblOpenClose.text = @"OPEN NOW";
+            cell.lblOpenClose.textColor = [UIColor greenColor];
+        }
+        else{
+            cell.lblOpenClose.text = @"NOW CLOSED";
+            cell.lblOpenClose.textColor = [UIColor redColor];
+        }
+        
+        cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:selectedBusiness.opening_time CloseTime:selectedBusiness.closing_time];
     }
     
     cell.btnFevorite.tag = indexPath.row;

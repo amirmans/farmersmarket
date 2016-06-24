@@ -82,20 +82,22 @@ NSInteger current_points_level_int  = 0;
     [cell.btnpoints setTitle:[NSString stringWithFormat:@"%ld",(long)points] forState:UIControlStateNormal];
     
     if([[dic objectForKey:@"points"] integerValue] > 0){
-     cell.lblreddemed.text  = @"Earned Points";
+        cell.lblreddemed.text  = @"Earned Points";
         date = [dic objectForKey:@"time_earned"];
     }else{
-     cell.lblreddemed.text  = @"Redeemed Points";
+        cell.lblreddemed.text  = @"Redeemed Points";
         date = [dic objectForKey:@"time_redeemed"];
     }
     
-    NSDateFormatter *dateformater = [[NSDateFormatter alloc] init];
-    dateformater.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-    NSDate *converteddate = [dateformater dateFromString:date];
-    dateformater.dateFormat = @"MMM-dd HH:mm a";
-    NSString *localdate = [dateformater stringFromDate:converteddate];
-    cell.lbldate.text =localdate;
-//  cell.backgroundColor = [UIColor colorWithHue:245/255.0f saturation:245/255.0f brightness:245/255.0f alpha:1];
+    if (date != (id)[NSNull null]) {
+        NSDateFormatter *dateformater = [[NSDateFormatter alloc] init];
+        dateformater.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+        NSDate *converteddate = [dateformater dateFromString:date];
+        dateformater.dateFormat = @"MMM-dd HH:mm a";
+        NSString *localdate = [dateformater stringFromDate:converteddate];
+        cell.lbldate.text =localdate;
+    }
+    //  cell.backgroundColor = [UIColor colorWithHue:245/255.0f saturation:245/255.0f brightness:245/255.0f alpha:1];
     
     return cell;
 }
@@ -126,32 +128,35 @@ NSInteger current_points_level_int  = 0;
                 
                 dollarValueDouble = [total_available_points doubleValue]/10;
             }
-            
-            if ([data valueForKeyPath:@"current_points_level"] != [NSNull null]) {
-                NSDictionary *current_points_level = [data valueForKeyPath:@"current_points_level"];
-                float dollarValue = 0.0;
-                NSInteger points = [[current_points_level valueForKey:@"points"] integerValue];
- 
-                current_points_level_int = points;
 
-                if ([current_points_level valueForKey:@"dollar_value"] != [NSNull null]) {
-                    dollarValue = [[current_points_level valueForKey:@"dollar_value"] floatValue];
-                    self.lblRedeemPoints.text = [NSString stringWithFormat:@"You can redeem %ld points for $%.2f",(long)points,dollarValue];
-                }
-            }
-            
-            if ([data valueForKeyPath:@"next_points_level"] != [NSNull null]) {
-                NSDictionary *next_points_level = [data valueForKeyPath:@"next_points_level"];
-                float dollarValue = 0.0;
-                NSInteger points = [[next_points_level valueForKey:@"points"] integerValue];
-                
-                if ([next_points_level valueForKey:@"dollar_value"] != [NSNull null]) {
-                    dollarValue = [[next_points_level valueForKey:@"dollar_value"] floatValue];
-                }
-                
-                self.lblNextLevelPoints.text = [NSString stringWithFormat:@"Next level is %ld points for $%.2f",(long)points,dollarValue];
-            }
-            
+// TODO For the nex release
+//            if ([data valueForKeyPath:@"current_points_level"] != [NSNull null]) {
+//                NSDictionary *current_points_level = [data valueForKeyPath:@"current_points_level"];
+//                float dollarValue = 0.0;
+//                NSInteger points = [[current_points_level valueForKey:@"points"] integerValue];
+// 
+//                current_points_level_int = points;
+//
+//                if ([current_points_level valueForKey:@"dollar_value"] != [NSNull null]) {
+//                    dollarValue = [[current_points_level valueForKey:@"dollar_value"] floatValue];
+//                    self.lblRedeemPoints.text = [NSString stringWithFormat:@"You can redeem %ld points for $%.2f",(long)points,dollarValue];
+//                }
+//            }
+//            
+//            if ([data valueForKeyPath:@"next_points_level"] != [NSNull null]) {
+//                NSDictionary *next_points_level = [data valueForKeyPath:@"next_points_level"];
+//                float dollarValue = 0.0;
+//                NSInteger points = [[next_points_level valueForKey:@"points"] integerValue];
+//                
+//                if ([next_points_level valueForKey:@"dollar_value"] != [NSNull null]) {
+//                    dollarValue = [[next_points_level valueForKey:@"dollar_value"] floatValue];
+//                }
+//                
+//                self.lblNextLevelPoints.text = [NSString stringWithFormat:@"Next level is %ld points for $%.2f",(long)points,dollarValue];
+//            }
+//
+            self.lblRedeemPoints.text = @"Keep earning points.";
+            self.lblNextLevelPoints.text = @"Redeem them with the next app update.";
             
 //            if ([dic valueForKeyPath:@"points_earned"] != [NSNull null])
             self.pointsarray = [data valueForKeyPath:@"points"];

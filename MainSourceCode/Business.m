@@ -189,7 +189,7 @@
 
 - (void)startLoadingBusinessEvents {
     
-    NSString *urlString = [NSString stringWithFormat:@"%@?businessID=%i", BusinessInformationServer, businessID];
+    NSString *urlString = [NSString stringWithFormat:@"%@?businessID=%i", ServerForBusiness, businessID];
     urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlString];

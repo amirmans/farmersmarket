@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Stripe/Stripe.h>
 #import "APIUtility.h"
+#import "ConsumerCCModelObject.h"
 
 @class Business;
 

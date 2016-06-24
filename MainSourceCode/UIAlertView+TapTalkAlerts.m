@@ -19,6 +19,16 @@
     alertView = nil;
 }
 
++ (void)showInformationAlert:(NSString *)text withTitle:(NSString *)title {
+    UIAlertView *alertView = [[UIAlertView alloc]
+                              initWithTitle:title
+                              message:text delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil];
+    
+    [alertView show];
+    alertView = nil;
+}
+
+
 + (void)showOKAlertForViewController:(UIViewController *)vc withText:(NSString *)text {
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""

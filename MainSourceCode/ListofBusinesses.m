@@ -56,8 +56,8 @@
 - (void)postProcessForListOfBusinessesSuccess:(NSDictionary *)responseData
 {
     //    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    int status = [[responseData objectForKey:@"status"] intValue];
-        NSAssert(status == 0, @"We could not get list of our businesses");
+//    int status = [[responseData objectForKey:@"status"] intValue];
+//        NSAssert(status == 0, @"We could not get list of our businesses");
     businessListArray = [responseData objectForKey:@"data"];
 //    NSLog(@"The status is: %i and our list of businesses is: %@", status, businessListArray);
 }

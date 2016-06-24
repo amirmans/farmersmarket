@@ -72,8 +72,27 @@ bool shouldOpenOptionMenu = false;
 
     [super viewDidLoad];
     
+//    NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
+//    NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
+//    
+//    BOOL businessIsClosed = false;
+//    if(openTime == (id)[NSNull null] || closeTime == (id)[NSNull null]) {
+//        businessIsClosed = true;
+//    } else if (![[APIUtility sharedInstance] isOpenBussiness:openTime CloseTime:closeTime]) {
+//        businessIsClosed = true;
+//    }
+//    
+//    if (businessIsClosed) {
+//        NSString *openCivilianTime = [[APIUtility sharedInstance] getCivilianTime:openTime];
+//        NSString *waitTime = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
+//        NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
+//        NSString *message = [NSString stringWithFormat:@"You may add items to your cart.\nBut if you pay, your order will be ready after the opening time (%@).\n\n%@ after opening.", openCivilianTime, waitTime];
+//        NSString *title = [NSString stringWithFormat:@"%@ is\nclosed now!", businessName];
+//        [UIAlertController showInformationAlert:message withTitle:title];
+//    }
+    
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    HUD.labelText = @"Updating products with the lastest...";
+    HUD.labelText = @"Updating products with latest info";
     HUD.detailsLabelText = @"It is worth the wait!";
     HUD.color =[UIColor orangeColor];
     HUD.mode = MBProgressHUDModeIndeterminate;
@@ -162,6 +181,13 @@ bool shouldOpenOptionMenu = false;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+    menu.menuButton.isActive = false;
+    [menu.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    shouldOpenOptionMenu = false;
+//    [self.navigationController popViewControllerAnimated:true];
+    
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -431,7 +457,16 @@ bool shouldOpenOptionMenu = false;
     headerLabel.textColor = [UIColor whiteColor];
     headerLabel.backgroundColor = [UIColor clearColor];
     [headerView addSubview:headerLabel];
+    
+    UIButton *headerButton = [[UIButton alloc] initWithFrame:headerView.bounds];
+    [headerButton addTarget:self action:@selector(headerClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [headerView addSubview:headerButton];
     return headerView;
+}
+
+- (void) headerClicked :(id)sender {
+    menu.menuButton.isActive = true;
+    [menu.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -534,10 +569,10 @@ bool shouldOpenOptionMenu = false;
         }
         
         if (itemModel.availability_status == 1) {
-            optionCell.availabilityStatusView.hidden = false;
+            optionCell.availabilityStatusView.hidden = true;
         }
         else {
-            optionCell.availabilityStatusView.hidden = true;
+            optionCell.availabilityStatusView.hidden = false;
         }
         
         NSString *str = [NSString stringWithFormat:@"%@ ($%@)",itemModel.itemName,itemModel.itemPrice];
@@ -846,6 +881,23 @@ bool shouldOpenOptionMenu = false;
         
         if (self.isOptionTab1Selected) {
             itemModel = [self.optionTab1Array objectAtIndex:indexPath.row];
+            
+            
+            
+            
+            for (MenuOptionItemModel *model in self.optionTab1Array) {
+                if (model.isSelected) {
+                    model.isSelected = false;
+                }
+            }
+
+            
+            
+            
+            
+            
+            
+            
         }
         else if (self.isOptionTab2Selected) {
             itemModel = [self.optionTab2Array objectAtIndex:indexPath.row];
@@ -854,7 +906,7 @@ bool shouldOpenOptionMenu = false;
             itemModel = [self.optionTab3Array objectAtIndex:indexPath.row];
         }
         
-        if (itemModel.availability_status == 1) {
+        if (itemModel.availability_status == 0) {
             itemModel.isSelected = false;
         }
         else {
@@ -977,7 +1029,7 @@ bool shouldOpenOptionMenu = false;
     
     if (favoriteCategoryArray.count > 0) {
         [self.sectionKeyArray addObject:@"Favorite"];
-        NSString *sectionString = [NSString stringWithFormat:@"Favorite (%ld)",(unsigned long)[favoriteCategoryArray count]];
+        NSString *sectionString = [NSString stringWithFormat:@"Favorites (%ld)",(unsigned long)[favoriteCategoryArray count]];
         [self.sectionKeysWithCountArray addObject:sectionString];
         [self.MainArray addObject:favoriteCategoryArray];
     }
@@ -1110,11 +1162,11 @@ bool shouldOpenOptionMenu = false;
         for (NSManagedObject *obj in results) {
             NSArray *keys = [[[obj entity] attributesByName] allKeys];
             NSDictionary *dictionary = [obj dictionaryWithValuesForKeys:keys];
-            NSLog(@"%@",[dictionary valueForKey:@"quantity"]);
-            NSLog(@"Business PID :- %@",[dictionary valueForKey:@"product_id"]);
-            NSLog(@"Business P_ID :- %@",businessDetail.product_id);
-            NSLog(@"%ld",[[dictionary valueForKey:@"quantity"]integerValue]);
-            NSLog(@"------------");
+//            NSLog(@"%@",[dictionary valueForKey:@"quantity"]);
+//            NSLog(@"Business PID :- %@",[dictionary valueForKey:@"product_id"]);
+//            NSLog(@"Business P_ID :- %@",businessDetail.product_id);
+//            NSLog(@"%ld",[[dictionary valueForKey:@"quantity"]integerValue]);
+//            NSLog(@"------------");
             if([[dictionary valueForKey:@"product_order_id"] integerValue] == businessDetail.product_order_id ){
                 itemFound = true;
                 int ItemQty = [[dictionary valueForKey:@"quantity"]intValue];
@@ -1413,6 +1465,26 @@ bool shouldOpenOptionMenu = false;
             });
 
             [MenuItemTableView reloadData];
+            
+            NSNumber *bizID= [NSNumber numberWithInt:business.businessID];
+            NSDictionary *inDataDict = @{@"cmd":@"get_average_wait_time_for_business",@"business_id":bizID};
+            
+            [[APIUtility sharedInstance] getAverageWaitTimeForBusiness:inDataDict server:ServerForBusiness completiedBlock:^(NSDictionary *response) {
+                if([response valueForKey:@"data"] != nil) {
+                    
+                    NSDictionary *dataDict = [response valueForKey:@"data"];
+                    
+                    NSString* process_time = [dataDict valueForKey:@"process_time"];
+                    if (process_time == (id)[NSNull null] || process_time.length == 0 )
+                    {
+                        
+                    } else {
+                    business.process_time = [dataDict valueForKey:@"process_time"];
+                }
+
+                }
+            }];
+            
             [HUD hide:YES];
 
             //            [self.MainArray removeAllObjects];
@@ -1445,7 +1517,7 @@ bool shouldOpenOptionMenu = false;
     
     if (favoriteCategoryArray.count > 0) {
         [self.sectionKeyArray addObject:@"Favorite"];
-        NSString *sectionString = [NSString stringWithFormat:@"Favorite (%ld)",(unsigned long)[favoriteCategoryArray count]];
+        NSString *sectionString = [NSString stringWithFormat:@"Favorites (%ld)",(unsigned long)[favoriteCategoryArray count]];
         [self.sectionKeysWithCountArray addObject:sectionString];
         [self.MainArray addObject:favoriteCategoryArray];
     }
@@ -1474,11 +1546,11 @@ bool shouldOpenOptionMenu = false;
         for (NSManagedObject *obj in results) {
             NSArray *keys = [[[obj entity] attributesByName] allKeys];
             NSDictionary *dictionary = [obj dictionaryWithValuesForKeys:keys];
-            NSLog(@"%@",[dictionary valueForKey:@"quantity"]);
-            NSLog(@"Business PID :- %@",[dictionary valueForKey:@"product_id"]);
-            NSLog(@"Business P_ID :- %@",businessDetail.product_id);
-            NSLog(@"%ld",[[dictionary valueForKey:@"quantity"]integerValue]);
-            NSLog(@"------------");
+//            NSLog(@"%@",[dictionary valueForKey:@"quantity"]);
+//            NSLog(@"Business PID :- %@",[dictionary valueForKey:@"product_id"]);
+//            NSLog(@"Business P_ID :- %@",businessDetail.product_id);
+//            NSLog(@"%ld",[[dictionary valueForKey:@"quantity"]integerValue]);
+//            NSLog(@"------------");
 
             if([[dictionary valueForKey:@"product_id"] isEqualToString:businessDetail.product_id]) {
                 
@@ -1596,7 +1668,7 @@ bool shouldOpenOptionMenu = false;
     UITableViewCell *cell = [MenuItemTableView cellForRowAtIndexPath:indexPath];
     // grab the imageview using cell
     UIImageView *imgV = (UIImageView*)[cell viewWithTag:1];
-
+    
     // get the exact location of image
     CGRect rect = [imgV.superview convertRect:imgV.frame fromView:nil];
     rect = CGRectMake(5, (rect.origin.y*-1)-10, imgV.frame.size.width, imgV.frame.size.height);
@@ -1608,6 +1680,9 @@ bool shouldOpenOptionMenu = false;
     starView.layer.cornerRadius=5;
     starView.layer.borderColor=[[UIColor blackColor]CGColor];
     starView.layer.borderWidth=1;
+    starView.backgroundColor = [UIColor whiteColor];
+    [starView setContentMode:UIViewContentModeCenter];
+    starView.clipsToBounds = true;
     [self.view addSubview:starView];
 
     // begin ---- apply position animation
@@ -1619,8 +1694,12 @@ bool shouldOpenOptionMenu = false;
     pathAnimation.delegate=self;
 
     // tab-bar right side item frame-point = end point
-    CGPoint endPoint = CGPointMake(200+rect.size.width/2, 50);
-
+//    CGPoint endPoint = CGPointMake(200+rect.size.width/2, 50);
+    
+//    CGPoint endPoint = CGPointMake(rect.size.width, 50);
+    
+    CGPoint endPoint = CGPointMake(self.view.frame.size.width, self.view.frame.origin.y);
+    
     CGMutablePathRef curvedPath = CGPathCreateMutable();
     CGPathMoveToPoint(curvedPath, NULL, starView.frame.origin.x, starView.frame.origin.y);
     CGPathAddCurveToPoint(curvedPath, NULL, endPoint.x-100, starView.frame.origin.y-100, endPoint.x-100, starView.frame.origin.y-100, endPoint.x, endPoint.y);

@@ -198,12 +198,12 @@ static AppData *sharedObj;
 }
 
 + (int) calculateRoundPoints : (CGFloat) value {
-    int rounded_down = floorf(value * 100) / 10;
+    int rounded_down = floorf(value * 100) / 100;
     return rounded_down;
 }
 
 + (CGFloat) calculateRoundPrice : (CGFloat) value {
-    CGFloat rounded_down = floorf(value * 100) / 100;
+    CGFloat rounded_down = floorf(value * 100 +0.5 ) / 100;
     return rounded_down;
 }
 

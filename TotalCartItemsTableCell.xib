@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -106,6 +106,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="ILf-CK-qQo" firstAttribute="top" secondItem="DZx-3B-UZ6" secondAttribute="bottom" constant="30" id="1sA-ih-Q9t"/>
                             <constraint firstAttribute="width" constant="76" id="4Xc-Z3-hBZ"/>
                             <constraint firstItem="gTl-eF-goJ" firstAttribute="top" secondItem="DZx-3B-UZ6" secondAttribute="bottom" constant="5" id="9R8-UM-f9b"/>
                             <constraint firstItem="JaB-0p-UGz" firstAttribute="top" secondItem="Ugl-AF-6Bw" secondAttribute="top" constant="16" id="9lC-Ri-gaB"/>
@@ -118,12 +119,11 @@
                             <constraint firstItem="DZx-3B-UZ6" firstAttribute="leading" secondItem="JaB-0p-UGz" secondAttribute="trailing" id="R85-aj-k3S"/>
                             <constraint firstItem="szl-co-M5Z" firstAttribute="top" secondItem="gTl-eF-goJ" secondAttribute="bottom" constant="2" id="SmV-jP-LVZ"/>
                             <constraint firstItem="DZx-3B-UZ6" firstAttribute="top" secondItem="Ugl-AF-6Bw" secondAttribute="top" constant="13" id="XjE-Yn-gQh"/>
-                            <constraint firstAttribute="bottom" secondItem="ILf-CK-qQo" secondAttribute="bottom" constant="2" id="dfO-1M-n8a"/>
                             <constraint firstAttribute="trailing" secondItem="59F-VF-0yI" secondAttribute="trailing" constant="7" id="hzn-Nd-Thd"/>
+                            <constraint firstItem="59F-VF-0yI" firstAttribute="top" secondItem="DZx-3B-UZ6" secondAttribute="bottom" constant="30" id="mxh-2Z-VZz"/>
                             <constraint firstItem="szl-co-M5Z" firstAttribute="leading" secondItem="Ugl-AF-6Bw" secondAttribute="leading" id="pLG-lc-E8z"/>
                             <constraint firstAttribute="trailing" secondItem="DZx-3B-UZ6" secondAttribute="trailing" id="tLp-Hc-oXV"/>
                             <constraint firstAttribute="trailing" secondItem="gTl-eF-goJ" secondAttribute="trailing" id="uFt-hS-FrU"/>
-                            <constraint firstAttribute="bottom" secondItem="59F-VF-0yI" secondAttribute="bottom" constant="2" id="ytw-XD-SgX"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">

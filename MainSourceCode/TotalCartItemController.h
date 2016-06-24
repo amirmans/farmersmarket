@@ -20,7 +20,7 @@
     NSDecimalNumber *billInDollar;
     NSDecimalNumber *zero;
     NSDictionary *defaultCardData;
-    NSDecimalNumber *billDollar;
+//    NSDecimalNumber *billDollar;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *lblSubTotalPrice;
@@ -40,7 +40,7 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *btnRedeemPoint;
 
-@property (strong, nonatomic) IBOutlet UILabel *lblTotalEarnedPoint;
+//@property (strong, nonatomic) IBOutlet UILabel *lblTotalEarnedPoint;
 
 @property (strong, nonatomic) IBOutlet UIView *paymentView;
 
@@ -57,6 +57,8 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *lblCurrentPoints;
 
+@property (strong, nonatomic) IBOutlet UILabel *lblSubtotalAmount;
+@property (strong, nonatomic) IBOutlet UILabel *lblEarnedPoint;
 
 - (IBAction)btnAddItemClicked:(id)sender;
 - (IBAction)btnRemoveItemClicked:(id)sender;

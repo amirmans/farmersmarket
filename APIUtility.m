@@ -218,35 +218,66 @@ static APIUtility *sharedObj;
               NSLog(@"Error saving credit card in the server: %@", error.description);
               finished(@{@"error":error.description});
           }];
-
-    
-//
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    [manager POST:Save_cc_info parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSLog(@"get %@", responseObject);
-//        if (finished) {
-//            finished((NSDictionary*)responseObject);
-//        }
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        
-//        NSLog(@"Error: %@", error);
-//        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
-//        //        NSDictionary *temp = @{};
-//        
-//        if([error code] == -1004) {
-//            
-//            if (finished) {
-//                finished(dic);
-//            }
-//        }
-//        else
-//        {
-//            if (finished) {
-//                finished(dic);
-//            }
-//        }
-//    }];
 }
+
+- (void) remove_cc_info :(NSDictionary *) param completiedBlock:(void (^)(NSDictionary *response))finished {
+    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+    {
+        return;
+    }
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    [manager POST:remove_cc
+       parameters:param
+          success:^(NSURLSessionDataTask *task, id responseObject) {
+              NSLog(@"JSON: %@", responseObject);
+              finished(responseObject);
+          }
+          failure:^(NSURLSessionDataTask *task, NSError *error) {
+              
+              NSLog(@"Error saving credit card in the server: %@", error.description);
+              finished(@{@"error":error.description});
+          }];
+}
+
+- (void) getAllCCInfo : (NSString *) consumer_id completiedBlock:(void (^)(NSDictionary *response))finished {
+    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+    {
+        return;
+    }
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@?cmd=get_consumer_all_cc_info&consumer_id=%@",Get_consumer_all_cc_info,consumer_id];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"get %@", responseObject);
+        if (finished) {
+            finished((NSDictionary*)responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
+        //        NSDictionary *temp = @{};
+        
+        if([error code] == -1004) {
+            
+            if (finished) {
+                finished(dic);
+            }
+        }
+        else
+        {
+            if (finished) {
+                finished(dic);
+            }
+        }
+    }];
+}
+
 
 - (void) getNotificationForConsumer  :(NSString *) consumer_id BusinessID : (NSString *) business_id completiedBlock:(void (^)(NSDictionary *response))finished {
     if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
@@ -382,6 +413,23 @@ static APIUtility *sharedObj;
 }
 
 
+- (NSString *)getCivilianTime: (NSString *)militaryTime {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"HH:mm:ss" options:0 locale:[NSLocale currentLocale]]];
+    
+    NSString *time1 = militaryTime;
+   
+    NSDate *date1= [formatter dateFromString:time1];
+
+    
+    NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
+    timeFormatter.dateFormat = @"h a";
+    
+    return [NSString stringWithFormat:@"%@",[timeFormatter stringFromDate:date1]];
+}
+
+
+
 -(CLLocationCoordinate2D) getLocationFromAddressString: (NSString*) addressStr {
     double latitude = 0, longitude = 0;
     NSString *esc_addr =  [addressStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -409,6 +457,61 @@ static APIUtility *sharedObj;
 //    UIFont* boldFont = [UIFont boldSystemFontOfSize:16];
 //    return boldFont;
 //}
+
+
+
+- (void)getAverageWaitTimeForBusiness:(NSDictionary *)data server:(NSString *)url completiedBlock:(void (^)(NSDictionary *response))finished {
+
+    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+    {
+        return;
+    }
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+    [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"get %@", responseObject);
+        if (finished) {
+            finished((NSDictionary*)responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
+        NSDictionary *temp = @{};
+        
+        if([error code] == -1004) {
+            
+            if (finished) {
+                finished(dic);
+            }
+        }
+        else
+        {
+            if (finished) {
+                finished(temp);
+            }
+        }
+    }];
+}
+
+
+- (BOOL)isZipCodeValid:(NSString *)zipCode {
+    BOOL returnVal = FALSE;
+    
+//    NSString *zipcodeRegEx = @"^[1..9][0-9,-]{4,}?"; // for us
+    NSString *zipcodeRegEx = @"^(\\d{5}(-\\d{4})?|[a-z]\\d[a-z][- ]*\\d[a-z]\\d)$"; // for us and canada
+    NSPredicate *zipcodeTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", zipcodeRegEx];
+    
+    if ([zipcodeTest evaluateWithObject:zipCode] == NO) {
+        returnVal = FALSE;
+    }
+    else {
+        returnVal = TRUE;
+    }
+
+    
+    return returnVal;
+}
 
 
 @end

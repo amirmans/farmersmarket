@@ -39,7 +39,7 @@
 
     
     self.Attendeesarray = [[NSMutableArray alloc] init];
-    for (NSUInteger i = 1; i <= 100; i++)
+    for (NSUInteger i = 1; i <= 1000; i++)
     {
         [self.Attendeesarray addObject:@(i)];
     }
@@ -103,7 +103,7 @@
 }
 
 - (void) setupEmail {
-    NSString *emailTitle = @"Test Email";
+    NSString *emailTitle = @"Catering";
     // Email Content
     NSString *messageBody = [NSString stringWithFormat:@"First name: %@ Last name: %@ \nPhone number: %@ \n Email: %@ \n Budget: %@\n Date:%@   Time:%@    Attendies: %@ \n Location: %@ \n Additional Notes:%@", self.txtFirstName.text,self.txtLastName.text ,self.txtPhoneNumber.text,self.txtEmail.text,self.txtBudget.text,self.txtDate.text,self.txtTime.text,self.txtAttendess.text,self.txtLocation.text,self.txtAdditionalNotes.text];
 //    NSArray *toRecipents = [NSArray arrayWithObject:@"support@appcoda.com"];

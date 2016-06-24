@@ -114,14 +114,14 @@ Business *biz;
 //    barBtnItem.tintColor = [UIColor whiteColor];
 //    self.navigationItem.leftBarButtonItem = barBtnItem;
 
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    self.mapView.delegate = self;
-    
-    locationManager.desiredAccuracy = 10.0f;
-    locationManager.distanceFilter = 200.0f;
-    [locationManager requestWhenInUseAuthorization];
-    [locationManager startUpdatingLocation];
+//    locationManager = [[CLLocationManager alloc] init];
+//    locationManager.delegate = self;
+//    self.mapView.delegate = self;
+//    
+//    locationManager.desiredAccuracy = 10.0f;
+//    locationManager.distanceFilter = 200.0f;
+//    [locationManager requestWhenInUseAuthorization];
+//    [locationManager startUpdatingLocation];
 
     self.automaticallyAdjustsScrollViewInsets = NO;
     
@@ -162,7 +162,7 @@ Business *biz;
 //    searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
 //    self.bizTableView.tableHeaderView = self.searchController.searchBar;
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    HUD.labelText = @"Updating businesess with the lastest...";
+    HUD.labelText = @"Updating businesses with latest info";
     HUD.detailsLabelText = @"It is worth the wait!";
     HUD.color =[UIColor orangeColor];
     HUD.mode = MBProgressHUDModeIndeterminate;
@@ -171,9 +171,10 @@ Business *biz;
 
     if (businessListArray.count <= 0 ) {
         bizListTimer = [NSTimer scheduledTimerWithTimeInterval:0.02 target:self selector:@selector(timerCallBack) userInfo:nil repeats:YES];
-    } else {
-       [HUD hide:YES];
     }
+//    else {
+//       [HUD hide:YES];
+//    }
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     filteredBusinessListArray = [[NSMutableArray alloc] initWithCapacity:businessListArray.count];
@@ -222,13 +223,11 @@ Business *biz;
 }
 
 - (void) backButtonPressed {
-    
     NSLog(@"backButtonPressed");
     [self.navigationController popViewControllerAnimated:TRUE];
 }
 
-
--(NSMutableArray *)getSortByLocationTapForApp
+- (NSMutableArray *)getSortByLocationTapForApp
 {
     NSArray *testLocations = [NSArray arrayWithArray:self.businessListArray];
     
@@ -525,6 +524,9 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         cellDict = [businessListArray objectAtIndex:indexPath.row];
     }
     
+    
+    Business * biz =[[Business alloc] initWithDataFromDatabase: cellDict];
+    
 //    NSLog(@"%@",cellDict);
     
     // Configure the cell...
@@ -572,6 +574,47 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     else {
         cell.rateView.rating =  0;
     }
+    
+    NSLog(@"%@",biz.opening_time);
+    
+    if([cellDict objectForKey:@"opening_time"] == [NSNull null] || [cellDict objectForKey:@"closing_time"] == [NSNull null]) {
+        cell.lblOpenClose.hidden = true;
+        cell.lblOpenCloseDate.hidden = true;
+    }
+    else {
+        cell.lblOpenClose.hidden = false;
+        cell.lblOpenCloseDate.hidden = false;
+        if([[APIUtility sharedInstance]isOpenBussiness: [cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]]){
+            cell.lblOpenClose.text = @"OPEN NOW";
+            cell.lblOpenClose.textColor = [UIColor greenColor];
+        }else{
+            cell.lblOpenClose.text = @"NOW CLOSED";
+            cell.lblOpenClose.textColor = [UIColor redColor];
+        }
+        cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:[cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]];
+
+    }
+    
+//    if([[APIUtility sharedInstance]isOpenBussiness: [cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]]){
+//        cell.lblOpenClose.text = @"OPEN NOW";
+//        cell.lblOpenClose.textColor = [UIColor greenColor];
+//    }else{
+//        cell.lblOpenClose.text = @"NOW CLOSED";
+//        cell.lblOpenClose.textColor = [UIColor redColor];
+//    }
+//    
+//    cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:[cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]];
+//
+//    
+//        if([[APIUtility sharedInstance]isOpenBussiness:biz.opening_time CloseTime:biz.closing_time]){
+//            self.lbl_OpenNow.text = @"OPEN NOW";
+//            self.lbl_OpenNow.textColor = [UIColor greenColor];
+//        }else{
+//            self.lbl_OpenNow.text = @"CLOSED";
+//            self.lbl_OpenNow.textColor = [UIColor redColor];
+//        }
+//        self.lbl_time.text = [[APIUtility sharedInstance]getOpenCloseTime:biz.opening_time CloseTime:biz.closing_time];
+
     
     double lat = [[cellDict valueForKey:@"lat"] doubleValue];
     double lng = [[cellDict valueForKey:@"lng"] doubleValue];
@@ -675,7 +718,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 
 
 //        NSLog(@"Title: %@",userData[TitleKey]);
-//        NSLog(@"Info: %@",userData[InfoKey]);
+//        NSLog(@"Info: %@",userData[InfoKey]);4
     }
 }
 

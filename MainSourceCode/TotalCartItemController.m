@@ -28,12 +28,15 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize orderItems;
 @synthesize waitTimeLabel;
+@synthesize lblEarnedPoint, lblSubtotalAmount;
 
-bool flagRedeemPoint;
+bool flagRedeemPoint = false;
+NSString *Note_default_text = @"Add your note here";
 
+double tipAmount = 0.0;
 double cartTotal = 0;
 double dollarValue = 0;
-double totalValue = 0;
+double totalValue = 0.0;
 NSInteger redeemPoints = 0;
 NSInteger current_points_level  = 0;
 NSInteger currentTipValue = 0;
@@ -45,6 +48,35 @@ UITextView *alertTextView;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
+    NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
+    
+    BOOL businessIsClosed = false;
+    if(openTime == (id)[NSNull null] || closeTime == (id)[NSNull null]) {
+        businessIsClosed = true;
+    } else if (![[APIUtility sharedInstance] isOpenBussiness:openTime CloseTime:closeTime]) {
+        businessIsClosed = true;
+    }
+    
+    if (businessIsClosed) {
+        NSString *openCivilianTime = [[APIUtility sharedInstance] getCivilianTime:openTime];
+        NSString *waitTime = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
+        NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
+        NSString *message = [NSString stringWithFormat:@"You may add items to your cart.\nBut if you pay, your order will be ready after the opening time (%@).\n\n%@ after opening.", openCivilianTime, waitTime];
+        NSString *title = [NSString stringWithFormat:@"%@ is closed now!", businessName];
+        [UIAlertController showInformationAlert:message withTitle:title];
+    }
+    
+    flagRedeemPoint = false;
+    
+    tipAmount = 0.0;
+    cartTotal = 0.0;
+    dollarValue = 0;
+    totalValue = 0.0;
+    redeemPoints = 0;
+    current_points_level  = 0;
+    currentTipValue = 0.0;
+    isPointsUsed = false;
     [self setNeedsStatusBarAppearanceUpdate];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -53,12 +85,12 @@ UITextView *alertTextView;
                                                object:nil];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
+    self.notesText = @"";
     billBusiness = [CurrentBusiness sharedCurrentBusinessManager].business;
     
     self.edgesForExtendedLayout = UIRectEdgeAll;
 
-    NSString *titleString = [NSString stringWithFormat:@"My Orders for %@",billBusiness.shortBusinessName];
+    NSString *titleString = [NSString stringWithFormat:@"My Order for %@",billBusiness.shortBusinessName];
     
     self.title = titleString;
     orderItems = [[NSMutableArray alloc] init];
@@ -290,11 +322,11 @@ UITextView *alertTextView;
         for (NSManagedObject *obj in results) {
             NSArray *keys = [[[obj entity] attributesByName] allKeys];
             NSDictionary *dictionary = [obj dictionaryWithValuesForKeys:keys];
-            NSLog(@"%@",[dictionary valueForKey:@"quantity"]);
-            NSLog(@"Business PID :- %@",[dictionary valueForKey:@"product_id"]);
-            NSLog(@"Business P_ID :- %@",businessDetail.product_id);
-            NSLog(@"%ld",[[dictionary valueForKey:@"quantity"]integerValue]);
-            NSLog(@"------------");
+//            NSLog(@"%@",[dictionary valueForKey:@"quantity"]);
+//            NSLog(@"Business PID :- %@",[dictionary valueForKey:@"product_id"]);
+//            NSLog(@"Business P_ID :- %@",businessDetail.product_id);
+//            NSLog(@"%ld",[[dictionary valueForKey:@"quantity"]integerValue]);
+//            NSLog(@"------------");
             
             if([[dictionary valueForKey:@"product_order_id"] integerValue] == businessDetail.product_order_id){
                 itemFound = true;
@@ -462,11 +494,11 @@ UITextView *alertTextView;
         for (NSManagedObject *obj in results) {
             NSArray *keys = [[[obj entity] attributesByName] allKeys];
             NSDictionary *dictionary = [obj dictionaryWithValuesForKeys:keys];
-            NSLog(@"%@",[dictionary valueForKey:@"quantity"]);
-            NSLog(@"Business PID :- %@",[dictionary valueForKey:@"product_id"]);
-            NSLog(@"Business P_ID :- %@",businessDetail.product_id);
-            NSLog(@"%ld",[[dictionary valueForKey:@"quantity"]integerValue]);
-            NSLog(@"------------");
+//            NSLog(@"%@",[dictionary valueForKey:@"quantity"]);
+//            NSLog(@"Business PID :- %@",[dictionary valueForKey:@"product_id"]);
+//            NSLog(@"Business P_ID :- %@",businessDetail.product_id);
+//            NSLog(@"%ld",[[dictionary valueForKey:@"quantity"]integerValue]);
+//            NSLog(@"------------");
 //            if([[dictionary valueForKey:@"product_id"] isEqualToString:BusinessDetail.product_id]) {
             
                 int ItemQty = [[dictionary valueForKey:@"quantity"]intValue];
@@ -725,11 +757,18 @@ UITextView *alertTextView;
     long business_id_long = [CurrentBusiness sharedCurrentBusinessManager].business.businessID;
     NSNumber *business_id = [NSNumber numberWithLongLong:business_id_long];
     
-    billDollar = [[NSDecimalNumber alloc] initWithDouble:totalValue];
+//    billDollar = [[NSDecimalNumber alloc] initWithDouble:totalValue];
     
     NSInteger currentRedeemPoints = [self calculatePointsRedeem];
+    NSString *cardNo = [defaultCardData valueForKey:@"number"];
+    if ([self.notesText  isEqual:Note_default_text]) {
+        self.notesText = @"";
+    }
     
-    NSDictionary *orderInfoDict= @{@"cmd":@"save_order",@"data":orderItemArray,@"consumer_id":userID,@"total":[NSString stringWithFormat:@"%f",totalValue],@"business_id":business_id,@"points_redeemed":[NSString stringWithFormat:@"%ld",(long)currentRedeemPoints], @"note":self.notesText};
+    NSDictionary *orderInfoDict= @{@"cmd":@"save_order",@"data":orderItemArray,@"consumer_id":userID,@"total":[NSString stringWithFormat:@"%f",totalValue],
+                                   @"business_id":business_id,@"points_redeemed":[NSString stringWithFormat:@"%ld",(long)currentRedeemPoints],
+                                   @"tip_amount":[NSNumber numberWithDouble:tipAmount], @"subtotal":[NSNumber numberWithDouble:cartTotal], @"tax_amount":[NSNumber numberWithDouble:0.0],
+                                   @"cc_last_4_digits":[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)], @"note":self.notesText};
     [MBProgressHUD showHUDAddedTo:self.view animated:true];
     [[APIUtility sharedInstance] orderToServer:orderInfoDict server:OrderServerURL completiedBlock:^(NSDictionary *response) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:true];
@@ -769,6 +808,9 @@ UITextView *alertTextView;
             receiptVC.cardExpDate = expDate;
             NSInteger currentRedeemPoints = [self calculatePointsRedeem];
             receiptVC.redeem_point = [NSString stringWithFormat:@"%ld",(long)currentRedeemPoints];
+            receiptVC.totalPaid = totalValue;
+            receiptVC.tipAmount = tipAmount;
+            receiptVC.subTotal = cartTotal;
             [self removeAllOrderFromCoreData];
             
             [self.navigationController pushViewController:receiptVC animated:YES];
@@ -803,7 +845,7 @@ UITextView *alertTextView;
     [self paymentSummary];
 }
 
-// set total oder and Price
+// set total order and Price
 - (void)paymentSummary {
     [orderItems removeAllObjects];
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
@@ -822,18 +864,21 @@ UITextView *alertTextView;
         self.notesText = [dictionary valueForKey:@"note"];
     }
     
-    self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f",TotalPrice];
+//    self.lblSubtotalAmount.text = [NSString stringWithFormat:@"$%.2f",cartTotal];
+//    self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f",TotalPrice];
     cartTotal = TotalPrice;
     totalValue = cartTotal;
+    self.lblSubtotalAmount.text = [NSString stringWithFormat:@"$%.2f",cartTotal];
     self.lblQty.text = [NSString stringWithFormat:@"%d",QTY];
-    self.lblTotalPrice.text = [NSString stringWithFormat:@"$%.2f",TotalPrice];
+//    self.lblTotalPrice.text = [NSString stringWithFormat:@"$%.2f",TotalPrice];
+    self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f",TotalPrice];
     billInDollar = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%.2f",TotalPrice]];
     
-    NSInteger totalPoints = TotalPrice * 10;
+    NSInteger totalPoints = cartTotal * PointsValueMultiplier;
     
     NSString *total_available_points = [NSString stringWithFormat:@"%ld",(long)totalPoints];
-    self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%@ Pts",total_available_points] ;
-
+//    self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%@ Pts",total_available_points];
+    self.lblEarnedPoint.text = [NSString stringWithFormat:@"%@ Pts",total_available_points];
     NSString *tip10String = [NSString stringWithFormat:@"$%.2f",cartTotal * .10];
     NSString *tip15String = [NSString stringWithFormat:@"$%.2f",cartTotal * .15];
     NSString *tip20String = [NSString stringWithFormat:@"$%.2f",cartTotal * .20];
@@ -846,30 +891,33 @@ UITextView *alertTextView;
 - (void) setPointsValue {
     NSLog(@"%@",[RewardDetailsModel sharedInstance].rewardDict);
     
-    NSDictionary *reward = [RewardDetailsModel sharedInstance].rewardDict;
-    NSLog(@"%@", [[reward valueForKey:@"data"] valueForKey:@"total_available_points"]);
-    NSLog(@"%@", [[[reward valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"dollar_value"]);
+    NSDictionary *rewards = [RewardDetailsModel sharedInstance].rewardDict;
+//    NSLog(@"%@", [[rewards valueForKey:@"data"] valueForKey:@"total_available_points"]);
+//    NSLog(@"%@", [[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"dollar_value"]);
     
-    current_points_level = [[[[reward valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"points"] integerValue];
+    current_points_level = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"points"] integerValue];
+    dollarValue = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"dollar_value"] doubleValue];
     
-    NSString *total_available_points = [[[reward valueForKey:@"data"] valueForKey:@"total_available_points"] stringValue];
-    dollarValue = [total_available_points doubleValue]/10;
+//    NSString *str_current_points_level =  [NSString stringWithFormat:@"%ld", current_points_level];
+//    [[self.tabBarController.tabBar.items objectAtIndex:3] setBadgeValue:str_current_points_level];
     
-    [[self.tabBarController.tabBar.items objectAtIndex:3] setBadgeValue:total_available_points];
-    
-    self.lblCurrentPoints.text = [NSString stringWithFormat:@"Current Points: %@ for $%.2f",total_available_points,dollarValue];
+    // text to let the user know how much points they have to redeem
+    self.lblCurrentPoints.text = [NSString stringWithFormat:@"Use %ld points with $%.2f value?",(long)current_points_level,dollarValue];
 }
 
 - (void) setFinaleValueFromRedeem {
 //    NSString *dollarString = self.lblDollarValue.text;
     
 //    double subTotal = [self.lblSubTotalPrice.text doubleValue];
-    if (totalValue > dollarValue) {
+    if (cartTotal > dollarValue) {
         totalValue = totalValue - dollarValue;
         self.lblSubTotalPrice.text =  [NSString stringWithFormat:@"$%.2f",totalValue];
     }
     else {
-        self.lblSubTotalPrice.text =  @"$0.00";
+        //zzzzzz
+        totalValue = tipAmount;
+        self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f", totalValue];
+        
     }
 }
 
@@ -882,7 +930,7 @@ UITextView *alertTextView;
         NSString *cardNo = [defaultCardData valueForKey:@"number"];
         
         NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
-        NSString *defaultCardString = [NSString stringWithFormat:@"WITH YOUR %@ ENDING IN %@",cardName,trimmedString];
+        NSString *defaultCardString = [NSString stringWithFormat:@"WITH %@ ENDING IN %@",cardName,trimmedString];
         self.lblDefaultCard.text = defaultCardString;
     }
     else {
@@ -929,7 +977,6 @@ UITextView *alertTextView;
     //            NSDecimalNumber *billDollar = [[NSDecimalNumber alloc] initWithDouble:totalValue];
     //
     //            NSDictionary *orderInfoDict= @{@"cmd":@"save_order",@"data":orderItemArray,@"consumer_id":userID,@"total":[NSString stringWithFormat:@"%f",cartTotal],@"business_id":business_id,@"points_redeemed":[NSString stringWithFormat:@"%ld",redeemPoints]};
-
 }
 
 - (void) setBorder : (UIView *) view {
@@ -1008,7 +1055,6 @@ UITextView *alertTextView;
     currentTipValue = 20;
     
     [self calculateTip:currentTipValue];
-
 }
 
 - (void) setOther {
@@ -1028,19 +1074,19 @@ UITextView *alertTextView;
 - (void) calculateTip : (double) tip  {
 
     if(cartTotal > 0) {
-        if(tip > 0) {
-            double tipAmount = cartTotal* (tip/100);
+//        if(tip > 0) {
+            tipAmount = cartTotal* (tip/100);
             totalValue = cartTotal + tipAmount;
-        }
-        else {
-            totalValue = cartTotal;
-        }
+//        }
+//        else {
+//            totalValue = cartTotal;
+//        }
         
         if (flagRedeemPoint == true) {
             [self setFinaleValueFromRedeem];
             
             NSLog(@"%f",totalValue);
-            redeemPoints = totalValue*10;
+            redeemPoints = totalValue*PointsValueMultiplier;
         }
         else {
             redeemPoints = 0;
@@ -1049,23 +1095,16 @@ UITextView *alertTextView;
         self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f",totalValue];
         billInDollar = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%.2f",totalValue]];
         
-        NSInteger totalPoints = totalValue * 10;
-        NSString *total_available_points = [NSString stringWithFormat:@"%ld",(long)totalPoints];
-        self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%@ Pts",total_available_points] ;
+//        NSInteger totalPoints = cartTotal * PointsValueMultiplier; //zzzz
+//        NSString *total_available_points = [NSString stringWithFormat:@"%ld",(long)totalPoints];
+//        self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%@ Pts",total_available_points] ;
     }
 }
 
 - (NSInteger) calculatePointsRedeem {
     
-    if (redeemPoints > 0) {
-        
-        if((dollarValue*10) > redeemPoints) {
-//            return (dollarValue*10) - redeemPoints;
-            return redeemPoints;
-        }
-        else {
-            return dollarValue*10;
-        }
+    if (flagRedeemPoint) {
+        return current_points_level;
     }
     else {
         return 0;
@@ -1093,7 +1132,7 @@ UITextView *alertTextView;
                                                         message:@""
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"Pay with Note",@"Pay without Note", nil];
+                                              otherButtonTitles:@"Pay", nil];
     alertTextView = [UITextView new];
     alertTextView.delegate = self;
     alertTextView.text = note;
@@ -1122,8 +1161,9 @@ UITextView *alertTextView;
         [UIAlertController showErrorAlert:@"Please register on profile page.\nThen you can order."];
     }
     else {
-        if ([billInDollar compare:zero] ==  NSOrderedDescending) {
-            // send the order items to the server
+//        if ([billInDollar compare:zero] ==  NSOrderedDescending) {
+      if (_FetchedRecordArray.count >  0) {
+        // send the order items to the server
             
             if (defaultCardData == nil) {
                 BillPayViewController *payBillViewController = [[BillPayViewController alloc] initWithNibName:nil bundle:nil withAmount:0 forBusiness:billBusiness];
@@ -1138,9 +1178,10 @@ UITextView *alertTextView;
 //                card.cvc = [defaultCardData valueForKey:@"cvc"];
 //
 //                [self createStripeTokenWithCard:card];
-                
-                if ([self.notesText isEqualToString:@""]) {
-                    [self openNotesPopupWithText:@"Add your note here"];
+                if ( (self.notesText == nil) || (self.notesText == (id)[NSNull null]) )
+                    [self openNotesPopupWithText:Note_default_text];
+                else if ([self.notesText isEqualToString:@""]) {
+                    [self openNotesPopupWithText:Note_default_text];
                 }
                 else {
                     [self openNotesPopupWithText:self.notesText];
@@ -1160,18 +1201,46 @@ UITextView *alertTextView;
 }
 
 - (IBAction)btnRedeemPointClicked:(id)sender {
-    if((dollarValue*10) > 0) {
-        if((dollarValue*10) > current_points_level) {
+    if(dollarValue > 0) {
+        // this condition in unnecessary
+        if((dollarValue) >= current_points_level) {
             if (flagRedeemPoint == false) {
-                [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_checked"] forState:UIControlStateNormal];
-                flagRedeemPoint = true;
-                [self setFinaleValueFromRedeem];
                 
-                NSLog(@"%f",totalValue);
-                //        redeemPoints = [self.lblTotalEarnedPoint.text integerValue];
-                redeemPoints = totalValue*10;
+                if (dollarValue > cartTotal) {
+                    NSString *message = [NSString stringWithFormat:@"Are you sure you want to use %ld points, with the dollar value of $%.2f for a subtotal of $%.2f",(long)current_points_level,dollarValue, cartTotal];
+                    
+                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Attention!" message:message preferredStyle:UIAlertControllerStyleAlert];
+                    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_checked"] forState:UIControlStateNormal];
+                        flagRedeemPoint = true;
+                        [self setFinaleValueFromRedeem]; //zzzzz
+                        
+                        //        redeemPoints = [self.lblTotalEarnedPoint.text integerValue];
+                        //                redeemPoints = totalValue*PointsValueMultiplier;
+                        redeemPoints = cartTotal*PointsValueMultiplier;
+//                        self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%ld Pts",(long)redeemPoints] ;
+                    }];
+                    
+                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 
-                self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%ld Pts",(long)redeemPoints] ;
+                    }];
+                    [alert addAction:okAction];
+                    [alert addAction:cancelAction];
+                    [self presentViewController:alert animated:true completion:nil];
+
+                }
+                
+                
+                
+                
+                
+//                flagRedeemPoint = true;
+//                [self setFinaleValueFromRedeem]; //zzzzz
+//                
+//                //        redeemPoints = [self.lblTotalEarnedPoint.text integerValue];
+////                redeemPoints = totalValue*PointsValueMultiplier;
+//                redeemPoints = cartTotal*PointsValueMultiplier;
+//                self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%ld Pts",(long)redeemPoints] ;
             }
             else {
                 [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_unchecked"] forState:UIControlStateNormal];
@@ -1183,12 +1252,12 @@ UITextView *alertTextView;
                 }
                 else {
                     totalValue = cartTotal;
-                    self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%ld Pts",(long)totalValue*10] ;
+//                    self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%ld Pts",(long)totalValue*PointsValueMultiplier] ;
                 }
             }
         }
         else {
-            NSString *message = [NSString stringWithFormat:@"You have %ld points, You need more %.f points to redeem",(long)current_points_level,((dollarValue*10) - current_points_level)];
+            NSString *message = [NSString stringWithFormat:@"You have %ld points, You need more %.f points to redeem",(long)current_points_level,((dollarValue*PointsValueMultiplier) - current_points_level)];
             
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -1264,9 +1333,9 @@ UITextView *alertTextView;
                                                         message:@""
                                                        delegate:self
                                               cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"Pay with Note",@"Pay without Note", nil];
+                                              otherButtonTitles:@"Pay", nil];
     alertTextView = [UITextView new];
-    alertTextView.text = @"Add your order note here";
+    alertTextView.text = Note_default_text;
     [testAlert setTag:100];
     [testAlert setValue: alertTextView forKey:@"accessoryView"];
     [testAlert show];
@@ -1278,13 +1347,12 @@ UITextView *alertTextView;
     
     if (alertView.tag == 100) {
         if (buttonIndex == 1) {
-            if ([alertTextView.text  isEqual: @""] || [alertTextView.text  isEqual: @"Add your note here"]) {
-                [[[UIAlertView alloc] initWithTitle:@"Stop" message:@"Please add Note" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil] show];
+            if ([alertTextView.text  isEqual:Note_default_text]) {
+                self.notesText = @"";
             }
-            else {
-                self.notesText = alertTextView.text;
-                [self postOrderToServer];
-            }
+            self.notesText = alertTextView.text;
+            [self postOrderToServer];
+            
         }
         else if (buttonIndex == 2) {
             self.notesText = @"";

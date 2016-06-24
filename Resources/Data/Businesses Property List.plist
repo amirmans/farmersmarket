@@ -138,7 +138,7 @@
 				</dict>
 				<dict>
 					<key>display_name</key>
-					<string>Text us</string>
+					<string>Text</string>
 					<key>name</key>
 					<string>Request Service</string>
 					<key>icon</key>

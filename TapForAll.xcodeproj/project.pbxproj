@@ -24,11 +24,9 @@
 		2949CCF31458A21700728B87 /* flag.png in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCCA1458A21700728B87 /* flag.png */; };
 		2949CCFF1458A21700728B87 /* Notifications.png in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCD61458A21700728B87 /* Notifications.png */; };
 		2949CD081458A21700728B87 /* BillViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCE01458A21700728B87 /* BillViewController.xib */; };
-		2949CD0F1458A21700728B87 /* MeowConfirmationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCE71458A21700728B87 /* MeowConfirmationViewController.xib */; };
 		2949CD101458A21700728B87 /* AskForSeviceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCE81458A21700728B87 /* AskForSeviceViewController.xib */; };
 		2949CD111458A21700728B87 /* ChatMessagesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCE91458A21700728B87 /* ChatMessagesViewController.xib */; };
 		2949CD121458A21700728B87 /* MyLocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCEA1458A21700728B87 /* MyLocationViewController.xib */; };
-		2949CD151458A21700728B87 /* PublicProfile.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2949CCED1458A21700728B87 /* PublicProfile.xib */; };
 		2949CD351458A9CC00728B87 /* Business.m in Sources */ = {isa = PBXBuildFile; fileRef = 2949CD231458A9CC00728B87 /* Business.m */; };
 		295C3AFD14E65F42000FB813 /* BusinessCustomerProfileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 295C3AFC14E65F42000FB813 /* BusinessCustomerProfileManager.m */; };
 		295C3AFE14E65F42000FB813 /* BusinessCustomerProfileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 295C3AFC14E65F42000FB813 /* BusinessCustomerProfileManager.m */; };
@@ -56,7 +54,6 @@
 		29ECC44C14CCC06C00986558 /* SpeechBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C00986557 /* SpeechBubbleView.m */; };
 		29ECC44C14CCC06C0098655B /* TapTalkChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C0098655A /* TapTalkChatMessage.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		29ECC44C14CCC06C0098655E /* ConsumerProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C0098655D /* ConsumerProfileViewController.m */; };
-		29ECC44C14CCC06C00986564 /* PublicProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C00986563 /* PublicProfile.m */; };
 		29ECC44C14CCC06C00986566 /* ProductItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C00986565 /* ProductItemViewCell.xib */; };
 		29ECC44C14CCC06C00986568 /* StoreMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C00986567 /* StoreMapViewController.xib */; };
 		29ECC44C14CCC06C0098656C /* RateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C0098656B /* RateView.m */; };
@@ -91,6 +88,7 @@
 		4A737B7B1C68B0DD00ADCD49 /* APIUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A737B781C68B0DD00ADCD49 /* APIUtility.m */; };
 		4A737B7C1C68B0DD00ADCD49 /* AppData.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A737B7A1C68B0DD00ADCD49 /* AppData.m */; };
 		4A737B821C68D2CF00ADCD49 /* DetailBusinessVCTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A737B801C68D2CF00ADCD49 /* DetailBusinessVCTableViewCell.xib */; };
+		4A74ECA31D0985F60088662C /* ConsumerCCModelObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A74ECA21D0985F60088662C /* ConsumerCCModelObject.m */; };
 		4A848ED11C8083D50055E127 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A848ED01C8083D50055E127 /* EventKit.framework */; };
 		4A848ED31C8083DB0055E127 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A848ED21C8083DB0055E127 /* EventKitUI.framework */; };
 		4A8DA3491CC8DD5300C3890A /* MenuItemOptionsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8DA3471CC8DD5300C3890A /* MenuItemOptionsCell.m */; };
@@ -192,9 +190,7 @@
 		C69653481C2A011B001A29DB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C69653471C2A011B001A29DB /* StoreKit.framework */; };
 		C696534B1C2A012A001A29DB /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C696534A1C2A012A001A29DB /* PassKit.framework */; };
 		C69935B018B969F6008FCF8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C699356318B969F6008FCF8A /* AppDelegate.m */; };
-		C69935B118B969F6008FCF8A /* BillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C699356518B969F6008FCF8A /* BillViewController.m */; };
 		C69935BB18B969F6008FCF8A /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C699357A18B969F6008FCF8A /* DataModel.m */; };
-		C69935C218B969F6008FCF8A /* MeowConfirmationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C699358818B969F6008FCF8A /* MeowConfirmationViewController.m */; };
 		C69935C318B969F6008FCF8A /* AskForSeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C699358A18B969F6008FCF8A /* AskForSeviceViewController.m */; };
 		C69935C518B969F6008FCF8A /* MyLocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C699358E18B969F6008FCF8A /* MyLocationViewController.m */; };
 		C69935D018B969F6008FCF8A /* StoreMap.m in Sources */ = {isa = PBXBuildFile; fileRef = C69935A518B969F6008FCF8A /* StoreMap.m */; };
@@ -251,11 +247,9 @@
 		2949CCCA1458A21700728B87 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
 		2949CCD61458A21700728B87 /* Notifications.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Notifications.png; sourceTree = "<group>"; };
 		2949CCE01458A21700728B87 /* BillViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BillViewController.xib; sourceTree = "<group>"; };
-		2949CCE71458A21700728B87 /* MeowConfirmationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeowConfirmationViewController.xib; sourceTree = "<group>"; };
 		2949CCE81458A21700728B87 /* AskForSeviceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AskForSeviceViewController.xib; sourceTree = "<group>"; };
 		2949CCE91458A21700728B87 /* ChatMessagesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatMessagesViewController.xib; sourceTree = "<group>"; };
 		2949CCEA1458A21700728B87 /* MyLocationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyLocationViewController.xib; sourceTree = "<group>"; };
-		2949CCED1458A21700728B87 /* PublicProfile.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PublicProfile.xib; sourceTree = "<group>"; };
 		2949CD231458A9CC00728B87 /* Business.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Business.m; path = MainSourceCode/Business.m; sourceTree = "<group>"; };
 		295C3AFB14E65F42000FB813 /* BusinessCustomerProfileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BusinessCustomerProfileManager.h; path = MainSourceCode/BusinessCustomerProfileManager.h; sourceTree = "<group>"; };
 		295C3AFC14E65F42000FB813 /* BusinessCustomerProfileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BusinessCustomerProfileManager.m; path = MainSourceCode/BusinessCustomerProfileManager.m; sourceTree = "<group>"; };
@@ -296,8 +290,6 @@
 		29ECC44C14CCC06C0098655A /* TapTalkChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TapTalkChatMessage.m; path = MainSourceCode/TapTalkChatMessage.m; sourceTree = "<group>"; };
 		29ECC44C14CCC06C0098655C /* ConsumerProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConsumerProfileViewController.h; path = MainSourceCode/ConsumerProfileViewController.h; sourceTree = "<group>"; };
 		29ECC44C14CCC06C0098655D /* ConsumerProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConsumerProfileViewController.m; path = MainSourceCode/ConsumerProfileViewController.m; sourceTree = "<group>"; };
-		29ECC44C14CCC06C00986562 /* PublicProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PublicProfile.h; path = MainSourceCode/PublicProfile.h; sourceTree = "<group>"; };
-		29ECC44C14CCC06C00986563 /* PublicProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PublicProfile.m; path = MainSourceCode/PublicProfile.m; sourceTree = "<group>"; };
 		29ECC44C14CCC06C00986565 /* ProductItemViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductItemViewCell.xib; sourceTree = "<group>"; };
 		29ECC44C14CCC06C00986567 /* StoreMapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StoreMapViewController.xib; sourceTree = "<group>"; };
 		29ECC44C14CCC06C00986569 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Consts.h; path = MainSourceCode/Consts.h; sourceTree = "<group>"; };
@@ -352,6 +344,8 @@
 		4A737B791C68B0DD00ADCD49 /* AppData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppData.h; sourceTree = "<group>"; };
 		4A737B7A1C68B0DD00ADCD49 /* AppData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppData.m; sourceTree = "<group>"; };
 		4A737B801C68D2CF00ADCD49 /* DetailBusinessVCTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DetailBusinessVCTableViewCell.xib; path = Resources/Xibs/DetailBusinessVCTableViewCell.xib; sourceTree = "<group>"; };
+		4A74ECA11D0985F60088662C /* ConsumerCCModelObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConsumerCCModelObject.h; sourceTree = "<group>"; };
+		4A74ECA21D0985F60088662C /* ConsumerCCModelObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConsumerCCModelObject.m; sourceTree = "<group>"; };
 		4A848ED01C8083D50055E127 /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		4A848ED21C8083DB0055E127 /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		4A8DA3461CC8DD5300C3890A /* MenuItemOptionsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuItemOptionsCell.h; sourceTree = "<group>"; };
@@ -487,13 +481,9 @@
 		C696534A1C2A012A001A29DB /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		C699356218B969F6008FCF8A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MainSourceCode/AppDelegate.h; sourceTree = "<group>"; };
 		C699356318B969F6008FCF8A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MainSourceCode/AppDelegate.m; sourceTree = "<group>"; };
-		C699356418B969F6008FCF8A /* BillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BillViewController.h; path = MainSourceCode/BillViewController.h; sourceTree = "<group>"; };
-		C699356518B969F6008FCF8A /* BillViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BillViewController.m; path = MainSourceCode/BillViewController.m; sourceTree = "<group>"; };
 		C699357618B969F6008FCF8A /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Consts.h; sourceTree = "<group>"; };
 		C699357918B969F6008FCF8A /* DataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataModel.h; sourceTree = "<group>"; };
 		C699357A18B969F6008FCF8A /* DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataModel.m; sourceTree = "<group>"; };
-		C699358718B969F6008FCF8A /* MeowConfirmationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeowConfirmationViewController.h; sourceTree = "<group>"; };
-		C699358818B969F6008FCF8A /* MeowConfirmationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeowConfirmationViewController.m; sourceTree = "<group>"; };
 		C699358918B969F6008FCF8A /* AskForSeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskForSeviceViewController.h; sourceTree = "<group>"; };
 		C699358A18B969F6008FCF8A /* AskForSeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AskForSeviceViewController.m; sourceTree = "<group>"; };
 		C699358D18B969F6008FCF8A /* MyLocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLocationViewController.h; sourceTree = "<group>"; };
@@ -780,13 +770,11 @@
 				C6AB1AFE18C7E7B2001FC051 /* DetailProductItemViewController.xib */,
 				C6308DE01C3E52D000B6B8B0 /* EventTableViewCell.xib */,
 				2935D2981569E842003FB5CB /* LoginViewController.xib */,
-				2949CCE71458A21700728B87 /* MeowConfirmationViewController.xib */,
 				2949CCEA1458A21700728B87 /* MyLocationViewController.xib */,
 				C6700CFC1859DAA4003814C9 /* NotificationTableViewCell.xib */,
 				290481BD150433CE0066002B /* ProductItemsTableViewController.xib */,
 				29ECC44C14CCC06C00986565 /* ProductItemViewCell.xib */,
 				C6504A8019D0EC83007646EB /* ProductMoreInformationViewController.xib */,
-				2949CCED1458A21700728B87 /* PublicProfile.xib */,
 				C6371A361C3B997500AC5A84 /* ShoppingCartTableViewController.xib */,
 				29ECC44C14CCC06C00986567 /* StoreMapViewController.xib */,
 				29AC066215DD9A490039C118 /* VoteToAddBusinessConfirmation.xib */,
@@ -895,8 +883,6 @@
 			children = (
 				C640AD371919F81E00DDA94D /* consumerProfileDataModel.h */,
 				C640AD381919F81E00DDA94D /* consumerProfileDataModel.m */,
-				29ECC44C14CCC06C00986562 /* PublicProfile.h */,
-				29ECC44C14CCC06C00986563 /* PublicProfile.m */,
 				29ECC44C14CCC06C0098655D /* ConsumerProfileViewController.m */,
 				29ECC44C14CCC06C0098655C /* ConsumerProfileViewController.h */,
 			);
@@ -918,6 +904,8 @@
 				4A8DA34C1CC8E13400C3890A /* MenuOptionItemModel.m */,
 				4AAF9C311CFDB101009ECFB2 /* NotificationDetailModel.h */,
 				4AAF9C321CFDB101009ECFB2 /* NotificationDetailModel.m */,
+				4A74ECA11D0985F60088662C /* ConsumerCCModelObject.h */,
+				4A74ECA21D0985F60088662C /* ConsumerCCModelObject.m */,
 			);
 			name = ModelClass;
 			sourceTree = "<group>";
@@ -1062,8 +1050,6 @@
 			children = (
 				C69298A718DF8FFE00B013E0 /* BillPayViewController.h */,
 				C69298A818DF8FFE00B013E0 /* BillPayViewController.m */,
-				C699356418B969F6008FCF8A /* BillViewController.h */,
-				C699356518B969F6008FCF8A /* BillViewController.m */,
 			);
 			name = Bill;
 			sourceTree = "<group>";
@@ -1082,8 +1068,6 @@
 				C6371A341C3B98F100AC5A84 /* EventsTableViewController.m */,
 				C6308DE21C3E52EC00B6B8B0 /* EventTableViewCell.h */,
 				C6308DE31C3E52EC00B6B8B0 /* EventTableViewCell.m */,
-				C699358718B969F6008FCF8A /* MeowConfirmationViewController.h */,
-				C699358818B969F6008FCF8A /* MeowConfirmationViewController.m */,
 				C699358D18B969F6008FCF8A /* MyLocationViewController.h */,
 				C699358E18B969F6008FCF8A /* MyLocationViewController.m */,
 				C6504A7B19D0EB17007646EB /* ProductMoreInformationViewController.h */,
@@ -1267,7 +1251,6 @@
 				4A0F2CDB1C726D9B005C6F22 /* TotalCartItemCell.xib in Resources */,
 				5D7AEDF51C696B3000B0929F /* pin3.png in Resources */,
 				C67BC4B31BA808ED00C66AF8 /* customer_pin.png in Resources */,
-				2949CD0F1458A21700728B87 /* MeowConfirmationViewController.xib in Resources */,
 				4AD6E47C1CE099240025676C /* ic_minus@3x.png in Resources */,
 				C6EABE1818B2D1CD00F50D19 /* BusinessListViewController.xib in Resources */,
 				5D7AEDCB1C6934E400B0929F /* ic_calendar.png in Resources */,
@@ -1280,7 +1263,6 @@
 				2949CD111458A21700728B87 /* ChatMessagesViewController.xib in Resources */,
 				2949CD121458A21700728B87 /* MyLocationViewController.xib in Resources */,
 				5D5498B81C69150600FC35FF /* navigation.png in Resources */,
-				2949CD151458A21700728B87 /* PublicProfile.xib in Resources */,
 				4A6643F81C74B05C00C10421 /* arrow_down.png in Resources */,
 				5DD2E5821C6BB18100503BF6 /* ic_plus@3x.png in Resources */,
 				5D5498B61C6914FE00FC35FF /* heart.png in Resources */,
@@ -1447,7 +1429,6 @@
 				29ECC44C14CCC06C00986546 /* ChatMessagesViewController.m in Sources */,
 				4A6643EA1C74A04000C10421 /* SIMenuCell.m in Sources */,
 				C61E552518E794C1007027C7 /* CurrentBusiness.m in Sources */,
-				C69935B118B969F6008FCF8A /* BillViewController.m in Sources */,
 				5DBDB5CB1C6AB3CF001828C5 /* MenuItemTableViewCell.m in Sources */,
 				4A6C9B341CB7D67000D1B60D /* RewardDetailsModel.m in Sources */,
 				C6504A7C19D0EB17007646EB /* ProductMoreInformationViewController.m in Sources */,
@@ -1470,9 +1451,9 @@
 				29ECC44C14CCC06C0098655E /* ConsumerProfileViewController.m in Sources */,
 				C6F475631CDFDCB7009E24E4 /* DetailBusinessVCTableViewCell.m in Sources */,
 				C69935D018B969F6008FCF8A /* StoreMap.m in Sources */,
+				4A74ECA31D0985F60088662C /* ConsumerCCModelObject.m in Sources */,
 				C6FDD5CF187D079600F4D721 /* ServerInteractionManager.m in Sources */,
 				C6AF155118ED3D6C004DBEBA /* UtilityConsumerProfile.m in Sources */,
-				29ECC44C14CCC06C00986564 /* PublicProfile.m in Sources */,
 				C69935C518B969F6008FCF8A /* MyLocationViewController.m in Sources */,
 				29ECC44C14CCC06C0098656C /* RateView.m in Sources */,
 				C6371A351C3B98F100AC5A84 /* EventsTableViewController.m in Sources */,
@@ -1481,7 +1462,6 @@
 				4A737B7B1C68B0DD00ADCD49 /* APIUtility.m in Sources */,
 				4AE25A981CBFB83B00134D29 /* BusinessNotificationCell.m in Sources */,
 				C68A65FB18D71049000ABBF8 /* ChatTableView.m in Sources */,
-				C69935C218B969F6008FCF8A /* MeowConfirmationViewController.m in Sources */,
 				29ECC44C14CCC06C0098656F /* TapTalkLooks.m in Sources */,
 				C67C6AE218DF9B03009EF996 /* TapForAll.xcdatamodeld in Sources */,
 				4A8DA34D1CC8E13400C3890A /* MenuOptionItemModel.m in Sources */,
@@ -1646,8 +1626,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1681,8 +1661,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",

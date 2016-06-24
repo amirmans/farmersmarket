@@ -65,7 +65,7 @@ static AppDelegate *sharedObj;
     if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [_locationManager requestWhenInUseAuthorization];
     }
-    _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     _locationManager.distanceFilter = 500; // meters
     _locationManager.delegate = self;
     [_locationManager requestWhenInUseAuthorization];
@@ -133,7 +133,7 @@ static AppDelegate *sharedObj;
 
     UIImage *payImage = [UIImage imageNamed:@"ic_pay_normal.png"];
     TPRewardPointController *payViewController = [[TPRewardPointController alloc] initWithNibName:nil bundle:nil];
-    UITabBarItem *payTabBar = [[UITabBarItem alloc] initWithTitle:@"Reward" image:payImage tag:4];
+    UITabBarItem *payTabBar = [[UITabBarItem alloc] initWithTitle:@"Points" image:payImage tag:4];
     payTabBar.selectedImage = [UIImage imageNamed:@"ic_pay_selected.png"];
 //    [payTabBar setBadgeValue:@"1"];
 //    payTabBar.

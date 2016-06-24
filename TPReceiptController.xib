@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G12a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TPReceiptController">
             <connections>
                 <outlet property="lblAverageWaitingTime" destination="pnT-VL-1N1" id="9hJ-4p-gNy"/>
+                <outlet property="lblBusinessName" destination="qxE-2t-eAG" id="AV7-o2-Aju"/>
                 <outlet property="lblCardDetails" destination="E6d-dH-27v" id="xyf-Iv-SL8"/>
                 <outlet property="lblEarnedReward" destination="CnT-B8-bZM" id="J3d-Wb-Red"/>
                 <outlet property="lblOrderNumber" destination="kHV-Sn-g1q" id="igf-KR-pF6"/>
                 <outlet property="lblRedeemReward" destination="1Aa-rD-jNt" id="YCj-o3-ezi"/>
+                <outlet property="lblTextFromPayConfirmation" destination="Ggd-HH-J9d" id="b55-cK-nfn"/>
                 <outlet property="lbl_Total" destination="SS4-Wi-Efo" id="rYa-Ok-vAO"/>
+                <outlet property="lbl_thankYou" destination="May-FB-Je1" id="ykT-mE-Z1p"/>
                 <outlet property="tableView" destination="Dbk-6x-cAg" id="UWr-sw-ZsD"/>
                 <outlet property="thanyouView" destination="iJb-8H-mCz" id="NEM-CE-myX"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -23,41 +26,76 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iJb-8H-mCz">
-                    <rect key="frame" x="0.0" y="64" width="320" height="90"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iJb-8H-mCz" userLabel="ThankYou View">
+                    <rect key="frame" x="0.0" y="64" width="320" height="121"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="THANKS FOR YOUR ORDER!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="May-FB-Je1">
-                            <rect key="frame" x="46" y="12" width="251" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="May-FB-Je1">
+                            <rect key="frame" x="34" y="9" width="251" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="qGN-ub-aZ0"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <attributedString key="attributedText">
+                                <fragment content="THANKS FOR YOUR ORDER!">
+                                    <attributes>
+                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <font key="NSFont" size="14" name="HelveticaNeue-Bold"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="1" tighteningFactorForTruncation="0.0"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We'll send you alert when your order is ready." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ho2-ag-wUO">
-                            <rect key="frame" x="46" y="35" width="251" height="44"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We'll send you an alert when order is ready." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ho2-ag-wUO">
+                            <rect key="frame" x="12" y="51" width="295" height="37"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="44" id="Z6j-Ux-AGx"/>
+                                <constraint firstAttribute="height" constant="37" id="Z6j-Ux-AGx"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your receipt will be emailed shortly" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="59D-gT-TNz">
+                            <rect key="frame" x="35" y="86" width="251" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="8oy-YR-igM"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qxE-2t-eAG">
+                            <rect key="frame" x="98" y="30" width="124" height="17"/>
+                            <attributedString key="attributedText">
+                                <fragment content="Business Full Name">
+                                    <attributes>
+                                        <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="1" tighteningFactorForTruncation="0.0"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" red="0.30588235289999999" green="0.7843137255" blue="0.81568627449999997" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstItem="ho2-ag-wUO" firstAttribute="leading" secondItem="iJb-8H-mCz" secondAttribute="leading" constant="46" id="4bg-ZP-WBU"/>
-                        <constraint firstItem="May-FB-Je1" firstAttribute="leading" secondItem="iJb-8H-mCz" secondAttribute="leading" constant="46" id="H8W-5F-206"/>
-                        <constraint firstAttribute="trailing" secondItem="May-FB-Je1" secondAttribute="trailing" constant="23" id="LmQ-x4-GNM"/>
-                        <constraint firstItem="ho2-ag-wUO" firstAttribute="top" secondItem="May-FB-Je1" secondAttribute="bottom" constant="2" id="TEy-vf-xND"/>
-                        <constraint firstItem="May-FB-Je1" firstAttribute="top" secondItem="iJb-8H-mCz" secondAttribute="top" constant="12" id="Wth-Nx-vhB"/>
-                        <constraint firstAttribute="height" constant="90" id="fZe-LV-PVf"/>
-                        <constraint firstAttribute="trailing" secondItem="ho2-ag-wUO" secondAttribute="trailing" constant="23" id="mg8-iX-8wI"/>
+                        <constraint firstItem="qxE-2t-eAG" firstAttribute="top" secondItem="May-FB-Je1" secondAttribute="bottom" id="3mF-zl-rma"/>
+                        <constraint firstItem="ho2-ag-wUO" firstAttribute="leading" secondItem="iJb-8H-mCz" secondAttribute="leading" constant="12" id="4bg-ZP-WBU"/>
+                        <constraint firstItem="59D-gT-TNz" firstAttribute="centerX" secondItem="iJb-8H-mCz" secondAttribute="centerX" id="BLy-k7-gAh"/>
+                        <constraint firstItem="May-FB-Je1" firstAttribute="leading" secondItem="iJb-8H-mCz" secondAttribute="leading" constant="34" id="H8W-5F-206"/>
+                        <constraint firstItem="59D-gT-TNz" firstAttribute="top" secondItem="iJb-8H-mCz" secondAttribute="top" constant="86" id="Kkm-Xg-5rY"/>
+                        <constraint firstAttribute="trailing" secondItem="May-FB-Je1" secondAttribute="trailing" constant="35" id="LmQ-x4-GNM"/>
+                        <constraint firstItem="May-FB-Je1" firstAttribute="centerX" secondItem="iJb-8H-mCz" secondAttribute="centerX" id="PFz-bG-AXn"/>
+                        <constraint firstItem="ho2-ag-wUO" firstAttribute="top" secondItem="May-FB-Je1" secondAttribute="bottom" constant="21" id="TEy-vf-xND"/>
+                        <constraint firstItem="qxE-2t-eAG" firstAttribute="centerX" secondItem="iJb-8H-mCz" secondAttribute="centerX" id="WlA-MJ-fft"/>
+                        <constraint firstItem="May-FB-Je1" firstAttribute="top" secondItem="iJb-8H-mCz" secondAttribute="top" constant="9" id="Wth-Nx-vhB"/>
+                        <constraint firstAttribute="height" constant="121" id="fZe-LV-PVf"/>
+                        <constraint firstAttribute="trailing" secondItem="ho2-ag-wUO" secondAttribute="trailing" constant="13" id="mg8-iX-8wI"/>
+                        <constraint firstItem="59D-gT-TNz" firstAttribute="leading" secondItem="iJb-8H-mCz" secondAttribute="leading" constant="35" id="oGd-ZM-ika"/>
                     </constraints>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Dbk-6x-cAg">
-                    <rect key="frame" x="0.0" y="150" width="320" height="165"/>
+                    <rect key="frame" x="0.0" y="186" width="320" height="129"/>
                     <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="vjT-Am-lGi"/>
@@ -86,7 +124,7 @@
                                         <constraint firstAttribute="height" constant="13" id="bdK-TX-icy"/>
                                         <constraint firstAttribute="width" constant="138" id="miV-87-JNc"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="14"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="highlightedColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </label>
@@ -182,7 +220,7 @@
                                 <constraint firstAttribute="width" constant="15" id="jar-hc-t6z"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save Your Fevorite Items For Next Time!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="850-kT-DlJ">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save Your Favorite Items For Next Time!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="850-kT-DlJ">
                             <rect key="frame" x="50" y="186" width="249" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="15" id="uS2-3L-xx9"/>
@@ -198,7 +236,7 @@
                                 <constraint firstAttribute="width" constant="15" id="gHo-Cp-kc4"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You Redeem 8 Reward Points!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Aa-rD-jNt">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You Redeemed 8 Reward Points!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Aa-rD-jNt">
                             <rect key="frame" x="51" y="162" width="249" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="15" id="rV1-Z2-qp7"/>
@@ -214,6 +252,14 @@
                                 <constraint firstAttribute="height" constant="15" id="V1f-Zg-YgB"/>
                             </constraints>
                         </imageView>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ggd-HH-J9d">
+                            <rect key="frame" x="124" y="215" width="72" height="30"/>
+                            <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
+                            <state key="normal" title="Text KOI?"/>
+                            <connections>
+                                <action selector="btnTextFromPayConfirmation:" destination="-1" eventType="touchUpInside" id="rW0-W9-X8o"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -251,7 +297,7 @@
                 <constraint firstAttribute="trailing" secondItem="DzX-uI-PPh" secondAttribute="trailing" id="cyM-wA-yMZ"/>
                 <constraint firstAttribute="trailing" secondItem="Dbk-6x-cAg" secondAttribute="trailing" id="dbb-Qk-Miu"/>
                 <constraint firstItem="iJb-8H-mCz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="gZd-HE-wEf"/>
-                <constraint firstItem="Dbk-6x-cAg" firstAttribute="top" secondItem="iJb-8H-mCz" secondAttribute="bottom" constant="-4" id="ggv-be-8FB"/>
+                <constraint firstItem="Dbk-6x-cAg" firstAttribute="top" secondItem="iJb-8H-mCz" secondAttribute="bottom" constant="1" id="ggv-be-8FB"/>
                 <constraint firstItem="iJb-8H-mCz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="q80-Z2-bSN"/>
                 <constraint firstItem="DzX-uI-PPh" firstAttribute="top" secondItem="Dbk-6x-cAg" secondAttribute="bottom" id="ts2-BZ-gHY"/>
             </constraints>

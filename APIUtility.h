@@ -22,6 +22,7 @@
 - (NSString *) getCurrentTime;
 - (BOOL) isOpenBussiness: (NSString *)openTime CloseTime:(NSString *)closeTime;
 - (NSString *) getOpenCloseTime: (NSString *)openTime CloseTime:(NSString *)closeTime;
+- (NSString *)getCivilianTime: (NSString *)militaryTime;
 
 -(CLLocationCoordinate2D) getLocationFromAddressString: (NSString*) addressStr;
 
@@ -33,6 +34,8 @@
 
 -(void)getRevardpointsForBusiness:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished ;
 
+- (void)getAverageWaitTimeForBusiness:(NSDictionary *)data server:(NSString *)url completiedBlock:(void (^)(NSDictionary *response))finished;
+
 - (void) getPreviousOrderListWithConsumerID  :(NSString *) consumer_id BusinessID : (NSString *) business_id completiedBlock:(void (^)(NSDictionary *response))finished;
 
 - (void) save_cc_info :(NSDictionary *) param completiedBlock:(void (^)(NSDictionary *response))finished;
@@ -40,4 +43,10 @@
 - (void) getNotificationForConsumer  :(NSString *) consumer_id BusinessID : (NSString *) business_id completiedBlock:(void (^)(NSDictionary *response))finished;
 
 - (void) save_notifications_for_consumer_in_business :(NSDictionary *) param completiedBlock:(void (^)(NSDictionary *response))finished;
+
+- (void) remove_cc_info :(NSDictionary *) param completiedBlock:(void (^)(NSDictionary *response))finished;
+
+- (void) getAllCCInfo : (NSString *) consumer_id completiedBlock:(void (^)(NSDictionary *response))finished;
+
+- (BOOL)isZipCodeValid:(NSString *)zipCode;
 @end

@@ -14,6 +14,7 @@
 #import "ConsumerProfileDataModel.h"
 #import "SavedCardTableCell.h"
 #import "AFNetworking.h"
+#import "APIUtility.h"
 
 @interface ConsumerProfileViewController () {
     NSMutableDictionary *consumerProfileDataDic;
@@ -251,10 +252,10 @@ static NSArray *consumerProfileDataArray = nil;
             case 3:
                 if (zipcodeTextField.text.length > 0)
                 {
-                    NSString *zipcodeRegEx = @"^[1..9][0-9,-]{4,}?";
-                    NSPredicate *zipcodeTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", zipcodeRegEx];
-                    
-                    if ([zipcodeTest evaluateWithObject:zipcodeTextField.text] == NO) {
+//                    NSString *zipcodeRegEx = @"^[1..9][0-9,-]{4,}?";
+//                    NSPredicate *zipcodeTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", zipcodeRegEx];
+                    if (![[APIUtility sharedInstance] isZipCodeValid:zipcodeTextField.text]) {
+//                    if ([zipcodeTest evaluateWithObject:zipcodeTextField.text] == NO) {
                         badInformation = TRUE;
                         errorMessageLabel.hidden = FALSE;
                         errorMessageLabel.text = @"Please enter valid zip code";
@@ -285,6 +286,9 @@ static NSArray *consumerProfileDataArray = nil;
         [UIAlertController showErrorAlert:@"There are errors in your input. Please fix them first"];
     }
     else {
+        errorMessageLabel.hidden = TRUE;
+        errorMessageLabel.text = @"";
+        
         [self postSaveRequest];
         if (self.navigationController.parentViewController != nil)
             [self.navigationController popViewControllerAnimated:YES];

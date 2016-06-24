@@ -8,18 +8,33 @@
 
 #import "TPReceiptController.h"
 #import "TotalCartItemCell.h"
+#import "CurrentBusiness.h"
 #import "AppDelegate.h"
 
 @interface TPReceiptController ()
 
 @end
 
+
 @implementation TPReceiptController
+
+@synthesize totalPaid, tipAmount, subTotal, lblTextFromPayConfirmation, lbl_thankYou, lblBusinessName;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Receipt";
+    self.title = @"Confirmation";
+    lblBusinessName.textAlignment = NSTextAlignmentCenter;
+    [lblBusinessName setNumberOfLines:0];
+    [lblBusinessName sizeToFit];
+    lblBusinessName.text = [NSString stringWithFormat:@"%@", [CurrentBusiness sharedCurrentBusinessManager].business.businessName];
+    
+    lbl_thankYou.textAlignment = NSTextAlignmentCenter;
+    [lbl_thankYou setNumberOfLines:0];
+    [lbl_thankYou sizeToFit];
+    lbl_thankYou.text = [NSString stringWithFormat:@"Thanks For Your Order #%@", self.order_id];
+    
+
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"< Done" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
@@ -35,6 +50,18 @@
     [self paymentSummary];
     [self setOrderItemArray];
     [self setBadgeForRewardPoint];
+    
+    NSString *my_sms_no = [CurrentBusiness sharedCurrentBusinessManager].business.sms_no;
+    if ((my_sms_no == nil) || (my_sms_no == (id)[NSNull null]))
+    {
+        lblTextFromPayConfirmation.hidden = true;
+    }
+    else {
+        lblTextFromPayConfirmation.hidden = false;
+        [lblTextFromPayConfirmation.titleLabel setTextAlignment: NSTextAlignmentCenter];
+        [lblTextFromPayConfirmation setTitle:[NSString stringWithFormat:@"Text %@, if you have questions!",
+                                              [CurrentBusiness sharedCurrentBusinessManager].business.shortBusinessName] forState:UIControlStateNormal];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -147,7 +174,10 @@
         CGFloat rounded_down = [AppData calculateRoundPrice:val];
         TotalPrice += rounded_down;
     }
-    self.lbl_Total.text = [NSString stringWithFormat:@"$%.2f",TotalPrice];
+    // TODO
+//    self.lbl_Total.text = [NSString stringWithFormat:@"$%.2f",TotalPrice];
+    self.lbl_Total.text = [NSString stringWithFormat:@"$%.2f",totalPaid];
+
     [self.tableView reloadData];
 }
 
@@ -156,7 +186,7 @@
     [AppData setBusinessBackgroundColor:self.thanyouView];
     self.lblOrderNumber.text = self.order_id;
     self.lblEarnedReward.text = [NSString stringWithFormat:@"You Earned %@ Reward Points!",self.reward_point];
-    self.lblRedeemReward.text = [NSString stringWithFormat:@"You Redeem %@ Reward Points!",self.redeem_point];
+    self.lblRedeemReward.text = [NSString stringWithFormat:@"You Redeemed %@ Reward Points!",self.redeem_point];
     self.lblCardDetails.text = [NSString stringWithFormat:@"%@ %@ %@",self.cardName,self.cardNumber,self.cardExpDate];
     self.lblAverageWaitingTime.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
 }
@@ -206,5 +236,45 @@
         }
     }];
 }
+
+- (IBAction)btnTextFromPayConfirmation:(id)sender {
+    NSString *my_sms_no = [CurrentBusiness sharedCurrentBusinessManager].business.sms_no;
+    MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
+    if ([MFMessageComposeViewController canSendText]) {
+        controller.body = [NSString stringWithFormat:@"For order #%@:", self.order_id];
+        
+        controller.recipients = [NSArray arrayWithObjects:my_sms_no, nil];
+        controller.messageComposeDelegate = self;
+        [self presentViewController:controller animated:YES completion:nil];
+    }
+    controller = nil;
+}
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    UIAlertView *alert;
+    NSString *tempStr = @"Your text to ";
+    NSString *confirmationTitle = [tempStr stringByAppendingString:[CurrentBusiness sharedCurrentBusinessManager].business.shortBusinessName];
+    
+    switch (result) {
+        case MessageComposeResultCancelled:
+            break;
+        case MessageComposeResultFailed:
+            alert = [[UIAlertView alloc] initWithTitle:@"confirmationTitle" message:@"Message was not sent because of an unknown Error" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            alert = nil;
+            break;
+        case MessageComposeResultSent:
+            alert = [[UIAlertView alloc] initWithTitle:confirmationTitle message:@"Message was sent." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            alert = nil;
+            break;
+        default:
+            break;
+    }
+    alert = nil;
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 
 @end

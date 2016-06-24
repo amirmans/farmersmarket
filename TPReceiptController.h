@@ -10,7 +10,7 @@
 #import "APIUtility.h"
 #import "DataModel.h"
 #import "RewardDetailsModel.h"
-@interface TPReceiptController : UIViewController<UITableViewDataSource, UITableViewDelegate>{
+@interface TPReceiptController : UIViewController<UITableViewDataSource, UITableViewDelegate, MFMessageComposeViewControllerDelegate>{
 
 //    NSMutableArray *FetchedRecordArray;
 
@@ -29,6 +29,9 @@
 @property (strong, nonatomic) NSString *cardNumber;
 @property (strong, nonatomic) NSString *cardExpDate;
 @property (strong, nonatomic) NSString *redeem_point;
+@property (assign) double totalPaid;
+@property (assign) double tipAmount;
+@property (assign) double subTotal;
 @property (strong, nonatomic) NSMutableArray *orderDataArray;
 @property (strong, nonatomic) IBOutlet UILabel *lblOrderNumber;
 @property (strong, nonatomic) IBOutlet UILabel *lblEarnedReward;
@@ -36,6 +39,10 @@
 @property (strong, nonatomic) IBOutlet UIView *thanyouView;
 @property (strong, nonatomic) IBOutlet UILabel *lblRedeemReward;
 @property (weak, nonatomic) IBOutlet UILabel *lblAverageWaitingTime;
+@property (strong, nonatomic) IBOutlet UIButton *lblTextFromPayConfirmation;
+@property (strong, nonatomic) IBOutlet UILabel *lbl_thankYou;
+@property (strong, nonatomic) IBOutlet UILabel *lblBusinessName;
 
+- (IBAction)btnTextFromPayConfirmation:(id)sender;
 
 @end

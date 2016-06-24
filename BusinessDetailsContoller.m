@@ -19,7 +19,7 @@
 #import <MBProgressHUD.h>
 #import "AskForSeviceViewController.h"
 //#import "MenuViewController.h"
-#import "BillViewController.h"
+//#import "BillViewController.h"
 #import "StoreMapViewController.h"
 #import "EventsTableViewController.h"
 #import "CateringViewController.h"
@@ -223,7 +223,12 @@ UIBarButtonItem *btn_heart;
     }else{
         cell.FoodView.hidden = true;
     }
-    cell.lbl_profileName.text = [choice valueForKey:@"display_name"];
+    if ([[choice valueForKey:@"name"] rangeOfString:@"Request"].location != NSNotFound) {
+        cell.lbl_profileName.text = [NSString stringWithFormat:@"%@ %@", [choice valueForKey:@"display_name"], biz.shortBusinessName];
+    }
+    else {
+        cell.lbl_profileName.text = [choice valueForKey:@"display_name"];
+    }
 //    if (biz.iconRelativeURL != (id)[NSNull null] && biz.iconRelativeURL.length != 0 )
 //    {
 //        NSString *imageURLString = [BusinessCustomerIconDirectory stringByAppendingString:biz.iconRelativeURL];
@@ -284,7 +289,7 @@ UIBarButtonItem *btn_heart;
     NSString* tmpStr = [service lowercaseString];
     NSUInteger whileIndex = 0;
     
-    while (whileIndex < 8) {
+    while (whileIndex < 7) {
         if (whileIndex == 0) {
             if ([tmpStr isEqualToString:@"order food"]) {
                 [[CurrentBusiness sharedCurrentBusinessManager].business startLoadingBusinessProductCategoriesAndProducts];
@@ -303,16 +308,7 @@ UIBarButtonItem *btn_heart;
                 [self textBusinessCustomer];
             }
         }
-        
         if (whileIndex == 2) {
-            if ( ([tmpStr rangeOfString:@"bill"].location != NSNotFound) ||
-                ([tmpStr rangeOfString:@"pay"].location != NSNotFound) ) {
-                BillViewController *billViewController = [[BillViewController alloc] initWithNibName:nil bundle:nil forBusiness:function_biz];
-                [navigationController pushViewController:billViewController animated:YES];
-            }
-        }
-        
-        if (whileIndex == 3) {
             if ([tmpStr rangeOfString:@"map"].location != NSNotFound) {
                 StoreMapViewController *storeMapViewController = [[StoreMapViewController alloc] initWithNibName:nil bundle:nil];
                 storeMapViewController.title = [NSString stringWithFormat:@"Map of %@",function_biz.shortBusinessName];
@@ -320,7 +316,7 @@ UIBarButtonItem *btn_heart;
             }
         }
         
-        if (whileIndex == 4) {
+        if (whileIndex == 3) {
             
 //            if (([tmpStr rangeOfString:@"items"].location != NSNotFound)
 //                || ([tmpStr rangeOfString:@"have"].location != NSNotFound)
@@ -341,7 +337,7 @@ UIBarButtonItem *btn_heart;
             }
         }
         
-        if (whileIndex == 5) {
+        if (whileIndex == 4) {
             if ([tmpStr rangeOfString:@"chat"].location != NSNotFound) {
                 
 //                if ([DataModel sharedDataModelManager].nickname.length < 1) {
@@ -368,7 +364,7 @@ UIBarButtonItem *btn_heart;
             
         }
         
-        if (whileIndex == 6) {
+        if (whileIndex == 5) {
             if ([tmpStr rangeOfString:@"event"].location != NSNotFound) {
                 EventsTableViewController *eventTableViewController = [[EventsTableViewController alloc] initWithNibName:nil bundle:nil forBusiness:function_biz];
                 [navigationController pushViewController:eventTableViewController animated:YES];
@@ -377,7 +373,7 @@ UIBarButtonItem *btn_heart;
             
         }
         
-        if (whileIndex == 7) {
+        if (whileIndex == 6) {
             if (([tmpStr rangeOfString:@"history"].location != NSNotFound) || ([tmpStr rangeOfString:@"shopping"].location != NSNotFound)) {
             }
         }
@@ -538,7 +534,7 @@ UIBarButtonItem *btn_heart;
                     TPBusinessDetail *businessDetail = [TPBusinessDetail new];
                     
                     businessDetail.product_order_id = [[orderDetail valueForKey:@"order_item_id"] integerValue];
-                    businessDetail.price = [NSString stringWithFormat:@"%ld",[[orderDetail valueForKey:@"price"] integerValue]] ;
+                    businessDetail.price = [NSString stringWithFormat:@"%f",[[orderDetail valueForKey:@"price"] doubleValue]] ;
                     businessDetail.short_description = [orderDetail valueForKey:@"product_short_description"];
                     businessDetail.product_id = [orderDetail valueForKey:@"product_id"];
                     businessDetail.name = [orderDetail valueForKey:@"product_name"];
@@ -623,7 +619,7 @@ UIBarButtonItem *btn_heart;
             [self.navigationController pushViewController:menuViewController animated:YES];
         }];
         
-        UIAlertAction *myCartAction = [UIAlertAction actionWithTitle:@"My Cart" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *myCartAction = [UIAlertAction actionWithTitle:@"My Order" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             TotalCartItemController *TotalCartItemVC = [[TotalCartItemController alloc] initWithNibName:@"TotalCartItemController" bundle:nil];
             [self.navigationController pushViewController:TotalCartItemVC animated:YES];
         }];

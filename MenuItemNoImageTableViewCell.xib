@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G7a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,9 +11,17 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="135"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="134.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="134"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="btn_add" translatesAutoresizingMaskIntoConstraints="NO" id="Mcu-Yg-bte">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="134"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="134" id="Alu-rJ-3Hr"/>
+                            <constraint firstAttribute="width" constant="320" id="WEe-Uy-sYf"/>
+                        </constraints>
+                    </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_menuItemcell" translatesAutoresizingMaskIntoConstraints="NO" id="kgY-Qo-JHY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="135"/>
                     </imageView>
@@ -144,16 +152,19 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="kgY-Qo-JHY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="3h5-xx-Fgk"/>
+                    <constraint firstItem="Mcu-Yg-bte" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="7iT-nW-Eav"/>
                     <constraint firstItem="kgY-Qo-JHY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="9ot-nj-UjF"/>
                     <constraint firstAttribute="bottom" secondItem="kgY-Qo-JHY" secondAttribute="bottom" constant="-1" id="Hjb-HH-4F2"/>
                     <constraint firstAttribute="trailing" secondItem="kgY-Qo-JHY" secondAttribute="trailing" id="JHM-HK-AZf"/>
                     <constraint firstAttribute="bottom" secondItem="FVg-PL-elJ" secondAttribute="bottom" constant="1" id="OgB-U1-g11"/>
                     <constraint firstItem="FVg-PL-elJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="14" id="P7R-sT-UJ9"/>
                     <constraint firstAttribute="trailing" secondItem="FVg-PL-elJ" secondAttribute="trailing" id="S0Q-yQ-mgP"/>
+                    <constraint firstItem="Mcu-Yg-bte" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="dlK-aG-Jwy"/>
                     <constraint firstItem="FVg-PL-elJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="op0-zH-8cy"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="ImageView" destination="Mcu-Yg-bte" id="eJQ-QG-xoz"/>
                 <outlet property="addedItemView" destination="gDU-HM-eb4" id="NTm-Zi-0Iz"/>
                 <outlet property="btnFevorite" destination="nCj-i4-jGV" id="Oq7-5j-zyB"/>
                 <outlet property="btn_plus" destination="Pe3-or-xOt" id="ZcA-yb-ngi"/>
@@ -169,6 +180,7 @@
     </objects>
     <resources>
         <image name="bg_menuItemcell" width="375" height="112"/>
+        <image name="btn_add" width="108" height="40"/>
         <image name="ic_plus_green" width="96" height="96"/>
         <image name="img_Like" width="64" height="64"/>
         <image name="img_Liked" width="64" height="64"/>

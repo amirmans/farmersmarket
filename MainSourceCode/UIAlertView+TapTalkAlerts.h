@@ -12,5 +12,6 @@
 
 + (void)showErrorAlert:(NSString *)text;
 + (void)showOKAlertForViewController:(UIViewController *)vc withText:(NSString *)text;
++ (void)showInformationAlert:(NSString *)text withTitle:(NSString *)title;
 
 @end

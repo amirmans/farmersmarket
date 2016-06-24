@@ -6,7 +6,7 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 #import "AskForSeviceViewController.h"
-#import "MeowConfirmationViewController.h"
+//#import "MeowConfirmationViewController.h"
 #import "UIAlertView+TapTalkAlerts.h"
 #import "TapTalkLooks.h"
 #import "Business.h"
@@ -201,25 +201,25 @@ static NSUInteger firstTime = TRUE;
 
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
-    UIAlertView *alert;
-    MeowConfirmationViewController *orderconfirmation;
-    switch (result) {
-        case MessageComposeResultCancelled:
-            break;
-        case MessageComposeResultFailed:
-            alert = [[UIAlertView alloc] initWithTitle:@"Ordering" message:@"Unknown Error" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
-            alert = nil;
-            break;
-        case MessageComposeResultSent:
-            orderconfirmation = [[MeowConfirmationViewController alloc] initWithNibName:nil bundle:nil];
-            [self.navigationController pushViewController:orderconfirmation animated:YES];
-            break;
-        default:
-            break;
-    }
-    alert = nil;
-    [self dismissViewControllerAnimated:YES completion:nil];
+//    UIAlertView *alert;
+//    MeowConfirmationViewController *orderconfirmation;
+//    switch (result) {
+//        case MessageComposeResultCancelled:
+//            break;
+//        case MessageComposeResultFailed:
+//            alert = [[UIAlertView alloc] initWithTitle:@"Ordering" message:@"Unknown Error" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//            [alert show];
+//            alert = nil;
+//            break;
+//        case MessageComposeResultSent:
+//            orderconfirmation = [[MeowConfirmationViewController alloc] initWithNibName:nil bundle:nil];
+//            [self.navigationController pushViewController:orderconfirmation animated:YES];
+//            break;
+//        default:
+//            break;
+//    }
+//    alert = nil;
+//    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void) backButtonPressed {
