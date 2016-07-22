@@ -843,6 +843,7 @@ UITextView *alertTextView;
     self.FetchedRecordArray= [[NSMutableArray alloc]initWithArray:[AppDelegate sharedInstance].getRecord];
     [self.itemCartTableView reloadData];
     [self paymentSummary];
+    [self setNoTip];
 }
 
 // set total order and Price
@@ -1203,7 +1204,7 @@ UITextView *alertTextView;
 - (IBAction)btnRedeemPointClicked:(id)sender {
     if(dollarValue > 0) {
         // this condition in unnecessary
-        if((dollarValue) >= current_points_level) {
+        if(1) {
             if (flagRedeemPoint == false) {
                 
                 if (dollarValue > cartTotal) {

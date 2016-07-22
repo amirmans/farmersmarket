@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [super awakeFromNib];
     [self.lbl_Description sizeToFit];
     [self.lbl_OrderOption sizeToFit];
 }

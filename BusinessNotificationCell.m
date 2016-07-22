@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [super awakeFromNib];
     self.notificationBadgeView.layer.cornerRadius = self.notificationBadgeView.frame.size.height/2;
 }
 

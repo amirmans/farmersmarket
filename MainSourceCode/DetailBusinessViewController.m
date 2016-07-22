@@ -402,7 +402,7 @@
                 tempText =@"Business Types: Not Known";
             }
             if (distanceInMileString !=nil)
-                tempText = [NSString stringWithFormat:@"\n%@\n%@%@", tempText, distanceInMileString, @" miles from you"];
+                tempText = [NSString stringWithFormat:@"\n%@\n%@%@", tempText, distanceInMileString, @" mi. from you"];
             else if (biz.neighborhood)
                 tempText = [NSString stringWithFormat:@"%@\n\nNeighborhood: %@", tempText, biz.neighborhood];
             else

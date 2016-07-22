@@ -586,10 +586,10 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         cell.lblOpenCloseDate.hidden = false;
         if([[APIUtility sharedInstance]isOpenBussiness: [cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]]){
             cell.lblOpenClose.text = @"OPEN NOW";
-            cell.lblOpenClose.textColor = [UIColor greenColor];
+            cell.lblOpenClose.textColor = [UIColor orangeColor];
         }else{
             cell.lblOpenClose.text = @"NOW CLOSED";
-            cell.lblOpenClose.textColor = [UIColor redColor];
+            cell.lblOpenClose.textColor = [UIColor grayColor];
         }
         cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:[cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]];
 
@@ -619,7 +619,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     double lat = [[cellDict valueForKey:@"lat"] doubleValue];
     double lng = [[cellDict valueForKey:@"lng"] doubleValue];
     
-    cell.distance.text = [NSString stringWithFormat:@"%.1f m",[[AppData sharedInstance]getDistance:lat longitude:lng]];
+    cell.distance.text = [NSString stringWithFormat:@"%.1f mi.",[[AppData sharedInstance]getDistance:lat longitude:lng]];
     
     NSString *neighborhood = [cellDict objectForKey:@"neighborhood"];
     if (neighborhood != (id)[NSNull null] && neighborhood != nil )

@@ -17,7 +17,7 @@
     IBOutlet UIWindow *window;
     IBOutlet UITabBarController *tt_tabBarController;
     IBOutlet UINavigationController *enterBusinessNav;
-    __weak id <NewNotificationProtocol> notificationDelegate; // default is strong which conflicts with the property
+    __strong id <NewNotificationProtocol> notificationDelegate; // default is strong which conflicts with the property
     
     NSString *lat;
     NSString *lng;
@@ -27,7 +27,7 @@
 + (AppDelegate *) sharedInstance;
 
 @property(strong, nonatomic) UIWindow *window;
-@property (nonatomic, weak) id <NewNotificationProtocol> notificationDelegate;
+@property (nonatomic, strong) id <NewNotificationProtocol> notificationDelegate;
 @property(atomic, retain) UITabBarController *tt_tabBarController;
 @property(atomic, retain) UINavigationController *enterBusinessNav;
 @property(nonatomic,retain) CLLocationManager *locationManager;
