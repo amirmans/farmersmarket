@@ -373,28 +373,20 @@ static NSArray *consumerProfileDataArray = nil;
     NSDictionary *params;
     NSInteger ageGroup = ageGroupSegmentedControl.selectedSegmentIndex;
     NSString *deviceToken = [[DataModel sharedDataModelManager] deviceToken];
-    NSNumber *uid = [NSNumber numberWithLong:[DataModel sharedDataModelManager].userID];
+    NSString *uuid = [DataModel sharedDataModelManager].uuid;
     
     [consumerProfileDataDic setObject:emailTextField.text forKey:@"email"];
     [consumerProfileDataDic setObject:zipcodeTextField.text forKey:@"zipcode"];
     [consumerProfileDataDic setObject:nicknameTextField.text forKey:@"nickname"];
     [consumerProfileDataDic setObject:[NSNumber numberWithInteger:ageGroup] forKey:@"age_group"];
     
-    if ([DataModel sharedDataModelManager].userID > 0)
-    {
-        // notice update method in our server, takes care of both situations with or without device_token
-        if (deviceToken != nil)
-            params = @{@"cmd": @"update", @"uid": uid, @"device_token":deviceToken};
-        else
-            params = @{@"cmd": @"update", @"uid": uid};
-    }
+
+    // notice update method in our server, takes care of both situations with or without device_token
+    if (deviceToken != nil)
+        params = @{@"cmd": @"update", @"uuid": uuid, @"device_token":deviceToken};
     else
-    {
-        if (deviceToken != nil)
-            params = @{@"cmd": @"join_with_devicetoken", @"device_token":deviceToken};
-        else
-            params = @{@"cmd": @"join"};
-    }
+        params = @{@"cmd": @"update", @"uuid": uuid};
+   
     [consumerProfileDataDic addEntriesFromDictionary:params];
     
     return consumerProfileDataDic;
@@ -423,7 +415,7 @@ static NSArray *consumerProfileDataArray = nil;
             NSLog(@"operation (saving profile information) response status code: %ld", (long)operation.response.statusCode);
             //status code = 200 is html code for OK - so anything else means not OK
             if (operation.response.statusCode != 200) {
-                [UIAlertController showErrorAlert:NSLocalizedString(@"Error in generatin user ID.  Please try agin a few min later", nil)];
+                [UIAlertController showErrorAlert:NSLocalizedString(@"Error in generating user ID.  Please try agin a few minutes!", nil)];
             }
             else {
                 [[DataModel sharedDataModelManager] setNickname:nicknameTextField.text];
@@ -432,11 +424,6 @@ static NSArray *consumerProfileDataArray = nil;
                 //uid is determine by the database. so we set DataModel after we talk to the server
                 //
                 NSDictionary *jsonDictResponse = (NSDictionary *) responseObject;
-                int userID = [[jsonDictResponse objectForKey:@"userID"] intValue];
-                // userID of 0 means, we updated a record with an existing user ID, so we sould not change the exiting userID
-                //TODO what if this is a join and userID comes back az zero?
-                if (userID != 0)
-                    [DataModel sharedDataModelManager].userID = userID;
                 [DataModel sharedDataModelManager].ageGroup = ageGroupSegmentedControl.selectedSegmentIndex;
                 NSString *qrImageFileName = [jsonDictResponse objectForKey:@"qrcode_file"];
                 if ((qrImageFileName != nil) && (qrImageFileName != (id)[NSNull null])) {

@@ -26,6 +26,7 @@
 
 
 
+
 @interface AppDelegate () {
     BusinessNotificationTableViewController *notificationController;
     UITabBarItem *notificationsTabBar;
@@ -39,6 +40,7 @@
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize notificationDelegate;
+
 
 @synthesize enterBusinessNav, tt_tabBarController;
 
@@ -529,8 +531,13 @@ static AppDelegate *sharedObj;
         [notificationDelegate updateUIWithNewNotification];
 }
 
-- (void) postProcessForSuccess:(long)givenUserID {
-    [DataModel sharedDataModelManager].userID = givenUserID;
+- (void) postProcessForSuccess:(NSDictionary *)consumerInfo {
+    [[DataModel sharedDataModelManager] setUserIDWithString:consumerInfo[@"uid"]];
+    [DataModel sharedDataModelManager].nickname = consumerInfo[@"nickname"];
+    [[DataModel sharedDataModelManager] setAgeGroupWithString:consumerInfo[@"age_group"]];
+    [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
+    [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
+    [DataModel sharedDataModelManager].emailAddress = consumerInfo[@"email1"];
 }
 
 #pragma mark - UIApplicationDelegate for notification
@@ -556,7 +563,7 @@ static AppDelegate *sharedObj;
     // send a "join" request to the server before we have received the device
     // token. In that case, we silently send an "update" request to the server
     // API once we receive the token.
-    NSString *oldToken = [[DataModel sharedDataModelManager] deviceToken];
+//    NSString *oldToken = [[DataModel sharedDataModelManager] deviceToken];
     NSString *newToken = [deviceToken description];
     newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -567,23 +574,24 @@ static AppDelegate *sharedObj;
 
     // If the token changed and we already sent the "join" request, we should
     // let the server know about the new device token.
-    if (![newToken isEqualToString:oldToken]) {
+//    if (![newToken isEqualToString:oldToken]) {
         NSError *error;
         ServerInteractionManager *serverManager =[[ServerInteractionManager alloc] init];
         serverManager.postProcessesDelegate = self;
         
-        long uid = [[DataModel sharedDataModelManager] userID];
+        NSString *uuid = [DataModel sharedDataModelManager].uuid;
+        NSLog(@"My uuid is: %@", uuid);
         
         // a valid uid means we have a registered user, update user info with the
         // new deviceToken.  If not, just save the deviceToken in the default file, for the time
         // user registers.
-        if (uid > 0 )
+        if (uuid)
         {
-            [serverManager serverUpdateDeviceToken:newToken withUserID:uid WithError:&error];
+            [serverManager serverUpdateDeviceToken:newToken withUuid:uuid WithError:&error];
         }
         
         [[DataModel sharedDataModelManager] setDeviceToken:newToken];
-    }
+//    }
 }
 
 

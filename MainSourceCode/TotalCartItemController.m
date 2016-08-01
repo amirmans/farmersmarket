@@ -17,6 +17,8 @@
 
 @property (strong, nonatomic) NSMutableArray *orderItems;
 @property (strong, nonatomic) NSString *notesText;
+
+- (float)calculateTotalPoints:(float)amount;
 @end
 
 @implementation TotalCartItemController
@@ -47,17 +49,17 @@ UITextView *alertTextView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
     NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
-    
+
     BOOL businessIsClosed = false;
     if(openTime == (id)[NSNull null] || closeTime == (id)[NSNull null]) {
         businessIsClosed = true;
     } else if (![[APIUtility sharedInstance] isOpenBussiness:openTime CloseTime:closeTime]) {
         businessIsClosed = true;
     }
-    
+
     if (businessIsClosed) {
         NSString *openCivilianTime = [[APIUtility sharedInstance] getCivilianTime:openTime];
         NSString *waitTime = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
@@ -66,9 +68,9 @@ UITextView *alertTextView;
         NSString *title = [NSString stringWithFormat:@"%@ is closed now!", businessName];
         [UIAlertController showInformationAlert:message withTitle:title];
     }
-    
+
     flagRedeemPoint = false;
-    
+
     tipAmount = 0.0;
     cartTotal = 0.0;
     dollarValue = 0;
@@ -78,61 +80,61 @@ UITextView *alertTextView;
     currentTipValue = 0.0;
     isPointsUsed = false;
     [self setNeedsStatusBarAppearanceUpdate];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(pointsRedeem:)
                                                  name:RedeemPoints
                                                object:nil];
-    
+
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.notesText = @"";
     billBusiness = [CurrentBusiness sharedCurrentBusinessManager].business;
-    
+
     self.edgesForExtendedLayout = UIRectEdgeAll;
 
     NSString *titleString = [NSString stringWithFormat:@"My Order for %@",billBusiness.shortBusinessName];
-    
+
     self.title = titleString;
     orderItems = [[NSMutableArray alloc] init];
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
-    
+
     self.itemCartTableView.delegate = self;
     self.itemCartTableView.dataSource = self;
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
     self.FetchedRecordArray= [[NSMutableArray alloc]initWithArray:[AppDelegate sharedInstance].getRecord];
     NSLog(@"%lu",(unsigned long)_FetchedRecordArray.count);
-    
+
     NSLog(@"%@",self.FetchedRecordArray);
     redeemPoints = 0;
     zero = [NSDecimalNumber zero];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
+
     [self setBorder:self.btnNoTip];
     [self setBorder:self.btnOther];
     [self setBorder:self.btnTip10];
     [self setBorder:self.btnTip15];
     [self setBorder:self.btnTip20];
 
-    
+
 //    self.edgesForExtendedLayout = UIRectEdgeAll;
 //    self.itemCartTableView.contentInset = UIEdgeInsetsMake(self.itemCartTableView.frame.origin.x, self.itemCartTableView.frame.origin.y, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
     self.itemCartTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
+
 //    self.itemCartTableView.estimatedRowHeight = 100;
 //    self.itemCartTableView.rowHeight = UITableViewAutomaticDimension;
-    
+
     [self paymentSummary];
     [self setPointsValue];
-    
+
     self.paymentView.layer.borderColor = [UIColor blackColor].CGColor;
     self.paymentView.layer.borderWidth = 2;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+
     waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
     [self getDefaultCardData];
 }
@@ -163,105 +165,105 @@ UITextView *alertTextView;
 //
 //    _currentObject = _FetchedRecordArray[indexPath.row];
 //    cell.lbl_totalItems.text = [self.currentObject valueForKey:@"quantity"];
-//    
+//
 //    CGFloat val = [[self.currentObject valueForKey:@"price"] floatValue];
 //    val =  val * [[self.currentObject valueForKey:@"quantity"] integerValue];
 //    CGFloat rounded_down = floorf(val * 100) / 100;
 //    cell.lbl_Price.text = [NSString stringWithFormat:@"$%.2f",rounded_down];
-//    
+//
 ////    if(![businessDetail.short_description isKindOfClass:[NSNull class]])
 ////        cell.lbl_description.text = businessDetail.short_description;
 ////    else
 ////        cell.lbl_description.text = @"";
 ////
-//    
+//
 //    cell.lbl_Description.text = [self.currentObject valueForKey:@"product_descrption"];
-//    
+//
 //    cell.lbl_OrderOption.text = [self.currentObject valueForKey:@"product_option"];
-//    
+//
 //    cell.lbl_Title.text = [self.currentObject valueForKey:@"productname"];
 //
 //    cell.btn_minus.tag = indexPath.row;
 //    cell.btn_minus.section = indexPath.section;
 //    cell.btn_minus.row = indexPath.row;
-//    
+//
 //    [cell.btn_minus addTarget:self action:@selector(MinusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    
+//
 ////    cell.btn_plus.tag = indexPath.row;
 ////    cell.btn_plus.section = indexPath.section;
 ////    cell.btn_plus.row = indexPath.row;
 ////    [cell.btn_plus addTarget:self action:@selector(PlusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    
+//
 //    cell.btn_minus.tag = indexPath.row;
 //    cell.btn_minus.section = indexPath.section;
 //    cell.btn_minus.row = indexPath.row;
-//    
+//
 //    [cell.btn_minus addTarget:self action:@selector(MinusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    
+//
 //    cell.btn_plus.tag = indexPath.row;
 //    cell.btn_plus.section = indexPath.section;
 //    cell.btn_plus.row = indexPath.row;
 //    [cell.btn_plus addTarget:self action:@selector(PlusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    
+//
 //    cell.backgroundColor = [UIColor colorWithRed:245/255.0f green:245/255.0f blue:245/255.0f alpha:1];
-    
+
     static NSString *simpleTableIdentifier = @"TotalCartItemsTableCell";
-    
+
     TotalCartItemsTableCell *cell = (TotalCartItemsTableCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     if (cell == nil)
     {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"TotalCartItemsTableCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
-    
+
     _currentObject = _FetchedRecordArray[indexPath.row];
     cell.lbl_totalItems.text = [self.currentObject valueForKey:@"quantity"];
-    
+
     CGFloat val = [[self.currentObject valueForKey:@"price"] floatValue];
     val =  val * [[self.currentObject valueForKey:@"quantity"] integerValue];
-    
+
     CGFloat rounded_down = [AppData calculateRoundPrice:val];
     int rounded_points = [AppData calculateRoundPoints:val];
-    
+
     cell.lbl_Price.text = [NSString stringWithFormat:@"%.2f",rounded_down];
-    
+
     cell.lbl_Points.text = [NSString stringWithFormat:@"%d Pts",rounded_points];
-    
+
     cell.lbl_Description.text = [self.currentObject valueForKey:@"product_descrption"];
-    
+
     cell.lbl_OrderOption.text = [self.currentObject valueForKey:@"product_option"];
-    
+
     cell.lbl_Title.text = [self.currentObject valueForKey:@"productname"];
-    
+
         cell.btnRemoveItem.tag = indexPath.row;
         cell.btnRemoveItem.section = indexPath.section;
         cell.btnRemoveItem.row = indexPath.row;
-    
+
         [cell.btnRemoveItem addTarget:self action:@selector(MinusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
+
         cell.btnAddItem.tag = indexPath.row;
         cell.btnAddItem.section = indexPath.section;
         cell.btnAddItem.row = indexPath.row;
         [cell.btnAddItem addTarget:self action:@selector(PlusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
 
 //    [cell.btn_minus addTarget:self action:@selector(MinusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
+
     //    cell.btn_plus.tag = indexPath.row;
     //    cell.btn_plus.section = indexPath.section;
     //    cell.btn_plus.row = indexPath.row;
     //    [cell.btn_plus addTarget:self action:@selector(PlusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
+
 //    cell.btn_minus.tag = indexPath.row;
 //    cell.btn_minus.section = indexPath.section;
 //    cell.btn_minus.row = indexPath.row;
-//    
+//
 //    [cell.btn_minus addTarget:self action:@selector(MinusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-//    
+//
 //    cell.btn_plus.tag = indexPath.row;
 //    cell.btn_plus.section = indexPath.section;
 //    cell.btn_plus.row = indexPath.row;
 //    [cell.btn_plus addTarget:self action:@selector(PlusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
+
     cell.backgroundColor = [UIColor colorWithRed:245/255.0f green:245/255.0f blue:245/255.0f alpha:1];
 
     return cell;
@@ -280,15 +282,15 @@ UITextView *alertTextView;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+
 }
 
 - (IBAction)MinusButtonClicked:(CustomUIButton *)sender {
-    
+
     NSLog(@"Minus Button Clicked");
-    
+
     NSManagedObject *managedObj = [self.FetchedRecordArray objectAtIndex:sender.row];
-    
+
     TPBusinessDetail *businessDetail = [[TPBusinessDetail alloc] init];
     businessDetail.price = [managedObj valueForKey:@"price"];
     businessDetail.businessID = [managedObj valueForKey:@"businessID"];
@@ -302,20 +304,20 @@ UITextView *alertTextView;
     businessDetail.product_option = [managedObj valueForKey:@"product_option"];
     businessDetail.note = [managedObj valueForKey:@"note"];
     NSManagedObjectContext *context = [self managedObjectContext];
-    
+
     //    NSLog(@"%@",_managedObjectContext.persistentStoreCoordinator.managedObjectModel.entities);
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
-    
+
     self.FetchedRecordArray = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
     NSLog(@"%lu",(unsigned long)_FetchedRecordArray.count);
     NSLog(@"%@",_FetchedRecordArray.description);
-    
+
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"MyCartItem"];
     NSError *error = nil;
     NSArray *results = [context executeFetchRequest:request error:&error];
-    
+
     if (error != nil) {
-        
+
     }
     else {
         BOOL itemFound = false;
@@ -327,7 +329,7 @@ UITextView *alertTextView;
 //            NSLog(@"Business P_ID :- %@",businessDetail.product_id);
 //            NSLog(@"%ld",[[dictionary valueForKey:@"quantity"]integerValue]);
 //            NSLog(@"------------");
-            
+
             if([[dictionary valueForKey:@"product_order_id"] integerValue] == businessDetail.product_order_id){
                 itemFound = true;
                 int ItemQty = [[dictionary valueForKey:@"quantity"]intValue];
@@ -370,12 +372,12 @@ UITextView *alertTextView;
 }
 
 - (IBAction)PlusButtonClicked:(CustomUIButton *)sender {
-    
+
     NSLog(@"%@", [self.FetchedRecordArray objectAtIndex:sender.row]);
 //    TPBusinessDetail *BusinessDetail = [self.FetchedRecordArray objectAtIndex:sender.row];
-    
+
     NSManagedObject *managedObj = [self.FetchedRecordArray objectAtIndex:sender.row];
-    
+
     TPBusinessDetail *businessDetail = [[TPBusinessDetail alloc] init];
     businessDetail.price = [managedObj valueForKey:@"price"];
     businessDetail.short_description = [managedObj valueForKey:@"product_descrption"];
@@ -396,7 +398,7 @@ UITextView *alertTextView;
 //    [failedBankInfo setValue:[NSString stringWithFormat:@"%d",ItemQty] forKey:@"quantity"];
 
 //    SHMultipleSelect *multipleSelect = [[SHMultipleSelect alloc] init];
-    
+
 //    if (BusinessDetail.arrOptions.count > 0) {
 //        _dataSource = BusinessDetail.arrOptions;
 //        selectedButton = sender;
@@ -404,7 +406,7 @@ UITextView *alertTextView;
 //        multipleSelect.delegate = self;
 //        multipleSelect.rowsCount = _dataSource.count;
 //        [multipleSelect show];
-//        
+//
 //    }else{
         [self AddItemInCart:businessDetail CustomUIButton:sender];
 //    }
@@ -413,7 +415,7 @@ UITextView *alertTextView;
 
 
 //- (void)AddItemInCart : (TPBusinessDetail *)BusinessDetail CustomUIButton:(CustomUIButton *)sender {
-//    
+//
 //    NSManagedObjectContext *context = [self managedObjectContext];
 //    _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
 //    self.FetchedRecordArray = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
@@ -421,7 +423,7 @@ UITextView *alertTextView;
 //    NSError *error = nil;
 //    NSArray *results = [context executeFetchRequest:request error:&error];
 //    if (error != nil) {
-//        
+//
 //    }
 //    else {
 //        BOOL itemFound = false;
@@ -438,7 +440,7 @@ UITextView *alertTextView;
 //                int ItemQty = [[dictionary valueForKey:@"quantity"]intValue];
 //                [context deleteObject:obj];
 //                ItemQty = ItemQty + 1;
-//                
+//
 //                NSManagedObject *failedBankInfo = [NSEntityDescription
 //                                                   insertNewObjectForEntityForName:@"MyCartItem"
 //                                                   inManagedObjectContext:context];
@@ -471,7 +473,7 @@ UITextView *alertTextView;
 //            }
 //        }
 //    }
-//    
+//
 //    NSIndexPath *ip = [NSIndexPath indexPathForRow:sender.row inSection:sender.section];
 //    [self refreshOrderData];
 ////    [self addToCartTapped:ip];
@@ -479,7 +481,7 @@ UITextView *alertTextView;
 //}
 
 - (void) AddItemInCart : (TPBusinessDetail *)businessDetail CustomUIButton:(CustomUIButton *)sender {
-    
+
     NSManagedObjectContext *context = [self managedObjectContext];
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
     self.FetchedRecordArray = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
@@ -487,7 +489,7 @@ UITextView *alertTextView;
     NSError *error = nil;
     NSArray *results = [context executeFetchRequest:request error:&error];
     if (error != nil) {
-        
+
     }
     else {
         BOOL itemFound = false;
@@ -500,17 +502,17 @@ UITextView *alertTextView;
 //            NSLog(@"%ld",[[dictionary valueForKey:@"quantity"]integerValue]);
 //            NSLog(@"------------");
 //            if([[dictionary valueForKey:@"product_id"] isEqualToString:BusinessDetail.product_id]) {
-            
+
                 int ItemQty = [[dictionary valueForKey:@"quantity"]intValue];
-                
+
                 ItemQty = ItemQty + 1;
-                
+
 //                if([BusinessDetail.product_option isEqualToString:@""] || BusinessDetail.product_option == nil) {
 //                    itemFound = true;
 //                    NSManagedObject *failedBankInfo = [NSEntityDescription
 //                                                       insertNewObjectForEntityForName:@"MyCartItem"
 //                                                       inManagedObjectContext:context];
-//                    
+//
 //                    [context deleteObject:obj];
 //                    [failedBankInfo setValue:BusinessDetail.price forKey:@"price"];
 //                    [failedBankInfo setValue:BusinessDetail.short_description forKey:@"product_descrption"];
@@ -521,27 +523,27 @@ UITextView *alertTextView;
 //                    [failedBankInfo setValue:@[BusinessDetail.product_order_id] forKey:@"product_order_id"];
 //                    NSString * selected_ProductID_arrayString = [BusinessDetail.selected_ProductID_array componentsJoinedByString:@","];
 //                    [failedBankInfo setValue:selected_ProductID_arrayString forKey:@"selected_ProductID_array"];
-//                    
+//
 //                    [failedBankInfo setValue:[NSString stringWithFormat:@"%d",ItemQty] forKey:@"quantity"];
-//                    
+//
 //                    NSError *error;
-//                    
+//
 //                    if (![context save:&error]) {
 //                        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
 //                    }
 //                    break;
 //                }
 //                else {
-            
+
                     NSInteger dict_product_order_id = [[dictionary valueForKey:@"product_order_id"] integerValue];
                     NSInteger Business_product_order_id = businessDetail.product_order_id;
-                    
+
                     if (Business_product_order_id == dict_product_order_id) {
                         itemFound = true;
                         NSManagedObject *storeManageObject = [NSEntityDescription
                                                            insertNewObjectForEntityForName:@"MyCartItem"
                                                            inManagedObjectContext:context];
-                        
+
                         [context deleteObject:obj];
                         [storeManageObject setValue:businessDetail.price forKey:@"price"];
                         [storeManageObject setValue:businessDetail.short_description forKey:@"product_descrption"];
@@ -554,11 +556,11 @@ UITextView *alertTextView;
                         [storeManageObject setValue:@(businessDetail.product_order_id) forKey:@"product_order_id"];
                         if ( ([dictionary valueForKey:@"selected_ProductID_array"] != nil) && ([dictionary valueForKey:@"selected_ProductID_array"] != [NSNull null]) )
                         [storeManageObject setValue:[dictionary valueForKey:@"selected_ProductID_array"] forKey:@"selected_ProductID_array"];
-                        
+
                         [storeManageObject setValue:[NSString stringWithFormat:@"%d",ItemQty] forKey:@"quantity"];
                         [storeManageObject setValue:[dictionary valueForKey:@"note"] forKey:@"note"];
                         NSError *error;
-                        
+
                         if (![context save:&error]) {
                             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
                         }
@@ -576,19 +578,19 @@ UITextView *alertTextView;
 //- (void)prepareToGetStripeToken
 //{
 //    STPCardParams *card = [[STPCardParams alloc] init];
-//    
+//
 //    NSString *cardNo = [defaultCardData valueForKey:@"number"];
 //    NSString *expMonth = [defaultCardData valueForKey:@"expMonth"];
 //    NSString *expYear = [defaultCardData valueForKey:@"expYear"];
 //    NSString *cardCvc = [defaultCardData valueForKey:@"cvc"];
 //    //    NSString *cardName = [self getNameFromCardNumber:card.number];
 //
-//    
+//
 //    card.number = cardNo;
 //    card.expMonth = [expMonth integerValue];
 //    card.expYear = [expYear integerValue];
 //    card.cvc = cardCvc;
-//    
+//
 //    [self createStripeTokenWithCard:card];
 //}
 
@@ -634,7 +636,7 @@ UITextView *alertTextView;
 //    request.HTTPMethod = @"POST";
 //    NSString *body     = [NSString stringWithFormat:@"stripeToken=%@", token.tokenId];
 //    request.HTTPBody   = [body dataUsingEncoding:NSUTF8StringEncoding];
-//    
+//
 //    [NSURLConnection sendAsynchronousRequest:request
 //                                       queue:[NSOperationQueue mainQueue]
 //                           completionHandler:^(NSURLResponse *response,
@@ -649,9 +651,9 @@ UITextView *alertTextView;
 //}
 //
 //- (void) createStripeTokenWithCard : (STPCardParams *) card {
-//    
+//
 //    [MBProgressHUD showHUDAddedTo:self.view animated:true];
-//    
+//
 //    [[STPAPIClient sharedClient]createTokenWithCard:card completion:^(STPToken * _Nullable token, NSError * _Nullable error) {
 //        [MBProgressHUD hideAllHUDsForView:self.view animated:true];
 //        if (error) {
@@ -669,31 +671,31 @@ UITextView *alertTextView;
 //    NSLog(@"Payment - Received Stripe token %@", token.tokenId);
 //    // convert dollars to cents
 //    NSDecimalNumber *cents = [NSDecimalNumber decimalNumberWithString:@"100"];
-//    
+//
 //    NSString *totalString = self.lblSubTotalPrice.text;
-//    
+//
 //    totalString = [totalString stringByReplacingOccurrencesOfString:@"$" withString:@""];
-//    
+//
 //    double doubleTotal = [totalString doubleValue];
-//    
+//
 //    NSDecimalNumber *decimalTotal = [[NSDecimalNumber alloc] initWithDouble:doubleTotal];
-//    
+//
 //    NSDecimalNumber *totalBillInCents= [decimalTotal decimalNumberByMultiplyingBy:cents];
-//    
+//
 //    NSString *amountInCentsString= [totalBillInCents stringValue];
 //    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:TapForAllPaymentServer]];
 //    request.HTTPMethod = @"POST";
 //    NSString *body     = [NSString stringWithFormat:@"stripeToken=%@&amount=%@&currency=usd&customerPaymentID=%@&customerPaymentProcessingEmail=%@", token.tokenId, amountInCentsString, billBusiness.paymentProcessingID, billBusiness.paymentProcessingEmail];
 //    request.HTTPBody   = [body dataUsingEncoding:NSUTF8StringEncoding];
-//    
+//
 //    [MBProgressHUD showHUDAddedTo:self.view animated:true];
-//    
+//
 //    [NSURLConnection sendAsynchronousRequest:request
 //                                       queue:[NSOperationQueue mainQueue]
 //                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
 //                               [MBProgressHUD hideAllHUDsForView:self.view animated:true];
 //                               if (error) {
-//                                   
+//
 //                                   [UIAlertController showErrorAlert:@"Something went BAD - Clean the place or first born?"];
 //                               }
 //                               else {
@@ -704,7 +706,7 @@ UITextView *alertTextView;
 //                                                                         otherButtonTitles:nil];
 //                                   alert.tag = 5;
 //                                   [alert show];
-//                                   
+//
 //                                   [self postOrderToServer];
 //                               }
 //                           }];
@@ -721,17 +723,17 @@ UITextView *alertTextView;
 //}
 
 - (void) postOrderToServer {
-    
-    NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
-    
+
+    NSString *userID = [DataModel sharedDataModelManager].uuid;
+
     NSMutableArray *orderItemArray = [[NSMutableArray alloc]init];
-    
+
     for (NSDictionary *product in self.orderItems) {
-        
+
         NSString *product_id = [product valueForKey:@"product_id"];
         NSString *quantity = [product valueForKey:@"quantity"];
         NSString *options = @"";
-        
+
         NSArray *option_array;
         if ([product valueForKey:@"selected_ProductID_array"] != [NSNull null]) {
             options = [product valueForKey:@"selected_ProductID_array"];
@@ -740,9 +742,9 @@ UITextView *alertTextView;
         else {
             option_array = [[NSArray alloc] init];
         }
-        
+
         NSString *price = [product valueForKey:@"price"];
-        
+
         CGFloat rounded_down = [AppData calculateRoundPoints:[price floatValue]];
         NSString *Points = [NSString stringWithFormat:@"$%.2f",rounded_down];
         NSDictionary *product_orderDict = @{@"product_id":product_id,
@@ -753,18 +755,18 @@ UITextView *alertTextView;
                                             };
         [orderItemArray addObject:product_orderDict];
     }
-    
+
     long business_id_long = [CurrentBusiness sharedCurrentBusinessManager].business.businessID;
     NSNumber *business_id = [NSNumber numberWithLongLong:business_id_long];
-    
+
 //    billDollar = [[NSDecimalNumber alloc] initWithDouble:totalValue];
-    
+
     NSInteger currentRedeemPoints = [self calculatePointsRedeem];
     NSString *cardNo = [defaultCardData valueForKey:@"number"];
     if ([self.notesText  isEqual:Note_default_text]) {
         self.notesText = @"";
     }
-    
+
     NSDictionary *orderInfoDict= @{@"cmd":@"save_order",@"data":orderItemArray,@"consumer_id":userID,@"total":[NSString stringWithFormat:@"%f",totalValue],
                                    @"business_id":business_id,@"points_redeemed":[NSString stringWithFormat:@"%ld",(long)currentRedeemPoints],
                                    @"tip_amount":[NSNumber numberWithDouble:tipAmount], @"subtotal":[NSNumber numberWithDouble:cartTotal], @"tax_amount":[NSNumber numberWithDouble:0.0],
@@ -773,32 +775,32 @@ UITextView *alertTextView;
     [[APIUtility sharedInstance] orderToServer:orderInfoDict server:OrderServerURL completiedBlock:^(NSDictionary *response) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:true];
         if([response valueForKey:@"data"] != nil) {
-            
+
             NSDictionary *dataDict = [response valueForKey:@"data"];
-            
+
             NSMutableArray *fetchedOrders = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
-            
+
             NSMutableArray *fetchedOrderArray = [[NSMutableArray alloc] init];
-            
+
             for (NSManagedObject *obj in fetchedOrders) {
                 NSArray *keys = [[[obj entity] attributesByName] allKeys];
                 NSDictionary *dictionary = [obj dictionaryWithValuesForKeys:keys];
-                
+
                 [fetchedOrderArray addObject:dictionary];
             }
             //            STPCardParams *card = [[STPCardParams alloc] init];
-            
-            
+
+
             NSString *cardName = [defaultCardData valueForKey:@"cardName"];
-            
+
             NSString *cardNo = [defaultCardData valueForKey:@"number"];;
-            
+
             NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
-            
+
             NSString *cardDisplayNumber = [NSString stringWithFormat:@"XXXX XXXX XXXX %@",trimmedString];
-            
+
             NSString *expDate =  [NSString stringWithFormat:@"%@/%@",[defaultCardData valueForKey:@"expMonth"],[defaultCardData valueForKey:@"expYear"]];
-            
+
             TPReceiptController *receiptVC = [[TPReceiptController alloc] initWithNibName:@"TPReceiptController" bundle:nil];
             receiptVC.fetchedRecordArray = fetchedOrderArray;
             receiptVC.order_id = [[dataDict valueForKey:@"order_id"] stringValue];
@@ -812,25 +814,25 @@ UITextView *alertTextView;
             receiptVC.tipAmount = tipAmount;
             receiptVC.subTotal = cartTotal;
             [self removeAllOrderFromCoreData];
-            
+
             [self.navigationController pushViewController:receiptVC animated:YES];
         }
     }];
 }
 
 - (void) removeAllOrderFromCoreData {
-    
+
     NSManagedObjectContext *managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
-    
+
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"MyCartItem"];
     NSError *error = nil;
     NSArray *results = [managedObjectContext executeFetchRequest:request error:&error];
-    
+
     for (NSManagedObject *object in results)
     {
         [managedObjectContext deleteObject:object];
     }
-    
+
     error = nil;
     [managedObjectContext save:&error];
 }
@@ -864,7 +866,7 @@ UITextView *alertTextView;
         [orderItems addObject:dictionary];
         self.notesText = [dictionary valueForKey:@"note"];
     }
-    
+
 //    self.lblSubtotalAmount.text = [NSString stringWithFormat:@"$%.2f",cartTotal];
 //    self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f",TotalPrice];
     cartTotal = TotalPrice;
@@ -874,16 +876,14 @@ UITextView *alertTextView;
 //    self.lblTotalPrice.text = [NSString stringWithFormat:@"$%.2f",TotalPrice];
     self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f",TotalPrice];
     billInDollar = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%.2f",TotalPrice]];
-    
-    NSInteger totalPoints = cartTotal * PointsValueMultiplier;
-    
-    NSString *total_available_points = [NSString stringWithFormat:@"%ld",(long)totalPoints];
+
+    NSString *totalPointsStr = [NSString stringWithFormat:@"%ld",(long)cartTotal * PointsValueMultiplier];
 //    self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%@ Pts",total_available_points];
-    self.lblEarnedPoint.text = [NSString stringWithFormat:@"%@ Pts",total_available_points];
+    self.lblEarnedPoint.text = [NSString stringWithFormat:@"%@ Pts",totalPointsStr];
     NSString *tip10String = [NSString stringWithFormat:@"$%.2f",cartTotal * .10];
     NSString *tip15String = [NSString stringWithFormat:@"$%.2f",cartTotal * .15];
     NSString *tip20String = [NSString stringWithFormat:@"$%.2f",cartTotal * .20];
-    
+
     [self.btnTip10 setTitle:tip10String forState:UIControlStateNormal];
     [self.btnTip15 setTitle:tip15String forState:UIControlStateNormal];
     [self.btnTip20 setTitle:tip20String forState:UIControlStateNormal];
@@ -891,24 +891,24 @@ UITextView *alertTextView;
 
 - (void) setPointsValue {
     NSLog(@"%@",[RewardDetailsModel sharedInstance].rewardDict);
-    
+
     NSDictionary *rewards = [RewardDetailsModel sharedInstance].rewardDict;
 //    NSLog(@"%@", [[rewards valueForKey:@"data"] valueForKey:@"total_available_points"]);
 //    NSLog(@"%@", [[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"dollar_value"]);
-    
+
     current_points_level = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"points"] integerValue];
     dollarValue = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"dollar_value"] doubleValue];
-    
+
 //    NSString *str_current_points_level =  [NSString stringWithFormat:@"%ld", current_points_level];
 //    [[self.tabBarController.tabBar.items objectAtIndex:3] setBadgeValue:str_current_points_level];
-    
+
     // text to let the user know how much points they have to redeem
     self.lblCurrentPoints.text = [NSString stringWithFormat:@"Use %ld points with $%.2f value?",(long)current_points_level,dollarValue];
 }
 
 - (void) setFinaleValueFromRedeem {
 //    NSString *dollarString = self.lblDollarValue.text;
-    
+
 //    double subTotal = [self.lblSubTotalPrice.text doubleValue];
     if (cartTotal > dollarValue) {
         totalValue = totalValue - dollarValue;
@@ -918,18 +918,18 @@ UITextView *alertTextView;
         //zzzzzz
         totalValue = tipAmount;
         self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f", totalValue];
-        
+
     }
 }
 
 - (void) getDefaultCardData {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
+
     if ([defaults valueForKey:StripeDefaultCard] != nil) {
         defaultCardData = [defaults valueForKey:StripeDefaultCard];
         NSString *cardName = [defaultCardData valueForKey:@"cardName"];
         NSString *cardNo = [defaultCardData valueForKey:@"number"];
-        
+
         NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
         NSString *defaultCardString = [NSString stringWithFormat:@"WITH %@ ENDING IN %@",cardName,trimmedString];
         self.lblDefaultCard.text = defaultCardString;
@@ -991,15 +991,15 @@ UITextView *alertTextView;
     self.btnTip15.backgroundColor = [UIColor whiteColor];
     self.btnTip20.backgroundColor = [UIColor whiteColor];
     self.btnOther.backgroundColor = [UIColor whiteColor];
-    
+
     [self.btnNoTip setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.btnTip10 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.btnTip15 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.btnTip20 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.btnOther setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    
+
     currentTipValue = 0;
-    
+
     [self calculateTip:currentTipValue];
 }
 
@@ -1009,15 +1009,15 @@ UITextView *alertTextView;
     self.btnTip15.backgroundColor = [UIColor whiteColor];
     self.btnTip20.backgroundColor = [UIColor whiteColor];
     self.btnOther.backgroundColor = [UIColor whiteColor];
-    
+
     [self.btnNoTip setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.btnTip10 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.btnTip15 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.btnTip20 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.btnOther setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    
+
     currentTipValue = 10;
-    
+
     [self calculateTip:currentTipValue];
 }
 
@@ -1027,15 +1027,15 @@ UITextView *alertTextView;
     self.btnTip15.backgroundColor = [UIColor blackColor];
     self.btnTip20.backgroundColor = [UIColor whiteColor];
     self.btnOther.backgroundColor = [UIColor whiteColor];
-    
+
     [self.btnNoTip setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.btnTip10 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.btnTip15 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.btnTip20 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.btnOther setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    
+
     currentTipValue = 15;
-    
+
     [self calculateTip:currentTipValue];
 
 }
@@ -1046,15 +1046,15 @@ UITextView *alertTextView;
     self.btnTip15.backgroundColor = [UIColor whiteColor];
     self.btnTip20.backgroundColor = [UIColor blackColor];
     self.btnOther.backgroundColor = [UIColor whiteColor];
-    
+
     [self.btnNoTip setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.btnTip10 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.btnTip15 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.btnTip20 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.btnOther setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    
+
     currentTipValue = 20;
-    
+
     [self calculateTip:currentTipValue];
 }
 
@@ -1064,7 +1064,7 @@ UITextView *alertTextView;
     self.btnTip15.backgroundColor = [UIColor whiteColor];
     self.btnTip20.backgroundColor = [UIColor whiteColor];
     self.btnOther.backgroundColor = [UIColor blackColor];
-    
+
     [self.btnNoTip setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.btnTip10 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.btnTip15 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -1082,42 +1082,47 @@ UITextView *alertTextView;
 //        else {
 //            totalValue = cartTotal;
 //        }
-        
+
         if (flagRedeemPoint == true) {
             [self setFinaleValueFromRedeem];
-            
+
             NSLog(@"%f",totalValue);
             redeemPoints = totalValue*PointsValueMultiplier;
         }
         else {
             redeemPoints = 0;
         }
-        
+
         self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f",totalValue];
         billInDollar = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%.2f",totalValue]];
-        
+
 //        NSInteger totalPoints = cartTotal * PointsValueMultiplier; //zzzz
 //        NSString *total_available_points = [NSString stringWithFormat:@"%ld",(long)totalPoints];
 //        self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%@ Pts",total_available_points] ;
     }
 }
 
-- (NSInteger) calculatePointsRedeem {
-    
+
+- (float)calculateTotalPoints:(float)amount {
+    return amount*PointsValueMultiplier;
+}
+
+- (NSInteger)calculatePointsRedeem {
+
     if (flagRedeemPoint) {
         return current_points_level;
     }
     else {
         return 0;
     }
-    
+
 }
 
 - (double) getTotalPrice {
     NSString *totalString = self.lblSubTotalPrice.text;
-    
+
     totalString = [totalString stringByReplacingOccurrencesOfString:@"$" withString:@""];
-    
+
     double doubleTotal = [totalString doubleValue];
     return doubleTotal;
 }
@@ -1142,6 +1147,7 @@ UITextView *alertTextView;
     [testAlert show];
 }
 
+
 #pragma mark - UITextView Delegate
 
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
@@ -1157,22 +1163,22 @@ UITextView *alertTextView;
 }
 
 - (IBAction)btnPayButtonClicked:(id)sender {
-    
-    if ([DataModel sharedDataModelManager].nickname.length < 1) {
+
+    if ([DataModel sharedDataModelManager].uuid.length < 1) {
         [UIAlertController showErrorAlert:@"Please register on profile page.\nThen you can order."];
     }
     else {
 //        if ([billInDollar compare:zero] ==  NSOrderedDescending) {
       if (_FetchedRecordArray.count >  0) {
         // send the order items to the server
-            
+
             if (defaultCardData == nil) {
                 BillPayViewController *payBillViewController = [[BillPayViewController alloc] initWithNibName:nil bundle:nil withAmount:0 forBusiness:billBusiness];
                 [self.navigationController pushViewController:payBillViewController animated:YES];
             }
             else {
 //                STPCardParams *card = [[STPCardParams alloc] init];
-//                
+//
 //                card.number = [defaultCardData valueForKey:@"number"];
 //                card.expMonth = [[defaultCardData valueForKey:@"expMonth"] integerValue];
 //                card.expYear = [[defaultCardData valueForKey:@"expYear"]integerValue];
@@ -1203,83 +1209,44 @@ UITextView *alertTextView;
 
 - (IBAction)btnRedeemPointClicked:(id)sender {
     if(dollarValue > 0) {
-        // this condition in unnecessary
-        if(1) {
-            if (flagRedeemPoint == false) {
-                
-                if (dollarValue > cartTotal) {
-                    NSString *message = [NSString stringWithFormat:@"Are you sure you want to use %ld points, with the dollar value of $%.2f for a subtotal of $%.2f",(long)current_points_level,dollarValue, cartTotal];
-                    
-                    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Attention!" message:message preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_checked"] forState:UIControlStateNormal];
-                        flagRedeemPoint = true;
-                        [self setFinaleValueFromRedeem]; //zzzzz
-                        
-                        //        redeemPoints = [self.lblTotalEarnedPoint.text integerValue];
-                        //                redeemPoints = totalValue*PointsValueMultiplier;
-                        redeemPoints = cartTotal*PointsValueMultiplier;
-//                        self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%ld Pts",(long)redeemPoints] ;
-                    }];
-                    
-                    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-                    }];
-                    [alert addAction:okAction];
-                    [alert addAction:cancelAction];
-                    [self presentViewController:alert animated:true completion:nil];
 
-                }
-                
-                
-                
-                
-                
-//                flagRedeemPoint = true;
-//                [self setFinaleValueFromRedeem]; //zzzzz
-//                
-//                //        redeemPoints = [self.lblTotalEarnedPoint.text integerValue];
-////                redeemPoints = totalValue*PointsValueMultiplier;
-//                redeemPoints = cartTotal*PointsValueMultiplier;
-//                self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%ld Pts",(long)redeemPoints] ;
-            }
-            else {
-                [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_unchecked"] forState:UIControlStateNormal];
-                flagRedeemPoint = false;
-                self.lblSubTotalPrice.text =  [NSString stringWithFormat:@"$%.2f",cartTotal];
-                redeemPoints = 0;
-                if(currentTipValue > 0) {
-                    [self calculateTip:currentTipValue];
-                }
-                else {
-                    totalValue = cartTotal;
-//                    self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%ld Pts",(long)totalValue*PointsValueMultiplier] ;
-                }
-            }
+      if (flagRedeemPoint == false) {
+
+        if (dollarValue < cartTotal) {
+//          NSString *message = [NSString stringWithFormat:@"You have %ld points, You need more %.f points to redeem",(long)current_points_level,((dollarValue*PointsValueMultiplier) - current_points_level)];
+//          UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
+//         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//          }];
+        } else {
+          flagRedeemPoint = true;
+          [self setFinaleValueFromRedeem]; //zzzzz
+          redeemPoints = [self calculateTotalPoints:cartTotal];
+          //redeemPoints = [self.lblTotalEarnedPoint.text integerValue];
+        }
+      }
+      else {
+        [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_unchecked"] forState:UIControlStateNormal];
+        flagRedeemPoint = false;
+        self.lblSubTotalPrice.text =  [NSString stringWithFormat:@"$%.2f",cartTotal];
+        redeemPoints = 0;
+        if(currentTipValue > 0) {
+          [self calculateTip:currentTipValue];
         }
         else {
-            NSString *message = [NSString stringWithFormat:@"You have %ld points, You need more %.f points to redeem",(long)current_points_level,((dollarValue*PointsValueMultiplier) - current_points_level)];
-            
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                
-            }];
-            
-            [alert addAction:okAction];
-            [self presentViewController:alert animated:true completion:^{
-                
-            }];
+          totalValue = cartTotal;
+                    //                    self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%ld Pts",(long)totalValue*PointsValueMultiplier] ;
         }
+      }
     }
     else {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"You have no points to redeem" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
+
         }];
-        
+
         [alert addAction:okAction];
         [self presentViewController:alert animated:true completion:^{
-            
+
         }];
     }
 }
@@ -1320,7 +1287,7 @@ UITextView *alertTextView;
 }
 
 - (IBAction)btnUsePointClicked:(id)sender {
-    if ([DataModel sharedDataModelManager].nickname.length < 1) {
+    if ([DataModel sharedDataModelManager].uuid.length < 1) {
         [UIAlertController showErrorAlert:@"Please register on profile page."];
     }
     else {
@@ -1345,7 +1312,7 @@ UITextView *alertTextView;
 #pragma mark - AlertView delegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
+
     if (alertView.tag == 100) {
         if (buttonIndex == 1) {
             if ([alertTextView.text  isEqual:Note_default_text]) {
@@ -1353,7 +1320,7 @@ UITextView *alertTextView;
             }
             self.notesText = alertTextView.text;
             [self postOrderToServer];
-            
+
         }
         else if (buttonIndex == 2) {
             self.notesText = @"";

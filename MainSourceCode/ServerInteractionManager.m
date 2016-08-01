@@ -1,4 +1,4 @@
-//
+    //
 //  ServerInteractionManager.m
 //  TapForAll
 //
@@ -37,7 +37,7 @@
 }
 
 
-- (BOOL)serverUpdateDeviceToken:(NSString *)deviceToken withUserID:(long)uid WithError:(NSError **)error
+- (BOOL)serverUpdateDeviceToken:(NSString *)deviceToken withUuid:(NSString *)uuid WithError:(NSError **)error
 {
     NSString *urlString = ConsumerProfileServer;
     BOOL retcode = YES;
@@ -48,10 +48,12 @@
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
     
-    NSDictionary *params = @{@"device_token": deviceToken, @"uid":[NSNumber numberWithUnsignedInteger:uid]};
+    NSDictionary *params = @{@"device_token": deviceToken, @"uuid":uuid};
     [manager POST:urlString parameters:params
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              [postProcessesDelegate postProcessForSuccess:operation.response.statusCode];
+              NSError *jsonError = nil;
+              NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:kNilOptions error:&jsonError];
+              [postProcessesDelegate postProcessForSuccess:jsonResponse[@"uid"]];
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"Error in ServerUpdateDeviceToken: %@", error);

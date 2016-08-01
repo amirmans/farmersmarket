@@ -60,7 +60,8 @@
 
 - (NSMutableArray *) sortNotificationsinReverseChronologicalOrder : (NSMutableArray *) notificationArray;
 
-@property(nonatomic, assign) long userID; // determined and given by the server
+@property(nonatomic, assign) long  userID; // determined and given by the server
+@property(nonatomic, assign) NSString*  uuid;
 @property(nonatomic, retain) NSString *chatSystemURL;
 @property(nonatomic, retain) NSString *businessName;
 @property(nonatomic, retain) NSString *shortBusinessName;
@@ -76,6 +77,9 @@
 @property(nonatomic, strong) NSString *qrImageFileName;
 @property(nonatomic, strong) NSString *zipcode;
 @property(atomic, assign) BOOL validate_chat;
+
+- (void)setUserIDWithString:(NSString *)uid;
+- (void)setAgeGroupWithString:(NSString *)age;
 
 - (void)buildBusinessChatMessages;
 

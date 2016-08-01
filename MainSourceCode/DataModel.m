@@ -1,5 +1,7 @@
 #import "DataModel.h"
+#import "APIUtility.h"
 #import "TapTalkChatMessage.h"
+#import "SAMKeychain.h"
 
 
 @implementation DataModel
@@ -14,11 +16,12 @@
 @synthesize ageGroup;
 @synthesize password;
 @synthesize emailAddress;
-@synthesize userID;
 @synthesize shouldDownloadChatMessages;
 @synthesize qrImageFileName;
 @synthesize zipcode;
 @synthesize validate_chat;
+@synthesize uuid;
+@synthesize userID;
 
 static DataModel *sharedDataModel = nil;
 
@@ -151,6 +154,11 @@ static DataModel *sharedDataModel = nil;
 }
 
 - (void)setNickname:(NSString *)name {
+    if (name != (id)[NSNull null] && name.length == 0 )
+    {
+        name = @"";
+    }
+
     [[NSUserDefaults standardUserDefaults] setObject:name forKey:NicknameKey];
 }
 
@@ -169,6 +177,15 @@ static DataModel *sharedDataModel = nil;
     [[NSUserDefaults standardUserDefaults] setInteger:argAgeGroup forKey:@"ageGroup"];
 }
 
+- (void)setAgeGroupWithString:(NSString *)age {
+    if (age == (id)[NSNull null] || age.length == 0 )
+    {
+        age = @"0";
+    }
+    
+    ageGroup = [age intValue];
+}
+
 
 - (BOOL)joinedChat {
     return [[NSUserDefaults standardUserDefaults] boolForKey:JoinedChatKey];
@@ -183,18 +200,63 @@ static DataModel *sharedDataModel = nil;
 }
 
 - (void)setDeviceToken:(NSString *)token {
+    if (token != (id)[NSNull null] && token.length == 0 )
+    {
+        token = @"";
+    }
+
     [[NSUserDefaults standardUserDefaults] setObject:token forKey:DeviceTokenKey];
 }
 
+//________
+- (NSString *)uuid {
+    if (uuid) {
+        return uuid;
+    }
+    
+    NSString* tempuuid = [SAMKeychain passwordForService:@"TapIn_uuid" account:@"TapForAll"];
+    if (tempuuid == nil) {
+        tempuuid = [[NSUUID UUID] UUIDString];
+        [self setUuid:tempuuid];
+    }
+    
+    return (tempuuid);
+}
+
+
+- (void)setUuid:(NSString *)tempuuid {
+    if ([SAMKeychain setPassword:tempuuid forService:@"TapIn_uuid" account:@"TapForAll"]) {
+ //       [[NSUserDefaults standardUserDefaults] setObject:tempuuid forKey:UserIDKey];
+        self.uuid = tempuuid;
+    }
+}
+
 - (void)setUserID:(long)uid {
-    [[NSUserDefaults standardUserDefaults] setInteger:uid forKey:UserIDKey];
+
+    userID = uid;
+}
+
+
+- (void)setUserIDWithString:(NSString *)uid {
+    if (uid == (id)[NSNull null] || uid.length == 0 )
+    {
+        uid = @"0";
+    }
+    
+    userID = [uid intValue];
 }
 
 - (long)userID {
-    return [[NSUserDefaults standardUserDefaults] integerForKey:UserIDKey];
+    return self.userID;
 }
 
+//_________
+
 - (void)setEmailAddress:(NSString *)emailAddr {
+    if (emailAddr != (id)[NSNull null] && emailAddr.length == 0 )
+    {
+        emailAddr = @"";
+    }
     [[NSUserDefaults standardUserDefaults] setObject:emailAddr forKey:EmailAddressKey];
 }
 
@@ -208,6 +270,11 @@ static DataModel *sharedDataModel = nil;
 }
 
 - (void)setPassword:(NSString *)string {
+
+    if (string != (id)[NSNull null] && string.length == 0 )
+    {
+        string = @"";
+    }
     [[NSUserDefaults standardUserDefaults] setObject:string forKey:PasswordKey];
 }
 
@@ -219,21 +286,27 @@ static DataModel *sharedDataModel = nil;
 }
 
 - (void)setZipcode:(NSString *)zip {
+    
+    if (zip != (id)[NSNull null] && zip.length == 0 )
+    {
+        zip = @"";
+    }
+    
     [[NSUserDefaults standardUserDefaults] setObject:zip forKey:@"Zipcode"];
 }
 
 
-- (void)setChat_masters:(NSArray *)ids {
-    chat_masters = ids;
-}
-
-- (NSArray *)chat_masters {
-    return chat_masters;
-}
-
-- (NSString *)businessNameForChatMasterId:(NSInteger)businessID {
-    //TODO
-    return @"";
-}
+//- (void)setChat_masters:(NSArray *)ids {
+//    chat_masters = ids;
+//}
+//
+//- (NSArray *)chat_masters {
+//    return chat_masters;
+//}
+//
+//- (NSString *)businessNameForChatMasterId:(NSInteger)businessID {
+//    //TODO
+//    return @"";
+//}
 
 @end
