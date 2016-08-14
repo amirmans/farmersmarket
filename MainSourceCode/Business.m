@@ -362,45 +362,45 @@
         process_time = Default_Process_Time;
 
     
-    if (validate_chat) {
-        validate_chat = ChatValidationWorkflow_InProcess; // means in the process of validation
-        // Create the HTTP request object for our URL
-        AFHTTPRequestOperationManager *manager;
-        manager = [AFHTTPRequestOperationManager manager];
-        
-        [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
-        [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
-        
-        NSInteger userID = [DataModel sharedDataModelManager].userID;
-        NSString *businessIDString = [NSString stringWithFormat:@"%i", businessID];
-        NSString  *userIDString = [NSString stringWithFormat:@"%lu", (unsigned long)userID];
-        NSDictionary *params = @{@"cmd":@"validate", @"business_id":businessIDString, @"userID":userIDString};
-        [manager POST:ChatSystemServer parameters:params
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  NSLog(@"Response from chat system server for validation the user:%@", responseObject);
-                  NSError *jsonError = nil;
-                  NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:kNilOptions error:&jsonError];
-                  NSInteger statusCode = [[jsonResponse objectForKey:@"status_code"] integerValue];
-                  NSInteger permissionCode = [[jsonResponse objectForKey:@"permission"] integerValue];
-                  
-                  if ( (operation.response.statusCode != 200) || (statusCode != 0) ) {
-                      [UIAlertController showErrorAlert:NSLocalizedString(@"No connection to Business's Chatroom", nil)];
-                      validate_chat = ChatValidationWorkflow_ErrorFromServer; // error
-                  }
-                  if (permissionCode == 1)
-                      validate_chat = ChatValidationWorkflow_Validated; //validated
-                  else
-                      validate_chat = ChatValidationWorkflow_Not_Valid;
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  validate_chat = ChatValidationWorkflow_ErrorFromServer; //error
-                  NSLog(@"Response from chat system server for validation the user indicates error:%@", error);
-              }
-         ];
-        
-    } else {
-        validate_chat = ChatValidationWorkflow_NoNeedToValidate;
-    };
+//    if (validate_chat) {
+//        validate_chat = ChatValidationWorkflow_InProcess; // means in the process of validation
+//        // Create the HTTP request object for our URL
+//        AFHTTPRequestOperationManager *manager;
+//        manager = [AFHTTPRequestOperationManager manager];
+//        
+//        [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
+//        [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
+//        
+//        NSInteger userID = [DataModel sharedDataModelManager].userID;
+//        NSString *businessIDString = [NSString stringWithFormat:@"%i", businessID];
+//        NSString  *userIDString = [NSString stringWithFormat:@"%lu", (unsigned long)userID];
+//        NSDictionary *params = @{@"cmd":@"validate", @"business_id":businessIDString, @"userID":userIDString};
+//        [manager POST:ChatSystemServer parameters:params
+//              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                  NSLog(@"Response from chat system server for validation the user:%@", responseObject);
+//                  NSError *jsonError = nil;
+//                  NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:kNilOptions error:&jsonError];
+//                  NSInteger statusCode = [[jsonResponse objectForKey:@"status_code"] integerValue];
+//                  NSInteger permissionCode = [[jsonResponse objectForKey:@"permission"] integerValue];
+//                  
+//                  if ( (operation.response.statusCode != 200) || (statusCode != 0) ) {
+//                      [UIAlertController showErrorAlert:NSLocalizedString(@"No connection to Business's Chatroom", nil)];
+//                      validate_chat = ChatValidationWorkflow_ErrorFromServer; // error
+//                  }
+//                  if (permissionCode == 1)
+//                      validate_chat = ChatValidationWorkflow_Validated; //validated
+//                  else
+//                      validate_chat = ChatValidationWorkflow_Not_Valid;
+//              }
+//              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                  validate_chat = ChatValidationWorkflow_ErrorFromServer; //error
+//                  NSLog(@"Response from chat system server for validation the user indicates error:%@", error);
+//              }
+//         ];
+//        
+//    } else {
+//        validate_chat = ChatValidationWorkflow_NoNeedToValidate;
+//    };
     return self;
 }
 
@@ -586,7 +586,7 @@
     
     NSString *removeRGBCharacter = [[colorString componentsSeparatedByCharactersInSet:trim] componentsJoinedByString:@""];
     
-    NSLog(@"%@",removeRGBCharacter);
+//    NSLog(@"%@",removeRGBCharacter);
  
     NSArray *rgbArray = [removeRGBCharacter componentsSeparatedByString:@","];
     

@@ -14,7 +14,7 @@
 #import "AppDelegate.h"
 #import "TotalCartItemController.h"
 
-@interface BusinessDetailsContoller : UIViewController <UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate, KASlideShowDelegate, MFMessageComposeViewControllerDelegate, UIAlertViewDelegate> {
+@interface BusinessDetailsContoller : UIViewController <UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate, KASlideShowDelegate, MFMessageComposeViewControllerDelegate, KASlideShowDataSource, UIAlertViewDelegate> {
 
     NSDictionary *allChoices;
     NSArray *mainChoices;

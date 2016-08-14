@@ -69,6 +69,14 @@ static DataModel *sharedDataModel = nil;
         // Load default defaults
 // from Internet        [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Defaults" ofType:@"plist"]]];
         validate_chat = FALSE;
+        userID = 0;
+        uuid = nil;
+        ageGroup = 0;
+        emailAddress = @"";
+        password = @"";
+        qrImageFileName = @"";
+        zipcode = @"";
+        
     }
     
     return self;
@@ -154,7 +162,7 @@ static DataModel *sharedDataModel = nil;
 }
 
 - (void)setNickname:(NSString *)name {
-    if (name != (id)[NSNull null] && name.length == 0 )
+    if (name == (id)[NSNull null] || name.length == 0 )
     {
         name = @"";
     }
@@ -200,7 +208,7 @@ static DataModel *sharedDataModel = nil;
 }
 
 - (void)setDeviceToken:(NSString *)token {
-    if (token != (id)[NSNull null] && token.length == 0 )
+    if (token == (id)[NSNull null] || token.length == 0 )
     {
         token = @"";
     }
@@ -213,8 +221,9 @@ static DataModel *sharedDataModel = nil;
     if (uuid) {
         return uuid;
     }
-    
-    NSString* tempuuid = [SAMKeychain passwordForService:@"TapIn_uuid" account:@"TapForAll"];
+    NSString *tempuuid;
+
+    tempuuid = [SAMKeychain passwordForService:@"TapIn_uuid" account:@"TapForAll"];
     if (tempuuid == nil) {
         tempuuid = [[NSUUID UUID] UUIDString];
         [self setUuid:tempuuid];
@@ -247,13 +256,13 @@ static DataModel *sharedDataModel = nil;
 }
 
 - (long)userID {
-    return self.userID;
+    return userID;
 }
 
 //_________
 
 - (void)setEmailAddress:(NSString *)emailAddr {
-    if (emailAddr != (id)[NSNull null] && emailAddr.length == 0 )
+    if (emailAddr == (id)[NSNull null] || emailAddr.length == 0 )
     {
         emailAddr = @"";
     }
@@ -271,7 +280,7 @@ static DataModel *sharedDataModel = nil;
 
 - (void)setPassword:(NSString *)string {
 
-    if (string != (id)[NSNull null] && string.length == 0 )
+    if (string == (id)[NSNull null] || string.length == 0 )
     {
         string = @"";
     }
@@ -287,8 +296,11 @@ static DataModel *sharedDataModel = nil;
 
 - (void)setZipcode:(NSString *)zip {
     
-    if (zip != (id)[NSNull null] && zip.length == 0 )
+    if (zip == (id)[NSNull null])
     {
+        zip = @"";
+    }
+    if (zip == nil) {
         zip = @"";
     }
     

@@ -192,7 +192,7 @@ typedef NS_ENUM(NSUInteger, ConfigurableButtonType) {
     rewardsNeededToBuyTextField.text = @"NA";
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = NSLocalizedString(@"Loading detaili product information...", @"");
+    hud.label.text = NSLocalizedString(@"Loading detaili product information...", @"");
     
     NSArray *runtimeFields;
     NSDictionary *runtimeField1;

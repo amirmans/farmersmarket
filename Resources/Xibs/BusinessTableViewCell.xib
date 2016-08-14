@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="16A239m" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -13,7 +13,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="129.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RUa-Yq-xMi" userLabel="BigView">
@@ -41,24 +41,24 @@
                                 <rect key="frame" x="9" y="69" width="213" height="14"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cr7-mf-6ry" userLabel="Bussiness Type">
-                                        <rect key="frame" x="0.0" y="0.0" width="72" height="14"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="14"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" red="0.63921568630000003" green="0.24313725489999999" blue="0.99607843139999996" alpha="1" colorSpace="deviceRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K51-Kj-rHg" userLabel="Bussiness Address">
-                                        <rect key="frame" x="75" y="0.0" width="68" height="14"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="1234.25 mi" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D2j-FA-vJ7" userLabel="Distance">
+                                        <rect key="frame" x="148" y="0.0" width="65" height="14"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="68" id="7xN-vM-PLH"/>
+                                            <constraint firstAttribute="width" constant="65" id="TTU-aJ-4jU"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="1234.25 mi" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D2j-FA-vJ7" userLabel="Distance">
-                                        <rect key="frame" x="150" y="0.0" width="67" height="14"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K51-Kj-rHg" userLabel="Bussiness Address">
+                                        <rect key="frame" x="53" y="0.0" width="92" height="14"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="67" id="TTU-aJ-4jU"/>
+                                            <constraint firstAttribute="width" constant="92" id="7xN-vM-PLH"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -68,14 +68,14 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="cr7-mf-6ry" firstAttribute="leading" secondItem="iQt-7m-3JV" secondAttribute="leading" id="OEC-kd-Vtp"/>
-                                    <constraint firstAttribute="trailing" secondItem="D2j-FA-vJ7" secondAttribute="trailing" constant="-4" id="OP7-Ek-Wx2"/>
+                                    <constraint firstAttribute="trailing" secondItem="D2j-FA-vJ7" secondAttribute="trailing" id="OP7-Ek-Wx2"/>
                                     <constraint firstItem="cr7-mf-6ry" firstAttribute="top" secondItem="iQt-7m-3JV" secondAttribute="top" id="PZG-R1-RjI"/>
                                     <constraint firstItem="cr7-mf-6ry" firstAttribute="baseline" secondItem="K51-Kj-rHg" secondAttribute="baseline" id="Uaw-Pk-coK"/>
                                     <constraint firstItem="K51-Kj-rHg" firstAttribute="firstBaseline" secondItem="D2j-FA-vJ7" secondAttribute="firstBaseline" id="V56-Wx-Xbd"/>
                                     <constraint firstAttribute="bottom" secondItem="cr7-mf-6ry" secondAttribute="bottom" id="YyE-ZF-PRn"/>
                                     <constraint firstItem="K51-Kj-rHg" firstAttribute="leading" secondItem="cr7-mf-6ry" secondAttribute="trailing" constant="3" id="Zb5-gn-b5X"/>
                                     <constraint firstItem="cr7-mf-6ry" firstAttribute="firstBaseline" secondItem="K51-Kj-rHg" secondAttribute="firstBaseline" id="hFC-pt-gcG"/>
-                                    <constraint firstItem="D2j-FA-vJ7" firstAttribute="leading" secondItem="K51-Kj-rHg" secondAttribute="trailing" constant="7" id="xoe-iB-Zpz"/>
+                                    <constraint firstItem="D2j-FA-vJ7" firstAttribute="leading" secondItem="K51-Kj-rHg" secondAttribute="trailing" constant="3" id="xoe-iB-Zpz"/>
                                     <constraint firstItem="K51-Kj-rHg" firstAttribute="baseline" secondItem="D2j-FA-vJ7" secondAttribute="baseline" id="zim-ut-62K"/>
                                 </constraints>
                             </view>

@@ -225,8 +225,8 @@
 
 - (void) setBadgeForRewardPoint {
     
-    [[RewardDetailsModel sharedInstance] getRewardData:[CurrentBusiness sharedCurrentBusinessManager].business completiedBlock:^(NSDictionary *response, bool success) {
-        if (success) {
+    [[RewardDetailsModel sharedInstance] getRewardData:[CurrentBusiness sharedCurrentBusinessManager].business completiedBlock:^(NSDictionary *response) {
+        if (1) {
             NSDictionary *reward = response;
             NSLog(@"%@",reward);
             NSString *total_available_points = [[[reward valueForKey:@"data"] valueForKey:@"total_available_points"] stringValue];

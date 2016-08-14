@@ -60,7 +60,7 @@
 
 - (NSMutableArray *) sortNotificationsinReverseChronologicalOrder : (NSMutableArray *) notificationArray;
 
-@property(nonatomic, assign) long  userID; // determined and given by the server
+@property (nonatomic, assign) long userID; // determined and given by the server
 @property(nonatomic, assign) NSString*  uuid;
 @property(nonatomic, retain) NSString *chatSystemURL;
 @property(nonatomic, retain) NSString *businessName;

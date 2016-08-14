@@ -17,6 +17,7 @@
 
 @property (nonatomic, strong) NSDictionary *rewardDict;
 
-
-- (void) getRewardData : (Business *) biz completiedBlock:(void (^)(NSDictionary *response, bool success))finished;
+//
+//- (void) getRewardData : (Business *) biz completiedBlock:(void (^)(NSDictionary *response, bool success))finished;
+- (void)getRewardData:(Business *)biz completiedBlock:(void (^)(NSDictionary *response))finished;
 @end

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="16A239m" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -304,7 +304,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9999 pts" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qKp-Rx-sHC">
-                    <rect key="frame" x="259" y="233" width="53" height="10"/>
+                    <rect key="frame" x="259" y="231" width="53" height="12"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="53" id="uUF-I2-Eab"/>
                     </constraints>
@@ -335,7 +335,7 @@
             <constraints>
                 <constraint firstItem="UBb-rH-YHD" firstAttribute="top" secondItem="Plw-PM-nLF" secondAttribute="bottom" constant="45" id="6Vl-L7-4Rn"/>
                 <constraint firstItem="UBb-rH-YHD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6cS-yv-r61"/>
-                <constraint firstItem="qKp-Rx-sHC" firstAttribute="top" secondItem="Plw-PM-nLF" secondAttribute="bottom" constant="37" id="7Bu-Aa-PlZ"/>
+                <constraint firstItem="qKp-Rx-sHC" firstAttribute="top" secondItem="Plw-PM-nLF" secondAttribute="bottom" constant="35" id="7Bu-Aa-PlZ"/>
                 <constraint firstItem="Plw-PM-nLF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="Cpn-Lt-zGa"/>
                 <constraint firstItem="qKp-Rx-sHC" firstAttribute="leading" secondItem="GOx-Pi-eQj" secondAttribute="trailing" constant="29" id="CvA-u7-0U2"/>
                 <constraint firstAttribute="trailing" secondItem="UBb-rH-YHD" secondAttribute="trailing" id="M2P-e6-ZLQ"/>

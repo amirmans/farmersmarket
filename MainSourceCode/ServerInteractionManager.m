@@ -1,4 +1,4 @@
-    //
+     //
 //  ServerInteractionManager.m
 //  TapForAll
 //
@@ -18,17 +18,16 @@
     NSString *urlString = BusinessInformationServer;
     NSDictionary *params = @{@"businessID":[NSNumber numberWithInt:0]};
     
-    AFHTTPRequestOperationManager *manager;
-    manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager  manager];
     
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
-    [manager GET:urlString parameters:params
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:urlString parameters:params progress:nil
+          success:^(NSURLSessionTask *operation, id responseObject) {
               //remember in the data is already translated to NSDictionay - by AFJSONResponseSerializer
               [postProcessesDelegate postProcessForListOfBusinessesSuccess:responseObject];
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionTask *operation, NSError *error) {
               NSLog(@"Error in fetching list of businesses: %@", error);
               
           }
@@ -42,20 +41,20 @@
     NSString *urlString = ConsumerProfileServer;
     BOOL retcode = YES;
     
-    AFHTTPRequestOperationManager *manager;
-    manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager;
+    manager = [AFHTTPSessionManager manager];
     
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
     
     NSDictionary *params = @{@"device_token": deviceToken, @"uuid":uuid};
-    [manager POST:urlString parameters:params
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:urlString parameters:params progress:nil
+          success:^(NSURLSessionTask *operation, id responseObject) {
               NSError *jsonError = nil;
               NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:kNilOptions error:&jsonError];
-              [postProcessesDelegate postProcessForSuccess:jsonResponse[@"uid"]];
+              [postProcessesDelegate postProcessForSuccess:jsonResponse];
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionTask *operation, NSError *error) {
               NSLog(@"Error in ServerUpdateDeviceToken: %@", error);
               
           }

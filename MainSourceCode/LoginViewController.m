@@ -62,10 +62,10 @@
 - (void)postJoinRequest {
     // Show an activity spinner that blocks the whole screen
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = NSLocalizedString(@"Joining the chatroom", @"");
+    hud.label.text = NSLocalizedString(@"Joining the chatroom", @"");
 
     // Create the HTTP request object for our URL
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 
 //    [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
@@ -73,8 +73,8 @@
     NSString *userIDString = [NSString stringWithFormat:@"%li", [DataModel sharedDataModelManager].userID];
     NSString *businessIDString = [NSString stringWithFormat:@"%i",[CurrentBusiness sharedCurrentBusinessManager].business.businessID];
     NSDictionary *params = @{@"cmd":@"join",  @"userID":userIDString, @"business_id":businessIDString};
-    [manager GET:ChatSystemServer parameters:params
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager GET:ChatSystemServer parameters:params progress:nil
+          success:^(NSURLSessionTask *task, id responseObject) {
 
               if ([self isViewLoaded]) {
                   [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -82,18 +82,18 @@
                   // If the HTTP response code is not "200 OK", then our server API
                   // complained about a problem. This shouldn't happen, but you never
                   // know. We must be prepared to handle such unexpected situations.
-                  NSLog(@"Registered in the chat system with response of %@",operation.responseString);
-                  NSRange tempRange = [operation.responseString rangeOfString:@"OK"];
-                  if (tempRange.location == NSNotFound) {
-                      [UIAlertController showErrorAlert:NSLocalizedString(@"Warning in joining the chat system", nil)];
-                  }
-                  else {
+//                  NSLog(@"Registered in the chat system with response of %@",operation.responseString);
+//                  NSRange tempRange = [operation.responseString rangeOfString:@"OK"];
+//                  if (tempRange.location == NSNotFound) {
+//                      [UIAlertController showErrorAlert:NSLocalizedString(@"Warning in joining the chat system", nil)];
+//                  }
+//                  else {
                       [self userDidJoin];
-                  }
+//                  }
               }
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"Error in login to the ChatSystem with error of %@ The response from the server was: %@", error, operation.responseString);
+          failure:^(NSURLSessionTask *operation, NSError *error) {
+              NSLog(@"Error in login to the ChatSystem with error of %@", error);
               if ([self isViewLoaded]) {
                   [MBProgressHUD hideHUDForView:self.view animated:YES];
                   [UIAlertController showErrorAlert:operation.description];

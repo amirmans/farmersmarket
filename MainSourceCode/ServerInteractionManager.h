@@ -9,7 +9,7 @@
 @protocol PostProcesses <NSObject>
 
 @optional
-- (void)postProcessForSuccess:(long)givenUserID;
+- (void)postProcessForSuccess:(NSDictionary *)consumerInfo;
 - (void)postProcessForListOfBusinessesSuccess:(NSData *)responseObject;
 - (void)postProcessForFailure;
 
@@ -21,7 +21,7 @@
     __weak id <PostProcesses> postProcessesDelegate;
 }
 
-- (BOOL)serverUpdateDeviceToken:(NSString *)deviceToken withUserID:(long)uid WithError:(NSError **)error;
+- (BOOL)serverUpdateDeviceToken:(NSString *)deviceToken withUuid:(NSString *)uuid WithError:(NSError **)error;
 - (void)serverCallToGetListofAllBusinesses;
 
 

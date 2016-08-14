@@ -8,12 +8,11 @@ pod 'AsyncImageView'
 pod 'MBProgressHUD'
 pod 'Reachability'
 pod 'KASlideShow'
+pod 'Stripe'
 pod 'GoogleMaps'
 pod 'APSmartStorage'
-pod 'Stripe'
 pod "SHMultipleSelect", "~> 0.2.2"
 pod 'ActionSheetPicker-3.0'
 pod 'BBBadgeBarButtonItem'
-pod 'SAMKeychain'
 end
 

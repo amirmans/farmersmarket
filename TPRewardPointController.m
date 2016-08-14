@@ -129,7 +129,7 @@ NSInteger current_points_level_int  = 0;
                 dollarValueDouble = [total_available_points doubleValue]/10;
             }
 
-// TODO For the nex release
+// TODO For the next release
 //            if ([data valueForKeyPath:@"current_points_level"] != [NSNull null]) {
 //                NSDictionary *current_points_level = [data valueForKeyPath:@"current_points_level"];
 //                float dollarValue = 0.0;

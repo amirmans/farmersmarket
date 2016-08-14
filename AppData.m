@@ -186,7 +186,7 @@ static AppData *sharedObj;
     
     NSString *removeRGBCharacter = [[colorString componentsSeparatedByCharactersInSet:trim] componentsJoinedByString:@""];
     
-    NSLog(@"%@",removeRGBCharacter);
+//    NSLog(@"%@",removeRGBCharacter);
     
     NSArray *rgbArray = [removeRGBCharacter componentsSeparatedByString:@","];
     

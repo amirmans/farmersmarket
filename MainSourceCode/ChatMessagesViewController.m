@@ -91,7 +91,7 @@
     [ttChatMessage loadMessagesFromServer];
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = NSLocalizedString(@"Loading messages", @"");
+    hud.label.text = NSLocalizedString(@"Loading messages", @"");
     
     [chatTableView setBackgroundColor:[UIColor colorWithRed:219 / 255.0 green:226 / 255.0 blue:237 / 255.0 alpha:1.0]];
     [TapTalkLooks setBackgroundImage:self.view];
@@ -250,13 +250,12 @@
 - (void)sendChatMessageToServer {
     // Show an activity spinner that blocks the whole screen
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = NSLocalizedString(@"Sending the message", @"");
+    hud.label.text = NSLocalizedString(@"Sending the message", @"");
 
     NSString *text = composeMessageTextField.text;
 
     // Create the HTTP request object for our URL
-    AFHTTPRequestOperationManager *manager;
-    manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
@@ -269,8 +268,8 @@
                              @"message": text,
                              @"chatroom": chatRoom,
                              @"user_id":userIDString};
-    [manager POST:AddChatServer parameters:params
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [manager POST:AddChatServer parameters:params progress:nil
+          success:^(NSURLSessionTask *task, id responseObject) {
               composeMessageTextField.text = nil;
               NSLog(@"Response from chat server for posting the message:%@", responseObject);
               if ([self isViewLoaded]) {
@@ -279,15 +278,15 @@
                   // If the HTTP response code is not "200 OK", then our server API
                   // complained about a problem. This shouldn't happen, but you never
                   // know. We must be prepared to handle such unexpected situations.
-                  if (operation.response.statusCode != 200) {
-                      [UIAlertController showErrorAlert:NSLocalizedString(@"No connection to Business's Chatroom", nil)];
-                  }
-                  else {
-                
-                  }
+//                  if (responseObject.statusCode != 200) {
+//                      [UIAlertController showErrorAlert:NSLocalizedString(@"No connection to Business's Chatroom", nil)];
+//                  }
+//                  else {
+//                
+//                  }
               }
           }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+          failure:^(NSURLSessionTask *task, NSError *error) {
             if ([self isViewLoaded]) {
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 [UIAlertController showErrorAlert:@"You are not in the business's chat room"];

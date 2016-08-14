@@ -20,7 +20,7 @@ static APIUtility *sharedObj;
     {
         sharedObj = [[APIUtility alloc] init];
         sharedObj.sessionManager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
-        sharedObj.operationManager = [AFHTTPRequestOperationManager manager];
+        sharedObj.operationManager = [AFHTTPSessionManager manager];
         sharedObj.operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
     }
     return sharedObj;
@@ -49,7 +49,7 @@ static APIUtility *sharedObj;
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
 
     [manager POST:url
-       parameters:data
+       parameters:data progress:nil
           success:^(NSURLSessionDataTask *task, id responseObject) {
               NSLog(@"JSON: %@", responseObject);
               finished(responseObject);
@@ -67,14 +67,13 @@ static APIUtility *sharedObj;
     {
         return;
     }
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:[NSString stringWithFormat:@"%@",BusinessInformationServer] parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"get %@", responseObject);
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:[NSString stringWithFormat:@"%@",BusinessInformationServer] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
         
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         
         NSLog(@"Error: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
@@ -101,13 +100,13 @@ static APIUtility *sharedObj;
     {
         return;
     }
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:[NSString stringWithFormat:@"%@",SetFavoriteServer] parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"get %@", responseObject);
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:[NSString stringWithFormat:@"%@",SetFavoriteServer] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+        
         if (finished) {
             finished(@{@"success":@"YES"});
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         
         NSLog(@"Error: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
@@ -133,14 +132,13 @@ static APIUtility *sharedObj;
     {
         return;
     }
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"get %@", responseObject);
+    [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data progress: nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         
         NSLog(@"Error: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
@@ -170,13 +168,12 @@ static APIUtility *sharedObj;
     
     NSString *urlString = [NSString stringWithFormat:@"%@?cmd=previous_order&consumer_id=%@&business_id=%@",GetPrevious_order,consumer_id,business_id];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"get %@", responseObject);
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         
         NSLog(@"Error: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
@@ -208,8 +205,8 @@ static APIUtility *sharedObj;
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     [manager POST:Save_cc_info
-       parameters:param
-          success:^(NSURLSessionDataTask *task, id responseObject) {
+       parameters:param progress:nil
+          success:^(NSURLSessionTask *task, id responseObject) {
               NSLog(@"JSON: %@", responseObject);
               finished(responseObject);
           }
@@ -231,12 +228,12 @@ static APIUtility *sharedObj;
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     [manager POST:remove_cc
-       parameters:param
-          success:^(NSURLSessionDataTask *task, id responseObject) {
+       parameters:param progress:nil
+          success:^(NSURLSessionTask *task, id responseObject) {
               NSLog(@"JSON: %@", responseObject);
               finished(responseObject);
           }
-          failure:^(NSURLSessionDataTask *task, NSError *error) {
+          failure:^(NSURLSessionTask *task, NSError *error) {
               
               NSLog(@"Error saving credit card in the server: %@", error.description);
               finished(@{@"error":error.description});
@@ -251,13 +248,13 @@ static APIUtility *sharedObj;
     
     NSString *urlString = [NSString stringWithFormat:@"%@?cmd=get_consumer_all_cc_info&consumer_id=%@",Get_consumer_all_cc_info,consumer_id];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         NSLog(@"get %@", responseObject);
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         
         NSLog(@"Error: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
@@ -287,13 +284,13 @@ static APIUtility *sharedObj;
     
     NSString *urlString = [NSString stringWithFormat:@"%@?cmd=get_all_notifications_for_consumer&consumer_id=%@",Get_notifications,consumer_id];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         NSLog(@"get %@", responseObject);
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask  *operation, NSError *error) {
         
         NSLog(@"Error: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
@@ -325,7 +322,7 @@ static APIUtility *sharedObj;
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     [manager POST:save_notifications
-       parameters:param
+       parameters:param progress:nil
           success:^(NSURLSessionDataTask *task, id responseObject) {
               NSLog(@"JSON: %@", responseObject);
               finished(responseObject);
@@ -376,13 +373,13 @@ static APIUtility *sharedObj;
     NSComparisonResult result1 = [date2 compare:date3];
     if(result == NSOrderedAscending && result1 == NSOrderedDescending)
     {
-        NSLog(@"date1 is later than date2");
+//        NSLog(@"date1 is later than date2");
         return true;
     } else if(result == NSOrderedSame || result1 == NSOrderedSame){
-        NSLog(@"date2 is later than date1");
+//        NSLog(@"date2 is later than date1");
         return true;
     } else {
-        NSLog(@"date1 is equal to date2");
+//        NSLog(@"date1 is equal to date2");
         return false;
     }
     return  false;
@@ -396,6 +393,10 @@ static APIUtility *sharedObj;
     NSString *time2 = closeTime;
     NSDate *date1= [formatter dateFromString:time1];
     NSDate *date2 = [formatter dateFromString:time2];
+    NSTimeInterval distanceBetweenDates = [date2 timeIntervalSinceDate:date1];
+    if (distanceBetweenDates <= 0) {
+        return @"Closed all day";
+    }
     
     NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
     timeFormatter.dateFormat = @"h:mm a";
@@ -448,8 +449,8 @@ static APIUtility *sharedObj;
     CLLocationCoordinate2D center;
     center.latitude=latitude;
     center.longitude = longitude;
-    NSLog(@"View Controller get Location Logitute : %f",center.latitude);
-    NSLog(@"View Controller get Location Latitute : %f",center.longitude);
+//    NSLog(@"View Controller get Location Logitute : %f",center.latitude);
+//    NSLog(@"View Controller get Location Latitute : %f",center.longitude);
     return center;
 }
 
@@ -466,14 +467,13 @@ static APIUtility *sharedObj;
     {
         return;
     }
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     
-    [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"get %@", responseObject);
+    [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
         
         NSLog(@"Error: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];

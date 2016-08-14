@@ -396,28 +396,28 @@ static NSArray *consumerProfileDataArray = nil;
 - (void)postSaveRequest {
     // Show an activity spinner that blocks the whole screen
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = NSLocalizedString(@"Updating account information", @"");
+    hud.label.text = NSLocalizedString(@"Updating account information", @"");
     
     NSString *urlString = ConsumerProfileServer;
     
-    AFHTTPRequestOperationManager *manager;
-    manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPSessionManager *manager;
+    manager = [AFHTTPSessionManager manager];
     
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
     
     NSDictionary *params = [self getCorrespondingParameters];
-    [manager POST:urlString parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject)
+    [manager POST:urlString parameters:params progress:nil success:^(NSURLSessionTask *operation, id responseObject)
     {
         if ([self isViewLoaded]) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             
-            NSLog(@"operation (saving profile information) response status code: %ld", (long)operation.response.statusCode);
-            //status code = 200 is html code for OK - so anything else means not OK
-            if (operation.response.statusCode != 200) {
-                [UIAlertController showErrorAlert:NSLocalizedString(@"Error in generating user ID.  Please try agin a few minutes!", nil)];
-            }
-            else {
+//            NSLog(@"operation (saving profile information) response status code: %ld", (long)operation.response.statusCode);
+//            //status code = 200 is html code for OK - so anything else means not OK
+//            if (operation.response.statusCode != 200) {
+//                [UIAlertController showErrorAlert:NSLocalizedString(@"Error in generating user ID.  Please try agin a few minutes!", nil)];
+//            }
+//            else {
                 [[DataModel sharedDataModelManager] setNickname:nicknameTextField.text];
 //                [[DataModel sharedDataModelManager] setPassword:passwordAgainTextField.text];
                 // we set two fields in the database after registering the user - now we are getting those fields
@@ -441,10 +441,10 @@ static NSArray *consumerProfileDataArray = nil;
                 
                 [alert addAction:defaultAction];
                 [self presentViewController:alert animated:YES completion:nil];
-            }
+//            }
         }
     }
-    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    failure:^(NSURLSessionTask *operation, NSError *error) {
           NSLog(@"Error: %@", error);
           if ([self isViewLoaded]) {
               [MBProgressHUD hideHUDForView:self.view animated:YES];

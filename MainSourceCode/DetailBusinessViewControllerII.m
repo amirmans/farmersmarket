@@ -654,8 +654,8 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     {
         [biz startLoadingBusinessProductCategoriesAndProducts];
 //        [[RewardDetailsModel sharedInstance] getRewardData:biz];
-        [[RewardDetailsModel sharedInstance] getRewardData:biz completiedBlock:^(NSDictionary *response, bool success) {
-            if (success) {
+        [[RewardDetailsModel sharedInstance] getRewardData:biz completiedBlock:^(NSDictionary *response) {
+            if (1) {
                 NSDictionary *reward = response;
                 NSLog(@"%@",reward);
                 NSString *total_available_points = [[[reward valueForKey:@"data"] valueForKey:@"total_available_points"] stringValue];
@@ -791,10 +791,10 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 
     if([[APIUtility sharedInstance]isOpenBussiness:biz1.opening_time CloseTime:biz1.closing_time]){
         cell.lblOpenClose.text = @"OPEN NOW";
-        cell.lblOpenClose.textColor = [UIColor greenColor];
+        cell.lblOpenClose.textColor = [UIColor grayColor];
     }else{
         cell.lblOpenClose.text = @"CLOSED";
-        cell.lblOpenClose.textColor = [UIColor redColor];
+        cell.lblOpenClose.textColor = [UIColor orangeColor];
     }
     
     cell.btnFevorite.tag = indexPath.row;

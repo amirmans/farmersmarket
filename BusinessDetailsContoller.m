@@ -33,6 +33,7 @@
     BOOL flagHeartBarButton;
     NSInteger previousOrderCount;
     NSMutableArray *previousOrderArray;
+    NSMutableArray * _datasource;
 }
 @end
 
@@ -435,13 +436,13 @@ UIBarButtonItem *btn_heart;
     BgPictureArray = [[biz.picturesString componentsSeparatedByCharactersInSet:
                                       [NSCharacterSet characterSetWithCharactersInString:@", "]] mutableCopy];
     [BgPictureArray removeObject:@""];
-
+    
     if([[APIUtility sharedInstance]isOpenBussiness:biz.opening_time CloseTime:biz.closing_time]){
         self.lbl_OpenNow.text = @"OPEN NOW";
-        self.lbl_OpenNow.textColor = [UIColor greenColor];
+        self.lbl_OpenNow.textColor = [UIColor orangeColor];
     }else{
         self.lbl_OpenNow.text = @"CLOSED";
-        self.lbl_OpenNow.textColor = [UIColor redColor];
+        self.lbl_OpenNow.textColor = [UIColor grayColor];
     }
     self.lbl_time.text = [[APIUtility sharedInstance]getOpenCloseTime:biz.opening_time CloseTime:biz.closing_time];
     [self setSliderForImage];
@@ -457,7 +458,9 @@ UIBarButtonItem *btn_heart;
         
         [picturesView setDelay:1]; // Delay between transitions
         [picturesView setTransitionDuration:1]; // Transition duration
-        [picturesView setTransitionType:KASlideShowTransitionSlide]; // Choose a transition type (fade or slide)
+        [picturesView setTransitionType:KASlideShowTransitionFade]; // Choose a transition type (fade or slide)
+        picturesView.delegate = self;
+        picturesView.datasource = self;
         [picturesView setImagesContentMode:UIViewContentModeScaleAspectFill]; // Choose a content mode for images to display
         
         NSArray *bizpictureArray = [biz.picturesString componentsSeparatedByString:@","];
@@ -474,13 +477,14 @@ UIBarButtonItem *btn_heart;
                 imageURLString = [imageURLString stringByAppendingFormat:@"%i/%@",biz.businessID, imageRelativePathString];
                 image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURLString]]];
                 if (image != nil) {
-                    [picturesView addImage:image];
+                    [_datasource addObject:image];
+//                    [picturesView reloadData];
                 }
                 else {
                     NSLog(@"Image %@ didn't exist", imageURLString);
                 }
             }
-            picturesView.delegate = self;
+            
             
             // we stated to show it in the parent view
             //        [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -833,6 +837,19 @@ UIBarButtonItem *btn_heart;
     }
     alert = nil;
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+#pragma mark - KASlideShow datasource
+
+- (NSObject *)slideShow:(KASlideShow *)slideShow objectAtIndex:(NSUInteger)index
+{
+    return _datasource[index];
+}
+
+- (NSUInteger)slideShowImagesNumber:(KASlideShow *)slideShow
+{
+    return _datasource.count;
 }
 
 

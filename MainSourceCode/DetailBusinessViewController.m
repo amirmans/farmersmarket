@@ -29,6 +29,7 @@
 
 @interface DetailBusinessViewController () {
     KASlideShow *picturesView;
+    NSMutableArray * _datasource;
 }
 
 @property (atomic, assign) BOOL viewIsDisplaying;
@@ -115,6 +116,8 @@
         [picturesView setDelay:3]; // Delay between transitions
         [picturesView setTransitionDuration:2]; // Transition duration
         [picturesView setTransitionType:KASlideShowTransitionFade]; // Choose a transition type (fade or slide)
+        picturesView.delegate = self;
+        picturesView.datasource = self;
         [picturesView setImagesContentMode:UIViewContentModeScaleAspectFill]; // Choose a content mode for images to display
         
         NSArray *bizpictureArray = [biz.picturesString componentsSeparatedByString:@","];
@@ -131,7 +134,7 @@
                 imageURLString = [imageURLString stringByAppendingFormat:@"//%i//%@",biz.businessID, imageRelativePathString];
                 image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURLString]]];
                 if (image != nil) {
-                    [picturesView addImage:image];
+                   [_datasource addObject:image];
                 }
                 else {
                     NSLog(@"Image %@ didn't exist", imageURLString);
@@ -449,6 +452,26 @@
     [UIAlertController showOKAlertForViewController:self withText:@"Error getting more information from Google - Try again."];
 
     [activityIndicator stopAnimating];
+}
+
+#pragma mark - KASlideShow datasource
+
+- (NSObject *)slideShow:(KASlideShow *)slideShow objectAtIndex:(NSUInteger)index
+{
+    return _datasource[index];
+}
+
+- (NSUInteger)slideShowImagesNumber:(KASlideShow *)slideShow
+{
+    return _datasource.count;
+}
+
+
+#pragma mark - KASlideShow delegate
+
+- (void) slideShowWillShowNext:(KASlideShow *)slideShow
+{
+    NSLog(@"slideShowWillShowNext, index : %@",@(slideShow.currentIndex));
 }
 
 @end

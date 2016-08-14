@@ -11,7 +11,7 @@
 #import "GooglePlacesConnection.h"
 #import "KASlideShow.h"
 
-@interface DetailBusinessViewController : UIViewController <KASlideShowDelegate> {
+@interface DetailBusinessViewController : UIViewController <KASlideShowDataSource,KASlideShowDelegate> {
     NSString *businessNameData;
     NSString *customerProfileName;
     NSString *distanceInMileString;

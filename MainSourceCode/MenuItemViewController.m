@@ -92,14 +92,14 @@ bool shouldOpenOptionMenu = false;
 //    }
     
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    HUD.labelText = @"Updating products with latest info";
-    HUD.detailsLabelText = @"It is worth the wait!";
-    HUD.color =[UIColor orangeColor];
+    HUD.label.text = @"Updating products with latest info";
+    HUD.detailsLabel.text = @"It is worth the wait!";
+    HUD.bezelView.color =[UIColor orangeColor];
     HUD.mode = MBProgressHUDModeIndeterminate;
     [self.view addSubview:HUD];
     
 //    [HUD showWhileExecuting:@selector(doSomeFunkyStuff) onTarget:self withObject:nil animated:YES];
-    [HUD show:YES];
+    [HUD showAnimated:YES];
 
     business = [CurrentBusiness sharedCurrentBusinessManager].business;
     //flagstr = @"false";
@@ -464,6 +464,17 @@ bool shouldOpenOptionMenu = false;
     return headerView;
 }
 
+-(void)myFunction :(id) sender
+{
+    UITapGestureRecognizer *gesture = (UITapGestureRecognizer *) sender;
+    [UIAlertController showErrorAlert:@"Please register on profile page to set your favorites. \nYou can order them next time around."];
+    return;
+//    NSLog(@"Tag = %d", gesture.view.tag);
+}
+
+
+
+
 - (void) headerClicked :(id)sender {
     menu.menuButton.isActive = true;
     [menu.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
@@ -596,6 +607,16 @@ bool shouldOpenOptionMenu = false;
             if (pictureURL != (id)[NSNull null] && pictureURL.length != 0 ) {
                     // Image available
                 MenuItemTableViewCell *cell = [self createMenuItemCellWithImageWithIndexpath:tableView indexPath:indexPath dataSource:catArray];
+                
+                cell.imageView.userInteractionEnabled = YES;
+                cell.imageView.tag = indexPath.row;
+                
+                UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(myFunction:)];
+                tapped.numberOfTapsRequired = 1;
+                [cell.imageView addGestureRecognizer:tapped];
+                tapped = nil;
+                
+                
                 return cell;
             }
             
@@ -607,6 +628,15 @@ bool shouldOpenOptionMenu = false;
         }
         else {
             MenuItemTableViewCell *cell = [self createMenuItemCellWithImageWithIndexpath:tableView indexPath:indexPath dataSource:catArray];
+            
+            cell.imageView.userInteractionEnabled = YES;
+            cell.imageView.tag = indexPath.row;
+            
+            UITapGestureRecognizer *tapped = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(myFunction:)];
+            tapped.numberOfTapsRequired = 1;
+            [cell.imageView addGestureRecognizer:tapped];
+            tapped = nil;
+            
             return cell;
         }
     }
@@ -1385,6 +1415,7 @@ bool shouldOpenOptionMenu = false;
             if (data.count <1)
             {
                 NSLog(@"For %d product items not loaded or don't exist.", [CurrentBusiness sharedCurrentBusinessManager].business.businessID);
+                [HUD hideAnimated:YES];
                 return;
             }
             [self.businessListDetailArray removeAllObjects];
@@ -1485,7 +1516,7 @@ bool shouldOpenOptionMenu = false;
                 }
             }];
             
-            [HUD hide:YES];
+            [HUD hideAnimated:YES];
 
             //            [self.MainArray removeAllObjects];
             //            for(int i = 0 ; i < self.sectionKeyArray.count; i++){

@@ -15,8 +15,8 @@
 + (APIUtility *) sharedInstance;
 
 @property(nonatomic, strong) AFHTTPSessionManager *sessionManager;
-@property(nonatomic, strong) AFHTTPRequestOperationManager *operationManager;
-@property(nonatomic, strong) AFHTTPRequestOperation *requestOperation;
+@property(nonatomic) AFHTTPSessionManager *operationManager;
+@property(nonatomic, strong) NSMutableURLRequest *requestOperation;
 @property(nonatomic, strong) NSString *appendUrl;
 
 - (NSString *) GMTToLocalTime: (NSString *)GMTTime;

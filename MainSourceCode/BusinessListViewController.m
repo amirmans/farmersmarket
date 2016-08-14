@@ -1,4 +1,4 @@
-//
+ //
 //  BusinessListTableViewController.m
 //  TapForAll
 //
@@ -77,7 +77,7 @@ Business *biz;
         if (businessListArray.count > 0 ) {
             [bizListTimer invalidate];
             bizListTimer = nil;
-    [HUD hide:YES];
+            [HUD hideAnimated:YES];
             NSMutableArray *SortByLocationArray = [self getSortByLocationTapForApp];
             [self.businessListArray removeAllObjects];
             self.businessListArray = SortByLocationArray;
@@ -128,7 +128,7 @@ Business *biz;
     self.edgesForExtendedLayout = UIRectEdgeAll;
     self.bizTableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
     
-    //ToDO for a leter release
+    //ToDO for a later release
 //    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
 //    self.searchController.searchResultsUpdater = self;
 //    self.searchController.dimsBackgroundDuringPresentation = NO;
@@ -162,12 +162,12 @@ Business *biz;
 //    searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
 //    self.bizTableView.tableHeaderView = self.searchController.searchBar;
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    HUD.labelText = @"Updating businesses with latest info";
-    HUD.detailsLabelText = @"It is worth the wait!";
-    HUD.color =[UIColor orangeColor];
+    HUD.label.text = @"Updating businesses with latest info";
+    HUD.detailsLabel.text = @"It is worth the wait!";
+    HUD.bezelView.color =[UIColor orangeColor];
     HUD.mode = MBProgressHUDModeIndeterminate;
     [self.view addSubview:HUD];
-    [HUD show:YES];
+    [HUD showAnimated:YES];
 
     if (businessListArray.count <= 0 ) {
         bizListTimer = [NSTimer scheduledTimerWithTimeInterval:0.02 target:self selector:@selector(timerCallBack) userInfo:nil repeats:YES];
@@ -773,8 +773,8 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         NSDictionary *allChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].allChoices;
         NSArray *mainChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].mainChoices;
         
-        [[RewardDetailsModel sharedInstance] getRewardData:biz completiedBlock:^(NSDictionary *response, bool success) {
-            if (success) {
+        [[RewardDetailsModel sharedInstance] getRewardData:biz completiedBlock:^(NSDictionary *response) {
+            if (1) {
                 if(response != nil) {
                     NSDictionary *reward = response;
                     NSLog(@"%@",reward);
