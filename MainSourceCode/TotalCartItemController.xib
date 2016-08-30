@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="16A239m" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="16A294a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -18,6 +18,7 @@
                 <outlet property="lblCurrentPoints" destination="SLR-JN-EaG" id="Al7-mq-2b3"/>
                 <outlet property="lblDefaultCard" destination="RHU-4j-CFF" id="8k9-nx-glT"/>
                 <outlet property="lblEarnedPoint" destination="qKp-Rx-sHC" id="Z9N-HD-WCM"/>
+                <outlet property="lblPointsUsed" destination="VJs-02-BM9" id="Air-FF-gzm"/>
                 <outlet property="lblSubTotalPrice" destination="nQB-qS-RqN" id="GLc-Ky-4FQ"/>
                 <outlet property="lblSubtotalAmount" destination="ykQ-5s-ChB" id="spY-Vm-Qrv"/>
                 <outlet property="paymentView" destination="woY-es-VWY" id="dNE-qw-61k"/>
@@ -243,9 +244,30 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="woY-es-VWY">
                             <rect key="frame" x="33" y="99" width="254" height="60"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4h-pc-waj">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WITH VISA ENDING IN 5546" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHU-4j-CFF">
+                                    <rect key="frame" x="0.0" y="32" width="173" height="19.5"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="9"/>
+                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="nQB-qS-RqN">
+                                    <rect key="frame" x="174" y="0.0" width="72.5" height="27.5"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pts used: xx" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VJs-02-BM9">
+                                    <rect key="frame" x="174" y="32" width="73.5" height="27.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U4h-pc-waj">
                                     <rect key="frame" x="0.0" y="0.0" width="173" height="60"/>
                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="173" id="oaE-wr-XuO"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
                                     <inset key="contentEdgeInsets" minX="0.0" minY="-18" maxX="0.0" maxY="0.0"/>
                                     <state key="normal" title="PAY NOW">
@@ -255,23 +277,24 @@
                                         <action selector="btnPayButtonClicked:" destination="-1" eventType="touchUpInside" id="UG4-b7-YWA"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="WITH VISA ENDING IN 5546" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHU-4j-CFF">
-                                    <rect key="frame" x="0.0" y="36" width="173" height="13"/>
-                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="9"/>
-                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="$999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="nQB-qS-RqN">
-                                    <rect key="frame" x="173" y="8" width="81" height="28"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstItem="U4h-pc-waj" firstAttribute="trailing" secondItem="RHU-4j-CFF" secondAttribute="trailing" id="4fZ-yh-m5R"/>
+                                <constraint firstItem="U4h-pc-waj" firstAttribute="leading" secondItem="RHU-4j-CFF" secondAttribute="leading" id="BvU-Uy-HSe"/>
+                                <constraint firstItem="RHU-4j-CFF" firstAttribute="top" secondItem="VJs-02-BM9" secondAttribute="top" id="HBY-6F-ISq"/>
+                                <constraint firstAttribute="bottom" secondItem="U4h-pc-waj" secondAttribute="bottom" id="Lp9-5W-oqi"/>
+                                <constraint firstItem="U4h-pc-waj" firstAttribute="leading" secondItem="woY-es-VWY" secondAttribute="leading" id="afW-Yy-Zxh"/>
+                                <constraint firstItem="VJs-02-BM9" firstAttribute="width" secondItem="nQB-qS-RqN" secondAttribute="width" constant="1" id="cQ8-bi-vWP"/>
                                 <constraint firstAttribute="width" constant="254" id="d6o-7N-nMH"/>
+                                <constraint firstItem="U4h-pc-waj" firstAttribute="top" secondItem="nQB-qS-RqN" secondAttribute="top" id="dE0-OU-wCd"/>
+                                <constraint firstItem="VJs-02-BM9" firstAttribute="height" secondItem="nQB-qS-RqN" secondAttribute="height" id="f4c-T3-lQU"/>
+                                <constraint firstItem="U4h-pc-waj" firstAttribute="top" secondItem="woY-es-VWY" secondAttribute="top" id="mUK-Xa-5Cy"/>
+                                <constraint firstItem="RHU-4j-CFF" firstAttribute="bottom" secondItem="woY-es-VWY" secondAttribute="bottomMargin" id="n1U-bq-jOs"/>
+                                <constraint firstItem="VJs-02-BM9" firstAttribute="leading" secondItem="U4h-pc-waj" secondAttribute="trailing" constant="1" id="tnl-nO-yVM"/>
                                 <constraint firstAttribute="height" constant="60" id="tuI-5w-fiG"/>
+                                <constraint firstItem="VJs-02-BM9" firstAttribute="trailing" secondItem="nQB-qS-RqN" secondAttribute="trailing" constant="1" id="usp-oG-Qt9"/>
+                                <constraint firstItem="VJs-02-BM9" firstAttribute="bottom" secondItem="U4h-pc-waj" secondAttribute="bottom" id="ztE-8Z-iVX"/>
                             </constraints>
                         </view>
                     </subviews>

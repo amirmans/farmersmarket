@@ -1,4 +1,4 @@
-//
+ //
 //  BusinessDetailsContoller.m
 //  TapForAll
 //
@@ -183,6 +183,9 @@ UIBarButtonItem *btn_heart;
         NSLog(@"%f",coordinate.latitude);
         NSLog(@"%f",coordinate.longitude);
     }
+    
+    // kaslider needs window to be loaded, so we have to make this call here and not viewDidLoad or ViewWillAppear
+    [self setSliderForImage];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -190,6 +193,7 @@ UIBarButtonItem *btn_heart;
     if (picturesView != nil) {
         [picturesView stop];
         picturesView = nil;
+        _datasource = nil;
     }
 }
 
@@ -445,13 +449,13 @@ UIBarButtonItem *btn_heart;
         self.lbl_OpenNow.textColor = [UIColor grayColor];
     }
     self.lbl_time.text = [[APIUtility sharedInstance]getOpenCloseTime:biz.opening_time CloseTime:biz.closing_time];
-    [self setSliderForImage];
+//    [self setSliderForImage];
 }
 
 - (void) setSliderForImage{
 
     if (biz.picturesString != nil) {
-        
+         _datasource = [[NSMutableArray alloc] init];
         //            CGRect picturesViewFrame = self.imageView.frame;
         picturesView = [[KASlideShow alloc] initWithFrame:CGRectMake(self.imageView.frame.origin.x, self.imageView.frame.origin.y, [UIScreen mainScreen].bounds.size.width, self.imageView.frame.size.height)];
         [self.view addSubview:picturesView];
@@ -464,6 +468,7 @@ UIBarButtonItem *btn_heart;
         [picturesView setImagesContentMode:UIViewContentModeScaleAspectFill]; // Choose a content mode for images to display
         
         NSArray *bizpictureArray = [biz.picturesString componentsSeparatedByString:@","];
+        
         //        dispatch_async(dispatch_get_main_queue(), ^{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0) , ^{
             NSString *imageRelativePathString;
@@ -497,6 +502,7 @@ UIBarButtonItem *btn_heart;
     else {
         //  typesOfBusiness.hidden = FALSE;
     }
+
 }
 
 - (void) getDistanceFromLocation : (NSString *) address {
@@ -550,17 +556,19 @@ UIBarButtonItem *btn_heart;
                     NSArray *optionsArray = [orderDetail valueForKey:@"options"];
                     NSString *selectedItemString = @"";
                     NSMutableArray *productID_array = [[NSMutableArray alloc] init];
-                    
-                    for (NSDictionary *optionDict in optionsArray) {
-                        selectedItemString = [selectedItemString stringByAppendingString:[NSString stringWithFormat:@"%@ ($%@) ,",[optionDict valueForKey:@"name"],[optionDict valueForKey:@"price"]]];
-                        
-                        [productID_array addObject:[optionDict valueForKey:@"option_id"]];
+                    if ([optionsArray count])  {
+                        for (NSDictionary *optionDict in optionsArray) {
+                            selectedItemString = [selectedItemString stringByAppendingString:[NSString stringWithFormat:@"%@ ($%@) ,",[optionDict valueForKey:@"name"],[optionDict valueForKey:@"price"]]];
+                            
+                            [productID_array addObject:[optionDict valueForKey:@"option_id"]];
+                        }
                     }
                     
                     businessDetail.product_option = selectedItemString;
                     businessDetail.selected_ProductID_array = [NSMutableArray arrayWithArray:productID_array];
                     
                     [previousOrderArray addObject:businessDetail];
+                    productID_array = nil;
                 }
             }
         }

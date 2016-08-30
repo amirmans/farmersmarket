@@ -18,6 +18,7 @@
 @property (strong, atomic) NSMutableArray *pointsarray;
 @property (strong, atomic) NSMutableDictionary *pointsdictionary;
 @property (strong, nonatomic) IBOutlet UIImageView *businessBackgrounImage;
+@property (strong, nonatomic) IBOutlet UILabel *lblCongrats;
 
 @property (strong, nonatomic) IBOutlet UILabel *lblRedeemPoints;
 @property (strong, nonatomic) IBOutlet UILabel *lblNextLevelPoints;

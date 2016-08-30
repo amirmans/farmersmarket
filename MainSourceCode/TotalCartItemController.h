@@ -10,7 +10,7 @@
 #import "Business.h"
 #import "RewardDetailsModel.h"
 #import "TotalCartItemsTableCell.h"
-#import <Stripe/Stripe.h>
+// zzzz #import <Stripe/Stripe.h>
 #import "STPCardValidator.h"
 #import "TPReceiptController.h"
 #import "MBProgressHUD.h"
@@ -59,6 +59,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *lblSubtotalAmount;
 @property (strong, nonatomic) IBOutlet UILabel *lblEarnedPoint;
+@property (strong, nonatomic) IBOutlet UILabel *lblPointsUsed;
 
 - (IBAction)btnAddItemClicked:(id)sender;
 - (IBAction)btnRemoveItemClicked:(id)sender;

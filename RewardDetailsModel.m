@@ -56,7 +56,7 @@ RewardDetailsModel *sharedObject;
     [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         self.rewardDict = responseObject;;
         if (finished) {
-            finished(@{@"success":@"YES"});
+            finished(responseObject);
         }
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         NSLog(@"Error: %@", error);

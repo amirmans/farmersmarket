@@ -91,9 +91,18 @@ Business *biz;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                              selector:@selector(becomeActive:)
+                                              name:UIApplicationDidBecomeActiveNotification
+                                              object:nil];
      }
 //    [listBusinessesActivityIndicator startAnimating];
     return self;
+}
+
+
+- (void)becomeActive:(NSNotification *)notification {
+    NSLog(@"becoming active");
 }
 
 - (void)viewDidLoad{
@@ -124,8 +133,8 @@ Business *biz;
 //    [locationManager startUpdatingLocation];
 
     self.automaticallyAdjustsScrollViewInsets = NO;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     
-    self.edgesForExtendedLayout = UIRectEdgeAll;
     self.bizTableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
     
     //ToDO for a later release
@@ -721,6 +730,12 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 //        NSLog(@"Info: %@",userData[InfoKey]);4
     }
 }
+
+- (void)dealloc {
+     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
 
 - (IBAction)enterAndGetServiceAction:(id)sender {
     

@@ -135,6 +135,7 @@
 @property(nonatomic, strong) UIColor *business_bg_color;
 @property(nonatomic, strong) UIColor *business_text_color;
 @property(nonatomic, strong) NSString *process_time;
+@property(nonatomic, strong) NSString *keywords;
 
 
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;

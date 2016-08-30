@@ -133,6 +133,10 @@ static APIUtility *sharedObj;
         return;
     }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+
+//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data progress: nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {

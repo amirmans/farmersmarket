@@ -130,33 +130,57 @@ NSInteger current_points_level_int  = 0;
             }
 
 // TODO For the next release
-//            if ([data valueForKeyPath:@"current_points_level"] != [NSNull null]) {
-//                NSDictionary *current_points_level = [data valueForKeyPath:@"current_points_level"];
-//                float dollarValue = 0.0;
-//                NSInteger points = [[current_points_level valueForKey:@"points"] integerValue];
-// 
-//                current_points_level_int = points;
-//
-//                if ([current_points_level valueForKey:@"dollar_value"] != [NSNull null]) {
-//                    dollarValue = [[current_points_level valueForKey:@"dollar_value"] floatValue];
-//                    self.lblRedeemPoints.text = [NSString stringWithFormat:@"You can redeem %ld points for $%.2f",(long)points,dollarValue];
-//                }
-//            }
-//            
-//            if ([data valueForKeyPath:@"next_points_level"] != [NSNull null]) {
-//                NSDictionary *next_points_level = [data valueForKeyPath:@"next_points_level"];
-//                float dollarValue = 0.0;
-//                NSInteger points = [[next_points_level valueForKey:@"points"] integerValue];
-//                
-//                if ([next_points_level valueForKey:@"dollar_value"] != [NSNull null]) {
-//                    dollarValue = [[next_points_level valueForKey:@"dollar_value"] floatValue];
-//                }
-//                
-//                self.lblNextLevelPoints.text = [NSString stringWithFormat:@"Next level is %ld points for $%.2f",(long)points,dollarValue];
-//            }
-//
-            self.lblRedeemPoints.text = @"Keep earning points.";
-            self.lblNextLevelPoints.text = @"Redeem them with the next app update.";
+            NSString *currentPointsMessage =@"";
+            if ([data valueForKeyPath:@"current_points_level"] != [NSNull null]) {
+                NSDictionary *current_points_level = [data valueForKeyPath:@"current_points_level"];
+                float dollarValue = 0.0;
+                NSInteger points = [[current_points_level valueForKey:@"points"] integerValue];
+ 
+                current_points_level_int = points;
+                if (points > 0) {
+                    if ([current_points_level valueForKey:@"dollar_value"] != [NSNull null]) {
+                        dollarValue = [[current_points_level valueForKey:@"dollar_value"] floatValue];
+                        if (dollarValue > 0) {
+                            double dollarValueForEachPoint = dollarValue / points;
+                            currentPointsMessage = [NSString stringWithFormat:@"Now your points are worth $%.2f each", dollarValueForEachPoint];
+                        }
+                        else {
+                            currentPointsMessage = [NSString stringWithFormat:@"Earn at least %ld points to redeem them", points ];
+                        }
+                    }
+                }
+            }
+            
+            if ([currentPointsMessage length] > 0) {
+                self.lblRedeemPoints.hidden = false;
+                self.lblCongrats.hidden = false;
+                self.lblRedeemPoints.text = currentPointsMessage;
+            } else {
+                self.lblRedeemPoints.hidden = true;
+                self.lblCongrats.hidden = true;
+            }
+            
+            if ([data valueForKeyPath:@"next_points_level"] != [NSNull null]) {
+                NSDictionary *next_points_level = [data valueForKeyPath:@"next_points_level"];
+                float dollarValue = 0.0;
+                NSInteger points = [[next_points_level valueForKey:@"points"] integerValue];
+                
+                if ([next_points_level valueForKey:@"dollar_value"] != [NSNull null]) {
+                    dollarValue = [[next_points_level valueForKey:@"dollar_value"] floatValue];
+                }
+                
+                if (points > 0) {
+                    self.lblNextLevelPoints.hidden = false;
+                    self.lblNextLevelPoints.text = [NSString stringWithFormat:@"Next level is %ld points for $%.2f",(long)points,dollarValue];
+                }
+                else {
+                    self.lblNextLevelPoints.hidden = true;
+                }
+            }
+
+            // this was in the first release
+//            self.lblRedeemPoints.text = @"Keep earning points.";
+//            self.lblNextLevelPoints.text = @"Redeem them with the next app update.";
             
 //            if ([dic valueForKeyPath:@"points_earned"] != [NSNull null])
             self.pointsarray = [data valueForKeyPath:@"points"];

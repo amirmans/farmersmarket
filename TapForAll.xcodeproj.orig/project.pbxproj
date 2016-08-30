@@ -174,7 +174,6 @@
 		C6504A8119D0EC83007646EB /* ProductMoreInformationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6504A8019D0EC83007646EB /* ProductMoreInformationViewController.xib */; };
 		C650705B18BCB88F00E5D06B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C650705A18BCB88F00E5D06B /* QuartzCore.framework */; };
 		C650705D18BD4CBD00E5D06B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C650705C18BD4CBD00E5D06B /* Default-568h@2x.png */; };
-		C6571B761D650A4700FD83F5 /* BusinessListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C91ECD189E3EA700AE6478 /* BusinessListViewController.m */; };
 		C65A68AB191AFB1E00BBDC16 /* DetailProductItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C65A68AA191AFB1E00BBDC16 /* DetailProductItemViewController.m */; };
 		C66237FE18C03E5B00750F82 /* disabled_button_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = C66237FD18C03E5B00750F82 /* disabled_button_bg.png */; };
 		C662DDFE18D8442F00683BBF /* BubbleCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = C662DDFD18D8442F00683BBF /* BubbleCenter.png */; };
@@ -190,6 +189,8 @@
 		C68FE1D418E64F9200FB4321 /* QRData.m in Sources */ = {isa = PBXBuildFile; fileRef = C68FE1D318E64F9200FB4321 /* QRData.m */; };
 		C69298A918DF8FFE00B013E0 /* BillPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C69298A818DF8FFE00B013E0 /* BillPayViewController.m */; };
 		C69298AB18DF903400B013E0 /* BillPayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C69298AA18DF903400B013E0 /* BillPayViewController.xib */; };
+		C69653481C2A011B001A29DB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C69653471C2A011B001A29DB /* StoreKit.framework */; };
+		C696534B1C2A012A001A29DB /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C696534A1C2A012A001A29DB /* PassKit.framework */; };
 		C69935B018B969F6008FCF8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C699356318B969F6008FCF8A /* AppDelegate.m */; };
 		C69935BB18B969F6008FCF8A /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C699357A18B969F6008FCF8A /* DataModel.m */; };
 		C69935C318B969F6008FCF8A /* AskForSeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C699358A18B969F6008FCF8A /* AskForSeviceViewController.m */; };
@@ -206,6 +207,7 @@
 		C6C8ACAD18DF9BBC005DAFD6 /* TapForAllTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C8ACAC18DF9BBC005DAFD6 /* TapForAllTests.m */; };
 		C6C8ACAF18DF9BE5005DAFD6 /* TapForAllTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6C8ACAE18DF9BE5005DAFD6 /* TapForAllTests-Info.plist */; };
 		C6C8ACB318DF9C1A005DAFD6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C6C8ACB118DF9C1A005DAFD6 /* InfoPlist.strings */; };
+		C6C91ECF189E3EA700AE6478 /* BusinessListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C91ECD189E3EA700AE6478 /* BusinessListViewController.m */; };
 		C6D20613195A8A23006E12FE /* JBKenBurnsView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6D20612195A8A23006E12FE /* JBKenBurnsView.m */; };
 		C6EABE1718B2D1CD00F50D19 /* BusinessTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6EABE1518B2D1CD00F50D19 /* BusinessTableViewCell.xib */; };
 		C6EABE1818B2D1CD00F50D19 /* BusinessListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6EABE1618B2D1CD00F50D19 /* BusinessListViewController.xib */; };
@@ -481,7 +483,9 @@
 		C69298A718DF8FFE00B013E0 /* BillPayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BillPayViewController.h; path = MainSourceCode/BillPayViewController.h; sourceTree = "<group>"; };
 		C69298A818DF8FFE00B013E0 /* BillPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BillPayViewController.m; path = MainSourceCode/BillPayViewController.m; sourceTree = "<group>"; };
 		C69298AA18DF903400B013E0 /* BillPayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BillPayViewController.xib; sourceTree = "<group>"; };
+		C69653471C2A011B001A29DB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		C69653491C2A011E001A29DB /* TapForAll.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TapForAll.entitlements; path = TapForAll/TapForAll.entitlements; sourceTree = SOURCE_ROOT; };
+		C696534A1C2A012A001A29DB /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		C699356218B969F6008FCF8A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MainSourceCode/AppDelegate.h; sourceTree = "<group>"; };
 		C699356318B969F6008FCF8A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MainSourceCode/AppDelegate.m; sourceTree = "<group>"; };
 		C699357618B969F6008FCF8A /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Consts.h; sourceTree = "<group>"; };
@@ -553,6 +557,8 @@
 				295F5BDF1458C5CC00832AE8 /* MapKit.framework in Frameworks */,
 				2949CC3A14589C7200728B87 /* UIKit.framework in Frameworks */,
 				2949CC3C14589C7200728B87 /* Foundation.framework in Frameworks */,
+				C696534B1C2A012A001A29DB /* PassKit.framework in Frameworks */,
+				C69653481C2A011B001A29DB /* StoreKit.framework in Frameworks */,
 				2949CC4014589C7200728B87 /* CoreData.framework in Frameworks */,
 				923BF223970CB23FD67D388D /* libPods-TapForAll.a in Frameworks */,
 			);
@@ -613,6 +619,8 @@
 				C6A877331D498A62007E3167 /* Security.framework */,
 				4A848ED21C8083DB0055E127 /* EventKitUI.framework */,
 				4A848ED01C8083D50055E127 /* EventKit.framework */,
+				C696534A1C2A012A001A29DB /* PassKit.framework */,
+				C69653471C2A011B001A29DB /* StoreKit.framework */,
 				C650705A18BCB88F00E5D06B /* QuartzCore.framework */,
 				29496BDC15EFDE1200127A05 /* ImageIO.framework */,
 				298A6C7A156C76B800986F29 /* libz.1.2.5.dylib */,
@@ -1166,25 +1174,26 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0510;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				TargetAttributes = {
 					2949CC3414589C7200728B87 = {
 						DevelopmentTeam = E79MNN58JH;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
 							};
 							com.apple.InAppPurchase = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.OMC = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.Push = {
 								enabled = 1;
 							};
 							com.apple.Wallet = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -1406,6 +1415,7 @@
 				4A6643E91C74A04000C10421 /* SIMenuButton.m in Sources */,
 				4AAD6B6C1D018A4D00AED4F7 /* MenuItemNoImageTableViewCell.m in Sources */,
 				4A0F2CD51C726D08005C6F22 /* TotalCartItemController.m in Sources */,
+				C6C91ECF189E3EA700AE6478 /* BusinessListViewController.m in Sources */,
 				C68FE1D418E64F9200FB4321 /* QRData.m in Sources */,
 				4A9499841C7F337200400A53 /* SavedCardTableCell.m in Sources */,
 				2949CD351458A9CC00728B87 /* Business.m in Sources */,
@@ -1455,7 +1465,6 @@
 				C6FDD5D3187D087900F4D721 /* BusinessNotificationTableViewController.m in Sources */,
 				4A5AD37B1C770AE700DCEA6F /* TPRewardPointCell.m in Sources */,
 				29ECC44C14CCC06C0098655E /* ConsumerProfileViewController.m in Sources */,
-				C6571B761D650A4700FD83F5 /* BusinessListViewController.m in Sources */,
 				C6F475631CDFDCB7009E24E4 /* DetailBusinessVCTableViewCell.m in Sources */,
 				C69935D018B969F6008FCF8A /* StoreMap.m in Sources */,
 				4A74ECA31D0985F60088662C /* ConsumerCCModelObject.m in Sources */,
@@ -1544,11 +1553,13 @@
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1.1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1594,11 +1605,13 @@
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
 				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 1.1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1634,8 +1647,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = E79MNN58JH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1653,8 +1666,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tapin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3465f065-e1be-4fcf-a8e8-7e12b9aba368";
-				PROVISIONING_PROFILE_SPECIFIER = TapIn_Dev_Provisioning;
+				PROVISIONING_PROFILE = "2ae9bec2-3525-455a-b85c-8aa5f41eeeb5";
+				PROVISIONING_PROFILE_SPECIFIER = TapIn_Distribution_June_4th_2016;
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1671,8 +1684,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = E79MNN58JH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1691,8 +1704,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tapin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3465f065-e1be-4fcf-a8e8-7e12b9aba368";
-				PROVISIONING_PROFILE_SPECIFIER = TapIn_Dev_Provisioning;
+				PROVISIONING_PROFILE = "15a99db5-9aef-41b9-a05c-62a80d0d4403";
+				PROVISIONING_PROFILE_SPECIFIER = com.tapin_distribution;
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";

@@ -3,13 +3,13 @@
 
 #define TT_CommunicationWithServerQ dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
-#define AddChatServer @"http://www.artdoost.com/tap-in/chatrooms/addchatmessage.php"
-#define LoadChatServer @"http://www.artdoost.com/tap-in/chatrooms/loadchatmessages.php"
-#define ChatSystemServer @"http://www.artdoost.com/tap-in/chatsystem/index.php"
+#define AddChatServer @"https://tapforall.com/staging/tap-in/chatrooms/addchatmessage.php"
+#define LoadChatServer @"https://tapforall.com/staging/tap-in/chatrooms/loadchatmessages.php"
+#define ChatSystemServer @"https://tapforall.com/staging/tap-in/chatsystem/index.php"
 //#define ChatSystemServer @"http://127.0.0.1/TapForAll/chatsystem/index.php"
 //#define OrderServerURL @"http://tapit-servers.dev/businessinfo/model.php"
-#define OrderServerURL @"http://www.artdoost.com/tap-in/include/model.php"
-static NSString *const ServerForBusiness = @"http://www.artdoost.com/tap-in/include/model.php";
+#define OrderServerURL @"https://tapforall.com/staging/tap-in/include/model.php"
+static NSString *const ServerForBusiness = @"https://tapforall.com/staging/tap-in/include/model.php";
 
 
 #define MaxRowsForLoadingChatMessages 150 // max number of messages
@@ -19,30 +19,30 @@ static NSString *const ServerForBusiness = @"http://www.artdoost.com/tap-in/incl
 #define ChatValidationWorkflow_Validated 2
 #define ChatValidationWorkflow_Not_Valid 3
 #define ChatValidationWorkflow_ErrorFromServer -1
-#define BusinessAndProductionInformationServer @"http://www.artdoost.com/tap-in/include/model.php"
-#define BusinessInformationServer @"http://www.artdoost.com/tap-in/businessinfo/index.php"
-#define ConsumerProfileServer @"http://www.artdoost.com/tap-in/profilesystem/consumerprofile.php"
-#define SetFavoriteServer @"http://www.artdoost.com/tap-in/include/model.php"
-#define GetRewardPoints @"http://www.artdoost.com/tap-in/include/model.php"
-#define GetPrevious_order @"http://www.artdoost.com/tap-in/include/model.php"
-#define Save_cc_info @"http://www.artdoost.com/tap-in/include/model.php"
-#define save_notifications @"http://www.artdoost.com/tap-in/include/model.php"
-#define Get_notifications @"http://www.artdoost.com/tap-in/include/model.php"
-#define Get_consumer_all_cc_info @"http://www.artdoost.com/tap-in/include/model.php"
-#define remove_cc @"http://www.artdoost.com/tap-in/include/model.php"
+#define BusinessAndProductionInformationServer @"https://tapforall.com/staging/tap-in/include/model.php"
+#define BusinessInformationServer @"http://tapforall.com/staging/tap-in/businessinfo/index.php"
+#define ConsumerProfileServer @"https://tapforall.com/staging/tap-in/profilesystem/consumerprofile.php"
+#define SetFavoriteServer @"https://tapforall.com/staging/tap-in/include/model.php"
+#define GetRewardPoints @"https://tapforall.com/staging/tap-in/include/model.php"
+#define GetPrevious_order @"https://tapforall.com/staging/tap-in/include/model.php"
+#define Save_cc_info @"https://tapforall.com/staging/tap-in/include/model.php"
+#define save_notifications @"https://tapforall.com/staging/tap-in/include/model.php"
+#define Get_notifications @"https://tapforall.com/staging/tap-in/include/model.php"
+#define Get_consumer_all_cc_info @"https://tapforall.com/staging/tap-in/include/model.php"
+#define remove_cc @"https://tapforall.com/staging/tap-in/include/model.php"
 //data directories
 
-#define BusinessCustomerIndividualDirectory @"http://www.artdoost.com/tap-in/customer_files/"
+#define BusinessCustomerIndividualDirectory @"https://tapforall.com/staging/tap-in/customer_files/"
 #define BusinessCustomerIndividualDirectory_ProductItems @"products"
-#define BusinessCustomerIconDirectory @"http://www.artdoost.com/tap-in/customer_files/icons/"
-#define BusinessCustomerBGImageDirectory @"http://www.artdoost.com/tap-in/customer_files/bg_images/"
-#define QRImageDomain @"http://www.artdoost.com/tap-in/consumer_files/qr_images/"
-#define BusinessCustomersMapDirectory @"http://www.artdoost.com/tap-in/customer_files/maps/"
+#define BusinessCustomerIconDirectory @"https://tapforall.com/staging/tap-in/customer_files/icons/"
+#define BusinessCustomerBGImageDirectory @"https://tapforall.com/staging/tap-in/customer_files/bg_images/"
+#define QRImageDomain @"https://tapforall.com/staging/tap-in/consumer_files/qr_images/"
+#define BusinessCustomersMapDirectory @"https://tapforall.com/staging/tap-in/customer_files/maps/"
 
 //payment processing
 //#define STRIPE_TEST_PUBLIC_KEY @"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi"
 //NSString * const StripePublishableKey = @"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi";
-#define TapForAllPaymentServer @"http://www.artdoost.com/tap-in/paymentsystem/charge.php"
+#define TapForAllPaymentServer @"https://tapforall.com/staging/tap-in/paymentsystem/charge.php"
 
 
 #define TapInApplicationThemeColor [UIColor colorWithRed:74.0/255.0 green:182.0/255.0 blue:190.0/255.0 alpha:1];

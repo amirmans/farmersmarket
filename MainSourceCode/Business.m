@@ -70,6 +70,7 @@
 @synthesize bg_image_name;
 @synthesize is_collection;
 @synthesize process_time;
+@synthesize keywords;
 
 - (void)initMemberData {
     
@@ -116,6 +117,7 @@
     closing_time = nil;
     bg_image_name = nil;
     process_time = nil;
+    keywords = nil;
 }
 
 - (int)isCustomer {
@@ -360,6 +362,12 @@
     process_time = [self stringFromDataDictionary:data forKey:@"process_time"];
     if (process_time == nil)
         process_time = Default_Process_Time;
+    
+    keywords = [self stringFromDataDictionary:data forKey:@"keywords"];
+    // no keywords is ginven at least use the business name for our searches
+    if ([keywords length] <1) {
+        keywords = businessName;
+    }
 
     
 //    if (validate_chat) {
@@ -464,6 +472,7 @@
                     map_image_url = [self stringFromDataDictionary:responseDictionary forKey:@"map_image_url"];
                     picturesString = [self stringFromDataDictionary:responseDictionary forKey:@"pictures"];
                     self.process_time = [responseDictionary valueForKey:@"process_time"];
+                    self.keywords = self.businessName;
                     NSString *iconPath = [NSString stringWithFormat:@"%@", [responseDictionary valueForKey:@"icon"]];
                     if (iconPath != (id)[NSNull null] && iconPath.length != 0 ) {
                         NSString *iconURLString = [BusinessCustomerIconDirectory stringByAppendingString:iconPath];

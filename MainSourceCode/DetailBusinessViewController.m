@@ -107,6 +107,7 @@
     [activityIndicator startAnimating];
     
     if (biz.picturesString != nil) {
+        _datasource = [[NSMutableArray alloc] init];
         //CGRect transformedBounds = CGRectApplyAffineTransform(picturesView_KSSlide.bounds, picturesView_KSSlide.transform);
         //        CGRect picturesViewFrame = CGRectMake(9, 71, 302, 187);
         CGRect picturesViewFrame = picturesView_KSSlide.frame;
@@ -121,7 +122,31 @@
         [picturesView setImagesContentMode:UIViewContentModeScaleAspectFill]; // Choose a content mode for images to display
         
         NSArray *bizpictureArray = [biz.picturesString componentsSeparatedByString:@","];
+        //*******ZZZZZ
+        NSString *imageRelativePathString;
+        UIImage  *image;
+        //[[self view] bringSubviewToFront:picturesView_KSSlide];
+        for (imageRelativePathString in bizpictureArray) {
+            // construct the absolute path for the image
+            imageRelativePathString = [imageRelativePathString stringByTrimmingCharactersInSet:
+                                       [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            NSString *imageURLString = BusinessCustomerIndividualDirectory;
+            imageURLString = [imageURLString stringByAppendingFormat:@"//%i//%@",biz.businessID, imageRelativePathString];
+            image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURLString]]];
+            if (image != nil) {
+                [_datasource addObject:image];
+            }
+            else {
+                NSLog(@"Image %@ didn't exist", imageURLString);
+            }
+        }
+        [picturesView start];
+        
+        //ZZZZZZZ*****
+        
+        
         //        dispatch_async(dispatch_get_main_queue(), ^{
+        if (0) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0) , ^{
             NSString *imageRelativePathString;
             UIImage  *image;
@@ -140,7 +165,7 @@
                     NSLog(@"Image %@ didn't exist", imageURLString);
                 }
             }
-            picturesView.delegate = self;
+        
             
             // we stated to show it in the parent view
             //        [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -155,7 +180,7 @@
     else {
         typesOfBusiness.hidden = FALSE;
     }
-    
+}
     [self doPopulateDisplayFields];
 }
 
@@ -267,6 +292,7 @@
     if (picturesView != nil) {
         [picturesView stop];
         picturesView = nil;
+        _datasource = nil;
     }
     
     [super viewWillDisappear:animated];

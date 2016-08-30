@@ -13,12 +13,26 @@
 #import "TPBusinessDetail.h"
 #import "SHMultipleSelect.h"
 
+
 @interface TotalCartItemController ()
 
 @property (strong, nonatomic) NSMutableArray *orderItems;
 @property (strong, nonatomic) NSString *notesText;
 
-- (float)calculateTotalPoints:(float)amount;
+//when we make changes to the order, changing subtotal, we set points related value to the original
+//rest the flag flagRedeemPoint to false, even ifthe user has chosen to use their points
+@property (assign) BOOL flagRedeemPoint;
+@property (assign) double originalPointsValue;
+@property (assign) NSInteger originalNoPoints;
+@property (assign) double dollarValueForEachPoints;  //detemined by the points level's ceiling
+@property (assign) NSInteger currenPointsLevel;
+@property (assign) NSInteger nextPointsLevel;
+@property (assign) NSInteger totalNoPoints;
+
+@property (assign) NSInteger redeemNoPoints;  // number of points being redeemed
+@property (assign) double  redeemPointsValue;  // value for the points that we are redeeming
+
+- (float)calculateValueforGivenPoints:(NSInteger)points;
 @end
 
 @implementation TotalCartItemController
@@ -31,18 +45,20 @@
 @synthesize orderItems;
 @synthesize waitTimeLabel;
 @synthesize lblEarnedPoint, lblSubtotalAmount;
+@synthesize flagRedeemPoint, originalPointsValue, originalNoPoints,dollarValueForEachPoints,
+    currenPointsLevel, nextPointsLevel, redeemNoPoints, redeemPointsValue, lblPointsUsed;
 
-bool flagRedeemPoint = false;
 NSString *Note_default_text = @"Add your note here";
 
 double tipAmount = 0.0;
-double cartTotal = 0;
-double dollarValue = 0;
-double totalValue = 0.0;
-NSInteger redeemPoints = 0;
-NSInteger current_points_level  = 0;
 NSInteger currentTipValue = 0;
-bool isPointsUsed = false;
+double cartTotal = 0;          //aka subtotal
+double totalValue = 0.0;
+
+
+
+
+
 UITextView *alertTextView;
 
 #pragma mark - Life Cycle
@@ -70,15 +86,18 @@ UITextView *alertTextView;
     }
 
     flagRedeemPoint = false;
+    originalPointsValue = 0.0;
+    originalNoPoints = 0;
+    dollarValueForEachPoints = 0;  //detemined by the points level's ceiling
+    currenPointsLevel  = 0;
+    nextPointsLevel  = 0;
+    redeemNoPoints  = 0;  // number of points being redeemed
+    redeemPointsValue = 0;  // value for the points that we are redeeming
+    lblPointsUsed.text= @"pts used: 0";
 
-    tipAmount = 0.0;
-    cartTotal = 0.0;
-    dollarValue = 0;
-    totalValue = 0.0;
-    redeemPoints = 0;
-    current_points_level  = 0;
-    currentTipValue = 0.0;
-    isPointsUsed = false;
+
+
+//    isPointsUsed = false;
     [self setNeedsStatusBarAppearanceUpdate];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -107,7 +126,7 @@ UITextView *alertTextView;
     NSLog(@"%lu",(unsigned long)_FetchedRecordArray.count);
 
     NSLog(@"%@",self.FetchedRecordArray);
-    redeemPoints = 0;
+
     zero = [NSDecimalNumber zero];
     self.automaticallyAdjustsScrollViewInsets = NO;
 
@@ -126,7 +145,7 @@ UITextView *alertTextView;
 //    self.itemCartTableView.rowHeight = UITableViewAutomaticDimension;
 
     [self paymentSummary];
-    [self setPointsValue];
+    [self setInitialPointsValue];
 
     self.paymentView.layer.borderColor = [UIColor blackColor].CGColor;
     self.paymentView.layer.borderWidth = 2;
@@ -349,8 +368,9 @@ UITextView *alertTextView;
                     [storeManageObject setValue:@(businessDetail.product_order_id) forKey:@"product_order_id"];
                     [storeManageObject setValue:[NSString stringWithFormat:@"%f",businessDetail.ti_rating]  forKey:@"ti_rating"];
                     [storeManageObject setValue:[NSString stringWithFormat:@"%d",ItemQty] forKey:@"quantity"];
-                    if ( ([dictionary valueForKey:@"selected_ProductID_array"] != nil) && ([dictionary valueForKey:@"selected_ProductID_array"] != [NSNull null]) )
-                    [storeManageObject setValue:[dictionary valueForKey:@"selected_ProductID_array"] forKey:@"selected_ProductID_array"];
+                    if ( ([dictionary valueForKey:@"selected_ProductID_array"] != nil) && ([dictionary valueForKey:@"selected_ProductID_array"] != [NSNull null]) ) {
+                        [storeManageObject setValue:[dictionary valueForKey:@"selected_ProductID_array"] forKey:@"selected_ProductID_array"];
+                    }
                     [storeManageObject setValue:[dictionary valueForKey:@"note"] forKey:@"note"];
                     NSError *error;
                     if (![context save:&error]) {
@@ -724,7 +744,7 @@ UITextView *alertTextView;
 
 - (void) postOrderToServer {
 
-    NSString *userID = [DataModel sharedDataModelManager].uuid;
+    NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
 
     NSMutableArray *orderItemArray = [[NSMutableArray alloc]init];
 
@@ -761,7 +781,8 @@ UITextView *alertTextView;
 
 //    billDollar = [[NSDecimalNumber alloc] initWithDouble:totalValue];
 
-    NSInteger currentRedeemPoints = [self calculatePointsRedeem];
+    NSInteger currentRedeemPoints = [self getRedeemNoPoints];
+    float redeemPointsDollarValue = [self redeemPointsValue];
     NSString *cardNo = [defaultCardData valueForKey:@"number"];
     if ([self.notesText  isEqual:Note_default_text]) {
         self.notesText = @"";
@@ -769,8 +790,25 @@ UITextView *alertTextView;
 
     NSDictionary *orderInfoDict= @{@"cmd":@"save_order",@"data":orderItemArray,@"consumer_id":userID,@"total":[NSString stringWithFormat:@"%f",totalValue],
                                    @"business_id":business_id,@"points_redeemed":[NSString stringWithFormat:@"%ld",(long)currentRedeemPoints],
+                                   @"points_dollar_amount":[NSString stringWithFormat:@"%f",redeemPointsDollarValue],
                                    @"tip_amount":[NSNumber numberWithDouble:tipAmount], @"subtotal":[NSNumber numberWithDouble:cartTotal], @"tax_amount":[NSNumber numberWithDouble:0.0],
                                    @"cc_last_4_digits":[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)], @"note":self.notesText};
+
+//_____
+
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:orderInfoDict
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+
+    if (! jsonData) {
+        NSLog(@"Got an error: %@", error);
+    } else {
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        NSLog(@"Json format of data send to save_order: %@", jsonString);
+    }
+//____
+
     [MBProgressHUD showHUDAddedTo:self.view animated:true];
     [[APIUtility sharedInstance] orderToServer:orderInfoDict server:OrderServerURL completiedBlock:^(NSDictionary *response) {
         [MBProgressHUD hideAllHUDsForView:self.view animated:true];
@@ -808,7 +846,7 @@ UITextView *alertTextView;
             receiptVC.cardName = cardName;
             receiptVC.cardNumber = cardDisplayNumber;
             receiptVC.cardExpDate = expDate;
-            NSInteger currentRedeemPoints = [self calculatePointsRedeem];
+            NSInteger currentRedeemPoints = [self getRedeemNoPoints];
             receiptVC.redeem_point = [NSString stringWithFormat:@"%ld",(long)currentRedeemPoints];
             receiptVC.totalPaid = totalValue;
             receiptVC.tipAmount = tipAmount;
@@ -844,6 +882,8 @@ UITextView *alertTextView;
     [self.FetchedRecordArray removeAllObjects];
     self.FetchedRecordArray= [[NSMutableArray alloc]initWithArray:[AppDelegate sharedInstance].getRecord];
     [self.itemCartTableView reloadData];
+    [self setNoTip];
+    [self changePointsAndUI:false];
     [self paymentSummary];
     [self setNoTip];
 }
@@ -889,38 +929,52 @@ UITextView *alertTextView;
     [self.btnTip20 setTitle:tip20String forState:UIControlStateNormal];
 }
 
-- (void) setPointsValue {
+- (void) setInitialPointsValue {
     NSLog(@"%@",[RewardDetailsModel sharedInstance].rewardDict);
 
     NSDictionary *rewards = [RewardDetailsModel sharedInstance].rewardDict;
 //    NSLog(@"%@", [[rewards valueForKey:@"data"] valueForKey:@"total_available_points"]);
 //    NSLog(@"%@", [[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"dollar_value"]);
 
-    current_points_level = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"points"] integerValue];
-    dollarValue = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"dollar_value"] doubleValue];
-
+    currenPointsLevel = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"points"] integerValue];
+    originalNoPoints = [[[rewards valueForKey:@"data"] valueForKey:@"total_available_points"] integerValue];
+    originalPointsValue = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"dollar_value"] doubleValue];
+    int totaLAvailablePoints = [[[rewards valueForKey:@"data"] valueForKey:@"total_available_points"] intValue];
+    if (originalPointsValue > 0) {
+        dollarValueForEachPoints = originalPointsValue / currenPointsLevel;
+        self.lblCurrentPoints.text = [NSString stringWithFormat:@"You have %ld points worth $%.2f each.  Redeem?",(long)totaLAvailablePoints,dollarValueForEachPoints];
+    }
+    else {
+        dollarValueForEachPoints = 0.0;
+        self.lblCurrentPoints.text = @"You don't have enough points to use for this transaction";
+    }
 //    NSString *str_current_points_level =  [NSString stringWithFormat:@"%ld", current_points_level];
 //    [[self.tabBarController.tabBar.items objectAtIndex:3] setBadgeValue:str_current_points_level];
 
     // text to let the user know how much points they have to redeem
-    self.lblCurrentPoints.text = [NSString stringWithFormat:@"Use %ld points with $%.2f value?",(long)current_points_level,dollarValue];
+//    self.lblCurrentPoints.text = [NSString stringWithFormat:@"Use %ld points with $%.2f value?",(long)currenPointsLevel,originalPointsValue];
 }
+// today's changes
+//- (double)getRedeemPointsValue {
+//    redeemPointsValue = redeemNoPoints * dollarValueForEachPoints;
+//    return redeemPointsValue;
+//}
 
-- (void) setFinaleValueFromRedeem {
-//    NSString *dollarString = self.lblDollarValue.text;
-
-//    double subTotal = [self.lblSubTotalPrice.text doubleValue];
-    if (cartTotal > dollarValue) {
-        totalValue = totalValue - dollarValue;
-        self.lblSubTotalPrice.text =  [NSString stringWithFormat:@"$%.2f",totalValue];
-    }
-    else {
-        //zzzzzz
-        totalValue = tipAmount;
-        self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f", totalValue];
-
-    }
-}
+//- (void) calculateValueFromRedeemPoints {
+////    NSString *dollarString = self.lblpointsDollarValue.text;
+//
+////    double subTotal = [self.lblSubTotalPrice.text doubleValue];
+//    if (cartTotal > redeemPointsValue) {
+//        totalValue = totalValue - redeemPointsValue;
+//        self.lblSubTotalPrice.text =  [NSString stringWithFormat:@"$%.2f",totalValue];
+//    }
+//    else {
+//        //zzzzz adjust redeemp points because now we have some left over
+//        totalValue = tipAmount;
+//        self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f", totalValue];
+//
+//    }
+//}
 
 - (void) getDefaultCardData {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -1072,26 +1126,13 @@ UITextView *alertTextView;
     [self.btnOther setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 
-- (void) calculateTip : (double) tip  {
+- (void)calculateTip : (double) tip  {
 
     if(cartTotal > 0) {
 //        if(tip > 0) {
-            tipAmount = cartTotal* (tip/100);
-            totalValue = cartTotal + tipAmount;
-//        }
-//        else {
-//            totalValue = cartTotal;
-//        }
 
-        if (flagRedeemPoint == true) {
-            [self setFinaleValueFromRedeem];
-
-            NSLog(@"%f",totalValue);
-            redeemPoints = totalValue*PointsValueMultiplier;
-        }
-        else {
-            redeemPoints = 0;
-        }
+        tipAmount = cartTotal* (tip/100);
+        totalValue = cartTotal + tipAmount - redeemPointsValue;
 
         self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f",totalValue];
         billInDollar = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%.2f",totalValue]];
@@ -1103,14 +1144,23 @@ UITextView *alertTextView;
 }
 
 
-- (float)calculateTotalPoints:(float)amount {
-    return amount*PointsValueMultiplier;
+- (float)calculateValueforGivenPoints:(NSInteger)points {
+    return points*dollarValueForEachPoints;
 }
 
-- (NSInteger)calculatePointsRedeem {
+- (bool)enoughPointsToRedeem {
+    if (dollarValueForEachPoints > 0)
+        return TRUE;
+    else
+        return false;
+}
 
+- (NSInteger)getRedeemNoPoints {
+    if (![self enoughPointsToRedeem])
+        return 0;
+    
     if (flagRedeemPoint) {
-        return current_points_level;
+        return redeemNoPoints;
     }
     else {
         return 0;
@@ -1118,13 +1168,59 @@ UITextView *alertTextView;
 
 }
 
-- (double) getTotalPrice {
-    NSString *totalString = self.lblSubTotalPrice.text;
+- (void)revertRedeemPointsAndValuesToOriginal {
+    redeemNoPoints = 0;
+    redeemPointsValue = 0;
+    dollarValueForEachPoints = originalPointsValue / currenPointsLevel;
+    if(currentTipValue > 0) {
+        [self calculateTip:currentTipValue];
+    }
+    else {
+        totalValue = cartTotal + tipAmount;
+        //                    self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%ld Pts",(long)totalValue*PointsValueMultiplier] ;
+    }
+}
 
-    totalString = [totalString stringByReplacingOccurrencesOfString:@"$" withString:@""];
+- (void)adjustRedeemPointsAndTheirValues {
+    double allAvailablePointsValue = [self calculateValueforGivenPoints:originalNoPoints];
+    if ( allAvailablePointsValue <= cartTotal) {
 
-    double doubleTotal = [totalString doubleValue];
-    return doubleTotal;
+            //          NSString *message = [NSString stringWithFormat:@"You have %ld points, You need more %.f points to redeem",(long)current_points_level,((pointsDollarValue*PointsValueMultiplier) - current_points_level)];
+            //          UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
+            //         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            //          }];
+        totalValue = cartTotal - allAvailablePointsValue + tipAmount;
+        redeemNoPoints = originalNoPoints;
+        redeemPointsValue = allAvailablePointsValue;
+        dollarValueForEachPoints = redeemPointsValue / redeemNoPoints;
+//            flagRedeemPoint = true;
+        } else {
+//            flagRedeemPoint = true;
+            redeemNoPoints = [self pointsNeededForGivenAmount:cartTotal];
+            // we need to calculate to get rid of rounding errors
+            dollarValueForEachPoints = totalValue / redeemNoPoints;
+            redeemPointsValue = redeemNoPoints * dollarValueForEachPoints;
+            totalValue = tipAmount;
+            
+        }
+}
+
+//- (double) getTotalPrice {
+//    NSString *totalString = self.lblSubTotalPrice.text;
+//
+//    totalString = [totalString stringByReplacingOccurrencesOfString:@"$" withString:@""];
+//
+//    double doubleTotal = [totalString doubleValue];
+//    return doubleTotal;
+//}
+
+- (NSInteger)pointsNeededForGivenAmount:(double)amount {
+    if (dollarValueForEachPoints <= 0 ) {
+        return 0;
+    }
+    else {
+        return ceil(amount / dollarValueForEachPoints );
+    }
 }
 
 - (void) pointsRedeem:(NSNotification *) notification
@@ -1207,35 +1303,38 @@ UITextView *alertTextView;
     [self.navigationController pushViewController:orderViewController animated:YES];
 }
 
+- (void) changePointsAndUI:(BOOL)flag {
+    if (flag) {
+        [self adjustRedeemPointsAndTheirValues];
+        [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_checked"] forState:UIControlStateNormal];
+        self.lblPointsUsed.text = [NSString stringWithFormat:@"pts used: %ld", redeemNoPoints];
+    } else {
+        [self revertRedeemPointsAndValuesToOriginal];
+        [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_unchecked"] forState:UIControlStateNormal];
+        self.lblPointsUsed.text = [NSString stringWithFormat:@"pts used: %ld", redeemNoPoints];
+    }
+}
+
 - (IBAction)btnRedeemPointClicked:(id)sender {
-    if(dollarValue > 0) {
-
+    if ([self enoughPointsToRedeem]) {
       if (flagRedeemPoint == false) {
-
-        if (dollarValue < cartTotal) {
-//          NSString *message = [NSString stringWithFormat:@"You have %ld points, You need more %.f points to redeem",(long)current_points_level,((dollarValue*PointsValueMultiplier) - current_points_level)];
-//          UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
-//         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//          }];
-        } else {
-          flagRedeemPoint = true;
-          [self setFinaleValueFromRedeem]; //zzzzz
-          redeemPoints = [self calculateTotalPoints:cartTotal];
-          //redeemPoints = [self.lblTotalEarnedPoint.text integerValue];
-        }
+        flagRedeemPoint = true;
+          [self changePointsAndUI:flagRedeemPoint];
+//        [self adjustRedeemPointsAndTheirValues];
+//        [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_checked"] forState:UIControlStateNormal];
+//        
+//          self.lblPointsUsed.text = [NSString stringWithFormat:@"pts used: %ld", redeemNoPoints];
+          
+          self.lblSubTotalPrice.text =  [NSString stringWithFormat:@"$%.2f",totalValue];
       }
       else {
-        [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_unchecked"] forState:UIControlStateNormal];
-        flagRedeemPoint = false;
-        self.lblSubTotalPrice.text =  [NSString stringWithFormat:@"$%.2f",cartTotal];
-        redeemPoints = 0;
-        if(currentTipValue > 0) {
-          [self calculateTip:currentTipValue];
-        }
-        else {
-          totalValue = cartTotal;
-                    //                    self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%ld Pts",(long)totalValue*PointsValueMultiplier] ;
-        }
+          flagRedeemPoint = false;
+          [self changePointsAndUI:flagRedeemPoint];
+//        [self revertRedeemPointsAndValuesToOriginal];
+//        [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_unchecked"] forState:UIControlStateNormal];
+//          self.lblPointsUsed.text = [NSString stringWithFormat:@"pts used: %ld", redeemNoPoints];
+          
+          self.lblSubTotalPrice.text =  [NSString stringWithFormat:@"$%.2f",totalValue];
       }
     }
     else {
