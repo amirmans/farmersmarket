@@ -304,6 +304,11 @@ bool shouldOpenOptionMenu = false;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
 {
     if (self.sectionKeyArray == nil) return  0;
+    
+    if (self.searchController.active) {
+        return 1;
+    }
+    
     if (self.searchController.active) {
         //    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
         return 1;
@@ -406,6 +411,9 @@ bool shouldOpenOptionMenu = false;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (self.searchController.active) {
+        return 0;
+    }
     if(tableView == self.tblRemoveFromCart) {
         return 0;
     }
@@ -1259,6 +1267,7 @@ bool shouldOpenOptionMenu = false;
 
 - (IBAction)PlusButtonClicked:(CustomUIButton *)sender {
 
+    
     NSLog(@"%@", [[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"name"]);
     NSLog(@"%@",[[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"price"]);
 
@@ -1272,6 +1281,8 @@ bool shouldOpenOptionMenu = false;
         businessDetail = [self.MainArray[sender.section] objectAtIndex:sender.row];
     }
     businessDetail.product_option = @"";
+    
+    self.searchController.active = false;
 
 //    TPBusinessDetail *BusinessDetail = [[TPBusinessDetail alloc]init];
 //    BusinessDetail.product_id = [responseData objectForKey:@"product_id"];
@@ -1572,6 +1583,7 @@ bool shouldOpenOptionMenu = false;
 
 - (void)AddItemInCart : (TPBusinessDetail *)businessDetail CustomUIButton:(CustomUIButton *)sender {
 
+    
     NSManagedObjectContext *context = [self managedObjectContext];
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
     self.FetchedRecordArray = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];

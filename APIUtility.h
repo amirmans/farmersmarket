@@ -49,5 +49,7 @@
 
 - (void) getAllCCInfo : (NSString *) consumer_id completiedBlock:(void (^)(NSDictionary *response))finished;
 
+- (void) getDefaultCCInfo : (NSString *) consumer_id completiedBlock:(void (^)(NSDictionary *response))finished;
+
 - (BOOL)isZipCodeValid:(NSString *)zipCode;
 @end

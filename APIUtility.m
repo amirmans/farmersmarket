@@ -280,6 +280,44 @@ static APIUtility *sharedObj;
 }
 
 
+- (void) getDefaultCCInfo : (NSString *) consumer_id completiedBlock:(void (^)(NSDictionary *response))finished {
+    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+    {
+        return;
+    }
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@?cmd=get_consumer_default_cc&consumer_id=%@",Get_consumer_all_cc_info,consumer_id];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+        NSLog(@"get %@", responseObject);
+        if (finished) {
+            finished((NSDictionary*)responseObject);
+        }
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
+        //        NSDictionary *temp = @{};
+        
+        if([error code] == -1004) {
+            
+            if (finished) {
+                finished(dic);
+            }
+        }
+        else
+        {
+            if (finished) {
+                finished(dic);
+            }
+        }
+    }];
+}
+
+
+
+
 - (void) getNotificationForConsumer  :(NSString *) consumer_id BusinessID : (NSString *) business_id completiedBlock:(void (^)(NSDictionary *response))finished {
     if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
     {

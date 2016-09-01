@@ -946,7 +946,7 @@ UITextView *alertTextView;
     }
     else {
         dollarValueForEachPoints = 0.0;
-        self.lblCurrentPoints.text = @"You don't have enough points to use for this transaction";
+        self.lblCurrentPoints.text = @"You don't have enough points to use";
     }
 //    NSString *str_current_points_level =  [NSString stringWithFormat:@"%ld", current_points_level];
 //    [[self.tabBarController.tabBar.items objectAtIndex:3] setBadgeValue:str_current_points_level];
@@ -985,7 +985,7 @@ UITextView *alertTextView;
         NSString *cardNo = [defaultCardData valueForKey:@"number"];
 
         NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
-        NSString *defaultCardString = [NSString stringWithFormat:@"WITH %@ ENDING IN %@",cardName,trimmedString];
+        NSString *defaultCardString = [NSString stringWithFormat:@"%@ ENDING IN %@",cardName,trimmedString];
         self.lblDefaultCard.text = defaultCardString;
     }
     else {
@@ -1264,6 +1264,10 @@ UITextView *alertTextView;
         [UIAlertController showErrorAlert:@"Please register on profile page.\nThen you can order."];
     }
     else {
+        if ([DataModel sharedDataModelManager].emailAddress.length < 1) {
+            [UIAlertController showErrorAlert:@"Your receipt won't be emailed to you!\nSince we don't have your email address in profile page"];
+        }
+
 //        if ([billInDollar compare:zero] ==  NSOrderedDescending) {
       if (_FetchedRecordArray.count >  0) {
         // send the order items to the server

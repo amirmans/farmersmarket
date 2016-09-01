@@ -81,6 +81,7 @@ Business *biz;
             NSMutableArray *SortByLocationArray = [self getSortByLocationTapForApp];
             [self.businessListArray removeAllObjects];
             self.businessListArray = SortByLocationArray;
+            
             [bizTableView reloadData];
             [self addMarkersToMap];
         }
@@ -134,9 +135,8 @@ Business *biz;
 
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    
-    self.bizTableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
-    
+    self.searchController.definesPresentationContext = YES;
+
     //ToDO for a later release
 //    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
 //    self.searchController.searchResultsUpdater = self;
@@ -155,21 +155,24 @@ Business *biz;
 //    self.searchController.searchBar.frame = CGRectMake(40,
 //                                                       self.searchController.searchBar.frame.origin.y,
 //                                                       (self.view.frame.size.width - 40), 44.0);
-    
-    self.definesPresentationContext = YES;
+    self.extendedLayoutIncludesOpaqueBars = YES;
     
     self.searchResults = [NSMutableArray arrayWithCapacity:businessListArray.count];
     
     // The table view controller is in a nav controller, and so the containing nav controller is the 'search results controller'
     //UINavigationController *searchResultsController = [[self storyboard] instantiateViewControllerWithIdentifier:@"TableSearchResultsNavController"];
     
-//    self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.navigationController];
-//    searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-//    searchController.searchResultsUpdater = self;
-//    searchController.dimsBackgroundDuringPresentation = NO;
-//    searchController.hidesNavigationBarDuringPresentation = NO;
-//    searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
-//    self.bizTableView.tableHeaderView = self.searchController.searchBar;
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.navigationController];
+    searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    searchController.searchResultsUpdater = self;
+    searchController.dimsBackgroundDuringPresentation = NO;
+    searchController.hidesNavigationBarDuringPresentation = NO;
+    searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
+    
+    self.bizTableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
+
+    self.bizTableView.tableHeaderView = self.searchController.searchBar;
+    
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     HUD.label.text = @"Updating businesses with latest info";
     HUD.detailsLabel.text = @"It is worth the wait!";
@@ -802,7 +805,8 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         
         BusinessDetailsContoller *services = [[BusinessDetailsContoller alloc]
                                               initWithData:allChoices :mainChoices :[mainChoices objectAtIndex:0] forBusiness:selectedBiz];
-      
+        self.searchController.active = false;
+
         [self.navigationController pushViewController:services animated:YES];
     }
 }
@@ -815,7 +819,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:
                                   @"(SELF contains[cd] %@)", searchText];
-        if ([predicate evaluateWithObject:[bizDict objectForKey:@"name"]])
+        if ([predicate evaluateWithObject:[bizDict objectForKey:@"keywords"]])
         {
             [filteredBusinessListArray addObject:bizDict];
         }

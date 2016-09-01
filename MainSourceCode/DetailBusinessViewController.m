@@ -142,45 +142,9 @@
         }
         [picturesView start];
         
-        //ZZZZZZZ*****
-        
-        
-        //        dispatch_async(dispatch_get_main_queue(), ^{
-        if (0) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0) , ^{
-            NSString *imageRelativePathString;
-            UIImage  *image;
-            //[[self view] bringSubviewToFront:picturesView_KSSlide];
-            for (imageRelativePathString in bizpictureArray) {
-                // construct the absolute path for the image
-                imageRelativePathString = [imageRelativePathString stringByTrimmingCharactersInSet:
-                                           [NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                NSString *imageURLString = BusinessCustomerIndividualDirectory;
-                imageURLString = [imageURLString stringByAppendingFormat:@"//%i//%@",biz.businessID, imageRelativePathString];
-                image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURLString]]];
-                if (image != nil) {
-                   [_datasource addObject:image];
-                }
-                else {
-                    NSLog(@"Image %@ didn't exist", imageURLString);
-                }
-            }
-        
-            
-            // we stated to show it in the parent view
-            //        [MBProgressHUD hideHUDForView:self.view animated:YES];
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                if (self.viewIsDisplaying == TRUE) {
-                    [picturesView start];
-                }
-            });
-            
-        });
-    }
-    else {
         typesOfBusiness.hidden = FALSE;
     }
-}
+    
     [self doPopulateDisplayFields];
 }
 

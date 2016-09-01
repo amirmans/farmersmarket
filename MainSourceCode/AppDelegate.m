@@ -22,6 +22,7 @@
 #import "LoginViewController.h"
 #import "UtilityConsumerProfile.h"
 #import "AppData.h"
+#import "APIUtility.h"
 #import <Stripe/Stripe.h>
 
 
@@ -531,6 +532,62 @@ static AppDelegate *sharedObj;
         [notificationDelegate updateUIWithNewNotification];
 }
 
+
+
+- (void) getDefaultCCForConsumer {
+    
+    NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
+    [[APIUtility sharedInstance] getDefaultCCInfo:userID completiedBlock:^(NSDictionary *response) {
+        if (response != nil) {
+            if ([response valueForKey:@"data"] != nil) {
+                NSArray *data = [response valueForKey:@"data"];
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                
+                for (NSDictionary *dataDict in data) {
+                    NSString *cardName = [dataDict valueForKey:@"name_on_card"];
+                    NSString *cardNumber = [dataDict valueForKey:@"cc_no"];
+                    NSString *cardExpDate  = [dataDict valueForKey:@"expiration_date"];
+                    
+                    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+                    [formatter setDateFormat:@"yyyy-mm-dd"];
+                    NSDate *date = [formatter dateFromString:cardExpDate];
+                    
+                    
+                    NSString *cardCvc = [dataDict valueForKey:@"cvv"];
+                    NSString *zipcode = [dataDict valueForKey:@"zip_code"];
+                    
+                    
+                    
+                    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+                    
+                    
+                    [df setDateFormat:@"MM"];
+                    NSString *cardExpMonth = [df stringFromDate:date];
+                    
+                    [df setDateFormat:@"yy"];
+                    NSString *cardExpYear = [df stringFromDate:date];
+
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    NSDictionary *cardDataDict = @{ @"number":cardNumber,@"cardName":cardName,@"expMonth":cardExpMonth,@"expYear":cardExpYear ,@"cvc":cardCvc, @"zip_code":zipcode };
+                    [defaults setObject:cardDataDict forKey:StripeDefaultCard];
+                    
+                    break;
+                }
+                
+            }
+        }
+    }];
+}
+
+
 - (void) postProcessForSuccess:(NSDictionary *)consumerInfo {
     [[DataModel sharedDataModelManager] setUserIDWithString:consumerInfo[@"uid"]];
     [DataModel sharedDataModelManager].nickname = consumerInfo[@"nickname"];
@@ -538,7 +595,11 @@ static AppDelegate *sharedObj;
     [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
     [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
     [DataModel sharedDataModelManager].emailAddress = consumerInfo[@"email1"];
+    
+    [self getDefaultCCForConsumer];
+    
 }
+
 
 #pragma mark - UIApplicationDelegate for notification
 

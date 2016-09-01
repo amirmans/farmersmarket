@@ -126,56 +126,62 @@ NSInteger current_points_level_int  = 0;
                 NSString *total_available_points = [[data valueForKeyPath:@"total_available_points"] stringValue];
                 self.lblPoints.text = [NSString stringWithFormat:@"Points: %@",total_available_points];
                 
-                dollarValueDouble = [total_available_points doubleValue]/10;
+                dollarValueDouble = [total_available_points doubleValue]/10; //zzz
             }
 
 // TODO For the next release
             NSString *currentPointsMessage =@"";
+            double dollarValueForEachPoint = 0.0;
+            NSInteger nextLevelpoints = 0;
+            NSInteger currentPoints = 0;
             if ([data valueForKeyPath:@"current_points_level"] != [NSNull null]) {
                 NSDictionary *current_points_level = [data valueForKeyPath:@"current_points_level"];
                 float dollarValue = 0.0;
-                NSInteger points = [[current_points_level valueForKey:@"points"] integerValue];
+                currentPoints = [[current_points_level valueForKey:@"points"] integerValue];
  
-                current_points_level_int = points;
-                if (points > 0) {
+                current_points_level_int = currentPoints;
+                if (currentPoints > 0) {
                     if ([current_points_level valueForKey:@"dollar_value"] != [NSNull null]) {
                         dollarValue = [[current_points_level valueForKey:@"dollar_value"] floatValue];
                         if (dollarValue > 0) {
-                            double dollarValueForEachPoint = dollarValue / points;
+                            dollarValueForEachPoint = dollarValue / currentPoints;
                             currentPointsMessage = [NSString stringWithFormat:@"Now your points are worth $%.2f each", dollarValueForEachPoint];
-                        }
-                        else {
-                            currentPointsMessage = [NSString stringWithFormat:@"Earn at least %ld points to redeem them", points ];
                         }
                     }
                 }
             }
             
             if ([currentPointsMessage length] > 0) {
-                self.lblRedeemPoints.hidden = false;
+//                self.lblRedeemPoints.hidden = false;
                 self.lblCongrats.hidden = false;
                 self.lblRedeemPoints.text = currentPointsMessage;
             } else {
-                self.lblRedeemPoints.hidden = true;
+//                self.lblRedeemPoints.hidden = true;
                 self.lblCongrats.hidden = true;
             }
             
             if ([data valueForKeyPath:@"next_points_level"] != [NSNull null]) {
                 NSDictionary *next_points_level = [data valueForKeyPath:@"next_points_level"];
                 float dollarValue = 0.0;
-                NSInteger points = [[next_points_level valueForKey:@"points"] integerValue];
+                nextLevelpoints = [[next_points_level valueForKey:@"points"] integerValue];
                 
                 if ([next_points_level valueForKey:@"dollar_value"] != [NSNull null]) {
                     dollarValue = [[next_points_level valueForKey:@"dollar_value"] floatValue];
                 }
                 
-                if (points > 0) {
+                if (nextLevelpoints > 0) {
                     self.lblNextLevelPoints.hidden = false;
-                    self.lblNextLevelPoints.text = [NSString stringWithFormat:@"Next level is %ld points for $%.2f",(long)points,dollarValue];
+                    self.lblNextLevelPoints.text = [NSString stringWithFormat:@"Next level is %ld points for $%.2f",(long)nextLevelpoints,dollarValue];
                 }
                 else {
                     self.lblNextLevelPoints.hidden = true;
                 }
+            }
+            
+            
+            if (dollarValueForEachPoint <= 0.0) {
+                currentPointsMessage = [NSString stringWithFormat:@"Earn at least %ld points to redeem them", (long)nextLevelpoints];
+                self.lblRedeemPoints.text = currentPointsMessage;
             }
 
             // this was in the first release

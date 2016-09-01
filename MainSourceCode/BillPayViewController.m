@@ -574,7 +574,7 @@ NSMutableArray *cardDataArray;
 //    NSString *cardName = [self getNameFromCardNumber:cardData.number];
     NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
     
-    NSDictionary *param = @{@"cmd":@"save_cc_info",@"consumer_id":userID,@"cc_no":cardNumber,@"expiration_date":expiration_date,@"cvv":cardCvc,@"zip_code":self.txtZipCode.text};
+    NSDictionary *param = @{@"cmd":@"save_cc_info",@"consumer_id":userID,@"cc_no":cardNumber,@"expiration_date":expiration_date,@"cvv":cardCvc,@"zip_code":self.txtZipCode.text, @"default":@"1"};
     
     [[APIUtility sharedInstance]save_cc_info:param completiedBlock:^(NSDictionary *response) {
         [self getCCForConsumer];
