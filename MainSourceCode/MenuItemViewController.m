@@ -92,10 +92,16 @@ bool shouldOpenOptionMenu = false;
 //    }
 
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    HUD.label.text = @"Updating products with latest info";
+    HUD.label.text = @"Updating products...";
     HUD.detailsLabel.text = @"It is worth the wait!";
-    HUD.bezelView.color =[UIColor orangeColor];
+//    HUD.bezelView.color =[UIColor orangeColor];
+//    HUD.backgroundView.color = [UIColor orangeColor];
     HUD.mode = MBProgressHUDModeIndeterminate;
+    
+    [HUD.bezelView setBackgroundColor:[UIColor orangeColor]];
+    HUD.bezelView.color = [UIColor orangeColor];
+    HUD.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
+
     [self.view addSubview:HUD];
 
 //    [HUD showWhileExecuting:@selector(doSomeFunkyStuff) onTarget:self withObject:nil animated:YES];
@@ -713,7 +719,7 @@ bool shouldOpenOptionMenu = false;
 
     CGFloat val = [[catArray[indexPath.row] valueForKey:@"price"] floatValue];
     int rounded_down = [AppData calculateRoundPoints:val];
-    cell.lbl_Pts.text = [NSString stringWithFormat:@"%d Pts",rounded_down];
+    cell.lbl_Pts.text = [NSString stringWithFormat:@"Earn %d Pts",rounded_down];
 
     if(businessDetail.availability_status == 1) {
         cell.imgContentBackGround.image = [UIImage imageNamed:@"bg_menuItemcell"];
@@ -779,7 +785,7 @@ bool shouldOpenOptionMenu = false;
 
     CGFloat val = [[catArray[indexPath.row] valueForKey:@"price"] floatValue];
     int rounded_down = [AppData calculateRoundPoints:val];
-    cell.lbl_Pts.text = [NSString stringWithFormat:@"%d Pts",rounded_down];
+    cell.lbl_Pts.text = [NSString stringWithFormat:@"Earn %d Pts",rounded_down];
 
     if(businessDetail.availability_status == 1) {
         cell.imgContentBackGround.image = [UIImage imageNamed:@"bg_menuItemcell"];
@@ -866,7 +872,7 @@ bool shouldOpenOptionMenu = false;
 
     CGFloat val = [businessDetail.price floatValue];
     int rounded_down = [AppData calculateRoundPoints:val];
-    cell.lbl_Pts.text = [NSString stringWithFormat:@"%d Pts",rounded_down];
+    cell.lbl_Pts.text = [NSString stringWithFormat:@"Earn %d Pts",rounded_down];
 
     return cell;
 }
@@ -907,7 +913,7 @@ bool shouldOpenOptionMenu = false;
 
     CGFloat val = [businessDetail.price floatValue];
     int rounded_down = [AppData calculateRoundPoints:val];
-    cell.lbl_Pts.text = [NSString stringWithFormat:@"%d Pts",rounded_down];
+    cell.lbl_Pts.text = [NSString stringWithFormat:@"Earn %d Pts",rounded_down];
 
     return cell;
 }

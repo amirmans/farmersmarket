@@ -1634,8 +1634,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEVELOPMENT_TEAM = E79MNN58JH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1671,8 +1671,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				DEVELOPMENT_TEAM = E79MNN58JH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1691,7 +1691,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tapin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3465f065-e1be-4fcf-a8e8-7e12b9aba368";
+				PROVISIONING_PROFILE = "172db1e2-4209-487a-af93-29e3df619115";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "92b2fc63-b234-4347-8fdd-c5c8f4ed4bed";
 				PROVISIONING_PROFILE_SPECIFIER = TapIn_Dev_Provisioning;
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;

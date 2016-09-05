@@ -13,6 +13,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblCardNo;
 @property (strong, nonatomic) IBOutlet UILabel *lblMonthYear;
 @property (strong, nonatomic) IBOutlet UILabel *lblCVC;
-@property (strong, nonatomic) IBOutlet UILabel *lblCardName;
+@property (strong, nonatomic) IBOutlet UILabel *lblCardType;
 
 @end

@@ -542,42 +542,33 @@ static AppDelegate *sharedObj;
             if ([response valueForKey:@"data"] != nil) {
                 NSArray *data = [response valueForKey:@"data"];
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults  removeObjectForKey:StripeDefaultCard];
                 
                 for (NSDictionary *dataDict in data) {
                     NSString *cardName = [dataDict valueForKey:@"name_on_card"];
                     NSString *cardNumber = [dataDict valueForKey:@"cc_no"];
                     NSString *cardExpDate  = [dataDict valueForKey:@"expiration_date"];
-                    
+                    NSString *cardType  = [dataDict valueForKey:@"card_type"];
+                    if (cardType == (id)[NSNull null] || cardType.length == 0 )
+                    {
+                        cardType = @"";
+                    }
+
                     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
                     [formatter setDateFormat:@"yyyy-mm-dd"];
                     NSDate *date = [formatter dateFromString:cardExpDate];
-                    
-                    
                     NSString *cardCvc = [dataDict valueForKey:@"cvv"];
                     NSString *zipcode = [dataDict valueForKey:@"zip_code"];
-                    
-                    
-                    
                     NSDateFormatter *df = [[NSDateFormatter alloc] init];
-                    
-                    
                     [df setDateFormat:@"MM"];
                     NSString *cardExpMonth = [df stringFromDate:date];
-                    
                     [df setDateFormat:@"yy"];
                     NSString *cardExpYear = [df stringFromDate:date];
 
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    NSDictionary *cardDataDict = @{ @"number":cardNumber,@"cardName":cardName,@"expMonth":cardExpMonth,@"expYear":cardExpYear ,@"cvc":cardCvc, @"zip_code":zipcode };
+                    NSDictionary *cardDataDict = @{ @"cc_no":cardNumber,@"card_name":cardName,@"expMonth":cardExpMonth,@"expYear":cardExpYear ,@"cvc":cardCvc
+                                                    , @"zip_code":zipcode, @"card_type":cardType};
                     [defaults setObject:cardDataDict forKey:StripeDefaultCard];
+                    [defaults synchronize];
                     
                     break;
                 }

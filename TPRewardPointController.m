@@ -121,74 +121,81 @@ NSInteger current_points_level_int  = 0;
             
             NSMutableDictionary *data = [response valueForKeyPath:@"data"];
 //            NSDictionary *dic = [data valueForKeyPath:@"current_points_level"];
-            
+            NSString *total_available_points= @"0";
             if ([data valueForKeyPath:@"total_available_points"] != [NSNull null]) {
-                NSString *total_available_points = [[data valueForKeyPath:@"total_available_points"] stringValue];
+                total_available_points = [[data valueForKeyPath:@"total_available_points"] stringValue];
                 self.lblPoints.text = [NSString stringWithFormat:@"Points: %@",total_available_points];
                 
                 dollarValueDouble = [total_available_points doubleValue]/10; //zzz
             }
-
-// TODO For the next release
-            NSString *currentPointsMessage =@"";
-            double dollarValueForEachPoint = 0.0;
-            NSInteger nextLevelpoints = 0;
-            NSInteger currentPoints = 0;
-            if ([data valueForKeyPath:@"current_points_level"] != [NSNull null]) {
-                NSDictionary *current_points_level = [data valueForKeyPath:@"current_points_level"];
-                float dollarValue = 0.0;
-                currentPoints = [[current_points_level valueForKey:@"points"] integerValue];
- 
-                current_points_level_int = currentPoints;
-                if (currentPoints > 0) {
-                    if ([current_points_level valueForKey:@"dollar_value"] != [NSNull null]) {
-                        dollarValue = [[current_points_level valueForKey:@"dollar_value"] floatValue];
-                        if (dollarValue > 0) {
-                            dollarValueForEachPoint = dollarValue / currentPoints;
-                            currentPointsMessage = [NSString stringWithFormat:@"Now your points are worth $%.2f each", dollarValueForEachPoint];
+            
+            if ([CurrentBusiness sharedCurrentBusinessManager].business) {
+                
+                NSString *currentPointsMessage =@"";
+                double dollarValueForEachPoint = 0.0;
+                NSInteger nextLevelpoints = 0;
+                NSInteger currentPoints = 0;
+                if ([data valueForKeyPath:@"current_points_level"] != [NSNull null]) {
+                    NSDictionary *current_points_level = [data valueForKeyPath:@"current_points_level"];
+                    float dollarValue = 0.0;
+                    currentPoints = [[current_points_level valueForKey:@"points"] integerValue];
+     
+                    current_points_level_int = currentPoints;
+                    if (currentPoints > 0) {
+                        if ([current_points_level valueForKey:@"dollar_value"] != [NSNull null]) {
+                            dollarValue = [[current_points_level valueForKey:@"dollar_value"] floatValue];
+                            if (dollarValue > 0) {
+                                dollarValueForEachPoint = dollarValue / currentPoints;
+                                currentPointsMessage = [NSString stringWithFormat:@"Your points are worth %2.0f¢ each", dollarValueForEachPoint*100];
+                            }
                         }
                     }
                 }
-            }
-            
-            if ([currentPointsMessage length] > 0) {
-//                self.lblRedeemPoints.hidden = false;
-                self.lblCongrats.hidden = false;
-                self.lblRedeemPoints.text = currentPointsMessage;
-            } else {
-//                self.lblRedeemPoints.hidden = true;
-                self.lblCongrats.hidden = true;
-            }
-            
-            if ([data valueForKeyPath:@"next_points_level"] != [NSNull null]) {
-                NSDictionary *next_points_level = [data valueForKeyPath:@"next_points_level"];
-                float dollarValue = 0.0;
-                nextLevelpoints = [[next_points_level valueForKey:@"points"] integerValue];
                 
-                if ([next_points_level valueForKey:@"dollar_value"] != [NSNull null]) {
-                    dollarValue = [[next_points_level valueForKey:@"dollar_value"] floatValue];
+                if ([currentPointsMessage length] > 0) {
+    //                self.lblRedeemPoints.hidden = false;
+                    self.lblCongrats.hidden = false;
+                    self.lblRedeemPoints.text = currentPointsMessage;
+                } else {
+    //                self.lblRedeemPoints.hidden = true;
+                    self.lblCongrats.hidden = true;
                 }
                 
-                if (nextLevelpoints > 0) {
-                    self.lblNextLevelPoints.hidden = false;
-                    self.lblNextLevelPoints.text = [NSString stringWithFormat:@"Next level is %ld points for $%.2f",(long)nextLevelpoints,dollarValue];
+                if ([data valueForKeyPath:@"next_points_level"] != [NSNull null]) {
+                    NSDictionary *next_points_level = [data valueForKeyPath:@"next_points_level"];
+                    float dollarValue = 0.0;
+                    nextLevelpoints = [[next_points_level valueForKey:@"points"] integerValue];
+                    
+                    if ([next_points_level valueForKey:@"dollar_value"] != [NSNull null]) {
+                        dollarValue = [[next_points_level valueForKey:@"dollar_value"] floatValue];
+                    }
+                    
+                    if (nextLevelpoints > 0) {
+                        self.lblNextLevelPoints.hidden = false;
+                        self.lblNextLevelPoints.text = [NSString stringWithFormat:@"Next level is %ld points for $%.2f",(long)nextLevelpoints,dollarValue];
+                    }
+                    else {
+                        self.lblNextLevelPoints.hidden = true;
+                    }
                 }
-                else {
-                    self.lblNextLevelPoints.hidden = true;
+                
+                
+                if (dollarValueForEachPoint <= 0.0) {
+                    currentPointsMessage = [NSString stringWithFormat:@"Earn at least %ld points to redeem them", (long)nextLevelpoints];
+                    self.lblRedeemPoints.text = currentPointsMessage;
                 }
-            }
-            
-            
-            if (dollarValueForEachPoint <= 0.0) {
-                currentPointsMessage = [NSString stringWithFormat:@"Earn at least %ld points to redeem them", (long)nextLevelpoints];
-                self.lblRedeemPoints.text = currentPointsMessage;
-            }
 
-            // this was in the first release
-//            self.lblRedeemPoints.text = @"Keep earning points.";
-//            self.lblNextLevelPoints.text = @"Redeem them with the next app update.";
-            
-//            if ([dic valueForKeyPath:@"points_earned"] != [NSNull null])
+                // this was in the first release
+    //            self.lblRedeemPoints.text = @"Keep earning points.";
+    //            self.lblNextLevelPoints.text = @"Redeem them with the next app update.";
+                
+    //            if ([dic valueForKeyPath:@"points_earned"] != [NSNull null])
+            } else {
+                // we have not chosen an business yet
+                self.lblCongrats.hidden = true;
+                self.lblNextLevelPoints.hidden = true;
+                self.lblRedeemPoints.text = [NSString stringWithFormat:@"Your total points for all businesses: %@",total_available_points];
+            }
             self.pointsarray = [data valueForKeyPath:@"points"];
             [self.tableView reloadData];
         }

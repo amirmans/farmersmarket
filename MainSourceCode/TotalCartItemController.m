@@ -783,7 +783,7 @@ UITextView *alertTextView;
 
     NSInteger currentRedeemPoints = [self getRedeemNoPoints];
     float redeemPointsDollarValue = [self redeemPointsValue];
-    NSString *cardNo = [defaultCardData valueForKey:@"number"];
+    NSString *cardNo = [defaultCardData valueForKey:@"cc_no"];
     if ([self.notesText  isEqual:Note_default_text]) {
         self.notesText = @"";
     }
@@ -829,9 +829,9 @@ UITextView *alertTextView;
             //            STPCardParams *card = [[STPCardParams alloc] init];
 
 
-            NSString *cardName = [defaultCardData valueForKey:@"cardName"];
+            NSString *cardType = [defaultCardData valueForKey:@"card_type"];
 
-            NSString *cardNo = [defaultCardData valueForKey:@"number"];;
+            NSString *cardNo = [defaultCardData valueForKey:@"cc_no"];;
 
             NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
 
@@ -843,7 +843,7 @@ UITextView *alertTextView;
             receiptVC.fetchedRecordArray = fetchedOrderArray;
             receiptVC.order_id = [[dataDict valueForKey:@"order_id"] stringValue];
             receiptVC.reward_point = [[dataDict valueForKey:@"points"] stringValue];
-            receiptVC.cardName = cardName;
+            receiptVC.cardType = cardType;
             receiptVC.cardNumber = cardDisplayNumber;
             receiptVC.cardExpDate = expDate;
             NSInteger currentRedeemPoints = [self getRedeemNoPoints];
@@ -919,7 +919,7 @@ UITextView *alertTextView;
 
     NSString *totalPointsStr = [NSString stringWithFormat:@"%ld",(long)cartTotal * PointsValueMultiplier];
 //    self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%@ Pts",total_available_points];
-    self.lblEarnedPoint.text = [NSString stringWithFormat:@"%@ Pts",totalPointsStr];
+    self.lblEarnedPoint.text = [NSString stringWithFormat:@"Earn %@ Pts",totalPointsStr];
     NSString *tip10String = [NSString stringWithFormat:@"$%.2f",cartTotal * .10];
     NSString *tip15String = [NSString stringWithFormat:@"$%.2f",cartTotal * .15];
     NSString *tip20String = [NSString stringWithFormat:@"$%.2f",cartTotal * .20];
@@ -942,7 +942,7 @@ UITextView *alertTextView;
     int totaLAvailablePoints = [[[rewards valueForKey:@"data"] valueForKey:@"total_available_points"] intValue];
     if (originalPointsValue > 0) {
         dollarValueForEachPoints = originalPointsValue / currenPointsLevel;
-        self.lblCurrentPoints.text = [NSString stringWithFormat:@"You have %ld points worth $%.2f each.  Redeem?",(long)totaLAvailablePoints,dollarValueForEachPoints];
+        self.lblCurrentPoints.text = [NSString stringWithFormat:@"%ld points worth %2.0f¢ each.  Redeem some?",(long)totaLAvailablePoints,dollarValueForEachPoints*100];
     }
     else {
         dollarValueForEachPoints = 0.0;
@@ -979,17 +979,22 @@ UITextView *alertTextView;
 - (void) getDefaultCardData {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    if ([defaults valueForKey:StripeDefaultCard] != nil) {
-        defaultCardData = [defaults valueForKey:StripeDefaultCard];
-        NSString *cardName = [defaultCardData valueForKey:@"cardName"];
-        NSString *cardNo = [defaultCardData valueForKey:@"number"];
-
+    defaultCardData = [defaults valueForKey:StripeDefaultCard];
+    if (defaultCardData != nil) {
+        
+        NSString *cardType = [defaultCardData valueForKey:@"card_type"];
+        NSString *cardNo = [defaultCardData valueForKey:@"cc_no"];
+        
+        if (cardType.length == 0) {
+            cardType = @"CARD";
+        }
+        
         NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
-        NSString *defaultCardString = [NSString stringWithFormat:@"%@ ENDING IN %@",cardName,trimmedString];
+        NSString *defaultCardString = [NSString stringWithFormat:@"%@ ENDING IN %@",cardType,trimmedString];
         self.lblDefaultCard.text = defaultCardString;
     }
     else {
-        self.lblDefaultCard.text = @"";
+        self.lblDefaultCard.text = @"NO DEFAULT CARD!";
     }
 }
 
@@ -1265,7 +1270,7 @@ UITextView *alertTextView;
     }
     else {
         if ([DataModel sharedDataModelManager].emailAddress.length < 1) {
-            [UIAlertController showErrorAlert:@"Your receipt won't be emailed to you!\nSince we don't have your email address in profile page"];
+            [UIAlertController showErrorAlert:@"Your receipt won't be emailed to you!\nPlease provide email address in profile page."];
         }
 
 //        if ([billInDollar compare:zero] ==  NSOrderedDescending) {

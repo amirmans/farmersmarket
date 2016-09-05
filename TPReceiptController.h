@@ -25,7 +25,7 @@
 @property (strong, nonatomic) NSMutableArray *fetchedRecordArray;
 @property (strong, nonatomic) NSString *order_id;
 @property (strong, nonatomic) NSString *reward_point;
-@property (strong, nonatomic) NSString *cardName;
+@property (strong, nonatomic) NSString *cardType;
 @property (strong, nonatomic) NSString *cardNumber;
 @property (strong, nonatomic) NSString *cardExpDate;
 @property (strong, nonatomic) NSString *redeem_point;
@@ -42,6 +42,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *lblTextFromPayConfirmation;
 @property (strong, nonatomic) IBOutlet UILabel *lbl_thankYou;
 @property (strong, nonatomic) IBOutlet UILabel *lblBusinessName;
+@property (strong, nonatomic) IBOutlet UILabel *lbl_emailSentShortly;
 
 - (IBAction)btnTextFromPayConfirmation:(id)sender;
 

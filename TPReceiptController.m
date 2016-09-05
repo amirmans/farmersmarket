@@ -18,10 +18,16 @@
 
 @implementation TPReceiptController
 
-@synthesize totalPaid, tipAmount, subTotal, lblTextFromPayConfirmation, lbl_thankYou, lblBusinessName;
+@synthesize totalPaid, tipAmount, subTotal, lblTextFromPayConfirmation, lbl_thankYou, lblBusinessName, lbl_emailSentShortly;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if ([DataModel sharedDataModelManager].emailAddress.length < 1) {
+        lbl_emailSentShortly.hidden = true;
+    } else {
+        lbl_emailSentShortly.hidden = false;
+    }
     
     self.title = @"Confirmation";
     lblBusinessName.textAlignment = NSTextAlignmentCenter;
@@ -187,7 +193,7 @@
     self.lblOrderNumber.text = self.order_id;
     self.lblEarnedReward.text = [NSString stringWithFormat:@"You Earned %@ Reward Points!",self.reward_point];
     self.lblRedeemReward.text = [NSString stringWithFormat:@"You Redeemed %@ Reward Points!",self.redeem_point];
-    self.lblCardDetails.text = [NSString stringWithFormat:@"%@ %@ %@",self.cardName,self.cardNumber,self.cardExpDate];
+    self.lblCardDetails.text = [NSString stringWithFormat:@"%@ %@ %@",self.cardType,self.cardNumber,self.cardExpDate];
     self.lblAverageWaitingTime.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
 }
 

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G12a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="16A313a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -59,6 +59,7 @@
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BUW-Np-MH0">
                                             <rect key="frame" x="0.0" y="0.0" width="101" height="35"/>
+                                            <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
                                             <state key="normal" title="Option 1">
                                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -81,6 +82,7 @@
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OFj-L9-VHy">
                                             <rect key="frame" x="0.0" y="0.0" width="101" height="35"/>
+                                            <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
                                             <state key="normal" title="Option 2">
                                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -103,6 +105,7 @@
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j06-Mq-hvq">
                                             <rect key="frame" x="0.0" y="0.0" width="101" height="35"/>
+                                            <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
                                             <state key="normal" title="Option 3">
                                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
@@ -159,6 +162,7 @@
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z6p-qT-YSp">
                                     <rect key="frame" x="0.0" y="0.0" width="152" height="39"/>
+                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="17"/>
                                     <state key="normal" title="Add to order">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
@@ -167,7 +171,8 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aS3-5m-NvT">
-                                    <rect key="frame" x="150" y="3" width="152" height="36"/>
+                                    <rect key="frame" x="150" y="0.0" width="152" height="39"/>
+                                    <fontDescription key="fontDescription" type="system" weight="black" pointSize="17"/>
                                     <state key="normal" title="Cancel">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
@@ -178,13 +183,13 @@
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="bottom" secondItem="aS3-5m-NvT" secondAttribute="bottom" constant="2" id="3z2-77-I21"/>
                                 <constraint firstItem="aS3-5m-NvT" firstAttribute="leading" secondItem="VcJ-UQ-F3l" secondAttribute="leading" constant="150" id="Fim-bI-DRs"/>
                                 <constraint firstAttribute="trailing" secondItem="aS3-5m-NvT" secondAttribute="trailing" constant="2" id="Icn-8q-vs8"/>
                                 <constraint firstAttribute="bottom" secondItem="z6p-qT-YSp" secondAttribute="bottom" constant="2" id="J6W-RE-A93"/>
-                                <constraint firstItem="aS3-5m-NvT" firstAttribute="top" secondItem="VcJ-UQ-F3l" secondAttribute="top" constant="3" id="SN3-EU-mLa"/>
+                                <constraint firstItem="aS3-5m-NvT" firstAttribute="height" secondItem="z6p-qT-YSp" secondAttribute="height" id="UA6-kX-v0Z"/>
                                 <constraint firstItem="z6p-qT-YSp" firstAttribute="leading" secondItem="VcJ-UQ-F3l" secondAttribute="leading" id="crk-wC-jgs"/>
                                 <constraint firstAttribute="trailing" secondItem="z6p-qT-YSp" secondAttribute="trailing" constant="152" id="gGM-9O-6ge"/>
+                                <constraint firstItem="aS3-5m-NvT" firstAttribute="top" secondItem="z6p-qT-YSp" secondAttribute="top" id="jY8-wM-W86"/>
                                 <constraint firstAttribute="height" constant="41" id="n6Z-RQ-4fe"/>
                                 <constraint firstItem="z6p-qT-YSp" firstAttribute="top" secondItem="VcJ-UQ-F3l" secondAttribute="top" id="nBU-9h-dHK"/>
                                 <constraint firstItem="aS3-5m-NvT" firstAttribute="width" secondItem="z6p-qT-YSp" secondAttribute="width" id="qmm-fI-H0w"/>

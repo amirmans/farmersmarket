@@ -45,15 +45,16 @@
                                                         <constraint firstAttribute="height" constant="21" id="44Y-Wm-ZWo"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.97254901959999995" green="0.50588235290000005" blue="0.13725490200000001" alpha="1" colorSpace="deviceRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" placeholder="zipcode (optional)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VXo-CT-dpb">
-                                                    <rect key="frame" x="8" y="25" width="288" height="40"/>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="zipcode (optional)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VXo-CT-dpb">
+                                                    <rect key="frame" x="8" y="27" width="288" height="42"/>
+                                                    <color key="backgroundColor" red="0.97254901959999995" green="0.50588235290000005" blue="0.13725490200000001" alpha="1" colorSpace="deviceRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="G7J-Us-vW3"/>
+                                                        <constraint firstAttribute="height" constant="42" id="G7J-Us-vW3"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
@@ -63,20 +64,21 @@
                                                 <constraint firstItem="BUQ-kG-N1S" firstAttribute="trailing" secondItem="VXo-CT-dpb" secondAttribute="trailing" id="ObF-Sz-XZ2"/>
                                                 <constraint firstItem="BUQ-kG-N1S" firstAttribute="leading" secondItem="VXo-CT-dpb" secondAttribute="leading" id="ZrL-ew-bOu"/>
                                                 <constraint firstItem="BUQ-kG-N1S" firstAttribute="trailing" secondItem="Icu-S5-m3i" secondAttribute="trailingMargin" id="bwT-Do-9Xb"/>
-                                                <constraint firstItem="VXo-CT-dpb" firstAttribute="top" secondItem="BUQ-kG-N1S" secondAttribute="bottom" constant="4" id="ycl-Ta-d65"/>
+                                                <constraint firstItem="VXo-CT-dpb" firstAttribute="top" secondItem="BUQ-kG-N1S" secondAttribute="bottom" constant="6" id="ycl-Ta-d65"/>
                                                 <constraint firstItem="BUQ-kG-N1S" firstAttribute="leading" secondItem="Icu-S5-m3i" secondAttribute="leadingMargin" id="zeI-IX-Pkz"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="knq-6E-Fsu" userLabel="Email">
                                             <rect key="frame" x="4" y="8" width="304" height="75"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Used to send receipt" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="kjC-4Y-VcP">
-                                                    <rect key="frame" x="8" y="25" width="288" height="40"/>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Used to send receipts" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="kjC-4Y-VcP">
+                                                    <rect key="frame" x="8" y="25" width="288" height="42"/>
+                                                    <color key="backgroundColor" red="0.97254901960784312" green="0.50588235294117645" blue="0.13725490196078433" alpha="1" colorSpace="deviceRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="XwT-MC-EBf"/>
+                                                        <constraint firstAttribute="height" constant="42" id="XwT-MC-EBf"/>
                                                     </constraints>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="jiA-OB-QxJ">
@@ -85,6 +87,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="oyR-Q7-HaZ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                                    <color key="textColor" red="0.97254901959999995" green="0.50588235290000005" blue="0.13725490200000001" alpha="1" colorSpace="deviceRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -107,16 +110,17 @@
                                                         <constraint firstAttribute="height" constant="21" id="wPa-gA-snD"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.97254901959999995" green="0.50588235290000005" blue="0.13725490200000001" alpha="1" colorSpace="deviceRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="25">
-                                                    <rect key="frame" x="8" y="25" width="288" height="40"/>
+                                                    <rect key="frame" x="8" y="25" width="288" height="42"/>
+                                                    <color key="backgroundColor" red="0.97254901959999995" green="0.50588235290000005" blue="0.13725490200000001" alpha="1" colorSpace="deviceRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="ws5-a1-SfW"/>
+                                                        <constraint firstAttribute="height" constant="42" id="ws5-a1-SfW"/>
                                                     </constraints>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
@@ -131,7 +135,7 @@
                                             </constraints>
                                         </view>
                                     </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="Icu-S5-m3i" firstAttribute="top" secondItem="n9o-7I-ffb" secondAttribute="bottom" constant="23" id="3Vc-yB-K9e"/>
                                         <constraint firstItem="knq-6E-Fsu" firstAttribute="leading" secondItem="MjS-P9-8SD" secondAttribute="leading" constant="4" id="5Mo-dp-G03"/>
@@ -156,7 +160,7 @@
                                     <constraints>
                                         <constraint firstAttribute="height" constant="39" id="yNG-hg-Osc"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" red="1" green="0.083229066429999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -169,7 +173,7 @@
                                     </constraints>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                     <state key="normal" title="Reset">
-                                        <color key="titleColor" red="0.96470588239999999" green="0.37647058820000001" blue="0.1019607843" alpha="1" colorSpace="deviceRGB"/>
+                                        <color key="titleColor" red="0.97254901959999995" green="0.50588235290000005" blue="0.13725490200000001" alpha="1" colorSpace="deviceRGB"/>
                                     </state>
                                     <connections>
                                         <action selector="resetButtonAction:" destination="-1" eventType="touchUpInside" id="iMd-x4-etQ"/>
@@ -180,7 +184,7 @@
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                     <state key="normal" title="Save">
-                                        <color key="titleColor" red="0.96470588239999999" green="0.37647058820000001" blue="0.1019607843" alpha="1" colorSpace="deviceRGB"/>
+                                        <color key="titleColor" red="0.97254901959999995" green="0.50588235290000005" blue="0.13725490200000001" alpha="1" colorSpace="deviceRGB"/>
                                     </state>
                                     <connections>
                                         <action selector="saveButtonAction:" destination="-1" eventType="touchUpInside" id="Iz3-N4-zgG"/>
@@ -213,7 +217,7 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="Rvs-6v-kc3" secondAttribute="bottom" id="37h-d1-zw4"/>
                         <constraint firstItem="Rvs-6v-kc3" firstAttribute="top" secondItem="ET0-aG-AlZ" secondAttribute="top" id="7bo-2b-9NE"/>

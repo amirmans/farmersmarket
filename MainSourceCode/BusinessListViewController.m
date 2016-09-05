@@ -174,10 +174,19 @@ Business *biz;
     self.bizTableView.tableHeaderView = self.searchController.searchBar;
     
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    HUD.label.text = @"Updating businesses with latest info";
+    HUD.label.text = @"Updating businesses...";
     HUD.detailsLabel.text = @"It is worth the wait!";
-    HUD.bezelView.color =[UIColor orangeColor];
+    
     HUD.mode = MBProgressHUDModeIndeterminate;
+
+    // it seems this should be after setting the mode
+    [HUD.bezelView setBackgroundColor:[UIColor orangeColor]];
+    HUD.bezelView.color = [UIColor orangeColor];
+    HUD.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
+    
+    
+    
+    
     [self.view addSubview:HUD];
     [HUD showAnimated:YES];
 

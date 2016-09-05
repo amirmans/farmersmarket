@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="16A313a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,10 +11,10 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="36"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="35"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="36"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Visa" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="2lk-aR-3e5">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Visa" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="2lk-aR-3e5" userLabel="Lbl Card Type">
                         <rect key="frame" x="14" y="8" width="66" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="2hY-pi-qqd"/>
@@ -56,8 +56,8 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="lblCVC" destination="h00-T3-QtR" id="jQq-7W-egi"/>
-                <outlet property="lblCardName" destination="2lk-aR-3e5" id="GTX-tx-5b3"/>
                 <outlet property="lblCardNo" destination="xm1-Rh-ppg" id="AQo-8W-g8o"/>
+                <outlet property="lblCardType" destination="2lk-aR-3e5" id="JuY-0O-sTU"/>
                 <outlet property="lblMonthYear" destination="Ts0-tz-OxN" id="gJX-kr-wBE"/>
             </connections>
             <point key="canvasLocation" x="514" y="387"/>

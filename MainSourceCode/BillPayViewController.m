@@ -60,9 +60,9 @@ NSMutableArray *cardDataArray;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     paymentView.delegate = self;
-    
+
     cardDataArray = [[NSMutableArray alloc] init];
     self.title = [NSString stringWithFormat:@"Pay %@", business.businessName];
 //    [self getStripeDataArray];
@@ -71,16 +71,16 @@ NSMutableArray *cardDataArray;
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
-    
+
     self.cardsTable.delegate = self;
     self.cardsTable.dataSource = self;
-    
+
     self.cardsTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
+
     self.txtZipCode.delegate = self;
-    
+
     [self greyoutView:payButton];
-    
+
     amountTextField.text = [currencyFormatter stringFromNumber:totalBillInDollars];
 }
 
@@ -109,44 +109,44 @@ NSMutableArray *cardDataArray;
 
 - (void) postOrderToServer {
     [[APIUtility sharedInstance] orderToServer:self.orderInfoDict server:OrderServerURL completiedBlock:^(NSDictionary *response) {
-        
+
         if([response valueForKey:@"data"] != nil) {
-            
+
             NSDictionary *dataDict = [response valueForKey:@"data"];
-            
+
             NSMutableArray *fetchedOrders = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
-            
+
             NSMutableArray *fetchedOrderArray = [[NSMutableArray alloc] init];
-            
+
             for (NSManagedObject *obj in fetchedOrders) {
                 NSArray *keys = [[[obj entity] attributesByName] allKeys];
                 NSDictionary *dictionary = [obj dictionaryWithValuesForKeys:keys];
-                
+
                 [fetchedOrderArray addObject:dictionary];
             }
-            
-//            STPCardParams *card = [[STPCardParams alloc] init];
-            
 
-            NSString *cardName = [self getNameFromCardNumber:self.paymentView.cardParams.number];
-            
+//            STPCardParams *card = [[STPCardParams alloc] init];
+
+
+            NSString *cardType = [self getTypeFromCardNumber:self.paymentView.cardParams.number];
+
             NSString *cardNo = self.paymentView.cardParams.number;
-            
+
             NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
-            
+
             NSString *cardDisplayNumber = [NSString stringWithFormat:@"XXXX XXXX XXXX %@",trimmedString];
 
             NSString *expDate =  [NSString stringWithFormat:@"%lu/%lu",(unsigned long)self.paymentView.cardParams.expMonth,(unsigned long)self.paymentView.cardParams.expYear];
-            
+
             TPReceiptController *receiptVC = [[TPReceiptController alloc] initWithNibName:@"TPReceiptController" bundle:nil];
             receiptVC.fetchedRecordArray = fetchedOrderArray;
             receiptVC.order_id = [[dataDict valueForKey:@"order_id"] stringValue];
             receiptVC.reward_point = [[dataDict valueForKey:@"points"] stringValue];
-            receiptVC.cardName = cardName;
+            receiptVC.cardType = cardType;
             receiptVC.cardNumber = cardDisplayNumber;
             receiptVC.cardExpDate = expDate;
             [self removeAllOrderFromCoreData];
-            
+
             [self.navigationController pushViewController:receiptVC animated:YES];
 
         }
@@ -170,31 +170,31 @@ NSMutableArray *cardDataArray;
 
 
 - (void) removeAllOrderFromCoreData {
-    
+
     NSManagedObjectContext *managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
-    
+
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"MyCartItem"];
     NSError *error = nil;
     NSArray *results = [managedObjectContext executeFetchRequest:request error:&error];
-    
+
     for (NSManagedObject *object in results)
     {
         [managedObjectContext deleteObject:object];
     }
-    
+
     error = nil;
     [managedObjectContext save:&error];
 }
 
 - (void) getCCForConsumer {
-    
+
     NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
     [[APIUtility sharedInstance] getAllCCInfo:userID completiedBlock:^(NSDictionary *response) {
         [cardDataArray removeAllObjects];
         if (response != nil) {
             if ([response valueForKey:@"data"] != nil) {
                 NSArray *data = [response valueForKey:@"data"];
-                
+
                 for (NSDictionary *dataDict in data) {
                     ConsumerCCModelObject *ccModel = [ConsumerCCModelObject new];
                     ccModel.consumer_cc_info_id = [dataDict valueForKey:@"consumer_cc_info_id"];
@@ -206,7 +206,7 @@ NSMutableArray *cardDataArray;
                     ccModel.verified = [dataDict valueForKey:@"verified"];
                     ccModel.is_default = [dataDict valueForKey:@"default"];
                     ccModel.zip_code = [dataDict valueForKey:@"zip_code"];
-                    
+
                     [cardDataArray addObject:ccModel];
                 }
             }
@@ -217,27 +217,28 @@ NSMutableArray *cardDataArray;
 
 - (void) deleteCard : (NSDictionary *) cardDict  {
     NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
-    
-    NSArray *dataArrau = [NSArray arrayWithObjects:cardDict, nil];
-    
-    NSDictionary *param = @{@"cmd":@"remove_cc",@"consumer_id":userID,@"data":dataArrau};
-    
+
+    NSArray *dataArray = [NSArray arrayWithObjects:cardDict, nil];
+
+    NSDictionary *param = @{@"cmd":@"remove_cc",@"consumer_id":userID,@"data":dataArray};
+
     [[APIUtility sharedInstance] remove_cc_info:param completiedBlock:^(NSDictionary *response) {
-        [self getCCForConsumer];
+        [self getCCForConsumer]; // todelete
     }];
 }
 
 - (void) checkDefaultCard : (NSString *) cardNumber {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
+
     if ([defaults valueForKey:StripeDefaultCard] != nil) {
 //        NSDictionary *cardDataDict = @{ @"number":cardNumber,@"cardName":cardName,@"expMonth":cardExpMonth,@"expYear":cardExpYear ,@"cvc":cardCvc };
 
         NSDictionary *defaultCardDict = [defaults objectForKey:StripeDefaultCard];
-        NSString *defaultCardNumber = [defaultCardDict valueForKey:@"number"];
-        
+        NSString *defaultCardNumber = [defaultCardDict valueForKey:@"cc_no"];
+
         if ([defaultCardNumber isEqualToString:cardNumber]) {
             [defaults setObject:nil forKey:StripeDefaultCard];
+            [defaults synchronize];
         }
     }
 }
@@ -248,19 +249,19 @@ NSMutableArray *cardDataArray;
 {
     [self.navigationController popViewControllerAnimated:true];
 //    [self.navigationController popToRootViewControllerAnimated:true];
-    
+
 }
 
 - (IBAction)payAction:(id)sender {
     NSString *zipCode = self.txtZipCode.text;
-    
+
     if ([[APIUtility sharedInstance] isZipCodeValid:zipCode]) {
         [self greyoutView:payButton];
         [self greyoutView:changeCardButton];
         //
         if ([self.paymentView isValid]) {
             STPCardParams *card = [[STPCardParams alloc] init];
-            
+
             card.number = self.paymentView.cardParams.number;
             card.expMonth = self.paymentView.cardParams.expMonth;
             card.expYear = self.paymentView.cardParams.expYear;
@@ -270,7 +271,7 @@ NSMutableArray *cardDataArray;
 //            [self checkForUniqeCard:card];
 //            [self.navigationController popViewControllerAnimated:true];
         }
-        
+
 //        NSString *message = [NSString stringWithFormat:@"Paying %@ to %@", amountTextField.text, business.businessName];
 //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:message message:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
 //        [alert setTag:1]; // to identify this alert in the delegate method
@@ -291,7 +292,7 @@ NSMutableArray *cardDataArray;
 //    [alert setTag:0];
 //    [alert show];
 //    alert = nil;
-    
+
     [self.navigationController popViewControllerAnimated:true];
 }
 
@@ -340,7 +341,7 @@ NSMutableArray *cardDataArray;
     request.HTTPMethod = @"POST";
     NSString *body     = [NSString stringWithFormat:@"stripeToken=%@", token.tokenId];
     request.HTTPBody   = [body dataUsingEncoding:NSUTF8StringEncoding];
-    
+
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response,
@@ -380,21 +381,21 @@ NSMutableArray *cardDataArray;
     if (![self.paymentView isValid]) {
         return;
     }
-    
+
     STPCardParams *card = [[STPCardParams alloc] init];
-    
+
     card.number = self.paymentView.cardParams.number;
     card.expMonth = self.paymentView.cardParams.expMonth;
     card.expYear = self.paymentView.cardParams.expYear;
     card.cvc = self.paymentView.cardParams.cvc;
-    
+
     [self checkForUniqeCard:card];
 }
 
 
-- (NSString *) getNameFromCardNumber : (NSString *) cardNumber  {
+- (NSString *) getTypeFromCardNumber : (NSString *) cardNumber  {
     STPCardBrand brand = [STPCardValidator brandForNumber:cardNumber];
-    
+
     switch (brand) {
         case STPCardBrandVisa:
             NSLog(@"Visa");
@@ -459,47 +460,49 @@ NSMutableArray *cardDataArray;
 
 - (void) showAlertForAddingCard : (STPCardParams *) card {
 //    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Do you want to save this Card?" message:@"You can use this card information for your future transactions" preferredStyle:UIAlertControllerStyleAlert];
-    
+
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Your credit card information is saved securely" message:@"You can use this card for your future transactions" preferredStyle:UIAlertControllerStyleAlert];
-    
+
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self saveStripeCard:card];
+//        [self saveCardToServer:card];
         [self saveAsDefaultCard:card];
+        [self.navigationController popViewControllerAnimated:true];
 //        [self createStripeTokenWithCard:card];
     }];
 //    UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//          [self saveStripeCard:card];
+//          [self saveCardToServer:card];
 ////        [self saveAsDefaultCard:card];
 ////        [self createStripeTokenWithCard:card];
 //    }];
-//    
+//
 //    [alert addAction:noAction];
     [alert addAction:yesAction];
-    
+
     [self presentViewController:alert animated:true completion:^{
-        
+
     }];
 }
 
-- (void) saveAsDefaultCard : (STPCardParams *) card {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    NSString *cardNumber = card.number;
-    NSString *cardExpMonth = [NSString stringWithFormat:@"%tu",card.expMonth];
-    NSString *cardExpYear = [NSString stringWithFormat:@"%tu",card.expYear];
-    NSString *cardCvc = card.cvc;
-    NSString *cardName = [self getNameFromCardNumber:cardNumber];
-    
-    NSDictionary *cardDataDict = @{ @"number":cardNumber,@"cardName":cardName,@"expMonth":cardExpMonth,@"expYear":cardExpYear ,@"cvc":cardCvc };
-    
-    [defaults setObject:cardDataDict forKey:StripeDefaultCard];
-    [self.navigationController popViewControllerAnimated:true];
-//    [self.navigationController popViewControllerAnimated:true];
-}
+//- (void) saveAsDefaultCard : (STPCardParams *) card {
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//
+//    NSString *cardNumber = card.number;
+//    NSString *cardExpMonth = [NSString stringWithFormat:@"%tu",card.expMonth];
+//    NSString *cardExpYear = [NSString stringWithFormat:@"%tu",card.expYear];
+//    NSString *cardCvc = card.cvc;
+//    NSString *cardName = [self getNameFromCardNumber:cardNumber];
+//
+//    NSDictionary *cardDataDict = @{ @"number":cardNumber,@"cardName":cardName,@"expMonth":cardExpMonth,@"expYear":cardExpYear ,@"cvc":cardCvc, @"addressZip":card.addressZip };
+//
+//    [defaults setObject:cardDataDict forKey:StripeDefaultCard];
+//    [self saveCardToServer:card];
+////    [self.navigationController popViewControllerAnimated:true];
+////    [self.navigationController popViewControllerAnimated:true];
+//}
 
 - (void) checkForUniqeCard : (STPCardParams *) cardData {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
+
     if ([defaults objectForKey:stripeArrayKey] == nil) {
         [self showAlertForAddingCard:cardData];
     }
@@ -507,14 +510,15 @@ NSMutableArray *cardDataArray;
         NSString *cardNumber = cardData.number;
 
         NSMutableArray *stripeDataArray = [defaults objectForKey:stripeArrayKey];
-        
+
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"number CONTAINS[cd] %@",cardNumber];
-        
+
         NSArray *dataArray = [[stripeDataArray filteredArrayUsingPredicate:predicate] mutableCopy];
-        
+
         NSLog(@"%ld",(unsigned long)[dataArray count]);
         if ([dataArray count] > 0) {
             [self saveAsDefaultCard:cardData];
+            [self.navigationController popViewControllerAnimated:true];
 //            [self createStripeTokenWithCard:cardData];
         }
         else {
@@ -523,61 +527,78 @@ NSMutableArray *cardDataArray;
     }
 }
 
-- (void) saveStripeCard : (STPCardParams *) cardData {
-    
-//    STPCardParams *param = cardData;
-    
-    [self saveCardToServer:cardData];
-    
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    
-//    NSString *cardNumber = cardData.number;
-//    NSString *cardExpMonth = [NSString stringWithFormat:@"%tu",cardData.expMonth];
-//    NSString *cardExpYear = [NSString stringWithFormat:@"%tu",cardData.expYear];
-//    NSString *cardCvc = cardData.cvc;
-//    NSString *cardName = [self getNameFromCardNumber:cardData.number];
-//    
-//    NSDictionary *cardDataDict = @{ @"number":cardNumber,@"cardName":cardName,@"expMonth":cardExpMonth,@"expYear":cardExpYear ,@"cvc":cardCvc };
+//- (void) saveCardToServer----old : (STPCardParams *) cardData {
 //
-////    NSDictionary *cardDataDict = @{ @"number":cardNumber,@"expMonth":cardExpMonth,@"expYear":cardExpYear ,@"cvc":cardCvc };
-//    
-//    if ([defaults objectForKey:stripeArrayKey] == nil) {
-//        NSMutableArray *stripeDataArray = [[NSMutableArray alloc] init];
-//        [stripeDataArray addObject:cardDataDict];
-//        [defaults setObject:stripeDataArray forKey:stripeArrayKey];
-//        [defaults synchronize];
-//    }
-//    else {
-//        NSMutableArray *stripeDataArray = [[NSMutableArray alloc] initWithArray: [defaults objectForKey:stripeArrayKey]];
-//        [stripeDataArray addObject:cardDataDict];
-//        NSLog(@"%ld",(unsigned long)[stripeDataArray count]);
-//        
-//        [defaults setObject:stripeDataArray forKey:stripeArrayKey];
-//        [defaults synchronize];
-//    }
-//    [self getStripeDataArray];
-}
+////    STPCardParams *param = cardData;
+//
+//    [self saveCardToServer:cardData];
+//
+////    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+////
+////    NSString *cardNumber = cardData.number;
+////    NSString *cardExpMonth = [NSString stringWithFormat:@"%tu",cardData.expMonth];
+////    NSString *cardExpYear = [NSString stringWithFormat:@"%tu",cardData.expYear];
+////    NSString *cardCvc = cardData.cvc;
+////    NSString *cardName = [self getNameFromCardNumber:cardData.number];
+////
+////    NSDictionary *cardDataDict = @{ @"number":cardNumber,@"cardName":cardName,@"expMonth":cardExpMonth,@"expYear":cardExpYear ,@"cvc":cardCvc };
+////
+//////    NSDictionary *cardDataDict = @{ @"number":cardNumber,@"expMonth":cardExpMonth,@"expYear":cardExpYear ,@"cvc":cardCvc };
+////
+////    if ([defaults objectForKey:stripeArrayKey] == nil) {
+////        NSMutableArray *stripeDataArray = [[NSMutableArray alloc] init];
+////        [stripeDataArray addObject:cardDataDict];
+////        [defaults setObject:stripeDataArray forKey:stripeArrayKey];
+////        [defaults synchronize];
+////    }
+////    else {
+////        NSMutableArray *stripeDataArray = [[NSMutableArray alloc] initWithArray: [defaults objectForKey:stripeArrayKey]];
+////        [stripeDataArray addObject:cardDataDict];
+////        NSLog(@"%ld",(unsigned long)[stripeDataArray count]);
+////
+////        [defaults setObject:stripeDataArray forKey:stripeArrayKey];
+////        [defaults synchronize];
+////    }
+////    [self getStripeDataArray];
+//}
 
-- (void) saveCardToServer : (STPCardParams *) cardData {
+- (void) saveAsDefaultCard : (STPCardParams *) cardData {
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     NSString *cardNumber = cardData.number;
     NSString *cardExpMonth = [NSString stringWithFormat:@"%tu",cardData.expMonth];
-//    NSString *cardExpYear = [NSString stringWithFormat:@"%tu",cardData.expYear];
+    NSString *cardExpYear = [NSString stringWithFormat:@"%tu",cardData.expYear];
+
     if ([cardExpMonth length] < 2)
     {
         cardExpMonth = [NSString stringWithFormat:@"0%@",cardExpMonth];
     }
-    
-    NSString *expiration_date = [NSString stringWithFormat:@"20%tu-%@-01",  cardData.expYear, cardExpMonth];
-    
+
+    NSString *expiration_date = [NSString stringWithFormat:@"%@-%@-01", cardExpYear, cardExpMonth];
+    NSString *zip_code = self.txtZipCode.text;
+    if ([zip_code length] == 0) {
+        zip_code = cardData.addressZip;
+    }
     NSString *cardCvc = cardData.cvc;
-//    NSString *cardName = [self getNameFromCardNumber:cardData.number];
+    NSString *cardType = [self getTypeFromCardNumber:cardData.number];
     NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
+
+//    [defaults setObject:defaultsParam forKey:StripeDefaultCard];
+    NSDictionary *defaultsParam = @{@"consumer_id":userID,@"cc_no":cardNumber
+                                 ,@"expMonth":cardExpMonth,@"expYear":cardExpYear,@"cvv":cardCvc,@"zip_code":zip_code, @"card_type":cardType};
+
+    [defaults setObject:defaultsParam forKey:StripeDefaultCard];
+//    [defaults registerDefaults:defaultsParam];
+    [defaults synchronize];
     
-    NSDictionary *param = @{@"cmd":@"save_cc_info",@"consumer_id":userID,@"cc_no":cardNumber,@"expiration_date":expiration_date,@"cvv":cardCvc,@"zip_code":self.txtZipCode.text, @"default":@"1"};
+    NSLog(@"Saved this info for card default: %@", defaultsParam);
     
-    [[APIUtility sharedInstance]save_cc_info:param completiedBlock:^(NSDictionary *response) {
-        [self getCCForConsumer];
+    NSDictionary *severParam = @{@"cmd":@"save_cc_info",@"consumer_id":userID,@"cc_no":cardNumber
+                                 ,@"expiration_date":expiration_date,@"cvv":cardCvc,@"zip_code":zip_code, @"card_type":cardType
+                                 ,@"default":@"1"};
+    [[APIUtility sharedInstance]save_cc_info:severParam completiedBlock:^(NSDictionary *response) {
+//        [self getCCForConsumer];
     }];
 }
 
@@ -636,19 +657,19 @@ NSMutableArray *cardDataArray;
     // convert dollars to cents
     NSDecimalNumber *cents = [NSDecimalNumber decimalNumberWithString:@"100"];
     NSDecimalNumber *totalBillInCents= [totalBillInDollars decimalNumberByMultiplyingBy:cents];
-    
+
     NSString *amountInCentsString= [totalBillInCents stringValue];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:TapForAllPaymentServer]];
     request.HTTPMethod = @"POST";
     NSString *body     = [NSString stringWithFormat:@"stripeToken=%@&amount=%@&currency=usd&customerPaymentID=%@&customerPaymentProcessingEmail=%@", token.tokenId, amountInCentsString, business.paymentProcessingID, business.paymentProcessingEmail];
     request.HTTPBody   = [body dataUsingEncoding:NSUTF8StringEncoding];
-    
+
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                if (error) {
                                    //                                       [UIAlertView showErrorAlert:@"Something went BAD - Clean the place or first born?"];
-                                   
+
                                    //
                                    //                                       UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
                                    //                                                                                                      message:@"Something went BAD - Clean the place or first born?"
@@ -658,18 +679,18 @@ NSMutableArray *cardDataArray;
                                    //                                                                                             handler:^(UIAlertAction * action) {}];
                                    //
                                    //                                       [alert addAction:defaultAction];
-                                   
-                                   
+
+
                                    [UIAlertController showErrorAlert:@"Something went BAD - Clean the place or first born?"];
-                                   
-                                   
-                                   
+
+
+
                                    [self enableView:payButton];
                                    [self enableView:changeCardButton];
                                }
                                else {
                                    //                                       [UIAlertView showErrorAlert:@"Paid - Now you're free to move about the country"];
-                                   
+
                                    //                                       UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
                                    //                                                                                                      message:@"Paid - Now you're free to move about the country."
                                    //                                                                                               preferredStyle:UIAlertControllerStyleAlert];
@@ -679,8 +700,8 @@ NSMutableArray *cardDataArray;
                                    //
                                    //                                       [alert addAction:defaultAction];
                                    //
-                                   
-                                   
+
+
                                    //Harry Dev Comment
                                    //                                       [UIAlertController showErrorAlert:@"Paid - Now you're free to move about the country"];
                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
@@ -690,11 +711,11 @@ NSMutableArray *cardDataArray;
                                                                          otherButtonTitles:nil];
                                    alert.tag = 5;
                                    [alert show];
-                                   
+
                                    [self postOrderToServer];
                                    [self greyoutView:payButton];
                                    [self greyoutView:changeCardButton];
-                                   
+
                                    paymentView.enabled = FALSE;
                                    [paymentView setBackgroundColor:[UIColor grayColor]];
                                }
@@ -712,45 +733,45 @@ NSMutableArray *cardDataArray;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *simpleTableIdentifier = @"SavedCardTableCell";
-    
+
     SavedCardTableCell *cell = (SavedCardTableCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     if (cell == nil)
     {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SavedCardTableCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
-    
+
 //    NSDictionary *cardDict = [cardDataArray objectAtIndex:indexPath.row];
-    
+
     ConsumerCCModelObject *ccModel = [cardDataArray objectAtIndex:indexPath.row];
-    
+
     NSString *cardNo = ccModel.cc_no;
-    
+
     NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
-    
+
     NSString *cardDisplayNumber = [NSString stringWithFormat:@"XXXX XXXX XXXX %@",trimmedString];
-    
+
 //    NSString *cardName = ccModel.name_on_card;
-    cell.lblCardName.text = [self getNameFromCardNumber:cardNo];
+    cell.lblCardType.text = [self getTypeFromCardNumber:cardNo];
     cell.lblCardNo.text = cardDisplayNumber;
-    
+
     NSString *cardExpirationDateString = ccModel.expiration_date;
-    
+
     NSDateFormatter *severDateFormatter = [[NSDateFormatter alloc] init];
-    
+
     severDateFormatter.dateFormat = @"yyyy-MM-dd";
     NSDate *date =  [severDateFormatter dateFromString:cardExpirationDateString];
-    
+
     NSDateFormatter *localDateFormatter = [[NSDateFormatter alloc] init];
     localDateFormatter.dateFormat = @"yyyy/MM";
-    
+
     NSString *localDateString = [localDateFormatter stringFromDate:date];
-    
+
 //    cell.lblMonthYear.text = [NSString stringWithFormat:@"%@/%@",[cardDict valueForKey:@"expMonth"],[cardDict valueForKey:@"expYear"]];
     cell.lblMonthYear.text = localDateString;
-    
+
     cell.lblCVC.text = @"XXX";
-    
+
 //    ConsumerCCModelObject *ccModel = [ConsumerCCModelObject new];
 //    ccModel.consumer_cc_info_id = [dataDict valueForKey:@"consumer_cc_info_id"];
 //    ccModel.consumer_id = [dataDict valueForKey:@"consumer_id"];
@@ -765,19 +786,19 @@ NSMutableArray *cardDataArray;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+
     ConsumerCCModelObject *ccModel = [cardDataArray objectAtIndex:indexPath.row];
-    
+
 //    NSDictionary *cardDict = [cardDataArray objectAtIndex:indexPath.row];
     NSString *cardNo = ccModel.cc_no;
-    
+
     NSDateFormatter *severDateFormatter = [[NSDateFormatter alloc] init];
     NSString *cardExpirationDateString = ccModel.expiration_date;
     severDateFormatter.dateFormat = @"yyyy-MM-dd";
     NSDate *date =  [severDateFormatter dateFromString:cardExpirationDateString];
     NSCalendar* calendar = [NSCalendar currentCalendar];
     NSDateComponents* components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date]; // Get necessary date components
-    
+
     [components month]; //gives you month
     [components day]; //gives you day
     [components year]; // gives you year
@@ -787,14 +808,17 @@ NSMutableArray *cardDataArray;
     NSString *cardCvc = ccModel.cvv;
 //    NSString *cardName = [self getNameFromCardNumber:card.number];
     STPCardParams *card = [[STPCardParams alloc] init];
-    
+
     card.number = cardNo;
     card.expMonth = [expMonth integerValue];
     card.expYear = [expYear integerValue];
     card.cvc = cardCvc;
-    
+    card.addressZip = ccModel.zip_code;
+
     [self saveAsDefaultCard:card];
-//    [self.navigationController popViewControllerAnimated:true];
+    [self.navigationController popViewControllerAnimated:true];
+
+    card = nil;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -809,15 +833,15 @@ NSMutableArray *cardDataArray;
         NSString *cardExpirationDateString = ccModel.expiration_date;
         NSString *zipCode = ccModel.zip_code;
         NSString *cvv = ccModel.cvv;
-        
+
         NSDictionary *dataDict = @{@"cc_no":cardNo,@"expiration_date":cardExpirationDateString,@"zip_code":zipCode,@"cvv":cvv};
-        
+
         [self checkDefaultCard:cardNo];
         [self deleteCard:dataDict];
-        
-        
+
+
         [cardDataArray removeObjectAtIndex:indexPath.row];
-        
+
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
                          withRowAnimation:UITableViewRowAnimationFade];
     }
@@ -838,22 +862,22 @@ NSMutableArray *cardDataArray;
         }
     }
     else if(alertView.tag == 5){
-        
+
 //        NSMutableArray *fetchedOrders = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
-//        
+//
 //        NSMutableArray *fetchedOrderArray = [[NSMutableArray alloc] init];
-//        
+//
 //        for (NSManagedObject *obj in fetchedOrders) {
 //            NSArray *keys = [[[obj entity] attributesByName] allKeys];
 //            NSDictionary *dictionary = [obj dictionaryWithValuesForKeys:keys];
-//            
+//
 //            [fetchedOrderArray addObject:dictionary];
 //        }
 //        TPReceiptController *receiptVC = [[TPReceiptController alloc] initWithNibName:@"TPReceiptController" bundle:nil];
 //        receiptVC.FetchedRecordArray = fetchedOrderArray;
-//        
+//
 //        [self removeAllOrderFromCoreData];
-//        
+//
 //        [self.navigationController pushViewController:receiptVC animated:YES];
     }
     else{
