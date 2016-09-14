@@ -219,6 +219,9 @@
 		C6FDD5CC187CDD2900F4D721 /* BusinessNotificationTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6FDD5CB187CDD2900F4D721 /* BusinessNotificationTableViewController.xib */; };
 		C6FDD5CF187D079600F4D721 /* ServerInteractionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FDD5CD187D079600F4D721 /* ServerInteractionManager.m */; };
 		C6FDD5D3187D087900F4D721 /* BusinessNotificationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FDD5D1187D087900F4D721 /* BusinessNotificationTableViewController.m */; };
+		C6FE85DC1D82974500B0D295 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FE85DB1D82974500B0D295 /* GameKit.framework */; };
+		C6FE85DE1D82974F00B0D295 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FE85DD1D82974F00B0D295 /* PassKit.framework */; };
+		C6FE85E01D82975400B0D295 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FE85DF1D82975400B0D295 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -531,6 +534,9 @@
 		C6FDD5D0187D087900F4D721 /* NewNotificationProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewNotificationProtocol.h; path = MainSourceCode/NewNotificationProtocol.h; sourceTree = "<group>"; };
 		C6FDD5D1187D087900F4D721 /* BusinessNotificationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BusinessNotificationTableViewController.m; path = MainSourceCode/BusinessNotificationTableViewController.m; sourceTree = "<group>"; };
 		C6FDD5D2187D087900F4D721 /* BusinessNotificationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BusinessNotificationTableViewController.h; path = MainSourceCode/BusinessNotificationTableViewController.h; sourceTree = "<group>"; };
+		C6FE85DB1D82974500B0D295 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		C6FE85DD1D82974F00B0D295 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
+		C6FE85DF1D82975400B0D295 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -545,12 +551,15 @@
 				29496BDD15EFDE1200127A05 /* ImageIO.framework in Frameworks */,
 				29D51BFD156C9D55009F0571 /* MessageUI.framework in Frameworks */,
 				29D51BFB156C9D2F009F0571 /* SystemConfiguration.framework in Frameworks */,
+				C6FE85E01D82975400B0D295 /* StoreKit.framework in Frameworks */,
 				29D51BED156C98E5009F0571 /* CoreGraphics.framework in Frameworks */,
 				298A6C7F156C78E400986F29 /* MobileCoreServices.framework in Frameworks */,
+				C6FE85DC1D82974500B0D295 /* GameKit.framework in Frameworks */,
 				298A6C7B156C76B800986F29 /* libz.1.2.5.dylib in Frameworks */,
 				298A6C74156C740900986F29 /* CFNetwork.framework in Frameworks */,
 				295F5BE01458C5F400832AE8 /* CoreLocation.framework in Frameworks */,
 				295F5BDF1458C5CC00832AE8 /* MapKit.framework in Frameworks */,
+				C6FE85DE1D82974F00B0D295 /* PassKit.framework in Frameworks */,
 				2949CC3A14589C7200728B87 /* UIKit.framework in Frameworks */,
 				2949CC3C14589C7200728B87 /* Foundation.framework in Frameworks */,
 				2949CC4014589C7200728B87 /* CoreData.framework in Frameworks */,
@@ -610,6 +619,9 @@
 		2949CC3814589C7200728B87 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C6FE85DF1D82975400B0D295 /* StoreKit.framework */,
+				C6FE85DD1D82974F00B0D295 /* PassKit.framework */,
+				C6FE85DB1D82974500B0D295 /* GameKit.framework */,
 				C6A877331D498A62007E3167 /* Security.framework */,
 				4A848ED21C8083DB0055E127 /* EventKitUI.framework */,
 				4A848ED01C8083D50055E127 /* EventKit.framework */,
@@ -1170,11 +1182,18 @@
 				TargetAttributes = {
 					2949CC3414589C7200728B87 = {
 						DevelopmentTeam = E79MNN58JH;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+							com.apple.GameCenter = {
 								enabled = 1;
 							};
 							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
 								enabled = 0;
 							};
 							com.apple.OMC = {
@@ -1184,6 +1203,9 @@
 								enabled = 1;
 							};
 							com.apple.Wallet = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
 								enabled = 0;
 							};
 						};
@@ -1634,8 +1656,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = E79MNN58JH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1646,15 +1668,16 @@
 				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/TapForAll/TapForAll-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tapin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3465f065-e1be-4fcf-a8e8-7e12b9aba368";
-				PROVISIONING_PROFILE_SPECIFIER = TapIn_Dev_Provisioning;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1672,7 +1695,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = E79MNN58JH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1683,7 +1706,7 @@
 				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/TapForAll/TapForAll-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1691,9 +1714,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tapin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "172db1e2-4209-487a-af93-29e3df619115";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "92b2fc63-b234-4347-8fdd-c5c8f4ed4bed";
-				PROVISIONING_PROFILE_SPECIFIER = TapIn_Dev_Provisioning;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1715,8 +1738,8 @@
 				INFOPLIST_FILE = "TapForAllTests/TapForAllTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "MyDoosts.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = TapForAllTests;
-				PROVISIONING_PROFILE = "5c1169f1-d679-401f-ad33-dc059f78d030";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5c1169f1-d679-401f-ad33-dc059f78d030";
+				PROVISIONING_PROFILE = "643cf8aa-6e64-4f3f-9550-9fec4d6d719e";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "643cf8aa-6e64-4f3f-9550-9fec4d6d719e";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Debug;
@@ -1725,7 +1748,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TapForAll.app/TapForAll";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1735,7 +1758,7 @@
 				INFOPLIST_FILE = "TapForAllTests/TapForAllTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "MyDoosts.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = TapForAllTests;
-				PROVISIONING_PROFILE = "94201fef-1b85-4130-9df2-9907edaff0b4";
+				PROVISIONING_PROFILE = "643cf8aa-6e64-4f3f-9550-9fec4d6d719e";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
 			name = Release;

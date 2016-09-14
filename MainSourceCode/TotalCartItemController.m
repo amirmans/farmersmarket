@@ -29,6 +29,8 @@
 @property (assign) NSInteger nextPointsLevel;
 @property (assign) NSInteger totalNoPoints;
 
+@property (nonatomic, strong) MBProgressHUD *hud;
+
 @property (assign) NSInteger redeemNoPoints;  // number of points being redeemed
 @property (assign) double  redeemPointsValue;  // value for the points that we are redeeming
 
@@ -46,7 +48,7 @@
 @synthesize waitTimeLabel;
 @synthesize lblEarnedPoint, lblSubtotalAmount;
 @synthesize flagRedeemPoint, originalPointsValue, originalNoPoints,dollarValueForEachPoints,
-    currenPointsLevel, nextPointsLevel, redeemNoPoints, redeemPointsValue, lblPointsUsed;
+    currenPointsLevel, nextPointsLevel, redeemNoPoints, redeemPointsValue, lblPointsUsed, hud;
 
 NSString *Note_default_text = @"Add your note here";
 
@@ -807,11 +809,25 @@ UITextView *alertTextView;
         NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         NSLog(@"Json format of data send to save_order: %@", jsonString);
     }
-//____
-
-    [MBProgressHUD showHUDAddedTo:self.view animated:true];
+    
+    hud = [[MBProgressHUD alloc] initWithView:self.view];
+    hud.label.text = @"Updating businesses...";
+    hud.detailsLabel.text = @"Tap-in is sending order to merchant...";
+    
+    hud.mode = MBProgressHUDModeIndeterminate;
+    
+    // it seems this should be after setting the mode
+    [hud.bezelView setBackgroundColor:[UIColor orangeColor]];
+    hud.bezelView.color = [UIColor orangeColor];
+    hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
+    [self.view addSubview:hud];
+    [hud showAnimated:YES];
+    
     [[APIUtility sharedInstance] orderToServer:orderInfoDict server:OrderServerURL completiedBlock:^(NSDictionary *response) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:true];
+        [hud hideAnimated:YES];
+        hud = nil;
+
+        
         if([response valueForKey:@"data"] != nil) {
 
             NSDictionary *dataDict = [response valueForKey:@"data"];

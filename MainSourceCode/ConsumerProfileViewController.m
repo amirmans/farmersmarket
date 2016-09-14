@@ -21,6 +21,8 @@
 }
 
 @property (nonatomic, strong) NSDictionary *consumerProfileDataDic;
+@property (nonatomic, strong) MBProgressHUD *hud;
+
 
 - (BOOL)validatePassword:(NSString *)pass;
 - (BOOL)validateAllUserInput;
@@ -45,7 +47,7 @@ static NSArray *consumerProfileDataArray = nil;
 @synthesize zipcodeLabel;
 @synthesize emailLabel;
 @synthesize zipcodeTextField;
-@synthesize emailTextField;
+@synthesize emailTextField, hud;
 
 @synthesize consumerProfileDataDic;
 
@@ -395,11 +397,20 @@ static NSArray *consumerProfileDataArray = nil;
 
 - (void)postSaveRequest {
     // Show an activity spinner that blocks the whole screen
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.label.text = NSLocalizedString(@"Updating account information", @"");
+    hud = [[MBProgressHUD alloc] initWithView:self.view];
+    hud.label.text = @"Updating you info...";
+    hud.detailsLabel.text = @"Your info is being saved securly in a secure place.";
+    
+    hud.mode = MBProgressHUDModeIndeterminate;
+    
+    // it seems this should be after setting the mode
+    [hud.bezelView setBackgroundColor:[UIColor orangeColor]];
+    hud.bezelView.color = [UIColor orangeColor];
+    hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
+    [self.view addSubview:hud];
+    [hud showAnimated:YES];
     
     NSString *urlString = ConsumerProfileServer;
-    
     AFHTTPSessionManager *manager;
     manager = [AFHTTPSessionManager manager];
     
@@ -410,7 +421,8 @@ static NSArray *consumerProfileDataArray = nil;
     [manager POST:urlString parameters:params progress:nil success:^(NSURLSessionTask *operation, id responseObject)
     {
         if ([self isViewLoaded]) {
-            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            [hud hideAnimated:YES];
+            hud = nil;
             
 //            NSLog(@"operation (saving profile information) response status code: %ld", (long)operation.response.statusCode);
 //            //status code = 200 is html code for OK - so anything else means not OK

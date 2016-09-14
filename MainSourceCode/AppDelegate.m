@@ -81,7 +81,6 @@ static AppDelegate *sharedObj;
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     // Override point for customization after application launch
 //    NSBundle *bundle = [NSBundle mainBundle];
-    
     ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
     [businessArrays startGettingListofAllBusinesses];
     
@@ -592,6 +591,39 @@ static AppDelegate *sharedObj;
 }
 
 
+- (void)saveDeviceTokenAndUUID {
+//    NSString *newToken = [deviceToken description];
+//    newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+//    newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSString *newToken = @"";
+    //    BOOL justTesting = [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];
+    //    UIUserNotificationSettings * notificationTypes = [[UIApplication sharedApplication] currentUserNotificationSettings];
+    
+//    NSLog(@"My token is: %@", newToken);
+    
+    // If the token changed and we already sent the "join" request, we should
+    // let the server know about the new device token.
+    //    if (![newToken isEqualToString:oldToken]) {
+    NSError *error;
+    ServerInteractionManager *serverManager =[[ServerInteractionManager alloc] init];
+    serverManager.postProcessesDelegate = self;
+    
+    NSString *uuid = [DataModel sharedDataModelManager].uuid;
+    NSLog(@"My uuid is: %@", uuid);
+    
+    // a valid uid means we have a registered user, update user info with the
+    // new deviceToken.  If not, just save the deviceToken in the default file, for the time
+    // user registers.
+    if (uuid)
+    {
+        [serverManager serverUpdateDeviceToken:newToken withUuid:uuid WithError:&error];
+    }
+    
+    [[DataModel sharedDataModelManager] setDeviceToken:newToken];
+    serverManager = nil;
+    //    }
+}
+
 #pragma mark - UIApplicationDelegate for notification
 
 //- (void)registerForRemoteNotificationTypes:(NSUInteger)notificationTypes categories:(NSSet *)categories
@@ -643,12 +675,14 @@ static AppDelegate *sharedObj;
         }
         
         [[DataModel sharedDataModelManager] setDeviceToken:newToken];
+        serverManager = nil;
 //    }
 }
 
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"Registering to Remote Notification didn't work with error: %@", error);
+    [self saveDeviceTokenAndUUID];
 }
 
 

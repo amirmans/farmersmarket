@@ -1065,7 +1065,7 @@ bool shouldOpenOptionMenu = false;
 
     NSString *lastString = [self.sectionKeyArray lastObject];
 
-    if ([lastString isEqualToString: @"Favorite"]) {
+    if ([lastString isEqualToString: @"Favorites"]) {
         [self.sectionKeyArray removeLastObject];
         [self.sectionKeysWithCountArray removeLastObject];
         [self.MainArray removeLastObject];
@@ -1082,7 +1082,7 @@ bool shouldOpenOptionMenu = false;
     }
 
     if (favoriteCategoryArray.count > 0) {
-        [self.sectionKeyArray addObject:@"Favorite"];
+        [self.sectionKeyArray addObject:@"Favorites"];
         NSString *sectionString = [NSString stringWithFormat:@"Favorites (%ld)",(unsigned long)[favoriteCategoryArray count]];
         [self.sectionKeysWithCountArray addObject:sectionString];
         [self.MainArray addObject:favoriteCategoryArray];
@@ -1574,7 +1574,7 @@ bool shouldOpenOptionMenu = false;
     }
 
     if (favoriteCategoryArray.count > 0) {
-        [self.sectionKeyArray addObject:@"Favorite"];
+        [self.sectionKeyArray addObject:@"Favorites"];
         NSString *sectionString = [NSString stringWithFormat:@"Favorites (%ld)",(unsigned long)[favoriteCategoryArray count]];
         [self.sectionKeysWithCountArray addObject:sectionString];
         [self.MainArray addObject:favoriteCategoryArray];

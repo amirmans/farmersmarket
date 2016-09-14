@@ -45,14 +45,20 @@
     manager = [AFHTTPSessionManager manager];
     
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
-    [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
+    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+//    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"application/json"];
+
+
+//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
+    
+//        [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
     
     NSDictionary *params = @{@"device_token": deviceToken, @"uuid":uuid};
     [manager POST:urlString parameters:params progress:nil
           success:^(NSURLSessionTask *operation, id responseObject) {
-              NSError *jsonError = nil;
-              NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:kNilOptions error:&jsonError];
-              [postProcessesDelegate postProcessForSuccess:jsonResponse];
+//              NSError *jsonError = nil;
+//              NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:kNilOptions error:&jsonError];
+              [postProcessesDelegate postProcessForSuccess:responseObject];
           }
           failure:^(NSURLSessionTask *operation, NSError *error) {
               NSLog(@"Error in ServerUpdateDeviceToken: %@", error);

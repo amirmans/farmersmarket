@@ -146,7 +146,8 @@ NSInteger current_points_level_int  = 0;
                             dollarValue = [[current_points_level valueForKey:@"dollar_value"] floatValue];
                             if (dollarValue > 0) {
                                 dollarValueForEachPoint = dollarValue / currentPoints;
-                                currentPointsMessage = [NSString stringWithFormat:@"Your points are worth %2.0f¢ each", dollarValueForEachPoint*100];
+//                                currentPointsMessage = [NSString stringWithFormat:@"Your points are worth %2.0f¢ each", dollarValueForEachPoint*100];
+                                currentPointsMessage = [NSString stringWithFormat:@"You passed the thereshold.  Redeem points when you pay"];
                             }
                         }
                     }
