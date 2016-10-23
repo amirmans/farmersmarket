@@ -134,7 +134,7 @@
     businessProducts = nil;
     
     NSString *consumer_id = [NSString stringWithFormat: @"%ld", [DataModel sharedDataModelManager].userID];
-    NSString *urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%i&consumerID=%@", BusinessAndProductionInformationServer, businessID, consumer_id];
+    NSString *urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%i&sub_businesses=24,6&consumerID=%@", BusinessAndProductionInformationServer, businessID, consumer_id];
     urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlString];

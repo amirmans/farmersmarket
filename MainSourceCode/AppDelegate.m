@@ -63,7 +63,7 @@ static AppDelegate *sharedObj;
     [GMSServices provideAPIKey:@"AIzaSyAcCD7rG0woreg6af3_AyFsa3V1J1vgK_k"];
 //    [Stripe setDefaultPublishableKey:@"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi"];
     
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     _locationManager = [[CLLocationManager alloc] init];
     if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [_locationManager requestWhenInUseAuthorization];
@@ -419,7 +419,7 @@ static AppDelegate *sharedObj;
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
         
-        __managedObjectContext = [[NSManagedObjectContext alloc] init];
+        __managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
         [__managedObjectContext setPersistentStoreCoordinator:coordinator];
         
     }
@@ -583,7 +583,7 @@ static AppDelegate *sharedObj;
     [DataModel sharedDataModelManager].nickname = consumerInfo[@"nickname"];
     [[DataModel sharedDataModelManager] setAgeGroupWithString:consumerInfo[@"age_group"]];
     [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
-    [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
+//    [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
     [DataModel sharedDataModelManager].emailAddress = consumerInfo[@"email1"];
     
     [self getDefaultCCForConsumer];

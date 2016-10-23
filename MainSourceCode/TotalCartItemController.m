@@ -747,6 +747,9 @@ UITextView *alertTextView;
 - (void) postOrderToServer {
 
     NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
+    if ([userID intValue] <=0) {
+        userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].uuid];
+    }
 
     NSMutableArray *orderItemArray = [[NSMutableArray alloc]init];
 
@@ -1251,6 +1254,36 @@ UITextView *alertTextView;
 }
 
 - (void) openNotesPopupWithText : (NSString *) note {
+//    
+//    UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"Add Note"
+//                                                       message:@""
+//                                                       preferredStyle:UIAlertControllerStyleAlert];
+//    UIAlertAction *payAction = [UIAlertAction actionWithTitle:@"Pay"
+//                                                          style:UIAlertActionStyleDestructive
+//                                                        handler:^(UIAlertAction *action) {
+//                                                            
+//                                                        }];
+//    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+//                                                          style:UIAlertActionStyleDestructive
+//                                                        handler:^(UIAlertAction *action) {
+//                                                            
+//                                                        }];
+//
+//    [controller addAction:payAction];
+//    [controller addAction:cancelAction];
+//    
+//    
+//    alertTextView = [UITextView new];
+//    alertTextView.delegate = self;
+//    alertTextView.text = note;
+////    [controller setTag:100];
+//    [controller setValue: alertTextView forKey:@"accessoryView"];
+//
+//    [self presentViewController:controller animated:YES completion:nil];
+//    
+    
+
+    
     UIAlertView *testAlert = [[UIAlertView alloc] initWithTitle:@"Add Note"
                                                         message:@""
                                                        delegate:self

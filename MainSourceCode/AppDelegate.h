@@ -43,6 +43,7 @@
 - (NSManagedObjectContext *)managedObjectContext;
 
 -(NSArray *)getRecord;// create this mathod for fetch data from any class...
+- (void)saveDeviceTokenAndUUID;
 
 
 @end
