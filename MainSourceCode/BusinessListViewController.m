@@ -68,6 +68,7 @@ Business *biz;
     ListofBusinesses* businesses = [ListofBusinesses sharedListofBusinesses];
 //    businessListArray = [businesses businessListArray];
     self.ResponseDataArray = [businesses businessListArray];
+    NSLog(@"%@",_ResponseDataArray);
     if (self.ResponseDataArray.count > 0 ) {
         [businessListArray removeAllObjects];
         for (int i = 0; i < self.ResponseDataArray.count ; i++) {

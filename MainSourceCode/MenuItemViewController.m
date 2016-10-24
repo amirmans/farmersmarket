@@ -431,18 +431,18 @@ bool shouldOpenOptionMenu = false;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView *headerView;
-
-    if (self.searchController.active) {
-        headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,tableView.frame.size.width,0)];
-    }
-    else if(tableView == self.tblRemoveFromCart) {
-        headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,tableView.frame.size.width,0)];
-        return headerView;
-    }
-    else{
-        headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,tableView.frame.size.width,30)];
-    }
+//    UIView *headerView;
+//
+//    if (self.searchController.active) {
+//        headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,tableView.frame.size.width,0)];
+//    }
+//    else if(tableView == self.tblRemoveFromCart) {
+//        headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,tableView.frame.size.width,0)];
+//        return headerView;
+//    }
+//    else{
+//        headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,tableView.frame.size.width,30)];
+//    }
 
     NSInteger rowCount = 0;
 
@@ -455,27 +455,73 @@ bool shouldOpenOptionMenu = false;
     else {
         rowCount = [[self.MainArray objectAtIndex:section] count];
     }
+    
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, tableView.bounds.size.width,40)]; //10px top and 10px bottom. Just for illustration purposes.
+    
+    UIImageView *sectionHeaderBG = [[UIImageView alloc]initWithFrame:CGRectMake(0, 10, 30, 30)];
+    [sectionHeaderBG setImageWithURL:[NSURL URLWithString:self.sectionKeysImageArray[section]]];
+//    [sectionHeaderBG setBackgroundColor:[UIColor redColor]];
+    
+    NSString *headerText = [NSString stringWithFormat:@"%@ (%ld)",self.sectionKeyArray[section],(long)rowCount];
+    NSUInteger length = [headerText length];
+    NSLog(@"%lu",(unsigned long)length);
+    
+    
+    UILabel *sectionTitle = [[UILabel alloc] init];
+    NSLog(@"Frame %@", NSStringFromCGRect(sectionTitle.frame));
+    sectionTitle.text = headerText;
+    sectionTitle.font = [UIFont fontWithName:@"Helvetica-Bold" size:20];
+    sectionTitle.textAlignment = NSTextAlignmentCenter;
+    sectionTitle.textColor = [UIColor whiteColor];
+    sectionTitle.backgroundColor = [UIColor clearColor];
+    CGSize expectedLabelSize = [headerText sizeWithFont:sectionTitle.font
+                                      constrainedToSize:tableView.frame.size
+                                          lineBreakMode:sectionTitle.lineBreakMode];
+    
+    sectionTitle.frame = CGRectMake(35.0, 10.0, expectedLabelSize.width, 30);
+    
+    
+    headerView.backgroundColor = [[UIColor colorWithRed:98.0/255.0f green:200.0/255.0f blue:207.0/255.0f alpha:1]colorWithAlphaComponent:1.0f];
+    
+    [AppData setBusinessBackgroundColor:headerView];
+    
+    
+    NSLog(@"Frame %@", NSStringFromCGRect(sectionTitle.frame));
+    UIView *innerView = [[UIView alloc] initWithFrame:CGRectMake(0,10,expectedLabelSize.width+40, 50)];
+    NSLog(@"Frame %@", NSStringFromCGRect(innerView.frame));
+    
+    UIButton *headerButton = [[UIButton alloc] initWithFrame:innerView.bounds];
+    [headerButton addTarget:self action:@selector(headerClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [innerView addSubview:headerButton];
+
+    [innerView addSubview: sectionHeaderBG];
+    [innerView addSubview: sectionTitle];
+    innerView.center = CGPointMake(headerView.bounds.size.width/2, headerView.bounds.size.height/2);
+    [headerView addSubview: innerView];
+    
+    return headerView;
+
 
 //    headerView.backgroundColor = [[UIColor colorWithRed:98.0/255.0f green:200.0/255.0f blue:207.0/255.0f alpha:1]colorWithAlphaComponent:1.0f];
 //    [[AppData sharedInstance] setBusinessBackgroundColor:headerView];
 
-    [AppData setBusinessBackgroundColor:headerView];
-
-    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 10,[UIScreen mainScreen].bounds.size.width-5, 40)];
-    headerLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:20];
-    headerLabel.textAlignment = NSTextAlignmentCenter;
-
-
-    headerLabel.text = [NSString stringWithFormat:@"%@ (%ld)",self.sectionKeyArray[section],(long)rowCount];
-
-    headerLabel.textColor = [UIColor whiteColor];
-    headerLabel.backgroundColor = [UIColor clearColor];
-    [headerView addSubview:headerLabel];
-
-    UIButton *headerButton = [[UIButton alloc] initWithFrame:headerView.bounds];
-    [headerButton addTarget:self action:@selector(headerClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview:headerButton];
-    return headerView;
+//    [AppData setBusinessBackgroundColor:headerView];
+//
+//    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 10,[UIScreen mainScreen].bounds.size.width-5, 40)];
+//    headerLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:20];
+//    headerLabel.textAlignment = NSTextAlignmentCenter;
+//
+//
+//    headerLabel.text = [NSString stringWithFormat:@"%@ (%ld)",self.sectionKeyArray[section],(long)rowCount];
+//
+//    headerLabel.textColor = [UIColor whiteColor];
+//    headerLabel.backgroundColor = [UIColor clearColor];
+//    [headerView addSubview:headerLabel];
+//
+//    UIButton *headerButton = [[UIButton alloc] initWithFrame:headerView.bounds];
+//    [headerButton addTarget:self action:@selector(headerClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    [headerView addSubview:headerButton];
+//    return headerView;
 }
 
 -(void)myFunction :(id) sender
@@ -1068,6 +1114,7 @@ bool shouldOpenOptionMenu = false;
     if ([lastString isEqualToString: @"Favorites"]) {
         [self.sectionKeyArray removeLastObject];
         [self.sectionKeysWithCountArray removeLastObject];
+        [self.sectionKeysImageArray removeLastObject];
         [self.MainArray removeLastObject];
     }
 
@@ -1090,6 +1137,7 @@ bool shouldOpenOptionMenu = false;
 
     menu.items =  self.sectionKeysWithCountArray;
     menu.table.items = self.sectionKeysWithCountArray;
+//    menu.itemsImage = self.sectionKeysImageArray;
     [menu.table.table reloadData];
     [self.MenuItemTableView reloadData];
 }
@@ -1436,7 +1484,7 @@ bool shouldOpenOptionMenu = false;
     NSDictionary *products = [CurrentBusiness sharedCurrentBusinessManager].business.businessProducts;
 
         NSInteger status = [[products valueForKey:@"status"] integerValue];
-
+    NSLog(@"%@",products);
         if ((status == 1) && products)  {
             NSDictionary *data = [products valueForKey:@"data"];
             if (data.count <1)
@@ -1448,6 +1496,7 @@ bool shouldOpenOptionMenu = false;
             [self.businessListDetailArray removeAllObjects];
 
             self.sectionKeyArray = [[NSMutableArray alloc] initWithArray:[data allKeys]];
+            
 
             NSLog(@"%@",self.sectionKeyArray);
 
@@ -1455,6 +1504,7 @@ bool shouldOpenOptionMenu = false;
             [self.sectionKeyArray sortUsingSelector:@selector(localizedStandardCompare:)];
 
             self.sectionKeysWithCountArray = [[NSMutableArray alloc] init];
+            self.sectionKeysImageArray = [[NSMutableArray alloc] init];
 
             [self.MainArray removeAllObjects];
 //            NSMutableArray *catArray = [[NSMutableArray alloc] init];
@@ -1465,6 +1515,8 @@ bool shouldOpenOptionMenu = false;
                 NSString *sectionString = [NSString stringWithFormat:@"%@ (%ld)",categoryString,(unsigned long)[categoryArray count]];
                 [self.sectionKeysWithCountArray addObject:sectionString];
 
+              
+                
                 NSMutableArray *catArray = [[NSMutableArray alloc] init];
                 for (NSDictionary* responseData  in categoryArray) {
                     TPBusinessDetail *businessDetail = [[TPBusinessDetail alloc]init];
@@ -1474,7 +1526,13 @@ bool shouldOpenOptionMenu = false;
                     businessDetail.pictures = [responseData objectForKey:@"pictures"];
                     businessDetail.short_description = [responseData objectForKey:@"short_description"];
                     businessDetail.long_description = [responseData objectForKey:@"long_description"];
+                    businessDetail.product_icon = [responseData objectForKey:@"product_icon"];
+                    businessDetail.category_icon = [responseData objectForKey:@"category_icon"];
 
+                    NSString *URLString = [NSString stringWithFormat:@"%@/%@",BusinessCustomerIconDirectory,[responseData objectForKey:@"product_icon"]];
+                    [self.sectionKeysImageArray addObject:URLString];
+//                    [self.sectionKeysImageArray addObject:[responseData objectForKey:@"product_icon"]];
+                    
 //                    NSString* field = [responseData objectForKey:@"ti_rating"];
 //                    if (field == (id)[NSNull null] || field.length == 0 )
 //                    {
@@ -1513,6 +1571,8 @@ bool shouldOpenOptionMenu = false;
             menu = [[SINavigationMenuView alloc] initWithFrame:frame title:[NSString stringWithFormat:@"%@ Menu", business.shortBusinessName]];
             [menu displayMenuInView:self.navigationController.view];
             menu.items =  self.sectionKeysWithCountArray;
+//            menu.itemsImage = self.sectionKeysImageArray;
+            
             menu.delegate = self;
             self.navigationItem.titleView = menu;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{

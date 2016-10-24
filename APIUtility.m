@@ -94,6 +94,143 @@ static APIUtility *sharedObj;
     }];
 }
 
+-(void)BusinessDelivaryInfoAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished
+{
+    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+    {
+        return;
+    }
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSLog(@"%@",data);
+    [manager GET:[NSString stringWithFormat:@"%@",BusinessDelivaryInformationServer] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+        if (finished) {
+            finished((NSDictionary*)responseObject);
+        }
+        
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
+        NSDictionary *temp = @{};
+        
+        if([error code] == -1004) {
+            
+            if (finished) {
+                finished(dic);
+            }
+        }
+        else
+        {
+            if (finished) {
+                finished(temp);
+            }
+        }
+    }];
+}
+
+-(void)ConsumerDelivaryInfoAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished
+{
+    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+    {
+        return;
+    }
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:[NSString stringWithFormat:@"%@",OrderServerURL] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+        if (finished) {
+            finished((NSDictionary*)responseObject);
+        }
+        
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
+        NSDictionary *temp = @{};
+        
+        if([error code] == -1004) {
+            
+            if (finished) {
+                finished(dic);
+            }
+        }
+        else
+        {
+            if (finished) {
+                finished(temp);
+            }
+        }
+    }];
+}
+-(void)ConsumerDelivaryInfoSaveAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished
+{
+    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+    {
+        return;
+    }
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    [manager POST:OrderServerURL
+       parameters:data progress:nil
+          success:^(NSURLSessionTask *task, id responseObject) {
+              NSLog(@"JSON: %@", responseObject);
+              finished(responseObject);
+          }
+          failure:^(NSURLSessionDataTask *task, NSError *error) {
+              
+              NSLog(@"Error saving delivary info in the server: %@", error.description);
+              finished(@{@"error":error.description});
+          }];
+}
+
+-(void)CheckConsumerPromoCodeAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished
+{
+    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+    {
+        return;
+    }
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    [manager GET:[NSString stringWithFormat:@"%@",OrderServerURL] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+        
+        if (finished) {
+            finished(responseObject);
+        }
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
+        NSDictionary *temp = @{};
+        
+        if([error code] == -1004) {
+            
+            if (finished) {
+                finished(dic);
+            }
+        }
+        else
+        {
+            if (finished) {
+                finished(temp);
+            }
+        }
+    }];
+    
+//    [manager POST:OrderServerURL
+//       parameters:data progress:nil
+//          success:^(NSURLSessionTask *task, id responseObject) {
+//              NSLog(@"JSON: %@", responseObject);
+//              finished(responseObject);
+//          }
+//          failure:^(NSURLSessionDataTask *task, NSError *error) {
+//              
+//              NSLog(@"Error saving delivary info in the server: %@", error.description);
+//              finished(@{@"error":error.description});
+//          }];
+}
+
+
 -(void)setFavoriteAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished {
     
     if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])

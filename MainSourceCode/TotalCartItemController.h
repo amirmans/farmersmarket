@@ -29,6 +29,7 @@
 - (IBAction)btnPayButtonClicked:(id)sender;
 - (IBAction)btnCancelButtonClicked:(id)sender;
 - (IBAction)btnQuestionClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *lblPromotionCode;
 
 @property (weak, nonatomic) IBOutlet UITableView *itemCartTableView;
 
@@ -43,6 +44,9 @@
 //@property (strong, nonatomic) IBOutlet UILabel *lblTotalEarnedPoint;
 
 @property (strong, nonatomic) IBOutlet UIView *paymentView;
+@property (weak, nonatomic) IBOutlet UIView *viewLeftLine;
+@property (weak, nonatomic) IBOutlet UIView *viewRightLine;
+@property (weak, nonatomic) IBOutlet UILabel *lblPromotion;
 
 - (IBAction)btnRedeemPointClicked:(id)sender;
 
@@ -60,6 +64,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblSubtotalAmount;
 @property (strong, nonatomic) IBOutlet UILabel *lblEarnedPoint;
 @property (strong, nonatomic) IBOutlet UILabel *lblPointsUsed;
+@property (weak, nonatomic) IBOutlet UILabel *lblDeliveryAmount;
+@property (weak, nonatomic) IBOutlet UILabel *lblPromotionalAmount;
+@property (weak, nonatomic) IBOutlet UILabel *lblDeliveryAmountText;
+@property (weak, nonatomic) IBOutlet UILabel *lblPromotionalDiscountText;
 
 - (IBAction)btnAddItemClicked:(id)sender;
 - (IBAction)btnRemoveItemClicked:(id)sender;
@@ -72,19 +80,28 @@
 - (IBAction)btnUsePointClicked:(id)sender;
 - (IBAction)btnAddNoteClicked:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIButton *btnDeliveryTo;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnUsePoints;
+@property (weak, nonatomic) IBOutlet UILabel *lblbtnDelivery;
 
 @property (strong, nonatomic) IBOutlet UIButton *btnNoTip;
 @property (strong, nonatomic) IBOutlet UIButton *btnOther;
 @property (strong, nonatomic) IBOutlet UIButton *btnTip10;
 @property (strong, nonatomic) IBOutlet UIButton *btnTip15;
 @property (strong, nonatomic) IBOutlet UIButton *btnTip20;
+@property (strong, nonatomic) IBOutlet UIView *deliveryView;
+@property (strong, nonatomic) IBOutlet UILabel *delivaryTitleLable;
+@property (strong, nonatomic) IBOutlet UIButton *delivayCheckmark;
+@property (strong, nonatomic) IBOutlet UILabel *delivaryTolable;
+@property (assign) BOOL isDeliveryChecked;
 
 - (IBAction)btnNoTipClicked:(id)sender;
 - (IBAction)btnOtherClicked:(id)sender;
 - (IBAction)btnTip10Clicked:(id)sender;
 - (IBAction)btnTip15Clicked:(id)sender;
 - (IBAction)btnTip20Clicked:(id)sender;
+- (IBAction)btnDeliveryToClicked:(id)sender;
+- (IBAction)onDeliveryCheckmark_Clicked:(id)sender;
 
 @end

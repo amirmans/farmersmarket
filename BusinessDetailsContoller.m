@@ -127,7 +127,7 @@ UIBarButtonItem *btn_heart;
  
 //    [[AppData sharedInstance] getCurruntLocation];
     
-    NSLog(@"%@",[allChoices objectForKey:chosenMainMenu]);
+    NSLog(@"%@",[CurrentBusiness sharedCurrentBusinessManager].business.business_delivery_id);
 
     ratingView.notSelectedImage = [UIImage imageNamed:@"Star.png"];
     ratingView.halfSelectedImage = [UIImage imageNamed:@"Star_Half_Empty.png"];
@@ -537,6 +537,7 @@ UIBarButtonItem *btn_heart;
     [[APIUtility sharedInstance] getPreviousOrderListWithConsumerID:consumerID BusinessID:businessID completiedBlock:^(NSDictionary *response) {
         if (![[response valueForKey:@"success"] isEqual: @"NO"]) {
             if ([[response valueForKey:@"status"] integerValue] == 1) {
+                NSLog(@"%@",response);
                 NSArray *dataArray = [response valueForKey:@"data"];
 //                previousOrderCount = [dataArray count];
                 [self.businessTableView reloadData];

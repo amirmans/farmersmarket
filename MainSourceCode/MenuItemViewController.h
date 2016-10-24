@@ -52,6 +52,7 @@
 
 @property (strong,nonatomic)NSMutableArray *sectionKeyArray;
 @property (strong,nonatomic) NSMutableArray *sectionKeysWithCountArray;
+@property (strong,nonatomic) NSMutableArray *sectionKeysImageArray;
 @property (strong,nonatomic)BBBadgeBarButtonItem *rightButton;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;

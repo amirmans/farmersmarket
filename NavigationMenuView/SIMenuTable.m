@@ -12,6 +12,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIColor+Extension.h"
 #import "SICellSelection.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface SIMenuTable () {
     CGRect endFrame;
@@ -22,11 +23,12 @@
 
 @implementation SIMenuTable
 
-- (id)initWithFrame:(CGRect)frame items:(NSArray *)items
+- (id)initWithFrame:(CGRect)frame items:(NSArray *)items itemsImage:(NSArray *)itemsImage
 {
     self = [super initWithFrame:frame];
     if (self) {
         self.items = [NSArray arrayWithArray:items];
+        self.itemsImage = [NSArray arrayWithArray:itemsImage];
         
         self.layer.backgroundColor = [UIColor color:[SIMenuConfiguration mainColor] withAlpha:0.0].CGColor;
         self.clipsToBounds = YES;
@@ -150,6 +152,19 @@
     cell.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
     cell.textLabel.text = [self.items objectAtIndex:indexPath.row];
+//    NSLog(@"%@",[self.itemsImage objectAtIndex:indexPath.row]);
+//    if([[self.itemsImage objectAtIndex:indexPath.row] isEqualToString:@"https://tapforall.com/staging/tap-in/customer_files/icons//<null>"] || [[self.itemsImage objectAtIndex:indexPath.row] isEqualToString:@"https://tapforall.com/staging/tap-in/customer_files/icons//"])
+//    {
+//        cell.imageView.backgroundColor = [UIColor whiteColor];
+//        cell.imageView.image = [UIImage imageNamed:@"dp.jpg"];
+//    }
+//    else
+//    {
+//        cell.imageView.backgroundColor = [UIColor clearColor];
+//        NSLog(@"---------image-------%@",[self.itemsImage objectAtIndex:indexPath.row]);
+//        [cell.imageView setImageWithURL:[NSURL URLWithString:[self.itemsImage objectAtIndex:indexPath.row]]];
+//        
+//    }
     
     return cell;
 }

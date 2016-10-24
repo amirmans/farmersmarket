@@ -41,4 +41,7 @@
 @property(nonatomic, assign) NSInteger product_order_id;
 @property(nonatomic, strong) NSMutableArray *selected_ProductID_array;
 @property(nonatomic, retain) NSString *note;
+@property(nonatomic, retain) NSString *product_icon;
+@property(nonatomic, retain) NSString *category_icon;
+
 @end

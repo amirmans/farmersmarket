@@ -18,8 +18,9 @@
 @property (nonatomic, weak) id <SIMenuDelegate> menuDelegate;
 @property (nonatomic, strong) UITableView *table;
 @property (nonatomic, strong) NSArray *items;
+@property (nonatomic, strong) NSArray *itemsImage;
 
-- (id)initWithFrame:(CGRect)frame items:(NSArray *)items;
+- (id)initWithFrame:(CGRect)frame items:(NSArray *)items itemsImage:(NSArray *)itemsImage;
 - (void)show;
 - (void)hide;
 

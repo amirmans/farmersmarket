@@ -19,6 +19,7 @@
 
 @property (nonatomic, weak) id <SINavigationMenuDelegate> delegate;
 @property (nonatomic, strong) NSArray *items;
+@property (nonatomic, strong) NSArray *itemsImage;
 @property (nonatomic, strong) SIMenuButton *menuButton;
 @property (nonatomic, strong) SIMenuTable *table;
 

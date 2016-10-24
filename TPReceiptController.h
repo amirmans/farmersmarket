@@ -10,6 +10,7 @@
 #import "APIUtility.h"
 #import "DataModel.h"
 #import "RewardDetailsModel.h"
+
 @interface TPReceiptController : UIViewController<UITableViewDataSource, UITableViewDelegate, MFMessageComposeViewControllerDelegate>{
 
 //    NSMutableArray *FetchedRecordArray;
@@ -29,7 +30,10 @@
 @property (strong, nonatomic) NSString *cardNumber;
 @property (strong, nonatomic) NSString *cardExpDate;
 @property (strong, nonatomic) NSString *redeem_point;
-@property (assign) double totalPaid;
+
+
+
+@property (assign) NSString *totalPaid;
 @property (assign) double tipAmount;
 @property (assign) double subTotal;
 @property (strong, nonatomic) NSMutableArray *orderDataArray;

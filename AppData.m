@@ -59,6 +59,31 @@ static AppData *sharedObj;
     }
     else{
         
+//        UIAlertController * alert = [UIAlertController
+//                                     alertControllerWithTitle:@"Location Services Disabled"
+//                                     message:@"You currently have all location services for this device disabled. If you proceed, you will be showing past informations. To enable, Settings->Location->location services->on"
+//                                     preferredStyle:UIAlertControllerStyleAlert];
+//        
+//        UIAlertAction* okButton = [UIAlertAction
+//                                    actionWithTitle:@"OK"
+//                                    style:UIAlertActionStyleDefault
+//                                    handler:^(UIAlertAction * action) {
+//                                        //Handle your yes please button action here
+//                                    }];
+//
+//        
+//        [alert addAction:okButton];
+//
+//        
+//        [presentViewController:alert animated:YES completion:nil];
+//        
+        
+        
+        
+        
+        
+        
+        
         UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:@"Location Services Disabled" message:@"You currently have all location services for this device disabled. If you proceed, you will be showing past informations. To enable, Settings->Location->location services->on" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:@"Continue",nil];
         [servicesDisabledAlert show];
         [servicesDisabledAlert setDelegate:self];

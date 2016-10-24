@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1240F8EB1DAD2FE8005D0642 /* AddressVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1240F8EA1DAD2FE8005D0642 /* AddressVC.xib */; };
+		1240F8EE1DAD3F19005D0642 /* AddressVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1240F8ED1DAD3F19005D0642 /* AddressVC.m */; };
 		290481BE150433CE0066002B /* ProductItemsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 290481BD150433CE0066002B /* ProductItemsTableViewController.xib */; };
 		291850CA153E8DA8008B6EBB /* DetailBusinessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291850C8153E8DA8008B6EBB /* DetailBusinessViewController.m */; };
 		2935D2991569E842003FB5CB /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2935D2981569E842003FB5CB /* LoginViewController.xib */; };
@@ -235,6 +237,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1240F8EA1DAD2FE8005D0642 /* AddressVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressVC.xib; sourceTree = "<group>"; };
+		1240F8EC1DAD3F19005D0642 /* AddressVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressVC.h; sourceTree = "<group>"; };
+		1240F8ED1DAD3F19005D0642 /* AddressVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressVC.m; sourceTree = "<group>"; };
 		290481BD150433CE0066002B /* ProductItemsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductItemsTableViewController.xib; sourceTree = "<group>"; };
 		291850C7153E8DA8008B6EBB /* DetailBusinessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailBusinessViewController.h; path = MainSourceCode/DetailBusinessViewController.h; sourceTree = "<group>"; };
 		291850C8153E8DA8008B6EBB /* DetailBusinessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailBusinessViewController.m; path = MainSourceCode/DetailBusinessViewController.m; sourceTree = "<group>"; };
@@ -1018,6 +1023,9 @@
 				4A1DA88E1C76235100E16F30 /* TPRewardPointController.h */,
 				4A1DA88F1C76235100E16F30 /* TPRewardPointController.m */,
 				4A6643CF1C747D7B00C10421 /* Xib */,
+				1240F8EA1DAD2FE8005D0642 /* AddressVC.xib */,
+				1240F8EC1DAD3F19005D0642 /* AddressVC.h */,
+				1240F8ED1DAD3F19005D0642 /* AddressVC.m */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -1178,7 +1186,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0510;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				TargetAttributes = {
 					2949CC3414589C7200728B87 = {
 						DevelopmentTeam = E79MNN58JH;
@@ -1329,6 +1337,7 @@
 				C6C8ACAF18DF9BE5005DAFD6 /* TapForAllTests-Info.plist in Resources */,
 				5D7AEDFC1C696B3800B0929F /* pin4@2x.png in Resources */,
 				4AA5F8BE1CAFC418007F4DFE /* Businesses Property List.plist in Resources */,
+				1240F8EB1DAD2FE8005D0642 /* AddressVC.xib in Resources */,
 				5DBDB5C51C6AB35A001828C5 /* MenuItemTableViewCell.xib in Resources */,
 				29ECC44C14CCC06C00986566 /* ProductItemViewCell.xib in Resources */,
 				5D7AEDDB1C6934E400B0929F /* img@2x.png in Resources */,
@@ -1503,6 +1512,7 @@
 				C6C8ACA918DF9B8F005DAFD6 /* main.m in Sources */,
 				4A6643EB1C74A04000C10421 /* SIMenuConfiguration.m in Sources */,
 				5D7AEDE51C6967E000B0929F /* SMClassicCalloutView.m in Sources */,
+				1240F8EE1DAD3F19005D0642 /* AddressVC.m in Sources */,
 				29CDC4B516293F5A002E3D5A /* BusinessProductsUtils.m in Sources */,
 				C6C8ACAD18DF9BBC005DAFD6 /* TapForAllTests.m in Sources */,
 			);
@@ -1566,7 +1576,9 @@
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -1616,7 +1628,9 @@
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -1656,9 +1670,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = E79MNN58JH;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1694,9 +1708,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = E79MNN58JH;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",

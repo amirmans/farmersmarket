@@ -12,10 +12,17 @@
 #import "UIAlertView+TapTalkAlerts.h"
 #import "TPBusinessDetail.h"
 #import "SHMultipleSelect.h"
-
+#import "AddressVC.h"
+#import "DataModel.h"
+#import "UIAlertView+TapTalkAlerts.h"
 
 @interface TotalCartItemController ()
-
+{
+    NSString *stringUid;
+    NSString *delivaryLocationName;
+    NSString *isDeliverySelected;
+    NSArray *latestInfoArray;
+}
 @property (strong, nonatomic) NSMutableArray *orderItems;
 @property (strong, nonatomic) NSString *notesText;
 
@@ -32,7 +39,8 @@
 @property (nonatomic, strong) MBProgressHUD *hud;
 
 @property (assign) NSInteger redeemNoPoints;  // number of points being redeemed
-@property (assign) double  redeemPointsValue;  // value for the points that we are redeeming
+@property (assign) double  redeemPointsValue;// value for the points that we are redeeming
+@property (assign) double latdouble;
 
 - (float)calculateValueforGivenPoints:(NSInteger)points;
 @end
@@ -56,18 +64,36 @@ double tipAmount = 0.0;
 NSInteger currentTipValue = 0;
 double cartTotal = 0;          //aka subtotal
 double totalValue = 0.0;
-
-
-
+double deliveryamount = 0.0;
+double promotionalamount = 0.0;
+double globalPromotional = 0.0;
 
 
 UITextView *alertTextView;
 
 #pragma mark - Life Cycle
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
+    if ([userID intValue] <=0) {
+        userID = [NSString stringWithFormat:@"%@",[DataModel sharedDataModelManager].uuid];
+    }
+    
+    stringUid = [NSString stringWithFormat:@"%@", userID];
+    
+    NSLog(@"%@",[CurrentBusiness sharedCurrentBusinessManager].business.business_delivery_id);
+    
+    if([[CurrentBusiness sharedCurrentBusinessManager].business.business_delivery_id integerValue] > 0){
+        self.deliveryView.hidden = NO;
+    }
+    else{
+        self.deliveryView.hidden = YES;
+    }
+    
+    self.automaticallyAdjustsScrollViewInsets = YES;
     NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
     NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
 
@@ -78,6 +104,7 @@ UITextView *alertTextView;
         businessIsClosed = true;
     }
 
+    self.lblbtnDelivery.text = @"Delivery";
     if (businessIsClosed) {
         NSString *openCivilianTime = [[APIUtility sharedInstance] getCivilianTime:openTime];
         NSString *waitTime = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
@@ -129,6 +156,41 @@ UITextView *alertTextView;
 
     NSLog(@"%@",self.FetchedRecordArray);
 
+//    if([billBusiness.business_delivery_id  isEqual: @"0"])
+//    {
+//        self.lblDeliveryAmount.hidden = true;
+//        self.lblDeliveryAmountText.hidden = true;
+//    }
+//    else
+//    {
+//        self.lblDeliveryAmount.hidden = false;
+//        self.lblDeliveryAmountText.hidden = false;
+//    }
+    
+    if(billBusiness.promotion_discount_amount == nil)
+    {
+        self.lblPromotionalAmount.hidden = true;
+        self.lblPromotionCode.hidden = true;
+        self.lblPromotion.hidden = true;
+        self.viewLeftLine.hidden = true;
+        self.viewRightLine.hidden = true;
+        self.lblPromotionalDiscountText.hidden = true;
+        self.btnDeliveryTo.hidden = true;
+        self.lblbtnDelivery.hidden = true;
+    }
+    else
+    {
+        self.lblPromotionalAmount.hidden = false;
+        self.lblPromotionCode.hidden = false;
+        self.lblPromotion.hidden = false;
+        self.viewLeftLine.hidden = false;
+        self.viewRightLine.hidden = false;
+        self.lblPromotionalDiscountText.hidden = false;
+        self.btnDeliveryTo.hidden = false;
+        self.lblbtnDelivery.hidden = false;
+    }
+    
+    
     zero = [NSDecimalNumber zero];
     self.automaticallyAdjustsScrollViewInsets = NO;
 
@@ -151,15 +213,114 @@ UITextView *alertTextView;
 
     self.paymentView.layer.borderColor = [UIColor blackColor].CGColor;
     self.paymentView.layer.borderWidth = 2;
+    
+//    [self GetLatestDelivaryInfo];
+    [self checkPromoCodeForUser];
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
+    [self setNoTip];
+    flagRedeemPoint = false;
+    [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_unchecked"] forState:UIControlStateNormal];
+
+    
+    NSLog(@"%@", [AppData sharedInstance].consumer_Delivery_Id);
+    if ([AppData sharedInstance].consumer_Delivery_Id != nil) {
+        self.lblDeliveryAmount.hidden = false;
+        self.lblDeliveryAmountText.hidden  =false;
+        self.lblbtnDelivery.text = [NSString stringWithFormat:@"Delivery to: %@",[AppData sharedInstance].consumer_Delivery_Location];
+    }
+    else
+    {
+        self.lblDeliveryAmount.hidden = true;
+        self.lblDeliveryAmountText.hidden  =true;
+        self.lblbtnDelivery.text = @"Delivery";
+    }
+    
+   
     waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
     [self getDefaultCardData];
+    [self paymentSummary];
 }
 
+-(void)checkPromoCodeForUser {
+    
+    
+    if ([DataModel sharedDataModelManager].uuid.length < 1) {
+        
+    }
+    else {
+        
+    if([CurrentBusiness sharedCurrentBusinessManager].business.promotion_code != nil) {
+        
+            NSDictionary *inDataDict = @{@"consumer_id":stringUid,
+                                         @"cmd":@"did_consumer_used_promotion",
+                                         @"business_id":[NSNumber numberWithInt:[CurrentBusiness sharedCurrentBusinessManager].business.businessID],
+                                         @"promotion_code":[CurrentBusiness sharedCurrentBusinessManager].business.promotion_code};
+        NSLog(@"%@",inDataDict);
+            [[APIUtility sharedInstance] CheckConsumerPromoCodeAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
+                
+                if( ((NSArray *)[response valueForKey:@"data"]).count > 0) {
+                    
+                    
+//                    self.latdouble = [[[(NSArray *)[response valueForKey:@"data"] objectAtIndex:0] valueForKey:@"promotion_discount_amount"] doubleValue];
+                    globalPromotional = 0.00;
+                    promotionalamount = 0.00;
+                    self.lblPromotionalDiscountText.hidden = true;
+                    self.lblPromotionalAmount.hidden = true;
+                    self.lblPromotionCode.hidden = true;
+                    self.lblPromotion.hidden = true;
+                    self.viewLeftLine.hidden = true;
+                    self.viewRightLine.hidden = true;
+//                    [UIAlertController showErrorAlert:@"Please register on profile page.\nThen you can get delivary."];
+                }
+                else
+                {
+                    self.lblPromotionalAmount.hidden = false;
+                    self.lblPromotionCode.hidden =false;
+                    self.lblPromotionalDiscountText.hidden = false;
+                    self.lblPromotion.hidden = false;
+                    self.viewLeftLine.hidden = false;
+                    self.viewRightLine.hidden = false;
+                    NSLog(@"%@", [CurrentBusiness sharedCurrentBusinessManager].business.promotion_code);
+                    if(([CurrentBusiness sharedCurrentBusinessManager].business.promotion_code == nil)){
+                        globalPromotional = 0.00;
+                        promotionalamount = 0.00;
+                    }
+                    else
+                    {
+                        double doublePromo = [[CurrentBusiness sharedCurrentBusinessManager].business.promotion_discount_amount doubleValue];
+                        globalPromotional = doublePromo;
+                        promotionalamount = doublePromo;
+                        self.lblPromotionCode.text = [NSString stringWithFormat:@"Code: %@",[CurrentBusiness sharedCurrentBusinessManager].business.promotion_code];
+                        self.lblPromotionCode.adjustsFontSizeToFitWidth = YES;
+                    }
+                    
+                    if(globalPromotional > cartTotal)
+                    {
+                        self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%.2f",cartTotal];
+                        promotionalamount = cartTotal;
+                    }
+                    else
+                    {
+                        promotionalamount = globalPromotional;
+                        self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%@",billBusiness.promotion_discount_amount];
+                        NSLog(@"%@",billBusiness.promotion_code);
+                        
+//                        self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%@",[[(NSArray *)[response valueForKey:@"data"] objectAtIndex:0] valueForKey:@"promotion_discount_amount"]];
+                    }
+                    
+
+                }
+                [self paymentSummary];
+
+            }];
+                }
+    }
+}
 - (void)didReceiveMemoryWarning {
     [self getDefaultCardData];
     [super didReceiveMemoryWarning];
@@ -305,6 +466,30 @@ UITextView *alertTextView;
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 }
+
+//-(void)GetLatestDelivaryInfo{
+//    
+//    NSLog(@"%@",[DataModel sharedDataModelManager].uuid);
+//    if ([DataModel sharedDataModelManager].uuid.length < 1) {
+//        
+//        [UIAlertController showErrorAlert:@"Please register on profile page.\nThen you can get delivary."];
+//    }
+//    else {
+//        NSDictionary *inDataDict = @{@"consumer_id":stringUid,
+//                                     @"cmd":@"get_consumer_latest_delivery_info"};
+//        
+//        [[APIUtility sharedInstance] ConsumerDelivaryInfoAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
+//            
+//            if( ((NSArray *)[response valueForKey:@"data"]).count > 0) {
+//                
+//                latestInfoArray = (NSArray *)[response valueForKey:@"data"];
+//                delivaryLocationName = [NSString stringWithFormat: @"%@", [[[response valueForKey:@"data"] objectAtIndex:0]valueForKey:@"delivery_address_name"]];
+//                self.btnDeliveryTo.titleLabel.text = delivaryLocationName;
+//                
+//            }
+//        }];
+//    }
+//}
 
 - (IBAction)MinusButtonClicked:(CustomUIButton *)sender {
 
@@ -797,7 +982,16 @@ UITextView *alertTextView;
                                    @"business_id":business_id,@"points_redeemed":[NSString stringWithFormat:@"%ld",(long)currentRedeemPoints],
                                    @"points_dollar_amount":[NSString stringWithFormat:@"%f",redeemPointsDollarValue],
                                    @"tip_amount":[NSNumber numberWithDouble:tipAmount], @"subtotal":[NSNumber numberWithDouble:cartTotal], @"tax_amount":[NSNumber numberWithDouble:0.0],
-                                   @"cc_last_4_digits":[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)], @"note":self.notesText};
+                                   @"cc_last_4_digits":[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)], @"note":self.notesText,
+                                   @"consumer_delivery_id":[AppData sharedInstance].consumer_Delivery_Id.length > 0 ? [AppData sharedInstance].consumer_Delivery_Id : @"",
+                                   
+                                   @"delivery_charge_amount":[NSNumber numberWithDouble:deliveryamount],
+                                   @"promotion_code":[CurrentBusiness sharedCurrentBusinessManager].business.promotion_code,
+                                   @"promotion_discount_amount" : [NSString stringWithFormat:@"%f",promotionalamount]
+                                   };
+    //promotion_code
+    //promotion_discount_amount
+    //
 
 //_____
 
@@ -867,7 +1061,8 @@ UITextView *alertTextView;
             receiptVC.cardExpDate = expDate;
             NSInteger currentRedeemPoints = [self getRedeemNoPoints];
             receiptVC.redeem_point = [NSString stringWithFormat:@"%ld",(long)currentRedeemPoints];
-            receiptVC.totalPaid = totalValue;
+//            receiptVC.totalPaid = totalValue;
+            receiptVC.totalPaid = self.lblSubTotalPrice.text;
             receiptVC.tipAmount = tipAmount;
             receiptVC.subTotal = cartTotal;
             [self removeAllOrderFromCoreData];
@@ -903,8 +1098,8 @@ UITextView *alertTextView;
     [self.itemCartTableView reloadData];
     [self setNoTip];
     [self changePointsAndUI:false];
-    [self paymentSummary];
     [self setNoTip];
+    [self paymentSummary];
 }
 
 // set total order and Price
@@ -933,7 +1128,7 @@ UITextView *alertTextView;
     self.lblSubtotalAmount.text = [NSString stringWithFormat:@"$%.2f",cartTotal];
     self.lblQty.text = [NSString stringWithFormat:@"%d",QTY];
 //    self.lblTotalPrice.text = [NSString stringWithFormat:@"$%.2f",TotalPrice];
-    self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f",TotalPrice];
+   
     billInDollar = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%.2f",TotalPrice]];
 
     NSString *totalPointsStr = [NSString stringWithFormat:@"%ld",(long)cartTotal * PointsValueMultiplier];
@@ -943,6 +1138,31 @@ UITextView *alertTextView;
     NSString *tip15String = [NSString stringWithFormat:@"$%.2f",cartTotal * .15];
     NSString *tip20String = [NSString stringWithFormat:@"$%.2f",cartTotal * .20];
 
+    NSLog(@"%@",[AppData sharedInstance].consumer_Delivery_Id);
+    if([AppData sharedInstance].consumer_Delivery_Id != nil)
+    {
+        deliveryamount = cartTotal * .10;
+        self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",cartTotal * .10];
+    }
+    else
+    {
+        deliveryamount = 0.00;
+        self.lblDeliveryAmount.text = [NSString stringWithFormat:@"0.00"];
+    }
+    
+    
+    if(globalPromotional > cartTotal)
+    {
+        self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%.2f",cartTotal];
+        promotionalamount = cartTotal;
+    }
+    else
+    {
+        promotionalamount = globalPromotional;
+        self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%.2f",promotionalamount];
+    }
+    
+    self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f",TotalPrice + deliveryamount - promotionalamount];
     [self.btnTip10 setTitle:tip10String forState:UIControlStateNormal];
     [self.btnTip15 setTitle:tip15String forState:UIControlStateNormal];
     [self.btnTip20 setTitle:tip20String forState:UIControlStateNormal];
@@ -1156,7 +1376,19 @@ UITextView *alertTextView;
 //        if(tip > 0) {
 
         tipAmount = cartTotal* (tip/100);
-        totalValue = cartTotal + tipAmount - redeemPointsValue;
+        
+        if(globalPromotional > cartTotal)
+        {
+            self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%.2f",cartTotal];
+            promotionalamount = cartTotal;
+        }
+        else
+        {
+            promotionalamount = globalPromotional;
+            self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%.2f",promotionalamount];
+        }
+        
+        totalValue = cartTotal + tipAmount + deliveryamount - promotionalamount - redeemPointsValue ;
 
         self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f",totalValue];
         billInDollar = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%.2f",totalValue]];
@@ -1200,7 +1432,7 @@ UITextView *alertTextView;
         [self calculateTip:currentTipValue];
     }
     else {
-        totalValue = cartTotal + tipAmount;
+        totalValue = cartTotal + tipAmount - promotionalamount +deliveryamount ;
         //                    self.lblTotalEarnedPoint.text = [NSString stringWithFormat:@"%ld Pts",(long)totalValue*PointsValueMultiplier] ;
     }
 }
@@ -1213,7 +1445,7 @@ UITextView *alertTextView;
             //          UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
             //         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             //          }];
-        totalValue = cartTotal - allAvailablePointsValue + tipAmount;
+        totalValue = cartTotal - allAvailablePointsValue + tipAmount - promotionalamount + deliveryamount;
         redeemNoPoints = originalNoPoints;
         redeemPointsValue = allAvailablePointsValue;
         dollarValueForEachPoints = redeemPointsValue / redeemNoPoints;
@@ -1309,6 +1541,7 @@ UITextView *alertTextView;
 
 - (IBAction) backBUttonClicked: (id) sender;
 {
+    [AppData sharedInstance].consumer_Delivery_Id = nil;
     [self.navigationController popViewControllerAnimated:true];
 }
 
@@ -1328,6 +1561,8 @@ UITextView *alertTextView;
 
             if (defaultCardData == nil) {
                 BillPayViewController *payBillViewController = [[BillPayViewController alloc] initWithNibName:nil bundle:nil withAmount:0 forBusiness:billBusiness];
+                [AppData sharedInstance].consumer_Delivery_Id = nil;
+
                 [self.navigationController pushViewController:payBillViewController animated:YES];
             }
             else {
@@ -1441,6 +1676,40 @@ UITextView *alertTextView;
 
 - (IBAction)btnTip20Clicked:(id)sender {
     [self setTip20];
+}
+
+- (IBAction)btnDeliveryToClicked:(id)sender {
+    
+    AddressVC *delivaryInfoVC = [[AddressVC alloc] initWithNibName:nil bundle:nil];
+    NSLog(@"%@",latestInfoArray);
+    delivaryInfoVC.latestDeliveryInfo = latestInfoArray;
+//    [self.navigationController pushViewController:delivaryInfoVC animated:true];
+    [self.navigationController presentViewController:delivaryInfoVC animated:YES completion:^{
+        NSLog(@"%@",[AppData sharedInstance].consumer_Delivery_Location);
+    }];
+
+}
+
+- (IBAction)onDeliveryCheckmark_Clicked:(id)sender {
+    
+    if(self.isDeliveryChecked == NO){
+        
+        self.isDeliveryChecked = YES;
+        self.delivaryTolable.hidden = NO;
+        self.btnDeliveryTo.hidden = NO;
+        self.lblbtnDelivery.hidden = NO;
+        [self.delivayCheckmark setImage:[UIImage imageNamed:@"ic_checked"] forState:UIControlStateNormal];
+
+    }
+    else{
+        
+        self.isDeliveryChecked = NO;
+        self.delivaryTolable.hidden = YES;
+        self.btnDeliveryTo.hidden = YES;
+        self.lblbtnDelivery.hidden = YES;
+        [self.delivayCheckmark setImage:[UIImage imageNamed:@"ic_unchecked"] forState:UIControlStateNormal];
+
+    }
 }
 
 - (IBAction)btnUsePointClicked:(id)sender {

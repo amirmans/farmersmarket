@@ -62,6 +62,7 @@
     NSString *bg_image_name;
     NSString *text_color;
     NSString *bg_color;
+    NSString *sub_businesses;
     
     UIColor *business_bg_color;
     UIColor *business_text_color;
@@ -71,6 +72,14 @@
     NSDictionary *businessProducts;
     NSError *businessError;
     NSString *process_time;
+    
+    NSString *business_delivery_id;
+    NSString *business_promotion_id;
+    NSString *display_icon_product_categories;
+    NSString *display_icon_products;
+    NSString *promotion_code;
+    NSString *promotion_discount_amount;
+    NSString *promotion_message;
 }
 
 @property(nonatomic, weak) id <TaptalkBusinessDelegate> businessDelegate;
@@ -136,6 +145,15 @@
 @property(nonatomic, strong) UIColor *business_text_color;
 @property(nonatomic, strong) NSString *process_time;
 @property(nonatomic, strong) NSString *keywords;
+
+@property(nonatomic, strong) NSString *sub_businesses;
+@property(nonatomic, strong) NSString *business_delivery_id;
+@property(nonatomic, strong) NSString *business_promotion_id;
+@property(nonatomic, strong) NSString *display_icon_product_categories;
+@property(nonatomic, strong) NSString *display_icon_products;
+@property(nonatomic, strong) NSString *promotion_code;
+@property(nonatomic, strong) NSString *promotion_discount_amount;
+@property(nonatomic, strong) NSString *promotion_message;
 
 
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;

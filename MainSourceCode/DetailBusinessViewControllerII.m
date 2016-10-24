@@ -194,8 +194,12 @@ static const CGFloat DefaultZoom = 12.0f;
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     self.title = businessNameData;
+    
+    NSLog(@"%@",biz.business_delivery_id);
+    
     self.navigationItem.hidesBackButton =  true;
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
@@ -486,6 +490,7 @@ static const CGFloat DefaultZoom = 12.0f;
 #pragma mark - Button Actions
 
 - (IBAction) backBUttonClicked: (id) sender {
+    [AppData sharedInstance].consumer_Delivery_Id = nil;
     [self.navigationController popViewControllerAnimated:true];
 }
 

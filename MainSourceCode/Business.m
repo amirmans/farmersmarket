@@ -71,6 +71,15 @@
 @synthesize is_collection;
 @synthesize process_time;
 @synthesize keywords;
+@synthesize sub_businesses;
+
+@synthesize business_delivery_id;
+@synthesize business_promotion_id;
+@synthesize display_icon_product_categories;
+@synthesize display_icon_products;
+@synthesize promotion_code;
+@synthesize promotion_discount_amount;
+@synthesize promotion_message;
 
 - (void)initMemberData {
     
@@ -118,6 +127,16 @@
     bg_image_name = nil;
     process_time = nil;
     keywords = nil;
+    
+    sub_businesses = nil;
+    
+    business_delivery_id = nil;
+    business_promotion_id = nil;
+    display_icon_product_categories = nil;
+    display_icon_products = nil;
+    promotion_code = nil;
+    promotion_discount_amount = nil;
+    promotion_message = nil;
 }
 
 - (int)isCustomer {
@@ -134,7 +153,17 @@
     businessProducts = nil;
     
     NSString *consumer_id = [NSString stringWithFormat: @"%ld", [DataModel sharedDataModelManager].userID];
-    NSString *urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%i&sub_businesses=24,6&consumerID=%@", BusinessAndProductionInformationServer, businessID, consumer_id];
+    
+    NSString *urlString = nil;
+    if(sub_businesses == nil)
+    {
+        urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%i&consumerID=%@&sub_businesses=""", BusinessAndProductionInformationServer, businessID, consumer_id];
+    }
+    else
+    {
+        urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%i&consumerID=%@&sub_businesses=%@", BusinessAndProductionInformationServer, businessID, consumer_id,sub_businesses];
+    }
+//    NSString *urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%i&consumerID=%@", BusinessAndProductionInformationServer, businessID, consumer_id];
     urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -151,7 +180,16 @@
     businessProducts = nil;
     
     NSString *consumer_id = [NSString stringWithFormat: @"%ld", [DataModel sharedDataModelManager].userID];
-    NSString *urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%@&consumerID=%@", BusinessAndProductionInformationServer, busiID, consumer_id];
+    NSString *urlString = nil;
+    if(sub_businesses == nil)
+    {
+        urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%@&consumerID=%@&sub_businesses=""", BusinessAndProductionInformationServer, busiID, consumer_id];
+    }
+    else
+    {
+        urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%@&consumerID=%@&sub_businesses=%@", BusinessAndProductionInformationServer, busiID, consumer_id,sub_businesses];
+    }
+//    NSString *urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%@&consumerID=%@", BusinessAndProductionInformationServer, busiID, consumer_id];
     urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -342,6 +380,16 @@
     bg_color = [self stringFromDataDictionary:data forKey:@"bg_color"];
     text_color = [self stringFromDataDictionary:data forKey:@"text_color"];
     
+    sub_businesses = [self stringFromDataDictionary:data forKey:@"sub_businesses"];
+    
+    business_delivery_id  = [self stringFromDataDictionary:data forKey:@"business_delivery_id"];
+    business_promotion_id  = [self stringFromDataDictionary:data forKey:@"business_promotion_id"];
+    display_icon_product_categories  = [self stringFromDataDictionary:data forKey:@"display_icon_product_categories"];
+    display_icon_products  = [self stringFromDataDictionary:data forKey:@"display_icon_products"];
+    promotion_code  = [self stringFromDataDictionary:data forKey:@"promotion_code"];
+    promotion_discount_amount  = [self stringFromDataDictionary:data forKey:@"promotion_discount_amount"];
+    promotion_message  = [self stringFromDataDictionary:data forKey:@"promotion_message"];
+    
     /*
      
      bg_colorRGB {
@@ -419,7 +467,7 @@
     // to get the rest of info
     [self initMemberData];
     rating = googleObject.rating;
-    address = googleObject.vicinity;
+    address = googleObject.vicinity;   
     phone = googleObject.formattedPhoneNumber;
     
     self.googlePlacesObject = googleObject;

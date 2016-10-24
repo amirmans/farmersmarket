@@ -55,7 +55,7 @@
         UIWindow *mainWindow = [[UIApplication sharedApplication] keyWindow];
         CGRect frame = mainWindow.frame;
         frame.origin.y += self.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height;
-        self.table = [[SIMenuTable alloc] initWithFrame:frame items:self.items];
+        self.table = [[SIMenuTable alloc] initWithFrame:frame items:self.items itemsImage:self.itemsImage];
         self.table.menuDelegate = self;
     }
     [self.menuContainer addSubview:self.table];

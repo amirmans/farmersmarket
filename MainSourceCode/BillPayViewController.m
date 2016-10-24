@@ -145,6 +145,8 @@ NSMutableArray *cardDataArray;
             receiptVC.cardType = cardType;
             receiptVC.cardNumber = cardDisplayNumber;
             receiptVC.cardExpDate = expDate;
+            
+           
             [self removeAllOrderFromCoreData];
 
             [self.navigationController pushViewController:receiptVC animated:YES];

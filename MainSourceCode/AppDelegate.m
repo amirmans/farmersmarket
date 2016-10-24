@@ -24,7 +24,7 @@
 #import "AppData.h"
 #import "APIUtility.h"
 #import <Stripe/Stripe.h>
-
+#import "AddressVC.h"
 
 
 
@@ -85,6 +85,10 @@ static AppDelegate *sharedObj;
     [businessArrays startGettingListofAllBusinesses];
     
     BusinessListViewController *listTableView = [[BusinessListViewController alloc] initWithNibName:nil bundle:nil];
+    
+//    AddressVC *listTableView = [[AddressVC alloc] initWithNibName:nil bundle:nil];
+
+    
 //    [listTableView.listBusinessesActivityIndicator hidesWhenStopped];
 //    [listTableView.listBusinessesActivityIndicator startAnimating];
     
@@ -190,7 +194,6 @@ static AppDelegate *sharedObj;
             [self doUpdateForRemoteNotification:dictionary updateUI:YES];
         }
     }
-    
     return YES;
 }
 
@@ -571,7 +574,6 @@ static AppDelegate *sharedObj;
                     
                     break;
                 }
-                
             }
         }
     }];

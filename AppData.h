@@ -28,6 +28,9 @@
 
 @property (nonatomic, strong) CLLocation *currentLocation;
 @property (assign, nonatomic) BOOL isFromTotalCart;
+@property (retain, nonatomic) NSString *consumer_Delivery_Id;
+@property (retain, nonatomic) NSString *consumer_Delivery_Location;
+
 
 - (void) locationManager ;
 

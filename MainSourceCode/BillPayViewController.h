@@ -32,6 +32,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *payButton;
 @property (weak, nonatomic) IBOutlet UIButton *changeCardButton;
 
+
+
 - (IBAction)payAction:(id)sender;
 - (IBAction)changeCardAction:(id)sender;
 

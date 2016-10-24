@@ -8,6 +8,7 @@
 
 #import "ServerInteractionManager.h"
 #import "AFNetworking.h"
+#import "AppDelegate.h"
 
 @implementation ServerInteractionManager
 
@@ -62,6 +63,8 @@
           }
           failure:^(NSURLSessionTask *operation, NSError *error) {
               NSLog(@"Error in ServerUpdateDeviceToken: %@", error);
+//              AppDelegate *appdelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+//              [appdelegate saveDeviceTokenAndUUID];
               
           }
      ];

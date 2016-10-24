@@ -10,9 +10,12 @@
 #import "TotalCartItemCell.h"
 #import "CurrentBusiness.h"
 #import "AppDelegate.h"
+#import "Business.h"
 
 @interface TPReceiptController ()
-
+{
+    Business *BusinessData;
+}
 @end
 
 
@@ -22,6 +25,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    BusinessData = [CurrentBusiness sharedCurrentBusinessManager].business;
     
     if ([DataModel sharedDataModelManager].emailAddress.length < 1) {
         lbl_emailSentShortly.hidden = true;
@@ -79,6 +84,13 @@
 {
 //    [self removeAllOrderFromCoreData];
 //    [self.navigationController popViewControllerAnimated:true];
+    BusinessData.promotion_code = nil;
+    BusinessData.promotion_message = nil;
+    BusinessData.promotion_discount_amount = nil;
+    [CurrentBusiness sharedCurrentBusinessManager].business.promotion_discount_amount = nil;
+    [CurrentBusiness sharedCurrentBusinessManager].business.promotion_code = nil;
+    [CurrentBusiness sharedCurrentBusinessManager].business.promotion_message = nil;
+    [AppData sharedInstance].consumer_Delivery_Id = nil;
     [self.navigationController popToRootViewControllerAnimated:true];
 }
 
@@ -109,6 +121,8 @@
     val =  val * businessDetail.quantity ;
     CGFloat rounded_down = [AppData calculateRoundPrice:val];
     cell.lbl_Price.text = [NSString stringWithFormat:@"$%.2f",rounded_down];
+    
+    
     cell.lbl_Title.text = businessDetail.name;
     cell.lbl_OrderOption.text = businessDetail.short_description;
     cell.btn_minus.hidden = true;
@@ -182,8 +196,8 @@
     }
     // TODO
 //    self.lbl_Total.text = [NSString stringWithFormat:@"$%.2f",TotalPrice];
-    self.lbl_Total.text = [NSString stringWithFormat:@"$%.2f",totalPaid];
-
+//    self.lbl_Total.text = [NSString stringWithFormat:@"$%.2f",totalPaid];
+    self.lbl_Total.text = self.totalPaid;
     [self.tableView reloadData];
 }
 
