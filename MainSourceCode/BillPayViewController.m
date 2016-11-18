@@ -590,17 +590,33 @@ NSMutableArray *cardDataArray;
     NSDictionary *defaultsParam = @{@"consumer_id":userID,@"cc_no":cardNumber
                                  ,@"expMonth":cardExpMonth,@"expYear":cardExpYear,@"cvv":cardCvc,@"zip_code":zip_code, @"card_type":cardType};
 
-    [defaults setObject:defaultsParam forKey:StripeDefaultCard];
-//    [defaults registerDefaults:defaultsParam];
-    [defaults synchronize];
-    
-    NSLog(@"Saved this info for card default: %@", defaultsParam);
     
     NSDictionary *severParam = @{@"cmd":@"save_cc_info",@"consumer_id":userID,@"cc_no":cardNumber
                                  ,@"expiration_date":expiration_date,@"cvv":cardCvc,@"zip_code":zip_code, @"card_type":cardType
                                  ,@"default":@"1"};
     [[APIUtility sharedInstance]save_cc_info:severParam completiedBlock:^(NSDictionary *response) {
 //        [self getCCForConsumer];
+        NSLog(@"%@",response);
+        if(![[response objectForKey:@"status"] boolValue])
+        {
+            NSLog(@"%@",[response objectForKey:@"message"]);
+            [defaults setObject:defaultsParam forKey:StripeDefaultCard];
+            //    [defaults registerDefaults:defaultsParam];
+            [defaults synchronize];
+            
+            NSLog(@"Saved this info for card default: %@", defaultsParam);
+        }
+        else
+        {
+            NSLog(@"%@",[response objectForKey:@"message"]);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                            message:@"Something went wrong."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+        
     }];
 }
 

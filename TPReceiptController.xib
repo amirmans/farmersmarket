@@ -25,7 +25,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" restorationIdentifier="TPReceiptController" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iJb-8H-mCz" userLabel="ThankYou View">
@@ -232,9 +232,10 @@
                                 <constraint firstAttribute="height" constant="15" id="V1f-Zg-YgB"/>
                             </constraints>
                         </imageView>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ggd-HH-J9d">
-                            <frame key="frameInset" minX="124" minY="215" width="72" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ggd-HH-J9d">
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="42D-CM-o1x"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
                             <state key="normal" title="Text KOI?"/>
                             <connections>
@@ -245,13 +246,16 @@
                     <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="hkB-2Q-uvA" secondAttribute="trailing" constant="20" id="1VL-25-bLX"/>
+                        <constraint firstItem="Ggd-HH-J9d" firstAttribute="leading" secondItem="DzX-uI-PPh" secondAttribute="leading" constant="25" id="9Vg-qC-qN0"/>
                         <constraint firstItem="CnT-B8-bZM" firstAttribute="top" secondItem="hkB-2Q-uvA" secondAttribute="bottom" constant="7" id="Cfa-gE-Pnx"/>
                         <constraint firstItem="1Aa-rD-jNt" firstAttribute="top" secondItem="CnT-B8-bZM" secondAttribute="bottom" constant="8" id="D4y-h4-NM1"/>
+                        <constraint firstAttribute="bottom" secondItem="Ggd-HH-J9d" secondAttribute="bottom" constant="8" id="HF0-1d-GPy"/>
                         <constraint firstAttribute="trailing" secondItem="850-kT-DlJ" secondAttribute="trailing" constant="21" id="I58-Yw-L1e"/>
                         <constraint firstItem="CnT-B8-bZM" firstAttribute="leading" secondItem="tVr-SP-85t" secondAttribute="trailing" constant="11" id="IK3-Rc-I5L"/>
                         <constraint firstItem="hkB-2Q-uvA" firstAttribute="leading" secondItem="DzX-uI-PPh" secondAttribute="leading" constant="20" id="J3C-s6-T0R"/>
                         <constraint firstItem="Dvu-Iy-W8V" firstAttribute="leading" secondItem="DzX-uI-PPh" secondAttribute="leading" constant="25" id="Jck-kE-1iq"/>
                         <constraint firstAttribute="trailing" secondItem="CnT-B8-bZM" secondAttribute="trailing" constant="20" id="MnJ-uO-7ej"/>
+                        <constraint firstAttribute="trailing" secondItem="Ggd-HH-J9d" secondAttribute="trailing" constant="21" id="Ne3-IU-Wu8"/>
                         <constraint firstItem="1Aa-rD-jNt" firstAttribute="leading" secondItem="Dvu-Iy-W8V" secondAttribute="trailing" constant="11" id="Rd2-1r-cHi"/>
                         <constraint firstItem="Dvu-Iy-W8V" firstAttribute="top" secondItem="tVr-SP-85t" secondAttribute="bottom" constant="8" id="S2X-0g-x5r"/>
                         <constraint firstItem="850-kT-DlJ" firstAttribute="leading" secondItem="3Ck-8l-qyj" secondAttribute="trailing" constant="10" id="SVg-lJ-oMK"/>
@@ -283,7 +287,7 @@
                 <constraint firstItem="DzX-uI-PPh" firstAttribute="top" secondItem="Dbk-6x-cAg" secondAttribute="bottom" id="ts2-BZ-gHY"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-            <point key="canvasLocation" x="548" y="448"/>
+            <point key="canvasLocation" x="547.5" y="447.5"/>
         </view>
     </objects>
     <resources>

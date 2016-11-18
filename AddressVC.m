@@ -26,6 +26,8 @@
     NSNumber *delivery_time_interval;
     NSDate *setMinPickerTime;
     ActionSheetDatePicker *datePicker;
+    NSString *uploadTime;
+    NSDateFormatter *formatter2;
 }
 @end
 
@@ -39,6 +41,9 @@
     [self.datePicker setAlpha:0.0];
     self.locationArr = [[NSMutableArray alloc] init];
     self.locationNameArr = [[NSMutableArray alloc] init];
+    
+    formatter2 = [[NSDateFormatter alloc] init];
+    [formatter2 setDateFormat:@"hh:mm a"];
     
 //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 //    [dateFormatter setDateFormat:@"HH:MM:SS"];
@@ -64,6 +69,7 @@
 //                                               object:self.view.window];
 //    keyboardIsShown = NO;
     
+   
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     HUD.label.text = @"Loading...";
 //    HUD.detailsLabel.text = @"It is worth the wait!";
@@ -113,6 +119,7 @@
             
             delivery_start_time = [[dataDict objectAtIndex:0] valueForKey:@"delivery_start_time"];
             delivery_end_time = [[dataDict objectAtIndex:0] valueForKey:@"delivery_end_time"];
+            
             delivery_time_interval = [[dataDict objectAtIndex:0] valueForKey:@"delivery_time_interval_in_minutes"];
             
             self.locationArr = [[[dataDict objectAtIndex:0] valueForKey:@"locations_in_section"] mutableCopy];
@@ -128,10 +135,11 @@
             NSDate *startDate = [dateFormatter1 dateFromString:delivery_start_time];
             NSDate *endDate = [dateFormatter1 dateFromString:delivery_end_time];
             
-            dateFormatter1.dateFormat = @"HH:mm";
+            dateFormatter1.dateFormat = @"hh:mm a";
            
             self.lblDeliveryStartEndTime.hidden = NO;
-            self.lblDeliveryStartEndTime.text = [NSString stringWithFormat:@"We are deliver between %@ to %@",[dateFormatter1 stringFromDate:startDate],[dateFormatter1 stringFromDate:endDate]];
+
+            self.lblDeliveryStartEndTime.text = [NSString stringWithFormat:@"Delivery between %@ - %@",[dateFormatter1 stringFromDate:startDate],[dateFormatter1 stringFromDate:endDate]];
             
             NSString *mapString = [NSString stringWithFormat:@"%@/%@",business_id,[[dataDict objectAtIndex:0] valueForKey:@"section_map"]];
             NSString *imageURLString = [BusinessCustomerIndividualDirectory stringByAppendingString:mapString];
@@ -243,7 +251,11 @@
                 
                 NSString *dTime = [[[response valueForKey:@"data"] objectAtIndex:0] valueForKey:@"delivery_time"];
                 NSLog(@"%@",dTime);
-                self.lblDeliveryTIme.text = dTime;
+                NSDateFormatter *dforamat = [[NSDateFormatter alloc] init];
+                [dforamat setDateFormat:@"HH:mm:ss"];
+                NSDate *date = [dforamat dateFromString:dTime];
+                NSLog(@"%@",date);
+                self.lblDeliveryTIme.text = [formatter2 stringFromDate:date];
                 
                 //                latestInfoArray = (NSArray *)[response valueForKey:@"data"];
 //                delivaryLocationName = [NSString stringWithFormat: @"%@", [[[response valueForKey:@"data"] objectAtIndex:0]valueForKey:@"delivery_address_name"]];
@@ -321,8 +333,6 @@
 //        self.lblDeliveryTIme.text = [NSString stringWithFormat:@"%@",setMinPickerTime];
 //    }
     
-    NSDateFormatter *formatter2 = [[NSDateFormatter alloc] init];
-    [formatter2 setDateFormat:@"HH:mm"];
     
     NSComparisonResult result = [time compare:date1];
     NSLog(@"%ld",(long)result);
@@ -333,12 +343,15 @@
         {
 //            NSDate *time1 = [formatter2 dateFromString:[formatter2 stringFromDate:setMinPickerTime]];
             self.lblDeliveryTIme.text = [formatter2 stringFromDate:setMinPickerTime];
+            uploadTime = [formatter stringFromDate:setMinPickerTime];
         }
         else
         {
-            NSDate *withOutSelectTime = [setMinPickerTime dateByAddingTimeInterval:60*[delivery_time_interval integerValue]];
+//            NSDate *withOutSelectTime = [setMinPickerTime dateByAddingTimeInterval:60*[delivery_time_interval integerValue]];
 //            NSDate *time1 = [formatter2 dateFromString:[formatter2 stringFromDate:withOutSelectTime]];
-            self.lblDeliveryTIme.text = [formatter2 stringFromDate:withOutSelectTime];
+            self.lblDeliveryTIme.text = [formatter2 stringFromDate:setMinPickerTime];
+            
+            uploadTime = [formatter stringFromDate:setMinPickerTime];
         }
     }
     else
@@ -349,6 +362,8 @@
 //        }
 //        NSDate *time1 = [formatter2 dateFromString:[formatter2 stringFromDate:selectedTime]];
         self.lblDeliveryTIme.text = [formatter2 stringFromDate:selectedTime];
+        
+        uploadTime = [formatter stringFromDate:selectedTime];
     }
     NSLog(@"%@",selectedTime);
     NSLog(@"%@",self.lblDeliveryTIme.text);
@@ -361,7 +376,7 @@
 
 - (void)filterContentForSearchText:(NSString*)searchText
 {
-    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"location_name contains[c] %@",searchText];
+    NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"location_name beginswith[c] %@",searchText];
     self.filterArray = [self.locationArr filteredArrayUsingPredicate:resultPredicate];
     NSLog(@"%@",self.locationArr);
     NSLog(@"Result = %@", searchText);
@@ -370,24 +385,50 @@
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     
+    self.btnCancelSearch.hidden = true;
+    
 }
 //Textfield
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-
+    if(self.selceted_Location_TextField.text.length > 0)
+    {
+        self.btnCancelSearch.hidden = false;
+    }
+    else
+    {
+        self.btnCancelSearch.hidden = true;
+    }
     return YES;
 }
+
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     
     if(textField == self.selceted_Location_TextField){
-        
+        NSUInteger newLength = [textField.text length] + [string length] - range.length;
+        NSLog(@"%lu",(unsigned long)newLength);
+        if(newLength > 0)
+        {
+            self.btnCancelSearch.hidden = false;
+        }
+        else
+        {
+            self.btnCancelSearch.hidden = true;
+        }
         [self filterContentForSearchText:[NSString stringWithFormat:@"%@%@",self.selceted_Location_TextField.text,string]];
-        
+        NSLog(@"%@",self.selceted_Location_TextField.text);
         if(self.filterArray.count > 0){
-            
-            self.locationTableView.hidden = NO;
-            [self.locationTableView reloadData];
+            if(newLength > (characterSearchLimit-1))
+            {
+                self.locationTableView.hidden = NO;
+                [self.locationTableView reloadData];
+            }
+            else
+            {
+                self.locationTableView.hidden = YES;
+                [self.locationTableView reloadData];
+            }
         }
         else{
             
@@ -412,6 +453,8 @@
     
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    self.btnCancelSearch.hidden = true;
     
     [textField resignFirstResponder];
     if(textField == self.selceted_Location_TextField){
@@ -460,6 +503,7 @@
     NSDictionary *dic = [self.filterArray objectAtIndex:indexPath.row];
     self.selceted_Location_TextField.text = [dic objectForKey:@"location_name"];
     self.locationTableView.hidden = YES;
+    self.btnCancelSearch.hidden = YES;
     [self.selceted_Location_TextField resignFirstResponder];
 }
 
@@ -519,41 +563,60 @@
         [alert show];
     }
     else {
+        
         [HUD showAnimated:YES];
+        NSDictionary *inDataDict;
         
-        NSDictionary *inDataDict = @{
-                                     @"delivery_address_name":self.selceted_Location_TextField.text,
-                                     @"delivery_instruction":self.txtNote.text,
-                                     @"delivery_time":self.lblDeliveryTIme.text,
-                                     @"cmd":@"save_consumer_delivery",
-                                     @"consumer_id":stringUid
-                                     };
-        
-        NSLog(@"%@",inDataDict);
-        [[APIUtility sharedInstance] ConsumerDelivaryInfoSaveAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
+        if(uploadTime != nil)
+        {
             
-            if( ((NSArray *)response).count > 0) {
+            inDataDict = @{              @"delivery_address_name":self.selceted_Location_TextField.text,
+                                         @"delivery_instruction":self.txtNote.text,
+                                         @"delivery_time":uploadTime,
+                                         @"cmd":@"save_consumer_delivery",
+                                         @"consumer_id":stringUid
+                                         };
+        }else
+        {
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            dateFormatter.dateFormat = @"hh:mm a";
+            NSDate *date = [dateFormatter dateFromString:self.lblDeliveryTIme.text];
+            
+            dateFormatter.dateFormat = @"HH:mm";
+            NSString *pmamDateString = [dateFormatter stringFromDate:date];
+            
+            inDataDict = @{              @"delivery_address_name":self.selceted_Location_TextField.text,
+                                         @"delivery_instruction":self.txtNote.text,
+                                         @"delivery_time":pmamDateString,
+                                         @"cmd":@"save_consumer_delivery",
+                                         @"consumer_id":stringUid
+                                         };
+        }
+            NSLog(@"%@",inDataDict);
+            [[APIUtility sharedInstance] ConsumerDelivaryInfoSaveAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
                 
-                [AppData sharedInstance].consumer_Delivery_Id =[NSString stringWithFormat:@"%@", [response valueForKey:@"consumer_delivery_id"]];
-                [AppData sharedInstance].consumer_Delivery_Location = self.selceted_Location_TextField.text;
-                [self dismissViewControllerAnimated:YES completion:nil];
-//                [self.navigationController popViewControllerAnimated:true];
-            }
-            else
-            {
-                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                               message:@"Something went wrong."
-                                                                        preferredStyle:UIAlertControllerStyleAlert];
+                if( ((NSArray *)response).count > 0) {
+                    
+                    [AppData sharedInstance].consumer_Delivery_Id =[NSString stringWithFormat:@"%@", [response valueForKey:@"consumer_delivery_id"]];
+                    [AppData sharedInstance].consumer_Delivery_Location = self.selceted_Location_TextField.text;
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                    //                [self.navigationController popViewControllerAnimated:true];
+                }
+                else
+                {
+                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                                   message:@"Something went wrong."
+                                                                            preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                                          handler:^(UIAlertAction * action) {}];
+                    
+                    [alert addAction:defaultAction];
+                    [self presentViewController:alert animated:YES completion:nil];
+                }
+                [HUD hideAnimated:YES];
                 
-                UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                                      handler:^(UIAlertAction * action) {}];
-                
-                [alert addAction:defaultAction];
-                [self presentViewController:alert animated:YES completion:nil];
-            }
-            [HUD hideAnimated:YES];
-         
-        }];
+            }];
     }
 }
 
@@ -581,7 +644,7 @@
 //    {
 //        datePicker.minuteInterval = 30;
 //    }
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"NL"];
+//    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"NL"];
 //    [datePicker setLocale:locale];
 
     NSString *time1 = delivery_start_time;
@@ -620,6 +683,9 @@
     NSDate *date1= [formatter dateFromString:time1];
     NSDate *date2 = [formatter dateFromString:time2];
     
+    NSString *time3 = delivery_end_time;
+    NSDate *date3= [formatter dateFromString:time3];
+    
     NSComparisonResult result = [date1 compare:date2];
 
     if(result == NSOrderedDescending)
@@ -631,21 +697,65 @@
     else if(result == NSOrderedAscending)
     {
         NSLog(@"date2 is later than date1");
-        setMinPickerTime =[date2 dateByAddingTimeInterval:60*15];
-
+        setMinPickerTime =[date2 dateByAddingTimeInterval:60*[delivery_time_interval integerValue]];
+        
+        
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *components = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:setMinPickerTime];
+        NSInteger minute = [components minute];
+        NSLog(@"%ld",(long)minute);
+        NSLog(@"%ld",(long)minute % [delivery_time_interval integerValue]);
+        if(minute % [delivery_time_interval integerValue] == 0)
+        {
+            setMinPickerTime =[date2 dateByAddingTimeInterval:60*[delivery_time_interval integerValue]];
+            
+            datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date2 minimumDate:setMinPickerTime maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
+            datePicker.minuteInterval = [delivery_time_interval integerValue];
+            [datePicker showActionSheetPicker];
+        }
+        else
+        {
+            if([setMinPickerTime compare:date3] == NSOrderedDescending)
+            {
+                
+                NSString *message = [NSString stringWithFormat:@"Sorry! \n We are not able to deliever today."];
+                [UIAlertController showErrorAlert:message];
+                
+            }
+            else
+            {
+                NSNumber *delieverTime = delivery_time_interval;
+                delieverTime = @([delieverTime integerValue] * 2);
+                setMinPickerTime =[date2 dateByAddingTimeInterval:60*[delieverTime integerValue]];
+                if([setMinPickerTime compare:date3] == NSOrderedDescending)
+                {
+                    NSNumber *delieverTime = delivery_time_interval;
+                    delieverTime = @([delieverTime integerValue]);
+                    setMinPickerTime =[date2 dateByAddingTimeInterval:60*[delieverTime integerValue]];
+                }
+                NSLog(@"%@",setMinPickerTime);
+                
+                datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date2 minimumDate:setMinPickerTime maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
+                datePicker.minuteInterval = [delivery_time_interval integerValue];
+                [datePicker showActionSheetPicker];
+            }
+        }
     }
     else
     {
         NSLog(@"date1 is equal to date2");
         setMinPickerTime = date1;
-
+        
+        datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date2 minimumDate:setMinPickerTime maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
+        datePicker.minuteInterval = [delivery_time_interval integerValue];
+        [datePicker showActionSheetPicker];
     }
     
-    NSString *time3 = delivery_end_time;
+    
 //    NSString *time4 = self.lblDeliveryTIme.text;
 //    
 //   
-    NSDate *date3= [formatter dateFromString:time3];
+    
 //    NSDate *date4 = [formatter dateFromString:time4];
 //    
 //    NSComparisonResult result2 = [date3 compare:date4];
@@ -668,13 +778,21 @@
     
 //     datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:setMinPickerTime minimumDate:setMinPickerTime maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
     
-    datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date2 minimumDate:setMinPickerTime maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
     
-    datePicker.minuteInterval = [delivery_time_interval integerValue];
     
-    [datePicker setLocale:locale];
-    [datePicker showActionSheetPicker];
+    
+    
+   
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    dateFormatter.dateFormat = @"hh:mm a";
+//    
+//    [datePicker setLocale:locale];
+    
 
+}
+
+- (IBAction)btnCancelSearch:(id)sender {
+    self.selceted_Location_TextField.text = @"";
 }
 - (IBAction)btnBackClicked:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];

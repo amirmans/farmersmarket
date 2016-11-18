@@ -189,8 +189,10 @@
     {
         urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%@&consumerID=%@&sub_businesses=%@", BusinessAndProductionInformationServer, busiID, consumer_id,sub_businesses];
     }
+    NSLog(@"%@", urlString);
 //    NSString *urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%@&consumerID=%@", BusinessAndProductionInformationServer, busiID, consumer_id];
     urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"%@", urlString);
     //urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlString];
     
@@ -204,19 +206,22 @@
 
 - (void)fetchProductData:(NSData *)responseData {
     //parse out the json data
-    NSError* error =nil;
-    
-    businessProducts = [NSJSONSerialization
-                        JSONObjectWithData:responseData
-                        options:kNilOptions
-                        error:&error];
-    if (error)
+    if(responseData != nil)
     {
-        NSLog(@"Error in fetching product items.  Description of error is: %@", [error localizedDescription]);
-        [UIAlertController showErrorAlert: @"Error in fetching product items."];
+        NSError* error =nil;
+        
+        businessProducts = [NSJSONSerialization
+                            JSONObjectWithData:responseData
+                            options:kNilOptions
+                            error:&error];
+        if (error)
+        {
+            NSLog(@"Error in fetching product items.  Description of error is: %@", [error localizedDescription]);
+            [UIAlertController showErrorAlert: @"Error in fetching product items."];
+        }
+        isProductListLoaded = TRUE;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GotProductData" object:nil];
     }
-    isProductListLoaded = TRUE;
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"GotProductData" object:nil];
 }
 
 - (NSDictionary *)businessProducts {

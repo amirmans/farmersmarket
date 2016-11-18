@@ -43,9 +43,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnDateTime;
 @property (weak, nonatomic) IBOutlet UITextField *txtNote;
 @property (weak, nonatomic) IBOutlet UILabel *lblDeliveryTIme;
+@property (weak, nonatomic) IBOutlet UIButton *btnCancelSearch;
 
 - (IBAction)btnOk_Clicked:(id)sender;
 - (IBAction)btnCancel_Clicked:(id)sender;
 - (IBAction)BtnDateTimeClicked:(id)sender;
+- (IBAction)btnCancelSearch:(id)sender;
 
 @end

@@ -71,7 +71,8 @@ static NSString *const stripeArrayKey = @"stripeDataArray";
 static NSString *const StripeDefaultCard = @"stripeDefaultCard";
 static NSString *const Default_Process_Time = @"Average wait time: 25 min";
 
-
+//character search limit in delievery screen
+#define characterSearchLimit 2
 
 // Maximum number of bytes that a text message may have. The payload data of
 // a push notification is limited to 256 bytes and that includes the JSON
