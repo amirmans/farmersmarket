@@ -21,7 +21,9 @@
 #import "TotalCartItemCell.h"
 #import "MBProgressHUD.h"
 
-@interface MenuItemViewController ()
+@interface MenuItemViewController ()<UITextFieldDelegate,CAAnimationDelegate>{
+    
+}
 
 @end
 
@@ -72,6 +74,8 @@ bool shouldOpenOptionMenu = false;
 
     [super viewDidLoad];
 
+    self.noteViewHeightConstraint.constant = 1.0;
+
 //    NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
 //    NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
 //
@@ -103,7 +107,8 @@ bool shouldOpenOptionMenu = false;
     HUD.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
 
     [self.view addSubview:HUD];
-
+    self.txtNote.delegate = self;
+    
 //    [HUD showWhileExecuting:@selector(doSomeFunkyStuff) onTarget:self withObject:nil animated:YES];
     [HUD showAnimated:YES];
 
@@ -243,7 +248,49 @@ bool shouldOpenOptionMenu = false;
 //        }
 //    }
 //}
+#pragma mark - Textfield Delegate
 
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if(self.txtNote.text.length > 0)
+    {
+        self.btnCancelNote.hidden = false;
+    }
+    else
+    {
+        self.btnCancelNote.hidden = true;
+    }
+    return YES;
+}
+
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    
+    if(textField == self.txtNote){
+        NSUInteger newLength = [textField.text length] + [string length] - range.length;
+        NSLog(@"%lu",(unsigned long)newLength);
+        if(newLength > 0)
+        {
+            self.btnCancelNote.hidden = false;
+        }
+        else
+        {
+            self.btnCancelNote.hidden = true;
+        }
+    }
+    return YES;
+    
+}
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    self.btnCancelNote.hidden = true;
+    
+    [textField resignFirstResponder];
+    return YES;
+}
+-(BOOL)textFieldShouldEndEditing:(UITextField *)textField{
+    self.btnCancelNote.hidden = true;
+    return YES;
+}
 
 #pragma mark - Search
 
@@ -459,7 +506,8 @@ bool shouldOpenOptionMenu = false;
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, tableView.bounds.size.width,40)]; //10px top and 10px bottom. Just for illustration purposes.
     
     UIImageView *sectionHeaderBG = [[UIImageView alloc]initWithFrame:CGRectMake(0, 10, 30, 30)];
-    [sectionHeaderBG setImageWithURL:[NSURL URLWithString:self.sectionKeysImageArray[section]]];
+    [sectionHeaderBG sd_setImageWithURL:[NSURL URLWithString:self.sectionKeysImageArray[section]]];
+//    [sectionHeaderBG setImageWithURL:[NSURL URLWithString:self.sectionKeysImageArray[section]]];
 //    [sectionHeaderBG setBackgroundColor:[UIColor redColor]];
     
     NSString *headerText = [NSString stringWithFormat:@"%@ (%ld)",self.sectionKeyArray[section],(long)rowCount];
@@ -474,9 +522,16 @@ bool shouldOpenOptionMenu = false;
     sectionTitle.textAlignment = NSTextAlignmentCenter;
     sectionTitle.textColor = [UIColor whiteColor];
     sectionTitle.backgroundColor = [UIColor clearColor];
-    CGSize expectedLabelSize = [headerText sizeWithFont:sectionTitle.font
-                                      constrainedToSize:tableView.frame.size
-                                          lineBreakMode:sectionTitle.lineBreakMode];
+//    CGSize expectedLabelSize = [headerText sizeWithFont:sectionTitle.font
+//                                      constrainedToSize:tableView.frame.size
+//                                          lineBreakMode:sectionTitle.lineBreakMode];
+    
+    CGRect textRect = [headerText boundingRectWithSize:tableView.frame.size
+                                         options:NSStringDrawingUsesLineFragmentOrigin
+                                      attributes:@{NSFontAttributeName:sectionTitle.font}
+                                         context:nil];
+    
+    CGSize expectedLabelSize = textRect.size;
     
     sectionTitle.frame = CGRectMake(35.0, 10.0, expectedLabelSize.width, 30);
     
@@ -526,7 +581,7 @@ bool shouldOpenOptionMenu = false;
 
 -(void)myFunction :(id) sender
 {
-    UITapGestureRecognizer *gesture = (UITapGestureRecognizer *) sender;
+//    UITapGestureRecognizer *gesture = (UITapGestureRecognizer *) sender;
     [UIAlertController showErrorAlert:@"Please register on profile page to set your favorites. \nYou can order them next time around."];
     return;
 //    NSLog(@"Tag = %d", gesture.view.tag);
@@ -792,6 +847,7 @@ bool shouldOpenOptionMenu = false;
 }
 
 - (MenuItemNoImageTableViewCell *) createMenuItemCellWithoutImageWithIndexpath : (UITableView *) tableView indexPath : (NSIndexPath *)indexPath  dataSource: (NSArray *) catArray {
+    
     static NSString *simpleTableIdentifier = @"MenuItemNoImageTableViewCell";
     MenuItemNoImageTableViewCell *cell = (MenuItemNoImageTableViewCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     if (cell == nil)
@@ -799,9 +855,7 @@ bool shouldOpenOptionMenu = false;
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"MenuItemNoImageTableViewCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
-
     TPBusinessDetail *businessDetail = [catArray objectAtIndex:indexPath.row];
-
     cell.btnFevorite.selected = NO;
 
     id idRating = [catArray[indexPath.row] valueForKey:@"ti_rating"];
@@ -1003,7 +1057,6 @@ bool shouldOpenOptionMenu = false;
                     }
                 }
             }
-            
         }
 
         if (itemModel.availability_status == 0) {
@@ -1321,6 +1374,8 @@ bool shouldOpenOptionMenu = false;
 
 - (IBAction)PlusButtonClicked:(CustomUIButton *)sender {
 
+    self.txtNote.text = @"";
+    self.btnCancelNote.hidden = YES;
     
     NSLog(@"%@", [[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"name"]);
     NSLog(@"%@",[[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"price"]);
@@ -1417,6 +1472,9 @@ bool shouldOpenOptionMenu = false;
     shouldOpenOptionMenu = false;
     TotalCartItemController *TotalCartItemVC = [[TotalCartItemController alloc] initWithNibName:@"TotalCartItemController" bundle:nil];
     [self.navigationController pushViewController:TotalCartItemVC animated:YES];
+//    CartViewController *TotalCartItemVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+//    [self.navigationController pushViewController:TotalCartItemVC animated:YES];
+
 }
 
 
@@ -2074,12 +2132,24 @@ bool shouldOpenOptionMenu = false;
     self.removeFromCartContainerView.hidden = true;
 }
 
+//- (IBAction)btnCancelMenuItemOptionClicked:(id)sender {
+//    [self enableBarButtons];
+//
+//    self.menuItemOptionsView.hidden = true;
+//}
 - (IBAction)btnCancelMenuItemOptionClicked:(id)sender {
+    
     [self enableBarButtons];
-
-    self.menuItemOptionsView.hidden = true;
+    
+    if( self.noteViewHeightConstraint.constant == 57.0){
+        
+        self.noteViewHeightConstraint.constant = 1.0;
+    }
+    else{
+        self.noteViewHeightConstraint.constant = 57.0;
+    }
+        self.menuItemOptionsView.hidden = true;
 }
-
 - (IBAction)btnAddToCartMenuItemOptionClicked:(id)sender {
     [self enableBarButtons];
 
@@ -2169,4 +2239,8 @@ bool shouldOpenOptionMenu = false;
     [self.tblMenuItemOption reloadData];
 }
 
+- (IBAction)btnCancelNoteClicked:(id)sender {
+    self.txtNote.text = @"";
+    self.btnCancelNote.hidden = YES;
+}
 @end

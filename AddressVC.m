@@ -16,7 +16,7 @@
 #import "UIImageView+AFNetworking.h"
 
 
-@interface AddressVC ()<UITableViewDelegate,UITableViewDataSource,UIPickerViewDataSource,UITextFieldDelegate>
+@interface AddressVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
     NSString *stringUid;
     BOOL keyboardIsShown;
@@ -31,7 +31,10 @@
 }
 @end
 
+
+
 @implementation AddressVC
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -108,70 +111,77 @@
     
     [[APIUtility sharedInstance] BusinessDelivaryInfoAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
         
-        if(((NSArray *)[response valueForKey:@"data"]).count > 0) {
-            
-            NSArray *dataDict = [response valueForKey:@"data"];
-            
-            NSLog(@"%@",dataDict);
-            self.delivery_Location_Textfield.text = [NSString stringWithFormat:@"%@",[[dataDict objectAtIndex:0] valueForKey:@"section_location_name"]];
-            //            NSArray *locationArry = [[[dataDict objectAtIndex:0] valueForKey:@"locations_in_section"] mutableCopy];
-            //            self.txtNote.text = [NSString stringWithFormat:@"%@",[[dataDict objectAtIndex:0] valueForKey:@"note"]];
-            
-            delivery_start_time = [[dataDict objectAtIndex:0] valueForKey:@"delivery_start_time"];
-            delivery_end_time = [[dataDict objectAtIndex:0] valueForKey:@"delivery_end_time"];
-            
-            delivery_time_interval = [[dataDict objectAtIndex:0] valueForKey:@"delivery_time_interval_in_minutes"];
-            
-            self.locationArr = [[[dataDict objectAtIndex:0] valueForKey:@"locations_in_section"] mutableCopy];
-            
-            for (int i = 0 ; i < self.locationArr.count ; i++) {
-                [self.locationNameArr addObject:[self.locationArr[i] objectForKey:@"location_name"]];
+        if([[response valueForKey:@"status"] integerValue] >= 0)
+        {
+            if(((NSArray *)[response valueForKey:@"data"]).count > 0) {
+                
+                NSArray *dataDict = [response valueForKey:@"data"];
+                
+                NSLog(@"%@",dataDict);
+                self.delivery_Location_Textfield.text = [NSString stringWithFormat:@"%@",[[dataDict objectAtIndex:0] valueForKey:@"section_location_name"]];
+                //            NSArray *locationArry = [[[dataDict objectAtIndex:0] valueForKey:@"locations_in_section"] mutableCopy];
+                //            self.txtNote.text = [NSString stringWithFormat:@"%@",[[dataDict objectAtIndex:0] valueForKey:@"note"]];
+                
+                delivery_start_time = [[dataDict objectAtIndex:0] valueForKey:@"delivery_start_time"];
+                delivery_end_time = [[dataDict objectAtIndex:0] valueForKey:@"delivery_end_time"];
+                
+                delivery_time_interval = [[dataDict objectAtIndex:0] valueForKey:@"delivery_time_interval_in_minutes"];
+                
+                self.locationArr = [[[dataDict objectAtIndex:0] valueForKey:@"locations_in_section"] mutableCopy];
+                
+                for (int i = 0 ; i < self.locationArr.count ; i++) {
+                    [self.locationNameArr addObject:[self.locationArr[i] objectForKey:@"location_name"]];
+                }
+                
+                self.titleLable.text = [[dataDict objectAtIndex:0] valueForKey:@"message_to_consumers"];
+                
+                NSDateFormatter* dateFormatter1 = [[NSDateFormatter alloc] init];
+                dateFormatter1.dateFormat = @"HH:mm:ss";
+                NSDate *startDate = [dateFormatter1 dateFromString:delivery_start_time];
+                NSDate *endDate = [dateFormatter1 dateFromString:delivery_end_time];
+                
+                dateFormatter1.dateFormat = @"hh:mm a";
+                
+                self.lblDeliveryStartEndTime.hidden = NO;
+                
+                self.lblDeliveryStartEndTime.text = [NSString stringWithFormat:@"Delivery between %@ - %@",[dateFormatter1 stringFromDate:startDate],[dateFormatter1 stringFromDate:endDate]];
+                
+                NSString *mapString = [NSString stringWithFormat:@"%@/%@",business_id,[[dataDict objectAtIndex:0] valueForKey:@"section_map"]];
+                NSString *imageURLString = [BusinessCustomerIndividualDirectory stringByAppendingString:mapString];
+                NSURL *imageURL = [NSURL URLWithString:imageURLString];
+                //            [self.mapImageView setImageURL:imageURL];
+                
+                NSLog(@"%@",imageURL);
+                //            self.mapImageView.hidden = YES;
+                NSURLRequest *urlReq = [[NSURLRequest alloc] initWithURL:imageURL];
+                UIActivityIndicatorView *progress= [[UIActivityIndicatorView alloc] initWithFrame: CGRectMake(125, 50, 30, 30)];
+                progress.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+                progress.center = self.mapImageView.center;
+                [self.view addSubview:progress];
+                [progress startAnimating];
+                [self.mapImageView setImageWithURLRequest:urlReq
+                                         placeholderImage:nil
+                                                  success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+                                                      [self.mapImageView setImageWithURL:imageURL];
+                                                      [progress stopAnimating];
+                                                      
+                                                  } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+                                                      [progress stopAnimating];
+                                                      NSLog(@"failure: %@", response);
+                                                  }];
+                
+                [HUD hideAnimated:YES];
+                
+            }else{
+                self.mapImageView.hidden = NO;
+                self.lblDeliveryStartEndTime.hidden = YES;
+                [HUD hideAnimated:YES];
             }
-            
-            self.titleLable.text = [[dataDict objectAtIndex:0] valueForKey:@"message_to_consumers"];
-            
-            NSDateFormatter* dateFormatter1 = [[NSDateFormatter alloc] init];
-            dateFormatter1.dateFormat = @"HH:mm:ss";
-            NSDate *startDate = [dateFormatter1 dateFromString:delivery_start_time];
-            NSDate *endDate = [dateFormatter1 dateFromString:delivery_end_time];
-            
-            dateFormatter1.dateFormat = @"hh:mm a";
-           
-            self.lblDeliveryStartEndTime.hidden = NO;
-
-            self.lblDeliveryStartEndTime.text = [NSString stringWithFormat:@"Delivery between %@ - %@",[dateFormatter1 stringFromDate:startDate],[dateFormatter1 stringFromDate:endDate]];
-            
-            NSString *mapString = [NSString stringWithFormat:@"%@/%@",business_id,[[dataDict objectAtIndex:0] valueForKey:@"section_map"]];
-            NSString *imageURLString = [BusinessCustomerIndividualDirectory stringByAppendingString:mapString];
-            NSURL *imageURL = [NSURL URLWithString:imageURLString];
-            //            [self.mapImageView setImageURL:imageURL];
-            
-            NSLog(@"%@",imageURL);
-            //            self.mapImageView.hidden = YES;
-            NSURLRequest *urlReq = [[NSURLRequest alloc] initWithURL:imageURL];
-            UIActivityIndicatorView *progress= [[UIActivityIndicatorView alloc] initWithFrame: CGRectMake(125, 50, 30, 30)];
-            progress.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-            progress.center = self.mapImageView.center;
-            [self.view addSubview:progress];
-            [progress startAnimating];
-            [self.mapImageView setImageWithURLRequest:urlReq
-                                     placeholderImage:nil
-                                              success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                                  [self.mapImageView setImageWithURL:imageURL];
-                                                  [progress stopAnimating];
-                                                  
-                                              } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                                                  [progress stopAnimating];
-                                                  NSLog(@"failure: %@", response);
-                                              }];
-            
+        }
+        else{
             [HUD hideAnimated:YES];
-            
-        }else{
-            self.mapImageView.hidden = NO;
-            self.lblDeliveryStartEndTime.hidden = YES;
-            [HUD hideAnimated:YES];
-       }
+            [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
+        }
     }];
     
     //Picker Setup
@@ -243,24 +253,31 @@
                                      @"cmd":@"get_consumer_latest_delivery_info"};
         
         [[APIUtility sharedInstance] ConsumerDelivaryInfoAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
-            
-            if( ((NSArray *)[response valueForKey:@"data"]).count > 0) {
-                NSLog(@"%@",response);
-                self.selceted_Location_TextField.text = [[[response valueForKey:@"data"] objectAtIndex:0] valueForKey:@"delivery_address_name"];
-                self.txtNote.text = [[[response valueForKey:@"data"] objectAtIndex:0] valueForKey:@"delivery_instruction"];
-                
-                NSString *dTime = [[[response valueForKey:@"data"] objectAtIndex:0] valueForKey:@"delivery_time"];
-                NSLog(@"%@",dTime);
-                NSDateFormatter *dforamat = [[NSDateFormatter alloc] init];
-                [dforamat setDateFormat:@"HH:mm:ss"];
-                NSDate *date = [dforamat dateFromString:dTime];
-                NSLog(@"%@",date);
-                self.lblDeliveryTIme.text = [formatter2 stringFromDate:date];
-                
-                //                latestInfoArray = (NSArray *)[response valueForKey:@"data"];
-//                delivaryLocationName = [NSString stringWithFormat: @"%@", [[[response valueForKey:@"data"] objectAtIndex:0]valueForKey:@"delivery_address_name"]];
-//                self.btnDeliveryTo.titleLabel.text = delivaryLocationName;
-                
+            if([[response valueForKey:@"status"] integerValue] >= 0)
+            {
+                if( ((NSArray *)[response valueForKey:@"data"]).count > 0) {
+                    NSLog(@"%@",response);
+                    self.selceted_Location_TextField.text = [[[response valueForKey:@"data"] objectAtIndex:0] valueForKey:@"delivery_address_name"];
+                    self.txtNote.text = [[[response valueForKey:@"data"] objectAtIndex:0] valueForKey:@"delivery_instruction"];
+                    
+                    NSString *dTime = [[[response valueForKey:@"data"] objectAtIndex:0] valueForKey:@"delivery_time"];
+                    NSLog(@"%@",dTime);
+                    NSDateFormatter *dforamat = [[NSDateFormatter alloc] init];
+                    [dforamat setDateFormat:@"HH:mm:ss"];
+                    NSDate *date = [dforamat dateFromString:dTime];
+                    NSLog(@"%@",date);
+                    self.lblDeliveryTIme.text = [formatter2 stringFromDate:date];
+                    
+                    //                latestInfoArray = (NSArray *)[response valueForKey:@"data"];
+                    //                delivaryLocationName = [NSString stringWithFormat: @"%@", [[[response valueForKey:@"data"] objectAtIndex:0]valueForKey:@"delivery_address_name"]];
+                    //                self.btnDeliveryTo.titleLabel.text = delivaryLocationName;
+                    
+                }
+            }
+            else
+            {
+                [HUD hideAnimated:YES];
+                [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
             }
         }];
     }
@@ -303,9 +320,9 @@
     [df setDateFormat:@"HH:mm:ss"];
     [df setTimeZone:[NSTimeZone systemTimeZone]];
     NSLog(@"The Current Time is %@",[df stringFromDate:now]);
-    NSString *currentTime = [df stringFromDate:now];
+//    NSString *currentTime = [df stringFromDate:now];
     
-    NSDate *CurrentTime = [df dateFromString:currentTime];
+//    NSDate *CurrentTime = [df dateFromString:currentTime];
     
     NSString *selectTime = [df stringFromDate:selectedTime];
     
@@ -536,31 +553,32 @@
 //    }
     NSLog(@"%@",self.locationNameArr);
     if(self.selceted_Location_TextField.text.length == 0){
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"Please select location."
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        [self showAlert:@"Error" :@"Please select location."];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+//                                                        message:@"Please select location."
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"OK"
+//                                              otherButtonTitles:nil];
+//        [alert show];
     }
     else if(self.lblDeliveryTIme.text.length == 0){
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"Please select date and time."
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+         [self showAlert:@"Error" :@"Please select date and time."];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+//                                                        message:@"Please select date and time."
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"OK"
+//                                              otherButtonTitles:nil];
+//        [alert show];
     }
     else if(![self.locationNameArr containsObject:self.selceted_Location_TextField.text])
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                        message:@"Please select correct location."
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        [self showAlert:@"Error" :@"Please select correct location."];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
+//                                                        message:@"Please select correct location."
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"OK"
+//                                              otherButtonTitles:nil];
+//        [alert show];
     }
     else {
         
@@ -594,28 +612,34 @@
         }
             NSLog(@"%@",inDataDict);
             [[APIUtility sharedInstance] ConsumerDelivaryInfoSaveAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
-                
-                if( ((NSArray *)response).count > 0) {
-                    
-                    [AppData sharedInstance].consumer_Delivery_Id =[NSString stringWithFormat:@"%@", [response valueForKey:@"consumer_delivery_id"]];
-                    [AppData sharedInstance].consumer_Delivery_Location = self.selceted_Location_TextField.text;
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                    //                [self.navigationController popViewControllerAnimated:true];
+                if([[response valueForKey:@"status"] integerValue] >= 0)
+                {
+                    if( ((NSArray *)response).count > 0) {
+                        
+                        [AppData sharedInstance].consumer_Delivery_Id =[NSString stringWithFormat:@"%@", [response valueForKey:@"consumer_delivery_id"]];
+                        [AppData sharedInstance].consumer_Delivery_Location = self.selceted_Location_TextField.text;
+                        [self dismissViewControllerAnimated:YES completion:nil];
+                        //                [self.navigationController popViewControllerAnimated:true];
+                    }
+                    else
+                    {
+                        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                                       message:@"Something went wrong."
+                                                                                preferredStyle:UIAlertControllerStyleAlert];
+                        
+                        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                                              handler:^(UIAlertAction * action) {}];
+                        
+                        [alert addAction:defaultAction];
+                        [self presentViewController:alert animated:YES completion:nil];
+                    }
+                    [HUD hideAnimated:YES];
                 }
                 else
                 {
-                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                                   message:@"Something went wrong."
-                                                                            preferredStyle:UIAlertControllerStyleAlert];
-                    
-                    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                                          handler:^(UIAlertAction * action) {}];
-                    
-                    [alert addAction:defaultAction];
-                    [self presentViewController:alert animated:YES completion:nil];
+                    [HUD hideAnimated:YES];
+                    [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
                 }
-                [HUD hideAnimated:YES];
-                
             }];
     }
 }
@@ -798,5 +822,24 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 //    [self.navigationController popViewControllerAnimated:true];
 }
+
+- (void)showAlert:(NSString *)Title :(NSString *)Message{
+    UIAlertController * alert = [UIAlertController
+                                 alertControllerWithTitle:Title
+                                 message:Message
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* OKButton = [UIAlertAction
+                               actionWithTitle:@"OK"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   [self dismissViewControllerAnimated:true completion:nil];
+                               }];
+    
+    [alert addAction:OKButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 
 @end

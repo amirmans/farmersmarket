@@ -726,14 +726,14 @@ UIBarButtonItem *btn_heart;
 
 - (IBAction)btn_GetDirection_Cllcked:(id)sender {
     
-    CLLocationCoordinate2D coord1;
-    CLLocationCoordinate2D coord2;
+//    CLLocationCoordinate2D coord1;
+//    CLLocationCoordinate2D coord2;
     
     NSLog(@"Lat :- %f",biz.lat);
     NSLog(@"Lat :- %f",biz.lng);
     
 //    double dist = getDistanceMetresBetweenLocationCoordinates(coord1,coord2);
-    double dist = [self getDistanceMetresBetweenLocationCoordinates:coord1 :coord2];
+//    double dist = [self getDistanceMetresBetweenLocationCoordinates:coord1 :coord2];
 
     CLLocation* location = [[CLLocation alloc] initWithLatitude:biz.lat longitude:biz.lng];
 
@@ -746,7 +746,7 @@ UIBarButtonItem *btn_heart;
                        launchOptions:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:MKLaunchOptionsDirectionsModeDriving, [NSNumber numberWithBool:YES], nil]
                                                                  forKeys:[NSArray arrayWithObjects:MKLaunchOptionsDirectionsModeKey, MKLaunchOptionsShowsTrafficKey, nil]]];
     }
-    NSLog(@"%f",dist);
+//    NSLog(@"%f",dist);
 }
 
 - (IBAction)btn_CallClicked:(id)sender {
@@ -759,8 +759,9 @@ UIBarButtonItem *btn_heart;
         [[UIApplication sharedApplication] openURL:phoneUrl];
     }
     else {
-        UIAlertView *callAlert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Call facility is not available!!!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-        [callAlert show];
+        [self showAlert:@"Alert" :@"Call facility is not available!!!"];
+//        UIAlertView *callAlert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Call facility is not available!!!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+//        [callAlert show];
     }
 }
 
@@ -824,7 +825,7 @@ UIBarButtonItem *btn_heart;
 
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
-    UIAlertView *alert;
+//    UIAlertView *alert;
     NSString *tempStr = @"Your text to ";
     NSString *confirmationTitle = [tempStr stringByAppendingString:biz.businessName];
 
@@ -832,20 +833,40 @@ UIBarButtonItem *btn_heart;
         case MessageComposeResultCancelled:
             break;
         case MessageComposeResultFailed:
-            alert = [[UIAlertView alloc] initWithTitle:@"confirmationTitle" message:@"Message was not sent because of an unknown Error" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
-            alert = nil;
+            [self showAlert:confirmationTitle :@"Message was not sent because of an unknown Error"];
+//            alert = [[UIAlertView alloc] initWithTitle:@"confirmationTitle" message:@"Message was not sent because of an unknown Error" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//            [alert show];
+//            alert = nil;
             break;
         case MessageComposeResultSent:
-            alert = [[UIAlertView alloc] initWithTitle:confirmationTitle message:@"Message was sent." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
-            alert = nil;
+            [self showAlert:confirmationTitle :@"Message was sent."];
+//            alert = [[UIAlertView alloc] initWithTitle:confirmationTitle message:@"Message was sent." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//            [alert show];
+//            alert = nil;
             break;
         default:
             break;
     }
-    alert = nil;
+//    alert = nil;
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)showAlert:(NSString *)Title :(NSString *)Message{
+    UIAlertController * alert = [UIAlertController
+                                 alertControllerWithTitle:Title
+                                 message:Message
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* OKButton = [UIAlertAction
+                               actionWithTitle:@"OK"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   [self dismissViewControllerAnimated:true completion:nil];
+                               }];
+    
+    [alert addAction:OKButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 

@@ -164,8 +164,8 @@
         urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%i&consumerID=%@&sub_businesses=%@", BusinessAndProductionInformationServer, businessID, consumer_id,sub_businesses];
     }
 //    NSString *urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%i&consumerID=%@", BusinessAndProductionInformationServer, businessID, consumer_id];
-    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    //urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+//    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlString];
     
     //    isProductListLoaded = TRUE;
@@ -191,9 +191,8 @@
     }
     NSLog(@"%@", urlString);
 //    NSString *urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%@&consumerID=%@", BusinessAndProductionInformationServer, busiID, consumer_id];
-    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"%@", urlString);
-    //urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+//    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlString];
     
     //    isProductListLoaded = TRUE;
@@ -235,8 +234,8 @@
 - (void)startLoadingBusinessEvents {
     
     NSString *urlString = [NSString stringWithFormat:@"%@?businessID=%i", ServerForBusiness, businessID];
-    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    //urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+//    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlString];
     
     //    isProductListLoaded = TRUE;

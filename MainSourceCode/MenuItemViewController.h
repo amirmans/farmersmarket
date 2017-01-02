@@ -16,6 +16,7 @@
 #import "MenuOptionItemModel.h"
 #import "MenuItemOptionsCell.h"
 #import "MenuItemNoImageTableViewCell.h"
+#import "CartViewController.h"
 @class MBProgressHUD;
 
 @interface MenuItemViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,SHMultipleSelectDelegate, SINavigationMenuDelegate, UITextFieldDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate> {
@@ -33,13 +34,16 @@
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, strong) UISearchController *searchController;
-
+@property (weak, nonatomic) IBOutlet UIView *noteView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *noteViewHeightConstraint;
 
 @property (strong, nonatomic) IBOutlet UIView *MenuItems_back_view;
 @property (strong, nonatomic) IBOutlet UILabel *lbl_menuItems;
 @property (strong, nonatomic) IBOutlet UITableView *MenuItemTableView;
 @property (strong,nonatomic) NSMutableArray *nameArray;
 @property (strong,nonatomic) NSMutableArray *discriptionArray;
+@property (weak, nonatomic) IBOutlet UIButton *btnCancelNote;
+- (IBAction)btnCancelNoteClicked:(id)sender;
 
 @property (nonatomic, strong) NSMutableArray *arrayForBool;
 
@@ -67,6 +71,7 @@
 @property (strong, nonatomic) IBOutlet UIView *removeFromCartContainerView;
 
 @property (strong, nonatomic) IBOutlet UIView *menuItemOptionsView;
+@property (weak, nonatomic) IBOutlet UITextField *txtNote;
 
 #pragma mark - Tabs
 

@@ -38,7 +38,7 @@
 
 +(CLLocationCoordinate2D) getLocationFromAddressString:(NSString*) addressStr;
 + (CLLocationDistance) getDistanceFromLocation : (CLLocation*) currentLocation Destination : (CLLocation*) destinationLocation;
-+ (void) showAlert:(NSString *)title message:(NSString *)message buttonTitle:(NSString *)buttonTitle;
++ (void) showAlert:(NSString *)title message:(NSString *)message buttonTitle:(NSString *)buttonTitle viewClass:(UIViewController *)viewClass;
 -(NSString *)checkNetworkConnectivity;
 - (void) getCurruntLocation;
 - (float)getDistance:(double)lat longitude:(double)lng;

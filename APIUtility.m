@@ -34,7 +34,7 @@ static APIUtility *sharedObj;
 
 -(void)showDialogBox
 {
-    [AppData showAlert:@"Message" message:@"No internet connection" buttonTitle:@"Ok"];
+//    [AppData showAlert:@"Message" message:@"No internet connection" buttonTitle:@"Ok"];
 }
 
 
@@ -612,7 +612,8 @@ static APIUtility *sharedObj;
 
 -(CLLocationCoordinate2D) getLocationFromAddressString: (NSString*) addressStr {
     double latitude = 0, longitude = 0;
-    NSString *esc_addr =  [addressStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//    NSString *esc_addr =  [addressStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *esc_addr = [addressStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     NSString *req = [NSString stringWithFormat:@"http://maps.google.com/maps/api/geocode/json?sensor=false&address=%@", esc_addr];
     NSString *result = [NSString stringWithContentsOfURL:[NSURL URLWithString:req] encoding:NSUTF8StringEncoding error:NULL];
     if (result) {
@@ -691,6 +692,75 @@ static APIUtility *sharedObj;
     
     return returnVal;
 }
+
+- (void)getFromServer:(NSDictionary *)data server:(NSString *)url
+                      completiedBlock:(void (^)(NSDictionary *response))finished {
+    
+    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+    {
+        return;
+    }
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    [manager GET:[NSString stringWithFormat:@"%@",url] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+        if (finished) {
+            finished((NSDictionary*)responseObject);
+        }
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
+        NSDictionary *temp = @{};
+        
+        if([error code] == -1004) {
+            
+            if (finished) {
+                finished(dic);
+            }
+        }
+        else
+        {
+            if (finished) {
+                finished(temp);
+            }
+        }
+    }];
+}
+
+- (void)postFromServer:(NSDictionary *)data server:(NSString *)url
+      completiedBlock:(void (^)(NSDictionary *response))finished {
+    
+    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+    {
+        return;
+    }
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    
+    [manager POST:[NSString stringWithFormat:@"%@",url] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+        if (finished) {
+            finished((NSDictionary*)responseObject);
+        }
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        
+        NSLog(@"Error: %@", error);
+        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
+        NSDictionary *temp = @{};
+        
+        if([error code] == -1004) {
+            
+            if (finished) {
+                finished(dic);
+            }
+        }
+        else
+        {
+            if (finished) {
+                finished(temp);
+            }
+        }
+    }];
+}
+
 
 
 @end

@@ -271,7 +271,7 @@
 }
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
-    UIAlertView *alert;
+//    UIAlertView *alert;
     NSString *tempStr = @"Your text to ";
     NSString *confirmationTitle = [tempStr stringByAppendingString:[CurrentBusiness sharedCurrentBusinessManager].business.shortBusinessName];
     
@@ -279,20 +279,40 @@
         case MessageComposeResultCancelled:
             break;
         case MessageComposeResultFailed:
-            alert = [[UIAlertView alloc] initWithTitle:@"confirmationTitle" message:@"Message was not sent because of an unknown Error" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
-            alert = nil;
+            [self showAlert:confirmationTitle :@"Message was not sent because of an unknown Error"];
+//            alert = [[UIAlertView alloc] initWithTitle:@"confirmationTitle" message:@"Message was not sent because of an unknown Error" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//            [alert show];
+//            alert = nil;
             break;
         case MessageComposeResultSent:
-            alert = [[UIAlertView alloc] initWithTitle:confirmationTitle message:@"Message was sent." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert show];
-            alert = nil;
+            [self showAlert:confirmationTitle :@"Message was sent."];
+//            alert = [[UIAlertView alloc] initWithTitle:confirmationTitle message:@"Message was sent." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//            [alert show];
+//            alert = nil;
             break;
         default:
             break;
     }
-    alert = nil;
+//    alert = nil;
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)showAlert:(NSString *)Title :(NSString *)Message{
+    UIAlertController * alert = [UIAlertController
+                                 alertControllerWithTitle:Title
+                                 message:Message
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* OKButton = [UIAlertAction
+                               actionWithTitle:@"OK"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   [self dismissViewControllerAnimated:true completion:nil];
+                               }];
+    
+    [alert addAction:OKButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 

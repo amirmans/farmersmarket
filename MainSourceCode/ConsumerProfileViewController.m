@@ -436,6 +436,7 @@ static NSArray *consumerProfileDataArray = nil;
                 //uid is determine by the database. so we set DataModel after we talk to the server
                 //
                 NSDictionary *jsonDictResponse = (NSDictionary *) responseObject;
+        
                 [DataModel sharedDataModelManager].ageGroup = ageGroupSegmentedControl.selectedSegmentIndex;
                 NSString *qrImageFileName = [jsonDictResponse objectForKey:@"qrcode_file"];
                 if ((qrImageFileName != nil) && (qrImageFileName != (id)[NSNull null])) {
@@ -443,7 +444,9 @@ static NSArray *consumerProfileDataArray = nil;
                 }
                 [DataModel sharedDataModelManager].zipcode = zipcodeTextField.text;
                 [DataModel sharedDataModelManager].emailAddress = emailTextField.text;
-
+            
+                [[DataModel sharedDataModelManager] setUserIDWithString:jsonDictResponse[@"uid"]];
+            
                 UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
                                                                                message:@"Profile information saved successfully."
                                                                         preferredStyle:UIAlertControllerStyleAlert];

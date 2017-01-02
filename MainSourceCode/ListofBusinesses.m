@@ -7,7 +7,7 @@
 //
 
 #import "ListofBusinesses.h"
-
+#import "AppData.h"
 
 
 @interface ListofBusinesses () {
@@ -58,7 +58,28 @@
     //    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
 //    int status = [[responseData objectForKey:@"status"] intValue];
 //        NSAssert(status == 0, @"We could not get list of our businesses");
-    businessListArray = [responseData objectForKey:@"data"];
+    if ([[responseData objectForKey:@"status"] integerValue] >= 0) {
+            businessListArray = [responseData objectForKey:@"data"];
+    }
+    else
+    {
+        UIAlertController * alert = [UIAlertController
+                                     alertControllerWithTitle:@"Error"
+                                     message:@"Something went wrong."
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* OKButton = [UIAlertAction
+                                   actionWithTitle:@"OK"
+                                   style:UIAlertActionStyleCancel
+                                   handler:nil];
+        [alert addAction:OKButton];
+        UIWindow *keyWindow = [[UIApplication sharedApplication]keyWindow];
+        UIViewController *mainController = [keyWindow rootViewController];
+        [mainController presentViewController:alert animated:YES completion:nil];
+//        [self presentViewController:alert animated:YES completion:nil];
+
+//        [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
+    }
+    
 //    NSLog(@"The status is: %i and our list of businesses is: %@", status, businessListArray);
 }
 

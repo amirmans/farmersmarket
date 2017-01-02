@@ -662,9 +662,7 @@ NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView = 1.0/3.0;
     self.arrowImageView.hidden = highlighted;
     self.arrowHighlightedImageView.hidden = !highlighted;
 }
-
-- (UIImage *)image:(UIImage *)image withColor:(UIColor *)color {
-    
+-(UIImage *)image:(UIImage *)image withColor:(UIColor *)color{
     UIGraphicsBeginImageContextWithOptions(image.size, NO, 0);
     CGRect imageRect = (CGRect){.size=image.size};
     CGContextRef c = UIGraphicsGetCurrentContext();
@@ -676,6 +674,7 @@ NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView = 1.0/3.0;
     UIImage *whiteImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return whiteImage;
+
 }
 
 - (void)layoutSubviews {

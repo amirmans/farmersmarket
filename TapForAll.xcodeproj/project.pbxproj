@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		1240F8EB1DAD2FE8005D0642 /* AddressVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1240F8EA1DAD2FE8005D0642 /* AddressVC.xib */; };
 		1240F8EE1DAD3F19005D0642 /* AddressVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1240F8ED1DAD3F19005D0642 /* AddressVC.m */; };
+		12C090E61DDDDB600033CEA9 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C090E41DDDDB600033CEA9 /* CartViewController.m */; };
+		12C090E71DDDDB600033CEA9 /* CartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12C090E51DDDDB600033CEA9 /* CartViewController.xib */; };
+		12C090EB1DDDEC6E0033CEA9 /* CartItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C090E91DDDEC6E0033CEA9 /* CartItemTableViewCell.m */; };
+		12C090EC1DDDEC6E0033CEA9 /* CartItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12C090EA1DDDEC6E0033CEA9 /* CartItemTableViewCell.xib */; };
+		12C090F01DDDEF940033CEA9 /* CartTotalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C090EE1DDDEF940033CEA9 /* CartTotalTableViewCell.m */; };
+		12C090F11DDDEF940033CEA9 /* CartTotalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12C090EF1DDDEF940033CEA9 /* CartTotalTableViewCell.xib */; };
 		290481BE150433CE0066002B /* ProductItemsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 290481BD150433CE0066002B /* ProductItemsTableViewController.xib */; };
 		291850CA153E8DA8008B6EBB /* DetailBusinessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291850C8153E8DA8008B6EBB /* DetailBusinessViewController.m */; };
 		2935D2991569E842003FB5CB /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2935D2981569E842003FB5CB /* LoginViewController.xib */; };
@@ -60,6 +66,8 @@
 		29ECC44C14CCC06C0098656C /* RateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C0098656B /* RateView.m */; };
 		29ECC44C14CCC06C0098656F /* TapTalkLooks.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C0098656E /* TapTalkLooks.m */; };
 		29ECC44C14CCC06C00986572 /* UIAlertView+TapTalkAlerts.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C00986571 /* UIAlertView+TapTalkAlerts.m */; };
+		4A06471D1DE456B900416969 /* CartViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A06471B1DE456B900416969 /* CartViewTableViewCell.m */; };
+		4A06471E1DE456B900416969 /* CartViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A06471C1DE456B900416969 /* CartViewTableViewCell.xib */; };
 		4A0F2CA31C71D5BA005C6F22 /* TPBusinessDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A0F2CA21C71D5BA005C6F22 /* TPBusinessDetail.m */; };
 		4A0F2CA91C7224B1005C6F22 /* CustomUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A0F2CA81C7224B1005C6F22 /* CustomUIButton.m */; };
 		4A0F2CD51C726D08005C6F22 /* TotalCartItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A0F2CD31C726D08005C6F22 /* TotalCartItemController.m */; };
@@ -99,6 +107,7 @@
 		4A9499851C7F337200400A53 /* SavedCardTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A9499831C7F337200400A53 /* SavedCardTableCell.xib */; };
 		4A99D9181CBD273C00755437 /* TotalCartItemsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A99D9161CBD273C00755437 /* TotalCartItemsTableCell.m */; };
 		4A99D9191CBD273C00755437 /* TotalCartItemsTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A99D9171CBD273C00755437 /* TotalCartItemsTableCell.xib */; };
+		4A9B0A5A1DD327FD0092D638 /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A9B0A591DD327FD0092D638 /* Cancel.png */; };
 		4AA5F8BE1CAFC418007F4DFE /* Businesses Property List.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4AA5F8BD1CAFC418007F4DFE /* Businesses Property List.plist */; };
 		4AAD6B6C1D018A4D00AED4F7 /* MenuItemNoImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAD6B6A1D018A4D00AED4F7 /* MenuItemNoImageTableViewCell.m */; };
 		4AAD6B6D1D018A4D00AED4F7 /* MenuItemNoImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD6B6B1D018A4D00AED4F7 /* MenuItemNoImageTableViewCell.xib */; };
@@ -240,6 +249,15 @@
 		1240F8EA1DAD2FE8005D0642 /* AddressVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressVC.xib; sourceTree = "<group>"; };
 		1240F8EC1DAD3F19005D0642 /* AddressVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressVC.h; sourceTree = "<group>"; };
 		1240F8ED1DAD3F19005D0642 /* AddressVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressVC.m; sourceTree = "<group>"; };
+		12C090E31DDDDB600033CEA9 /* CartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartViewController.h; sourceTree = "<group>"; };
+		12C090E41DDDDB600033CEA9 /* CartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartViewController.m; sourceTree = "<group>"; };
+		12C090E51DDDDB600033CEA9 /* CartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartViewController.xib; sourceTree = "<group>"; };
+		12C090E81DDDEC6E0033CEA9 /* CartItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartItemTableViewCell.h; sourceTree = "<group>"; };
+		12C090E91DDDEC6E0033CEA9 /* CartItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartItemTableViewCell.m; sourceTree = "<group>"; };
+		12C090EA1DDDEC6E0033CEA9 /* CartItemTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartItemTableViewCell.xib; sourceTree = "<group>"; };
+		12C090ED1DDDEF940033CEA9 /* CartTotalTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartTotalTableViewCell.h; sourceTree = "<group>"; };
+		12C090EE1DDDEF940033CEA9 /* CartTotalTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartTotalTableViewCell.m; sourceTree = "<group>"; };
+		12C090EF1DDDEF940033CEA9 /* CartTotalTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartTotalTableViewCell.xib; sourceTree = "<group>"; };
 		290481BD150433CE0066002B /* ProductItemsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProductItemsTableViewController.xib; sourceTree = "<group>"; };
 		291850C7153E8DA8008B6EBB /* DetailBusinessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailBusinessViewController.h; path = MainSourceCode/DetailBusinessViewController.h; sourceTree = "<group>"; };
 		291850C8153E8DA8008B6EBB /* DetailBusinessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailBusinessViewController.m; path = MainSourceCode/DetailBusinessViewController.m; sourceTree = "<group>"; };
@@ -308,6 +326,9 @@
 		29ECC44C14CCC06C0098656E /* TapTalkLooks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TapTalkLooks.m; path = MainSourceCode/TapTalkLooks.m; sourceTree = "<group>"; };
 		29ECC44C14CCC06C00986570 /* UIAlertView+TapTalkAlerts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIAlertView+TapTalkAlerts.h"; path = "MainSourceCode/UIAlertView+TapTalkAlerts.h"; sourceTree = "<group>"; };
 		29ECC44C14CCC06C00986571 /* UIAlertView+TapTalkAlerts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIAlertView+TapTalkAlerts.m"; path = "MainSourceCode/UIAlertView+TapTalkAlerts.m"; sourceTree = "<group>"; };
+		4A06471A1DE456B900416969 /* CartViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartViewTableViewCell.h; sourceTree = "<group>"; };
+		4A06471B1DE456B900416969 /* CartViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartViewTableViewCell.m; sourceTree = "<group>"; };
+		4A06471C1DE456B900416969 /* CartViewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartViewTableViewCell.xib; sourceTree = "<group>"; };
 		4A0F2CA11C71D5BA005C6F22 /* TPBusinessDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPBusinessDetail.h; sourceTree = "<group>"; };
 		4A0F2CA21C71D5BA005C6F22 /* TPBusinessDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPBusinessDetail.m; sourceTree = "<group>"; };
 		4A0F2CA71C7224B1005C6F22 /* CustomUIButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomUIButton.h; sourceTree = "<group>"; };
@@ -368,6 +389,7 @@
 		4A99D9151CBD273C00755437 /* TotalCartItemsTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TotalCartItemsTableCell.h; sourceTree = "<group>"; };
 		4A99D9161CBD273C00755437 /* TotalCartItemsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TotalCartItemsTableCell.m; sourceTree = "<group>"; };
 		4A99D9171CBD273C00755437 /* TotalCartItemsTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TotalCartItemsTableCell.xib; sourceTree = "<group>"; };
+		4A9B0A591DD327FD0092D638 /* Cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cancel.png; sourceTree = "<group>"; };
 		4AA5F8BD1CAFC418007F4DFE /* Businesses Property List.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Businesses Property List.plist"; sourceTree = "<group>"; };
 		4AAD6B691D018A4D00AED4F7 /* MenuItemNoImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuItemNoImageTableViewCell.h; sourceTree = "<group>"; };
 		4AAD6B6A1D018A4D00AED4F7 /* MenuItemNoImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuItemNoImageTableViewCell.m; sourceTree = "<group>"; };
@@ -744,6 +766,7 @@
 				5D7AEDBF1C6934E400B0929F /* ic_heart.png */,
 				5D7AEDC01C6934E400B0929F /* ic_heart@2x.png */,
 				5D7AEDC11C6934E400B0929F /* ic_heart@3x.png */,
+				4A9B0A591DD327FD0092D638 /* Cancel.png */,
 				5D7AEDC21C6934E400B0929F /* ic_nav.png */,
 				5D7AEDC31C6934E400B0929F /* ic_nav@2x.png */,
 				5D7AEDC41C6934E400B0929F /* ic_nav@3x.png */,
@@ -1026,6 +1049,9 @@
 				1240F8EA1DAD2FE8005D0642 /* AddressVC.xib */,
 				1240F8EC1DAD3F19005D0642 /* AddressVC.h */,
 				1240F8ED1DAD3F19005D0642 /* AddressVC.m */,
+				12C090E31DDDDB600033CEA9 /* CartViewController.h */,
+				12C090E41DDDDB600033CEA9 /* CartViewController.m */,
+				12C090E51DDDDB600033CEA9 /* CartViewController.xib */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -1033,6 +1059,9 @@
 		4AD53C241C73660B009D8FE0 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				4A06471A1DE456B900416969 /* CartViewTableViewCell.h */,
+				4A06471B1DE456B900416969 /* CartViewTableViewCell.m */,
+				4A06471C1DE456B900416969 /* CartViewTableViewCell.xib */,
 				C6F4755E1CDFDBA4009E24E4 /* BusinessDetailsTableCell.h */,
 				C6F4755F1CDFDBA4009E24E4 /* BusinessDetailsTableCell.m */,
 				4AE25A951CBFB83B00134D29 /* BusinessNotificationCell.h */,
@@ -1058,6 +1087,12 @@
 				4AAD6B691D018A4D00AED4F7 /* MenuItemNoImageTableViewCell.h */,
 				4AAD6B6A1D018A4D00AED4F7 /* MenuItemNoImageTableViewCell.m */,
 				4AAD6B6B1D018A4D00AED4F7 /* MenuItemNoImageTableViewCell.xib */,
+				12C090E81DDDEC6E0033CEA9 /* CartItemTableViewCell.h */,
+				12C090E91DDDEC6E0033CEA9 /* CartItemTableViewCell.m */,
+				12C090EA1DDDEC6E0033CEA9 /* CartItemTableViewCell.xib */,
+				12C090ED1DDDEF940033CEA9 /* CartTotalTableViewCell.h */,
+				12C090EE1DDDEF940033CEA9 /* CartTotalTableViewCell.m */,
+				12C090EF1DDDEF940033CEA9 /* CartTotalTableViewCell.xib */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -1144,12 +1179,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2949CC6814589C7200728B87 /* Build configuration list for PBXNativeTarget "TapForAll" */;
 			buildPhases = (
-				996F31FC54012C620D2B26AA /* Check Pods Manifest.lock */,
+				996F31FC54012C620D2B26AA /* [CP] Check Pods Manifest.lock */,
 				2949CC3114589C7200728B87 /* Sources */,
 				2949CC3214589C7200728B87 /* Frameworks */,
 				2949CC3314589C7200728B87 /* Resources */,
-				B363820411F5CD91861D911C /* Embed Pods Frameworks */,
-				16DEAD1D28A6B7C0EC812343 /* Copy Pods Resources */,
+				B363820411F5CD91861D911C /* [CP] Embed Pods Frameworks */,
+				16DEAD1D28A6B7C0EC812343 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1247,6 +1282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C67622321BC9F96200B2F434 /* DetailBusinessViewController.xib in Resources */,
+				4A9B0A5A1DD327FD0092D638 /* Cancel.png in Resources */,
 				C6060DF31BA6265E0084D612 /* Images.xcassets in Resources */,
 				5D7AEDF61C696B3000B0929F /* pin3@2x.png in Resources */,
 				2949CCF21458A21700728B87 /* checkedRadioButton.png in Resources */,
@@ -1255,6 +1291,7 @@
 				2949CCF31458A21700728B87 /* flag.png in Resources */,
 				5D7AEDF11C696B2800B0929F /* pin2@3x.png in Resources */,
 				C662DDFE18D8442F00683BBF /* BubbleCenter.png in Resources */,
+				12C090E71DDDDB600033CEA9 /* CartViewController.xib in Resources */,
 				5D7AEDCE1C6934E400B0929F /* ic_food.png in Resources */,
 				5D7AEDB81C692B6800B0929F /* tempImage.jpeg in Resources */,
 				5D7AEDD41C6934E400B0929F /* ic_nav.png in Resources */,
@@ -1290,6 +1327,7 @@
 				4AD6E47C1CE099240025676C /* ic_minus@3x.png in Resources */,
 				C6EABE1818B2D1CD00F50D19 /* BusinessListViewController.xib in Resources */,
 				5D7AEDCB1C6934E400B0929F /* ic_calendar.png in Resources */,
+				12C090EC1DDDEC6E0033CEA9 /* CartItemTableViewCell.xib in Resources */,
 				5D7AEDD71C6934E400B0929F /* ic_service.png in Resources */,
 				4A3A1D921CC6578100457B07 /* MenuItemOptionsView.xib in Resources */,
 				5D7AEDFB1C696B3800B0929F /* pin4.png in Resources */,
@@ -1334,10 +1372,12 @@
 				5D7AEDEA1C696B2100B0929F /* pin1@2x.png in Resources */,
 				5D7AEDDC1C6934E400B0929F /* img@3x.png in Resources */,
 				29AC066315DD9A490039C118 /* VoteToAddBusinessConfirmation.xib in Resources */,
+				12C090F11DDDEF940033CEA9 /* CartTotalTableViewCell.xib in Resources */,
 				C6C8ACAF18DF9BE5005DAFD6 /* TapForAllTests-Info.plist in Resources */,
 				5D7AEDFC1C696B3800B0929F /* pin4@2x.png in Resources */,
 				4AA5F8BE1CAFC418007F4DFE /* Businesses Property List.plist in Resources */,
 				1240F8EB1DAD2FE8005D0642 /* AddressVC.xib in Resources */,
+				4A06471E1DE456B900416969 /* CartViewTableViewCell.xib in Resources */,
 				5DBDB5C51C6AB35A001828C5 /* MenuItemTableViewCell.xib in Resources */,
 				29ECC44C14CCC06C00986566 /* ProductItemViewCell.xib in Resources */,
 				5D7AEDDB1C6934E400B0929F /* img@2x.png in Resources */,
@@ -1364,14 +1404,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		16DEAD1D28A6B7C0EC812343 /* Copy Pods Resources */ = {
+		16DEAD1D28A6B7C0EC812343 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1392,29 +1432,29 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
-		996F31FC54012C620D2B26AA /* Check Pods Manifest.lock */ = {
+		996F31FC54012C620D2B26AA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		B363820411F5CD91861D911C /* Embed Pods Frameworks */ = {
+		B363820411F5CD91861D911C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1442,6 +1482,7 @@
 				2949CD351458A9CC00728B87 /* Business.m in Sources */,
 				C6768BCE1D5688C000125E95 /* SAMKeychain.m in Sources */,
 				C600C49218DF8A850019E8EF /* ChatsFromBusinessTableViewController.m in Sources */,
+				12C090E61DDDDB600033CEA9 /* CartViewController.m in Sources */,
 				C67D4D4218AEFFEE00D6DF6C /* ListofBusinesses.m in Sources */,
 				4A6643ED1C74A04000C10421 /* SINavigationMenuView.m in Sources */,
 				C6700CFB1859D74B003814C9 /* NotificationTableViewCell.m in Sources */,
@@ -1454,16 +1495,19 @@
 				C6F4755D1CDFDB13009E24E4 /* BusinessDetailsContoller.m in Sources */,
 				C6F475601CDFDBA4009E24E4 /* BusinessDetailsTableCell.m in Sources */,
 				4AAF9C331CFDB101009ECFB2 /* NotificationDetailModel.m in Sources */,
+				4A06471D1DE456B900416969 /* CartViewTableViewCell.m in Sources */,
 				291850CA153E8DA8008B6EBB /* DetailBusinessViewController.m in Sources */,
 				29D29A2015DB5AFA00990F62 /* GooglePlacesConnection.m in Sources */,
 				C69298A918DF8FFE00B013E0 /* BillPayViewController.m in Sources */,
 				5D7AEDE41C6967E000B0929F /* SMCalloutView.m in Sources */,
+				12C090EB1DDDEC6E0033CEA9 /* CartItemTableViewCell.m in Sources */,
 				29D29A2115DB5AFA00990F62 /* GooglePlacesObject.m in Sources */,
 				29ECC44C14CCC06C0098653D /* ProductItemViewCell.m in Sources */,
 				4A1DA88C1C7603CA00E16F30 /* TPReceiptController.m in Sources */,
 				29ECC44C14CCC06C00986540 /* ProductItemsTableViewController.m in Sources */,
 				5D7AEDDF1C69502D00B0929F /* TPFloatRatingView.m in Sources */,
 				29ECC44C14CCC06C00986546 /* ChatMessagesViewController.m in Sources */,
+				12C090F01DDDEF940033CEA9 /* CartTotalTableViewCell.m in Sources */,
 				4A6643EA1C74A04000C10421 /* SIMenuCell.m in Sources */,
 				C61E552518E794C1007027C7 /* CurrentBusiness.m in Sources */,
 				5DBDB5CB1C6AB3CF001828C5 /* MenuItemTableViewCell.m in Sources */,
@@ -1670,7 +1714,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1682,7 +1726,7 @@
 				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/TapForAll/TapForAll-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -1708,8 +1752,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1720,7 +1764,7 @@
 				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/TapForAll/TapForAll-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",

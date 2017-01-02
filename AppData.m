@@ -77,16 +77,10 @@ static AppData *sharedObj;
 //        
 //        [presentViewController:alert animated:YES completion:nil];
 //        
-        
-        
-        
-        
-        
-        
-        
-        UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:@"Location Services Disabled" message:@"You currently have all location services for this device disabled. If you proceed, you will be showing past informations. To enable, Settings->Location->location services->on" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:@"Continue",nil];
-        [servicesDisabledAlert show];
-        [servicesDisabledAlert setDelegate:self];
+        [self showAlert:@"Location Services Disabled" :@"You currently have all location services for this device disabled. If you proceed, you will be showing past informations. To enable, Settings->Location->location services->on"];
+//        UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:@"Location Services Disabled" message:@"You currently have all location services for this device disabled. If you proceed, you will be showing past informations. To enable, Settings->Location->location services->on" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:@"Continue",nil];
+//        [servicesDisabledAlert show];
+//        [servicesDisabledAlert setDelegate:self];
     }
 }
 
@@ -95,9 +89,10 @@ static AppData *sharedObj;
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     NSLog(@"didFailWithError: %@", error);
-    UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [errorAlert show];
+    [self showAlert:@"Error" :@"Failed to Get Your Location"];
+//    UIAlertView *errorAlert = [[UIAlertView alloc]
+//                               initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//    [errorAlert show];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
@@ -132,7 +127,9 @@ static AppData *sharedObj;
 +(CLLocationCoordinate2D) getLocationFromAddressString:(NSString*) addressStr {
     
     double latitude = 0, longitude = 0;
-    NSString *esc_addr =  [addressStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+//    NSString *esc_addr =  [addressStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *esc_addr = [addressStr stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     NSString *req = [NSString stringWithFormat:@"http://maps.google.com/maps/api/geocode/json?sensor=false&address=%@", esc_addr];
     NSString *result = [NSString stringWithContentsOfURL:[NSURL URLWithString:req] encoding:NSUTF8StringEncoding error:NULL];
     if (result) {
@@ -156,7 +153,13 @@ static AppData *sharedObj;
     return distance;
 }
 
-+ (void) showAlert:(NSString *)title message:(NSString *)message buttonTitle:(NSString *)buttonTitle {
++ (void) showAlert:(NSString *)title message:(NSString *)message buttonTitle:(NSString *)buttonTitle viewClass:(UIViewController *)viewClass {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:buttonTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    [alert addAction:okAction];
+    [viewClass presentViewController:alert animated:true completion:^{
+    }];
 }
 
 - (float) getDistance:(double)lat longitude:(double)lng {
@@ -289,4 +292,20 @@ static AppData *sharedObj;
     NSString *dateString = [dateFormatter stringFromDate:localDate];
     return dateString;
 }
+- (void)showAlert:(NSString *)Title :(NSString *)Message{
+    UIAlertController * alert = [UIAlertController
+                                 alertControllerWithTitle:Title
+                                 message:Message
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* OKButton = [UIAlertAction
+                               actionWithTitle:@"OK"
+                               style:UIAlertActionStyleCancel
+                               handler:nil];
+    [alert addAction:OKButton];
+    UIWindow *keyWindow = [[UIApplication sharedApplication]keyWindow];
+    UIViewController *mainController = [keyWindow rootViewController];
+    [mainController presentViewController:alert animated:YES completion:nil];
+}
+
+
 @end

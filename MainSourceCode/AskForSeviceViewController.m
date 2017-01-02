@@ -229,22 +229,23 @@ static NSUInteger firstTime = TRUE;
 }
 
 - (IBAction)Cancel:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Clear your text?" message:@"Sure?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
-    [alert show];
+    [self showAlert:@"Clear your text?" :@"Sure?"];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Clear your text?" message:@"Sure?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+//    [alert show];
 }
 
 #pragma UIAlertViewDelegate method
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-        orderView.text = @"";
-        [orderView resignFirstResponder];
-//        [self.view setNeedsDisplay];
-    }
-    else {
-        // do nothing
-    }
-}
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+//    if (buttonIndex == 0) {
+//        orderView.text = @"";
+//        [orderView resignFirstResponder];
+////        [self.view setNeedsDisplay];
+//    }
+//    else {
+//        // do nothing
+//    }
+//}
 
 - (void)registerForKeyboardNotifications
 {
@@ -319,5 +320,30 @@ static NSUInteger firstTime = TRUE;
     }
     self.lbl_Time.text = [[APIUtility sharedInstance]getOpenCloseTime:self.myBusiness.opening_time CloseTime:self.myBusiness.closing_time];
 }
+
+- (void)showAlert:(NSString *)Title :(NSString *)Message{
+    UIAlertController * alert = [UIAlertController
+                                 alertControllerWithTitle:Title
+                                 message:Message
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* YesButton = [UIAlertAction
+                                actionWithTitle:@"Yes"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action) {
+                                    orderView.text = @"";
+                                    [orderView resignFirstResponder];
+                                }];
+    UIAlertAction* NoButton = [UIAlertAction
+                               actionWithTitle:@"No"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   [self dismissViewControllerAnimated:true completion:nil];
+                               }];
+    [alert addAction:YesButton];
+    [alert addAction:NoButton];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 
 @end

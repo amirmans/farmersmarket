@@ -75,14 +75,15 @@
 + (NSString*)gtm_stringByEscapingForURLArgument:(NSString *)tmpString {
     // Encode all the reserved characters, per RFC 3986
     // (<http://www.ietf.org/rfc/rfc3986.txt>)
-    CFStringRef escaped =
-    CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                            (CFStringRef)tmpString,
-                                            NULL,
-                                            (CFStringRef)@"!*'();:@&=+$,/?%#[]",
-                                            kCFStringEncodingUTF8);
-//    return GTMCFAutorelease(escaped);
-    return  (__bridge NSString *)escaped;
+//    CFStringRef escaped =
+//    CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+//                                            (CFStringRef)tmpString,
+//                                            NULL,
+//                                            (CFStringRef)@"!*'();:@&=+$,/?%#[]",
+//                                            kCFStringEncodingUTF8);
+////    return GTMCFAutorelease(escaped);
+//    return  (__bridge NSString *)escaped;
+    return [tmpString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:@"!*'();:@&=+$,/?%#[]"]];
 }
 
 + (NSString*)gtm_stringByUnescapingFromURLArgument:(NSString *)tmpString {
@@ -91,7 +92,9 @@
                                   withString:@" "
                                      options:NSLiteralSearch
                                        range:NSMakeRange(0, [resultString length])];
-    return [resultString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return [resultString stringByRemovingPercentEncoding];
+//    return [resultString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
 }
 
 

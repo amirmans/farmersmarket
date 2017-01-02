@@ -223,12 +223,12 @@
 
     [mapActivityIndicator stopAnimating];
     if ([objects count] == 0) {
-
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No matches found near this location from google"
-                                                        message:@"Try another place name or address"
-                                                       delegate:nil cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        [self showAlert:@"No matches found near this location from google" :@"Try another place name or address"];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No matches found near this location from google"
+//                                                        message:@"Try another place name or address"
+//                                                       delegate:nil cancelButtonTitle:@"OK"
+//                                              otherButtonTitles:nil];
+//        [alert show];
     } else {
         businessesAroundMe = [[NSMutableArray alloc] initWithCapacity:[objects count]];
         NSEnumerator *e = [objects objectEnumerator];
@@ -293,6 +293,22 @@
         [self setResultsLoaded:NO];
     }
 }
-
+- (void)showAlert:(NSString *)Title :(NSString *)Message{
+    UIAlertController * alert = [UIAlertController
+                                 alertControllerWithTitle:Title
+                                 message:Message
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* OKButton = [UIAlertAction
+                               actionWithTitle:@"OK"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   [self dismissViewControllerAnimated:true completion:nil];
+                               }];
+    
+    [alert addAction:OKButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
 
 @end

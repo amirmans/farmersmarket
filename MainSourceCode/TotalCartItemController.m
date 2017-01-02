@@ -89,11 +89,18 @@ UITextView *alertTextView;
         NSLog(@"---parameter---%@",inDataDict);
         [[APIUtility sharedInstance] BusinessDelivaryInfoAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
             NSLog(@"----response : %@",response);
-            if(((NSArray *)[response valueForKey:@"data"]).count > 0) {
-                NSArray *dataDict = [response valueForKey:@"data"];
-                deliveryamount = [[[dataDict objectAtIndex:0] valueForKey:@"delivery_charge"] doubleValue];
-                delivery_start_time = [[dataDict objectAtIndex:0] valueForKey:@"delivery_start_time"];
-                delivery_end_time = [[dataDict objectAtIndex:0] valueForKey:@"delivery_end_time"];
+            if([[response valueForKey:@"status"] integerValue] >= 0)
+            {
+                if(((NSArray *)[response valueForKey:@"data"]).count > 0) {
+                    NSArray *dataDict = [response valueForKey:@"data"];
+                    deliveryamount = [[[dataDict objectAtIndex:0] valueForKey:@"delivery_charge"] doubleValue];
+                    delivery_start_time = [[dataDict objectAtIndex:0] valueForKey:@"delivery_start_time"];
+                    delivery_end_time = [[dataDict objectAtIndex:0] valueForKey:@"delivery_end_time"];
+                }
+            }
+            else
+            {
+                [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
             }
         }];
     }
@@ -128,7 +135,8 @@ UITextView *alertTextView;
     self.notesText = @"";
     billBusiness = [CurrentBusiness sharedCurrentBusinessManager].business;
     self.edgesForExtendedLayout = UIRectEdgeAll;
-    NSString *titleString = [NSString stringWithFormat:@"My Order for %@",billBusiness.shortBusinessName];
+//    NSString *titleString = [NSString stringWithFormat:@"My Order for %@",billBusiness.shortBusinessName];
+    NSString *titleString = [NSString stringWithFormat:@"Order"];
     self.title = titleString;
     orderItems = [[NSMutableArray alloc] init];
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
@@ -208,49 +216,56 @@ UITextView *alertTextView;
                                          @"promotion_code":[CurrentBusiness sharedCurrentBusinessManager].business.promotion_code};
             [[APIUtility sharedInstance] CheckConsumerPromoCodeAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
                 NSLog(@"%@",response);
-                if( ((NSArray *)[response valueForKey:@"data"]).count > 0) {
-                    globalPromotional = 0.00;
-                    promotionalamount = 0.00;
-                    self.lblPromotionalDiscountText.hidden = true;
-                    self.lblPromotionalAmount.hidden = true;
-                    self.lblPromotionCode.hidden = true;
-                    self.lblPromotion.hidden = true;
-                    self.viewLeftLine.hidden = true;
-                    self.viewRightLine.hidden = true;
+                if([[response valueForKey:@"status"] integerValue] >= 0){
+                    
+                    if( ((NSArray *)[response valueForKey:@"data"]).count > 0) {
+                        globalPromotional = 0.00;
+                        promotionalamount = 0.00;
+                        self.lblPromotionalDiscountText.hidden = true;
+                        self.lblPromotionalAmount.hidden = true;
+                        self.lblPromotionCode.hidden = true;
+                        self.lblPromotion.hidden = true;
+                        self.viewLeftLine.hidden = true;
+                        self.viewRightLine.hidden = true;
+                    }
+                    else
+                    {
+                        self.lblPromotionalAmount.hidden = false;
+                        self.lblPromotionCode.hidden =false;
+                        self.lblPromotionalDiscountText.hidden = false;
+                        self.lblPromotion.hidden = false;
+                        self.viewLeftLine.hidden = false;
+                        self.viewRightLine.hidden = false;
+                        NSLog(@"%@", [CurrentBusiness sharedCurrentBusinessManager].business.promotion_code);
+                        if(([CurrentBusiness sharedCurrentBusinessManager].business.promotion_code == nil)){
+                            globalPromotional = 0.00;
+                            promotionalamount = 0.00;
+                        }
+                        else
+                        {
+                            double doublePromo = [[CurrentBusiness sharedCurrentBusinessManager].business.promotion_discount_amount doubleValue];
+                            globalPromotional = doublePromo;
+                            promotionalamount = doublePromo;
+                            self.lblPromotionCode.text = [NSString stringWithFormat:@"Code: %@",[CurrentBusiness sharedCurrentBusinessManager].business.promotion_code];
+                            self.lblPromotionCode.adjustsFontSizeToFitWidth = YES;
+                        }
+                        if(globalPromotional > cartTotal)
+                        {
+                            self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%.2f",cartTotal];
+                            promotionalamount = cartTotal;
+                        }
+                        else
+                        {
+                            promotionalamount = globalPromotional;
+                            self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%@",billBusiness.promotion_discount_amount];
+                        }
+                    }
+                    [self paymentSummary];
                 }
                 else
                 {
-                    self.lblPromotionalAmount.hidden = false;
-                    self.lblPromotionCode.hidden =false;
-                    self.lblPromotionalDiscountText.hidden = false;
-                    self.lblPromotion.hidden = false;
-                    self.viewLeftLine.hidden = false;
-                    self.viewRightLine.hidden = false;
-                    NSLog(@"%@", [CurrentBusiness sharedCurrentBusinessManager].business.promotion_code);
-                    if(([CurrentBusiness sharedCurrentBusinessManager].business.promotion_code == nil)){
-                        globalPromotional = 0.00;
-                        promotionalamount = 0.00;
-                    }
-                    else
-                    {
-                        double doublePromo = [[CurrentBusiness sharedCurrentBusinessManager].business.promotion_discount_amount doubleValue];
-                        globalPromotional = doublePromo;
-                        promotionalamount = doublePromo;
-                        self.lblPromotionCode.text = [NSString stringWithFormat:@"Code: %@",[CurrentBusiness sharedCurrentBusinessManager].business.promotion_code];
-                        self.lblPromotionCode.adjustsFontSizeToFitWidth = YES;
-                    }
-                    if(globalPromotional > cartTotal)
-                    {
-                        self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%.2f",cartTotal];
-                        promotionalamount = cartTotal;
-                    }
-                    else
-                    {
-                        promotionalamount = globalPromotional;
-                        self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%@",billBusiness.promotion_discount_amount];
-                    }
+                    [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
                 }
-                [self paymentSummary];
             }];
         }
     }
@@ -531,40 +546,81 @@ UITextView *alertTextView;
     [self.view addSubview:hud];
     [hud showAnimated:YES];
     
-    [[APIUtility sharedInstance] orderToServer:orderInfoDict server:OrderServerURL completiedBlock:^(NSDictionary *response) {
+    if ([[orderInfoDict valueForKey:@"business_id"] integerValue] <= 0) {
         [hud hideAnimated:YES];
         hud = nil;
-        if([response valueForKey:@"data"] != nil) {
-            NSDictionary *dataDict = [response valueForKey:@"data"];
-            NSMutableArray *fetchedOrders = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
-            NSMutableArray *fetchedOrderArray = [[NSMutableArray alloc] init];
-            for (NSManagedObject *obj in fetchedOrders) {
-                NSArray *keys = [[[obj entity] attributesByName] allKeys];
-                NSDictionary *dictionary = [obj dictionaryWithValuesForKeys:keys];
-                [fetchedOrderArray addObject:dictionary];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Something went wrong." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        [alert addAction:okAction];
+        [self presentViewController:alert animated:true completion:^{
+        }];
+    }
+    else if([[orderInfoDict valueForKey:@"consumer_id"] integerValue] <= 0)
+    {
+        [hud hideAnimated:YES];
+        hud = nil;
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Something went wrong in login. \n Please try again." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        [alert addAction:okAction];
+        [self presentViewController:alert animated:true completion:^{
+        }];
+    }
+    else if([orderInfoDict valueForKey:@"cc_last_4_digits"] == nil || [[orderInfoDict valueForKey:@"cc_last_4_digits"] isEqualToString:@""]){
+        [hud hideAnimated:YES];
+        hud = nil;
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"CC info is not correct. Please Re-enter Creditcard details." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        [alert addAction:okAction];
+        [self presentViewController:alert animated:true completion:^{
+        }];
+    }
+    else{
+        [[APIUtility sharedInstance] orderToServer:orderInfoDict server:OrderServerURL completiedBlock:^(NSDictionary *response) {
+            [hud hideAnimated:YES];
+            hud = nil;
+            if([[response valueForKey:@"status"] integerValue] >= 0)
+            {
+                if([response valueForKey:@"data"] != nil) {
+                    NSDictionary *dataDict = [response valueForKey:@"data"];
+                    NSMutableArray *fetchedOrders = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
+                    NSMutableArray *fetchedOrderArray = [[NSMutableArray alloc] init];
+                    for (NSManagedObject *obj in fetchedOrders) {
+                        NSArray *keys = [[[obj entity] attributesByName] allKeys];
+                        NSDictionary *dictionary = [obj dictionaryWithValuesForKeys:keys];
+                        [fetchedOrderArray addObject:dictionary];
+                    }
+                    NSString *cardType = [defaultCardData valueForKey:@"card_type"];
+                    NSString *cardNo = [defaultCardData valueForKey:@"cc_no"];
+                    NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
+                    NSString *cardDisplayNumber = [NSString stringWithFormat:@"XXXX XXXX XXXX %@",trimmedString];
+                    NSString *expDate =  [NSString stringWithFormat:@"%@/%@",[defaultCardData valueForKey:@"expMonth"],[defaultCardData valueForKey:@"expYear"]];
+                    TPReceiptController *receiptVC = [[TPReceiptController alloc] initWithNibName:@"TPReceiptController" bundle:nil];
+                    receiptVC.fetchedRecordArray = fetchedOrderArray;
+                    receiptVC.order_id = [[dataDict valueForKey:@"order_id"] stringValue];
+                    receiptVC.reward_point = [[dataDict valueForKey:@"points"] stringValue];
+                    receiptVC.cardType = cardType;
+                    receiptVC.cardNumber = cardDisplayNumber;
+                    receiptVC.cardExpDate = expDate;
+                    NSInteger currentRedeemPoints = [self getRedeemNoPoints];
+                    receiptVC.redeem_point = [NSString stringWithFormat:@"%ld",(long)currentRedeemPoints];
+                    receiptVC.totalPaid = self.lblSubTotalPrice.text;
+                    receiptVC.tipAmount = tipAmount;
+                    receiptVC.subTotal = cartTotal;
+                    [self removeAllOrderFromCoreData];
+                    
+                    [self.navigationController pushViewController:receiptVC animated:YES];
+                }
             }
-            NSString *cardType = [defaultCardData valueForKey:@"card_type"];
-            NSString *cardNo = [defaultCardData valueForKey:@"cc_no"];
-            NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
-            NSString *cardDisplayNumber = [NSString stringWithFormat:@"XXXX XXXX XXXX %@",trimmedString];
-            NSString *expDate =  [NSString stringWithFormat:@"%@/%@",[defaultCardData valueForKey:@"expMonth"],[defaultCardData valueForKey:@"expYear"]];
-            TPReceiptController *receiptVC = [[TPReceiptController alloc] initWithNibName:@"TPReceiptController" bundle:nil];
-            receiptVC.fetchedRecordArray = fetchedOrderArray;
-            receiptVC.order_id = [[dataDict valueForKey:@"order_id"] stringValue];
-            receiptVC.reward_point = [[dataDict valueForKey:@"points"] stringValue];
-            receiptVC.cardType = cardType;
-            receiptVC.cardNumber = cardDisplayNumber;
-            receiptVC.cardExpDate = expDate;
-            NSInteger currentRedeemPoints = [self getRedeemNoPoints];
-            receiptVC.redeem_point = [NSString stringWithFormat:@"%ld",(long)currentRedeemPoints];
-            receiptVC.totalPaid = self.lblSubTotalPrice.text;
-            receiptVC.tipAmount = tipAmount;
-            receiptVC.subTotal = cartTotal;
-            [self removeAllOrderFromCoreData];
-            
-            [self.navigationController pushViewController:receiptVC animated:YES];
-        }
-    }];
+            else
+            {
+                
+                [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
+            }
+        }];
+    }
 }
 
 - (void) removeAllOrderFromCoreData {
@@ -854,17 +910,18 @@ UITextView *alertTextView;
 }
 
 - (void) openNotesPopupWithText : (NSString *) note {
-    UIAlertView *testAlert = [[UIAlertView alloc] initWithTitle:@"Add Note"
-                                                        message:@""
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"Pay", nil];
-    alertTextView = [UITextView new];
-    alertTextView.delegate = self;
-    alertTextView.text = note;
-    [testAlert setTag:100];
-    [testAlert setValue: alertTextView forKey:@"accessoryView"];
-    [testAlert show];
+    [self showAlert:@"Add Note" :@""];
+//    UIAlertView *testAlert = [[UIAlertView alloc] initWithTitle:@"Add Note"
+//                                                        message:@""
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"Cancel"
+//                                              otherButtonTitles:@"Pay", nil];
+//    alertTextView = [UITextView new];
+//    alertTextView.delegate = self;
+//    alertTextView.text = note;
+//    [testAlert setTag:100];
+//    [testAlert setValue: alertTextView forKey:@"accessoryView"];
+//    [testAlert show];
 }
 
 #pragma mark - UITextView Delegate
@@ -882,11 +939,23 @@ UITextView *alertTextView;
 
 - (IBAction)btnPayButtonClicked:(id)sender {
     if ([DataModel sharedDataModelManager].uuid.length < 1) {
-        [UIAlertController showErrorAlert:@"Please register on profile page.\nThen you can order."];
+        UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:@"Please register on profile page.\nThen you can order." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            self.tabBarController.selectedIndex = 1;
+        }];
+        [alert1 addAction:okAction];
+        [self presentViewController:alert1 animated:true completion:^{
+        }];
     }
     else {
         if ([DataModel sharedDataModelManager].emailAddress.length < 1) {
-            [UIAlertController showErrorAlert:@"Your receipt won't be emailed to you!\nPlease provide email address in profile page."];
+            UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:@"" message:@"Your receipt won't be emailed to you!\nPlease provide email address in profile page." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                self.tabBarController.selectedIndex = 1;
+            }];
+            [alert2 addAction:okAction];
+            [self presentViewController:alert2 animated:true completion:^{
+            }];
         }
         if (_FetchedRecordArray.count >  0) {
              if (defaultCardData == nil) {
@@ -904,6 +973,15 @@ UITextView *alertTextView;
                     [self openNotesPopupWithText:self.notesText];
                 }
             }
+        }
+        else
+        {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Please select item for place order." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            }];
+            [alert addAction:okAction];
+            [self presentViewController:alert animated:true completion:^{
+            }];
         }
     }
 }
@@ -1084,34 +1162,71 @@ UITextView *alertTextView;
 }
 
 - (IBAction)btnAddNoteClicked:(id)sender {
-    UIAlertView *testAlert = [[UIAlertView alloc] initWithTitle:@"Add Note"
-                                                        message:@""
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"Pay", nil];
-    alertTextView = [UITextView new];
-    alertTextView.text = Note_default_text;
-    [testAlert setTag:100];
-    [testAlert setValue: alertTextView forKey:@"accessoryView"];
-    [testAlert show];
+    [self showAlert:@"Add Note" :@""];
+//    UIAlertView *testAlert = [[UIAlertView alloc] initWithTitle:@"Add Note"
+//                                                        message:@""
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"Cancel"
+//                                              otherButtonTitles:@"Pay", nil];
+//    alertTextView = [UITextView new];
+//    alertTextView.text = Note_default_text;
+//    [testAlert setTag:100];
+//    [testAlert setValue: alertTextView forKey:@"accessoryView"];
+//    [testAlert show];
 }
 
 #pragma mark - AlertView delegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+//    
+//    if (alertView.tag == 100) {
+//        if (buttonIndex == 1) {
+//            if ([alertTextView.text  isEqual:Note_default_text]) {
+//                self.notesText = @"";
+//            }
+//            self.notesText = alertTextView.text;
+//            [self postOrderToServer];
+//        }
+//        else if (buttonIndex == 2) {
+//            self.notesText = @"";
+//            [self postOrderToServer];
+//        }
+//    }
+//}
+- (void)showAlert:(NSString *)Title :(NSString *)Message{
+    UIAlertController *alert = [UIAlertController
+                                alertControllerWithTitle: Title
+                                message: Message
+                                preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* ok = [UIAlertAction
+                               actionWithTitle:@"Pay"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   UITextField *alertTextField = alert.textFields.firstObject;
+                                   NSLog(@"And the text is... %@!", alertTextField.text);
+                                   
+                                   if ([alertTextField.text  isEqual:Note_default_text]) {
+                                       self.notesText = @"";
+                                   }
+                                   self.notesText = alertTextField.text;
+                                   [self postOrderToServer];
+                               }];
     
-    if (alertView.tag == 100) {
-        if (buttonIndex == 1) {
-            if ([alertTextView.text  isEqual:Note_default_text]) {
-                self.notesText = @"";
-            }
-            self.notesText = alertTextView.text;
-            [self postOrderToServer];
-        }
-        else if (buttonIndex == 2) {
-            self.notesText = @"";
-            [self postOrderToServer];
-        }
-    }
-}
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
+                                                   handler:^(UIAlertAction *action){
+                                                       self.notesText = @"";
+//                                                       [self postOrderToServer];
+                                                   }];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        
+    textField.placeholder = Note_default_text;
+        
+    }];
+    
+    [alert addAction:ok];
+    [alert addAction:cancel];
+    
+    [self presentViewController:alert animated:YES completion:nil];}
+
 
 @end

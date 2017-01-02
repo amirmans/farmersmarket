@@ -25,7 +25,7 @@
 #import "APIUtility.h"
 #import <Stripe/Stripe.h>
 #import "AddressVC.h"
-
+#import "IQKeyboardManager.h"
 
 
 @interface AppDelegate () {
@@ -78,6 +78,7 @@ static AppDelegate *sharedObj;
     
 //    [GMSServices provideAPIKey:@"AIzaSyBjJcsPVsRERXqA5SKas-nseCmrZaajEeE"];
     
+    [[IQKeyboardManager sharedManager] setEnable:YES];
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     // Override point for customization after application launch
 //    NSBundle *bundle = [NSBundle mainBundle];
