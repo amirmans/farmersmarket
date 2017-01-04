@@ -382,6 +382,10 @@ static NSArray *consumerProfileDataArray = nil;
     [consumerProfileDataDic setObject:nicknameTextField.text forKey:@"nickname"];
     [consumerProfileDataDic setObject:[NSNumber numberWithInteger:ageGroup] forKey:@"age_group"];
     
+    NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSLog(@"%@",appBuildString);
+
+    [consumerProfileDataDic setObject:[NSString stringWithFormat:@"V%@",appBuildString] forKey:@"app_ver"];
 
     // notice update method in our server, takes care of both situations with or without device_token
     if (deviceToken != nil)

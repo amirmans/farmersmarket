@@ -1470,10 +1470,10 @@ bool shouldOpenOptionMenu = false;
     [menu.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
 
     shouldOpenOptionMenu = false;
-    TotalCartItemController *TotalCartItemVC = [[TotalCartItemController alloc] initWithNibName:@"TotalCartItemController" bundle:nil];
-    [self.navigationController pushViewController:TotalCartItemVC animated:YES];
-//    CartViewController *TotalCartItemVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+//    TotalCartItemController *TotalCartItemVC = [[TotalCartItemController alloc] initWithNibName:@"TotalCartItemController" bundle:nil];
 //    [self.navigationController pushViewController:TotalCartItemVC animated:YES];
+    CartViewController *TotalCartItemVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+    [self.navigationController pushViewController:TotalCartItemVC animated:YES];
 
 }
 

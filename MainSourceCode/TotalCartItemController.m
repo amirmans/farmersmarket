@@ -939,7 +939,7 @@ UITextView *alertTextView;
 
 - (IBAction)btnPayButtonClicked:(id)sender {
     if ([DataModel sharedDataModelManager].uuid.length < 1) {
-        UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:@"Please register on profile page.\nThen you can order." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:@"we are taking you to profile page. please update your profile info \n then go to home for place the order" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             self.tabBarController.selectedIndex = 1;
         }];
@@ -949,7 +949,7 @@ UITextView *alertTextView;
     }
     else {
         if ([DataModel sharedDataModelManager].emailAddress.length < 1) {
-            UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:@"" message:@"Your receipt won't be emailed to you!\nPlease provide email address in profile page." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:@"" message:@"we are taking you to profile page. please update your profile info \n then go to home for place the order" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 self.tabBarController.selectedIndex = 1;
             }];

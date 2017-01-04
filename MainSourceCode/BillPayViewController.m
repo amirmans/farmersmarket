@@ -204,7 +204,7 @@ NSMutableArray *cardDataArray;
         [UIAlertController showErrorAlert:@"Please register on profile page.\nThen save your card information."];
     }
     else if ([DataModel sharedDataModelManager].emailAddress.length < 1) {
-        UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:@"" message:@"Your receipt won't be emailed to you!\nPlease provide email address in profile page." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:@"" message:@"we are taking you to profile page. please update your profile info \n then go to home for save card information" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             self.tabBarController.selectedIndex = 1;
         }];
