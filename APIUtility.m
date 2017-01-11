@@ -694,4 +694,56 @@ static APIUtility *sharedObj;
 }
 
 
+- (NSString *)transformValidSMSNo:(NSString *)phone {
+    
+    NSString *phoneNumber = [phone stringByReplacingOccurrencesOfString:@", ()-+"  withString:@""];
+    phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@","  withString:@""];
+    phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@" "  withString:@""];
+    phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"("  withString:@""];
+    phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@")"  withString:@""];
+    phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"-"  withString:@""];
+    phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"+"  withString:@""];
+
+    if (phoneNumber.length == 10)
+    {
+        phoneNumber = [@"+1" stringByAppendingString:phoneNumber];
+    } else if (phoneNumber.length == 11) {
+         phoneNumber = [@"+" stringByAppendingString:phoneNumber];
+    }
+    
+        
+    NSString *phoneRegex = @"^[+][1][2-9][0-9]{9}$";
+    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
+    
+    if ([phoneTest evaluateWithObject:phoneNumber])
+    {
+        return phoneNumber;
+    }
+    else {
+        return @"";
+    }
+}
+
+
+
+- (NSString*)usPhoneNumber:(NSString *)E_164FormatNo {
+    
+    if (E_164FormatNo.length < 10) {
+        return @"";
+    }
+    NSString* stringts = [NSMutableString stringWithString:E_164FormatNo];
+    stringts = [stringts stringByReplacingOccurrencesOfString:@"+"  withString:@""];
+    
+    NSRange range = [stringts rangeOfString:@"1"];
+    stringts= [stringts stringByReplacingCharactersInRange:range withString:@""];
+    
+    NSMutableString* usNumber = [NSMutableString stringWithString:stringts];
+    [usNumber insertString: @"(" atIndex:0];
+    [usNumber insertString: @")" atIndex:4];
+    [usNumber insertString: @"-" atIndex:5];
+    [usNumber insertString: @"-" atIndex:9];
+
+    return usNumber;
+}
+
 @end

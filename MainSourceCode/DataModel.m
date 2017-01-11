@@ -19,6 +19,7 @@
 @synthesize shouldDownloadChatMessages;
 @synthesize qrImageFileName;
 @synthesize zipcode;
+@synthesize sms_no;
 @synthesize validate_chat;
 @synthesize uuid;
 @synthesize userID;
@@ -76,6 +77,7 @@ static DataModel *sharedDataModel = nil;
         password = @"";
         qrImageFileName = @"";
         zipcode = @"";
+        sms_no = @"";
         
     }
     
@@ -294,6 +296,13 @@ static DataModel *sharedDataModel = nil;
     return [[NSUserDefaults standardUserDefaults] stringForKey:@"Zipcode"];
 }
 
+- (NSString *)sms_no {
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:@"SMS_No"] == nil) {
+        return @"";
+    }
+    return [[NSUserDefaults standardUserDefaults] stringForKey:@"SMS_No"];
+}
+
 - (void)setZipcode:(NSString *)zip {
     
     if (zip == (id)[NSNull null])
@@ -305,6 +314,19 @@ static DataModel *sharedDataModel = nil;
     }
     
     [[NSUserDefaults standardUserDefaults] setObject:zip forKey:@"Zipcode"];
+}
+
+- (void)setSms_no:(NSString *)sms {
+    
+    if (sms == (id)[NSNull null])
+    {
+        sms = @"";
+    }
+    if (sms == nil) {
+        sms = @"";
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:sms forKey:@"SMS_No"];
 }
 
 

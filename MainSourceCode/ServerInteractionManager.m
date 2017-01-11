@@ -9,6 +9,7 @@
 #import "ServerInteractionManager.h"
 #import "AFNetworking.h"
 #import "AppDelegate.h"
+#import "Consts.h"
 
 @implementation ServerInteractionManager
 

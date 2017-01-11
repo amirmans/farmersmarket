@@ -53,6 +53,9 @@
 
 - (BOOL)isZipCodeValid:(NSString *)zipCode;
 
+- (NSString *)transformValidSMSNo:(NSString *)phone;
+- (NSString*)usPhoneNumber:(NSString *)E_164FormatNo;
+
 -(void)BusinessDelivaryInfoAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished;
 
 -(void)ConsumerDelivaryInfoSaveAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished;

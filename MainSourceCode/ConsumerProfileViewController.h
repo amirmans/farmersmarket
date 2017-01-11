@@ -35,5 +35,8 @@
 @property (strong, nonatomic) IBOutlet UIView *topView;
 @property (strong, nonatomic) IBOutlet UIView *bottomView;
 @property (strong, nonatomic) IBOutlet UITableView *savedCardTable;
+@property (strong, nonatomic) IBOutlet UILabel *smsNoLabel;
+@property (strong, nonatomic) IBOutlet UITextField *smsNoTextField;
+
 
 @end

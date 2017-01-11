@@ -76,6 +76,7 @@
 @property(atomic, assign) BOOL shouldDownloadChatMessages;
 @property(nonatomic, strong) NSString *qrImageFileName;
 @property(nonatomic, strong) NSString *zipcode;
+@property(nonatomic, strong) NSString *sms_no;
 @property(atomic, assign) BOOL validate_chat;
 
 - (void)setUserIDWithString:(NSString *)uid;
