@@ -10,6 +10,7 @@
 #import <Stripe/Stripe.h>
 #import "APIUtility.h"
 #import "ConsumerCCModelObject.h"
+#import "MBProgressHUD.h"
 
 @class Business;
 

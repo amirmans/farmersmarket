@@ -25,7 +25,6 @@
 @property (nonatomic, strong) MBProgressHUD *hud;
 @property (nonatomic, strong) NSString *E_164FormatPhoneNumber;
 
-
 - (BOOL)validatePassword:(NSString *)pass;
 - (BOOL)validateAllUserInput;
 - (void)populateFieldsWithInitialValues;
@@ -53,15 +52,14 @@ static NSArray *consumerProfileDataArray = nil;
 @synthesize smsNoLabel, smsNoTextField, E_164FormatPhoneNumber;
 @synthesize consumerProfileDataDic;
 
-
 -(void)SetTextFieldBorder :(UITextField *)textField{
     
     CALayer *border = [CALayer layer];
     CGFloat borderWidth = 2;
     border.borderColor = [UIColor grayColor].CGColor;
     border.frame = CGRectMake(0.0, textField.frame.size.height -borderWidth , textField.frame.size.width, 1.0);
-//    border.frame = CGRectMake(0, textField.frame.size.height - borderWidth, textField.frame.size.width, textField.frame.size.height);
-//    border.borderWidth = borderWidth;
+    //    border.frame = CGRectMake(0, textField.frame.size.height - borderWidth, textField.frame.size.width, textField.frame.size.height);
+    //    border.borderWidth = borderWidth;
     [textField.layer addSublayer:border];
     textField.layer.masksToBounds = YES;
     
@@ -78,16 +76,14 @@ static NSArray *consumerProfileDataArray = nil;
     return self;
 }
 
-
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-//    [self SetTextFieldBorder:emailTextField];
-//    [self SetTextFieldBorder:zipcodeTextField];
-//    [self SetTextFieldBorder:nicknameTextField];
-//    [self SetTextFieldBorder:smsNoTextField];
+    //    [self SetTextFieldBorder:emailTextField];
+    //    [self SetTextFieldBorder:zipcodeTextField];
+    //    [self SetTextFieldBorder:nicknameTextField];
+    //    [self SetTextFieldBorder:smsNoTextField];
 }
-
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -127,12 +123,11 @@ static NSArray *consumerProfileDataArray = nil;
 //    [TapTalkLooks setToTapTalkLooks:emailTextField isActionButton:NO makeItRound:YES];
 //    
 //    ageGroupSegmentedControl.tintColor = [UIColor colorWithRed: 0/255.0 green:0/255.0 blue:255.0f/255.0 alpha:1.0];
-    
+
     [self SetTextFieldBorder:emailTextField];
     [self SetTextFieldBorder:zipcodeTextField];
     [self SetTextFieldBorder:nicknameTextField];
     [self SetTextFieldBorder:smsNoTextField];
-
 
     savedCardDataArray = [[NSMutableArray alloc] init];
     
@@ -224,8 +219,6 @@ static NSArray *consumerProfileDataArray = nil;
     zipcodeTextField.text = [[DataModel sharedDataModelManager] zipcode];
     smsNoTextField.text = [[APIUtility sharedInstance] usPhoneNumber:[[DataModel sharedDataModelManager] sms_no]];
     
-    
-    
     emailTextField.text = [[DataModel sharedDataModelManager] emailAddress];
 }
 
@@ -305,11 +298,10 @@ static NSArray *consumerProfileDataArray = nil;
                     }
                 }
                 break;
-                
             case 4:
                 if (smsNoTextField.text.length > 0)
                 {
-            
+                    
                     if ([[APIUtility sharedInstance] transformValidSMSNo:smsNoTextField.text].length != 12) {
                         //                    if ([zipcodeTest evaluateWithObject:zipcodeTextField.text] == NO) {
                         badInformation = TRUE;
@@ -324,7 +316,6 @@ static NSArray *consumerProfileDataArray = nil;
                     }
                 }
                 break;
-
 
             default:
                 break;
@@ -439,8 +430,7 @@ static NSArray *consumerProfileDataArray = nil;
     [consumerProfileDataDic setObject:nicknameTextField.text forKey:@"nickname"];
     [consumerProfileDataDic setObject:[NSNumber numberWithInteger:ageGroup] forKey:@"age_group"];
     [consumerProfileDataDic setObject:E_164FormatPhoneNumber forKey:@"sms_no"];
-    
-    
+
     NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
     NSLog(@"%@",appBuildString);
 

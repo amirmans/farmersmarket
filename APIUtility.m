@@ -693,7 +693,6 @@ static APIUtility *sharedObj;
     return returnVal;
 }
 
-
 - (NSString *)transformValidSMSNo:(NSString *)phone {
     
     NSString *phoneNumber = [phone stringByReplacingOccurrencesOfString:@", ()-+"  withString:@""];
@@ -703,15 +702,15 @@ static APIUtility *sharedObj;
     phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@")"  withString:@""];
     phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"-"  withString:@""];
     phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"+"  withString:@""];
-
+    
     if (phoneNumber.length == 10)
     {
         phoneNumber = [@"+1" stringByAppendingString:phoneNumber];
     } else if (phoneNumber.length == 11) {
-         phoneNumber = [@"+" stringByAppendingString:phoneNumber];
+        phoneNumber = [@"+" stringByAppendingString:phoneNumber];
     }
     
-        
+    
     NSString *phoneRegex = @"^[+][1][2-9][0-9]{9}$";
     NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
     
@@ -742,7 +741,7 @@ static APIUtility *sharedObj;
     [usNumber insertString: @")" atIndex:4];
     [usNumber insertString: @"-" atIndex:5];
     [usNumber insertString: @"-" atIndex:9];
-
+    
     return usNumber;
 }
 

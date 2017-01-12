@@ -304,6 +304,7 @@ UITextView *alertTextView;
     cell.lbl_Description.text = [self.currentObject valueForKey:@"product_descrption"];
     cell.lbl_OrderOption.text = [self.currentObject valueForKey:@"product_option"];
     cell.lbl_Title.text = [self.currentObject valueForKey:@"productname"];
+    NSLog(@"note ---------------- %@",[self.currentObject valueForKey:@"item_note"]);
     cell.btnRemoveItem.tag = indexPath.row;
     cell.btnRemoveItem.section = indexPath.section;
     cell.btnRemoveItem.row = indexPath.row;
@@ -484,6 +485,7 @@ UITextView *alertTextView;
         NSString *product_id = [product valueForKey:@"product_id"];
         NSString *quantity = [product valueForKey:@"quantity"];
         NSString *options = @"";
+        NSString *itemNote = [product valueForKey:@"item_note"];
         NSArray *option_array;
         if ([product valueForKey:@"selected_ProductID_array"] != [NSNull null]) {
             options = [product valueForKey:@"selected_ProductID_array"];
@@ -495,13 +497,29 @@ UITextView *alertTextView;
         NSString *price = [product valueForKey:@"price"];
         CGFloat rounded_down = [AppData calculateRoundPoints:[price floatValue]];
         NSString *Points = [NSString stringWithFormat:@"$%.2f",rounded_down];
-        NSDictionary *product_orderDict = @{@"product_id":product_id,
-                                            @"quantity":quantity,
-                                            @"options":option_array,
-                                            @"price":price,
-                                            @"points":Points
-                                            };
-        [orderItemArray addObject:product_orderDict];
+        
+        if(itemNote != nil)
+        {
+            if([itemNote isEqualToString:@""]){
+                NSDictionary *product_orderDict = @{@"product_id":product_id,
+                                                    @"quantity":quantity,
+                                                    @"options":option_array,
+                                                    @"price":price,
+                                                    @"points":Points
+                                                    };
+                [orderItemArray addObject:product_orderDict];
+            }else
+            {
+                NSDictionary *product_orderDict = @{@"product_id":product_id,
+                                                    @"quantity":quantity,
+                                                    @"options":option_array,
+                                                    @"price":price,
+                                                    @"item_note":itemNote,
+                                                    @"points":Points
+                                                    };
+                [orderItemArray addObject:product_orderDict];
+            }
+        }
     }
     
     long business_id_long = [CurrentBusiness sharedCurrentBusinessManager].business.businessID;
@@ -681,6 +699,7 @@ UITextView *alertTextView;
     if([AppData sharedInstance].consumer_Delivery_Id != nil)
     {
         self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",cartTotal * deliveryamount];
+        deliveryamount = cartTotal * deliveryamount;
     }
     else
     {
@@ -705,7 +724,7 @@ UITextView *alertTextView;
 }
 
 - (void) setInitialPointsValue {
-    
+    NSLog(@"%@",[RewardDetailsModel sharedInstance].rewardDict);
     NSDictionary *rewards = [RewardDetailsModel sharedInstance].rewardDict;
     currenPointsLevel = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"points"] integerValue];
     originalNoPoints = [[[rewards valueForKey:@"data"] valueForKey:@"total_available_points"] integerValue];
@@ -849,6 +868,7 @@ UITextView *alertTextView;
 }
 
 - (bool)enoughPointsToRedeem {
+    NSLog(@"%f",dollarValueForEachPoints);
     if (dollarValueForEachPoints > 0)
         return TRUE;
     else

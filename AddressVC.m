@@ -651,7 +651,7 @@
     self.mapImageView.image = nil;
     self.txtNote.text = @"";
     [AppData sharedInstance].consumer_Delivery_Id = nil;
-    
+    [AppData sharedInstance].consumer_Delivery_Location = nil;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

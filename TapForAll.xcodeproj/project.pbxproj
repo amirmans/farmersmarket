@@ -116,6 +116,8 @@
 		4AC5CB9D1CAE8F8B0087A65F /* CateringViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC5CB9B1CAE8F8B0087A65F /* CateringViewController.m */; };
 		4AC5CB9E1CAE8F8B0087A65F /* CateringViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AC5CB9C1CAE8F8B0087A65F /* CateringViewController.xib */; };
 		4AC80A901C69FF6A00A42EE2 /* restaurant.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4AC80A8F1C69FF6900A42EE2 /* restaurant.jpg */; };
+		4ACD41AF1E1FDEAB002F9379 /* CartViewSecondScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACD41AD1E1FDEAB002F9379 /* CartViewSecondScreenViewController.m */; };
+		4ACD41B01E1FDEAB002F9379 /* CartViewSecondScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4ACD41AE1E1FDEAB002F9379 /* CartViewSecondScreenViewController.xib */; };
 		4AD6E47A1CE099240025676C /* ic_minus.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AD6E4771CE099240025676C /* ic_minus.png */; };
 		4AD6E47B1CE099240025676C /* ic_minus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AD6E4781CE099240025676C /* ic_minus@2x.png */; };
 		4AD6E47C1CE099240025676C /* ic_minus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AD6E4791CE099240025676C /* ic_minus@3x.png */; };
@@ -403,6 +405,9 @@
 		4AC5CB9C1CAE8F8B0087A65F /* CateringViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CateringViewController.xib; sourceTree = "<group>"; };
 		4AC80A8F1C69FF6900A42EE2 /* restaurant.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = restaurant.jpg; sourceTree = "<group>"; };
 		4ACD296C1CD7628B00BAA006 /* TapForAll_V2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TapForAll_V2.xcdatamodel; sourceTree = "<group>"; };
+		4ACD41AC1E1FDEAB002F9379 /* CartViewSecondScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartViewSecondScreenViewController.h; sourceTree = "<group>"; };
+		4ACD41AD1E1FDEAB002F9379 /* CartViewSecondScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartViewSecondScreenViewController.m; sourceTree = "<group>"; };
+		4ACD41AE1E1FDEAB002F9379 /* CartViewSecondScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartViewSecondScreenViewController.xib; sourceTree = "<group>"; };
 		4AD6E4771CE099240025676C /* ic_minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_minus.png; sourceTree = "<group>"; };
 		4AD6E4781CE099240025676C /* ic_minus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_minus@2x.png"; sourceTree = "<group>"; };
 		4AD6E4791CE099240025676C /* ic_minus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_minus@3x.png"; sourceTree = "<group>"; };
@@ -1052,6 +1057,9 @@
 				12C090E31DDDDB600033CEA9 /* CartViewController.h */,
 				12C090E41DDDDB600033CEA9 /* CartViewController.m */,
 				12C090E51DDDDB600033CEA9 /* CartViewController.xib */,
+				4ACD41AC1E1FDEAB002F9379 /* CartViewSecondScreenViewController.h */,
+				4ACD41AD1E1FDEAB002F9379 /* CartViewSecondScreenViewController.m */,
+				4ACD41AE1E1FDEAB002F9379 /* CartViewSecondScreenViewController.xib */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -1225,7 +1233,7 @@
 				TargetAttributes = {
 					2949CC3414589C7200728B87 = {
 						DevelopmentTeam = E79MNN58JH;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -1351,6 +1359,7 @@
 				29ECC44C14CCC06C0098653A /* EnterBusiness@2x.png in Resources */,
 				C69298AB18DF903400B013E0 /* BillPayViewController.xib in Resources */,
 				C600C49518DF8C4C0019E8EF /* ChatsFromBusinessTableViewController.xib in Resources */,
+				4ACD41B01E1FDEAB002F9379 /* CartViewSecondScreenViewController.xib in Resources */,
 				4AD6E47A1CE099240025676C /* ic_minus.png in Resources */,
 				4AE25A991CBFB83B00134D29 /* BusinessNotificationCell.xib in Resources */,
 				4A6643E61C74A04000C10421 /* arrow_down1@2x.png in Resources */,
@@ -1495,6 +1504,7 @@
 				C6F4755D1CDFDB13009E24E4 /* BusinessDetailsContoller.m in Sources */,
 				C6F475601CDFDBA4009E24E4 /* BusinessDetailsTableCell.m in Sources */,
 				4AAF9C331CFDB101009ECFB2 /* NotificationDetailModel.m in Sources */,
+				4ACD41AF1E1FDEAB002F9379 /* CartViewSecondScreenViewController.m in Sources */,
 				4A06471D1DE456B900416969 /* CartViewTableViewCell.m in Sources */,
 				291850CA153E8DA8008B6EBB /* DetailBusinessViewController.m in Sources */,
 				29D29A2015DB5AFA00990F62 /* GooglePlacesConnection.m in Sources */,
@@ -1714,9 +1724,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				DEVELOPMENT_TEAM = E79MNN58JH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1733,9 +1743,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tapin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "63f4ed67-89ea-4678-8700-b87882407643";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = tapin_development_19_dec;
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1752,9 +1762,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Mohammad Amirmansoury (TGS9Q787ZF)";
+				DEVELOPMENT_TEAM = E79MNN58JH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1772,9 +1782,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tapin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "63f4ed67-89ea-4678-8700-b87882407643";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = tapin_development_19_dec;
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";

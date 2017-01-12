@@ -91,6 +91,7 @@
     [CurrentBusiness sharedCurrentBusinessManager].business.promotion_code = nil;
     [CurrentBusiness sharedCurrentBusinessManager].business.promotion_message = nil;
     [AppData sharedInstance].consumer_Delivery_Id = nil;
+    [AppData sharedInstance].consumer_Delivery_Location = nil;
     [self.navigationController popToRootViewControllerAnimated:true];
 }
 

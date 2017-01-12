@@ -81,6 +81,8 @@
 @synthesize promotion_discount_amount;
 @synthesize promotion_message;
 
+@synthesize pickup_later;
+
 - (void)initMemberData {
     
     self.iconRelativeURL = nil;
@@ -137,6 +139,8 @@
     promotion_code = nil;
     promotion_discount_amount = nil;
     promotion_message = nil;
+    
+    pickup_later = nil;
 }
 
 - (int)isCustomer {
@@ -393,6 +397,8 @@
     promotion_code  = [self stringFromDataDictionary:data forKey:@"promotion_code"];
     promotion_discount_amount  = [self stringFromDataDictionary:data forKey:@"promotion_discount_amount"];
     promotion_message  = [self stringFromDataDictionary:data forKey:@"promotion_message"];
+    
+    pickup_later = [self stringFromDataDictionary:data forKey:@"pickup_later"];
     
     /*
      

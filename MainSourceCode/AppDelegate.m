@@ -588,7 +588,7 @@ static AppDelegate *sharedObj;
     [[DataModel sharedDataModelManager] setAgeGroupWithString:consumerInfo[@"age_group"]];
     [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
     [DataModel sharedDataModelManager].sms_no = consumerInfo[@"sms_no"];
-
+    
 //    [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
     [DataModel sharedDataModelManager].emailAddress = consumerInfo[@"email1"];
     

@@ -38,5 +38,4 @@
 @property (strong, nonatomic) IBOutlet UILabel *smsNoLabel;
 @property (strong, nonatomic) IBOutlet UITextField *smsNoTextField;
 
-
 @end

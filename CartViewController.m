@@ -17,6 +17,7 @@
 @interface CartViewController (){
     NSArray *latestInfoArray;
     ActionSheetDatePicker *datePicker;
+    NSMutableArray *orderItemArray;
 }
 
 @property (strong, nonatomic) NSMutableArray *orderItems;
@@ -29,20 +30,21 @@
 @property (nonatomic, strong) MBProgressHUD *hud;
 @property (assign) NSInteger redeemNoPoints;  // number of points being redeemed
 @property (assign) double  redeemPointsValue;// value for the points that we are redeeming
-
+@property (assign) NSDate* pickupTime;
 @end
 
 @implementation CartViewController
 @synthesize orderItems;
 @synthesize flagRedeemPoint, originalPointsValue, originalNoPoints,dollarValueForEachPoints,
-currenPointsLevel, redeemNoPoints, redeemPointsValue, hud;
+currenPointsLevel, redeemNoPoints, redeemPointsValue, hud,pickupTime;
 
 
-//NSString *Note_default_text = @"Add your note here";
+NSString *Note_defaultText = @"Add your note here";
 double cartSubTotal = 0;            // aka subtotal
 NSString *deliveryStartTime;
 NSString *deliveryEndTime;
 double deliveryAmount = 0.0;
+
 //double totalValue = 0.0;         // Final Total Amount value
 
 - (void)viewDidLoad {
@@ -57,12 +59,30 @@ double deliveryAmount = 0.0;
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
 
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
     orderItems = [[NSMutableArray alloc] init];
     
     [self setNeedsStatusBarAppearanceUpdate];
     self.notesText = @"";
     billBusiness = [CurrentBusiness sharedCurrentBusinessManager].business;
     self.lblTitle.text = billBusiness.title;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    defaultCardData = [defaults valueForKey:StripeDefaultCard];
+    
+    [self setButtonBorder:self.btnScheduleForLater];
+    [self setButtonBorder:self.btnPickUpFood];
+    [self setButtonBorder:self.btnDeliverToMe];
+    
+    if([billBusiness.pickup_later isEqualToString:@"1"]){
+        self.btnScheduleForLater.enabled = YES;
+    }
+    else
+    {
+        self.btnScheduleForLater.enabled = NO;
+    }
     
     if([[CurrentBusiness sharedCurrentBusinessManager].business.business_delivery_id integerValue] > 0){
         self.btnDeliverToMe.enabled = YES;
@@ -92,6 +112,9 @@ double deliveryAmount = 0.0;
     // Do any additional setup after loading the view from its nib.
 }
 - (void)viewWillAppear:(BOOL)animated{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    defaultCardData = [defaults valueForKey:StripeDefaultCard];
+
     [self paymentSummary];
 }
 
@@ -124,6 +147,9 @@ double deliveryAmount = 0.0;
     
     cell.lbl_Description.text = [self.currentObject valueForKey:@"product_descrption"];
     cell.lbl_Title.text = [self.currentObject valueForKey:@"productname"];
+    
+    NSLog(@"note ---------------- %@",[self.currentObject valueForKey:@"item_note"]);
+    
     
     cell.btnRemoveItem.tag = indexPath.row;
     cell.btnRemoveItem.section = indexPath.section;
@@ -160,7 +186,6 @@ double deliveryAmount = 0.0;
         CGFloat rounded_down = [AppData calculateRoundPrice:val];
         TotalPrice += rounded_down;
         [orderItems addObject:dictionary];
-        self.notesText = [dictionary valueForKey:@"note"];
     }
     cartSubTotal = TotalPrice;
     
@@ -174,6 +199,16 @@ double deliveryAmount = 0.0;
     
     NSString *totalPointsStr = [NSString stringWithFormat:@"%ld",(long)cartSubTotal * PointsValueMultiplier];
     self.lblEarnPoints.text = [NSString stringWithFormat:@"EARN %@ Pts",totalPointsStr];
+}
+
+- (void)setButtonBorder:(UIButton *) buttonName
+{
+    [buttonName.layer setBorderWidth:1.0];
+    [buttonName.layer setBorderColor:[[UIColor colorWithRed:80.0/255.0 green:190.0/255.0 blue:199.0/255.0 alpha:1.0] CGColor]];
+    
+    [buttonName.layer setShadowOffset:CGSizeMake(2, 2)];
+    [buttonName.layer setShadowColor:[[UIColor blackColor] CGColor]];
+    [buttonName.layer setShadowOpacity:0.3];
 }
 
 #pragma mark - Add and Remove Qty
@@ -320,6 +355,7 @@ double deliveryAmount = 0.0;
     [self paymentSummary];
 }
 
+
 #pragma mark - Button Actions
 
 - (IBAction)backBUttonClicked:(id)sender {
@@ -327,6 +363,64 @@ double deliveryAmount = 0.0;
 }
 
 - (IBAction)btnPickUpFoodClicked:(id)sender {
+    if ([DataModel sharedDataModelManager].uuid.length < 1) {
+        UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:@"we are taking you to profile page. please update your profile info \n then go to home for place the order" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            self.tabBarController.selectedIndex = 1;
+        }];
+        [alert1 addAction:okAction];
+        [self presentViewController:alert1 animated:true completion:^{
+        }];
+    }
+    else {
+        if ([DataModel sharedDataModelManager].emailAddress.length < 1) {
+            UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:@"" message:@"we are taking you to profile page. please update your profile info \n then go to home for place the order" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                self.tabBarController.selectedIndex = 1;
+            }];
+            [alert2 addAction:okAction];
+            [self presentViewController:alert2 animated:true completion:^{
+            }];
+        }
+        if (_FetchedRecordArray.count >  0) {
+            if (defaultCardData == nil) {
+                BillPayViewController *payBillViewController = [[BillPayViewController alloc] initWithNibName:nil bundle:nil withAmount:0 forBusiness:billBusiness];
+//                [AppData sharedInstance].consumer_Delivery_Id = nil;
+                [self.navigationController pushViewController:payBillViewController animated:YES];
+            }
+            else {
+                if(![self.txtNote.text isEqualToString:@""])
+                {
+                    self.notesText = self.txtNote.text;
+                }
+                else
+                {
+                    self.notesText = @"";
+                }
+                CartViewSecondScreenViewController *TotalCartItemVC = [[CartViewSecondScreenViewController alloc] initWithNibName:@"CartViewSecondScreenViewController" bundle:nil];
+                TotalCartItemVC.orderItems = self.orderItems;
+                TotalCartItemVC.subTotal = [NSString stringWithFormat:@"%.2f",cartSubTotal];
+                TotalCartItemVC.earnPts = self.lblEarnPoints.text;
+                TotalCartItemVC.noteText = self.notesText;
+                TotalCartItemVC.pickupTime = self.pickupTime;
+                if([AppData sharedInstance].consumer_Delivery_Id != nil){
+                    TotalCartItemVC.deliveryamt = deliveryAmount;
+                    TotalCartItemVC.delivery_startTime = deliveryStartTime;
+                    TotalCartItemVC.delivery_endTime = deliveryEndTime;
+                }
+                [self.navigationController pushViewController:TotalCartItemVC animated:YES];
+            }
+        }
+        else
+        {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Please select item for place order." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            }];
+            [alert addAction:okAction];
+            [self presentViewController:alert animated:true completion:^{
+            }];
+        }
+    }
 }
 
 - (IBAction)btnDeliverToMeClicked:(id)sender {
@@ -400,6 +494,7 @@ double deliveryAmount = 0.0;
     NSLog(@"The Current Time is %@",[formatter stringFromDate:now]);
     datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"" datePickerMode:UIDatePickerModeTime selectedDate:now doneBlock:^(ActionSheetDatePicker *picker, id selectedDate, id origin) {
         NSLog(@"%@",selectedDate);
+        self.pickupTime = selectedDate;
         self.lblPickUpAt.text = [NSString stringWithFormat:@"PICK-UP AT %@",[formatter stringFromDate:selectedDate]];
         self.viewBottomConstraint.constant = 50.0;
     } cancelBlock:^(ActionSheetDatePicker *picker) {
@@ -410,5 +505,14 @@ double deliveryAmount = 0.0;
 }
 - (IBAction)btnPickUpAtContinueClicked:(id)sender {
     self.viewBottomConstraint.constant = 0.0;
+}
+
+- (IBAction)btnAddNoteClicked:(id)sender {
+    if([self.txtNote.text isEqualToString:@""]){
+        [AppData showAlert:@"Error" message:@"Please enter notes." buttonTitle:@"Ok" viewClass:self];
+    }
+    else{
+        self.notesText = self.txtNote.text;
+    }
 }
 @end

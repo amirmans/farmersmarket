@@ -491,6 +491,7 @@ static const CGFloat DefaultZoom = 12.0f;
 
 - (IBAction) backBUttonClicked: (id) sender {
     [AppData sharedInstance].consumer_Delivery_Id = nil;
+    [AppData sharedInstance].consumer_Delivery_Location = nil;
     [self.navigationController popViewControllerAnimated:true];
 }
 

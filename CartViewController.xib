@@ -16,13 +16,14 @@
                 <outlet property="lblSubtotalAmount" destination="DoL-Mh-65z" id="0BK-xC-ZJS"/>
                 <outlet property="lblTitle" destination="UT5-yU-MLU" id="NSo-aK-fbU"/>
                 <outlet property="tableView" destination="qy4-0g-buj" id="XmT-Zs-xfz"/>
+                <outlet property="txtNote" destination="MCV-Ul-8ac" id="g89-UE-CKh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewBottomConstraint" destination="rdt-oP-OA3" id="xov-9O-L9g"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="602"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zj1-S8-4oe">
@@ -69,6 +70,9 @@
                                         <constraint firstAttribute="height" constant="30" id="x0u-6T-V28"/>
                                     </constraints>
                                     <state key="normal" title="+"/>
+                                    <connections>
+                                        <action selector="btnAddNoteClicked:" destination="-1" eventType="touchUpInside" id="ASm-xe-eYb"/>
+                                    </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ADD NOTE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aSW-TG-GIN">
                                     <constraints>
@@ -194,13 +198,14 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EoP-6f-Keh">
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ydk-Z0-n48">
-                            <frame key="frameInset" minX="13" minY="14" width="103" height="80"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="ydk-Z0-n48">
                             <color key="backgroundColor" red="0.29803921568627451" green="0.72941176470588232" blue="0.76470588235294112" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="80" id="Hhy-OD-OYj"/>
+                            </constraints>
                             <string key="text">PICK-UP
 FOOD</string>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -217,11 +222,12 @@ FOOD</string>
                                 <action selector="btnPickUpFoodClicked:" destination="-1" eventType="touchUpInside" id="KGI-eq-fLR"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="DELIVER TO ME" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="az9-EM-xj5">
-                            <frame key="frameInset" minX="134" minY="14" width="103" height="80"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DELIVER TO ME" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="az9-EM-xj5">
                             <color key="backgroundColor" red="0.29803921568627451" green="0.72941176470588232" blue="0.76470588235294112" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="80" id="egx-Oq-FEs"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -237,11 +243,12 @@ FOOD</string>
                                 <action selector="btnDeliverToMeClicked:" destination="-1" eventType="touchUpInside" id="j3v-oB-zKo"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SCHEDULE FOR LATER" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dfp-Up-jqv">
-                            <frame key="frameInset" minX="256" minY="14" width="103" height="80"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SCHEDULE FOR LATER" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Dfp-Up-jqv">
                             <color key="backgroundColor" red="0.29803921568627451" green="0.72941176470588232" blue="0.76470588235294112" alpha="1" colorSpace="calibratedRGB"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="80" id="AMH-vB-dnS"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -254,24 +261,38 @@ FOOD</string>
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
-                                <action selector="btnScheduleForLaterClicked:" destination="-1" eventType="touchUpInside" id="3cw-0Y-lQD"/>
+                                <action selector="btnScheduleForLaterClicked:" destination="-1" eventType="touchUpInside" id="2RC-h8-woz"/>
                             </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="0.28235294119999998" green="0.68627450980000004" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstItem="az9-EM-xj5" firstAttribute="leading" secondItem="HfO-fK-SVY" secondAttribute="trailing" constant="18" id="0HO-XX-44p"/>
                         <constraint firstItem="HfO-fK-SVY" firstAttribute="centerY" secondItem="EoP-6f-Keh" secondAttribute="centerY" id="3QO-jI-zOA"/>
                         <constraint firstItem="1Fs-9W-afR" firstAttribute="centerY" secondItem="EoP-6f-Keh" secondAttribute="centerY" id="6kG-Dr-RLw"/>
                         <constraint firstItem="8Fj-E9-cKK" firstAttribute="width" secondItem="1Fs-9W-afR" secondAttribute="width" id="87o-Vj-GqY"/>
+                        <constraint firstItem="Dfp-Up-jqv" firstAttribute="top" secondItem="EoP-6f-Keh" secondAttribute="top" constant="14" id="9E8-4p-Xdi"/>
                         <constraint firstItem="8Fj-E9-cKK" firstAttribute="leading" secondItem="HfO-fK-SVY" secondAttribute="trailing" constant="18" id="APz-E1-uQs"/>
+                        <constraint firstItem="1Fs-9W-afR" firstAttribute="leading" secondItem="az9-EM-xj5" secondAttribute="trailing" constant="19" id="BOH-9b-EFN"/>
+                        <constraint firstItem="az9-EM-xj5" firstAttribute="top" secondItem="EoP-6f-Keh" secondAttribute="top" constant="14" id="BgW-qC-OqO"/>
                         <constraint firstItem="1Fs-9W-afR" firstAttribute="leading" secondItem="8Fj-E9-cKK" secondAttribute="trailing" constant="19" id="CmW-Q7-e57"/>
                         <constraint firstItem="HfO-fK-SVY" firstAttribute="leading" secondItem="EoP-6f-Keh" secondAttribute="leading" constant="13" id="GSH-mf-hKc"/>
+                        <constraint firstItem="ydk-Z0-n48" firstAttribute="width" secondItem="az9-EM-xj5" secondAttribute="width" id="L5S-ft-CcN"/>
+                        <constraint firstAttribute="bottom" secondItem="Dfp-Up-jqv" secondAttribute="bottom" constant="11" id="Mry-J4-G51"/>
+                        <constraint firstAttribute="bottom" secondItem="ydk-Z0-n48" secondAttribute="bottom" constant="11" id="Oig-eR-vN0"/>
                         <constraint firstAttribute="height" constant="105" id="R00-FT-ftn"/>
                         <constraint firstItem="1Fs-9W-afR" firstAttribute="leading" secondItem="8Fj-E9-cKK" secondAttribute="trailing" constant="19" id="WkM-t1-ZXC"/>
                         <constraint firstItem="8Fj-E9-cKK" firstAttribute="leading" secondItem="HfO-fK-SVY" secondAttribute="trailing" constant="18" id="b1g-MQ-0pt"/>
+                        <constraint firstItem="ydk-Z0-n48" firstAttribute="top" secondItem="EoP-6f-Keh" secondAttribute="top" constant="14" id="d1n-Ne-6gZ"/>
                         <constraint firstItem="8Fj-E9-cKK" firstAttribute="centerY" secondItem="EoP-6f-Keh" secondAttribute="centerY" id="dek-V6-n9L"/>
+                        <constraint firstItem="az9-EM-xj5" firstAttribute="width" secondItem="Dfp-Up-jqv" secondAttribute="width" id="exX-L1-ghV"/>
+                        <constraint firstItem="ydk-Z0-n48" firstAttribute="leading" secondItem="EoP-6f-Keh" secondAttribute="leading" constant="13" id="gol-PO-xto"/>
                         <constraint firstItem="HfO-fK-SVY" firstAttribute="width" secondItem="8Fj-E9-cKK" secondAttribute="width" id="hEs-be-682"/>
+                        <constraint firstItem="Dfp-Up-jqv" firstAttribute="leading" secondItem="8Fj-E9-cKK" secondAttribute="trailing" constant="19" id="hgw-da-vnK"/>
+                        <constraint firstItem="8Fj-E9-cKK" firstAttribute="leading" secondItem="ydk-Z0-n48" secondAttribute="trailing" constant="18" id="nKU-ok-Kmi"/>
+                        <constraint firstAttribute="trailing" secondItem="Dfp-Up-jqv" secondAttribute="trailing" constant="16" id="qS3-gK-s81"/>
                         <constraint firstAttribute="trailing" secondItem="1Fs-9W-afR" secondAttribute="trailing" constant="16" id="rU8-BH-B2e"/>
+                        <constraint firstAttribute="bottom" secondItem="az9-EM-xj5" secondAttribute="bottom" constant="11" id="wBJ-Ga-lYs"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BP3-qR-zmn">
@@ -354,8 +375,8 @@ FOOD</string>
                 <constraint firstItem="9Mz-gN-yOw" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="RL8-lN-Y0L"/>
                 <constraint firstItem="EoP-6f-Keh" firstAttribute="top" secondItem="MDG-LV-CD0" secondAttribute="bottom" id="a8t-Es-JZi"/>
                 <constraint firstItem="MDG-LV-CD0" firstAttribute="top" secondItem="9Mz-gN-yOw" secondAttribute="bottom" id="aNs-e7-2pz"/>
+                <constraint firstItem="Zj1-S8-4oe" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="dJl-Xs-jjK"/>
                 <constraint firstItem="EoP-6f-Keh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="hgM-Ge-tuB"/>
-                <constraint firstItem="Zj1-S8-4oe" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="htA-zD-Xyy"/>
                 <constraint firstItem="MDG-LV-CD0" firstAttribute="top" secondItem="9Mz-gN-yOw" secondAttribute="bottom" id="hyC-FS-suw"/>
                 <constraint firstAttribute="trailing" secondItem="9Mz-gN-yOw" secondAttribute="trailing" id="iNf-98-IRI"/>
                 <constraint firstItem="9Mz-gN-yOw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="qih-Ob-chs"/>
@@ -365,7 +386,8 @@ FOOD</string>
                 <constraint firstItem="9Mz-gN-yOw" firstAttribute="top" secondItem="Zj1-S8-4oe" secondAttribute="bottom" constant="1" id="yZg-se-6tL"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
-            <point key="canvasLocation" x="-37.5" y="-215.5"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-27" y="-367"/>
         </view>
     </objects>
 </document>

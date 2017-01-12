@@ -78,7 +78,6 @@ static DataModel *sharedDataModel = nil;
         qrImageFileName = @"";
         zipcode = @"";
         sms_no = @"";
-        
     }
     
     return self;
@@ -328,8 +327,6 @@ static DataModel *sharedDataModel = nil;
     
     [[NSUserDefaults standardUserDefaults] setObject:sms forKey:@"SMS_No"];
 }
-
-
 //- (void)setChat_masters:(NSArray *)ids {
 //    chat_masters = ids;
 //}

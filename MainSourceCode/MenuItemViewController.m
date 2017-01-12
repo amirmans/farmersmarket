@@ -1504,6 +1504,7 @@ bool shouldOpenOptionMenu = false;
         NSDictionary *dictionary = [obj dictionaryWithValuesForKeys:keys];
         myCartCount += [[dictionary valueForKey:@"quantity"] integerValue];
     }
+    NSLog(@"%@",self.FetchedRecordArray);
 //  myCartCount = self.FetchedRecordArray.count;
     self.rightButton.badgeValue = [NSString stringWithFormat:@"%d",myCartCount];
 }
@@ -1752,6 +1753,9 @@ bool shouldOpenOptionMenu = false;
                         [storeManageObject setValue:businessDetail.pictures forKey:@"product_imageurg"];
                         [storeManageObject setValue:businessDetail.name forKey:@"productname"];
                         [storeManageObject setValue:businessDetail.product_option forKey:@"product_option"];
+                        
+                        [storeManageObject setValue:self.txtNote.text forKey:@"item_note"];
+                        
                         [storeManageObject setValue:[NSString stringWithFormat:@"%f",businessDetail.ti_rating]  forKey:@"ti_rating"];
                         [storeManageObject setValue:@([[dictionary valueForKey:@"product_order_id"] integerValue]) forKey:@"product_order_id"];
                         if([dictionary valueForKey:@"selected_ProductID_array"] == [NSNull null])
@@ -1788,6 +1792,9 @@ bool shouldOpenOptionMenu = false;
                         [storeManageObject setValue:businessDetail.pictures forKey:@"product_imageurg"];
                         [storeManageObject setValue:businessDetail.name forKey:@"productname"];
                         [storeManageObject setValue:businessDetail.product_option forKey:@"product_option"];
+                        
+                        [storeManageObject setValue:self.txtNote.text forKey:@"item_note"];
+                        
                         [storeManageObject setValue:[NSString stringWithFormat:@"%f",businessDetail.ti_rating]  forKey:@"ti_rating"];
                         [storeManageObject setValue:@([[dictionary valueForKey:@"product_order_id"] integerValue]) forKey:@"product_order_id"];
                         [storeManageObject setValue:[dictionary valueForKey:@"selected_ProductID_array"] forKey:@"selected_ProductID_array"];
@@ -1820,6 +1827,9 @@ bool shouldOpenOptionMenu = false;
             [storeManageObject setValue:businessDetail.pictures forKey:@"product_imageurg"];
             [storeManageObject setValue:businessDetail.name forKey:@"productname"];
             [storeManageObject setValue:businessDetail.product_option forKey:@"product_option"];
+            
+            [storeManageObject setValue:self.txtNote.text forKey:@"item_note"];
+            
             [storeManageObject setValue:[NSString stringWithFormat:@"%f",businessDetail.ti_rating]  forKey:@"ti_rating"];
             [storeManageObject setValue:order_id forKey:@"product_order_id"];
             NSString * selected_ProductID_arrayString = [businessDetail.selected_ProductID_array componentsJoinedByString:@","];

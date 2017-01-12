@@ -27,12 +27,15 @@
 @interface BillPayViewController () {
     NSNumberFormatter *currencyFormatter;
 }
-
+@property (nonatomic, strong) MBProgressHUD *hud;
 @end
 
 NSMutableArray *cardDataArray;
 
+
 @implementation BillPayViewController
+
+@synthesize hud;
 @synthesize payButton;
 @synthesize changeCardButton;
 @synthesize amountTextField;
@@ -73,6 +76,15 @@ NSMutableArray *cardDataArray;
 
     self.cardsTable.delegate = self;
     self.cardsTable.dataSource = self;
+    
+    hud = [[MBProgressHUD alloc] initWithView:self.view];
+    hud.label.text = @"";
+    hud.detailsLabel.text = @"";
+    hud.mode = MBProgressHUDModeIndeterminate;
+    [hud.bezelView setBackgroundColor:[UIColor orangeColor]];
+    hud.bezelView.color = [UIColor orangeColor];
+    hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
+    [self.view addSubview:hud];
 
     self.cardsTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
@@ -519,7 +531,7 @@ NSMutableArray *cardDataArray;
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //        [self saveCardToServer:card];
         [self saveAsDefaultCard:card];
-        [self.navigationController popViewControllerAnimated:true];
+       
         //        [self createStripeTokenWithCard:card];
     }];
     //    UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -563,6 +575,7 @@ NSMutableArray *cardDataArray;
 }
 - (void) saveAsDefaultCard : (STPCardParams *) cardData {
     
+    [hud showAnimated:YES];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     NSString *cardNumber = cardData.number;
@@ -594,6 +607,7 @@ NSMutableArray *cardDataArray;
     [[APIUtility sharedInstance]save_cc_info:severParam completiedBlock:^(NSDictionary *response) {
         //        [self getCCForConsumer];
         NSLog(@"%@",response);
+        [hud hideAnimated:YES];
         if(![[response objectForKey:@"status"] boolValue])
         {
             NSLog(@"%@",[response objectForKey:@"message"]);
@@ -602,9 +616,11 @@ NSMutableArray *cardDataArray;
             [defaults synchronize];
             
             NSLog(@"Saved this info for card default: %@", defaultsParam);
+            [self.navigationController popViewControllerAnimated:true];
         }
         else
         {
+            
             NSLog(@"%@",[response objectForKey:@"message"]);
             UIAlertController * alert = [UIAlertController
                                          alertControllerWithTitle:@"Error"

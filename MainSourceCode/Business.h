@@ -80,6 +80,8 @@
     NSString *promotion_code;
     NSString *promotion_discount_amount;
     NSString *promotion_message;
+    
+    NSString *pickup_later;
 }
 
 @property(nonatomic, weak) id <TaptalkBusinessDelegate> businessDelegate;
@@ -155,6 +157,7 @@
 @property(nonatomic, strong) NSString *promotion_discount_amount;
 @property(nonatomic, strong) NSString *promotion_message;
 
+@property(nonatomic, strong) NSString *pickup_later;
 
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;
 - (void)startLoadingBusinessProductCategoriesAndProducts;
