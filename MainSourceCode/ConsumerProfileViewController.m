@@ -134,28 +134,35 @@ static NSArray *consumerProfileDataArray = nil;
     errorMessageLabel.hidden = TRUE;
 
     nicknameTextField.delegate = self;
+    nicknameTextField.keyboardAppearance = UIKeyboardAppearanceDark;
     [nicknameTextField setReturnKeyType:UIReturnKeyDone];
+    nicknameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     
     zipcodeTextField.delegate = self;
+    zipcodeTextField.keyboardAppearance = UIKeyboardAppearanceDark;
     [zipcodeTextField setReturnKeyType:UIReturnKeyDone];
+    zipcodeTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
     emailTextField.delegate = self;
+    emailTextField.keyboardAppearance = UIKeyboardAppearanceDark;
     [emailTextField setReturnKeyType:UIReturnKeyDone];
+    emailTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    
+    smsNoTextField.delegate = self;
+    smsNoTextField.keyboardAppearance = UIKeyboardAppearanceDark;
+    [smsNoTextField setReturnKeyType:UIReturnKeyDone];
+    smsNoTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
-    passwordTextField.secureTextEntry = YES;
-    [passwordTextField setReturnKeyType:UIReturnKeyDone];
-    passwordTextField.delegate = self;
-
-    passwordAgainTextField.secureTextEntry = YES;
-    [passwordAgainTextField setReturnKeyType:UIReturnKeyDone];
-    passwordAgainTextField.delegate = self;
+//    passwordTextField.secureTextEntry = YES;
+//    [passwordTextField setReturnKeyType:UIReturnKeyDone];
+//    passwordTextField.delegate = self;
+//
+//    passwordAgainTextField.secureTextEntry = YES;
+//    [passwordAgainTextField setReturnKeyType:UIReturnKeyDone];
+//    passwordAgainTextField.delegate = self;
 
     [self populateFieldsWithInitialValues];
-    nicknameTextField.keyboardAppearance = UIKeyboardAppearanceDark;
-    zipcodeTextField.keyboardAppearance = UIKeyboardAppearanceDark;
-    emailTextField.keyboardAppearance = UIKeyboardAppearanceDark;
-    
-    
+   
     self.topView.layer.borderWidth = 2.0;
     self.topView.layer.borderColor = [UIColor whiteColor].CGColor;
     self.topView.layer.cornerRadius = 10.0;
@@ -351,7 +358,13 @@ static NSArray *consumerProfileDataArray = nil;
 
 
 - (IBAction)resetButtonAction:(id)sender {
-    [self populateFieldsWithInitialValues];
+//    [self.navigationController popViewControllerAnimated:TRUE];
+
+    [super viewDidLoad];
+    [self.tabBarController setSelectedIndex:0];
+    
+//    [self dismissViewControllerAnimated:YES completion:nil];
+    //[self populateFieldsWithInitialValues];
 }
 
 #pragma mark - TableView DataSource / Delegate
