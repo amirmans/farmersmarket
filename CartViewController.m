@@ -38,15 +38,13 @@
 @synthesize flagRedeemPoint, originalPointsValue, originalNoPoints,dollarValueForEachPoints,
 currenPointsLevel, redeemNoPoints, redeemPointsValue, hud,pickupTime;
 
-
 NSString *Note_defaultText = @"Add your note here";
-double cartSubTotal = 0;            // aka subtotal
 NSString *deliveryStartTime;
 NSString *deliveryEndTime;
-double deliveryAmount = 0.0;
+double cartSubTotal = 0;            // Subtotal Price
+double deliveryAmount = 0.0;        // Delivery Amount
 
-//double totalValue = 0.0;         // Final Total Amount value
-
+#pragma mark - LifeCycle
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -82,6 +80,24 @@ double deliveryAmount = 0.0;
     else
     {
         self.btnScheduleForLater.enabled = NO;
+    }
+    
+    NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
+    NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
+    BOOL businessIsClosed = false;
+    if(openTime == (id)[NSNull null] || closeTime == (id)[NSNull null]) {
+        businessIsClosed = true;
+    } else if (![[APIUtility sharedInstance] isOpenBussiness:openTime CloseTime:closeTime]) {
+        businessIsClosed = true;
+    }
+    
+    if (businessIsClosed) {
+        NSString *openCivilianTime = [[APIUtility sharedInstance] getCivilianTime:openTime];
+        NSString *waitTime = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
+        NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
+        NSString *message = [NSString stringWithFormat:@"You may add items to your cart.\nBut if you pay, your order will be ready after the opening time (%@).\n\n%@ after opening.", openCivilianTime, waitTime];
+        NSString *title = [NSString stringWithFormat:@"%@ is closed now!", businessName];
+        [UIAlertController showInformationAlert:message withTitle:title];
     }
     
     if([[CurrentBusiness sharedCurrentBusinessManager].business.business_delivery_id integerValue] > 0){
@@ -135,7 +151,6 @@ double deliveryAmount = 0.0;
     CGFloat val = [[self.currentObject valueForKey:@"price"] floatValue];
     val =  val * [[self.currentObject valueForKey:@"quantity"] integerValue];
     CGFloat rounded_down = [AppData calculateRoundPrice:val];
-//    int rounded_points = [AppData calculateRoundPoints:val];
     
     NSString *v = [NSString stringWithFormat:@"%.f",rounded_down];
     NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"$%.2f",rounded_down]];
@@ -143,14 +158,10 @@ double deliveryAmount = 0.0;
                       value:[UIFont boldSystemFontOfSize:25.0]
                       range:NSMakeRange(1, v.length)];
     cell.lbl_Price.attributedText = attString;
-    
-    
     cell.lbl_Description.text = [self.currentObject valueForKey:@"product_descrption"];
     cell.lbl_Title.text = [self.currentObject valueForKey:@"productname"];
     
     NSLog(@"note ---------------- %@",[self.currentObject valueForKey:@"item_note"]);
-    
-    
     cell.btnRemoveItem.tag = indexPath.row;
     cell.btnRemoveItem.section = indexPath.section;
     cell.btnRemoveItem.row = indexPath.row;
@@ -196,7 +207,6 @@ double deliveryAmount = 0.0;
                   value:[UIFont boldSystemFontOfSize:25.0]
                   range:NSMakeRange(1, val.length)];
     self.lblSubtotalAmount.attributedText = attString;
-    
     NSString *totalPointsStr = [NSString stringWithFormat:@"%ld",(long)cartSubTotal * PointsValueMultiplier];
     self.lblEarnPoints.text = [NSString stringWithFormat:@"EARN %@ Pts",totalPointsStr];
 }
@@ -205,7 +215,6 @@ double deliveryAmount = 0.0;
 {
     [buttonName.layer setBorderWidth:1.0];
     [buttonName.layer setBorderColor:[[UIColor colorWithRed:80.0/255.0 green:190.0/255.0 blue:199.0/255.0 alpha:1.0] CGColor]];
-    
     [buttonName.layer setShadowOffset:CGSizeMake(2, 2)];
     [buttonName.layer setShadowColor:[[UIColor blackColor] CGColor]];
     [buttonName.layer setShadowOpacity:0.3];

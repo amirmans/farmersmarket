@@ -20,16 +20,16 @@
     Business  *billBusiness;
     NSDictionary *defaultCardData;
 }
-@property (strong, nonatomic) IBOutlet UILabel *lblSubtotalAmount;
-@property (strong, nonatomic) IBOutlet UILabel *lblEarnedPoint;
+
+@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 @property (strong,nonatomic) NSString *subTotal;
 @property (strong,nonatomic) NSString *noteText;
-@property (strong,nonatomic) NSDate *pickupTime;
-@property (strong,nonatomic) NSString *earnPts;
-@property (strong,nonatomic) NSMutableArray *orderItems;
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (assign) NSString* delivery_startTime;
 @property (assign) NSString* delivery_endTime;
+@property (strong,nonatomic) NSString *earnPts;
+@property (strong,nonatomic) NSDate *pickupTime;
+@property (strong,nonatomic) NSMutableArray *orderItems;
 @property (assign) double deliveryamt;
 
 @property (strong, nonatomic) IBOutlet UIButton *btnNoTip;
@@ -49,8 +49,12 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblDefaultCard;
 @property (weak, nonatomic) IBOutlet UILabel *lblDeliveryLocation;
 @property (weak, nonatomic) IBOutlet UILabel *lblPickUpTime;
-@property (weak, nonatomic) IBOutlet UIView *viewDeliveryAndPickup;
 @property (weak, nonatomic) IBOutlet UILabel *lblPromotionalText;
+@property (weak, nonatomic) IBOutlet UILabel *waitTimeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *lblSubtotalAmount;
+@property (strong, nonatomic) IBOutlet UILabel *lblEarnedPoint;
+
+@property (weak, nonatomic) IBOutlet UIView *viewDeliveryAndPickup;
 
 - (IBAction)btnNoTipClicked:(id)sender;
 - (IBAction)btnTip10Clicked:(id)sender;
@@ -59,7 +63,5 @@
 - (IBAction)btnRedeemPointClicked:(id)sender;
 - (IBAction)btnChangePaymentMethodClicked:(id)sender;
 - (IBAction)btnPayNowClicked:(id)sender;
-
-
 
 @end

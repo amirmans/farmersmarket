@@ -17,6 +17,7 @@
 #import "APIUtility.h"
 #import <QuartzCore/QuartzCore.h>
 
+
 @interface ConsumerProfileViewController () {
     NSMutableDictionary *consumerProfileDataDic;
 }
@@ -147,12 +148,12 @@ static NSArray *consumerProfileDataArray = nil;
     emailTextField.keyboardAppearance = UIKeyboardAppearanceDark;
     [emailTextField setReturnKeyType:UIReturnKeyDone];
     emailTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    
+
     smsNoTextField.delegate = self;
     smsNoTextField.keyboardAppearance = UIKeyboardAppearanceDark;
     [smsNoTextField setReturnKeyType:UIReturnKeyDone];
     smsNoTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-
+    
 //    passwordTextField.secureTextEntry = YES;
 //    [passwordTextField setReturnKeyType:UIReturnKeyDone];
 //    passwordTextField.delegate = self;
@@ -162,7 +163,7 @@ static NSArray *consumerProfileDataArray = nil;
 //    passwordAgainTextField.delegate = self;
 
     [self populateFieldsWithInitialValues];
-   
+    
     self.topView.layer.borderWidth = 2.0;
     self.topView.layer.borderColor = [UIColor whiteColor].CGColor;
     self.topView.layer.cornerRadius = 10.0;
@@ -172,12 +173,11 @@ static NSArray *consumerProfileDataArray = nil;
     self.bottomView.layer.cornerRadius = 10.0;
     
     self.title = @"Profile";
-    
+
     self.savedCardTable.delegate = self;
     self.savedCardTable.dataSource = self;
     
     self.savedCardTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-
     
     [self getStripeDataArray];
 
@@ -358,13 +358,10 @@ static NSArray *consumerProfileDataArray = nil;
 
 
 - (IBAction)resetButtonAction:(id)sender {
-//    [self.navigationController popViewControllerAnimated:TRUE];
-
     [super viewDidLoad];
     [self.tabBarController setSelectedIndex:0];
-    
-//    [self dismissViewControllerAnimated:YES completion:nil];
-    //[self populateFieldsWithInitialValues];
+
+//    [self populateFieldsWithInitialValues];
 }
 
 #pragma mark - TableView DataSource / Delegate

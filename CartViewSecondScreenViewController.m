@@ -14,10 +14,10 @@
 
 @property (assign) double  redeemPointsVal;// value for the points that we are redeeming
 @property (assign) double dollarValForEachPoints;  //detemined by the points level's ceiling
+@property (assign) double originalPointsVal;
 @property (assign) NSInteger currentPointsLevel;
 @property (assign) NSInteger redeemNoPoint;  // number of points being redeemed
 @property (assign) NSInteger originalNoPoint;
-@property (assign) double originalPointsVal;
 @property (assign) BOOL flagRedeemPointVal;
 @property (nonatomic, strong) MBProgressHUD *hud;
 - (float)calculateValueforGivenPoints:(NSInteger)points;
@@ -149,7 +149,7 @@ double deliveryAmountValue = 0.00; //Delievery amount value in $
     [self setNoTip];
     flagRedeemPointVal = false;
     [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_unchecked"] forState:UIControlStateNormal];
-    
+    _waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
     [self getDefaultCardData];
     [self paymentSummary];
 }
@@ -325,7 +325,6 @@ double deliveryAmountValue = 0.00; //Delievery amount value in $
             totalVal = cartTotalValue + tipAmt + deliveryAmountValue - promotionalamt - redeemPointsVal ;
         }
         self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f",totalVal];
-//        billInDollar = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%.2f",totalVal]];
     }
 }
 // set total order and Price
@@ -334,18 +333,7 @@ double deliveryAmountValue = 0.00; //Delievery amount value in $
     totalVal = 0.00;
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
     cartTotalValue = [self.subTotal doubleValue];
-   
-//    if(globalPromotnal > [self.subTotal doubleValue])
-//    {
-//        self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%.2f",cartTotalValue];
-//        promotionalamt = cartTotalValue;
-//    }
-//    else
-//    {
-//        promotionalamt = globalPromotnal;
-//        self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%.2f",promotionalamt];
-//    }
-//    NSLog(@"%f",promotionalamt);
+
     totalVal = [self.subTotal doubleValue] + deliveryAmountValue - promotionalamt;
     self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f",totalVal];
 
@@ -495,8 +483,8 @@ double deliveryAmountValue = 0.00; //Delievery amount value in $
 - (void) pointsRedeem:(NSNotification *) notification
 {
     [self btnRedeemPointClicked:self];
-//    self.btnUsePoints.userInteractionEnabled = false;
 }
+
 - (void) changePointsAndUI:(BOOL)flag {
     if (flag) {
         [self adjustRedeemPointsAndTheirValues];
