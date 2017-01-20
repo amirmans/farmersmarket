@@ -1294,8 +1294,10 @@ bool shouldOpenOptionMenu = false;
     businessDetail.quantity = [[content valueForKey:@"quantity"] integerValue];
     businessDetail.product_order_id = [[content valueForKey:@"product_order_id"] integerValue];
     businessDetail.product_option = [content valueForKey:@"product_option"];
+    businessDetail.item_note = [content valueForKey:@"item_note"];
     businessDetail.note = [content valueForKey:@"note"];
 
+    businessDetail.item_note = [content valueForKey:@"item_note"];
 //    NSManagedObjectContext *context = [self managedObjectContext];
 
     //    NSLog(@"%@",_managedObjectContext.persistentStoreCoordinator.managedObjectModel.entities);
@@ -1342,6 +1344,7 @@ bool shouldOpenOptionMenu = false;
                     [storeManageObject setValue:[NSString stringWithFormat:@"%d",ItemQty] forKey:@"quantity"];
                     [storeManageObject setValue:[dictionary valueForKey:@"selected_ProductID_array"] forKey:@"selected_ProductID_array"];
                     [storeManageObject setValue:businessDetail.note forKey:@"note"];
+                    [storeManageObject setValue:businessDetail.item_note forKey:@"item_note"];
                     NSError *error;
                     if (![_managedObjectContext save:&error]) {
                         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
@@ -1390,6 +1393,7 @@ bool shouldOpenOptionMenu = false;
         businessDetail = [self.MainArray[sender.section] objectAtIndex:sender.row];
     }
     businessDetail.product_option = @"";
+    businessDetail.item_note = @"";
     
     self.searchController.active = false;
 
@@ -1438,6 +1442,8 @@ bool shouldOpenOptionMenu = false;
         selectedBusinessDetail.product_order_id = businessDetail.product_order_id;
         selectedBusinessDetail.product_option = businessDetail.product_option;
         selectedBusinessDetail.note = businessDetail.note;
+        
+        selectedBusinessDetail.item_note = businessDetail.item_note;
 //        multipleSelect.delegate = self;
 //        multipleSelect.rowsCount = _dataSource.count;
 //        [multipleSelect show];
@@ -1754,7 +1760,7 @@ bool shouldOpenOptionMenu = false;
                         [storeManageObject setValue:businessDetail.name forKey:@"productname"];
                         [storeManageObject setValue:businessDetail.product_option forKey:@"product_option"];
                         
-                        [storeManageObject setValue:self.txtNote.text forKey:@"item_note"];
+                        [storeManageObject setValue:businessDetail.item_note forKey:@"item_note"];
                         
                         [storeManageObject setValue:[NSString stringWithFormat:@"%f",businessDetail.ti_rating]  forKey:@"ti_rating"];
                         [storeManageObject setValue:@([[dictionary valueForKey:@"product_order_id"] integerValue]) forKey:@"product_order_id"];
@@ -1793,7 +1799,7 @@ bool shouldOpenOptionMenu = false;
                         [storeManageObject setValue:businessDetail.name forKey:@"productname"];
                         [storeManageObject setValue:businessDetail.product_option forKey:@"product_option"];
                         
-                        [storeManageObject setValue:self.txtNote.text forKey:@"item_note"];
+                        [storeManageObject setValue:businessDetail.item_note forKey:@"item_note"];
                         
                         [storeManageObject setValue:[NSString stringWithFormat:@"%f",businessDetail.ti_rating]  forKey:@"ti_rating"];
                         [storeManageObject setValue:@([[dictionary valueForKey:@"product_order_id"] integerValue]) forKey:@"product_order_id"];
@@ -1828,7 +1834,7 @@ bool shouldOpenOptionMenu = false;
             [storeManageObject setValue:businessDetail.name forKey:@"productname"];
             [storeManageObject setValue:businessDetail.product_option forKey:@"product_option"];
             
-            [storeManageObject setValue:self.txtNote.text forKey:@"item_note"];
+            [storeManageObject setValue:businessDetail.item_note forKey:@"item_note"];
             
             [storeManageObject setValue:[NSString stringWithFormat:@"%f",businessDetail.ti_rating]  forKey:@"ti_rating"];
             [storeManageObject setValue:order_id forKey:@"product_order_id"];
@@ -2202,6 +2208,9 @@ bool shouldOpenOptionMenu = false;
 
     businessDetail.product_option = selectedItemString;
 
+    if(self.txtNote.text.length != 0){
+        businessDetail.item_note = self.txtNote.text;
+    }
     double product_price = [businessDetail.price doubleValue];
 
     double totalCartPrice = product_price + optionTotal;

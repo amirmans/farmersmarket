@@ -53,6 +53,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *waitTimeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *lblSubtotalAmount;
 @property (strong, nonatomic) IBOutlet UILabel *lblEarnedPoint;
+@property (weak, nonatomic) IBOutlet UILabel *lblPayNow;
 
 @property (weak, nonatomic) IBOutlet UIView *viewDeliveryAndPickup;
 

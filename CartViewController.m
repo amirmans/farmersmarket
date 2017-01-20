@@ -38,7 +38,7 @@
 @synthesize flagRedeemPoint, originalPointsValue, originalNoPoints,dollarValueForEachPoints,
 currenPointsLevel, redeemNoPoints, redeemPointsValue, hud,pickupTime;
 
-NSString *Note_defaultText = @"Add your note here";
+NSString *Note_defaultText = @"Note for order(Optional)";
 NSString *deliveryStartTime;
 NSString *deliveryEndTime;
 double cartSubTotal = 0;            // Subtotal Price
@@ -51,7 +51,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"CartViewTableViewCell" bundle:nil] forCellReuseIdentifier:@"CartViewTableViewCell"];
-    
+    [self.tableView layoutIfNeeded];
     self.title = @"Order";
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
@@ -59,6 +59,9 @@ double deliveryAmount = 0.0;        // Delivery Amount
 
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
+
+    self.txtNote.delegate = self;
+    [self setPlaceHolderText];
     
     orderItems = [[NSMutableArray alloc] init];
     
@@ -133,7 +136,6 @@ double deliveryAmount = 0.0;        // Delivery Amount
 
     [self paymentSummary];
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -146,6 +148,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *simpleTableIdentifier = @"CartViewTableViewCell";
     CartViewTableViewCell *cell = (CartViewTableViewCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    
     _currentObject = _FetchedRecordArray[indexPath.row];
     cell.lbl_totalItems.text = [self.currentObject valueForKey:@"quantity"];
     CGFloat val = [[self.currentObject valueForKey:@"price"] floatValue];
@@ -158,8 +161,38 @@ double deliveryAmount = 0.0;        // Delivery Amount
                       value:[UIFont boldSystemFontOfSize:25.0]
                       range:NSMakeRange(1, v.length)];
     cell.lbl_Price.attributedText = attString;
-    cell.lbl_Description.text = [self.currentObject valueForKey:@"product_descrption"];
+    
+    NSString *myString = [self.currentObject valueForKey:@"product_option"];
+    NSString *menu_option;
+    if ([myString length] > 0) {
+        menu_option = [myString substringToIndex:[myString length] - 1];
+    }
+    
+//    NSArray *myFinalString = [myString componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"("]];
+    
     cell.lbl_Title.text = [self.currentObject valueForKey:@"productname"];
+    
+    NSLog(@"%@",[self.currentObject valueForKey:@"item_note"]);
+    
+    NSLog(@"%@",[self.currentObject valueForKey:@"product_option"]);
+    
+    if(![[self.currentObject valueForKey:@"item_note"] isEqualToString:@""] && [self.currentObject valueForKey:@"item_note"] != nil){
+        if([[self.currentObject valueForKey:@"product_option"] isEqualToString:@""]){
+            cell.lbl_Description.text = [NSString stringWithFormat:@"Note : %@",[self.currentObject valueForKey:@"item_note"]];
+            cell.lbl_Notes.hidden = true;
+        }
+        else
+        {
+            cell.lbl_Description.text = menu_option;
+            cell.lbl_Notes.text = [NSString stringWithFormat:@"Note : %@",[self.currentObject valueForKey:@"item_note"]];
+            cell.lbl_Notes.hidden = false;
+        }
+    }
+    else
+    {
+        cell.lbl_Description.text = menu_option;
+        cell.lbl_Notes.hidden = true;
+    }
     
     NSLog(@"note ---------------- %@",[self.currentObject valueForKey:@"item_note"]);
     cell.btnRemoveItem.tag = indexPath.row;
@@ -172,16 +205,62 @@ double deliveryAmount = 0.0;        // Delivery Amount
     cell.btnAddItem.row = indexPath.row;
     
     [cell.btnAddItem addTarget:self action:@selector(PlusButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraintsIfNeeded];
+
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return UITableViewAutomaticDimension;
+    if([[self.currentObject valueForKey:@"product_option"] isEqualToString:@""] && [self.currentObject valueForKey:@"item_note"] == nil){
+        return 80.0;
+    }
+    else if([[self.currentObject valueForKey:@"product_option"] isEqualToString:@""] && [[self.currentObject valueForKey:@"item_note"] isEqualToString:@""]){
+        return 80.0;
+    }
+    else{
+        return UITableViewAutomaticDimension;
+    }
 }
+
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 100.0;
 }
 
+#pragma mark - TextView Delegate
+
+- (BOOL) textViewShouldBeginEditing:(UITextView *)textView
+{
+    if (self.txtNote.textColor == [UIColor lightGrayColor]) {
+        self.txtNote.text = @"";
+        self.txtNote.textColor = [UIColor blackColor];
+    }
+    
+    return YES;}
+
+-(void) textViewDidChange:(UITextView *)textView
+{
+    if(self.txtNote.text.length == 0){
+        self.txtNote.textColor = [UIColor lightGrayColor];
+        self.txtNote.text = Note_defaultText;
+        [self.txtNote resignFirstResponder];
+    }
+}
+-(void)textViewDidEndEditing:(UITextView *)textView{
+    if(self.txtNote.text.length == 0){
+        self.txtNote.textColor = [UIColor lightGrayColor];
+        self.txtNote.text = Note_defaultText;
+        [self.txtNote resignFirstResponder];
+    }
+}
+
 #pragma mark - User Functions
+
+- (void)setPlaceHolderText{
+    self.txtNote.text = Note_defaultText;
+    self.txtNote.textColor = [UIColor lightGrayColor];
+}
+
 - (void)paymentSummary {
     [orderItems removeAllObjects];
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
@@ -214,7 +293,8 @@ double deliveryAmount = 0.0;        // Delivery Amount
 - (void)setButtonBorder:(UIButton *) buttonName
 {
     [buttonName.layer setBorderWidth:1.0];
-    [buttonName.layer setBorderColor:[[UIColor colorWithRed:80.0/255.0 green:190.0/255.0 blue:199.0/255.0 alpha:1.0] CGColor]];
+    [buttonName.layer setBorderColor:[[UIColor colorWithRed:204.0/255.0 green:102.0/255.0 blue:0.0/255.0 alpha:1.0] CGColor]];
+//    [buttonName.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
     [buttonName.layer setShadowOffset:CGSizeMake(2, 2)];
     [buttonName.layer setShadowColor:[[UIColor blackColor] CGColor]];
     [buttonName.layer setShadowOpacity:0.3];
@@ -236,6 +316,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
     businessDetail.product_order_id = [[managedObj valueForKey:@"product_order_id"] integerValue];
     businessDetail.product_option = [managedObj valueForKey:@"product_option"];
     businessDetail.note = [managedObj valueForKey:@"note"];
+    businessDetail.item_note = [managedObj valueForKey:@"item_note"];
     NSManagedObjectContext *context = [self managedObjectContext];
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
     self.FetchedRecordArray = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
@@ -267,6 +348,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
                     [storeManageObject setValue:businessDetail.name forKey:@"productname"];
                     [storeManageObject setValue:businessDetail.product_option forKey:@"product_option"];
                     [storeManageObject setValue:@(businessDetail.product_order_id) forKey:@"product_order_id"];
+                    [storeManageObject setValue:businessDetail.item_note forKey:@"item_note"];
                     [storeManageObject setValue:[NSString stringWithFormat:@"%f",businessDetail.ti_rating]  forKey:@"ti_rating"];
                     [storeManageObject setValue:[NSString stringWithFormat:@"%d",ItemQty] forKey:@"quantity"];
                     if ( ([dictionary valueForKey:@"selected_ProductID_array"] != nil) && ([dictionary valueForKey:@"selected_ProductID_array"] != [NSNull null]) ) {
@@ -306,6 +388,8 @@ double deliveryAmount = 0.0;        // Delivery Amount
     businessDetail.product_order_id = [[managedObj valueForKey:@"product_order_id"] integerValue];
     businessDetail.product_option = [managedObj valueForKey:@"product_option"];
     businessDetail.note = [managedObj valueForKey:@"note"];
+    NSLog(@"%@",[managedObj valueForKey:@"item_note"]);
+    businessDetail.item_note = [managedObj valueForKey:@"item_note"];
     [self AddItemInCart:businessDetail CustomUIButton:sender];
 }
 
@@ -342,6 +426,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
                 [storeManageObject setValue:businessDetail.name forKey:@"productname"];
                 [storeManageObject setValue:[NSString stringWithFormat:@"%f",businessDetail.ti_rating]  forKey:@"ti_rating"];
                 [storeManageObject setValue:businessDetail.product_option forKey:@"product_option"];
+                [storeManageObject setValue:businessDetail.item_note forKey:@"item_note"];
                 [storeManageObject setValue:@(businessDetail.product_order_id) forKey:@"product_order_id"];
                 if ( ([dictionary valueForKey:@"selected_ProductID_array"] != nil) && ([dictionary valueForKey:@"selected_ProductID_array"] != [NSNull null]) )
                     [storeManageObject setValue:[dictionary valueForKey:@"selected_ProductID_array"] forKey:@"selected_ProductID_array"];
@@ -398,7 +483,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
                 [self.navigationController pushViewController:payBillViewController animated:YES];
             }
             else {
-                if(![self.txtNote.text isEqualToString:@""])
+                if(![self.txtNote.text isEqualToString:@""] && ![self.txtNote.text isEqualToString:Note_defaultText])
                 {
                     self.notesText = self.txtNote.text;
                 }

@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *lbl_Description;
 @property (weak, nonatomic) IBOutlet UILabel *lbl_totalItems;
 @property (weak, nonatomic) IBOutlet UILabel *lbl_Price;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_Notes;
+
 @property (weak, nonatomic) IBOutlet CustomUIButton *btnAddItem;
 @property (weak, nonatomic) IBOutlet CustomUIButton *btnRemoveItem;
 

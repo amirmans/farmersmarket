@@ -13,7 +13,7 @@
 #import "CartViewSecondScreenViewController.h"
 #import "UIAlertView+TapTalkAlerts.h"
 
-@interface CartViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>{
+@interface CartViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate>{
     Business  *billBusiness;
     NSDecimalNumber *billInDollar;
     NSDecimalNumber *zero;

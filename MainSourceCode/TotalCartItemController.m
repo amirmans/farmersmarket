@@ -346,6 +346,8 @@ UITextView *alertTextView;
     businessDetail.product_order_id = [[managedObj valueForKey:@"product_order_id"] integerValue];
     businessDetail.product_option = [managedObj valueForKey:@"product_option"];
     businessDetail.note = [managedObj valueForKey:@"note"];
+    businessDetail.item_note = [managedObj valueForKey:@"item_note"];
+    
     NSManagedObjectContext *context = [self managedObjectContext];
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
     self.FetchedRecordArray = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
@@ -377,6 +379,7 @@ UITextView *alertTextView;
                     [storeManageObject setValue:businessDetail.name forKey:@"productname"];
                     [storeManageObject setValue:businessDetail.product_option forKey:@"product_option"];
                     [storeManageObject setValue:@(businessDetail.product_order_id) forKey:@"product_order_id"];
+                    [storeManageObject setValue:businessDetail.item_note forKey:@"item_note"];
                     [storeManageObject setValue:[NSString stringWithFormat:@"%f",businessDetail.ti_rating]  forKey:@"ti_rating"];
                     [storeManageObject setValue:[NSString stringWithFormat:@"%d",ItemQty] forKey:@"quantity"];
                     if ( ([dictionary valueForKey:@"selected_ProductID_array"] != nil) && ([dictionary valueForKey:@"selected_ProductID_array"] != [NSNull null]) ) {
@@ -415,6 +418,8 @@ UITextView *alertTextView;
     businessDetail.quantity = [[managedObj valueForKey:@"quantity"] integerValue];
     businessDetail.product_order_id = [[managedObj valueForKey:@"product_order_id"] integerValue];
     businessDetail.product_option = [managedObj valueForKey:@"product_option"];
+    NSLog(@"%@",[managedObj valueForKey:@"item_note"]);
+    businessDetail.item_note = [managedObj valueForKey:@"item_note"];
     businessDetail.note = [managedObj valueForKey:@"note"];
     [self AddItemInCart:businessDetail CustomUIButton:sender];
 }

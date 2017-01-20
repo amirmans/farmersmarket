@@ -59,6 +59,13 @@ double deliveryAmountValue = 0.00; //Delievery amount value in $
     redeemNoPoint  = 0;  // number of points being redeemed
     redeemPointsVal = 0;  // value for the points that we are redeeming
     
+    [self.lblPayNow.layer setBorderWidth:1.0];
+    [self.lblPayNow.layer setBorderColor:[[UIColor colorWithRed:204.0/255.0 green:102.0/255.0 blue:0.0/255.0 alpha:1.0] CGColor]];
+//    [self.lblPayNow.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+    [self.lblPayNow.layer setShadowOffset:CGSizeMake(2, 2)];
+    [self.lblPayNow.layer setShadowColor:[[UIColor blackColor] CGColor]];
+    [self.lblPayNow.layer setShadowOpacity:0.3];
+
     NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
     if ([userID intValue] <=0) {
         userID = [NSString stringWithFormat:@"%@",[DataModel sharedDataModelManager].uuid];

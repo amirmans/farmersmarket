@@ -43,5 +43,6 @@
 @property(nonatomic, retain) NSString *note;
 @property(nonatomic, retain) NSString *product_icon;
 @property(nonatomic, retain) NSString *category_icon;
+@property(nonatomic, retain) NSString *item_note;
 
 @end
