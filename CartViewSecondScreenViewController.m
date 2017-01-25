@@ -43,7 +43,7 @@ double deliveryAmountValue = 0.00; //Delievery amount value in $
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Order";
+    self.title = @"Pay";
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
