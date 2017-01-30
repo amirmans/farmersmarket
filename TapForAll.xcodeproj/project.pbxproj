@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1240F8EB1DAD2FE8005D0642 /* AddressVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1240F8EA1DAD2FE8005D0642 /* AddressVC.xib */; };
-		1240F8EE1DAD3F19005D0642 /* AddressVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1240F8ED1DAD3F19005D0642 /* AddressVC.m */; };
+		1240F8EE1DAD3F19005D0642 /* DeliveryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1240F8ED1DAD3F19005D0642 /* DeliveryViewController.m */; };
 		12C090E61DDDDB600033CEA9 /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C090E41DDDDB600033CEA9 /* CartViewController.m */; };
 		12C090E71DDDDB600033CEA9 /* CartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 12C090E51DDDDB600033CEA9 /* CartViewController.xib */; };
 		12C090EB1DDDEC6E0033CEA9 /* CartItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C090E91DDDEC6E0033CEA9 /* CartItemTableViewCell.m */; };
@@ -78,6 +77,7 @@
 		4A1DA88D1C7603CA00E16F30 /* TPReceiptController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A1DA88B1C7603CA00E16F30 /* TPReceiptController.xib */; };
 		4A1DA8911C76235100E16F30 /* TPRewardPointController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DA88F1C76235100E16F30 /* TPRewardPointController.m */; };
 		4A1DA8921C76235100E16F30 /* TPRewardPointController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A1DA8901C76235100E16F30 /* TPRewardPointController.xib */; };
+		4A32F15C1E3ADD9A002F4565 /* CartViewSecondScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A32F15B1E3ADD9A002F4565 /* CartViewSecondScreenViewController.xib */; };
 		4A3A1D921CC6578100457B07 /* MenuItemOptionsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A3A1D911CC6578000457B07 /* MenuItemOptionsView.xib */; };
 		4A5AD37B1C770AE700DCEA6F /* TPRewardPointCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5AD3791C770AE700DCEA6F /* TPRewardPointCell.m */; };
 		4A5AD37C1C770AE700DCEA6F /* TPRewardPointCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A5AD37A1C770AE700DCEA6F /* TPRewardPointCell.xib */; };
@@ -116,8 +116,8 @@
 		4AC5CB9D1CAE8F8B0087A65F /* CateringViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC5CB9B1CAE8F8B0087A65F /* CateringViewController.m */; };
 		4AC5CB9E1CAE8F8B0087A65F /* CateringViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AC5CB9C1CAE8F8B0087A65F /* CateringViewController.xib */; };
 		4AC80A901C69FF6A00A42EE2 /* restaurant.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4AC80A8F1C69FF6900A42EE2 /* restaurant.jpg */; };
+		4ACB62FB1E3A2E7500E5DD21 /* DeliveryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4ACB62FA1E3A2E7500E5DD21 /* DeliveryViewController.xib */; };
 		4ACD41AF1E1FDEAB002F9379 /* CartViewSecondScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACD41AD1E1FDEAB002F9379 /* CartViewSecondScreenViewController.m */; };
-		4ACD41B01E1FDEAB002F9379 /* CartViewSecondScreenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4ACD41AE1E1FDEAB002F9379 /* CartViewSecondScreenViewController.xib */; };
 		4AD6E47A1CE099240025676C /* ic_minus.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AD6E4771CE099240025676C /* ic_minus.png */; };
 		4AD6E47B1CE099240025676C /* ic_minus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AD6E4781CE099240025676C /* ic_minus@2x.png */; };
 		4AD6E47C1CE099240025676C /* ic_minus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AD6E4791CE099240025676C /* ic_minus@3x.png */; };
@@ -248,9 +248,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1240F8EA1DAD2FE8005D0642 /* AddressVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddressVC.xib; sourceTree = "<group>"; };
-		1240F8EC1DAD3F19005D0642 /* AddressVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressVC.h; sourceTree = "<group>"; };
-		1240F8ED1DAD3F19005D0642 /* AddressVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressVC.m; sourceTree = "<group>"; };
+		1240F8EC1DAD3F19005D0642 /* DeliveryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeliveryViewController.h; sourceTree = "<group>"; };
+		1240F8ED1DAD3F19005D0642 /* DeliveryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeliveryViewController.m; sourceTree = "<group>"; };
 		12C090E31DDDDB600033CEA9 /* CartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartViewController.h; sourceTree = "<group>"; };
 		12C090E41DDDDB600033CEA9 /* CartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartViewController.m; sourceTree = "<group>"; };
 		12C090E51DDDDB600033CEA9 /* CartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartViewController.xib; sourceTree = "<group>"; };
@@ -346,6 +345,7 @@
 		4A1DA88E1C76235100E16F30 /* TPRewardPointController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPRewardPointController.h; sourceTree = "<group>"; };
 		4A1DA88F1C76235100E16F30 /* TPRewardPointController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPRewardPointController.m; sourceTree = "<group>"; };
 		4A1DA8901C76235100E16F30 /* TPRewardPointController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TPRewardPointController.xib; sourceTree = "<group>"; };
+		4A32F15B1E3ADD9A002F4565 /* CartViewSecondScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartViewSecondScreenViewController.xib; sourceTree = "<group>"; };
 		4A3A1D911CC6578000457B07 /* MenuItemOptionsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuItemOptionsView.xib; sourceTree = "<group>"; };
 		4A5AD3781C770AE700DCEA6F /* TPRewardPointCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPRewardPointCell.h; sourceTree = "<group>"; };
 		4A5AD3791C770AE700DCEA6F /* TPRewardPointCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPRewardPointCell.m; sourceTree = "<group>"; };
@@ -404,10 +404,10 @@
 		4AC5CB9B1CAE8F8B0087A65F /* CateringViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CateringViewController.m; sourceTree = "<group>"; };
 		4AC5CB9C1CAE8F8B0087A65F /* CateringViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CateringViewController.xib; sourceTree = "<group>"; };
 		4AC80A8F1C69FF6900A42EE2 /* restaurant.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = restaurant.jpg; sourceTree = "<group>"; };
+		4ACB62FA1E3A2E7500E5DD21 /* DeliveryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeliveryViewController.xib; sourceTree = "<group>"; };
 		4ACD296C1CD7628B00BAA006 /* TapForAll_V2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TapForAll_V2.xcdatamodel; sourceTree = "<group>"; };
 		4ACD41AC1E1FDEAB002F9379 /* CartViewSecondScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartViewSecondScreenViewController.h; sourceTree = "<group>"; };
 		4ACD41AD1E1FDEAB002F9379 /* CartViewSecondScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartViewSecondScreenViewController.m; sourceTree = "<group>"; };
-		4ACD41AE1E1FDEAB002F9379 /* CartViewSecondScreenViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CartViewSecondScreenViewController.xib; sourceTree = "<group>"; };
 		4AD6E4771CE099240025676C /* ic_minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_minus.png; sourceTree = "<group>"; };
 		4AD6E4781CE099240025676C /* ic_minus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_minus@2x.png"; sourceTree = "<group>"; };
 		4AD6E4791CE099240025676C /* ic_minus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_minus@3x.png"; sourceTree = "<group>"; };
@@ -1051,15 +1051,15 @@
 				4A1DA88E1C76235100E16F30 /* TPRewardPointController.h */,
 				4A1DA88F1C76235100E16F30 /* TPRewardPointController.m */,
 				4A6643CF1C747D7B00C10421 /* Xib */,
-				1240F8EA1DAD2FE8005D0642 /* AddressVC.xib */,
-				1240F8EC1DAD3F19005D0642 /* AddressVC.h */,
-				1240F8ED1DAD3F19005D0642 /* AddressVC.m */,
+				4ACB62FA1E3A2E7500E5DD21 /* DeliveryViewController.xib */,
+				1240F8EC1DAD3F19005D0642 /* DeliveryViewController.h */,
+				1240F8ED1DAD3F19005D0642 /* DeliveryViewController.m */,
 				12C090E31DDDDB600033CEA9 /* CartViewController.h */,
 				12C090E41DDDDB600033CEA9 /* CartViewController.m */,
 				12C090E51DDDDB600033CEA9 /* CartViewController.xib */,
 				4ACD41AC1E1FDEAB002F9379 /* CartViewSecondScreenViewController.h */,
 				4ACD41AD1E1FDEAB002F9379 /* CartViewSecondScreenViewController.m */,
-				4ACD41AE1E1FDEAB002F9379 /* CartViewSecondScreenViewController.xib */,
+				4A32F15B1E3ADD9A002F4565 /* CartViewSecondScreenViewController.xib */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -1305,6 +1305,7 @@
 				5D7AEDD41C6934E400B0929F /* ic_nav.png in Resources */,
 				5D7AEDD81C6934E400B0929F /* ic_service@2x.png in Resources */,
 				5D7AEDCC1C6934E400B0929F /* ic_calendar@2x.png in Resources */,
+				4A32F15C1E3ADD9A002F4565 /* CartViewSecondScreenViewController.xib in Resources */,
 				5D7AEE001C696B4000B0929F /* Pin.png in Resources */,
 				C66237FE18C03E5B00750F82 /* disabled_button_bg.png in Resources */,
 				5D7AEDD01C6934E400B0929F /* ic_food@3x.png in Resources */,
@@ -1359,12 +1360,12 @@
 				29ECC44C14CCC06C0098653A /* EnterBusiness@2x.png in Resources */,
 				C69298AB18DF903400B013E0 /* BillPayViewController.xib in Resources */,
 				C600C49518DF8C4C0019E8EF /* ChatsFromBusinessTableViewController.xib in Resources */,
-				4ACD41B01E1FDEAB002F9379 /* CartViewSecondScreenViewController.xib in Resources */,
 				4AD6E47A1CE099240025676C /* ic_minus.png in Resources */,
 				4AE25A991CBFB83B00134D29 /* BusinessNotificationCell.xib in Resources */,
 				4A6643E61C74A04000C10421 /* arrow_down1@2x.png in Resources */,
 				5D7AEDE91C696B2100B0929F /* pin1.png in Resources */,
 				5D7AEDF01C696B2800B0929F /* pin2@2x.png in Resources */,
+				4ACB62FB1E3A2E7500E5DD21 /* DeliveryViewController.xib in Resources */,
 				4AC5CB9E1CAE8F8B0087A65F /* CateringViewController.xib in Resources */,
 				290481BE150433CE0066002B /* ProductItemsTableViewController.xib in Resources */,
 				5D7AEE011C696B4000B0929F /* Pin@2x.png in Resources */,
@@ -1385,7 +1386,6 @@
 				C6C8ACAF18DF9BE5005DAFD6 /* TapForAllTests-Info.plist in Resources */,
 				5D7AEDFC1C696B3800B0929F /* pin4@2x.png in Resources */,
 				4AA5F8BE1CAFC418007F4DFE /* Businesses Property List.plist in Resources */,
-				1240F8EB1DAD2FE8005D0642 /* AddressVC.xib in Resources */,
 				4A06471E1DE456B900416969 /* CartViewTableViewCell.xib in Resources */,
 				5DBDB5C51C6AB35A001828C5 /* MenuItemTableViewCell.xib in Resources */,
 				29ECC44C14CCC06C00986566 /* ProductItemViewCell.xib in Resources */,
@@ -1566,7 +1566,7 @@
 				C6C8ACA918DF9B8F005DAFD6 /* main.m in Sources */,
 				4A6643EB1C74A04000C10421 /* SIMenuConfiguration.m in Sources */,
 				5D7AEDE51C6967E000B0929F /* SMClassicCalloutView.m in Sources */,
-				1240F8EE1DAD3F19005D0642 /* AddressVC.m in Sources */,
+				1240F8EE1DAD3F19005D0642 /* DeliveryViewController.m in Sources */,
 				29CDC4B516293F5A002E3D5A /* BusinessProductsUtils.m in Sources */,
 				C6C8ACAD18DF9BBC005DAFD6 /* TapForAllTests.m in Sources */,
 			);
@@ -1736,7 +1736,7 @@
 				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/TapForAll/TapForAll-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -1774,7 +1774,7 @@
 				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/TapForAll/TapForAll-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",

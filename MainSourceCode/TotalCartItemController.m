@@ -12,7 +12,7 @@
 #import "UIAlertView+TapTalkAlerts.h"
 #import "TPBusinessDetail.h"
 #import "SHMultipleSelect.h"
-#import "AddressVC.h"
+#import "DeliveryViewController.h"
 #import "DataModel.h"
 #import "UIAlertView+TapTalkAlerts.h"
 
@@ -1140,7 +1140,7 @@ UITextView *alertTextView;
             }
             else
             {
-                AddressVC *delivaryInfoVC = [[AddressVC alloc] initWithNibName:nil bundle:nil];
+                DeliveryViewController *delivaryInfoVC = [[DeliveryViewController alloc] initWithNibName:nil bundle:nil];
                 delivaryInfoVC.latestDeliveryInfo = latestInfoArray;
                 [self.navigationController presentViewController:delivaryInfoVC animated:YES completion:^{
                     NSLog(@"%@",[AppData sharedInstance].consumer_Delivery_Location);
@@ -1149,7 +1149,7 @@ UITextView *alertTextView;
         }
         else
         {
-            AddressVC *delivaryInfoVC = [[AddressVC alloc] initWithNibName:nil bundle:nil];
+            DeliveryViewController *delivaryInfoVC = [[DeliveryViewController alloc] initWithNibName:nil bundle:nil];
             delivaryInfoVC.latestDeliveryInfo = latestInfoArray;
             [self.navigationController presentViewController:delivaryInfoVC animated:YES completion:^{
                 NSLog(@"%@",[AppData sharedInstance].consumer_Delivery_Location);

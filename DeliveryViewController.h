@@ -12,7 +12,7 @@
 @class MBProgressHUD;
 
 
-@interface AddressVC : UIViewController
+@interface DeliveryViewController : UIViewController
 {
     MBProgressHUD *HUD;
 
@@ -38,7 +38,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *locationTableView;
 @property (weak, nonatomic) IBOutlet AsyncImageView *mapImageAsyncView;
-@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
+//@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (assign) BOOL isPickerOpen;
 @property (weak, nonatomic) IBOutlet UIButton *btnDateTime;
 @property (weak, nonatomic) IBOutlet UITextField *txtNote;

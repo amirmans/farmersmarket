@@ -6,7 +6,7 @@
 //
 //
 #import <UIKit/UIKit.h>
-#import "AddressVC.h"
+#import "DeliveryViewController.h"
 #import "APIUtility.h"
 #import "MBProgressHUD.h"
 #import "ActionSheetPicker.h"
@@ -16,7 +16,7 @@
 #import "UIImageView+AFNetworking.h"
 
 
-@interface AddressVC ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
+@interface DeliveryViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 {
     NSString *stringUid;
     BOOL keyboardIsShown;
@@ -33,15 +33,14 @@
 
 
 
-@implementation AddressVC
-
+@implementation DeliveryViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = YES;
     
     self.isPickerOpen = NO;
-    [self.datePicker setAlpha:0.0];
+//    [self.datePicker setAlpha:0.0];
     self.locationArr = [[NSMutableArray alloc] init];
     self.locationNameArr = [[NSMutableArray alloc] init];
     

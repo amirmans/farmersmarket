@@ -24,9 +24,9 @@
 #import "AppData.h"
 #import "APIUtility.h"
 #import <Stripe/Stripe.h>
-#import "AddressVC.h"
+#import "DeliveryViewController.h"
 #import "IQKeyboardManager.h"
-
+#import "Business.h"
 
 @interface AppDelegate () {
     BusinessNotificationTableViewController *notificationController;
@@ -710,8 +710,9 @@ static AppDelegate *sharedObj;
     
 //    NSInteger notification_type = ;
     
-    int notification_type = [[aps valueForKey:@"notification_type"] intValue];
-    
+//    int notification_type = [[aps valueForKey:@"notification_type"] intValue];
+    int notification_type = [[aps valueForKey:@"type"] intValue];
+    NSLog(@"%d",notification_type);
     if (notification_type == 1 || notification_type == 2) {
         
         [self.tt_tabBarController setSelectedIndex:0];
@@ -735,6 +736,37 @@ static AppDelegate *sharedObj;
                 [[CurrentBusiness sharedCurrentBusinessManager].business startLoadingBusinessProductCategoriesAndProducts];
                 MenuItemViewController *menuItemVC = [[MenuItemViewController alloc] initWithNibName:nil bundle:nil];
                 [navController.visibleViewController.navigationController pushViewController:menuItemVC animated:true];
+            }
+        }
+    }
+    else if (notification_type == 4) {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Message"
+                                                                       message:@"You have pending orders to confirm."
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * action) {}];
+        
+        [alert addAction:defaultAction];
+        [self.window.rootViewController presentViewController:alert animated:YES completion:nil];
+    }
+    else if(notification_type == 5){
+        Business *biz = [CurrentBusiness sharedCurrentBusinessManager].business;
+        if ([CurrentBusiness sharedCurrentBusinessManager].business != nil) {
+            NSInteger businessID = [[aps valueForKey:@"business_id"] integerValue];
+            NSLog(@"%d",[CurrentBusiness sharedCurrentBusinessManager].business.businessID);
+            if ([CurrentBusiness sharedCurrentBusinessManager].business.businessID == businessID) {
+                [[RewardDetailsModel sharedInstance] getRewardData:biz completiedBlock:^(NSDictionary *response) {
+                    if (1) {
+                        if(response != nil) {
+                            NSDictionary *reward = response;
+                            NSLog(@"%@",reward);
+                            NSString *total_available_points = [[[reward valueForKey:@"data"] valueForKey:@"total_available_points"] stringValue];
+                            
+                            [[self.tt_tabBarController.tabBar.items objectAtIndex:3] setBadgeValue:total_available_points];
+                        }
+                    }
+                }];
             }
         }
     }

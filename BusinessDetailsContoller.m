@@ -633,8 +633,10 @@ UIBarButtonItem *btn_heart;
         }];
         
         UIAlertAction *myCartAction = [UIAlertAction actionWithTitle:@"My Order" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            TotalCartItemController *TotalCartItemVC = [[TotalCartItemController alloc] initWithNibName:@"TotalCartItemController" bundle:nil];
+            CartViewController *TotalCartItemVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
             [self.navigationController pushViewController:TotalCartItemVC animated:YES];
+//            TotalCartItemController *TotalCartItemVC = [[TotalCartItemController alloc] initWithNibName:@"TotalCartItemController" bundle:nil];
+//            [self.navigationController pushViewController:TotalCartItemVC animated:YES];
         }];
         
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {

@@ -11,7 +11,7 @@
 #import "APIUtility.h"
 #import "UIAlertView+TapTalkAlerts.h"
 #import "AppDelegate.h"
-#import "AddressVC.h"
+#import "DeliveryViewController.h"
 #import "ActionSheetPicker.h"
 
 @interface CartViewController (){
@@ -559,7 +559,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
             }
             else
             {
-                AddressVC *delivaryInfoVC = [[AddressVC alloc] initWithNibName:nil bundle:nil];
+                DeliveryViewController *delivaryInfoVC = [[DeliveryViewController alloc] initWithNibName:nil bundle:nil];
                 delivaryInfoVC.latestDeliveryInfo = latestInfoArray;
                 [self.navigationController presentViewController:delivaryInfoVC animated:YES completion:^{
                     NSLog(@"%@",[AppData sharedInstance].consumer_Delivery_Location);
@@ -568,12 +568,16 @@ double deliveryAmount = 0.0;        // Delivery Amount
         }
         else
         {
-            AddressVC *delivaryInfoVC = [[AddressVC alloc] initWithNibName:nil bundle:nil];
+            DeliveryViewController *delivaryInfoVC = [[DeliveryViewController alloc] initWithNibName:nil bundle:nil];
             delivaryInfoVC.latestDeliveryInfo = latestInfoArray;
             [self.navigationController presentViewController:delivaryInfoVC animated:YES completion:^{
                 NSLog(@"%@",[AppData sharedInstance].consumer_Delivery_Location);
             }];
         }
+    }
+    else
+    {
+        [AppData showAlert:@"" message:@"NOW CLOSED" buttonTitle:@"OK" viewClass:self];
     }
 }
 

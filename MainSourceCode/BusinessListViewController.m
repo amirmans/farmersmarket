@@ -609,11 +609,13 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         if([[APIUtility sharedInstance]isOpenBussiness: [cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]]){
             cell.lblOpenClose.text = @"OPEN NOW";
             cell.lblOpenClose.textColor = [UIColor orangeColor];
+            cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:[cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]];
+
         }else{
             cell.lblOpenClose.text = @"NOW CLOSED";
             cell.lblOpenClose.textColor = [UIColor grayColor];
+            cell.lblOpenCloseDate.text = @"";
         }
-        cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:[cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]];
 
     }
     

@@ -41,7 +41,7 @@ extern NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView;
 // Callout view.
 //
 
-@interface SMCalloutView : UIView
+@interface SMCalloutView : UIView<CAAnimationDelegate>
 
 @property (nonatomic, weak, nullable) id<SMCalloutViewDelegate, UIGestureRecognizerDelegate,CAAnimationDelegate> delegate;
 /// title/titleView relationship mimics UINavigationBar.
@@ -134,6 +134,7 @@ extern NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView;
 
 /// For subclassers. You can override this method to provide your own custom animation for presenting/dismissing the callout.
 - (CAAnimation *)animationWithType:(SMCalloutAnimation)type presenting:(BOOL)presenting;
+
 
 @end
 

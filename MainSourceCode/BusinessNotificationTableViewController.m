@@ -200,13 +200,15 @@ Business *currentBiz;
         if([[APIUtility sharedInstance]isOpenBussiness:selectedBusiness.opening_time CloseTime:selectedBusiness.closing_time]){
             cell.lblOpenClose.text = @"OPEN NOW";
             cell.lblOpenClose.textColor = [UIColor orangeColor];
+            cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:selectedBusiness.opening_time CloseTime:selectedBusiness.closing_time];
         }
         else{
             cell.lblOpenClose.text = @"NOW CLOSED";
             cell.lblOpenClose.textColor = [UIColor grayColor];
+            cell.lblOpenCloseDate.text = @"";
         }
         
-        cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:selectedBusiness.opening_time CloseTime:selectedBusiness.closing_time];
+        
     }
     
     cell.btnFevorite.tag = indexPath.row;

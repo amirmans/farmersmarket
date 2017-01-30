@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -72,8 +71,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Closed now" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eqi-j5-jbe">
-                                <frame key="frameInset" minX="22" minY="105" width="78" height="15"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Closed now" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eqi-j5-jbe">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="jRT-UL-2eN"/>
                                 </constraints>
@@ -86,10 +84,9 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="11 am - 12 pm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VJP-im-sqn">
-                                <frame key="frameInset" minX="103" minY="106" width="115" height="14"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11 am - 12 pm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="VJP-im-sqn">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="115" id="3XL-fx-zm4"/>
+                                    <constraint firstAttribute="width" constant="112" id="3XL-fx-zm4"/>
                                     <constraint firstAttribute="height" constant="14" id="Ree-be-6ua"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -106,7 +103,7 @@
                             <constraint firstItem="i4c-EX-NfG" firstAttribute="top" secondItem="dkP-B4-jid" secondAttribute="bottom" constant="-4" id="GnL-Sc-1aA"/>
                             <constraint firstItem="Eqi-j5-jbe" firstAttribute="leading" secondItem="ItZ-cb-5Gl" secondAttribute="leading" constant="22" id="HbA-6r-cCx"/>
                             <constraint firstItem="Eqi-j5-jbe" firstAttribute="top" secondItem="i4c-EX-NfG" secondAttribute="bottom" constant="7" id="J6Y-oD-Wla"/>
-                            <constraint firstAttribute="trailing" secondItem="VJP-im-sqn" secondAttribute="trailing" id="LbA-Iw-4jf"/>
+                            <constraint firstAttribute="trailing" secondItem="VJP-im-sqn" secondAttribute="trailing" constant="3" id="LbA-Iw-4jf"/>
                             <constraint firstItem="7AY-hH-cLJ" firstAttribute="leading" secondItem="ItZ-cb-5Gl" secondAttribute="leading" constant="4" id="X27-Da-QCP"/>
                             <constraint firstAttribute="bottom" secondItem="Eqi-j5-jbe" secondAttribute="bottom" constant="8" id="ab0-Gc-tf9"/>
                             <constraint firstItem="VJP-im-sqn" firstAttribute="leading" secondItem="Eqi-j5-jbe" secondAttribute="trailing" constant="3" id="bnQ-Zc-Kqw"/>

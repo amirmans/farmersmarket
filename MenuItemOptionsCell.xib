@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,11 +16,14 @@
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_check_blue_blank" translatesAutoresizingMaskIntoConstraints="NO" id="Ptc-wW-TUB">
                         <constraints>
-                            <constraint firstAttribute="width" constant="30" id="2BA-ej-0aJ"/>
-                            <constraint firstAttribute="height" constant="30" id="5gQ-Vv-hwW"/>
+                            <constraint firstAttribute="height" constant="30" id="5Gl-N7-Ycm"/>
+                            <constraint firstAttribute="width" constant="30" id="TMU-bc-YJc"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aIZ-ir-Q7i">
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21.5" id="TVw-vU-sa5"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -31,17 +33,16 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="aIZ-ir-Q7i" firstAttribute="leading" secondItem="Ptc-wW-TUB" secondAttribute="trailing" constant="8" id="1oD-ls-Lz0"/>
-                    <constraint firstItem="Ptc-wW-TUB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="3n8-bA-R7L"/>
-                    <constraint firstItem="aIZ-ir-Q7i" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="11" id="Fgg-17-a1s"/>
-                    <constraint firstAttribute="bottom" secondItem="dxx-hL-sYq" secondAttribute="bottom" id="GnK-MD-VYw"/>
-                    <constraint firstAttribute="trailing" secondItem="dxx-hL-sYq" secondAttribute="trailing" id="PcK-bu-x49"/>
-                    <constraint firstAttribute="bottom" secondItem="Ptc-wW-TUB" secondAttribute="bottom" constant="7" id="coa-SQ-PM9"/>
-                    <constraint firstItem="Ptc-wW-TUB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="eBw-CM-YsN"/>
-                    <constraint firstItem="dxx-hL-sYq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="pWY-T1-bph"/>
-                    <constraint firstAttribute="bottom" secondItem="aIZ-ir-Q7i" secondAttribute="bottom" constant="11" id="sdu-56-U5j"/>
-                    <constraint firstItem="dxx-hL-sYq" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="vI6-lq-8Jh"/>
-                    <constraint firstAttribute="trailing" secondItem="aIZ-ir-Q7i" secondAttribute="trailing" constant="8" id="weK-d1-V5V"/>
+                    <constraint firstAttribute="trailing" secondItem="dxx-hL-sYq" secondAttribute="trailing" id="1jw-hK-t82"/>
+                    <constraint firstItem="dxx-hL-sYq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="5LC-Pz-ewz"/>
+                    <constraint firstItem="aIZ-ir-Q7i" firstAttribute="leading" secondItem="Ptc-wW-TUB" secondAttribute="trailing" constant="8" id="I0B-DN-ygK"/>
+                    <constraint firstItem="Ptc-wW-TUB" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="IoV-Kz-g8B"/>
+                    <constraint firstItem="aIZ-ir-Q7i" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="NZK-qJ-1yO"/>
+                    <constraint firstItem="dxx-hL-sYq" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="W6w-Z4-4yC"/>
+                    <constraint firstAttribute="trailing" secondItem="aIZ-ir-Q7i" secondAttribute="trailing" constant="8" id="apd-Ic-rYn"/>
+                    <constraint firstAttribute="bottom" secondItem="dxx-hL-sYq" secondAttribute="bottom" id="dVx-WI-wUt"/>
+                    <constraint firstItem="Ptc-wW-TUB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="k4o-F6-2Yn"/>
+                    <constraint firstItem="aIZ-ir-Q7i" firstAttribute="leading" secondItem="Ptc-wW-TUB" secondAttribute="trailing" constant="8" id="mvg-kX-jBt"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
