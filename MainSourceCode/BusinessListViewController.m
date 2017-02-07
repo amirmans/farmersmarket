@@ -176,7 +176,7 @@ Business *biz;
     
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     HUD.label.text = @"Updating businesses...";
-    HUD.detailsLabel.text = @"It is worth the wait!";
+//    HUD.detailsLabel.text = @"It is worth the wait!";
     
     HUD.mode = MBProgressHUDModeIndeterminate;
 

@@ -334,11 +334,10 @@ static NSArray *consumerProfileDataArray = nil;
 }
 
 
-- (IBAction)saveButtonAction:(id)sender {
-
+- (BOOL)saveProfile {
     //Validating input by the user - These rules should match the ones in the server
     BOOL badInformation = [self validateAllUserInput];
-
+    
     if (badInformation) {
         [UIAlertController showErrorAlert:@"There are errors in your input. Please fix them first"];
     }
@@ -350,6 +349,12 @@ static NSArray *consumerProfileDataArray = nil;
         if (self.navigationController.parentViewController != nil)
             [self.navigationController popViewControllerAnimated:YES];
     }
+
+    return !badInformation;
+}
+
+- (IBAction)saveButtonAction:(id)sender {
+    [self saveProfile];
 }
 
 - (IBAction)ageGroupSegmentedControlAction:(id)sender {
@@ -359,7 +364,10 @@ static NSArray *consumerProfileDataArray = nil;
 
 - (IBAction)resetButtonAction:(id)sender {
     [super viewDidLoad];
-    [self.tabBarController setSelectedIndex:0];
+    BOOL successfulSave = [self saveProfile];
+    if (successfulSave) {
+        [self.tabBarController setSelectedIndex:0];
+    }
 
 //    [self populateFieldsWithInitialValues];
 }

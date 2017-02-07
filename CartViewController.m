@@ -462,7 +462,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
 
 - (IBAction)btnPickUpFoodClicked:(id)sender {
     if ([DataModel sharedDataModelManager].uuid.length < 1) {
-        UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:@"we are taking you to profile page. please update your profile info \n then go to home for place the order" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:@"We are taking you to the profile page.  Please update your profile info \n then come back to this page." preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             self.tabBarController.selectedIndex = 1;
         }];
@@ -472,7 +472,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
     }
     else {
         if ([DataModel sharedDataModelManager].emailAddress.length < 1) {
-            UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:@"" message:@"we are taking you to profile page. please update your profile info \n then go to home for place the order" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:@"" message:@"We are taking you to the profile page.  Please update your profile info \n then come back to this page." preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 self.tabBarController.selectedIndex = 1;
             }];
@@ -511,7 +511,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
         }
         else
         {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Please select item for place order." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Please select menu items to place an order." preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             }];
             [alert addAction:okAction];
@@ -582,7 +582,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
         }
         else
         {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Please select item for place order." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Please select menu items to place an order." preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             }];
             [alert addAction:okAction];

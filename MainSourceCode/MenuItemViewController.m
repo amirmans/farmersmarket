@@ -97,7 +97,7 @@ bool shouldOpenOptionMenu = false;
 
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     HUD.label.text = @"Updating products...";
-    HUD.detailsLabel.text = @"It is worth the wait!";
+//    HUD.detailsLabel.text = @"It is worth the wait!";
 //    HUD.bezelView.color =[UIColor orangeColor];
 //    HUD.backgroundView.color = [UIColor orangeColor];
     HUD.mode = MBProgressHUDModeIndeterminate;
