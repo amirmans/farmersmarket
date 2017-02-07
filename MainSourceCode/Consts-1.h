@@ -11,6 +11,7 @@
 #define OrderServerURL @"https://tapforall.com/merchants/tap-in/include/model.php"
 static NSString *const ServerForBusiness = @"https://tapforall.com/merchants/tap-in/include/model.php";
 
+#define timeInterval 60 // network time interval
 
 #define MaxRowsForLoadingChatMessages 150 // max number of messages
 #define TimeIntervalForLoadingChatMessages 1440 //Hours - 1440 means 2 months

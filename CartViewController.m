@@ -79,10 +79,12 @@ double deliveryAmount = 0.0;        // Delivery Amount
     
     if([billBusiness.pickup_later isEqualToString:@"1"]){
         self.btnScheduleForLater.enabled = YES;
+        self.lblSchedule.alpha = 1.0;
     }
     else
     {
         self.btnScheduleForLater.enabled = NO;
+        self.lblSchedule.alpha = 0.7;
     }
     
     NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
@@ -104,7 +106,6 @@ double deliveryAmount = 0.0;        // Delivery Amount
     }
     
     if([[CurrentBusiness sharedCurrentBusinessManager].business.business_delivery_id integerValue] > 0){
-        self.btnDeliverToMe.enabled = YES;
         // Get Delivery info API
         long business_id_long = [CurrentBusiness sharedCurrentBusinessManager].business.businessID;
         NSNumber *business_id = [NSNumber numberWithLongLong:business_id_long];
@@ -112,6 +113,8 @@ double deliveryAmount = 0.0;        // Delivery Amount
         NSLog(@"---parameter---%@",inDataDict);
         [[APIUtility sharedInstance] BusinessDelivaryInfoAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
             NSLog(@"----response : %@",response);
+            self.btnDeliverToMe.enabled = YES;
+            self.lblDeliver.alpha = 1.0;
             if(((NSArray *)[response valueForKey:@"data"]).count > 0) {
                 NSArray *dataDict = [response valueForKey:@"data"];
                 deliveryAmount = [[[dataDict objectAtIndex:0] valueForKey:@"delivery_charge"] doubleValue];
@@ -122,6 +125,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
     }
     else{
         self.btnDeliverToMe.enabled = NO;
+        self.lblDeliver.alpha = 0.7;
     }
     
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
@@ -518,36 +522,25 @@ double deliveryAmount = 0.0;        // Delivery Amount
 }
 
 - (IBAction)btnDeliverToMeClicked:(id)sender {
-    if(orderItems.count > 0 && deliveryStartTime != nil && deliveryEndTime != nil)
+    if(deliveryStartTime != nil && deliveryEndTime != nil)
     {
-        NSString *time1 = deliveryStartTime;
-        NSString *time3 = deliveryEndTime;
-        NSDate *now = [NSDate date];
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"HH:mm:ss"];
-        NSLog(@"The Current Time is %@",[formatter stringFromDate:now]);
-        NSLog(@"Time 1 : %@",time1);
-        NSLog(@"Time 2 : %@",time3);
-        NSString *time2 = [formatter stringFromDate:now];
-        
-        NSDate *date1= [formatter dateFromString:time1];
-        NSDate *date2 = [formatter dateFromString:time2];
-        NSDate *date3 = [formatter dateFromString:time3];
-        NSComparisonResult result = [date1 compare:date2];
-        
-        if(result == NSOrderedDescending)
-        {
-            NSDateFormatter* dateFormatter1 = [[NSDateFormatter alloc] init];
-            dateFormatter1.dateFormat = @"HH:mm:ss";
-            NSDate *startDate = [dateFormatter1 dateFromString:deliveryStartTime];
-            NSDate *endDate = [dateFormatter1 dateFromString:deliveryEndTime];
-            dateFormatter1.dateFormat = @"hh:mm a";
-            NSString *message = [NSString stringWithFormat:@"Not available at this time.  Deliveries only between %@ - %@",[dateFormatter1 stringFromDate:startDate],[dateFormatter1 stringFromDate:endDate]];
-            [UIAlertController showErrorAlert:message];
-        }
-        else if(result == NSOrderedAscending)
-        {
-            if([date2 compare:date3] == NSOrderedDescending)
+        if(orderItems.count > 0){
+            NSString *time1 = deliveryStartTime;
+            NSString *time3 = deliveryEndTime;
+            NSDate *now = [NSDate date];
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"HH:mm:ss"];
+            NSLog(@"The Current Time is %@",[formatter stringFromDate:now]);
+            NSLog(@"Time 1 : %@",time1);
+            NSLog(@"Time 2 : %@",time3);
+            NSString *time2 = [formatter stringFromDate:now];
+            
+            NSDate *date1= [formatter dateFromString:time1];
+            NSDate *date2 = [formatter dateFromString:time2];
+            NSDate *date3 = [formatter dateFromString:time3];
+            NSComparisonResult result = [date1 compare:date2];
+            
+            if(result == NSOrderedDescending)
             {
                 NSDateFormatter* dateFormatter1 = [[NSDateFormatter alloc] init];
                 dateFormatter1.dateFormat = @"HH:mm:ss";
@@ -556,6 +549,27 @@ double deliveryAmount = 0.0;        // Delivery Amount
                 dateFormatter1.dateFormat = @"hh:mm a";
                 NSString *message = [NSString stringWithFormat:@"Not available at this time.  Deliveries only between %@ - %@",[dateFormatter1 stringFromDate:startDate],[dateFormatter1 stringFromDate:endDate]];
                 [UIAlertController showErrorAlert:message];
+            }
+            else if(result == NSOrderedAscending)
+            {
+                if([date2 compare:date3] == NSOrderedDescending)
+                {
+                    NSDateFormatter* dateFormatter1 = [[NSDateFormatter alloc] init];
+                    dateFormatter1.dateFormat = @"HH:mm:ss";
+                    NSDate *startDate = [dateFormatter1 dateFromString:deliveryStartTime];
+                    NSDate *endDate = [dateFormatter1 dateFromString:deliveryEndTime];
+                    dateFormatter1.dateFormat = @"hh:mm a";
+                    NSString *message = [NSString stringWithFormat:@"Not available at this time.  Deliveries only between %@ - %@",[dateFormatter1 stringFromDate:startDate],[dateFormatter1 stringFromDate:endDate]];
+                    [UIAlertController showErrorAlert:message];
+                }
+                else
+                {
+                    DeliveryViewController *delivaryInfoVC = [[DeliveryViewController alloc] initWithNibName:nil bundle:nil];
+                    delivaryInfoVC.latestDeliveryInfo = latestInfoArray;
+                    [self.navigationController presentViewController:delivaryInfoVC animated:YES completion:^{
+                        NSLog(@"%@",[AppData sharedInstance].consumer_Delivery_Location);
+                    }];
+                }
             }
             else
             {
@@ -568,10 +582,11 @@ double deliveryAmount = 0.0;        // Delivery Amount
         }
         else
         {
-            DeliveryViewController *delivaryInfoVC = [[DeliveryViewController alloc] initWithNibName:nil bundle:nil];
-            delivaryInfoVC.latestDeliveryInfo = latestInfoArray;
-            [self.navigationController presentViewController:delivaryInfoVC animated:YES completion:^{
-                NSLog(@"%@",[AppData sharedInstance].consumer_Delivery_Location);
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Please select item for place order." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            }];
+            [alert addAction:okAction];
+            [self presentViewController:alert animated:true completion:^{
             }];
         }
     }

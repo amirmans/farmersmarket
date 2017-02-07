@@ -179,33 +179,33 @@
     });
 }
 
-- (void) startLoadingBusinessProductCategoriesAndProductsWithBusincessID : (NSString *) busiID {
-    isProductListLoaded = false;
-    businessProducts = nil;
-    
-    NSString *consumer_id = [NSString stringWithFormat: @"%ld", [DataModel sharedDataModelManager].userID];
-    NSString *urlString = nil;
-    if(sub_businesses == nil)
-    {
-        urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%@&consumerID=%@&sub_businesses=""", BusinessAndProductionInformationServer, busiID, consumer_id];
-    }
-    else
-    {
-        urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%@&consumerID=%@&sub_businesses=%@", BusinessAndProductionInformationServer, busiID, consumer_id,sub_businesses];
-    }
-    NSLog(@"%@", urlString);
-//    NSString *urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%@&consumerID=%@", BusinessAndProductionInformationServer, busiID, consumer_id];
-//    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    //    isProductListLoaded = TRUE;
-    dispatch_async(TT_CommunicationWithServerQ, ^{
-        NSData* data = [NSData dataWithContentsOfURL:url];
-        [self performSelectorOnMainThread:@selector(fetchProductData:) withObject:data waitUntilDone:YES];
-    });
-
-}
+//- (void) startLoadingBusinessProductCategoriesAndProductsWithBusincessID : (NSString *) busiID {
+//    isProductListLoaded = false;
+//    businessProducts = nil;
+//    
+//    NSString *consumer_id = [NSString stringWithFormat: @"%ld", [DataModel sharedDataModelManager].userID];
+//    NSString *urlString = nil;
+//    if(sub_businesses == nil)
+//    {
+//        urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%@&consumerID=%@&sub_businesses=""", BusinessAndProductionInformationServer, busiID, consumer_id];
+//    }
+//    else
+//    {
+//        urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%@&consumerID=%@&sub_businesses=%@", BusinessAndProductionInformationServer, busiID, consumer_id,sub_businesses];
+//    }
+//    NSLog(@"%@", urlString);
+////    NSString *urlString = [NSString stringWithFormat:@"%@?cmd=products_for_business&businessID=%@&consumerID=%@", BusinessAndProductionInformationServer, busiID, consumer_id];
+////    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+//    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+//    NSURL *url = [NSURL URLWithString:urlString];
+//    
+//    //    isProductListLoaded = TRUE;
+//    dispatch_async(TT_CommunicationWithServerQ, ^{
+//        NSData* data = [NSData dataWithContentsOfURL:url];
+//        [self performSelectorOnMainThread:@selector(fetchProductData:) withObject:data waitUntilDone:YES];
+//    });
+//
+//}
 
 - (void)fetchProductData:(NSData *)responseData {
     //parse out the json data

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,8 +10,10 @@
                 <outlet property="btnDeliverToMe" destination="8Fj-E9-cKK" id="tQQ-cR-DXf"/>
                 <outlet property="btnPickUpFood" destination="HfO-fK-SVY" id="aqv-aA-5OW"/>
                 <outlet property="btnScheduleForLater" destination="1Fs-9W-afR" id="wqV-kB-n80"/>
+                <outlet property="lblDeliver" destination="az9-EM-xj5" id="Wlb-xf-icY"/>
                 <outlet property="lblEarnPoints" destination="CVk-sK-ei1" id="2eX-lc-fGr"/>
                 <outlet property="lblPickUpAt" destination="ZJT-53-41m" id="C2e-Ah-Nu2"/>
+                <outlet property="lblSchedule" destination="Dfp-Up-jqv" id="x5U-Yo-a1t"/>
                 <outlet property="lblSubtotalAmount" destination="DoL-Mh-65z" id="0BK-xC-ZJS"/>
                 <outlet property="lblTitle" destination="UT5-yU-MLU" id="NSo-aK-fbU"/>
                 <outlet property="tableView" destination="qy4-0g-buj" id="XmT-Zs-xfz"/>

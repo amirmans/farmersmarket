@@ -47,7 +47,8 @@ static APIUtility *sharedObj;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
-
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
+    
     [manager POST:url
        parameters:data progress:nil
           success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -68,6 +69,8 @@ static APIUtility *sharedObj;
         return;
     }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
+    
     [manager GET:[NSString stringWithFormat:@"%@",BusinessInformationServer] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
@@ -101,6 +104,8 @@ static APIUtility *sharedObj;
         return;
     }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
+    
     NSLog(@"%@",data);
     [manager GET:[NSString stringWithFormat:@"%@",BusinessDelivaryInformationServer] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
@@ -135,6 +140,8 @@ static APIUtility *sharedObj;
         return;
     }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
+    
     [manager GET:[NSString stringWithFormat:@"%@",OrderServerURL] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
@@ -169,6 +176,7 @@ static APIUtility *sharedObj;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
     
     [manager POST:OrderServerURL
        parameters:data progress:nil
@@ -192,6 +200,7 @@ static APIUtility *sharedObj;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
 //    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
     
     [manager GET:[NSString stringWithFormat:@"%@",OrderServerURL] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         
@@ -238,6 +247,8 @@ static APIUtility *sharedObj;
         return;
     }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
+    
     [manager GET:[NSString stringWithFormat:@"%@",SetFavoriteServer] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         
         if (finished) {
@@ -272,7 +283,7 @@ static APIUtility *sharedObj;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
-
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
 //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     
     [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data progress: nil success:^(NSURLSessionTask *operation, id responseObject) {
@@ -310,6 +321,8 @@ static APIUtility *sharedObj;
     NSString *urlString = [NSString stringWithFormat:@"%@?cmd=previous_order&consumer_id=%@&business_id=%@",GetPrevious_order,consumer_id,business_id];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
+    
     [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
@@ -344,6 +357,7 @@ static APIUtility *sharedObj;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
     
     [manager POST:Save_cc_info
        parameters:param progress:nil
@@ -367,6 +381,7 @@ static APIUtility *sharedObj;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
     
     [manager POST:remove_cc
        parameters:param progress:nil
@@ -390,6 +405,8 @@ static APIUtility *sharedObj;
     NSString *urlString = [NSString stringWithFormat:@"%@?cmd=get_consumer_all_cc_info&consumer_id=%@",Get_consumer_all_cc_info,consumer_id];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
+    
     [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         NSLog(@"get %@", responseObject);
         if (finished) {
@@ -426,6 +443,8 @@ static APIUtility *sharedObj;
     NSString *urlString = [NSString stringWithFormat:@"%@?cmd=get_consumer_default_cc&consumer_id=%@",Get_consumer_all_cc_info,consumer_id];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
+    
     [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         NSLog(@"get %@", responseObject);
         if (finished) {
@@ -464,6 +483,8 @@ static APIUtility *sharedObj;
     NSString *urlString = [NSString stringWithFormat:@"%@?cmd=get_all_notifications_for_consumer&consumer_id=%@",Get_notifications,consumer_id];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
+    
     [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         NSLog(@"get %@", responseObject);
         if (finished) {
@@ -499,6 +520,7 @@ static APIUtility *sharedObj;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
     
     [manager POST:save_notifications
        parameters:param progress:nil
@@ -648,6 +670,7 @@ static APIUtility *sharedObj;
         return;
     }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
     
     [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {

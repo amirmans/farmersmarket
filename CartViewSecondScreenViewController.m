@@ -422,10 +422,14 @@ double deliveryAmountValue = 0.00; //Delievery amount value in $
     int totaLAvailablePoints = [[[rewards valueForKey:@"data"] valueForKey:@"total_available_points"] intValue];
     if (originalPointsVal > 0) {
         dollarValForEachPoints = originalPointsVal / currentPointsLevel;
+        self.lblCurrentPoints.textColor = [UIColor blackColor];
+        [self.btnRedeemPoint setImage:[UIImage imageNamed:@"Unchecked"] forState:UIControlStateNormal];
         self.lblCurrentPoints.text = [NSString stringWithFormat:@"%ld points worth %2.0f¢ each.  Redeem some?",(long)totaLAvailablePoints,dollarValForEachPoints*100];
     }
     else {
         dollarValForEachPoints = 0.0;
+        self.lblCurrentPoints.textColor = [UIColor lightGrayColor];
+        [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_unchecked"] forState:UIControlStateNormal];
         self.lblCurrentPoints.text = @"You don't have enough points to use";
     }
 }

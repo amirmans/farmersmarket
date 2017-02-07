@@ -20,6 +20,10 @@
     NSDictionary *defaultCardData;
 }
 
+
+@property (weak, nonatomic) IBOutlet UILabel *lblDeliver;
+@property (weak, nonatomic) IBOutlet UILabel *lblSchedule;
+
 @property (weak, nonatomic) IBOutlet UILabel *lblTitle;
 @property (weak, nonatomic) IBOutlet UILabel *lblSubtotalAmount;
 @property (weak, nonatomic) IBOutlet UILabel *lblEarnPoints;

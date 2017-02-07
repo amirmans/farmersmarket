@@ -22,7 +22,7 @@
 #import "MBProgressHUD.h"
 
 @interface MenuItemViewController ()<UITextFieldDelegate,CAAnimationDelegate>{
-    
+    UIButton *customButton;
 }
 
 @end
@@ -121,7 +121,7 @@ bool shouldOpenOptionMenu = false;
     self.navigationItem.leftBarButtonItem = backButton;
     backButton.tintColor = [UIColor whiteColor];
 
-    UIButton *customButton = [[UIButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-85, 20, 80, 40)];
+    customButton = [[UIButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-85, 20, 80, 40)];
     [customButton setTitle:@"Order" forState:UIControlStateNormal];
     [customButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.rightButton = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:customButton];
@@ -1944,12 +1944,14 @@ bool shouldOpenOptionMenu = false;
 
 - (void) disableBarButtons {
     self.rightButton.enabled = false;
+    [customButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     backButton.enabled = false;
     menu.userInteractionEnabled = false;
 }
 
 - (void) enableBarButtons {
     self.rightButton.enabled = true;
+    [customButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     backButton.enabled = true;
     menu.userInteractionEnabled = true;
 }
