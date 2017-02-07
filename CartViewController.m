@@ -592,7 +592,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
     }
     else
     {
-        [AppData showAlert:@"" message:@"NOW CLOSED" buttonTitle:@"OK" viewClass:self];
+        [AppData showAlert:@"" message:@"Delivery Time is Closed Now." buttonTitle:@"OK" viewClass:self];
     }
 }
 
