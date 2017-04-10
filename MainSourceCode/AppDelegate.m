@@ -27,6 +27,7 @@
 #import "DeliveryViewController.h"
 #import "IQKeyboardManager.h"
 #import "Business.h"
+#import "HomeViewController.h"
 
 @interface AppDelegate () {
     BusinessNotificationTableViewController *notificationController;
@@ -83,10 +84,12 @@ static AppDelegate *sharedObj;
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     // Override point for customization after application launch
 //    NSBundle *bundle = [NSBundle mainBundle];
-    ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
-    [businessArrays startGettingListofAllBusinesses];
     
-    BusinessListViewController *listTableView = [[BusinessListViewController alloc] initWithNibName:nil bundle:nil];
+//    ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
+//    [businessArrays startGettingListofAllBusinesses];
+    
+//    BusinessListViewController *listTableView = [[BusinessListViewController alloc] initWithNibName:nil bundle:nil];
+     HomeViewController *listTableView = [[HomeViewController alloc] initWithNibName:nil bundle:nil];
     
 //    AddressVC *listTableView = [[AddressVC alloc] initWithNibName:nil bundle:nil];
 
@@ -94,13 +97,18 @@ static AppDelegate *sharedObj;
 //    [listTableView.listBusinessesActivityIndicator hidesWhenStopped];
 //    [listTableView.listBusinessesActivityIndicator startAnimating];
     
-    UIImage *locationImage = [UIImage imageNamed:@"ic_biz_partners_normal.png"];
+//    UIImage *locationImage = [UIImage imageNamed:@"ic_biz_partners_normal.png"];
+    UIImage *locationImage = [UIImage imageNamed:@"tab_home"];
     UITabBarItem *locationTabBar = [[UITabBarItem alloc] initWithTitle:@"Home" image:locationImage tag:0];
     listTableView.tabBarItem = locationTabBar;
-    locationTabBar.selectedImage = [UIImage imageNamed:@"ic_biz_partners_selected.png"];
+//    locationTabBar.selectedImage = [UIImage imageNamed:@"ic_biz_partners_selected.png"];
+    locationTabBar.selectedImage = [UIImage imageNamed:@"tab_home1"];
     enterBusinessNav = [[UINavigationController alloc] initWithRootViewController:listTableView];
-    enterBusinessNav.navigationBar.barTintColor = [UIColor blackColor];
+    
+//    enterBusinessNav.navigationBar.barTintColor = [UIColor blackColor];
+    enterBusinessNav.navigationBar.barTintColor = [UIColor colorWithDisplayP3Red:255.0/255.0 green:112.0/255.0 blue:39.0/255.0 alpha:1.0];
     enterBusinessNav.navigationBar.translucent = true;
+    enterBusinessNav.extendedLayoutIncludesOpaqueBars = YES;
     enterBusinessNav.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     listTableView = nil;
 
@@ -113,36 +121,44 @@ static AppDelegate *sharedObj;
 //    UINavigationController *chatNav = [[UINavigationController alloc] initWithRootViewController:chatViewContoller];
 
     //consumer profile tab
-    UIImage *profileTabBarImage = [UIImage imageNamed:@"ic_profile_normal.png"];
+//    UIImage *profileTabBarImage = [UIImage imageNamed:@"ic_profile_normal.png"];
+    UIImage *profileTabBarImage = [UIImage imageNamed:@"tab_profile"];
     UITabBarItem *consumerProfileTabBar = [[UITabBarItem alloc] initWithTitle:@"Profile" image:profileTabBarImage tag:2];
-    consumerProfileTabBar.selectedImage = [UIImage imageNamed:@"ic_profile_selected.png"];
+//    consumerProfileTabBar.selectedImage = [UIImage imageNamed:@"ic_profile_selected.png"];
+    consumerProfileTabBar.selectedImage = [UIImage imageNamed:@"tab_profile1"];
     ConsumerProfileViewController *consumerProfileViewController = [[ConsumerProfileViewController alloc] initWithNibName:nil bundle:nil];
     consumerProfileViewController.tabBarItem = consumerProfileTabBar;
     profileTabBarImage = nil;
     UINavigationController *profileNav = [[UINavigationController alloc] initWithRootViewController:consumerProfileViewController];
-    profileNav.navigationBar.barTintColor = [UIColor blackColor];
+//    profileNav.navigationBar.barTintColor = [UIColor blackColor];
+     profileNav.navigationBar.barTintColor = [UIColor colorWithDisplayP3Red:249.0/255.0 green:122.0/255.0 blue:18.0/255.0 alpha:1.0];
     profileNav.navigationBar.translucent = true;
     profileNav.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     
 
     // notifications from businesses
-    UIImage *notificationImage = [UIImage imageNamed:@"ic_notifications_normal.png"];
+//    UIImage *notificationImage = [UIImage imageNamed:@"ic_notifications_normal.png"];
+    UIImage *notificationImage = [UIImage imageNamed:@"tab_notification"];
     notificationsTabBar = [[UITabBarItem alloc] initWithTitle:@"Notifications" image:notificationImage tag:3];
     
     
-    notificationsTabBar.selectedImage = [UIImage imageNamed:@"ic_notifications_selected.png"];
+//    notificationsTabBar.selectedImage = [UIImage imageNamed:@"ic_notifications_selected.png"];
+    notificationsTabBar.selectedImage = [UIImage imageNamed:@"tab_notification1"];
     notificationController = [[BusinessNotificationTableViewController alloc] initWithNibName:nil bundle:nil];
     notificationController.tabBarItem = notificationsTabBar;
     UINavigationController *notificationNav = [[UINavigationController alloc] initWithRootViewController:notificationController];
-    notificationNav.navigationBar.barTintColor = [UIColor blackColor];
+//    notificationNav.navigationBar.barTintColor = [UIColor blackColor];
+    notificationNav.navigationBar.barTintColor = [UIColor colorWithDisplayP3Red:249.0/255.0 green:122.0/255.0 blue:18.0/255.0 alpha:1.0];
     notificationNav.navigationBar.translucent = true;
     notificationNav.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
 
 
-    UIImage *payImage = [UIImage imageNamed:@"ic_pay_normal.png"];
+//    UIImage *payImage = [UIImage imageNamed:@"ic_pay_normal.png"];
+    UIImage *payImage = [UIImage imageNamed:@"tab_points"];
     TPRewardPointController *payViewController = [[TPRewardPointController alloc] initWithNibName:nil bundle:nil];
     UITabBarItem *payTabBar = [[UITabBarItem alloc] initWithTitle:@"Points" image:payImage tag:4];
-    payTabBar.selectedImage = [UIImage imageNamed:@"ic_pay_selected.png"];
+//    payTabBar.selectedImage = [UIImage imageNamed:@"ic_pay_selected.png"];
+    payTabBar.selectedImage = [UIImage imageNamed:@"tab_points1"];
 //    [payTabBar setBadgeValue:@"1"];
 //    payTabBar.
     payViewController.tabBarItem = payTabBar;
@@ -162,9 +178,11 @@ static AppDelegate *sharedObj;
 //    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, chatNav, consumerProfileViewController, notificationNav, payViewController, nil];
     self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, /*chatNav,*/ profileNav, notificationNav, payViewController, nil];
     
-    self.tt_tabBarController.tabBar.tintColor = [UIColor whiteColor];
-    self.tt_tabBarController.tabBar.backgroundImage = [UIImage imageNamed:@"bgTabBar.png"];
-
+//    self.tt_tabBarController.tabBar.tintColor = [UIColor whiteColor];
+self.tt_tabBarController.tabBar.tintColor = [UIColor colorWithDisplayP3Red:249.0/255.0 green:122.0/255.0 blue:18.0/255.0 alpha:1.0];
+//    self.tt_tabBarController.tabBar.backgroundImage = [UIImage imageNamed:@"bgTabBar.png"];
+    self.tt_tabBarController.tabBar.backgroundColor = [UIColor whiteColor];
+    
     tt_tabBarController.delegate = self;
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.tt_tabBarController;

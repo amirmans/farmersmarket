@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -44,7 +43,7 @@
                 <constraint firstItem="Blf-cF-c3S" firstAttribute="top" secondItem="rrM-pp-g4G" secondAttribute="top" identifier="DTL_ID1" id="FqF-tI-2Zb"/>
                 <constraint firstItem="75" firstAttribute="centerX" secondItem="rrM-pp-g4G" secondAttribute="centerX" identifier="DTL_ID9" id="IMV-9F-U22"/>
                 <constraint firstAttribute="trailing" secondItem="rrM-pp-g4G" secondAttribute="trailing" identifier="DTL_ID5" id="LPG-WD-euQ"/>
-                <constraint firstItem="rrM-pp-g4G" firstAttribute="top" secondItem="56" secondAttribute="top" constant="64" identifier="DTL_ID6" id="PQs-G9-awp"/>
+                <constraint firstItem="rrM-pp-g4G" firstAttribute="top" secondItem="56" secondAttribute="top" identifier="DTL_ID6" id="PQs-G9-awp"/>
                 <constraint firstItem="ZhA-ul-kRe" firstAttribute="top" secondItem="Blf-cF-c3S" secondAttribute="bottom" identifier="DTL_ID13" id="SCj-1j-vcH"/>
                 <constraint firstItem="Blf-cF-c3S" firstAttribute="leading" secondItem="56" secondAttribute="leading" identifier="DTL_ID2" id="WhF-px-JTL"/>
                 <constraint firstItem="Blf-cF-c3S" firstAttribute="bottom" secondItem="rrM-pp-g4G" secondAttribute="bottom" identifier="DTL_ID3" id="bdP-Ef-XUZ"/>
@@ -53,7 +52,7 @@
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <nil key="simulatedBottomBarMetrics"/>
-            <point key="canvasLocation" x="441" y="372"/>
+            <point key="canvasLocation" x="440.5" y="371.5"/>
         </view>
     </objects>
 </document>

@@ -134,6 +134,9 @@ static const CGFloat DefaultZoom = 12.0f;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -204,6 +207,7 @@ static const CGFloat DefaultZoom = 12.0f;
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.translucent = NO;
     // Do any additional setup after loading the view from its nib.
     // setup looks of the ui elements
     [TapTalkLooks setToTapTalkLooks:contactInfo isActionButton:NO makeItRound:YES];

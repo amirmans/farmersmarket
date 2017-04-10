@@ -12,6 +12,7 @@
 #import "MBProgressHUD.h"
 #import "CartViewSecondScreenViewController.h"
 #import "UIAlertView+TapTalkAlerts.h"
+#import "OrderDetailViewController.h"
 
 @interface CartViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate>{
     Business  *billBusiness;
@@ -40,6 +41,7 @@
 @property (strong) NSManagedObject *currentObject;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewBottomConstraint;
 
+- (IBAction)btnContinueClicked:(id)sender;
 - (IBAction)btnPickUpFoodClicked:(id)sender;
 - (IBAction)btnDeliverToMeClicked:(id)sender;
 - (IBAction)btnScheduleForLaterClicked:(id)sender;

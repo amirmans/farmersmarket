@@ -21,7 +21,7 @@
 #import "TotalCartItemCell.h"
 #import "MBProgressHUD.h"
 
-@interface MenuItemViewController ()<UITextFieldDelegate,CAAnimationDelegate>{
+@interface MenuItemViewController ()<UITextFieldDelegate,CAAnimationDelegate,UIAlertViewDelegate>{
     UIButton *customButton;
 }
 
@@ -330,7 +330,6 @@ bool shouldOpenOptionMenu = false;
 
     [self.MenuItemTableView reloadData];
 }
-
 
 //-(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
 //    [UIView animateWithDuration:0.2 animations:^{
@@ -1460,7 +1459,46 @@ bool shouldOpenOptionMenu = false;
             [self setMenuItemOptionsViewWithDataSource:businessDetail.arrOptions];
         }
         else {
-            [self AddItemInCart:businessDetail CustomUIButton:sender];
+            UIAlertController * alert=   [UIAlertController
+                                          alertControllerWithTitle:@"Tapin"
+                                          message:@"Add Note For This Item (Optional)."
+                                          preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* ok = [UIAlertAction
+                                 actionWithTitle:@"Ok"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     NSLog(@"Resolving UIAlert Action for tapping OK Button");
+                                     NSArray * textfields = alert.textFields;
+                                     UITextField * notefield = textfields[0];
+                                     businessDetail.item_note = notefield.text;
+                                     NSLog(@"%@",notefield.text);
+                                     [alert dismissViewControllerAnimated:YES completion:nil];
+                                     [self AddItemInCart:businessDetail CustomUIButton:sender];
+                                 }];
+            UIAlertAction* cancel = [UIAlertAction
+                                     actionWithTitle:@"Cancel"
+                                     style:UIAlertActionStyleDefault
+                                     handler:^(UIAlertAction * action)
+                                     {
+                                         NSLog(@"Resolving UIAlertActionController for tapping cancel button");
+                                         [alert dismissViewControllerAnimated:YES completion:nil];
+                                         [self AddItemInCart:businessDetail CustomUIButton:sender];
+                                     }];
+            
+            
+            [alert addAction:cancel];
+            [alert addAction:ok];
+            
+            [alert addTextFieldWithConfigurationHandler:^(UITextField * textField) {
+                textField.accessibilityIdentifier = @"";
+                textField.placeholder = @"";
+                textField.accessibilityLabel = @"";
+            }];
+            
+            [self presentViewController:alert animated:YES completion:nil];
+            
         }
     }
     else{
@@ -2168,60 +2206,74 @@ bool shouldOpenOptionMenu = false;
     }
         self.menuItemOptionsView.hidden = true;
 }
+
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+//    
+//    NSLog(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
+//    
+//    [self addItemToMenuCart];}
+
 - (IBAction)btnAddToCartMenuItemOptionClicked:(id)sender {
+    
+    [self addItemToMenuCart];
+}
+
+-(void)addItemToMenuCart{
+
     [self enableBarButtons];
-
+    
     NSMutableArray *selectedItemsArray = [self getArrayFromSelectedOption];
-
+    
     NSString *selectedItemString = @"";
-
+    
     double optionTotal = 0;
-
+    
     TPBusinessDetail *businessDetail = selectedBusinessDetail;
     NSMutableArray *productID_array = [[NSMutableArray alloc] init];
-
-//    for (NSIndexPath *indexPath in selectedIndexPaths) {
-//        NSLog(@"%@", _dataSource[indexPath.row]);
-//
-//        selectedItemString = [selectedItemString stringByAppendingString:[NSString stringWithFormat:@"%@ ($%@) ,",[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"name"],[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"price"]]];
-//
-//        [productID_array addObject:[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"option_id"]];
-//
-//        optionTotal = optionTotal + [[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"price"]doubleValue];
-//    }
-
-
+    
+    //    for (NSIndexPath *indexPath in selectedIndexPaths) {
+    //        NSLog(@"%@", _dataSource[indexPath.row]);
+    //
+    //        selectedItemString = [selectedItemString stringByAppendingString:[NSString stringWithFormat:@"%@ ($%@) ,",[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"name"],[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"price"]]];
+    //
+    //        [productID_array addObject:[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"option_id"]];
+    //
+    //        optionTotal = optionTotal + [[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"price"]doubleValue];
+    //    }
+    
+    
     for (MenuOptionItemModel *model in selectedItemsArray) {
         selectedItemString = [selectedItemString stringByAppendingString:[NSString stringWithFormat:@"%@ ($%@) ,",model.itemName,model.itemPrice]];
         [productID_array addObject:model.itemOption_ID];
-
+        
         optionTotal = optionTotal + [model.itemPrice doubleValue];
     }
-
+    
     NSArray *sortedArray = [productID_array sortedArrayUsingDescriptors:
                             @[[NSSortDescriptor sortDescriptorWithKey:@"integerValue"
                                                             ascending:YES]]];
-
+    
     NSLog(@"Sorted: %@", sortedArray);
-
+    
     businessDetail.selected_ProductID_array = [NSMutableArray arrayWithArray:sortedArray];
-
+    
     NSLog(@"%@",selectedItemString);
-
+    
     businessDetail.product_option = selectedItemString;
-
+    
     if(self.txtNote.text.length != 0){
         businessDetail.item_note = self.txtNote.text;
     }
     double product_price = [businessDetail.price doubleValue];
-
+    
     double totalCartPrice = product_price + optionTotal;
-
+    
     NSLog(@"origional price = %@ , optional total= %f , total Cart price= %f",businessDetail.price,optionTotal,totalCartPrice);
     businessDetail.price = [NSString stringWithFormat:@"%f",(double)totalCartPrice];
     [self AddItemInCart:businessDetail  CustomUIButton:selectedButton];
-
+    
     self.menuItemOptionsView.hidden = true;
+    
 }
 
 - (IBAction)optionTab1Clicked:(id)sender {

@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -197,7 +198,7 @@
                         <constraint firstAttribute="bottom" secondItem="ccs-dW-pYK" secondAttribute="bottom" id="qsK-VJ-DfJ"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EoP-6f-Keh">
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EoP-6f-Keh">
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="ydk-Z0-n48">
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -363,9 +364,29 @@ FOOD</string>
                         <constraint firstAttribute="bottom" secondItem="9xq-ma-Gpb" secondAttribute="bottom" constant="5" id="ba6-jU-9q9"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="40K-cj-dSs">
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zgb-F1-iRa">
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="zgb-F1-iRa" secondAttribute="height" multiplier="239:45" id="iAf-CE-zIK"/>
+                            </constraints>
+                            <state key="normal" image="btn_continue"/>
+                            <connections>
+                                <action selector="btnContinueClicked:" destination="-1" eventType="touchUpInside" id="f8v-Br-d0F"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="zgb-F1-iRa" firstAttribute="centerY" secondItem="40K-cj-dSs" secondAttribute="centerY" id="4NB-fU-dKw"/>
+                        <constraint firstAttribute="height" constant="105" id="M8h-qc-ken"/>
+                        <constraint firstItem="zgb-F1-iRa" firstAttribute="centerX" secondItem="40K-cj-dSs" secondAttribute="centerX" id="w48-lV-y5o"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="40K-cj-dSs" firstAttribute="top" secondItem="MDG-LV-CD0" secondAttribute="bottom" id="1VR-Ay-fhp"/>
                 <constraint firstItem="BP3-qR-zmn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="1vW-en-JD4"/>
                 <constraint firstItem="BP3-qR-zmn" firstAttribute="top" secondItem="EoP-6f-Keh" secondAttribute="bottom" id="7FA-pn-OlN"/>
                 <constraint firstAttribute="trailing" secondItem="MDG-LV-CD0" secondAttribute="trailing" id="7k4-53-33U"/>
@@ -377,9 +398,12 @@ FOOD</string>
                 <constraint firstItem="EoP-6f-Keh" firstAttribute="top" secondItem="MDG-LV-CD0" secondAttribute="bottom" id="a8t-Es-JZi"/>
                 <constraint firstItem="MDG-LV-CD0" firstAttribute="top" secondItem="9Mz-gN-yOw" secondAttribute="bottom" id="aNs-e7-2pz"/>
                 <constraint firstItem="Zj1-S8-4oe" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="dJl-Xs-jjK"/>
+                <constraint firstItem="BP3-qR-zmn" firstAttribute="top" secondItem="40K-cj-dSs" secondAttribute="bottom" id="fW9-mw-BDf"/>
+                <constraint firstItem="40K-cj-dSs" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="gxP-4e-1oh"/>
                 <constraint firstItem="EoP-6f-Keh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="hgM-Ge-tuB"/>
                 <constraint firstItem="MDG-LV-CD0" firstAttribute="top" secondItem="9Mz-gN-yOw" secondAttribute="bottom" id="hyC-FS-suw"/>
                 <constraint firstAttribute="trailing" secondItem="9Mz-gN-yOw" secondAttribute="trailing" id="iNf-98-IRI"/>
+                <constraint firstAttribute="trailing" secondItem="40K-cj-dSs" secondAttribute="trailing" id="l2O-pL-Mzo"/>
                 <constraint firstItem="9Mz-gN-yOw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="qih-Ob-chs"/>
                 <constraint firstAttribute="bottom" secondItem="EoP-6f-Keh" secondAttribute="bottom" id="rdt-oP-OA3"/>
                 <constraint firstAttribute="trailing" secondItem="EoP-6f-Keh" secondAttribute="trailing" id="ufv-NC-av9"/>
@@ -391,4 +415,7 @@ FOOD</string>
             <point key="canvasLocation" x="-27.5" y="-367"/>
         </view>
     </objects>
+    <resources>
+        <image name="btn_continue" width="239" height="44"/>
+    </resources>
 </document>

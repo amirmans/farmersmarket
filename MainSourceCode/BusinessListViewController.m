@@ -110,6 +110,10 @@ Business *biz;
 - (void)viewDidLoad{
     [super viewDidLoad];
     
+    UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
+    self.navigationItem.leftBarButtonItem = BackButton;
+    BackButton.tintColor = [UIColor whiteColor];
+    
     // Create a mutable array to contain products for the search results table.
     ListofBusinesses* businesses = [ListofBusinesses sharedListofBusinesses];
     businessListArray= [[NSMutableArray alloc]init];
@@ -120,7 +124,10 @@ Business *biz;
                 [businessListArray addObject:[self.ResponseDataArray objectAtIndex:i]];
         }
     }
-    
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.navigationController.navigationBar.translucent = NO;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+
 //    UIBarButtonItem *barBtnItem = [[UIBarButtonItem alloc]initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector(backButtonPressed)];
 //    barBtnItem.tintColor = [UIColor whiteColor];
 //    self.navigationItem.leftBarButtonItem = barBtnItem;
@@ -134,8 +141,6 @@ Business *biz;
 //    [locationManager requestWhenInUseAuthorization];
 //    [locationManager startUpdatingLocation];
 
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.searchController.definesPresentationContext = YES;
 
     //ToDO for a later release
@@ -194,9 +199,9 @@ Business *biz;
     if (businessListArray.count <= 0 ) {
         bizListTimer = [NSTimer scheduledTimerWithTimeInterval:0.02 target:self selector:@selector(timerCallBack) userInfo:nil repeats:YES];
     }
-//    else {
-//       [HUD hide:YES];
-//    }
+    else {
+       [HUD hideAnimated:YES];
+    }
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     filteredBusinessListArray = [[NSMutableArray alloc] initWithCapacity:businessListArray.count];
@@ -207,7 +212,8 @@ Business *biz;
 //    displayMapButton = nil;
 //    self.title = @"Biz Partners";
     
-    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tap-in-logo-navigation-bar"]];
+//    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tap-in-logo-navigation-bar"]];
+    self.title = @"Tapin";
     
     self.calloutView = [[SMCalloutView alloc] init];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
@@ -346,7 +352,12 @@ Business *biz;
     
     [self.mapView animateWithCameraUpdate:[GMSCameraUpdate fitBounds:bounds withPadding:15.0f]];
 }
-
+- (IBAction) backBUttonClicked: (id) sender;
+{
+    [self.navigationController popViewControllerAnimated:true];
+    //    [self.navigationController popToRootViewControllerAnimated:true];
+    
+}
 #pragma mark - GMSMapViewDelegate
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
     CLLocationCoordinate2D anchor = marker.position;
@@ -869,6 +880,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)arg_searchController
 {
+    
     NSString *searchString = arg_searchController.searchBar.text;
 //    [[self filterContentForSearchText:[arg_searchController.searchBar scopeButtonTitles] objectAtIndex:[self.searchController.searchBar selectedScopeButtonIndex]]];
     
@@ -877,6 +889,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     
     [self.bizTableView reloadData];
 }
+
 
 
 

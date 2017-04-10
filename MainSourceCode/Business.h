@@ -23,6 +23,7 @@
     NSString *iconRelativeURL;
     UIImage *iconImage;
     UIImage *bg_image;
+    NSString *Note;
     
     GooglePlacesObject *googlePlacesObject;
     NSString *businessName;
@@ -111,7 +112,7 @@
 
 @property(nonatomic, assign) int isCustomer;
 @property(nonatomic, assign) BOOL isProductListLoaded;
-
+//@property(nonatomic, retain) NSString *Note;
 @property(nonatomic, retain) NSString *rating;
 @property(nonatomic, retain) NSString *website;
 @property(nonatomic, retain) NSString *address;

@@ -235,6 +235,11 @@
 		C6FE85DC1D82974500B0D295 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FE85DB1D82974500B0D295 /* GameKit.framework */; };
 		C6FE85DE1D82974F00B0D295 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FE85DD1D82974F00B0D295 /* PassKit.framework */; };
 		C6FE85E01D82975400B0D295 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FE85DF1D82975400B0D295 /* StoreKit.framework */; };
+		DA3C19C31E974BFC00ADDE31 /* OrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3C19C11E974BFC00ADDE31 /* OrderDetailViewController.m */; };
+		DA3C19C41E974BFC00ADDE31 /* OrderDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA3C19C21E974BFC00ADDE31 /* OrderDetailViewController.xib */; };
+		DA3E43A31E9A1CF6004FF1BA /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3E43A11E9A1CF6004FF1BA /* HomeViewController.m */; };
+		DA3E43A41E9A1CF6004FF1BA /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA3E43A21E9A1CF6004FF1BA /* HomeViewController.xib */; };
+		DAB7A2461E9811DF00FFD508 /* KPDropMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB7A2451E9811DF00FFD508 /* KPDropMenu.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -569,6 +574,14 @@
 		C6FE85DB1D82974500B0D295 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		C6FE85DD1D82974F00B0D295 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		C6FE85DF1D82975400B0D295 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		DA3C19C01E974BFC00ADDE31 /* OrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailViewController.h; sourceTree = "<group>"; };
+		DA3C19C11E974BFC00ADDE31 /* OrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailViewController.m; sourceTree = "<group>"; };
+		DA3C19C21E974BFC00ADDE31 /* OrderDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderDetailViewController.xib; sourceTree = "<group>"; };
+		DA3E43A01E9A1CF6004FF1BA /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		DA3E43A11E9A1CF6004FF1BA /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		DA3E43A21E9A1CF6004FF1BA /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		DAB7A2441E9811DF00FFD508 /* KPDropMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPDropMenu.h; sourceTree = "<group>"; };
+		DAB7A2451E9811DF00FFD508 /* KPDropMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPDropMenu.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1030,6 +1043,7 @@
 		4AD53C231C736535009D8FE0 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				DA3C19BF1E974B8000ADDE31 /* Order Detail */,
 				C6C91ECC189E3EA700AE6478 /* BusinessListViewController.h */,
 				C6C91ECD189E3EA700AE6478 /* BusinessListViewController.m */,
 				4AC5CB9A1CAE8F8B0087A65F /* CateringViewController.h */,
@@ -1060,6 +1074,9 @@
 				4ACD41AC1E1FDEAB002F9379 /* CartViewSecondScreenViewController.h */,
 				4ACD41AD1E1FDEAB002F9379 /* CartViewSecondScreenViewController.m */,
 				4A32F15B1E3ADD9A002F4565 /* CartViewSecondScreenViewController.xib */,
+				DA3E43A01E9A1CF6004FF1BA /* HomeViewController.h */,
+				DA3E43A11E9A1CF6004FF1BA /* HomeViewController.m */,
+				DA3E43A21E9A1CF6004FF1BA /* HomeViewController.xib */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -1180,6 +1197,26 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		DA3C19BF1E974B8000ADDE31 /* Order Detail */ = {
+			isa = PBXGroup;
+			children = (
+				DAB7A2431E9811D200FFD508 /* DropDown */,
+				DA3C19C01E974BFC00ADDE31 /* OrderDetailViewController.h */,
+				DA3C19C11E974BFC00ADDE31 /* OrderDetailViewController.m */,
+				DA3C19C21E974BFC00ADDE31 /* OrderDetailViewController.xib */,
+			);
+			name = "Order Detail";
+			sourceTree = "<group>";
+		};
+		DAB7A2431E9811D200FFD508 /* DropDown */ = {
+			isa = PBXGroup;
+			children = (
+				DAB7A2441E9811DF00FFD508 /* KPDropMenu.h */,
+				DAB7A2451E9811DF00FFD508 /* KPDropMenu.m */,
+			);
+			name = DropDown;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1295,6 +1332,7 @@
 				5D7AEDF61C696B3000B0929F /* pin3@2x.png in Resources */,
 				2949CCF21458A21700728B87 /* checkedRadioButton.png in Resources */,
 				4A99D9191CBD273C00755437 /* TotalCartItemsTableCell.xib in Resources */,
+				DA3E43A41E9A1CF6004FF1BA /* HomeViewController.xib in Resources */,
 				4AD6E47B1CE099240025676C /* ic_minus@2x.png in Resources */,
 				2949CCF31458A21700728B87 /* flag.png in Resources */,
 				5D7AEDF11C696B2800B0929F /* pin2@3x.png in Resources */,
@@ -1381,6 +1419,7 @@
 				4AAD6B6D1D018A4D00AED4F7 /* MenuItemNoImageTableViewCell.xib in Resources */,
 				5D7AEDEA1C696B2100B0929F /* pin1@2x.png in Resources */,
 				5D7AEDDC1C6934E400B0929F /* img@3x.png in Resources */,
+				DA3C19C41E974BFC00ADDE31 /* OrderDetailViewController.xib in Resources */,
 				29AC066315DD9A490039C118 /* VoteToAddBusinessConfirmation.xib in Resources */,
 				12C090F11DDDEF940033CEA9 /* CartTotalTableViewCell.xib in Resources */,
 				C6C8ACAF18DF9BE5005DAFD6 /* TapForAllTests-Info.plist in Resources */,
@@ -1492,6 +1531,7 @@
 				C6768BCE1D5688C000125E95 /* SAMKeychain.m in Sources */,
 				C600C49218DF8A850019E8EF /* ChatsFromBusinessTableViewController.m in Sources */,
 				12C090E61DDDDB600033CEA9 /* CartViewController.m in Sources */,
+				DAB7A2461E9811DF00FFD508 /* KPDropMenu.m in Sources */,
 				C67D4D4218AEFFEE00D6DF6C /* ListofBusinesses.m in Sources */,
 				4A6643ED1C74A04000C10421 /* SINavigationMenuView.m in Sources */,
 				C6700CFB1859D74B003814C9 /* NotificationTableViewCell.m in Sources */,
@@ -1514,6 +1554,7 @@
 				29D29A2115DB5AFA00990F62 /* GooglePlacesObject.m in Sources */,
 				29ECC44C14CCC06C0098653D /* ProductItemViewCell.m in Sources */,
 				4A1DA88C1C7603CA00E16F30 /* TPReceiptController.m in Sources */,
+				DA3C19C31E974BFC00ADDE31 /* OrderDetailViewController.m in Sources */,
 				29ECC44C14CCC06C00986540 /* ProductItemsTableViewController.m in Sources */,
 				5D7AEDDF1C69502D00B0929F /* TPFloatRatingView.m in Sources */,
 				29ECC44C14CCC06C00986546 /* ChatMessagesViewController.m in Sources */,
@@ -1559,6 +1600,7 @@
 				C67C6AE218DF9B03009EF996 /* TapForAll.xcdatamodeld in Sources */,
 				4A8DA34D1CC8E13400C3890A /* MenuOptionItemModel.m in Sources */,
 				4A0F2CA31C71D5BA005C6F22 /* TPBusinessDetail.m in Sources */,
+				DA3E43A31E9A1CF6004FF1BA /* HomeViewController.m in Sources */,
 				4A0F2CA91C7224B1005C6F22 /* CustomUIButton.m in Sources */,
 				29ECC44C14CCC06C00986572 /* UIAlertView+TapTalkAlerts.m in Sources */,
 				4AC5CB9D1CAE8F8B0087A65F /* CateringViewController.m in Sources */,

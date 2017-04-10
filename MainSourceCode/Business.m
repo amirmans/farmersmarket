@@ -37,6 +37,7 @@
 
 @synthesize iconRelativeURL, iconImage, coordinate, title, subtitle,businessName, shortBusinessName, customerProfileName, imageFileName, imageFileExt, googlePlacesObject, businessDelegate;
 
+//@synthesize Note;
 @synthesize rating;
 @synthesize website;
 @synthesize address;
@@ -85,6 +86,7 @@
 
 - (void)initMemberData {
     
+//    self.Note = nil;
     self.iconRelativeURL = nil;
     self.isCustomer = -1;
     self.customerProfileName = nil;
@@ -336,6 +338,7 @@
     
     // since these values are coming from db, we should take care "[Null]" - database marks for null
     title = [data objectForKey:@"name"];
+//    Note = [data objectForKey:@"note"];
     rating = [self stringFromDataDictionary:data forKey:@"rating"];
     website = [self stringFromDataDictionary:data forKey:@"website"];
     phone = [self stringFromDataDictionary:data forKey:@"phone"];

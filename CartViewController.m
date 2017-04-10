@@ -38,6 +38,7 @@
 @synthesize flagRedeemPoint, originalPointsValue, originalNoPoints,dollarValueForEachPoints,
 currenPointsLevel, redeemNoPoints, redeemPointsValue, hud,pickupTime;
 
+
 NSString *Note_defaultText = @"Note for order(Optional)";
 NSString *deliveryStartTime;
 NSString *deliveryEndTime;
@@ -154,6 +155,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
     CartViewTableViewCell *cell = (CartViewTableViewCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     
     _currentObject = _FetchedRecordArray[indexPath.row];
+    NSLog(@"%@",[self.currentObject valueForKey:@"item_note"]);
     cell.lbl_totalItems.text = [self.currentObject valueForKey:@"quantity"];
     CGFloat val = [[self.currentObject valueForKey:@"price"] floatValue];
     val =  val * [[self.currentObject valueForKey:@"quantity"] integerValue];
@@ -458,6 +460,68 @@ double deliveryAmount = 0.0;        // Delivery Amount
 
 - (IBAction)backBUttonClicked:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)btnContinueClicked:(id)sender {
+    if ([DataModel sharedDataModelManager].uuid.length < 1) {
+        UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:@"We are taking you to the profile page.  Please update your profile info \n then come back to this page." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            self.tabBarController.selectedIndex = 1;
+        }];
+        [alert1 addAction:okAction];
+        [self presentViewController:alert1 animated:true completion:^{
+        }];
+    }
+    else {
+        if ([DataModel sharedDataModelManager].emailAddress.length < 1) {
+            UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:@"" message:@"We are taking you to the profile page.  Please update your profile info \n then come back to this page." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                self.tabBarController.selectedIndex = 1;
+            }];
+            [alert2 addAction:okAction];
+            [self presentViewController:alert2 animated:true completion:^{
+            }];
+        }
+        if (_FetchedRecordArray.count >  0) {
+            if (defaultCardData == nil) {
+                BillPayViewController *payBillViewController = [[BillPayViewController alloc] initWithNibName:nil bundle:nil withAmount:0 forBusiness:billBusiness];
+                //                [AppData sharedInstance].consumer_Delivery_Id = nil;
+                [self.navigationController pushViewController:payBillViewController animated:YES];
+            }
+            else {
+                if(![self.txtNote.text isEqualToString:@""] && ![self.txtNote.text isEqualToString:Note_defaultText])
+                {
+                    self.notesText = self.txtNote.text;
+                }
+                else
+                {
+                    self.notesText = @"";
+                }
+                
+                OrderDetailViewController *TotalCartItemVC = [[OrderDetailViewController alloc] initWithNibName:@"OrderDetailViewController" bundle:nil];
+                TotalCartItemVC.orderItemsOD = self.orderItems;
+                TotalCartItemVC.subTotalOD = [NSString stringWithFormat:@"%.2f",cartSubTotal];
+                TotalCartItemVC.earnPtsOD = self.lblEarnPoints.text;
+                TotalCartItemVC.noteTextOD = self.notesText;
+                TotalCartItemVC.pickupTimeOD = self.pickupTime;
+                if([AppData sharedInstance].consumer_Delivery_Id != nil){
+                    TotalCartItemVC.deliveryamtOD = deliveryAmount;
+                    TotalCartItemVC.delivery_startTimeOD = deliveryStartTime;
+                    TotalCartItemVC.delivery_endTimeOD = deliveryEndTime;
+                }
+                [self.navigationController pushViewController:TotalCartItemVC animated:YES];
+            }
+        }
+        else
+        {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"Please select menu items to place an order." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            }];
+            [alert addAction:okAction];
+            [self presentViewController:alert animated:true completion:^{
+            }];
+        }
+    }
 }
 
 - (IBAction)btnPickUpFoodClicked:(id)sender {
