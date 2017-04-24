@@ -1,5 +1,5 @@
 //
-//  BusinessDetailsContoller.h
+//  BusinessServicesViewController.h
 //  TapForAll
 //
 //  Created by Sanjay on 2/8/16.
@@ -14,7 +14,7 @@
 #import "AppDelegate.h"
 #import "TotalCartItemController.h"
 
-@interface BusinessDetailsContoller : UIViewController <UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate, KASlideShowDelegate, MFMessageComposeViewControllerDelegate, KASlideShowDataSource, UIAlertViewDelegate> {
+@interface BusinessServicesViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate, KASlideShowDelegate, MFMessageComposeViewControllerDelegate, KASlideShowDataSource, UIAlertViewDelegate> {
 
     NSDictionary *allChoices;
     NSArray *mainChoices;

@@ -1,12 +1,12 @@
  //
-//  BusinessDetailsContoller.m
+//  BusinessServicesViewController.m
 //  TapForAll
 //
 //  Created by Sanjay on 2/8/16.
 //
 //
 
-#import "BusinessDetailsContoller.h"
+#import "BusinessServicesViewController.h"
 #import "BusinessDetailsTableCell.h"
 #import "RateView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -27,7 +27,7 @@
 #import "UIAlertView+TapTalkAlerts.h"
 
 
-@interface BusinessDetailsContoller  (){
+@interface BusinessServicesViewController  (){
     KASlideShow *picturesView;
     UIButton *customBarButton;
     BOOL flagHeartBarButton;
@@ -38,7 +38,7 @@
 @end
 
 
-@implementation BusinessDetailsContoller
+@implementation BusinessServicesViewController
 @synthesize ratingView;
 
 @synthesize biz;
