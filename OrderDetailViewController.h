@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "CartViewSecondScreenViewController.h"
 #import "Business.h"
+@class MBProgressHUD;
 
 @interface OrderDetailViewController : UIViewController{
     Business  *billBusiness;
-
+    MBProgressHUD *HUD;
 }
 @property (strong,nonatomic) NSString *subTotalOD;
 @property (strong,nonatomic) NSString *noteTextOD;
@@ -22,6 +23,8 @@
 @property (strong,nonatomic) NSDate *pickupTimeOD;
 @property (strong,nonatomic) NSMutableArray *orderItemsOD;
 @property (assign) double deliveryamtOD;
+@property (strong, nonatomic) NSMutableArray *locationArray;
+@property (strong, nonatomic) NSMutableArray *locationNameArray;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnCounter;
 @property (weak, nonatomic) IBOutlet UIButton *btnTable;

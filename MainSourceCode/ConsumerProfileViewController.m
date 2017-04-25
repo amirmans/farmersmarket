@@ -11,7 +11,7 @@
 #import "DataModel.h"
 #import "MBProgressHUD.h"
 #import "TapTalkLooks.h"
-#import "ConsumerProfileDataModel.h"
+//#import "ConsumerProfileDataModel.h"
 #import "SavedCardTableCell.h"
 #import "AFNetworking.h"
 #import "APIUtility.h"
@@ -70,9 +70,9 @@ static NSArray *consumerProfileDataArray = nil;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        consumerProfileDataDic = [[NSMutableDictionary alloc] init];
-        ConsumerProfileDataModel *consumerProfileDataModel = [[ConsumerProfileDataModel alloc] init];
-        consumerProfileDataArray = consumerProfileDataModel.consumerProfileDataArray;
+//        consumerProfileDataDic = [[NSMutableDictionary alloc] init];
+//        ConsumerProfileDataModel *consumerProfileDataModel = [[ConsumerProfileDataModel alloc] init];
+//        consumerProfileDataArray = consumerProfileDataModel.consumerProfileDataArray;
     }
     return self;
 }

@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BusinessDetailsContoller">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BusinessServicesViewController">
             <connections>
                 <outlet property="DirectionView" destination="v4r-HZ-SRg" id="M6r-ib-iZm"/>
                 <outlet property="ImageProgress" destination="p6G-P6-Fjo" id="lvY-aG-MC6"/>

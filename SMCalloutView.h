@@ -1,13 +1,12 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-#import "AppData.h"
 
 /*
 
 SMCalloutView
 -------------
 Created by Nick Farina (nfarina@gmail.com)
-Version 2.1.4
+Version 2.1.5
 
 */
 
@@ -41,15 +40,17 @@ extern NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView;
 // Callout view.
 //
 
-@interface SMCalloutView : UIView<CAAnimationDelegate>
+// iOS 10+ expects CAAnimationDelegate to be set explicitly.
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 100000
+@interface SMCalloutView : UIView
+#else
+@interface SMCalloutView : UIView <CAAnimationDelegate>
+#endif
 
-@property (nonatomic, weak, nullable) id<SMCalloutViewDelegate, UIGestureRecognizerDelegate,CAAnimationDelegate> delegate;
+@property (nonatomic, weak, nullable) id<SMCalloutViewDelegate> delegate;
 /// title/titleView relationship mimics UINavigationBar.
 @property (nonatomic, copy, nullable) NSString *title;
 @property (nonatomic, copy, nullable) NSString *subtitle;
-
-///  for the call out
-@property (nonatomic, strong, nullable) UIView *BothAccessoryView;
 
 /// Left accessory view for the call out
 @property (nonatomic, strong, nullable) UIView *leftAccessoryView;
@@ -63,7 +64,7 @@ extern NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView;
 @property (nonatomic, assign) UIEdgeInsets constrainedInsets;
 /// default is @c SMCalloutMaskedBackgroundView, or @c SMCalloutDrawnBackgroundView when using @c SMClassicCalloutView
 @property (nonatomic, strong) SMCalloutBackgroundView *backgroundView;
-                                                                                                                                                                                                                                           
+
 /**
  @brief Custom title view.
  
@@ -85,7 +86,7 @@ extern NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView;
 @property (nonatomic, strong, nullable) UIView *subtitleView;
 
 /// Custom "content" view that can be any width/height. If this is set, title/subtitle/titleView/subtitleView are all ignored.
-@property (nonatomic, retain) UIView *contentView;
+@property (nonatomic, retain, nullable) UIView *contentView;
 
 /// Custom content view margin
 @property (nonatomic, assign) UIEdgeInsets contentViewInset;
@@ -135,24 +136,14 @@ extern NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView;
 /// For subclassers. You can override this method to provide your own custom animation for presenting/dismissing the callout.
 - (CAAnimation *)animationWithType:(SMCalloutAnimation)type presenting:(BOOL)presenting;
 
-
 @end
 
 //
 // Background view - default draws the iOS 7 system background style (translucent white with rounded arrow).
 //
-//static UIImage *blackArrowImage = nil, *whiteArrowImage = nil, *grayArrowImage = nil;
 
 /// Abstract base class
 @interface SMCalloutBackgroundView : UIView
-
-@property (nonatomic, strong) UIImage *blackArrowImage;
-@property (nonatomic, strong) UIImage *whiteArrowImage;
-@property (nonatomic, strong) UIImage *grayArrowImage;
-
-@property (nonatomic, strong) UIView *containerView, *containerBorderView, *arrowView;
-@property (nonatomic, strong) UIImageView *arrowImageView, *arrowHighlightedImageView, *arrowBorderView;
-
 /// indicates where the tip of the arrow should be drawn, as a pixel offset
 @property (nonatomic, assign) CGPoint arrowPoint;
 /// will be set by the callout when the callout is in a highlighted state
@@ -163,9 +154,6 @@ extern NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView;
 @property (nonatomic, assign) CGFloat anchorHeight;
 /// the smallest possible distance from the edge of our control to the "tip" of the anchor, from either left or right
 @property (nonatomic, assign) CGFloat anchorMargin;
-
-- (UIImage *)image:(UIImage *)image withColor:(UIColor *)color;
-
 @end
 
 /// Default for iOS 7, this reproduces the "masked" behavior of the iOS 7-style callout view.

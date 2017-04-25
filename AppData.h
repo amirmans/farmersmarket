@@ -30,6 +30,9 @@
 @property (assign, nonatomic) BOOL isFromTotalCart;
 @property (retain, nonatomic) NSString *consumer_Delivery_Id;
 @property (retain, nonatomic) NSString *consumer_Delivery_Location;
+@property (retain, nonatomic) NSString *consumer_Delivery_Location_Id;
+@property (retain, nonatomic) NSString *Pick_Time;
+@property (retain, nonatomic) NSString *Pd_Mode;
 
 
 - (void) locationManager ;

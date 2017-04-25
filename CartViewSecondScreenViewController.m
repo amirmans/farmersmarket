@@ -584,7 +584,11 @@ double deliveryAmountValue = 0.00; //Delievery amount value in $
                                    @"consumer_delivery_id":[AppData sharedInstance].consumer_Delivery_Id.length > 0 ? [AppData sharedInstance].consumer_Delivery_Id : @"",
                                    @"delivery_charge_amount":[NSNumber numberWithDouble:deliveryamt],
                                    @"promotion_code":[CurrentBusiness sharedCurrentBusinessManager].business.promotion_code,
-                                   @"promotion_discount_amount" : [NSString stringWithFormat:@"%f",promotionalamt]
+                                   @"promotion_discount_amount" : [NSString stringWithFormat:@"%f",promotionalamt],
+                                   @"pd_charge_amount": @"",
+                                   @"pd_mode": [AppData sharedInstance].Pd_Mode.length > 0 ? [AppData sharedInstance].Pd_Mode : @"",
+                                   @"pd_locations_id": [AppData sharedInstance].consumer_Delivery_Location_Id.length > 0 ? [AppData sharedInstance].consumer_Delivery_Location_Id : @"",
+                                   @"pd_time": [AppData sharedInstance].Pick_Time.length > 0 ? [AppData sharedInstance].Pick_Time : @""
                                    };
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:orderInfoDict

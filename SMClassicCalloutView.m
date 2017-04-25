@@ -102,6 +102,7 @@
     // remove and re-add our appropriate subviews in the appropriate order
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self setNeedsDisplay];
+    
     [self addSubview:self.backgroundView];
     
     if (self.contentView) {

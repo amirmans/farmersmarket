@@ -19,7 +19,7 @@
 #import "APIUtility.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "DataModel.h"
-#import "BusinessDetailsContoller.h"
+#import "BusinessServicesViewController.h"
 #import "CurrentBusiness.h"
 #import "MBProgressHUD.h"
 
@@ -378,14 +378,14 @@ Business *biz;
         NSString *bg_color = [marker.userData valueForKeyPath:@"bg_color"];
         
         UIColor *businessColor = [[AppData sharedInstance] setUIColorFromString:bg_color];
-        self.calloutView.backgroundView.containerView.backgroundColor = businessColor;
+        self.calloutView.backgroundView.backgroundColor = businessColor;
         
 //        self.whiteArrowImage = [self image:self.blackArrowImage withColor:[AppData businessBackgroundColor]];
         
-        self.calloutView.backgroundView.whiteArrowImage = [self.calloutView.backgroundView image:self.calloutView.backgroundView.blackArrowImage withColor:businessColor];
+//        self.calloutView.backgroundView.whiteArrowImage = [self.calloutView.backgroundView image:self.calloutView.backgroundView.blackArrowImage withColor:businessColor];
         
-        self.calloutView.backgroundView.arrowImageView = [[UIImageView alloc] initWithImage:self.calloutView.backgroundView.whiteArrowImage];
-        [self.calloutView.backgroundView.arrowView addSubview:self.calloutView.backgroundView.arrowImageView];
+//        self.calloutView.backgroundView.arrowImageView = [[UIImageView alloc] initWithImage:self.calloutView.backgroundView.whiteArrowImage];
+//        [self.calloutView.backgroundView.arrowView addSubview:self.calloutView.backgroundView.arrowImageView];
         
 //        self.calloutView.backgroundView.arrowView.backgroundColor = businessColor;
 //        self.calloutView.backgroundView.containerView
@@ -712,7 +712,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         GMSMarker *marker = self.mapView.selectedMarker;
         NSDictionary *userData = marker.userData;
         
-        //        BusinessDetailsContoller *BusinessDetailsVC = [[BusinessDetailsContoller alloc] initWithNibName:@"BusinessDetailsContoller" bundle:nil];
+        //        BusinessServicesViewController *BusinessDetailsVC = [[BusinessServicesViewController alloc] initWithNibName:@"BusinessServicesViewController" bundle:nil];
         //
         //        [self.navigationController pushViewController: BusinessDetailsVC animated:YES];
         
@@ -745,7 +745,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
             NSDictionary *allChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].allChoices;
             NSArray *mainChoices = [BusinessCustomerProfileManager sharedBusinessCustomerProfileManager].mainChoices;
             
-            BusinessDetailsContoller *services = [[BusinessDetailsContoller alloc]
+            BusinessServicesViewController *services = [[BusinessServicesViewController alloc]
                                                   initWithData:allChoices :mainChoices :[mainChoices objectAtIndex:0] forBusiness:selectedBiz];
             
             [self.navigationController pushViewController:services animated:YES];
@@ -826,7 +826,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
             }
         }];
         
-        BusinessDetailsContoller *services = [[BusinessDetailsContoller alloc]
+        BusinessServicesViewController *services = [[BusinessServicesViewController alloc]
                                               initWithData:allChoices :mainChoices :[mainChoices objectAtIndex:0] forBusiness:selectedBiz];
         self.searchController.active = false;
 

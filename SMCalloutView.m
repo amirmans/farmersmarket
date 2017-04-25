@@ -97,8 +97,8 @@ NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView = 1.0/3.0;
             self.titleLabel.frameHeight = TITLE_HEIGHT;
             self.titleLabel.opaque = NO;
             self.titleLabel.backgroundColor = [UIColor clearColor];
-            self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
-            self.titleLabel.textColor = [UIColor whiteColor];
+            self.titleLabel.font = [UIFont systemFontOfSize:17];
+            self.titleLabel.textColor = [UIColor blackColor];
         }
         return self.titleLabel;
     }
@@ -115,8 +115,8 @@ NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView = 1.0/3.0;
             self.subtitleLabel.frameHeight = SUBTITLE_HEIGHT;
             self.subtitleLabel.opaque = NO;
             self.subtitleLabel.backgroundColor = [UIColor clearColor];
-            self.subtitleLabel.font = [UIFont boldSystemFontOfSize:12];
-            self.subtitleLabel.textColor = [UIColor whiteColor];
+            self.subtitleLabel.font = [UIFont systemFontOfSize:12];
+            self.subtitleLabel.textColor = [UIColor blackColor];
         }
         return self.subtitleLabel;
     }
@@ -147,10 +147,8 @@ NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView = 1.0/3.0;
         if (self.titleViewOrDefault) [self.containerView addSubview:self.titleViewOrDefault];
         if (self.subtitleViewOrDefault) [self.containerView addSubview:self.subtitleViewOrDefault];
     }
-
     if (self.leftAccessoryView) [self.containerView addSubview:self.leftAccessoryView];
     if (self.rightAccessoryView) [self.containerView addSubview:self.rightAccessoryView];
-    if (self.BothAccessoryView) [self.containerView addSubview:self.BothAccessoryView];
 }
 
 // Accessory margins. Accessories are centered vertically when shorter
@@ -530,15 +528,11 @@ NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView = 1.0/3.0;
     self.subtitleViewOrDefault.frameY = SUBTITLE_TOP + dy;
     self.subtitleViewOrDefault.frameWidth = self.titleViewOrDefault.frameWidth;
     
-    
     self.leftAccessoryView.frameX = self.leftAccessoryHorizontalMargin;
     self.leftAccessoryView.frameY = self.leftAccessoryVerticalMargin + dy;
     
     self.rightAccessoryView.frameX = self.frameWidth - self.rightAccessoryHorizontalMargin - self.rightAccessoryView.frameWidth;
     self.rightAccessoryView.frameY = self.rightAccessoryVerticalMargin + dy;
-    
-    self.BothAccessoryView.frameX = self.leftAccessoryHorizontalMargin;
-    self.BothAccessoryView.frameY = self.leftAccessoryVerticalMargin + dy;
     
     if (self.contentView) {
         self.contentView.frameX = self.innerContentMarginLeft;
@@ -596,8 +590,11 @@ NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView = 1.0/3.0;
 //
 
 @interface SMCalloutMaskedBackgroundView ()
+@property (nonatomic, strong) UIView *containerView, *containerBorderView, *arrowView;
+@property (nonatomic, strong) UIImageView *arrowImageView, *arrowHighlightedImageView, *arrowBorderView;
 @end
 
+static UIImage *blackArrowImage = nil, *whiteArrowImage = nil, *grayArrowImage = nil;
 
 @implementation SMCalloutMaskedBackgroundView
 
@@ -608,8 +605,7 @@ NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView = 1.0/3.0;
         // The hierarchy and view/layer values were discovered by inspecting map kit using Reveal.app
         
         self.containerView = [UIView new];
-//        self.containerView.backgroundColor = [UIColor colorWithRed:123.0/255.0 green:0 blue:254.0/255.0 alpha:1.0f];
-        [AppData setBusinessBackgroundColor:self.containerView];
+        self.containerView.backgroundColor = [UIColor whiteColor];
         self.containerView.alpha = 0.96;
         self.containerView.layer.cornerRadius = 8;
         self.containerView.layer.shadowRadius = 30;
@@ -620,23 +616,21 @@ NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView = 1.0/3.0;
         self.containerBorderView.layer.borderWidth = 0.5;
         self.containerBorderView.layer.cornerRadius = 8.5;
         
-        if (!self.blackArrowImage) {
-            self.blackArrowImage = [SMCalloutBackgroundView embeddedImageNamed:@"CalloutArrow"];
-            self.whiteArrowImage = [self image:self.blackArrowImage withColor:[UIColor colorWithRed:123.0/255.0 green:0 blue:254.0/255.0 alpha:1.0f]];
-//            self.whiteArrowImage = [self image:self.blackArrowImage withColor:[AppData businessBackgroundColor]];
-
-            self.grayArrowImage = [self image:self.blackArrowImage withColor:[UIColor colorWithWhite:0.85 alpha:1]];
+        if (!blackArrowImage) {
+            blackArrowImage = [SMCalloutBackgroundView embeddedImageNamed:@"CalloutArrow"];
+            whiteArrowImage = [self image:blackArrowImage withColor:[UIColor whiteColor]];
+            grayArrowImage = [self image:blackArrowImage withColor:[UIColor colorWithWhite:0.85 alpha:1]];
         }
         
         self.anchorHeight = 13;
         self.anchorMargin = 27;
         
-        self.arrowView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.blackArrowImage.size.width, self.blackArrowImage.size.height)];
+        self.arrowView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, blackArrowImage.size.width, blackArrowImage.size.height)];
         self.arrowView.alpha = 0.96;
-        self.arrowImageView = [[UIImageView alloc] initWithImage:self.whiteArrowImage];
-        self.arrowHighlightedImageView = [[UIImageView alloc] initWithImage:self.grayArrowImage];
+        self.arrowImageView = [[UIImageView alloc] initWithImage:whiteArrowImage];
+        self.arrowHighlightedImageView = [[UIImageView alloc] initWithImage:grayArrowImage];
         self.arrowHighlightedImageView.hidden = YES;
-        self.arrowBorderView = [[UIImageView alloc] initWithImage:self.blackArrowImage];
+        self.arrowBorderView = [[UIImageView alloc] initWithImage:blackArrowImage];
         self.arrowBorderView.alpha = 0.1;
         self.arrowBorderView.frameY = 0.5;
         
@@ -662,7 +656,9 @@ NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView = 1.0/3.0;
     self.arrowImageView.hidden = highlighted;
     self.arrowHighlightedImageView.hidden = !highlighted;
 }
--(UIImage *)image:(UIImage *)image withColor:(UIColor *)color{
+
+- (UIImage *)image:(UIImage *)image withColor:(UIColor *)color {
+    
     UIGraphicsBeginImageContextWithOptions(image.size, NO, 0);
     CGRect imageRect = (CGRect){.size=image.size};
     CGContextRef c = UIGraphicsGetCurrentContext();
@@ -674,7 +670,6 @@ NSTimeInterval const kSMCalloutViewRepositionDelayForUIScrollView = 1.0/3.0;
     UIImage *whiteImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return whiteImage;
-
 }
 
 - (void)layoutSubviews {

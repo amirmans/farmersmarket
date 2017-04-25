@@ -72,6 +72,23 @@ static NSString *const stripeArrayKey = @"stripeDataArray";
 static NSString *const StripeDefaultCard = @"stripeDefaultCard";
 static NSString *const Default_Process_Time = @"Average wait time: 25 min";
 
+//order status
+#define ORDER_STATUS_DONE @"10";
+
+#define ORDER_STATUS_COMPLETE @"3";
+#define ORDER_STATUS_APPROVED @"2";
+#define ORDER_STATUS_REJECTED @"0";
+#define ORDER_STATUS_NEW = 1;
+
+// pick up  and delivery modes
+#define PICKUP_COUNTER @"1";
+#define PICKUP_LOCATION @"2";
+#define PICKUP_BOTH @"3";
+
+#define DELIVERY_TABLE @"4";
+#define DELIVERY_LOCATION @"8";
+#define DELIVERY_BOTH @"12";
+
 //character search limit in delievery screen
 #define characterSearchLimit 2
 

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -24,7 +24,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" restorationIdentifier="TPReceiptController" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iJb-8H-mCz" userLabel="ThankYou View">
@@ -300,10 +300,11 @@
                 <constraint firstItem="iJb-8H-mCz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="HbD-sl-JFE"/>
                 <constraint firstAttribute="trailing" secondItem="Dbk-6x-cAg" secondAttribute="trailing" id="bT3-Rk-dw5"/>
                 <constraint firstItem="DzX-uI-PPh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dVc-6L-rVz"/>
-                <constraint firstItem="iJb-8H-mCz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="hcr-5n-RtE"/>
+                <constraint firstItem="iJb-8H-mCz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="hcr-5n-RtE"/>
                 <constraint firstAttribute="bottom" secondItem="DzX-uI-PPh" secondAttribute="bottom" id="tQg-mL-4GY"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="547.5" y="447.5"/>
         </view>
     </objects>

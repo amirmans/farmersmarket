@@ -228,7 +228,7 @@
     NSLog(@"%ld",(long)indexPath.row);
     
     
-    //        BusinessDetailsContoller *BusinessDetailsVC = [[BusinessDetailsContoller alloc] initWithNibName:@"BusinessDetailsContoller" bundle:nil];
+    //        BusinessServicesViewController *BusinessDetailsVC = [[BusinessServicesViewController alloc] initWithNibName:@"BusinessServicesViewController" bundle:nil];
 //    Business *biz1 = [[Business alloc] initWithDataFromDatabase:[self.bussinessListByBranch objectAtIndex:indexPath.row]];
 //    [self enterAndGetServiceAction:self];
 }

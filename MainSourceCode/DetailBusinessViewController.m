@@ -10,7 +10,7 @@
 //#import "ServicesForBusinessViewController.h"
 //#import "GooglePlacesObject.h"
 #import "DetailBusinessViewController.h"
-#import "BusinessDetailsContoller.h"
+#import "BusinessServicesViewController.h"
 //#import "ServicesForBusinessTableViewController.h"
 //#import "ShakeHandWithBusinessViewController.h"
 #import "DataModel.h"
@@ -322,7 +322,7 @@
     }
     else {
         biz.needsBizChat = true;
-        BusinessDetailsContoller *services = [[BusinessDetailsContoller alloc]
+        BusinessServicesViewController *services = [[BusinessServicesViewController alloc]
                                                         initWithData:allChoices :mainChoices :[mainChoices objectAtIndex:0] forBusiness:biz];
         [self.navigationController pushViewController:services animated:YES];
         services = nil;

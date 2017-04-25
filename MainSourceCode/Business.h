@@ -74,6 +74,9 @@
     NSError *businessError;
     NSString *process_time;
     
+    NSString *delivery_mode;
+    NSString *pickup_mode;
+    
     NSString *business_delivery_id;
     NSString *business_promotion_id;
     NSString *display_icon_product_categories;
@@ -149,6 +152,9 @@
 @property(nonatomic, strong) NSString *process_time;
 @property(nonatomic, strong) NSString *keywords;
 
+@property(nonatomic, strong) NSString *delivery_mode;
+@property(nonatomic, strong) NSString *pickup_mode;
+
 @property(nonatomic, strong) NSString *sub_businesses;
 @property(nonatomic, strong) NSString *business_delivery_id;
 @property(nonatomic, strong) NSString *business_promotion_id;
@@ -162,7 +168,7 @@
 
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;
 - (void)startLoadingBusinessProductCategoriesAndProducts;
-- (void) startLoadingBusinessProductCategoriesAndProductsWithBusincessID : (NSString *) busiID;
+//- (void) startLoadingBusinessProductCategoriesAndProductsWithBusincessID : (NSString *) busiID;
 
 - (id)initWithGooglePlacesObject:(GooglePlacesObject *)googleObject;
 - (id)initWithDataFromDatabase:(NSDictionary *)data;

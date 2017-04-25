@@ -59,7 +59,6 @@
 		29ECC44C14CCC06C00986555 /* MessageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C00986554 /* MessageTableViewCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		29ECC44C14CCC06C00986558 /* SpeechBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C00986557 /* SpeechBubbleView.m */; };
 		29ECC44C14CCC06C0098655B /* TapTalkChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C0098655A /* TapTalkChatMessage.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		29ECC44C14CCC06C0098655E /* ConsumerProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C0098655D /* ConsumerProfileViewController.m */; };
 		29ECC44C14CCC06C00986566 /* ProductItemViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C00986565 /* ProductItemViewCell.xib */; };
 		29ECC44C14CCC06C00986568 /* StoreMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C00986567 /* StoreMapViewController.xib */; };
 		29ECC44C14CCC06C0098656C /* RateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 29ECC44C14CCC06C0098656B /* RateView.m */; };
@@ -145,8 +144,6 @@
 		5D7AEDDB1C6934E400B0929F /* img@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D7AEDC91C6934E400B0929F /* img@2x.png */; };
 		5D7AEDDC1C6934E400B0929F /* img@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D7AEDCA1C6934E400B0929F /* img@3x.png */; };
 		5D7AEDDF1C69502D00B0929F /* TPFloatRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7AEDDE1C69502D00B0929F /* TPFloatRatingView.m */; };
-		5D7AEDE41C6967E000B0929F /* SMCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7AEDE11C6967E000B0929F /* SMCalloutView.m */; };
-		5D7AEDE51C6967E000B0929F /* SMClassicCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D7AEDE31C6967E000B0929F /* SMClassicCalloutView.m */; };
 		5D7AEDE91C696B2100B0929F /* pin1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D7AEDE61C696B2100B0929F /* pin1.png */; };
 		5D7AEDEA1C696B2100B0929F /* pin1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D7AEDE71C696B2100B0929F /* pin1@2x.png */; };
 		5D7AEDEB1C696B2100B0929F /* pin1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D7AEDE81C696B2100B0929F /* pin1@3x.png */; };
@@ -181,7 +178,6 @@
 		C6308DE41C3E52EC00B6B8B0 /* EventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6308DE31C3E52EC00B6B8B0 /* EventTableViewCell.m */; };
 		C6371A351C3B98F100AC5A84 /* EventsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6371A341C3B98F100AC5A84 /* EventsTableViewController.m */; };
 		C6371A371C3B997500AC5A84 /* ShoppingCartTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6371A361C3B997500AC5A84 /* ShoppingCartTableViewController.xib */; };
-		C640AD391919F81E00DDA94D /* consumerProfileDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C640AD381919F81E00DDA94D /* consumerProfileDataModel.m */; };
 		C6504A7C19D0EB17007646EB /* ProductMoreInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6504A7A19D0EB17007646EB /* ProductMoreInformationViewController.m */; };
 		C6504A7F19D0EB91007646EB /* Tap4AllDisplayUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = C6504A7D19D0EB91007646EB /* Tap4AllDisplayUtil.m */; };
 		C6504A8119D0EC83007646EB /* ProductMoreInformationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6504A8019D0EC83007646EB /* ProductMoreInformationViewController.xib */; };
@@ -193,6 +189,8 @@
 		C662DDFE18D8442F00683BBF /* BubbleCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = C662DDFD18D8442F00683BBF /* BubbleCenter.png */; };
 		C6700CFB1859D74B003814C9 /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6700CFA1859D74B003814C9 /* NotificationTableViewCell.m */; };
 		C6700CFD1859DAA4003814C9 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6700CFC1859DAA4003814C9 /* NotificationTableViewCell.xib */; };
+		C671530B1EAEA04D00DA5D01 /* SMCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = C67153081EAEA04D00DA5D01 /* SMCalloutView.m */; };
+		C671530C1EAEA04D00DA5D01 /* SMClassicCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = C671530A1EAEA04D00DA5D01 /* SMClassicCalloutView.m */; };
 		C67622321BC9F96200B2F434 /* DetailBusinessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C67622341BC9F96200B2F434 /* DetailBusinessViewController.xib */; };
 		C6768BCD1D5688C000125E95 /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C6768BC91D5688C000125E95 /* SAMKeychainQuery.m */; };
 		C6768BCE1D5688C000125E95 /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C6768BCB1D5688C000125E95 /* SAMKeychain.m */; };
@@ -222,12 +220,13 @@
 		C6D20613195A8A23006E12FE /* JBKenBurnsView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6D20612195A8A23006E12FE /* JBKenBurnsView.m */; };
 		C6EABE1718B2D1CD00F50D19 /* BusinessTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6EABE1518B2D1CD00F50D19 /* BusinessTableViewCell.xib */; };
 		C6EABE1818B2D1CD00F50D19 /* BusinessListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6EABE1618B2D1CD00F50D19 /* BusinessListViewController.xib */; };
+		C6F10BBC1EAE067E00E972C6 /* ConsumerProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F10BBB1EAE067E00E972C6 /* ConsumerProfileViewController.m */; };
 		C6F475571CDFD13E009E24E4 /* BusinessDetailsTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6F475561CDFD13E009E24E4 /* BusinessDetailsTableCell.xib */; };
 		C6F4755A1CDFD9B2009E24E4 /* TotalCartItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F475591CDFD9B2009E24E4 /* TotalCartItemCell.m */; };
-		C6F4755D1CDFDB13009E24E4 /* BusinessDetailsContoller.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F4755C1CDFDB13009E24E4 /* BusinessDetailsContoller.m */; };
+		C6F4755D1CDFDB13009E24E4 /* BusinessServicesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F4755C1CDFDB13009E24E4 /* BusinessServicesViewController.m */; };
 		C6F475601CDFDBA4009E24E4 /* BusinessDetailsTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F4755F1CDFDBA4009E24E4 /* BusinessDetailsTableCell.m */; };
 		C6F475631CDFDCB7009E24E4 /* DetailBusinessVCTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6F475621CDFDCB7009E24E4 /* DetailBusinessVCTableViewCell.m */; };
-		C6F475651CDFE0A8009E24E4 /* BusinessDetailsContoller.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6F475641CDFE0A8009E24E4 /* BusinessDetailsContoller.xib */; };
+		C6F475651CDFE0A8009E24E4 /* BusinessServicesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6F475641CDFE0A8009E24E4 /* BusinessServicesViewController.xib */; };
 		C6F475671CDFE12F009E24E4 /* TotalItemCart.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6F475661CDFE12F009E24E4 /* TotalItemCart.xib */; };
 		C6FDD5CC187CDD2900F4D721 /* BusinessNotificationTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6FDD5CB187CDD2900F4D721 /* BusinessNotificationTableViewController.xib */; };
 		C6FDD5CF187D079600F4D721 /* ServerInteractionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C6FDD5CD187D079600F4D721 /* ServerInteractionManager.m */; };
@@ -321,8 +320,6 @@
 		29ECC44C14CCC06C00986557 /* SpeechBubbleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpeechBubbleView.m; path = MainSourceCode/SpeechBubbleView.m; sourceTree = "<group>"; };
 		29ECC44C14CCC06C00986559 /* TapTalkChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TapTalkChatMessage.h; path = MainSourceCode/TapTalkChatMessage.h; sourceTree = "<group>"; };
 		29ECC44C14CCC06C0098655A /* TapTalkChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TapTalkChatMessage.m; path = MainSourceCode/TapTalkChatMessage.m; sourceTree = "<group>"; };
-		29ECC44C14CCC06C0098655C /* ConsumerProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConsumerProfileViewController.h; path = MainSourceCode/ConsumerProfileViewController.h; sourceTree = "<group>"; };
-		29ECC44C14CCC06C0098655D /* ConsumerProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConsumerProfileViewController.m; path = MainSourceCode/ConsumerProfileViewController.m; sourceTree = "<group>"; };
 		29ECC44C14CCC06C00986565 /* ProductItemViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProductItemViewCell.xib; sourceTree = "<group>"; };
 		29ECC44C14CCC06C00986567 /* StoreMapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StoreMapViewController.xib; sourceTree = "<group>"; };
 		29ECC44C14CCC06C00986569 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Consts.h; path = MainSourceCode/Consts.h; sourceTree = "<group>"; };
@@ -443,10 +440,6 @@
 		5D7AEDCA1C6934E400B0929F /* img@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "img@3x.png"; sourceTree = "<group>"; };
 		5D7AEDDD1C69502D00B0929F /* TPFloatRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPFloatRatingView.h; sourceTree = "<group>"; };
 		5D7AEDDE1C69502D00B0929F /* TPFloatRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPFloatRatingView.m; sourceTree = "<group>"; };
-		5D7AEDE01C6967E000B0929F /* SMCalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMCalloutView.h; sourceTree = "<group>"; };
-		5D7AEDE11C6967E000B0929F /* SMCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMCalloutView.m; sourceTree = "<group>"; };
-		5D7AEDE21C6967E000B0929F /* SMClassicCalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMClassicCalloutView.h; sourceTree = "<group>"; };
-		5D7AEDE31C6967E000B0929F /* SMClassicCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMClassicCalloutView.m; sourceTree = "<group>"; };
 		5D7AEDE61C696B2100B0929F /* pin1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin1.png; sourceTree = "<group>"; };
 		5D7AEDE71C696B2100B0929F /* pin1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin1@2x.png"; sourceTree = "<group>"; };
 		5D7AEDE81C696B2100B0929F /* pin1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pin1@3x.png"; sourceTree = "<group>"; };
@@ -489,8 +482,6 @@
 		C6371A331C3B98F100AC5A84 /* EventsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsTableViewController.h; sourceTree = "<group>"; };
 		C6371A341C3B98F100AC5A84 /* EventsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsTableViewController.m; sourceTree = "<group>"; };
 		C6371A361C3B997500AC5A84 /* ShoppingCartTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShoppingCartTableViewController.xib; sourceTree = "<group>"; };
-		C640AD371919F81E00DDA94D /* consumerProfileDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = consumerProfileDataModel.h; path = MainSourceCode/consumerProfileDataModel.h; sourceTree = "<group>"; };
-		C640AD381919F81E00DDA94D /* consumerProfileDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = consumerProfileDataModel.m; path = MainSourceCode/consumerProfileDataModel.m; sourceTree = "<group>"; };
 		C6504A7A19D0EB17007646EB /* ProductMoreInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductMoreInformationViewController.m; sourceTree = "<group>"; };
 		C6504A7B19D0EB17007646EB /* ProductMoreInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductMoreInformationViewController.h; sourceTree = "<group>"; };
 		C6504A7D19D0EB91007646EB /* Tap4AllDisplayUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tap4AllDisplayUtil.m; path = MainSourceCode/Tap4AllDisplayUtil.m; sourceTree = "<group>"; };
@@ -505,6 +496,10 @@
 		C6700CF91859D74B003814C9 /* NotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationTableViewCell.h; path = MainSourceCode/NotificationTableViewCell.h; sourceTree = "<group>"; };
 		C6700CFA1859D74B003814C9 /* NotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationTableViewCell.m; path = MainSourceCode/NotificationTableViewCell.m; sourceTree = "<group>"; };
 		C6700CFC1859DAA4003814C9 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
+		C67153071EAEA04D00DA5D01 /* SMCalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMCalloutView.h; sourceTree = "<group>"; };
+		C67153081EAEA04D00DA5D01 /* SMCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMCalloutView.m; sourceTree = "<group>"; };
+		C67153091EAEA04D00DA5D01 /* SMClassicCalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMClassicCalloutView.h; sourceTree = "<group>"; };
+		C671530A1EAEA04D00DA5D01 /* SMClassicCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMClassicCalloutView.m; sourceTree = "<group>"; };
 		C67622331BC9F96200B2F434 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailBusinessViewController.xib; sourceTree = "<group>"; };
 		C6768BC91D5688C000125E95 /* SAMKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAMKeychainQuery.m; sourceTree = "<group>"; };
 		C6768BCA1D5688C000125E95 /* SAMKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAMKeychainQuery.h; sourceTree = "<group>"; };
@@ -554,16 +549,18 @@
 		C6D20612195A8A23006E12FE /* JBKenBurnsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JBKenBurnsView.m; sourceTree = "<group>"; };
 		C6EABE1518B2D1CD00F50D19 /* BusinessTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessTableViewCell.xib; sourceTree = "<group>"; };
 		C6EABE1618B2D1CD00F50D19 /* BusinessListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessListViewController.xib; sourceTree = "<group>"; };
+		C6F10BBA1EAE067E00E972C6 /* ConsumerProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConsumerProfileViewController.h; path = MainSourceCode/ConsumerProfileViewController.h; sourceTree = "<group>"; };
+		C6F10BBB1EAE067E00E972C6 /* ConsumerProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConsumerProfileViewController.m; path = MainSourceCode/ConsumerProfileViewController.m; sourceTree = "<group>"; };
 		C6F475561CDFD13E009E24E4 /* BusinessDetailsTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessDetailsTableCell.xib; sourceTree = "<group>"; };
 		C6F475581CDFD9B2009E24E4 /* TotalCartItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TotalCartItemCell.h; path = MainSourceCode/TotalCartItemCell.h; sourceTree = "<group>"; };
 		C6F475591CDFD9B2009E24E4 /* TotalCartItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TotalCartItemCell.m; path = MainSourceCode/TotalCartItemCell.m; sourceTree = "<group>"; };
-		C6F4755B1CDFDB13009E24E4 /* BusinessDetailsContoller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessDetailsContoller.h; sourceTree = "<group>"; };
-		C6F4755C1CDFDB13009E24E4 /* BusinessDetailsContoller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessDetailsContoller.m; sourceTree = "<group>"; };
+		C6F4755B1CDFDB13009E24E4 /* BusinessServicesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessServicesViewController.h; sourceTree = "<group>"; };
+		C6F4755C1CDFDB13009E24E4 /* BusinessServicesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessServicesViewController.m; sourceTree = "<group>"; };
 		C6F4755E1CDFDBA4009E24E4 /* BusinessDetailsTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BusinessDetailsTableCell.h; path = MainSourceCode/BusinessDetailsTableCell.h; sourceTree = "<group>"; };
 		C6F4755F1CDFDBA4009E24E4 /* BusinessDetailsTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BusinessDetailsTableCell.m; path = MainSourceCode/BusinessDetailsTableCell.m; sourceTree = "<group>"; };
 		C6F475611CDFDCB7009E24E4 /* DetailBusinessVCTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailBusinessVCTableViewCell.h; path = MainSourceCode/DetailBusinessVCTableViewCell.h; sourceTree = "<group>"; };
 		C6F475621CDFDCB7009E24E4 /* DetailBusinessVCTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailBusinessVCTableViewCell.m; path = MainSourceCode/DetailBusinessVCTableViewCell.m; sourceTree = "<group>"; };
-		C6F475641CDFE0A8009E24E4 /* BusinessDetailsContoller.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessDetailsContoller.xib; sourceTree = "<group>"; };
+		C6F475641CDFE0A8009E24E4 /* BusinessServicesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessServicesViewController.xib; sourceTree = "<group>"; };
 		C6F475661CDFE12F009E24E4 /* TotalItemCart.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TotalItemCart.xib; sourceTree = "<group>"; };
 		C6FDD5CB187CDD2900F4D721 /* BusinessNotificationTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessNotificationTableViewController.xib; sourceTree = "<group>"; };
 		C6FDD5CD187D079600F4D721 /* ServerInteractionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerInteractionManager.m; path = MainSourceCode/ServerInteractionManager.m; sourceTree = "<group>"; };
@@ -639,7 +636,6 @@
 				C699356118B969F6008FCF8A /* MainSourceCode */,
 				C6EABE1918B2E19D00F50D19 /* Business */,
 				C696970618BC97A300F0B4F5 /* Bill */,
-				29D4FCC9159939880034962C /* ConsumerProfile */,
 				296AB7BB158368AA00685894 /* Chat */,
 				2971AF4616071A630022B72E /* Notification */,
 				29D2999D15DB58A800990F62 /* External */,
@@ -817,7 +813,7 @@
 				2949CCE81458A21700728B87 /* AskForSeviceViewController.xib */,
 				C69298AA18DF903400B013E0 /* BillPayViewController.xib */,
 				2949CCE01458A21700728B87 /* BillViewController.xib */,
-				C6F475641CDFE0A8009E24E4 /* BusinessDetailsContoller.xib */,
+				C6F475641CDFE0A8009E24E4 /* BusinessServicesViewController.xib */,
 				C6F475561CDFD13E009E24E4 /* BusinessDetailsTableCell.xib */,
 				C6EABE1618B2D1CD00F50D19 /* BusinessListViewController.xib */,
 				C6FDD5CB187CDD2900F4D721 /* BusinessNotificationTableViewController.xib */,
@@ -904,10 +900,10 @@
 		29D29A2315DB77CB00990F62 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				5D7AEDE01C6967E000B0929F /* SMCalloutView.h */,
-				5D7AEDE11C6967E000B0929F /* SMCalloutView.m */,
-				5D7AEDE21C6967E000B0929F /* SMClassicCalloutView.h */,
-				5D7AEDE31C6967E000B0929F /* SMClassicCalloutView.m */,
+				C67153071EAEA04D00DA5D01 /* SMCalloutView.h */,
+				C67153081EAEA04D00DA5D01 /* SMCalloutView.m */,
+				C67153091EAEA04D00DA5D01 /* SMClassicCalloutView.h */,
+				C671530A1EAEA04D00DA5D01 /* SMClassicCalloutView.m */,
 				5D7AEDDD1C69502D00B0929F /* TPFloatRatingView.h */,
 				5D7AEDDE1C69502D00B0929F /* TPFloatRatingView.m */,
 				C6504A7D19D0EB91007646EB /* Tap4AllDisplayUtil.m */,
@@ -940,17 +936,6 @@
 				29ECC44C14CCC06C0098653B /* ProductItemViewCell.h */,
 			);
 			name = BusinessProducts;
-			sourceTree = "<group>";
-		};
-		29D4FCC9159939880034962C /* ConsumerProfile */ = {
-			isa = PBXGroup;
-			children = (
-				C640AD371919F81E00DDA94D /* consumerProfileDataModel.h */,
-				C640AD381919F81E00DDA94D /* consumerProfileDataModel.m */,
-				29ECC44C14CCC06C0098655C /* ConsumerProfileViewController.h */,
-				29ECC44C14CCC06C0098655D /* ConsumerProfileViewController.m */,
-			);
-			name = ConsumerProfile;
 			sourceTree = "<group>";
 		};
 		4A0F2CA01C71D584005C6F22 /* ModelClass */ = {
@@ -1043,6 +1028,8 @@
 		4AD53C231C736535009D8FE0 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				C6F10BBA1EAE067E00E972C6 /* ConsumerProfileViewController.h */,
+				C6F10BBB1EAE067E00E972C6 /* ConsumerProfileViewController.m */,
 				DA3C19BF1E974B8000ADDE31 /* Order Detail */,
 				C6C91ECC189E3EA700AE6478 /* BusinessListViewController.h */,
 				C6C91ECD189E3EA700AE6478 /* BusinessListViewController.m */,
@@ -1173,8 +1160,8 @@
 		C6EABE1918B2E19D00F50D19 /* Business */ = {
 			isa = PBXGroup;
 			children = (
-				C6F4755B1CDFDB13009E24E4 /* BusinessDetailsContoller.h */,
-				C6F4755C1CDFDB13009E24E4 /* BusinessDetailsContoller.m */,
+				C6F4755B1CDFDB13009E24E4 /* BusinessServicesViewController.h */,
+				C6F4755C1CDFDB13009E24E4 /* BusinessServicesViewController.m */,
 				295C3AFB14E65F42000FB813 /* BusinessCustomerProfileManager.h */,
 				295C3AFC14E65F42000FB813 /* BusinessCustomerProfileManager.m */,
 				C67D4D4018AEFFEE00D6DF6C /* ListofBusinesses.h */,
@@ -1270,7 +1257,7 @@
 				TargetAttributes = {
 					2949CC3414589C7200728B87 = {
 						DevelopmentTeam = E79MNN58JH;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -1387,7 +1374,7 @@
 				4A6643F81C74B05C00C10421 /* arrow_down.png in Resources */,
 				5DD2E5821C6BB18100503BF6 /* ic_plus@3x.png in Resources */,
 				5D5498B61C6914FE00FC35FF /* heart.png in Resources */,
-				C6F475651CDFE0A8009E24E4 /* BusinessDetailsContoller.xib in Resources */,
+				C6F475651CDFE0A8009E24E4 /* BusinessServicesViewController.xib in Resources */,
 				C6EABE1718B2D1CD00F50D19 /* BusinessTableViewCell.xib in Resources */,
 				5DD2E5801C6BB18100503BF6 /* ic_plus.png in Resources */,
 				29E693D014CC044B007E958F /* EnterBusiness.png in Resources */,
@@ -1492,7 +1479,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		B363820411F5CD91861D911C /* [CP] Embed Pods Frameworks */ = {
@@ -1541,7 +1528,8 @@
 				4A99D9181CBD273C00755437 /* TotalCartItemsTableCell.m in Sources */,
 				4A8DA3491CC8DD5300C3890A /* MenuItemOptionsCell.m in Sources */,
 				4A6643EC1C74A04000C10421 /* SIMenuTable.m in Sources */,
-				C6F4755D1CDFDB13009E24E4 /* BusinessDetailsContoller.m in Sources */,
+				C6F4755D1CDFDB13009E24E4 /* BusinessServicesViewController.m in Sources */,
+				C671530B1EAEA04D00DA5D01 /* SMCalloutView.m in Sources */,
 				C6F475601CDFDBA4009E24E4 /* BusinessDetailsTableCell.m in Sources */,
 				4AAF9C331CFDB101009ECFB2 /* NotificationDetailModel.m in Sources */,
 				4ACD41AF1E1FDEAB002F9379 /* CartViewSecondScreenViewController.m in Sources */,
@@ -1549,7 +1537,7 @@
 				291850CA153E8DA8008B6EBB /* DetailBusinessViewController.m in Sources */,
 				29D29A2015DB5AFA00990F62 /* GooglePlacesConnection.m in Sources */,
 				C69298A918DF8FFE00B013E0 /* BillPayViewController.m in Sources */,
-				5D7AEDE41C6967E000B0929F /* SMCalloutView.m in Sources */,
+				C671530C1EAEA04D00DA5D01 /* SMClassicCalloutView.m in Sources */,
 				12C090EB1DDDEC6E0033CEA9 /* CartItemTableViewCell.m in Sources */,
 				29D29A2115DB5AFA00990F62 /* GooglePlacesObject.m in Sources */,
 				29ECC44C14CCC06C0098653D /* ProductItemViewCell.m in Sources */,
@@ -1562,6 +1550,7 @@
 				4A6643EA1C74A04000C10421 /* SIMenuCell.m in Sources */,
 				C61E552518E794C1007027C7 /* CurrentBusiness.m in Sources */,
 				5DBDB5CB1C6AB3CF001828C5 /* MenuItemTableViewCell.m in Sources */,
+				C6F10BBC1EAE067E00E972C6 /* ConsumerProfileViewController.m in Sources */,
 				4A6C9B341CB7D67000D1B60D /* RewardDetailsModel.m in Sources */,
 				C6504A7C19D0EB17007646EB /* ProductMoreInformationViewController.m in Sources */,
 				C69935B018B969F6008FCF8A /* AppDelegate.m in Sources */,
@@ -1577,10 +1566,8 @@
 				29ECC44C14CCC06C00986558 /* SpeechBubbleView.m in Sources */,
 				29ECC44C14CCC06C0098655B /* TapTalkChatMessage.m in Sources */,
 				C65A68AB191AFB1E00BBDC16 /* DetailProductItemViewController.m in Sources */,
-				C640AD391919F81E00DDA94D /* consumerProfileDataModel.m in Sources */,
 				C6FDD5D3187D087900F4D721 /* BusinessNotificationTableViewController.m in Sources */,
 				4A5AD37B1C770AE700DCEA6F /* TPRewardPointCell.m in Sources */,
-				29ECC44C14CCC06C0098655E /* ConsumerProfileViewController.m in Sources */,
 				C6571B761D650A4700FD83F5 /* BusinessListViewController.m in Sources */,
 				C6F475631CDFDCB7009E24E4 /* DetailBusinessVCTableViewCell.m in Sources */,
 				C69935D018B969F6008FCF8A /* StoreMap.m in Sources */,
@@ -1607,7 +1594,6 @@
 				2971AF4A16071AFA0022B72E /* NotificationPermissionViewController.m in Sources */,
 				C6C8ACA918DF9B8F005DAFD6 /* main.m in Sources */,
 				4A6643EB1C74A04000C10421 /* SIMenuConfiguration.m in Sources */,
-				5D7AEDE51C6967E000B0929F /* SMClassicCalloutView.m in Sources */,
 				1240F8EE1DAD3F19005D0642 /* DeliveryViewController.m in Sources */,
 				29CDC4B516293F5A002E3D5A /* BusinessProductsUtils.m in Sources */,
 				C6C8ACAD18DF9BBC005DAFD6 /* TapForAllTests.m in Sources */,
@@ -1767,8 +1753,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
-				DEVELOPMENT_TEAM = E79MNN58JH;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1785,9 +1771,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tapin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ee6eca66-a0ac-4166-b258-62cb60d26f9a";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				PROVISIONING_PROFILE_SPECIFIER = tapin_distribution_19_dec;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -1805,8 +1791,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
-				DEVELOPMENT_TEAM = E79MNN58JH;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -1824,9 +1810,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tapin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ee6eca66-a0ac-4166-b258-62cb60d26f9a";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				PROVISIONING_PROFILE_SPECIFIER = tapin_distribution_19_dec;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";

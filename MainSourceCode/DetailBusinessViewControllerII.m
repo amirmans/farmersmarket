@@ -24,7 +24,7 @@
 #import "APIUtility.h"
 #import "AppData.h"
 #import "DetailBusinessVCTableViewCell.h"
-#import "BusinessDetailsContoller.h"
+#import "BusinessServicesViewController.h"
 // github library to load the images asynchronously
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "RewardDetailsModel.h"
@@ -401,7 +401,7 @@ static const CGFloat DefaultZoom = 12.0f;
         GMSMarker *marker = mapViews.selectedMarker;
         NSDictionary *userData = marker.userData;
         
-        //        BusinessDetailsContoller *BusinessDetailsVC = [[BusinessDetailsContoller alloc] initWithNibName:@"BusinessDetailsContoller" bundle:nil];
+        //        BusinessServicesViewController *BusinessDetailsVC = [[BusinessServicesViewController alloc] initWithNibName:@"BusinessServicesViewController" bundle:nil];
         //
         //        [self.navigationController pushViewController: BusinessDetailsVC animated:YES];
         
@@ -551,14 +551,15 @@ static const CGFloat DefaultZoom = 12.0f;
         NSString *bg_color = [marker.userData valueForKeyPath:@"bg_color"];
         
         UIColor *businessColor = [[AppData sharedInstance] setUIColorFromString:bg_color];
-        self.calloutView.backgroundView.containerView.backgroundColor = businessColor;
+        self.calloutView.contentView.backgroundColor= businessColor;
         
+        /*after upgrading calloutview arrows were producing compilation errors */
         //        self.whiteArrowImage = [self image:self.blackArrowImage withColor:[AppData businessBackgroundColor]];
         
-        self.calloutView.backgroundView.whiteArrowImage = [self.calloutView.backgroundView image:self.calloutView.backgroundView.blackArrowImage withColor:businessColor];
+//        self.calloutView.contentView.whiteArrowImage = [self.calloutView.backgroundView image:self.calloutView.backgroundView.blackArrowImage withColor:businessColor];
         
-        self.calloutView.backgroundView.arrowImageView = [[UIImageView alloc] initWithImage:self.calloutView.backgroundView.whiteArrowImage];
-        [self.calloutView.backgroundView.arrowView addSubview:self.calloutView.backgroundView.arrowImageView];
+//        self.calloutView.backgroundView.arrowImageView = [[UIImageView alloc] initWithImage:self.calloutView.backgroundView.whiteArrowImage];
+//        [self.calloutView.backgroundView.arrowView addSubview:self.calloutView.backgroundView.arrowImageView];
 
         UIImageView *thumbView = [[UIImageView alloc] init];
         NSString *tmpIconName = [marker.userData valueForKeyPath:@"icon"];
@@ -704,7 +705,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     }
     else {
         biz.needsBizChat = true;
-        BusinessDetailsContoller *services = [[BusinessDetailsContoller alloc]
+        BusinessServicesViewController *services = [[BusinessServicesViewController alloc]
                                               initWithData:allChoices :mainChoices :[mainChoices objectAtIndex:0] forBusiness:selectedBiz];
         //        NSString *bgImageURL = @"";
         //        if (biz.bg_image)
@@ -832,7 +833,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     NSLog(@"%ld",(long)indexPath.row);
     
     
-//        BusinessDetailsContoller *BusinessDetailsVC = [[BusinessDetailsContoller alloc] initWithNibName:@"BusinessDetailsContoller" bundle:nil];
+//        BusinessServicesViewController *BusinessDetailsVC = [[BusinessServicesViewController alloc] initWithNibName:@"BusinessServicesViewController" bundle:nil];
     selectedBiz = [[Business alloc] initWithDataFromDatabase:[self.bussinessListByBranch objectAtIndex:indexPath.row]];
     [self enterAndGetServiceAction:self];
 }

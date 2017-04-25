@@ -74,6 +74,9 @@
 @synthesize keywords;
 @synthesize sub_businesses;
 
+@synthesize delivery_mode;
+@synthesize pickup_mode;
+
 @synthesize business_delivery_id;
 @synthesize business_promotion_id;
 @synthesize display_icon_product_categories;
@@ -81,6 +84,8 @@
 @synthesize promotion_code;
 @synthesize promotion_discount_amount;
 @synthesize promotion_message;
+
+
 
 @synthesize pickup_later;
 
@@ -133,6 +138,9 @@
     keywords = nil;
     
     sub_businesses = nil;
+    
+    pickup_mode = nil;
+    delivery_mode = nil;
     
     business_delivery_id = nil;
     business_promotion_id = nil;
@@ -393,6 +401,9 @@
     
     sub_businesses = [self stringFromDataDictionary:data forKey:@"sub_businesses"];
     
+    pickup_mode = [self stringFromDataDictionary:data forKey:@"pickup_mode"];
+    delivery_mode  = [self stringFromDataDictionary:data forKey:@"delivery_mode"];
+    
     business_delivery_id  = [self stringFromDataDictionary:data forKey:@"business_delivery_id"];
     business_promotion_id  = [self stringFromDataDictionary:data forKey:@"business_promotion_id"];
     display_icon_product_categories  = [self stringFromDataDictionary:data forKey:@"display_icon_product_categories"];
@@ -507,7 +518,26 @@
     NSURLResponse *resp = nil;
     NSError *err = nil;
     NSData *responseData;
-    responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&err];
+//    responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&err];
+    
+    
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithURL:[NSURL URLWithString:urlString]
+            completionHandler:^(NSData *data,
+                                NSURLResponse *resp,
+                                NSError *error) {
+                // handle response
+                
+            }] resume];
+    
+    
+    
+    
+    
+    
+    
+    
     
     isCustomer = 0;
   
