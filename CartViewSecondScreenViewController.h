@@ -31,6 +31,7 @@
 @property (strong,nonatomic) NSDate *pickupTime;
 @property (strong,nonatomic) NSMutableArray *orderItems;
 @property (assign) double deliveryamt;
+@property (assign) NSInteger selectedButtonNumber;
 
 @property (strong, nonatomic) IBOutlet UIButton *btnNoTip;
 @property (strong, nonatomic) IBOutlet UIButton *btnOther;
@@ -54,6 +55,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblSubtotalAmount;
 @property (strong, nonatomic) IBOutlet UILabel *lblEarnedPoint;
 @property (weak, nonatomic) IBOutlet UILabel *lblPayNow;
+@property (weak, nonatomic) IBOutlet UILabel *lblTaxRate;
+
 
 @property (weak, nonatomic) IBOutlet UIView *viewDeliveryAndPickup;
 

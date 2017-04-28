@@ -74,8 +74,11 @@
     NSError *businessError;
     NSString *process_time;
     
-    NSString *delivery_mode;
-    NSString *pickup_mode;
+    NSString *delivery_location_charge;
+    NSString *delivery_table_charge;
+    NSString *pickup_counter_charge;
+    NSString *pickup_location_charge;
+    NSString *tax_rate;
     
     NSString *business_delivery_id;
     NSString *business_promotion_id;
@@ -152,8 +155,12 @@
 @property(nonatomic, strong) NSString *process_time;
 @property(nonatomic, strong) NSString *keywords;
 
-@property(nonatomic, strong) NSString *delivery_mode;
-@property(nonatomic, strong) NSString *pickup_mode;
+@property(nonatomic, strong) NSString *delivery_location_charge;
+@property(nonatomic, strong) NSString *delivery_table_charge;
+@property(nonatomic, strong) NSString *pickup_counter_charge;
+@property(nonatomic, strong) NSString *pickup_location_charge;
+@property(nonatomic, strong) NSString *tax_rate;
+
 
 @property(nonatomic, strong) NSString *sub_businesses;
 @property(nonatomic, strong) NSString *business_delivery_id;

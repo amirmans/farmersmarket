@@ -74,8 +74,11 @@
 @synthesize keywords;
 @synthesize sub_businesses;
 
-@synthesize delivery_mode;
-@synthesize pickup_mode;
+@synthesize delivery_table_charge;
+@synthesize delivery_location_charge;
+@synthesize pickup_counter_charge;
+@synthesize pickup_location_charge;
+@synthesize tax_rate;
 
 @synthesize business_delivery_id;
 @synthesize business_promotion_id;
@@ -139,8 +142,11 @@
     
     sub_businesses = nil;
     
-    pickup_mode = nil;
-    delivery_mode = nil;
+    delivery_location_charge = nil;
+    delivery_table_charge = nil;
+    pickup_location_charge = nil;
+    pickup_counter_charge = nil;
+    tax_rate = nil;
     
     business_delivery_id = nil;
     business_promotion_id = nil;
@@ -401,8 +407,13 @@
     
     sub_businesses = [self stringFromDataDictionary:data forKey:@"sub_businesses"];
     
-    pickup_mode = [self stringFromDataDictionary:data forKey:@"pickup_mode"];
-    delivery_mode  = [self stringFromDataDictionary:data forKey:@"delivery_mode"];
+//    pickup_mode = [self stringFromDataDictionary:data forKey:@"pickup_mode"];
+//    delivery_mode  = [self stringFromDataDictionary:data forKey:@"delivery_mode"];
+    delivery_table_charge = [self stringFromDataDictionary:data forKey:@"delivery_table_charge"];
+    delivery_location_charge  = [self stringFromDataDictionary:data forKey:@"delivery_location_charge"];
+    pickup_counter_charge = [self stringFromDataDictionary:data forKey:@"pickup_counter_charge"];
+    pickup_location_charge  = [self stringFromDataDictionary:data forKey:@"pickup_location_charge"];
+    tax_rate  = [self stringFromDataDictionary:data forKey:@"tax_rate"];
     
     business_delivery_id  = [self stringFromDataDictionary:data forKey:@"business_delivery_id"];
     business_promotion_id  = [self stringFromDataDictionary:data forKey:@"business_promotion_id"];

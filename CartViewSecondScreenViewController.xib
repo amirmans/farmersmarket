@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -25,6 +25,7 @@
                 <outlet property="lblPromotionalText" destination="48S-aU-hkZ" id="XVX-Lp-adD"/>
                 <outlet property="lblSubTotalPrice" destination="eT4-Ck-A3a" id="p9H-T2-D0t"/>
                 <outlet property="lblSubtotalAmount" destination="b4D-i4-9ga" id="NoT-dW-j7z"/>
+                <outlet property="lblTaxRate" destination="5hw-BN-jHq" id="ahL-79-tnF"/>
                 <outlet property="lblTitle" destination="5ou-Kq-8sU" id="kOd-rG-ciN"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewDeliveryAndPickup" destination="S4x-NC-eXx" id="XDy-Dm-Z1o"/>
@@ -256,7 +257,7 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pgr-RG-mxo">
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delievery Amount " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="aZ8-3D-jeC">
+                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delievery Amount " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="aZ8-3D-jeC">
                                     <constraints>
                                         <constraint firstAttribute="height" constant="15" id="A0y-rZ-rGj"/>
                                         <constraint firstAttribute="width" constant="146" id="A3f-0b-jSe"/>
@@ -312,34 +313,51 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YSp-3y-P13">
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Total Payment :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="dg5-bl-xgI">
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="159" id="Eat-T5-DZN"/>
-                                        <constraint firstAttribute="height" constant="21" id="TVZ-av-C3F"/>
-                                    </constraints>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Your Total Payment :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="dg5-bl-xgI">
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="$ 0.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="eT4-Ck-A3a">
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="21" id="Oj8-44-fnW"/>
+                                        <constraint firstAttribute="height" constant="21" id="eoM-ce-Ypg"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                     <color key="textColor" red="0.39607843139999999" green="0.39607843139999999" blue="0.39607843139999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Tax Amount Value :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gob-vl-AJH">
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="$ 0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5hw-BN-jHq">
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="16" id="ze9-ib-Dm9"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="dg5-bl-xgI" firstAttribute="leading" secondItem="YSp-3y-P13" secondAttribute="leading" constant="8" id="CD4-0Z-vHM"/>
-                                <constraint firstItem="eT4-Ck-A3a" firstAttribute="top" secondItem="YSp-3y-P13" secondAttribute="top" constant="5" id="I3R-5B-GqV"/>
-                                <constraint firstAttribute="height" constant="30" id="QPJ-Vf-nAY"/>
-                                <constraint firstItem="dg5-bl-xgI" firstAttribute="top" secondItem="YSp-3y-P13" secondAttribute="top" constant="5" id="We5-tA-VjB"/>
-                                <constraint firstItem="eT4-Ck-A3a" firstAttribute="leading" secondItem="dg5-bl-xgI" secondAttribute="trailing" constant="12" id="bCi-Ge-uuK"/>
-                                <constraint firstAttribute="bottom" secondItem="dg5-bl-xgI" secondAttribute="bottom" constant="4" id="j16-5A-w4V"/>
-                                <constraint firstAttribute="bottom" secondItem="eT4-Ck-A3a" secondAttribute="bottom" constant="4" id="pxJ-JZ-2oA"/>
-                                <constraint firstAttribute="trailing" secondItem="eT4-Ck-A3a" secondAttribute="trailing" constant="8" id="yAp-w4-zr4"/>
+                                <constraint firstAttribute="bottom" secondItem="dg5-bl-xgI" secondAttribute="bottom" id="67W-X9-gvr"/>
+                                <constraint firstItem="gob-vl-AJH" firstAttribute="leading" secondItem="YSp-3y-P13" secondAttribute="leading" constant="8" id="7YA-Ui-GN6"/>
+                                <constraint firstItem="eT4-Ck-A3a" firstAttribute="leading" secondItem="dg5-bl-xgI" secondAttribute="trailing" constant="12" id="82X-AC-lX0"/>
+                                <constraint firstItem="eT4-Ck-A3a" firstAttribute="top" secondItem="5hw-BN-jHq" secondAttribute="bottom" constant="7" id="9GT-xM-Y5z"/>
+                                <constraint firstItem="gob-vl-AJH" firstAttribute="top" secondItem="YSp-3y-P13" secondAttribute="top" id="AQf-C0-PB2"/>
+                                <constraint firstItem="eT4-Ck-A3a" firstAttribute="top" secondItem="5hw-BN-jHq" secondAttribute="bottom" constant="7" id="BsW-zd-BRu"/>
+                                <constraint firstAttribute="trailing" secondItem="5hw-BN-jHq" secondAttribute="trailing" constant="8" id="H8G-zt-x3e"/>
+                                <constraint firstItem="dg5-bl-xgI" firstAttribute="top" secondItem="gob-vl-AJH" secondAttribute="bottom" constant="8" id="J6L-Wn-Dnp"/>
+                                <constraint firstAttribute="height" constant="45" id="KGF-o9-CMM"/>
+                                <constraint firstAttribute="trailing" secondItem="eT4-Ck-A3a" secondAttribute="trailing" constant="8" id="S4l-DQ-zdj"/>
+                                <constraint firstItem="eT4-Ck-A3a" firstAttribute="leading" secondItem="dg5-bl-xgI" secondAttribute="trailing" constant="12" id="VcK-Xo-6mZ"/>
+                                <constraint firstItem="5hw-BN-jHq" firstAttribute="leading" secondItem="gob-vl-AJH" secondAttribute="trailing" constant="23" id="aye-P5-IVg"/>
+                                <constraint firstAttribute="bottom" secondItem="eT4-Ck-A3a" secondAttribute="bottom" id="eWw-8L-Q9P"/>
+                                <constraint firstItem="dg5-bl-xgI" firstAttribute="top" secondItem="gob-vl-AJH" secondAttribute="bottom" constant="8" id="fve-tI-mN0"/>
+                                <constraint firstItem="5hw-BN-jHq" firstAttribute="top" secondItem="YSp-3y-P13" secondAttribute="top" constant="1" id="koE-pJ-3f6"/>
+                                <constraint firstItem="dg5-bl-xgI" firstAttribute="leading" secondItem="YSp-3y-P13" secondAttribute="leading" constant="8" id="t0r-am-spD"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hiz-uD-HbA">
@@ -394,9 +412,9 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S4x-NC-eXx">
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Order is delievered at ...................." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Yek-EI-zA6">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Order is delievered at ................." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Yek-EI-zA6">
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="21" id="eJu-m5-sNH"/>
+                                        <constraint firstAttribute="height" constant="41" id="eJu-m5-sNH"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                     <color key="textColor" red="0.95686274510000002" green="0.51372549020000002" blue="0.1215686275" alpha="1" colorSpace="calibratedRGB"/>
@@ -404,7 +422,7 @@
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pickup Time on ...................." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="qse-JB-DBL">
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="21" id="zsO-6O-9BY"/>
+                                        <constraint firstAttribute="height" id="zsO-6O-9BY"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                     <color key="textColor" red="0.95686274510000002" green="0.51372549020000002" blue="0.1215686275" alpha="1" colorSpace="calibratedRGB"/>
@@ -419,7 +437,7 @@
                                 <constraint firstItem="Yek-EI-zA6" firstAttribute="leading" secondItem="S4x-NC-eXx" secondAttribute="leading" constant="8" id="Q4W-88-QJq"/>
                                 <constraint firstItem="Yek-EI-zA6" firstAttribute="top" secondItem="S4x-NC-eXx" secondAttribute="top" constant="5" id="a1F-RJ-bq7"/>
                                 <constraint firstItem="qse-JB-DBL" firstAttribute="top" secondItem="Yek-EI-zA6" secondAttribute="bottom" constant="9" id="m7J-X2-CON"/>
-                                <constraint firstAttribute="bottom" secondItem="qse-JB-DBL" secondAttribute="bottom" constant="5" id="muJ-O7-7hS"/>
+                                <constraint firstAttribute="bottom" secondItem="qse-JB-DBL" secondAttribute="bottom" constant="6" id="muJ-O7-7hS"/>
                                 <constraint firstItem="qse-JB-DBL" firstAttribute="leading" secondItem="S4x-NC-eXx" secondAttribute="leading" constant="8" id="nDn-8e-yqU"/>
                                 <constraint firstAttribute="trailing" secondItem="Yek-EI-zA6" secondAttribute="trailing" constant="8" id="ty6-dI-RVa"/>
                             </constraints>

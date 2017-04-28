@@ -120,65 +120,68 @@ NSDate *setMinPickerTimeOD;
     
     //---------- Set Button enable/disable ------//
     Business *bis = [CurrentBusiness sharedCurrentBusinessManager].business;
-    if([bis.pickup_mode isEqualToString:@"1"]){
+    NSInteger  counterVal = [bis.pickup_counter_charge intValue];
+    NSInteger  tableVal = [bis.delivery_table_charge intValue];
+    NSInteger  locationVal = [bis.delivery_location_charge intValue];
+    NSInteger  parkingVal = [bis.pickup_location_charge intValue];
+    if(counterVal != -1){
         self.btnCounter.enabled = YES;
-        self.btnParking.enabled = NO;
         
         self.viewCounter.hidden = NO;
         self.viewTable.hidden = YES;
         self.viewDesignationLocation.hidden = YES;
         self.viewParking.hidden = YES;
     }
-    else if([bis.pickup_mode isEqualToString:@"2"]){
-        self.btnCounter.enabled = NO;
+    if(parkingVal != -1){
         self.btnParking.enabled = YES;
         
-        self.viewCounter.hidden = YES;
-        self.viewTable.hidden = YES;
-        self.viewDesignationLocation.hidden = YES;
-        self.viewParking.hidden = NO;
+//        self.viewCounter.hidden = YES;
+//        self.viewTable.hidden = YES;
+//        self.viewDesignationLocation.hidden = YES;
+//        self.viewParking.hidden = NO;
 
     }
-    else if([bis.pickup_mode isEqualToString:@"3"]){
-        self.btnCounter.enabled = YES;
-        self.btnParking.enabled = YES;
-        
-        self.viewCounter.hidden = NO;
-        self.viewTable.hidden = YES;
-        self.viewDesignationLocation.hidden = YES;
-        self.viewParking.hidden = YES;
-
-    }
-    else{
-        self.btnCounter.enabled = NO;
-        self.btnParking.enabled = NO;
-        
-        self.viewCounter.hidden = NO;
-        self.viewTable.hidden = YES;
-        self.viewDesignationLocation.hidden = YES;
-        self.viewParking.hidden = YES;
-
-    }
-    if([bis.delivery_mode isEqualToString:@"1"]){
+//    if(counterVal >= 0 && parkingVal >= 0){
+//        self.btnCounter.enabled = YES;
+//        self.btnParking.enabled = YES;
+//        
+//        self.viewCounter.hidden = NO;
+//        self.viewTable.hidden = YES;
+//        self.viewDesignationLocation.hidden = YES;
+//        self.viewParking.hidden = YES;
+//
+//    }
+//    else if(counterVal < 0 && parkingVal < 0){
+//        self.btnCounter.enabled = NO;
+//        self.btnParking.enabled = NO;
+    
+//        
+//        self.viewCounter.hidden = NO;
+//        self.viewTable.hidden = YES;
+//        self.viewDesignationLocation.hidden = YES;
+//        self.viewParking.hidden = YES;
+//
+//    }
+    
+    if(tableVal != -1){
         self.btnTable.enabled = YES;
-        self.btnDesignatedLocation.enabled = NO;
+        
  
     }
-    else if([bis.delivery_mode isEqualToString:@"2"]){
-        self.btnTable.enabled = NO;
+    if(locationVal != -1){
         self.btnDesignatedLocation.enabled = YES;
   
     }
-    else if([bis.delivery_mode isEqualToString:@"3"]){
-        self.btnTable.enabled = YES;
-        self.btnDesignatedLocation.enabled = YES;
-  
-    }
-    else{
-        self.btnTable.enabled = NO;
-        self.btnDesignatedLocation.enabled = NO;
-   
-    }
+//    if(tableVal >= 0 && locationVal >= 0){
+//        self.btnTable.enabled = YES;
+//        self.btnDesignatedLocation.enabled = YES;
+//  
+//    }
+//    else if(tableVal < 0 && locationVal < 0){
+//        self.btnTable.enabled = NO;
+//        self.btnDesignatedLocation.enabled = NO;
+//   
+//    }
     //------------------------------//
    
     deliveryLocation = self.locationNameArray;
@@ -280,6 +283,19 @@ NSDate *setMinPickerTimeOD;
                                                                   TotalCartItemVC.delivery_startTime = self.delivery_startTimeOD;
                                                                   TotalCartItemVC.delivery_endTime = self.delivery_endTimeOD;
                                                               }
+                                                              if([self.btnCounter isSelected]){
+                                                                  TotalCartItemVC.selectedButtonNumber = 1;
+                                                              }
+                                                              else if ([self.btnTable isSelected]){
+                                                                  TotalCartItemVC.selectedButtonNumber = 2;
+                                                              }
+                                                              else if ([self.btnDesignatedLocation isSelected]){
+                                                                  TotalCartItemVC.selectedButtonNumber = 3;
+                                                              }
+                                                              else if ([self.btnParking isSelected]){
+                                                                  TotalCartItemVC.selectedButtonNumber = 4;
+                                                              }
+                                                              
                                                               [self dismissViewControllerAnimated:YES completion:nil];
                                                               [self.navigationController pushViewController:TotalCartItemVC animated:YES];
                                                           }]];
@@ -979,7 +995,6 @@ NSDate *setMinPickerTimeOD;
             newDate = [df stringFromDate:newDate];
             uploadTime = (NSString *)newDate;
             NSLog(@"%@",uploadTime);
-
 
             [AppData sharedInstance].consumer_Delivery_Id =@"";
             [AppData sharedInstance].consumer_Delivery_Location_Id = @"";

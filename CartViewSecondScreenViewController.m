@@ -27,7 +27,7 @@
 @implementation CartViewSecondScreenViewController
 
 @synthesize managedObjectContext = _managedObjectContext;
-@synthesize redeemPointsVal,hud,dollarValForEachPoints,redeemNoPoint,currentPointsLevel,originalNoPoint,originalPointsVal,flagRedeemPointVal,delivery_startTime,delivery_endTime,deliveryamt;
+@synthesize redeemPointsVal,hud,dollarValForEachPoints,redeemNoPoint,currentPointsLevel,originalNoPoint,originalPointsVal,flagRedeemPointVal,delivery_startTime,delivery_endTime,deliveryamt,selectedButtonNumber;
 
 NSInteger currentTipVal = 0;   // Selected Tip Value
 NSString *delivery_location;   // Delivery location
@@ -35,8 +35,9 @@ double globalPromotnal = 0.0;  // Variable for manage promotional amount with to
 double promotionalamt = 0.0;  // Promotional Amount value
 double cartTotalValue = 0;            // aka subtotal
 double totalVal = 0.0;         // Final Total Amount value
+double taxVal = 0.0;         // Final Tax Amount value
 double tipAmt = 0.0;          // Tip Amount Value
-double deliveryAmountValue = 0.00; //Delievery amount value in $
+double deliveryAmountValue; //Delievery amount value in $
 
 #pragma mark - Life Cycle
 
@@ -58,6 +59,7 @@ double deliveryAmountValue = 0.00; //Delievery amount value in $
     currentPointsLevel  = 0;
     redeemNoPoint  = 0;  // number of points being redeemed
     redeemPointsVal = 0;  // value for the points that we are redeeming
+    taxVal = 0.0;
     
     [self.lblPayNow.layer setBorderWidth:1.0];
     [self.lblPayNow.layer setBorderColor:[[UIColor colorWithRed:204.0/255.0 green:102.0/255.0 blue:0.0/255.0 alpha:1.0] CGColor]];
@@ -131,18 +133,19 @@ double deliveryAmountValue = 0.00; //Delievery amount value in $
                                                  name:RedeemPoints
                                                object:nil];
     
-    if(deliveryamt > 0)
-    {
-        self.lblDeliveryAmount.hidden = false;
-        self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",cartTotalValue * deliveryamt];
-        deliveryAmountValue = cartTotalValue * deliveryamt;
-    }
-    else
-    {
-        self.lblDeliveryAmount.hidden = true;
-        deliveryAmountValue = 0.00;
-        self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $0.00"];
-    }
+    
+//    if(deliveryamt > 0)
+//    {
+//        self.lblDeliveryAmount.hidden = false;
+//        self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",cartTotalValue * deliveryamt];
+//        deliveryAmountValue = cartTotalValue * deliveryamt;
+//    }
+//    else
+//    {
+//        self.lblDeliveryAmount.hidden = true;
+//        deliveryAmountValue = 0.00;
+//        self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $0.00"];
+//    }
 
     [self checkPromoCodeForUser];
     [self paymentSummary];
@@ -329,7 +332,7 @@ double deliveryAmountValue = 0.00; //Delievery amount value in $
         }
         else
         {
-            totalVal = cartTotalValue + tipAmt + deliveryAmountValue - promotionalamt - redeemPointsVal ;
+            totalVal = cartTotalValue + taxVal + tipAmt + deliveryAmountValue - promotionalamt - redeemPointsVal ;
         }
         self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f",totalVal];
     }
@@ -340,10 +343,80 @@ double deliveryAmountValue = 0.00; //Delievery amount value in $
     totalVal = 0.00;
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
     cartTotalValue = [self.subTotal doubleValue];
+    taxVal = ([self.subTotal doubleValue]*[billBusiness.tax_rate doubleValue])/100;
+    self.lblTaxRate.text = [NSString stringWithFormat:@"$%.2f",taxVal];
 
-    totalVal = [self.subTotal doubleValue] + deliveryAmountValue - promotionalamt;
+    totalVal = [self.subTotal doubleValue] + taxVal + deliveryAmountValue - promotionalamt;
     self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f",totalVal];
+    
+    self.lblDeliveryAmount.hidden = false;
+    NSDateFormatter* df = [[NSDateFormatter alloc] init];
+    [df setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
+    [df setTimeZone:[NSTimeZone systemTimeZone]];
+    [df setDateFormat:@"HH:mm:ss"];
 
+    if(selectedButtonNumber == 1){
+        if ([billBusiness.pickup_counter_charge rangeOfString:@"%"].location == NSNotFound)
+        {
+            deliveryAmountValue = [billBusiness.pickup_counter_charge doubleValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",deliveryAmountValue];
+        }
+        else
+        {
+            NSString *newStr = [billBusiness.pickup_counter_charge stringByReplacingOccurrencesOfString:@"%" withString:@""];
+            double del_charge = [newStr doubleValue];
+            deliveryAmountValue = (cartTotalValue * del_charge)/100;
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",deliveryAmountValue];
+        }
+        NSDate* newDate = [df dateFromString:[AppData sharedInstance].Pick_Time];
+        [df setDateFormat:@"hh:mm a"];
+        NSString *p_time = [df stringFromDate:newDate];
+        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Pick up your food from counter at %@",(NSString *)p_time];
+    }
+    else if(selectedButtonNumber == 2){
+        if ([billBusiness.delivery_table_charge rangeOfString:@"%"].location == NSNotFound) {
+            deliveryAmountValue = [billBusiness.delivery_table_charge doubleValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",deliveryAmountValue];
+        }
+        else{
+            NSString *newStr = [billBusiness.delivery_table_charge stringByReplacingOccurrencesOfString:@"%" withString:@""];
+            double del_charge = [newStr doubleValue];
+            deliveryAmountValue = (cartTotalValue * del_charge)/100;
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",deliveryAmountValue];
+        }
+        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Your food will be deliver at table number %@",[AppData sharedInstance].consumer_Delivery_Location_Id];
+    }
+    else if(selectedButtonNumber == 3){
+        if ([billBusiness.delivery_location_charge rangeOfString:@"%"].location == NSNotFound) {
+            deliveryAmountValue = [billBusiness.delivery_location_charge doubleValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",deliveryAmountValue];
+        }
+        else{
+            NSString *newStr = [billBusiness.delivery_location_charge stringByReplacingOccurrencesOfString:@"%" withString:@""];
+            double del_charge = [newStr doubleValue];
+            deliveryAmountValue = (cartTotalValue * del_charge)/100;
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",deliveryAmountValue];
+        }
+        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Your food will be deliver at %@",[AppData sharedInstance].consumer_Delivery_Location];
+    }
+    else if(selectedButtonNumber == 4){
+        if ([billBusiness.pickup_location_charge rangeOfString:@"%"].location == NSNotFound) {
+            deliveryAmountValue = [billBusiness.pickup_location_charge doubleValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",deliveryAmountValue];
+        }
+        else
+        {
+            NSString *newStr = [billBusiness.pickup_location_charge stringByReplacingOccurrencesOfString:@"%" withString:@""];
+            double del_charge = [newStr doubleValue];
+            deliveryAmountValue = (cartTotalValue * del_charge)/100;
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",deliveryAmountValue];
+        }
+        NSDate* newDate = [df dateFromString:[AppData sharedInstance].Pick_Time];
+        [df setDateFormat:@"hh:mm a"];
+        NSString *p_time = [df stringFromDate:newDate];
+        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Pickup your food at %@ from parking.",p_time];
+    }
+    
 }
 //Check Promotion Code available
 -(void)checkPromoCodeForUser {
@@ -398,17 +471,20 @@ double deliveryAmountValue = 0.00; //Delievery amount value in $
                             self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%@",billBusiness.promotion_discount_amount];
                         }
                     }
+ 
                     [self paymentSummary];
                 }
                 else
                 {
                     [hud hideAnimated:YES];
+                    [self paymentSummary];
                     [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
                 }
             }];
         }
         else
         {
+            [self paymentSummary];
             [hud hideAnimated:YES];
         }
     }
@@ -463,14 +539,14 @@ double deliveryAmountValue = 0.00; //Delievery amount value in $
         [self calculateTip:currentTipVal];
     }
     else {
-        totalVal = [self.subTotal doubleValue] + tipAmt - promotionalamt +deliveryAmountValue ;
+        totalVal = [self.subTotal doubleValue] + taxVal + tipAmt - promotionalamt +deliveryAmountValue ;
     }
 }
 
 - (void)adjustRedeemPointsAndTheirValues {
     double allAvailablePointsValue = [self calculateValueforGivenPoints:originalNoPoint];
     if ( allAvailablePointsValue <= [self.subTotal doubleValue]) {
-        totalVal = [self.subTotal doubleValue] - allAvailablePointsValue + tipAmt - promotionalamt + deliveryAmountValue;
+        totalVal = [self.subTotal doubleValue] + taxVal - allAvailablePointsValue + tipAmt - promotionalamt + deliveryAmountValue;
         redeemNoPoint = originalNoPoint;
         redeemPointsVal = allAvailablePointsValue;
         dollarValForEachPoints = redeemPointsVal / redeemNoPoint;
@@ -579,7 +655,7 @@ double deliveryAmountValue = 0.00; //Delievery amount value in $
     NSDictionary *orderInfoDict= @{@"cmd":@"save_order",@"data":orderItemArray,@"consumer_id":userID,@"total":[NSString stringWithFormat:@"%f",totalVal],
                                    @"business_id":business_id,@"points_redeemed":[NSString stringWithFormat:@"%ld",(long)currentRedeemPoints],
                                    @"points_dollar_amount":[NSString stringWithFormat:@"%f",redeemPointsDollarValue],
-                                   @"tip_amount":[NSNumber numberWithDouble:tipAmt], @"subtotal":[NSNumber numberWithDouble:[self.subTotal doubleValue]], @"tax_amount":[NSNumber numberWithDouble:0.0],
+                                   @"tip_amount":[NSNumber numberWithDouble:tipAmt], @"subtotal":[NSNumber numberWithDouble:[self.subTotal doubleValue]], @"tax_amount":[NSNumber numberWithDouble:taxVal],
                                    @"cc_last_4_digits":[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)], @"note":self.noteText,
                                    @"consumer_delivery_id":[AppData sharedInstance].consumer_Delivery_Id.length > 0 ? [AppData sharedInstance].consumer_Delivery_Id : @"",
                                    @"delivery_charge_amount":[NSNumber numberWithDouble:deliveryamt],
@@ -673,6 +749,7 @@ double deliveryAmountValue = 0.00; //Delievery amount value in $
                     receiptVC.totalPaid = self.lblSubTotalPrice.text;
                     receiptVC.tipAmount = tipAmt;
                     receiptVC.subTotal = [self.subTotal doubleValue];
+                    
                     [self removeAllOrderFromCoreData];
                     
                     [self.navigationController pushViewController:receiptVC animated:YES];
