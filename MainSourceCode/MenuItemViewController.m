@@ -177,12 +177,12 @@ bool shouldOpenOptionMenu = false;
 
     self.MenuItemTableView.tableHeaderView = self.searchController.searchBar;
     self.searchController.hidesNavigationBarDuringPresentation = false;
-
+    
     self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x,
                                                        self.searchController.searchBar.frame.origin.y,
                                                        self.searchController.searchBar.frame.size.width, 44.0);
 
-    self.definesPresentationContext = YES;
+    self.definesPresentationContext = NO;
 
 //    [[NSNotificationCenter defaultCenter] addObserver:self
 //                                                      selector:@selector(BusinessListAPICall)
@@ -306,10 +306,15 @@ bool shouldOpenOptionMenu = false;
     }
 
     [self.filteredResult removeAllObjects];
-    NSPredicate *filter = [NSPredicate predicateWithFormat:@"name beginswith[c] %@",
-                           searchText];
+    NSPredicate *filter = [NSPredicate predicateWithFormat:@"name beginswith[c] %@ OR product_keywords contains[c] %@",
+                           searchText, searchText];
+//    NSPredicate *filter2 = [NSPredicate predicateWithFormat:@"product_keywords contains[c] %@",
+//                       searchText];
+    
+    NSPredicate *predicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[filter]];
+    
     NSArray * dataArray = [[NSArray alloc]init];
-    dataArray = [mainCategoryArray filteredArrayUsingPredicate:filter];
+    dataArray = [mainCategoryArray filteredArrayUsingPredicate:predicate];
     self.filteredResult = [[NSMutableArray alloc]initWithArray:dataArray];
     NSLog(@"%ld",(unsigned long)self.filteredResult.count);
 }
@@ -788,6 +793,7 @@ bool shouldOpenOptionMenu = false;
     NSString *imageURLString = BusinessCustomerIndividualDirectory;
     NSString *pictureURL = [catArray[indexPath.row] valueForKey:@"pictures"];
 
+    
     if (pictureURL != (id)[NSNull null] && pictureURL.length != 0 ) {
 
         imageURLString = [imageURLString stringByAppendingFormat:@"%@/%@/%@",
@@ -813,6 +819,19 @@ bool shouldOpenOptionMenu = false;
         cell.lbl_description.text = short_desc;
     else
         cell.lbl_description.text = @"";
+    
+    
+    NSString *productIconURL = [catArray[indexPath.row] valueForKey:@"product_icon"];
+    NSString *iconDirectory = BusinessCustomerIconDirectory;
+    
+    if (productIconURL != (id)[NSNull null] && productIconURL.length != 0 ) {
+        
+        iconDirectory = [iconDirectory stringByAppendingFormat:@"%@",
+                          productIconURL];
+        [cell.imgProductIcon sd_setImageWithURL:[NSURL URLWithString:iconDirectory] placeholderImage:nil];
+        cell.imgProductIcon.contentMode = UIViewContentModeScaleAspectFill;
+    }
+    
     cell.lbl_title.text = [catArray[indexPath.row] valueForKey:@"name"];
 
     cell.lbl_money.text = [catArray[indexPath.row] valueForKey:@"price"];
@@ -878,6 +897,18 @@ bool shouldOpenOptionMenu = false;
         cell.lbl_description.text = short_desc;
     else
         cell.lbl_description.text = @"";
+    
+    NSString *productIconURL = [catArray[indexPath.row] valueForKey:@"product_icon"];
+    NSString *iconDirectory = BusinessCustomerIconDirectory;
+    
+    if (productIconURL != (id)[NSNull null] && productIconURL.length != 0 ) {
+        
+        iconDirectory = [iconDirectory stringByAppendingFormat:@"%@",
+                         productIconURL];
+        [cell.imgProductIcon sd_setImageWithURL:[NSURL URLWithString:iconDirectory] placeholderImage:nil];
+        cell.imgProductIcon.contentMode = UIViewContentModeScaleAspectFill;
+    }
+    
     cell.lbl_title.text = [catArray[indexPath.row] valueForKey:@"name"];
 
     cell.lbl_money.text = [catArray[indexPath.row] valueForKey:@"price"];
@@ -1295,6 +1326,7 @@ bool shouldOpenOptionMenu = false;
     businessDetail.product_option = [content valueForKey:@"product_option"];
     businessDetail.item_note = [content valueForKey:@"item_note"];
     businessDetail.note = [content valueForKey:@"note"];
+    businessDetail.product_keywords = [content valueForKey:@"product_keywords"];
 
     businessDetail.item_note = [content valueForKey:@"item_note"];
 //    NSManagedObjectContext *context = [self managedObjectContext];
@@ -1654,6 +1686,7 @@ bool shouldOpenOptionMenu = false;
                     businessDetail.category_name = [responseData objectForKey:@"category_name"];
                     businessDetail.note = @"";
                     businessDetail.availability_status = [[responseData objectForKey:@"availability_status"] integerValue];
+                    businessDetail.product_keywords = [responseData objectForKey:@"product_keywords"];
 
                     NSMutableArray * arr = [responseData objectForKey:@"options"];
 

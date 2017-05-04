@@ -19,6 +19,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *lbl_Pts;
 @property (strong, nonatomic) IBOutlet UILabel *lbl_money;
 @property (strong, nonatomic) IBOutlet UILabel *lbl_dollar;
+@property (weak, nonatomic) IBOutlet UIImageView *imgProductIcon;
 
 //@property (weak, nonatomic) IBOutlet UIButton *btnFevorite;
 @property (strong, nonatomic) IBOutlet CustomUIButton *btnFevorite;

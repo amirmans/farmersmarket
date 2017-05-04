@@ -42,6 +42,7 @@
 @property(nonatomic, strong) NSMutableArray *selected_ProductID_array;
 @property(nonatomic, retain) NSString *note;
 @property(nonatomic, retain) NSString *product_icon;
+@property(nonatomic, retain) NSString *product_keywords;
 @property(nonatomic, retain) NSString *category_icon;
 @property(nonatomic, retain) NSString *item_note;
 
