@@ -518,7 +518,7 @@
         [businessTypes appendString:tmpStr];
     }
     NSString *urlString = BusinessInformationServer;
-    NSString *getValues = [NSString stringWithFormat:@"?businessName=%@", businessName];
+    NSString *getValues = [NSString stringWithFormat:@"?businessName=%@&cmd=%@", businessName, @"getBusinessInfoWithName"];
     urlString = [urlString stringByAppendingString:getValues];
     //urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];

@@ -21,7 +21,8 @@ static NSString *const ServerForBusiness = @"https://tapforall.com/staging/tap-i
 #define ChatValidationWorkflow_Not_Valid 3
 #define ChatValidationWorkflow_ErrorFromServer -1
 #define BusinessAndProductionInformationServer @"https://tapforall.com/staging/tap-in/include/model.php"
-#define BusinessInformationServer @"https://tapforall.com/staging/tap-in/businessinfo/index.php"
+//#define BusinessInformationServer @"https://tapforall.com/staging/tap-in/businessinfo/index.php"
+#define BusinessInformationServer @"https://tapforall.com/staging/tap-in/include/model.php"
 #define ConsumerProfileServer @"https://tapforall.com/staging/tap-in/profilesystem/consumerprofile.php"
 #define SetFavoriteServer @"https://tapforall.com/staging/tap-in/include/model.php"
 #define GetRewardPoints @"https://tapforall.com/staging/tap-in/include/model.php"

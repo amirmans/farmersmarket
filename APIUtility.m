@@ -62,40 +62,40 @@ static APIUtility *sharedObj;
           }];
 }
 
--(void)BusinessListAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished
-{
-    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
-    {
-        return;
-    }
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
-    [manager GET:[NSString stringWithFormat:@"%@",BusinessInformationServer] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
-        if (finished) {
-            finished((NSDictionary*)responseObject);
-        }
-        
-    } failure:^(NSURLSessionTask *operation, NSError *error) {
-        
-        NSLog(@"Error: %@", error);
-        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
-        NSDictionary *temp = @{};
-        
-        if([error code] == -1004) {
-            
-            if (finished) {
-                finished(dic);
-            }
-        }
-        else
-        {
-            if (finished) {
-                finished(temp);
-            }
-        }
-    }];
-}
+//-(void)BusinessListAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished
+//{
+//    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+//    {
+//        return;
+//    }
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    [manager.requestSerializer setTimeoutInterval:timeInterval];
+//    
+//    [manager GET:[NSString stringWithFormat:@"%@",BusinessInformationServer] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+//        if (finished) {
+//            finished((NSDictionary*)responseObject);
+//        }
+//        
+//    } failure:^(NSURLSessionTask *operation, NSError *error) {
+//        
+//        NSLog(@"Error: %@", error);
+//        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
+//        NSDictionary *temp = @{};
+//        
+//        if([error code] == -1004) {
+//            
+//            if (finished) {
+//                finished(dic);
+//            }
+//        }
+//        else
+//        {
+//            if (finished) {
+//                finished(temp);
+//            }
+//        }
+//    }];
+//}
 
 -(void)BusinessDelivaryInfoAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished
 {

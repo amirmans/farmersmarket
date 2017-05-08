@@ -18,7 +18,7 @@
 - (void)serverCallToGetListofAllBusinesses
 {
     NSString *urlString = BusinessInformationServer;
-    NSDictionary *params = @{@"businessID":[NSNumber numberWithInt:0]};
+    NSDictionary *params = @{@"businessID":[NSNumber numberWithInt:0], @"cmd":@"getBusinessInfoWithConsumerRating"};
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager  manager];
     
