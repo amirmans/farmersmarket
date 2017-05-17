@@ -521,12 +521,11 @@
     NSString *getValues = [NSString stringWithFormat:@"?businessName=%@&cmd=%@", businessName, @"getBusinessInfoWithName"];
     urlString = [urlString stringByAppendingString:getValues];
     //urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSMutableURLRequest *request =
-    [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadRevalidatingCacheData timeoutInterval:10];
+//    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+//    NSURL *url = [NSURL URLWithString:urlString];
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadRevalidatingCacheData timeoutInterval:10];
     
-    NSURLResponse *resp = nil;
+//    NSURLResponse *resp = nil;
     NSError *err = nil;
     NSData *responseData;
 //    responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&err];
@@ -541,15 +540,6 @@
                 // handle response
                 
             }] resume];
-    
-    
-    
-    
-    
-    
-    
-    
-    
     isCustomer = 0;
   
     if (!err) {

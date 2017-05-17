@@ -48,7 +48,7 @@ NSDate *setMinPickerTimeOD;
 #pragma mark - Life Cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"Pickup Order";
+    self.title = @"Pick up/Delivery Options";
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
@@ -99,8 +99,6 @@ NSDate *setMinPickerTimeOD;
                 for (int i = 0 ; i < self.locationArray.count ; i++) {
                     [self.locationNameArray addObject:[self.locationArray[i] objectForKey:@"location_name"]];
                 }
-
-                
                 NSLog(@"%@",tableMinNo);
                 NSLog(@"%@",tableMaxNo);
                 for (int i = [tableMinNo intValue] ; i <= [tableMaxNo intValue] ; i++) {
@@ -124,9 +122,11 @@ NSDate *setMinPickerTimeOD;
     NSInteger  tableVal = [bis.delivery_table_charge intValue];
     NSInteger  locationVal = [bis.delivery_location_charge intValue];
     NSInteger  parkingVal = [bis.pickup_location_charge intValue];
+    NSString *openingTime = bis.opening_time;
+    NSString *closingTime = bis.closing_time;
+
     if(counterVal != -1){
         self.btnCounter.enabled = YES;
-        
         self.viewCounter.hidden = NO;
         self.viewTable.hidden = YES;
         self.viewDesignationLocation.hidden = YES;
@@ -165,7 +165,6 @@ NSDate *setMinPickerTimeOD;
     
     if(tableVal != -1){
         self.btnTable.enabled = YES;
-        
  
     }
     if(locationVal != -1){
@@ -183,7 +182,85 @@ NSDate *setMinPickerTimeOD;
 //   
 //    }
     //------------------------------//
-   
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)); // 1
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        NSDate *now = [NSDate date];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"HH:mm:ss"];
+        
+        NSLog(@"The Current Time is %@",[formatter stringFromDate:now]);
+        NSString *time2 = [formatter stringFromDate:now];
+        
+        NSDate *date1= [formatter dateFromString:openingTime];
+        NSDate *date2 = [formatter dateFromString:time2];
+        
+        NSString *time3 = closingTime;
+        NSDate *date3= [formatter dateFromString:time3];
+        
+        NSComparisonResult result = [date1 compare:date2];
+        
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.dateFormat = @"hh:mm a";
+        [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
+       if(result == NSOrderedDescending)
+        {
+            NSLog(@"date1 is later than date2");
+            self.btnCounterPickupTime.enabled = NO;
+            self.btnCounter.enabled = NO;
+            NSString *currentTime = [dateFormatter stringFromDate:date1];
+            [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
+            [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
+            [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
+        }
+        else if(result == NSOrderedAscending)
+        {
+            NSLog(@"date2 is later than date1");
+            NSComparisonResult result2 = [date2 compare:date3];
+            if(result2 == NSOrderedAscending)
+            {
+                if([date2 compare:date3] == NSOrderedDescending)
+                {
+                    self.btnCounterPickupTime.enabled = NO;
+                    self.btnCounter.enabled = NO;
+                    NSString *currentTime = [dateFormatter stringFromDate:date1];
+                    [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
+                    [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
+                    [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
+                }
+                else
+                {
+                    self.btnCounterPickupTime.enabled = YES;
+                    self.btnCounter.enabled = YES;
+                    NSDate *newDate = [now dateByAddingTimeInterval:60*[deliveryTimeInterval intValue]]; // Add XXX seconds to *now
+                    NSString *currentTime = [dateFormatter stringFromDate:newDate];
+                    [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
+                    [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
+                    [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
+                }
+            }
+            else if(result2 == NSOrderedDescending)
+            {
+                self.btnCounterPickupTime.enabled = NO;
+                self.btnCounter.enabled = NO;
+                NSString *currentTime = [dateFormatter stringFromDate:date1];
+                [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
+                [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
+                [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
+            }
+        }
+        else
+        {
+            NSLog(@"date1 is equal to date2");
+            self.btnCounterPickupTime.enabled = NO;
+            self.btnCounter.enabled = NO;
+            NSString *currentTime = [dateFormatter stringFromDate:date1];
+            [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
+            [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
+            [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
+        }
+    });
     deliveryLocation = self.locationNameArray;
 //    [_btnLocation setTitle:deliveryLocation[0] forState:UIControlStateNormal];
     
@@ -192,15 +269,10 @@ NSDate *setMinPickerTimeOD;
     self.txtNotes.delegate = self;
     billBusiness = [CurrentBusiness sharedCurrentBusinessManager].business;
     self.lblHotelName.text = billBusiness.title;
-//    NSDate *now = [NSDate date];
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"hh:mm a";
-    [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
-    [self.btnParkingPickUp setTitle:@"-- Select Time --" forState:UIControlStateNormal];
-    [self.btnDesignationLocationPickUp setTitle:@"-- Select Time --" forState:UIControlStateNormal];
-    [self.btnCounterPickupTime setTitle:@"-- Select Time --" forState:UIControlStateNormal];
     
+
+
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -881,8 +953,8 @@ NSDate *setMinPickerTimeOD;
             [HUD showAnimated:YES];
             NSDate* newDate = [df dateFromString:self.btnDesignationLocationPickUp.titleLabel.text];
             [df setDateFormat:@"HH:mm:ss"];
-            newDate = [df stringFromDate:newDate];
-            uploadTime = (NSString *)newDate;
+//            newDate = [df stringFromDate:newDate];
+            uploadTime = (NSString *)[df stringFromDate:newDate];
             NSLog(@"%@",uploadTime);
             NSDictionary *inDataDict;
             
@@ -953,8 +1025,8 @@ NSDate *setMinPickerTimeOD;
         else{
             NSDate* newDate = [df dateFromString:self.btnCounterPickupTime.titleLabel.text];
             [df setDateFormat:@"HH:mm:ss"];
-            newDate = [df stringFromDate:newDate];
-            uploadTime = (NSString *)newDate;
+//            newDate = [df stringFromDate:newDate];
+            uploadTime = (NSString *)[df stringFromDate:newDate];;
             NSLog(@"%@",uploadTime);
 
             [AppData sharedInstance].consumer_Delivery_Id =@"";
@@ -992,8 +1064,8 @@ NSDate *setMinPickerTimeOD;
         else{
             NSDate* newDate = [df dateFromString:self.btnParkingPickUp.titleLabel.text];
             [df setDateFormat:@"HH:mm:ss"];
-            newDate = [df stringFromDate:newDate];
-            uploadTime = (NSString *)newDate;
+//            newDate = [df stringFromDate:newDate];
+            uploadTime = (NSString *)[df stringFromDate:newDate];
             NSLog(@"%@",uploadTime);
 
             [AppData sharedInstance].consumer_Delivery_Id =@"";

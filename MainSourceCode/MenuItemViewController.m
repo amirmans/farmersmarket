@@ -168,6 +168,7 @@ bool shouldOpenOptionMenu = false;
     [self setMyCartValue];
 
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
 
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.delegate = self;
@@ -183,7 +184,7 @@ bool shouldOpenOptionMenu = false;
                                                        self.searchController.searchBar.frame.size.width, 44.0);
 
     self.definesPresentationContext = NO;
-
+//    self.searchController.searchBar.translucent = NO;
 //    [[NSNotificationCenter defaultCenter] addObserver:self
 //                                                      selector:@selector(BusinessListAPICall)
 //                                                      name:@"GotProductData"
@@ -306,12 +307,12 @@ bool shouldOpenOptionMenu = false;
     }
 
     [self.filteredResult removeAllObjects];
-    NSPredicate *filter = [NSPredicate predicateWithFormat:@"name beginswith[c] %@ OR product_keywords contains[c] %@",
-                           searchText, searchText];
-//    NSPredicate *filter2 = [NSPredicate predicateWithFormat:@"product_keywords contains[c] %@",
-//                       searchText];
+    NSPredicate *filter = [NSPredicate predicateWithFormat:@"name beginswith[c] %@",
+                           searchText];
+    NSPredicate *filter2 = [NSPredicate predicateWithFormat:@"product_keywords contains[c] %@",
+                       searchText];
     
-    NSPredicate *predicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[filter]];
+    NSPredicate *predicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[filter, filter2]];
     
     NSArray * dataArray = [[NSArray alloc]init];
     dataArray = [mainCategoryArray filteredArrayUsingPredicate:predicate];
@@ -1509,18 +1510,6 @@ bool shouldOpenOptionMenu = false;
                                      [alert dismissViewControllerAnimated:YES completion:nil];
                                      [self AddItemInCart:businessDetail CustomUIButton:sender];
                                  }];
-            UIAlertAction* cancel = [UIAlertAction
-                                     actionWithTitle:@"Cancel"
-                                     style:UIAlertActionStyleDefault
-                                     handler:^(UIAlertAction * action)
-                                     {
-                                         NSLog(@"Resolving UIAlertActionController for tapping cancel button");
-                                         [alert dismissViewControllerAnimated:YES completion:nil];
-                                         [self AddItemInCart:businessDetail CustomUIButton:sender];
-                                     }];
-            
-            
-            [alert addAction:cancel];
             [alert addAction:ok];
             
             [alert addTextFieldWithConfigurationHandler:^(UITextField * textField) {
@@ -1686,7 +1675,6 @@ bool shouldOpenOptionMenu = false;
                     businessDetail.category_name = [responseData objectForKey:@"category_name"];
                     businessDetail.note = @"";
                     businessDetail.availability_status = [[responseData objectForKey:@"availability_status"] integerValue];
-                    businessDetail.product_keywords = [responseData objectForKey:@"product_keywords"];
 
                     NSMutableArray * arr = [responseData objectForKey:@"options"];
 
