@@ -8,7 +8,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TPReceiptController">
             <connections>
                 <outlet property="lblAverageWaitingTime" destination="pnT-VL-1N1" id="9hJ-4p-gNy"/>
-                <outlet property="lblBusinessName" destination="qxE-2t-eAG" id="AV7-o2-Aju"/>
                 <outlet property="lblCardDetails" destination="E6d-dH-27v" id="xyf-Iv-SL8"/>
                 <outlet property="lblEarnedReward" destination="CnT-B8-bZM" id="J3d-Wb-Red"/>
                 <outlet property="lblOrderNumber" destination="kHV-Sn-g1q" id="igf-KR-pF6"/>
@@ -29,29 +28,13 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iJb-8H-mCz" userLabel="ThankYou View">
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="May-FB-Je1">
-                            <constraints>
-                                <constraint firstAttribute="height" constant="21" id="EyN-g7-gwg"/>
-                                <constraint firstAttribute="width" constant="306" id="Pb6-Zm-CvE"/>
-                            </constraints>
-                            <attributedString key="attributedText">
-                                <fragment content="THANKS FOR YOUR ORDER!">
-                                    <attributes>
-                                        <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <font key="NSFont" size="14" name="HelveticaNeue-Bold"/>
-                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="1" tighteningFactorForTruncation="0.0"/>
-                                    </attributes>
-                                </fragment>
-                            </attributedString>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We'll send you an alert when order is ready." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ho2-ag-wUO">
                             <constraints>
-                                <constraint firstAttribute="height" constant="37" id="4dE-aU-3BH"/>
+                                <constraint firstAttribute="height" constant="24" id="4dE-aU-3BH"/>
                                 <constraint firstAttribute="width" constant="350" id="R7P-2c-5Bu"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your receipt will be emailed shortly" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="59D-gT-TNz">
@@ -60,17 +43,26 @@
                                 <constraint firstAttribute="height" constant="21" id="i5l-v9-zVZ"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qxE-2t-eAG">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thank You" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qxE-2t-eAG">
                             <constraints>
-                                <constraint firstAttribute="height" constant="16.5" id="8kV-8z-M6y"/>
+                                <constraint firstAttribute="height" constant="26" id="8kV-8z-M6y"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="26"/>
+                            <color key="textColor" red="0.97647058819999999" green="0.47843137250000001" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="May-FB-Je1">
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="EyN-g7-gwg"/>
+                                <constraint firstAttribute="width" constant="306" id="Pb6-Zm-CvE"/>
                             </constraints>
                             <attributedString key="attributedText">
-                                <fragment content="Business Full Name">
+                                <fragment content="THANKS FOR YOUR ORDER!">
                                     <attributes>
-                                        <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <font key="NSFont" size="14" name="HelveticaNeue"/>
                                         <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="1" tighteningFactorForTruncation="0.0"/>
                                     </attributes>
@@ -79,16 +71,16 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.95686274510000002" green="0.51372549020000002" blue="0.1215686275" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="May-FB-Je1" firstAttribute="centerX" secondItem="iJb-8H-mCz" secondAttribute="centerX" id="7aM-UD-M6E"/>
                         <constraint firstItem="qxE-2t-eAG" firstAttribute="top" secondItem="May-FB-Je1" secondAttribute="bottom" id="Amf-3X-NFe"/>
-                        <constraint firstItem="ho2-ag-wUO" firstAttribute="top" secondItem="qxE-2t-eAG" secondAttribute="bottom" constant="4.5" id="JH2-zf-MvK"/>
+                        <constraint firstItem="ho2-ag-wUO" firstAttribute="top" secondItem="qxE-2t-eAG" secondAttribute="bottom" constant="8" id="JH2-zf-MvK"/>
                         <constraint firstItem="May-FB-Je1" firstAttribute="top" secondItem="iJb-8H-mCz" secondAttribute="top" constant="9" id="Jjs-0y-xn3"/>
                         <constraint firstItem="59D-gT-TNz" firstAttribute="top" secondItem="ho2-ag-wUO" secondAttribute="bottom" id="QZf-oR-Mc3"/>
                         <constraint firstItem="qxE-2t-eAG" firstAttribute="centerX" secondItem="iJb-8H-mCz" secondAttribute="centerX" id="Sdf-U2-Dfd"/>
                         <constraint firstAttribute="bottom" secondItem="ho2-ag-wUO" secondAttribute="bottom" constant="33" id="U7f-Ch-Qu8"/>
-                        <constraint firstItem="ho2-ag-wUO" firstAttribute="top" secondItem="qxE-2t-eAG" secondAttribute="bottom" constant="4.5" id="Wlm-Cr-QpJ"/>
+                        <constraint firstItem="ho2-ag-wUO" firstAttribute="top" secondItem="qxE-2t-eAG" secondAttribute="bottom" constant="8" id="Wlm-Cr-QpJ"/>
                         <constraint firstItem="ho2-ag-wUO" firstAttribute="centerX" secondItem="iJb-8H-mCz" secondAttribute="centerX" id="fab-xv-UEZ"/>
                         <constraint firstItem="qxE-2t-eAG" firstAttribute="top" secondItem="May-FB-Je1" secondAttribute="bottom" id="ptg-r4-MsT"/>
                         <constraint firstItem="59D-gT-TNz" firstAttribute="centerX" secondItem="iJb-8H-mCz" secondAttribute="centerX" id="rHr-Yn-sOD"/>
@@ -303,7 +295,6 @@
                 <constraint firstItem="iJb-8H-mCz" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="hcr-5n-RtE"/>
                 <constraint firstAttribute="bottom" secondItem="DzX-uI-PPh" secondAttribute="bottom" id="tQg-mL-4GY"/>
             </constraints>
-            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="547.5" y="447.5"/>
         </view>

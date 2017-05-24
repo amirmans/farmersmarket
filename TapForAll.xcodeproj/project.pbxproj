@@ -238,6 +238,10 @@
 		DA3C19C41E974BFC00ADDE31 /* OrderDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA3C19C21E974BFC00ADDE31 /* OrderDetailViewController.xib */; };
 		DA3E43A31E9A1CF6004FF1BA /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3E43A11E9A1CF6004FF1BA /* HomeViewController.m */; };
 		DA3E43A41E9A1CF6004FF1BA /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA3E43A21E9A1CF6004FF1BA /* HomeViewController.xib */; };
+		DA6580B01ED05F4C0043862A /* MakePaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA6580AE1ED05F4C0043862A /* MakePaymentViewController.m */; };
+		DA6580B11ED05F4C0043862A /* MakePaymentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA6580AF1ED05F4C0043862A /* MakePaymentViewController.xib */; };
+		DA6580B91ED075C20043862A /* cardDetailCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA6580B71ED075C20043862A /* cardDetailCollectionCell.m */; };
+		DA6580BA1ED075C20043862A /* cardDetailCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA6580B81ED075C20043862A /* cardDetailCollectionCell.xib */; };
 		DAB7A2461E9811DF00FFD508 /* KPDropMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = DAB7A2451E9811DF00FFD508 /* KPDropMenu.m */; };
 /* End PBXBuildFile section */
 
@@ -577,6 +581,12 @@
 		DA3E43A01E9A1CF6004FF1BA /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		DA3E43A11E9A1CF6004FF1BA /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		DA3E43A21E9A1CF6004FF1BA /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		DA6580AD1ED05F4C0043862A /* MakePaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakePaymentViewController.h; sourceTree = "<group>"; };
+		DA6580AE1ED05F4C0043862A /* MakePaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakePaymentViewController.m; sourceTree = "<group>"; };
+		DA6580AF1ED05F4C0043862A /* MakePaymentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MakePaymentViewController.xib; sourceTree = "<group>"; };
+		DA6580B61ED075C20043862A /* cardDetailCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cardDetailCollectionCell.h; sourceTree = "<group>"; };
+		DA6580B71ED075C20043862A /* cardDetailCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cardDetailCollectionCell.m; sourceTree = "<group>"; };
+		DA6580B81ED075C20043862A /* cardDetailCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = cardDetailCollectionCell.xib; sourceTree = "<group>"; };
 		DAB7A2441E9811DF00FFD508 /* KPDropMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPDropMenu.h; sourceTree = "<group>"; };
 		DAB7A2451E9811DF00FFD508 /* KPDropMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPDropMenu.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1061,9 +1071,15 @@
 				4ACD41AC1E1FDEAB002F9379 /* CartViewSecondScreenViewController.h */,
 				4ACD41AD1E1FDEAB002F9379 /* CartViewSecondScreenViewController.m */,
 				4A32F15B1E3ADD9A002F4565 /* CartViewSecondScreenViewController.xib */,
+				DA6580AD1ED05F4C0043862A /* MakePaymentViewController.h */,
+				DA6580AE1ED05F4C0043862A /* MakePaymentViewController.m */,
+				DA6580AF1ED05F4C0043862A /* MakePaymentViewController.xib */,
 				DA3E43A01E9A1CF6004FF1BA /* HomeViewController.h */,
 				DA3E43A11E9A1CF6004FF1BA /* HomeViewController.m */,
 				DA3E43A21E9A1CF6004FF1BA /* HomeViewController.xib */,
+				DA6580B61ED075C20043862A /* cardDetailCollectionCell.h */,
+				DA6580B71ED075C20043862A /* cardDetailCollectionCell.m */,
+				DA6580B81ED075C20043862A /* cardDetailCollectionCell.xib */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -1326,6 +1342,7 @@
 				C662DDFE18D8442F00683BBF /* BubbleCenter.png in Resources */,
 				12C090E71DDDDB600033CEA9 /* CartViewController.xib in Resources */,
 				5D7AEDCE1C6934E400B0929F /* ic_food.png in Resources */,
+				DA6580B11ED05F4C0043862A /* MakePaymentViewController.xib in Resources */,
 				5D7AEDB81C692B6800B0929F /* tempImage.jpeg in Resources */,
 				5D7AEDD41C6934E400B0929F /* ic_nav.png in Resources */,
 				5D7AEDD81C6934E400B0929F /* ic_service@2x.png in Resources */,
@@ -1362,6 +1379,7 @@
 				C6EABE1818B2D1CD00F50D19 /* BusinessListViewController.xib in Resources */,
 				5D7AEDCB1C6934E400B0929F /* ic_calendar.png in Resources */,
 				12C090EC1DDDEC6E0033CEA9 /* CartItemTableViewCell.xib in Resources */,
+				DA6580BA1ED075C20043862A /* cardDetailCollectionCell.xib in Resources */,
 				5D7AEDD71C6934E400B0929F /* ic_service.png in Resources */,
 				4A3A1D921CC6578100457B07 /* MenuItemOptionsView.xib in Resources */,
 				5D7AEDFB1C696B3800B0929F /* pin4.png in Resources */,
@@ -1510,6 +1528,7 @@
 				C6308DE41C3E52EC00B6B8B0 /* EventTableViewCell.m in Sources */,
 				4A737B7C1C68B0DD00ADCD49 /* AppData.m in Sources */,
 				4A6643E91C74A04000C10421 /* SIMenuButton.m in Sources */,
+				DA6580B91ED075C20043862A /* cardDetailCollectionCell.m in Sources */,
 				4AAD6B6C1D018A4D00AED4F7 /* MenuItemNoImageTableViewCell.m in Sources */,
 				4A0F2CD51C726D08005C6F22 /* TotalCartItemController.m in Sources */,
 				C68FE1D418E64F9200FB4321 /* QRData.m in Sources */,
@@ -1593,6 +1612,7 @@
 				4AC5CB9D1CAE8F8B0087A65F /* CateringViewController.m in Sources */,
 				2971AF4A16071AFA0022B72E /* NotificationPermissionViewController.m in Sources */,
 				C6C8ACA918DF9B8F005DAFD6 /* main.m in Sources */,
+				DA6580B01ED05F4C0043862A /* MakePaymentViewController.m in Sources */,
 				4A6643EB1C74A04000C10421 /* SIMenuConfiguration.m in Sources */,
 				1240F8EE1DAD3F19005D0642 /* DeliveryViewController.m in Sources */,
 				29CDC4B516293F5A002E3D5A /* BusinessProductsUtils.m in Sources */,

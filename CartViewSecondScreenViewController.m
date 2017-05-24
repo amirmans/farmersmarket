@@ -44,7 +44,7 @@ double deliveryAmountValue; //Delievery amount value in $
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Pay";
+    self.title = @"Order Summary";
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
@@ -220,13 +220,26 @@ double deliveryAmountValue; //Delievery amount value in $
 }
 
 - (IBAction)btnPayNowClicked:(id)sender {
-    if(defaultCardData != nil){
-        [self postOrderToServer];
-    }
-    else
-    {
-        [AppData showAlert:@"Error" message:@"Please set first any one default card" buttonTitle:@"Ok" viewClass:self];
-    }
+    MakePaymentViewController *makePaymentVC = [[MakePaymentViewController alloc] initWithNibName:@"MakePaymentViewController" bundle:nil];
+    makePaymentVC.finalOrderItems = self.orderItems;
+    makePaymentVC.currentTipVal = currentTipVal;
+    makePaymentVC.totalVal = totalVal;
+    makePaymentVC.subTotalVal = [self.subTotal doubleValue];
+    makePaymentVC.taxVal = taxVal;
+    makePaymentVC.tipAmt = tipAmt;
+    makePaymentVC.promotionalamt = promotionalamt;
+    makePaymentVC.deliveryAmountValue = deliveryAmountValue;
+    makePaymentVC.deliveryamt = deliveryamt;
+    makePaymentVC.noteText = self.noteText;
+    makePaymentVC.restTitle = self.lblTitle.text;
+    [self.navigationController pushViewController:makePaymentVC animated:YES];
+//    if(defaultCardData != nil){
+//        [self postOrderToServer];
+//    }
+//    else
+//    {
+//        [AppData showAlert:@"Error" message:@"Please set first any one default card" buttonTitle:@"Ok" viewClass:self];
+//    }
 }
 
 #pragma mark - Custom Functions
@@ -251,7 +264,7 @@ double deliveryAmountValue; //Delievery amount value in $
 }
 - (void) setNoTip {
     
-    self.btnNoTip.backgroundColor = [UIColor blackColor];
+    self.btnNoTip.backgroundColor = [UIColor colorWithDisplayP3Red:249.0/255.0 green:122.0/255.0 blue:18.0/255.0 alpha:1.0];
     self.btnTip10.backgroundColor = [UIColor whiteColor];
     self.btnTip15.backgroundColor = [UIColor whiteColor];
     self.btnTip20.backgroundColor = [UIColor whiteColor];
@@ -267,7 +280,7 @@ double deliveryAmountValue; //Delievery amount value in $
 - (void) setTip10 {
     
     self.btnNoTip.backgroundColor = [UIColor whiteColor];
-    self.btnTip10.backgroundColor = [UIColor blackColor];
+    self.btnTip10.backgroundColor = [UIColor colorWithDisplayP3Red:249.0/255.0 green:122.0/255.0 blue:18.0/255.0 alpha:1.0];
     self.btnTip15.backgroundColor = [UIColor whiteColor];
     self.btnTip20.backgroundColor = [UIColor whiteColor];
     self.btnOther.backgroundColor = [UIColor whiteColor];
@@ -283,7 +296,7 @@ double deliveryAmountValue; //Delievery amount value in $
     
     self.btnNoTip.backgroundColor = [UIColor whiteColor];
     self.btnTip10.backgroundColor = [UIColor whiteColor];
-    self.btnTip15.backgroundColor = [UIColor blackColor];
+    self.btnTip15.backgroundColor = [UIColor colorWithDisplayP3Red:249.0/255.0 green:122.0/255.0 blue:18.0/255.0 alpha:1.0];
     self.btnTip20.backgroundColor = [UIColor whiteColor];
     self.btnOther.backgroundColor = [UIColor whiteColor];
     [self.btnNoTip setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -299,7 +312,7 @@ double deliveryAmountValue; //Delievery amount value in $
     self.btnNoTip.backgroundColor = [UIColor whiteColor];
     self.btnTip10.backgroundColor = [UIColor whiteColor];
     self.btnTip15.backgroundColor = [UIColor whiteColor];
-    self.btnTip20.backgroundColor = [UIColor blackColor];
+    self.btnTip20.backgroundColor = [UIColor colorWithDisplayP3Red:249.0/255.0 green:122.0/255.0 blue:18.0/255.0 alpha:1.0];
     self.btnOther.backgroundColor = [UIColor whiteColor];
     [self.btnNoTip setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.btnTip10 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -359,14 +372,14 @@ double deliveryAmountValue; //Delievery amount value in $
         if ([billBusiness.pickup_counter_charge rangeOfString:@"%"].location == NSNotFound)
         {
             deliveryAmountValue = [billBusiness.pickup_counter_charge doubleValue];
-            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",deliveryAmountValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",deliveryAmountValue];
         }
         else
         {
             NSString *newStr = [billBusiness.pickup_counter_charge stringByReplacingOccurrencesOfString:@"%" withString:@""];
             double del_charge = [newStr doubleValue];
             deliveryAmountValue = (cartTotalValue * del_charge)/100;
-            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",deliveryAmountValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",deliveryAmountValue];
         }
         NSDate* newDate = [df dateFromString:[AppData sharedInstance].Pick_Time];
         [df setDateFormat:@"hh:mm a"];
@@ -376,40 +389,40 @@ double deliveryAmountValue; //Delievery amount value in $
     else if(selectedButtonNumber == 2){
         if ([billBusiness.delivery_table_charge rangeOfString:@"%"].location == NSNotFound) {
             deliveryAmountValue = [billBusiness.delivery_table_charge doubleValue];
-            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",deliveryAmountValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",deliveryAmountValue];
         }
         else{
             NSString *newStr = [billBusiness.delivery_table_charge stringByReplacingOccurrencesOfString:@"%" withString:@""];
             double del_charge = [newStr doubleValue];
             deliveryAmountValue = (cartTotalValue * del_charge)/100;
-            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",deliveryAmountValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",deliveryAmountValue];
         }
         self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Your food will be deliver at table number %@",[AppData sharedInstance].consumer_Delivery_Location_Id];
     }
     else if(selectedButtonNumber == 3){
         if ([billBusiness.delivery_location_charge rangeOfString:@"%"].location == NSNotFound) {
             deliveryAmountValue = [billBusiness.delivery_location_charge doubleValue];
-            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",deliveryAmountValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",deliveryAmountValue];
         }
         else{
             NSString *newStr = [billBusiness.delivery_location_charge stringByReplacingOccurrencesOfString:@"%" withString:@""];
             double del_charge = [newStr doubleValue];
             deliveryAmountValue = (cartTotalValue * del_charge)/100;
-            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",deliveryAmountValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",deliveryAmountValue];
         }
         self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Your food will be deliver at %@",[AppData sharedInstance].consumer_Delivery_Location];
     }
     else if(selectedButtonNumber == 4){
         if ([billBusiness.pickup_location_charge rangeOfString:@"%"].location == NSNotFound) {
             deliveryAmountValue = [billBusiness.pickup_location_charge doubleValue];
-            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",deliveryAmountValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",deliveryAmountValue];
         }
         else
         {
             NSString *newStr = [billBusiness.pickup_location_charge stringByReplacingOccurrencesOfString:@"%" withString:@""];
             double del_charge = [newStr doubleValue];
             deliveryAmountValue = (cartTotalValue * del_charge)/100;
-            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"Delivery Charge: $%.2f",deliveryAmountValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",deliveryAmountValue];
         }
         NSDate* newDate = [df dateFromString:[AppData sharedInstance].Pick_Time];
         [df setDateFormat:@"hh:mm a"];

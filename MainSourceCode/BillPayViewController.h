@@ -45,6 +45,13 @@
 
 @property (strong, nonatomic) NSDictionary *orderInfoDict;
 
+@property (weak, nonatomic) IBOutlet UITextField *txtCardHolderName;
+@property (weak, nonatomic) IBOutlet UITextField *txtCardNumber;
+@property (weak, nonatomic) IBOutlet UITextField *txtExpMonth;
+@property (weak, nonatomic) IBOutlet UITextField *txtExpYear;
+@property (weak, nonatomic) IBOutlet UITextField *txtCVV;
+
+
 
 //@property (nonatomic, weak) id<STPBackendCharging> backendCharger;
 

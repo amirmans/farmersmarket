@@ -15,6 +15,7 @@
 #import "RewardDetailsModel.h"
 #import "BillPayViewController.h"
 #import "TPReceiptController.h"
+#import "MakePaymentViewController.h"
 
 @interface CartViewSecondScreenViewController : UIViewController{
     Business  *billBusiness;

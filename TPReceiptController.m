@@ -204,7 +204,7 @@
 
 #pragma mark - Custom Methods
 - (void) setOrderData {
-    [AppData setBusinessBackgroundColor:self.thanyouView];
+//    [AppData setBusinessBackgroundColor:self.thanyouView];
     self.lblOrderNumber.text = self.order_id;
     self.lblEarnedReward.text = [NSString stringWithFormat:@"You Earned %@ Reward Points!",self.reward_point];
     self.lblRedeemReward.text = [NSString stringWithFormat:@"You Redeemed %@ Reward Points!",self.redeem_point];
