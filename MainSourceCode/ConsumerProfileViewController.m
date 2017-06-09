@@ -214,6 +214,7 @@ static NSArray *consumerProfileDataArray = nil;
 
 
 - (void)populateFieldsWithInitialValues {
+    
     nicknameTextField.text = [DataModel sharedDataModelManager].nickname;
     passwordTextField.text = [DataModel sharedDataModelManager].password;
     passwordAgainTextField.text = [DataModel sharedDataModelManager].password;
@@ -513,8 +514,11 @@ static NSArray *consumerProfileDataArray = nil;
                 if ((qrImageFileName != nil) && (qrImageFileName != (id)[NSNull null])) {
                     [DataModel sharedDataModelManager].qrImageFileName = qrImageFileName;
                 }
-                [DataModel sharedDataModelManager].zipcode = zipcodeTextField.text;
-                [DataModel sharedDataModelManager].emailAddress = emailTextField.text;
+            
+            [[DataModel sharedDataModelManager] setZipcode:zipcodeTextField.text];
+            [[DataModel sharedDataModelManager] setEmailAddress:emailTextField.text];
+//                [DataModel sharedDataModelManager].zipcode = zipcodeTextField.text;
+//                [DataModel sharedDataModelManager].emailAddress = emailTextField.text;
             
                 [[DataModel sharedDataModelManager] setUserIDWithString:jsonDictResponse[@"uid"]];
             

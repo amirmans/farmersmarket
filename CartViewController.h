@@ -14,7 +14,8 @@
 #import "UIAlertView+TapTalkAlerts.h"
 #import "OrderDetailViewController.h"
 
-@interface CartViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate>{
+
+@interface CartViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,UITextFieldDelegate>{
     Business  *billBusiness;
     NSDecimalNumber *billInDollar;
     NSDecimalNumber *zero;

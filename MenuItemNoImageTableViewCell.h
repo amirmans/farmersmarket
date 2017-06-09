@@ -15,6 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *contentBackgroundView;
 
+@property (weak, nonatomic) IBOutlet UIView *cellOuterView;
 
 @property (strong, nonatomic) IBOutlet UILabel *lbl_title;
 @property (weak, nonatomic) IBOutlet UILabel *lbl_description;

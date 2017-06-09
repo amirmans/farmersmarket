@@ -61,7 +61,7 @@ static AppDelegate *sharedObj;
 //    [GMSServices provideAPIKey:@"AIzaSyD7WfHjPssiG_nJi5P0rF4GJHUxxrFCono"];
 //      [GMSServices provideAPIKey:@"AIzaSyAnP9ELVL1xHQqJGhba_3gH9nWLXV5N5n8"];
     
-    
+    [[STPPaymentConfiguration sharedConfiguration] setPublishableKey:@"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi"];
     [GMSServices provideAPIKey:@"AIzaSyAcCD7rG0woreg6af3_AyFsa3V1J1vgK_k"];
 //    [Stripe setDefaultPublishableKey:@"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi"];
     
@@ -75,6 +75,8 @@ static AppDelegate *sharedObj;
     _locationManager.delegate = self;
     [_locationManager requestWhenInUseAuthorization];
     [_locationManager startUpdatingLocation];
+    
+    NSLog(@"%@",[DataModel sharedDataModelManager].emailAddress);
 
 //    [[AppData sharedInstance] getCurruntLocation];
     
@@ -602,13 +604,13 @@ self.tt_tabBarController.tabBar.tintColor = [UIColor colorWithDisplayP3Red:249.0
 
 - (void) postProcessForSuccess:(NSDictionary *)consumerInfo {
     [[DataModel sharedDataModelManager] setUserIDWithString:consumerInfo[@"uid"]];
-    [DataModel sharedDataModelManager].nickname = consumerInfo[@"nickname"];
-    [[DataModel sharedDataModelManager] setAgeGroupWithString:consumerInfo[@"age_group"]];
-    [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
-    [DataModel sharedDataModelManager].sms_no = consumerInfo[@"sms_no"];
+//    [DataModel sharedDataModelManager].nickname = consumerInfo[@"nickname"];
+//    [[DataModel sharedDataModelManager] setAgeGroupWithString:consumerInfo[@"age_group"]];
+//    [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
+//    [DataModel sharedDataModelManager].sms_no = consumerInfo[@"sms_no"];
     
 //    [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
-    [DataModel sharedDataModelManager].emailAddress = consumerInfo[@"email1"];
+//    [DataModel sharedDataModelManager].emailAddress = consumerInfo[@"email1"];
     
     [self getDefaultCCForConsumer];
     

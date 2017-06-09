@@ -13,11 +13,14 @@
 #import "AppDelegate.h"
 #import "DeliveryViewController.h"
 #import "ActionSheetPicker.h"
+#import "IQKeyboardManager.h"
+#define kOFFSET_FOR_KEYBOARD 80.0
 
 @interface CartViewController (){
     NSArray *latestInfoArray;
     ActionSheetDatePicker *datePicker;
     NSMutableArray *orderItemArray;
+    CGSize keyboardSize;
 }
 
 @property (strong, nonatomic) NSMutableArray *orderItems;
@@ -54,6 +57,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
     [self.tableView registerNib:[UINib nibWithNibName:@"CartViewTableViewCell" bundle:nil] forCellReuseIdentifier:@"CartViewTableViewCell"];
     [self.tableView layoutIfNeeded];
     self.title = @"Order";
+    
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
@@ -138,9 +142,32 @@ double deliveryAmount = 0.0;        // Delivery Amount
 - (void)viewWillAppear:(BOOL)animated{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     defaultCardData = [defaults valueForKey:StripeDefaultCard];
-
+    [IQKeyboardManager sharedManager].enable = NO;
+    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
     [self paymentSummary];
 }
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillShowNotification
+                                                  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIKeyboardWillHideNotification
+                                                  object:nil];
+    [IQKeyboardManager sharedManager].enable = YES;
+    [IQKeyboardManager sharedManager].enableAutoToolbar = YES;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -241,7 +268,14 @@ double deliveryAmount = 0.0;        // Delivery Amount
         self.txtNote.text = @"";
         self.txtNote.textColor = [UIColor blackColor];
     }
-    
+    if ([textView isEqual:self.txtNote])
+    {
+        //move the main view, so that the keyboard does not hide it.
+        if  (self.view.frame.origin.y >= 0)
+        {
+            [self setViewMovedUp:YES];
+        }
+    }
     return YES;}
 
 -(void) textViewDidChange:(UITextView *)textView
@@ -259,8 +293,70 @@ double deliveryAmount = 0.0;        // Delivery Amount
         [self.txtNote resignFirstResponder];
     }
 }
-
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if([text isEqualToString:@"\n"]){
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
+}
 #pragma mark - User Functions
+-(void)keyboardWillShow:(NSNotification *)notification {
+    // Animate the current view out of the way
+    
+    
+    if (self.view.frame.origin.y >= 0)
+    {
+        [self setViewMovedUp:YES];
+    }
+    else if (self.view.frame.origin.y < 0)
+    {
+        [self setViewMovedUp:NO];
+    }
+}
+
+-(void)keyboardWillHide:(NSNotification *)notification {
+    
+    if (self.view.frame.origin.y >= 0)
+    {
+        [self setViewMovedUp:YES];
+    }
+    else if (self.view.frame.origin.y < 0)
+    {
+        [self setViewMovedUp:NO];
+    }
+}
+-(void)setViewMovedUp:(BOOL)movedUp
+{
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.2]; // if you want to slide up the view
+    //Given size may not account for screen rotation
+
+    
+    CGRect rect = self.view.frame;
+    if (movedUp)
+    {
+        // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
+        // 2. increase the size of the view so that the area behind the keyboard is covered up.
+        
+//        [self.view setFrame:CGRectMake(0,-115,rect.size.width,rect.size.height)];
+        rect.origin.y -= 180;
+        rect.size.height += kOFFSET_FOR_KEYBOARD;
+    }
+    else
+    {
+        // revert back to the normal state.
+//        [self.view setFrame:CGRectMake(0,115,rect.size.width,rect.size.height)];
+        rect.origin.y += 180;
+        rect.size.height -= kOFFSET_FOR_KEYBOARD;
+    }
+    
+    self.view.frame = rect;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+
+    [UIView commitAnimations];
+}
 
 - (void)setPlaceHolderText{
     self.txtNote.text = Note_defaultText;

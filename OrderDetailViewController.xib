@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -52,6 +52,12 @@
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UbL-jg-TTF">
+                            <color key="backgroundColor" red="0.95686274510000002" green="0.51372549020000002" blue="0.1215686275" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="CAu-OU-mri"/>
+                            </constraints>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="McX-Jl-UZ8">
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LTg-fP-L4W">
@@ -180,13 +186,16 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="qNd-nt-UTt" secondAttribute="trailing" constant="20" id="1mI-DX-KKA"/>
-                        <constraint firstItem="qNd-nt-UTt" firstAttribute="top" secondItem="6uT-CE-MNa" secondAttribute="bottom" constant="8" id="2RI-kE-5wm"/>
-                        <constraint firstItem="McX-Jl-UZ8" firstAttribute="top" secondItem="qNd-nt-UTt" secondAttribute="bottom" constant="3" id="2Xx-rp-XKC"/>
+                        <constraint firstItem="qNd-nt-UTt" firstAttribute="top" secondItem="6uT-CE-MNa" secondAttribute="bottom" constant="10" id="2RI-kE-5wm"/>
+                        <constraint firstItem="McX-Jl-UZ8" firstAttribute="top" secondItem="qNd-nt-UTt" secondAttribute="bottom" constant="1" id="2Xx-rp-XKC"/>
                         <constraint firstItem="6uT-CE-MNa" firstAttribute="top" secondItem="9ma-2V-rMh" secondAttribute="bottom" constant="8" id="3aw-ka-WM1"/>
                         <constraint firstItem="9ma-2V-rMh" firstAttribute="top" secondItem="uT5-M5-w4g" secondAttribute="top" constant="10" id="5H2-Z9-PeI"/>
                         <constraint firstItem="9ma-2V-rMh" firstAttribute="leading" secondItem="uT5-M5-w4g" secondAttribute="leading" constant="20" id="9FW-9l-l5L"/>
                         <constraint firstAttribute="trailing" secondItem="McX-Jl-UZ8" secondAttribute="trailing" id="Ec6-ok-hsg"/>
-                        <constraint firstItem="qNd-nt-UTt" firstAttribute="top" secondItem="6uT-CE-MNa" secondAttribute="bottom" constant="8" id="W6q-Kt-ju4"/>
+                        <constraint firstItem="UbL-jg-TTF" firstAttribute="leading" secondItem="uT5-M5-w4g" secondAttribute="leading" constant="8" id="KZe-Pz-DtB"/>
+                        <constraint firstItem="qNd-nt-UTt" firstAttribute="top" secondItem="UbL-jg-TTF" secondAttribute="bottom" constant="6" id="Qd2-0I-oHD"/>
+                        <constraint firstItem="qNd-nt-UTt" firstAttribute="top" secondItem="6uT-CE-MNa" secondAttribute="bottom" constant="10" id="W6q-Kt-ju4"/>
+                        <constraint firstItem="UbL-jg-TTF" firstAttribute="top" secondItem="6uT-CE-MNa" secondAttribute="bottom" constant="3" id="Wis-1Q-Xt6"/>
                         <constraint firstAttribute="trailing" secondItem="9ma-2V-rMh" secondAttribute="trailing" constant="20" id="bZJ-7i-qQM"/>
                         <constraint firstItem="McX-Jl-UZ8" firstAttribute="leading" secondItem="uT5-M5-w4g" secondAttribute="leading" id="dHQ-3r-5tA"/>
                         <constraint firstItem="6uT-CE-MNa" firstAttribute="top" secondItem="9ma-2V-rMh" secondAttribute="bottom" constant="8" id="esP-lE-yci"/>
@@ -194,6 +203,7 @@
                         <constraint firstAttribute="bottom" secondItem="McX-Jl-UZ8" secondAttribute="bottom" constant="20" id="hDG-rC-60u"/>
                         <constraint firstItem="qNd-nt-UTt" firstAttribute="leading" secondItem="uT5-M5-w4g" secondAttribute="leading" constant="20" id="lxv-Jz-c9o"/>
                         <constraint firstAttribute="trailing" secondItem="6uT-CE-MNa" secondAttribute="trailing" constant="20" id="nT3-Yj-ziv"/>
+                        <constraint firstAttribute="trailing" secondItem="UbL-jg-TTF" secondAttribute="trailing" constant="8" id="pOg-gr-pUF"/>
                         <constraint firstAttribute="width" secondItem="uT5-M5-w4g" secondAttribute="height" multiplier="375:331" constant="103.09667673716012" id="v0a-9n-evt"/>
                     </constraints>
                 </view>

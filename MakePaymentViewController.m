@@ -36,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Make Payment";
+    self.title = @"Payment";
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
@@ -50,15 +50,26 @@
     self.automaticallyAdjustsScrollViewInsets = YES;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self setInitialPointsValue];
-    [self getDefaultCardData];
-    [self getCCForConsumer];
+//    [self getDefaultCardData];
+//    [self getCCForConsumer];
     
+    NSLocale* currentLocale = [NSLocale currentLocale];
+    [[NSDate date] descriptionWithLocale:currentLocale];
+    
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MMMM dd, yyyy hh:mm a"];
+    // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
+    NSLog(@"%@",[dateFormatter stringFromDate:[NSDate date]]);
+    self.lblPickUpDate.text = [dateFormatter stringFromDate:[NSDate date]];
     _waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
     self.lblTitle.text = self.restTitle;
     self.lblTotalPrice.text = [NSString stringWithFormat:@"$ %.2f",self.totalVal];
     // Do any additional setup after loading the view from its nib.
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    [self getDefaultCardData];
+    [self getCCForConsumer];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -242,13 +253,14 @@
         self.lblCurrentPoints.textColor = [UIColor blackColor];
         [self.btnRedeemPoint setImage:[UIImage imageNamed:@"Unchecked"] forState:UIControlStateNormal];
         self.lblCurrentPoints.text = [NSString stringWithFormat:@"%ld points" ,(long)totaLAvailablePoints];
+        self.lblRedeemPointText.text = [NSString stringWithFormat:@"%ld points worth %2.0f¢ each.  Redeem some?",(long)totaLAvailablePoints,dollarValForEachPoints*100];
     }
     else {
         dollarValForEachPoints = 0.0;
         self.lblCurrentPoints.textColor = [UIColor lightGrayColor];
         [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_unchecked"] forState:UIControlStateNormal];
         self.lblCurrentPoints.text = [NSString stringWithFormat:@"%ld points" ,(long)totaLAvailablePoints];
-//        self.lblCurrentPoints.text = @"You don't have enough points to use";
+        self.lblRedeemPointText.text = @"You don't have enough points to use";
     }
 }
 - (float)calculateValueforGivenPoints:(NSInteger)points {

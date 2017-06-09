@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (strong, nonatomic) IBOutlet UIButton *btnRedeemPoint;
+@property (weak, nonatomic) IBOutlet UILabel *lblRedeemPointText;
 
 @property (weak, nonatomic) IBOutlet UILabel *lblTitle;
 @property (weak, nonatomic) IBOutlet UILabel *lblTotalPrice;

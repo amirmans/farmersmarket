@@ -435,7 +435,7 @@ bool shouldOpenOptionMenu = false;
 
             else {
                 // Image not available
-                return 135;
+                return 125;
             }
         }
         else {
@@ -510,8 +510,11 @@ bool shouldOpenOptionMenu = false;
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, tableView.bounds.size.width,40)]; //10px top and 10px bottom. Just for illustration purposes.
     
-    UIImageView *sectionHeaderBG = [[UIImageView alloc]initWithFrame:CGRectMake(0, 10, 30, 30)];
+    UIImageView *sectionHeaderBG = [[UIImageView alloc]initWithFrame:CGRectMake(0, 15, 30, 30)];
     [sectionHeaderBG sd_setImageWithURL:[NSURL URLWithString:self.sectionKeysImageArray[section]]];
+    [sectionHeaderBG layoutIfNeeded];
+    sectionHeaderBG.layer.cornerRadius = sectionHeaderBG.frame.size.width / 2;
+    sectionHeaderBG.clipsToBounds = YES;
 //    [sectionHeaderBG setImageWithURL:[NSURL URLWithString:self.sectionKeysImageArray[section]]];
 //    [sectionHeaderBG setBackgroundColor:[UIColor redColor]];
     
@@ -538,7 +541,7 @@ bool shouldOpenOptionMenu = false;
     
     CGSize expectedLabelSize = textRect.size;
     
-    sectionTitle.frame = CGRectMake(35.0, 10.0, expectedLabelSize.width, 30);
+    sectionTitle.frame = CGRectMake(35.0, 15.0, expectedLabelSize.width, 30);
     
     
     headerView.backgroundColor = [[UIColor colorWithRed:98.0/255.0f green:200.0/255.0f blue:207.0/255.0f alpha:1]colorWithAlphaComponent:1.0f];
@@ -831,6 +834,7 @@ bool shouldOpenOptionMenu = false;
                           productIconURL];
         [cell.imgProductIcon sd_setImageWithURL:[NSURL URLWithString:iconDirectory] placeholderImage:nil];
         cell.imgProductIcon.contentMode = UIViewContentModeScaleAspectFill;
+        
     }
     
     cell.lbl_title.text = [catArray[indexPath.row] valueForKey:@"name"];
@@ -908,6 +912,8 @@ bool shouldOpenOptionMenu = false;
                          productIconURL];
         [cell.imgProductIcon sd_setImageWithURL:[NSURL URLWithString:iconDirectory] placeholderImage:nil];
         cell.imgProductIcon.contentMode = UIViewContentModeScaleAspectFill;
+        
+       
     }
     
     cell.lbl_title.text = [catArray[indexPath.row] valueForKey:@"name"];

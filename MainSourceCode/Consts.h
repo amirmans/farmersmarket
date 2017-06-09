@@ -60,6 +60,7 @@ static NSString *const ServerForBusiness = @"https://tapforall.com/staging/tap-i
 static const int PointsValueMultiplier = 1;
 
 // We store our settings in the NSUserDefaults dictionary using these keys
+
 static NSString *const NicknameKey = @"nickname";
 static NSString *const PasswordKey = @"password";
 static NSString *const JoinedChatKey = @"joinedChat";
@@ -67,6 +68,7 @@ static NSString *const DeviceTokenKey = @"deviceToken";
 static NSString *const EmailAddressKey = @"email1";
 static NSString *const AgeGroupKey = @"age_group";
 static NSString *const UserIDKey = @"userID";
+
 static int NumberOfMessagesOnOnePage = 6;
 
 static NSString *const stripeArrayKey = @"stripeDataArray";

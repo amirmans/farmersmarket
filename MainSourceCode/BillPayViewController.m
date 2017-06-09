@@ -66,7 +66,8 @@ NSMutableArray *cardDataArray;
 
     paymentView.delegate = self;
     cardDataArray = [[NSMutableArray alloc] init];
-    self.title = [NSString stringWithFormat:@"Pay %@", business.businessName];
+//    self.title = [NSString stringWithFormat:@"Pay %@", business.businessName];
+    self.title = @"Add Card";
     self.automaticallyAdjustsScrollViewInsets = YES;
     self.edgesForExtendedLayout = UIRectEdgeNone;
 
@@ -238,8 +239,11 @@ NSMutableArray *cardDataArray;
     else
     {
 
-        NSString *zipCode = @"12345";
-        if([self.txtExpMonth.text intValue] > 12){
+        NSString *zipCode = self.txtZipCode.text;
+        if([self.txtCardNumber.text isEqualToString:@""] || [self.txtExpMonth.text isEqualToString:@""] || [self.txtExpYear.text isEqualToString:@""] || [self.txtCVV.text isEqualToString:@""] || [self.txtZipCode.text isEqualToString:@""]){
+            [self showAlert:@"Error" :@"Please fill all fields."];
+        }
+        else if([self.txtExpMonth.text intValue] > 12){
             [self showAlert:@"Error" :@"Enter Valid Card Expiration Month."];
         }
         else if ([[APIUtility sharedInstance] isZipCodeValid:zipCode]) {
@@ -259,17 +263,7 @@ NSMutableArray *cardDataArray;
             card.expYear = [self.txtExpYear.text intValue];
             card.cvc = self.txtCVV.text;
 
-                [self showAlertForAddingCard:card];
-                //            [self checkForUniqeCard:card];
-                //            [self.navigationController popViewControllerAnimated:true];
-//            }
-            
-            //        NSString *message = [NSString stringWithFormat:@"Paying %@ to %@", amountTextField.text, business.businessName];
-            //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:message message:@"Are you sure?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
-            //        [alert setTag:1]; // to identify this alert in the delegate method
-            //        [alert show];
-            //        alert = nil;
-            //        self.stripeCard = [[STPCard alloc] init];
+            [self showAlertForAddingCard:card];
         }
         else {
             UIAlertController * alert = [UIAlertController
@@ -428,19 +422,26 @@ NSMutableArray *cardDataArray;
 #pragma mark - UITextfield Delegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     if (textField == self.txtZipCode) {
-        NSString * searchStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
-        //        if ([searchStr length] == 6) {
-        if ([[APIUtility sharedInstance] isZipCodeValid:searchStr]) {
-            if(self.paymentView.isValid) {
-                [self enableView:payButton];
-            }
-            else {
-                [self greyoutView:payButton];
-            }
+        if(range.length + range.location > textField.text.length)
+        {
+            return NO;
         }
-        else {
-            [self greyoutView:payButton];
-        }
+        
+        NSUInteger newLength = [textField.text length] + [string length] - range.length;
+        return newLength <= 5;
+//        NSString * searchStr = [textField.text stringByReplacingCharactersInRange:range withString:string];
+//        //        if ([searchStr length] == 6) {
+//        if ([[APIUtility sharedInstance] isZipCodeValid:searchStr]) {
+//            if(self.paymentView.isValid) {
+//                [self enableView:payButton];
+//            }
+//            else {
+//                [self greyoutView:payButton];
+//            }
+//        }
+//        else {
+//            [self greyoutView:payButton];
+//        }
     }
     else{
         if(range.length + range.location > textField.text.length)
@@ -646,16 +647,26 @@ NSMutableArray *cardDataArray;
     return YES;
 }
 - (void)performStripeOperation : (STPCardParams *) cardData {
+    hud = [[MBProgressHUD alloc] initWithView:self.view];
+    hud.mode = MBProgressHUDModeIndeterminate;
+    [hud.bezelView setBackgroundColor:[UIColor orangeColor]];
+    hud.bezelView.color = [UIColor orangeColor];
+    hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
+    [self.view addSubview:hud];
+    [hud showAnimated:YES];
+
     [[STPAPIClient sharedClient] createTokenWithCard:cardData
                                           completion:^(STPToken *token, NSError *error) {
                                               if (error) {
                                                   //                                           [self handleError:error];
                                                   NSLog(@"ERRRRR = %@",error);
+                                                  [hud hideAnimated:YES];
+                                                  hud = nil;
+
                                                   [self showAlert:@"Please try again" :[NSString stringWithFormat:@"%@",error.localizedDescription]];
                                               } else {
                                                   
                                                   //when credit card details is correct code here
-                                                  [hud showAnimated:YES];
                                                   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                                                   
                                                   NSString *cardNumber = cardData.number;
@@ -688,6 +699,8 @@ NSMutableArray *cardDataArray;
                                                       //        [self getCCForConsumer];
                                                       NSLog(@"%@",response);
                                                       [hud hideAnimated:YES];
+                                                      hud = nil;
+
                                                       if(![[response objectForKey:@"status"] boolValue])
                                                       {
                                                           NSLog(@"%@",[response objectForKey:@"message"]);
@@ -731,7 +744,6 @@ NSMutableArray *cardDataArray;
                                           }];
 }
 
-
 - (void) saveAsDefaultCard : (STPCardParams *) cardData {
 
     STPCardParams *param = [[STPCardParams alloc]init];
@@ -740,76 +752,80 @@ NSMutableArray *cardDataArray;
     param.expMonth =[self.txtExpMonth.text integerValue];
     param.expYear = [self.txtExpYear.text integerValue];
     
-    [hud showAnimated:YES];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    NSString *cardNumber = cardData.number;
-    NSString *cardExpMonth = [NSString stringWithFormat:@"%tu",cardData.expMonth];
-    NSString *cardExpYear = [NSString stringWithFormat:@"%tu",cardData.expYear];
-    
-    if ([cardExpMonth length] < 2)
-    {
-        cardExpMonth = [NSString stringWithFormat:@"0%@",cardExpMonth];
-    }
-    
-    NSString *expiration_date = [NSString stringWithFormat:@"%@-%@-01", cardExpYear, cardExpMonth];
-//    NSString *zip_code = self.txtZipCode.text;
-    NSString *zip_code = @"12345";
-    if ([zip_code length] == 0) {
-        zip_code = cardData.addressZip;
-    }
-    NSString *cardCvc = cardData.cvc;
-    NSString *cardType = [self getTypeFromCardNumber:cardData.number];
-    NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
-    
-    //    [defaults setObject:defaultsParam forKey:StripeDefaultCard];
-    NSDictionary *defaultsParam = @{@"consumer_id":userID,@"cc_no":cardNumber
-                                    ,@"expMonth":cardExpMonth,@"expYear":cardExpYear,@"cvv":cardCvc,@"zip_code":zip_code, @"card_type":cardType};
-    
-    
-    NSDictionary *severParam = @{@"cmd":@"save_cc_info",@"consumer_id":userID,@"cc_no":cardNumber
-                                 ,@"expiration_date":expiration_date,@"cvv":cardCvc,@"zip_code":zip_code, @"card_type":cardType
-                                 ,@"default":@"1"};
-    [[APIUtility sharedInstance]save_cc_info:severParam completiedBlock:^(NSDictionary *response) {
-        //        [self getCCForConsumer];
-        NSLog(@"%@",response);
-        [hud hideAnimated:YES];
-        if(![[response objectForKey:@"status"] boolValue])
-        {
-            NSLog(@"%@",[response objectForKey:@"message"]);
-            [defaults setObject:defaultsParam forKey:StripeDefaultCard];
-            //    [defaults registerDefaults:defaultsParam];
-            [defaults synchronize];
-            
-            NSLog(@"Saved this info for card default: %@", defaultsParam);
-            [self.navigationController popViewControllerAnimated:true];
-        }
-        else
-        {
-            
-            NSLog(@"%@",[response objectForKey:@"message"]);
-            UIAlertController * alert = [UIAlertController
-                                         alertControllerWithTitle:@"Error"
-                                         message:@"Something went wrong."
-                                         preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction* OKButton = [UIAlertAction
-                                       actionWithTitle:@"OK"
-                                       style:UIAlertActionStyleDefault
-                                       handler:^(UIAlertAction * action) {
-                                           [self dismissViewControllerAnimated:true completion:nil];
-                                       }];
-            
-            [alert addAction:OKButton];
-            
-            [self presentViewController:alert animated:YES completion:nil];
-        }
-        
-    }];
-
-//    if ([self validateCustomerInfo]) {
-//        [self performStripeOperation:param];
+//    [hud showAnimated:YES];
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    
+//    NSString *cardNumber = cardData.number;
+//    NSString *cardExpMonth = [NSString stringWithFormat:@"%tu",cardData.expMonth];
+//    NSString *cardExpYear = [NSString stringWithFormat:@"%tu",cardData.expYear];
+//    
+//    if ([cardExpMonth length] < 2)
+//    {
+//        cardExpMonth = [NSString stringWithFormat:@"0%@",cardExpMonth];
 //    }
+//    
+//    NSString *expiration_date = [NSString stringWithFormat:@"%@-%@-01", cardExpYear, cardExpMonth];
+//    NSString *zip_code = self.txtZipCode.text;
+//    if ([zip_code length] == 0) {
+//        zip_code = cardData.addressZip;
+//    }
+//    NSString *cardCvc = cardData.cvc;
+//    NSString *cardType = [self getTypeFromCardNumber:cardData.number];
+//    NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
+//    
+//    //    [defaults setObject:defaultsParam forKey:StripeDefaultCard];
+//    NSDictionary *defaultsParam = @{@"consumer_id":userID,@"cc_no":cardNumber
+//                                    ,@"expMonth":cardExpMonth,@"expYear":cardExpYear,@"cvv":cardCvc,@"zip_code":zip_code, @"card_type":cardType};
+//    
+//    
+//    NSDictionary *severParam = @{@"cmd":@"save_cc_info",@"consumer_id":userID,@"cc_no":cardNumber
+//                                 ,@"expiration_date":expiration_date,@"cvv":cardCvc,@"zip_code":zip_code, @"card_type":cardType
+//                                 ,@"default":@"1"};
+//    [[APIUtility sharedInstance]save_cc_info:severParam completiedBlock:^(NSDictionary *response) {
+//        //        [self getCCForConsumer];
+//        NSLog(@"%@",response);
+//        [hud hideAnimated:YES];
+//        if(![[response objectForKey:@"status"] boolValue])
+//        {
+//            NSLog(@"%@",[response objectForKey:@"message"]);
+//            [defaults setObject:defaultsParam forKey:StripeDefaultCard];
+//            //    [defaults registerDefaults:defaultsParam];
+//            [defaults synchronize];
+//            
+//            NSLog(@"Saved this info for card default: %@", defaultsParam);
+//            [self.navigationController popViewControllerAnimated:true];
+//        }
+//        else
+//        {
+//            
+//            NSLog(@"%@",[response objectForKey:@"message"]);
+//            UIAlertController * alert = [UIAlertController
+//                                         alertControllerWithTitle:@"Error"
+//                                         message:@"Something went wrong."
+//                                         preferredStyle:UIAlertControllerStyleAlert];
+//            
+//            UIAlertAction* OKButton = [UIAlertAction
+//                                       actionWithTitle:@"OK"
+//                                       style:UIAlertActionStyleDefault
+//                                       handler:^(UIAlertAction * action) {
+//                                           [self dismissViewControllerAnimated:true completion:nil];
+//                                       }];
+//            
+//            [alert addAction:OKButton];
+//            
+//            [self presentViewController:alert animated:YES completion:nil];
+//        }
+//        
+//    }];
+//
+    if ([self validateCustomerInfo]) {
+        if([self.txtCardNumber.text isEqualToString:@""]){
+        [self performStripeOperation:cardData];
+        }
+        else{
+        [self performStripeOperation:param];
+        }
+    }
  }
 
 

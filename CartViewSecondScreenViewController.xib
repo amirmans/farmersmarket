@@ -60,7 +60,7 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order delivery to:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMZ-Fg-LYi">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delivery to:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMZ-Fg-LYi">
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="FMe-aR-Xpf"/>
                                         <constraint firstAttribute="width" constant="132" id="yeF-bI-09b"/>
@@ -94,7 +94,7 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lhh-Lj-GNj">
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Order Subtotal :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="pOE-76-Wfe">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtotal :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="pOE-76-Wfe">
                                     <constraints>
                                         <constraint firstAttribute="width" constant="111" id="QnK-Zu-YDs"/>
                                         <constraint firstAttribute="height" constant="21" id="Yt7-Js-xQU"/>
@@ -116,7 +116,7 @@
                                         <constraint firstAttribute="height" constant="20" id="Cz1-Qh-cel"/>
                                         <constraint firstAttribute="width" constant="63" id="aIH-OH-zaY"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                     <color key="textColor" red="0.97647058819999999" green="0.47843137250000001" blue="0.070588235289999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -169,7 +169,7 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discount :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="48S-aU-hkZ">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discount :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="48S-aU-hkZ">
                                     <constraints>
                                         <constraint firstAttribute="width" constant="173" id="QcC-f2-fJ6"/>
                                         <constraint firstAttribute="height" constant="21" id="aeW-ts-CW8"/>
@@ -188,10 +188,10 @@
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="bottom" secondItem="o2W-U9-WTN" secondAttribute="bottom" constant="12" id="1p4-M2-Hk0"/>
-                                <constraint firstAttribute="bottom" secondItem="48S-aU-hkZ" secondAttribute="bottom" constant="12" id="4wZ-Sm-eAF"/>
-                                <constraint firstItem="aZ8-3D-jeC" firstAttribute="top" secondItem="pgr-RG-mxo" secondAttribute="top" id="8Ef-FV-ehe"/>
-                                <constraint firstItem="Vcx-uq-KXk" firstAttribute="top" secondItem="pgr-RG-mxo" secondAttribute="top" id="AM5-he-H0F"/>
+                                <constraint firstAttribute="bottom" secondItem="o2W-U9-WTN" secondAttribute="bottom" constant="10" id="1p4-M2-Hk0"/>
+                                <constraint firstAttribute="bottom" secondItem="48S-aU-hkZ" secondAttribute="bottom" constant="10" id="4wZ-Sm-eAF"/>
+                                <constraint firstItem="aZ8-3D-jeC" firstAttribute="top" secondItem="pgr-RG-mxo" secondAttribute="top" constant="2" id="8Ef-FV-ehe"/>
+                                <constraint firstItem="Vcx-uq-KXk" firstAttribute="top" secondItem="pgr-RG-mxo" secondAttribute="top" constant="2" id="AM5-he-H0F"/>
                                 <constraint firstItem="0zc-hU-fT7" firstAttribute="leading" secondItem="pgr-RG-mxo" secondAttribute="leading" constant="8" id="Diu-V9-etm"/>
                                 <constraint firstAttribute="trailing" secondItem="o2W-U9-WTN" secondAttribute="trailing" constant="11" id="F1j-XC-f10"/>
                                 <constraint firstAttribute="height" constant="91" id="ITd-t1-4Iw"/>
@@ -332,7 +332,7 @@
                                         <constraint firstItem="zb4-eY-b6S" firstAttribute="leading" secondItem="slk-aO-jq7" secondAttribute="leading" constant="10" id="zBr-WF-SmJ"/>
                                     </constraints>
                                 </view>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tip Amount:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="E6E-sB-gtz">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tip :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="E6E-sB-gtz">
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="6io-fQ-fIw"/>
                                         <constraint firstAttribute="width" constant="74" id="jnq-sp-P4z"/>
@@ -355,7 +355,7 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YSp-3y-P13">
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tax Amount :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gob-vl-AJH">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tax :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gob-vl-AJH">
                                     <constraints>
                                         <constraint firstAttribute="width" constant="157" id="Wkc-qt-Gb5"/>
                                         <constraint firstAttribute="height" constant="21" id="ppJ-zr-cdf"/>
@@ -372,7 +372,7 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Total Payment :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="dg5-bl-xgI">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Total :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="dg5-bl-xgI">
                                     <constraints>
                                         <constraint firstAttribute="height" constant="20" id="wAA-BT-xn2"/>
                                         <constraint firstAttribute="width" constant="159" id="xE2-5j-86T"/>

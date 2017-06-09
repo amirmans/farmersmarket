@@ -23,6 +23,7 @@
 
 //@property (weak, nonatomic) IBOutlet UIButton *btnFevorite;
 @property (strong, nonatomic) IBOutlet CustomUIButton *btnFevorite;
+@property (weak, nonatomic) IBOutlet UIView *cellOuterView;
 
 
 @property (weak, nonatomic) IBOutlet CustomUIButton *btn_plus;

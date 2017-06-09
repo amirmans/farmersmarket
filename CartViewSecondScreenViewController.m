@@ -453,13 +453,13 @@ double deliveryAmountValue; //Delievery amount value in $
                         promotionalamt = 0.00;
                         self.lblPromotionalAmount.hidden = true;
                         self.lblPromotionCode.hidden = true;
-                        self.lblPromotionalText.hidden = true;
+//                        self.lblPromotionalText.hidden = true;
                     }
                     else
                     {
                         self.lblPromotionalAmount.hidden = false;
                         self.lblPromotionCode.hidden = false;
-                        self.lblPromotionalText.hidden = false;
+//                        self.lblPromotionalText.hidden = false;
                         NSLog(@"%@", [CurrentBusiness sharedCurrentBusinessManager].business.promotion_code);
                         if(([CurrentBusiness sharedCurrentBusinessManager].business.promotion_code == nil)){
                             globalPromotnal = 0.00;
