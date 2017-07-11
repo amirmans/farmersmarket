@@ -306,6 +306,10 @@ static AppData *sharedObj;
     UIViewController *mainController = [keyWindow rootViewController];
     [mainController presentViewController:alert animated:YES completion:nil];
 }
-
+- (NSDateFormatter *) setDateFormatter : (NSString *) dateFormat{
+    NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = dateFormat;
+    return dateFormatter;
+}
 
 @end

@@ -92,6 +92,13 @@ static NSString *const Default_Process_Time = @"Average wait time: 25 min";
 #define DELIVERY_LOCATION @"8";
 #define DELIVERY_BOTH @"12";
 
+// Time Format
+static NSString *const TIME24HOURFORMAT = @"HH:mm:ss";
+static NSString *const TIME12HOURFORMAT = @"hh:mm a";
+//#define TIME24HOURFORMAT @"HH:mm:ss";
+//#define TIME12HOURFORMAT @"hh:mm a";
+
+
 //character search limit in delievery screen
 #define characterSearchLimit 2
 

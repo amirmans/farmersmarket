@@ -226,7 +226,7 @@ bool shouldOpenOptionMenu = false;
     [MenuItemTableView scrollToRowAtIndexPath:indexPath
                          atScrollPosition:UITableViewScrollPositionTop
                                  animated:YES];
-    NSLog(@"did selected item at index %lu", (unsigned long)index);
+//    NSLog(@"did selected item at index %lu", (unsigned long)index);
 }
 
 
@@ -268,7 +268,7 @@ bool shouldOpenOptionMenu = false;
     
     if(textField == self.txtNote){
         NSUInteger newLength = [textField.text length] + [string length] - range.length;
-        NSLog(@"%lu",(unsigned long)newLength);
+//        NSLog(@"%lu",(unsigned long)newLength);
         if(newLength > 0)
         {
             self.btnCancelNote.hidden = false;
@@ -317,7 +317,7 @@ bool shouldOpenOptionMenu = false;
     NSArray * dataArray = [[NSArray alloc]init];
     dataArray = [mainCategoryArray filteredArrayUsingPredicate:predicate];
     self.filteredResult = [[NSMutableArray alloc]initWithArray:dataArray];
-    NSLog(@"%ld",(unsigned long)self.filteredResult.count);
+//    NSLog(@"%ld",(unsigned long)self.filteredResult.count);
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller{
@@ -520,11 +520,11 @@ bool shouldOpenOptionMenu = false;
     
     NSString *headerText = [NSString stringWithFormat:@"%@ (%ld)",self.sectionKeyArray[section],(long)rowCount];
     NSUInteger length = [headerText length];
-    NSLog(@"%lu",(unsigned long)length);
+//    NSLog(@"%lu",(unsigned long)length);
     
     
     UILabel *sectionTitle = [[UILabel alloc] init];
-    NSLog(@"Frame %@", NSStringFromCGRect(sectionTitle.frame));
+//    NSLog(@"Frame %@", NSStringFromCGRect(sectionTitle.frame));
     sectionTitle.text = headerText;
     sectionTitle.font = [UIFont fontWithName:@"Helvetica-Bold" size:20];
     sectionTitle.textAlignment = NSTextAlignmentCenter;
@@ -549,9 +549,9 @@ bool shouldOpenOptionMenu = false;
     [AppData setBusinessBackgroundColor:headerView];
     
     
-    NSLog(@"Frame %@", NSStringFromCGRect(sectionTitle.frame));
+//    NSLog(@"Frame %@", NSStringFromCGRect(sectionTitle.frame));
     UIView *innerView = [[UIView alloc] initWithFrame:CGRectMake(0,10,expectedLabelSize.width+40, 50)];
-    NSLog(@"Frame %@", NSStringFromCGRect(innerView.frame));
+//    NSLog(@"Frame %@", NSStringFromCGRect(innerView.frame));
     
     UIButton *headerButton = [[UIButton alloc] initWithFrame:innerView.bounds];
     [headerButton addTarget:self action:@selector(headerClicked:) forControlEvents:UIControlEventTouchUpInside];
@@ -1238,7 +1238,7 @@ bool shouldOpenOptionMenu = false;
 - (IBAction)MinusButtonClicked:(CustomUIButton *)sender {
 
     NSLog(@"Minus Button Clicked");
-    NSLog(@"%@", [[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"name"]);
+//    NSLog(@"%@", [[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"name"]);
     TPBusinessDetail *BusinessDetail = [self.MainArray[sender.section] objectAtIndex:sender.row];
 //    NSManagedObjectContext *context = [self managedObjectContext];
 //    NSLog(@"%@",_managedObjectContext.persistentStoreCoordinator.managedObjectModel.entities);
@@ -1264,8 +1264,8 @@ bool shouldOpenOptionMenu = false;
         else {
             self.removeFromCartContainerView.hidden = false;
             [self.tblRemoveFromCart reloadData];
-            NSLog(@"%lu",(unsigned long)_FetchedRecordArray.count);
-            NSLog(@"%@",_FetchedRecordArray.description);
+//            NSLog(@"%lu",(unsigned long)_FetchedRecordArray.count);
+//            NSLog(@"%@",_FetchedRecordArray.description);
         }
     }
 
@@ -1418,8 +1418,8 @@ bool shouldOpenOptionMenu = false;
     self.txtNote.text = @"";
     self.btnCancelNote.hidden = YES;
     
-    NSLog(@"%@", [[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"name"]);
-    NSLog(@"%@",[[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"price"]);
+//    NSLog(@"%@", [[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"name"]);
+//    NSLog(@"%@",[[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"price"]);
 
 //    SHMultipleSelect *multipleSelect = [[SHMultipleSelect alloc] init];
     TPBusinessDetail *businessDetail;
@@ -1512,7 +1512,7 @@ bool shouldOpenOptionMenu = false;
                                      NSArray * textfields = alert.textFields;
                                      UITextField * notefield = textfields[0];
                                      businessDetail.item_note = notefield.text;
-                                     NSLog(@"%@",notefield.text);
+//                                     NSLog(@"%@",notefield.text);
                                      [alert dismissViewControllerAnimated:YES completion:nil];
                                      [self AddItemInCart:businessDetail CustomUIButton:sender];
                                  }];
@@ -1522,6 +1522,7 @@ bool shouldOpenOptionMenu = false;
                 textField.accessibilityIdentifier = @"";
                 textField.placeholder = @"";
                 textField.accessibilityLabel = @"";
+                textField.returnKeyType = UIReturnKeyDone;
             }];
             
             [self presentViewController:alert animated:YES completion:nil];
@@ -1575,7 +1576,7 @@ bool shouldOpenOptionMenu = false;
         NSDictionary *dictionary = [obj dictionaryWithValuesForKeys:keys];
         myCartCount += [[dictionary valueForKey:@"quantity"] integerValue];
     }
-    NSLog(@"%@",self.FetchedRecordArray);
+//    NSLog(@"%@",self.FetchedRecordArray);
 //  myCartCount = self.FetchedRecordArray.count;
     self.rightButton.badgeValue = [NSString stringWithFormat:@"%d",myCartCount];
 }
@@ -1614,12 +1615,12 @@ bool shouldOpenOptionMenu = false;
     NSDictionary *products = [CurrentBusiness sharedCurrentBusinessManager].business.businessProducts;
 
         NSInteger status = [[products valueForKey:@"status"] integerValue];
-    NSLog(@"%@",products);
+//    NSLog(@"%@",products);
         if ((status == 1) && products)  {
             NSDictionary *data = [products valueForKey:@"data"];
             if (data.count <1)
             {
-                NSLog(@"For %d product items not loaded or don't exist.", [CurrentBusiness sharedCurrentBusinessManager].business.businessID);
+//                NSLog(@"For %d product items not loaded or don't exist.", [CurrentBusiness sharedCurrentBusinessManager].business.businessID);
                 [HUD hideAnimated:YES];
                 return;
             }
@@ -1628,7 +1629,7 @@ bool shouldOpenOptionMenu = false;
             self.sectionKeyArray = [[NSMutableArray alloc] initWithArray:[data allKeys]];
             
 
-            NSLog(@"%@",self.sectionKeyArray);
+//            NSLog(@"%@",self.sectionKeyArray);
 
 //            NSMutableArray *sortedArray = [NSMutableArray arrayWithArray:data.allKeys];
             [self.sectionKeyArray sortUsingSelector:@selector(localizedStandardCompare:)];
@@ -1876,7 +1877,7 @@ bool shouldOpenOptionMenu = false;
                         NSError *error;
 
                         if (![context save:&error]) {
-                            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+//                            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
                         }
                         break;
                     }
@@ -1910,7 +1911,7 @@ bool shouldOpenOptionMenu = false;
             NSError *error;
 
             if (![context save:&error]) {
-                NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+//                NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
             }
         }
     }
@@ -1930,7 +1931,7 @@ bool shouldOpenOptionMenu = false;
     // get the exact location of image
     CGRect rect = [imgV.superview convertRect:imgV.frame fromView:nil];
     rect = CGRectMake(5, (rect.origin.y*-1)-10, imgV.frame.size.width, imgV.frame.size.height);
-    NSLog(@"rect is %f,%f,%f,%f",rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
+//    NSLog(@"rect is %f,%f,%f,%f",rect.origin.x,rect.origin.y,rect.size.width,rect.size.height);
 
     // create new duplicate image
     UIImageView *starView = [[UIImageView alloc] initWithImage:imgV.image];

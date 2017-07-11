@@ -28,6 +28,7 @@
     CGSize keyboardSize;
 }
 @property (strong, nonatomic) NSString *notesTextOrderDetail;
+@property (strong, nonatomic) NSDateFormatter *formatter;
 //@property (assign) BOOL flagRedeemPointOD;
 //@property (assign) double originalPointsValueOD;
 //@property (assign) NSInteger originalNoPointsOD;
@@ -42,83 +43,205 @@
 
 @implementation OrderDetailViewController
 @synthesize orderItemsOD;
-@synthesize /*flagRedeemPointOD, originalPointsValueOD, originalNoPointsOD, dollarValueForEachPointsOD,currenPointsLevelOD,redeemNoPointsOD, redeemPointsValueOD,*/ hud,pickupTimeOD;
+@synthesize /*flagRedeemPointOD, originalPointsValueOD, originalNoPointsOD, dollarValueForEachPointsOD,currenPointsLevelOD,redeemNoPointsOD, redeemPointsValueOD,*/ hud,pickupTimeOD, formatter;
 
 NSNumber *delivery_time_intervalOD;
 NSDate *setMinPickerTimeOD;
 
 //NSString *Note_defaultText = @"Note for order(Optional)";
+
+//- (NSDictionary *)serviceOperationHours:(NSdictionary*) times{
+//    {
+//
+//        NSDate *PDStartTime = [times valueForKey:@"PDStartTime"];
+//        NSDate *PDEndTime = [times valueForKey:@"PDEndTime"];
+//        NSDate *BusinessEndTime = [times valueForKey:@"BusinessEndTime"];
+//        NSDate *BusinessStartTime = [times valueForKey:@"BusinessStartTime"];
+//        NSDate *now = [NSDate date];
+////        [formatter setDateFormat:@"HH:mm:ss"];
+//
+//        NSLog(@"The Current Time is %@",[formatter stringFromDate:now]);
+//
+//        NSString *time2 = [formatter stringFromDate:now];
+//
+//        NSDate *date1 = PDStartTime;  //delivery start time
+//        NSDate *date2 = [formatter dateFromString:time2]; //date2 is now
+//
+//        NSString *time3 = deliveryEndTime; // date3 is delivery end time
+//        NSDate *date3= [formatter dateFromString:time3];
+//
+//        NSComparisonResult result = [date1 compare:date2];
+//
+//        if(result == NSOrderedDescending)
+//        {
+//            NSLog(@"date1 is later than date2");
+//            setMinPickerTimeOD = date1;
+//            datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date1 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
+//            datePicker.minuteInterval = [deliveryTimeInterval integerValue];
+//            [datePicker showActionSheetPicker];
+//
+////        NSString *message = [NSString stringWithFormat:@"Sorry! \n We are not able to deliever today."];
+////        [UIAlertController showErrorAlert:message];
+//        }
+//        else if(result == NSOrderedAscending)
+//        {
+//            NSLog(@"date2 is later than date1");
+//
+//            NSComparisonResult result2 = [date2 compare:date3];
+//            if(result2 == NSOrderedAscending)
+//            {
+//                NSLog(@"date3 is later than date2, endTime is later than now time");
+//                setMinPickerTimeOD =[date2 dateByAddingTimeInterval:60*[deliveryTimeInterval integerValue]];
+//
+//                NSCalendar *calendar = [NSCalendar currentCalendar];
+//                NSDateComponents *components = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:setMinPickerTimeOD];
+//                NSInteger minute = [components minute];
+//                NSLog(@"%ld",(long)minute);
+//                NSLog(@"%ld",(long)minute % [deliveryTimeInterval integerValue]);
+//                if(minute % [deliveryTimeInterval integerValue] == 0)
+//                {
+//                    setMinPickerTimeOD =[date2 dateByAddingTimeInterval:60*[deliveryTimeInterval integerValue]];
+//
+//                    datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date2 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
+//                    datePicker.minuteInterval = [deliveryTimeInterval integerValue];
+//                    [datePicker showActionSheetPicker];
+//                }
+//                else
+//                {
+//                    if([setMinPickerTimeOD compare:date3] == NSOrderedDescending)
+//                    {
+//                        setMinPickerTimeOD = date1;
+//                        datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date1 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
+//                        datePicker.minuteInterval = [deliveryTimeInterval integerValue];
+//                        [datePicker showActionSheetPicker];
+////                    NSString *message = [NSString stringWithFormat:@"Sorry! \n We are not able to deliever today."];
+////                    [UIAlertController showErrorAlert:message];
+//
+//                    }
+//                    else
+//                    {
+//                        NSNumber *delieverTime = deliveryTimeInterval;
+//                        delieverTime = @([delieverTime integerValue] * 2);
+//                        setMinPickerTimeOD =[date2 dateByAddingTimeInterval:60*[delieverTime integerValue]];
+//                        if([setMinPickerTimeOD compare:date3] == NSOrderedDescending)
+//                        {
+//                            NSNumber *delieverTime = deliveryTimeInterval;
+//                            delieverTime = @([delieverTime integerValue]);
+//                            setMinPickerTimeOD =[date2 dateByAddingTimeInterval:60*[delieverTime integerValue]];
+//                        }
+//                        NSLog(@"%@",setMinPickerTimeOD);
+//
+//                        datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date2 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
+//                        datePicker.minuteInterval = [deliveryTimeInterval integerValue];
+//                        [datePicker showActionSheetPicker];
+//                    }
+//                }
+//            }
+//            else if(result2 == NSOrderedDescending)
+//            {
+//                NSLog(@"date2 is later than date3, now time is big than end time");
+//                setMinPickerTimeOD = date1;
+//                datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date1 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
+//                datePicker.minuteInterval = [deliveryTimeInterval integerValue];
+//                [datePicker showActionSheetPicker];
+////            NSString *message = [NSString stringWithFormat:@"Sorry! \n We are not able to deliever today."];
+////            [UIAlertController showErrorAlert:message];
+//            }
+//        }
+//        else
+//        {
+//            NSLog(@"date1 is equal to date2");
+//            setMinPickerTimeOD = date1;
+//
+//            datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date2 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
+//            datePicker.minuteInterval = [deliveryTimeInterval integerValue];
+//            [datePicker showActionSheetPicker];
+//        }
+//    }
+
+
+- (void)triggerAction:(NSNotification *)notification {
+    NSDictionary *response = notification.userInfo;
+    if([[response valueForKey:@"status"] integerValue] >= 0)
+    {
+        if(((NSArray *)[response valueForKey:@"table"]).count > 0) {
+
+            NSArray *tableDict = [response valueForKey:@"table"];
+            NSArray *locationDict = [response valueForKey:@"location_info"];
+            NSLog(@"%@",tableDict);
+            deliveryStartTime = [locationDict valueForKey:@"delivery_start_time"];
+            deliveryEndTime = [locationDict valueForKey:@"delivery_end_time"];
+            deliveryTimeInterval = [locationDict valueForKey:@"delivery_time_interval_in_minutes"];
+            self.lblBusinessNote.text = [tableDict valueForKey:@"message_to_consumers"];
+            tableMinNo = [tableDict valueForKey:@"table_no_min"];
+            tableMaxNo = [tableDict valueForKey:@"table_no_max"];
+            self.locationArray = [[locationDict valueForKey:@"locations"] mutableCopy];
+
+            for (int i = 0 ; i < self.locationArray.count ; i++) {
+                [self.locationNameArray addObject:[self.locationArray[i] objectForKey:@"location_name"]];
+            }
+            NSLog(@"%@",tableMinNo);
+            NSLog(@"%@",tableMaxNo);
+            for (int i = [tableMinNo intValue] ; i <= [tableMaxNo intValue] ; i++) {
+                [tableNoArr addObject:[NSString stringWithFormat:@"%d",i]];
+            }
+            self.btnCounterPickupTime.enabled = YES;
+            
+        }
+    }
+    else{
+        [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
+    }
+           
+    [HUD hideAnimated:YES];
+
+}
+
 #pragma mark - Life Cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"Pick up/Delivery Options";
-    UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
+    self.title = @"Pickup/Delivery Options";
+    UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                   style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
 
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     tableNoArr = [[NSMutableArray alloc] init];
-    
-    formatter2 = [[NSDateFormatter alloc] init];
-    [formatter2 setDateFormat:@"hh:mm a"];
+
+    formatter = [[AppData sharedInstance] setDateFormatter:TIME24HOURFORMAT];
+//    formatter = [[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:@"HH:mm:ss"];
+
+    formatter2 = [[AppData sharedInstance] setDateFormatter:TIME12HOURFORMAT];
+//    formatter2 = [[NSDateFormatter alloc] init];
+//    [formatter2 setDateFormat:@"hh:mm a"];
     self.locationArray = [[NSMutableArray alloc]init];
     self.locationNameArray = [[NSMutableArray alloc]init];
-    
+
     long uid = [[DataModel sharedDataModelManager] userID];
     if (uid <= 0) {
         [UIAlertController showErrorAlert:@"Please register on profile page to set your favorites. \nYou can order them next time around."];
         return;
     }
-    
+
     stringUId = [NSString stringWithFormat:@"%ld", uid];
-    
-    
+
+
     //---------- Buisness delivery info ---------//
     self.btnCounterPickupTime.enabled = NO;
-    
+
     long business_id_long = [CurrentBusiness sharedCurrentBusinessManager].business.businessID;
     NSNumber *business_id = [NSNumber numberWithLongLong:business_id_long];
     NSDictionary *inDataDict = @{@"business_id":business_id};
     NSLog(@"%@",inDataDict);
+
+    [[NSNotificationCenter defaultCenter]
+            addObserver:self selector:@selector(triggerAction:) name:@"GotDeliveryInfo" object:nil];
     
-    [[APIUtility sharedInstance] BusinessDelivaryInfoAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
-        
-        if([[response valueForKey:@"status"] integerValue] >= 0)
-        {
-            if(((NSArray *)[response valueForKey:@"table"]).count > 0) {
-                
-                NSArray *tableDict = [response valueForKey:@"table"];
-                NSArray *locationDict = [response valueForKey:@"location_info"];
-                NSLog(@"%@",tableDict);
-                deliveryStartTime = [locationDict valueForKey:@"delivery_start_time"];
-                deliveryEndTime = [locationDict valueForKey:@"delivery_end_time"];
-                deliveryTimeInterval = [locationDict valueForKey:@"delivery_time_interval_in_minutes"];
-                self.lblBusinessNote.text = [tableDict valueForKey:@"message_to_consumers"];
-                tableMinNo = [tableDict valueForKey:@"table_no_min"];
-                tableMaxNo = [tableDict valueForKey:@"table_no_max"];
-                self.locationArray = [[locationDict valueForKey:@"locations"] mutableCopy];
-                
-                for (int i = 0 ; i < self.locationArray.count ; i++) {
-                    [self.locationNameArray addObject:[self.locationArray[i] objectForKey:@"location_name"]];
-                }
-                NSLog(@"%@",tableMinNo);
-                NSLog(@"%@",tableMaxNo);
-                for (int i = [tableMinNo intValue] ; i <= [tableMaxNo intValue] ; i++) {
-                    [tableNoArr addObject:[NSString stringWithFormat:@"%d",i]];
-                }
-                self.btnCounterPickupTime.enabled = YES;
-                [HUD hideAnimated:YES];
-            }
-        }
-        else{
-            [HUD hideAnimated:YES];
-            [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
-        }
-    }];
-    
-    // ------------------------ //
-    
+    [HUD showAnimated:YES];
+
     //---------- Set Button enable/disable ------//
     Business *bis = [CurrentBusiness sharedCurrentBusinessManager].business;
     NSInteger  counterVal = [bis.pickup_counter_charge intValue];
@@ -137,168 +260,103 @@ NSDate *setMinPickerTimeOD;
     }
     if(parkingVal != -1){
         self.btnParking.enabled = YES;
-        
-//        self.viewCounter.hidden = YES;
-//        self.viewTable.hidden = YES;
-//        self.viewDesignationLocation.hidden = YES;
-//        self.viewParking.hidden = NO;
-
     }
-//    if(counterVal >= 0 && parkingVal >= 0){
-//        self.btnCounter.enabled = YES;
-//        self.btnParking.enabled = YES;
-//        
-//        self.viewCounter.hidden = NO;
-//        self.viewTable.hidden = YES;
-//        self.viewDesignationLocation.hidden = YES;
-//        self.viewParking.hidden = YES;
-//
-//    }
-//    else if(counterVal < 0 && parkingVal < 0){
-//        self.btnCounter.enabled = NO;
-//        self.btnParking.enabled = NO;
-    
-//        
-//        self.viewCounter.hidden = NO;
-//        self.viewTable.hidden = YES;
-//        self.viewDesignationLocation.hidden = YES;
-//        self.viewParking.hidden = YES;
-//
-//    }
-    
+
+
     if(tableVal != -1){
         self.btnTable.enabled = YES;
- 
+
     }
     if(locationVal != -1){
         self.btnDesignatedLocation.enabled = YES;
-  
+
     }
-//    if(tableVal >= 0 && locationVal >= 0){
-//        self.btnTable.enabled = YES;
-//        self.btnDesignatedLocation.enabled = YES;
-//  
-//    }
-//    else if(tableVal < 0 && locationVal < 0){
-//        self.btnTable.enabled = NO;
-//        self.btnDesignatedLocation.enabled = NO;
-//   
-//    }
-    //------------------------------//
+
     self.btnOk.enabled = false;
-    double delayInSeconds = 4.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)); // 1
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        
-        NSDate *now = [NSDate date];
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"HH:mm:ss"];
-        
-        NSLog(@"The Current Time is %@",[formatter stringFromDate:now]);
-        NSString *time2 = [formatter stringFromDate:now];
-        
-        NSDate *date1= [formatter dateFromString:openingTime];
-        NSDate *date2 = [formatter dateFromString:time2];
-        
-        NSString *time3 = closingTime;
-        NSDate *date3= [formatter dateFromString:time3];
-        
-        NSComparisonResult result = [date1 compare:date2];
-        
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat = @"hh:mm a";
-        [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
-       if(result == NSOrderedDescending)
+
+    NSDate *now = [NSDate date];
+    [formatter setDateFormat:TIME12HOURFORMAT];
+
+    NSLog(@"The Current Time is %@",[formatter stringFromDate:now]);
+    NSString *stringNow = [formatter stringFromDate:now];
+
+    NSDate *dateOpeningTime= [formatter dateFromString:openingTime];
+    NSDate *dateNow = [formatter dateFromString:stringNow];
+
+    NSDate *dateClosingTime= [formatter dateFromString:closingTime];
+
+    NSComparisonResult result = [dateOpeningTime compare:dateNow];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    
+    [dateFormatter setDateFormat:TIME24HOURFORMAT];
+    NSDate *dateFromString = [dateFormatter dateFromString:openingTime];
+    [dateFormatter setDateFormat:TIME12HOURFORMAT];
+    openingTime = [dateFormatter stringFromDate:dateFromString];
+    
+    [formatter setTimeZone:[NSTimeZone systemTimeZone]];
+    if(result == NSOrderedDescending) // opening time is in future.  Display opening time
+    {
+        [self.btnParkingPickUp setTitle:openingTime forState:UIControlStateNormal];
+        [self.btnDesignationLocationPickUp setTitle:openingTime forState:UIControlStateNormal];
+        [self.btnCounterPickupTime setTitle:openingTime forState:UIControlStateNormal];
+        self.btnOk.enabled = true;
+    }
+    else if(result == NSOrderedAscending) // "now" is in future of opening time  - display now
+    {
+        NSComparisonResult result2 = [dateNow compare:dateClosingTime];
+        if(result2 == NSOrderedAscending)
         {
-            NSLog(@"date1 is later than date2");
-//            self.btnCounterPickupTime.enabled = NO;
-//            self.btnCounter.enabled = NO;
-            if(tableVal != -1){
-                self.btnTable.enabled = NO;
-            }
-            NSString *currentTime = [dateFormatter stringFromDate:date1];
-            [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
-            [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
-            [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
-            self.btnOk.enabled = true;
-        }
-        else if(result == NSOrderedAscending)
-        {
-            NSLog(@"date2 is later than date1");
-            NSComparisonResult result2 = [date2 compare:date3];
-            if(result2 == NSOrderedAscending)
+            if([dateNow compare:dateClosingTime] == NSOrderedDescending) // Closing time in is in future of
             {
-                if([date2 compare:date3] == NSOrderedDescending)
-                {
-//                    self.btnCounterPickupTime.enabled = NO;
-//                    self.btnCounter.enabled = NO;
-                    if(tableVal != -1){
-                        self.btnTable.enabled = NO;
-                    }
-                    NSString *currentTime = [dateFormatter stringFromDate:date1];
-                    [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
-                    [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
-                    [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
-                    self.btnOk.enabled = true;
-                }
-                else
-                {
-//                    self.btnCounterPickupTime.enabled = YES;
-//                    self.btnCounter.enabled = YES;
-                    if(tableVal != -1){
-                        self.btnTable.enabled = YES;
-                    }
-                    NSDate *newDate = [now dateByAddingTimeInterval:60*[deliveryTimeInterval intValue]]; // Add XXX seconds to *now
-                    NSString *currentTime = [dateFormatter stringFromDate:newDate];
-                    [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
-                    [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
-                    [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
-                    self.btnOk.enabled = true;
-                }
+                NSString *currentTime = openingTime;
+                [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
+                [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
+                [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
+                self.btnOk.enabled = true;
             }
-            else if(result2 == NSOrderedDescending)
+            else
             {
-//                self.btnCounterPickupTime.enabled = NO;
-//                self.btnCounter.enabled = NO;
-                if(tableVal != -1){
-                    self.btnTable.enabled = NO;
-                }
-                NSString *currentTime = [dateFormatter stringFromDate:date1];
+                NSDate *newDate = [now dateByAddingTimeInterval:60*[deliveryTimeInterval intValue]]; // Add XXX seconds to *now
+                NSString *currentTime = [formatter stringFromDate:newDate];
                 [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
                 [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
                 [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
                 self.btnOk.enabled = true;
             }
         }
-        else
+        else if(result2 == NSOrderedDescending)
         {
-            NSLog(@"date1 is equal to date2");
-//            self.btnCounterPickupTime.enabled = NO;
-//            self.btnCounter.enabled = NO;
-            if(tableVal != -1){
-                self.btnTable.enabled = NO;
-            }
-            NSString *currentTime = [dateFormatter stringFromDate:date1];
-            [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
-            [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
-            [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
+
+//            NSString *currentTime = [formatter stringFromDate:openingTime];
+            [self.btnParkingPickUp setTitle:openingTime forState:UIControlStateNormal];
+            [self.btnDesignationLocationPickUp setTitle:openingTime forState:UIControlStateNormal];
+            [self.btnCounterPickupTime setTitle:openingTime forState:UIControlStateNormal];
             self.btnOk.enabled = true;
         }
-    });
+    }
+    else
+    {
+        NSLog(@"date1 is equal to date2");
+        NSString *currentTime = openingTime;
+        [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
+        [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
+        [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
+        self.btnOk.enabled = true;
+    }
+
     deliveryLocation = self.locationNameArray;
 //    [_btnLocation setTitle:deliveryLocation[0] forState:UIControlStateNormal];
-    
+
     _btnCounter.selected = YES;
     [self setButtonBorder];
     self.txtNotes.delegate = self;
     billBusiness = [CurrentBusiness sharedCurrentBusinessManager].business;
     self.lblHotelName.text = billBusiness.title;
-    
-    
-
 
     // Do any additional setup after loading the view from its nib.
 }
+
 - (void)viewWillAppear:(BOOL)animated{
     [IQKeyboardManager sharedManager].enable = NO;
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
@@ -306,19 +364,19 @@ NSDate *setMinPickerTimeOD;
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-    
+
 }
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIKeyboardWillShowNotification
                                                   object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIKeyboardWillHideNotification
                                                   object:nil];
@@ -400,51 +458,51 @@ NSDate *setMinPickerTimeOD;
         rect.size.height -= kOFFSET_FOR_KEYBOARD;
     }
     self.view.frame = rect;
-    
+
     [UIView commitAnimations];
 }
 
 - (void)showAlert:(NSString *)Title :(NSString *)Message{
     UIAlertController * alert = [UIAlertController
-                                 alertControllerWithTitle:Title
-                                 message:Message
-                                 preferredStyle:UIAlertControllerStyleAlert];
-    
+            alertControllerWithTitle:Title
+                             message:Message
+                      preferredStyle:UIAlertControllerStyleAlert];
+
     UIAlertAction* OKButton = [UIAlertAction
-                               actionWithTitle:@"OK"
-                               style:UIAlertActionStyleDefault
-                               handler:^(UIAlertAction * action) {
-                                   [self dismissViewControllerAnimated:true completion:nil];
-                               }];
-    
+            actionWithTitle:@"OK"
+                      style:UIAlertActionStyleDefault
+                    handler:^(UIAlertAction * action) {
+                        [self dismissViewControllerAnimated:true completion:nil];
+                    }];
+
     [alert addAction:OKButton];
-    
+
     [self presentViewController:alert animated:YES completion:nil];
 }
 - (void)showAlertForNavigate:(NSString *)Title :(NSString *)Message{
-    
+
     NYAlertViewController *alertViewController = [[NYAlertViewController alloc] initWithNibName:nil bundle:nil];
-    
+
     // Set a title and message
     alertViewController.title = NSLocalizedString(Title, nil);
     alertViewController.message = NSLocalizedString(Message, nil);
-    
+
     // Customize appearance as desired
     alertViewController.buttonCornerRadius = 20.0f;
     alertViewController.view.tintColor = self.view.tintColor;
-    
+
     alertViewController.titleColor = [UIColor colorWithDisplayP3Red:249.0/255.0 green:122.0/255.0 blue:18.0/255.0 alpha:1.0];
     alertViewController.buttonColor = [UIColor colorWithDisplayP3Red:249.0/255.0 green:122.0/255.0 blue:18.0/255.0 alpha:1.0];
     alertViewController.cancelButtonColor = [UIColor colorWithDisplayP3Red:249.0/255.0 green:122.0/255.0 blue:18.0/255.0 alpha:1.0];
-    
+
     alertViewController.titleFont = [UIFont fontWithName:@"AvenirNext-Bold" size:19.0f];
     alertViewController.messageFont = [UIFont fontWithName:@"AvenirNext-Medium" size:16.0f];
     alertViewController.buttonTitleFont = [UIFont fontWithName:@"AvenirNext-Regular" size:alertViewController.buttonTitleFont.pointSize];
     alertViewController.cancelButtonTitleFont = [UIFont fontWithName:@"AvenirNext-Medium" size:alertViewController.cancelButtonTitleFont.pointSize];
-    
+
     alertViewController.swipeDismissalGestureEnabled = NO;
     alertViewController.backgroundTapDismissalGestureEnabled = NO;
-    
+
     // Add alert actions
     [alertViewController addAction:[NYAlertAction actionWithTitle:NSLocalizedString(@"Confirm", nil)
                                                             style:UIAlertActionStyleCancel
@@ -472,7 +530,7 @@ NSDate *setMinPickerTimeOD;
                                                               else if ([self.btnParking isSelected]){
                                                                   TotalCartItemVC.selectedButtonNumber = 4;
                                                               }
-                                                              
+
                                                               [self dismissViewControllerAnimated:YES completion:nil];
                                                               [self.navigationController pushViewController:TotalCartItemVC animated:YES];
                                                           }]];
@@ -482,7 +540,7 @@ NSDate *setMinPickerTimeOD;
                                                           handler:^(NYAlertAction *action) {
                                                               [self dismissViewControllerAnimated:YES completion:nil];
                                                           }]];
-    
+
     // Present the alert view controller
     [self presentViewController:alertViewController animated:YES completion:nil];
 //    UIAlertController * alert = [UIAlertController
@@ -552,32 +610,33 @@ NSDate *setMinPickerTimeOD;
 //        [self.btnParkingPickUp setTitle:[dateFormatter stringFromDate:selectedTime] forState:UIControlStateNormal];
 //    }
 //
- 
+
     NSLog(@"%@",selectedTime);
-    
+
     NSDate *now = [NSDate date];
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"HH:mm:ss"];
+    NSDateFormatter *df = [[AppData sharedInstance] setDateFormatter:TIME24HOURFORMAT];
+//    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+//    [df setDateFormat:@"HH:mm:ss"];
     [df setTimeZone:[NSTimeZone systemTimeZone]];
     NSLog(@"The Current Time is %@",[df stringFromDate:now]);
     NSString *selectTime = [df stringFromDate:selectedTime];
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"HH:mm:ss"];
-    
+
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:TIME24HOURFORMAT];
+
     NSDate *time = [formatter dateFromString:selectTime];
     NSDate *date1= [formatter dateFromString:deliveryStartTime];
     NSDate *date2 = [formatter dateFromString:deliveryEndTime];
     NSComparisonResult result = [time compare:date1];
     NSLog(@"%ld",(long)result);
     if ([setMinPickerTimeOD compare:time] == NSOrderedDescending ||
-        [date2 compare:time] == NSOrderedAscending)
+            [date2 compare:time] == NSOrderedAscending)
     {
         if([setMinPickerTimeOD compare:time] == NSOrderedDescending)
         {
             if([element tag] == 1){
                 [self.btnCounterPickupTime setTitle:[formatter2 stringFromDate:setMinPickerTimeOD] forState:UIControlStateNormal];
-                
+
             }
             else if([element tag] == 2){
                 [self.btnDesignationLocationPickUp setTitle:[formatter2 stringFromDate:setMinPickerTimeOD] forState:UIControlStateNormal];
@@ -586,7 +645,7 @@ NSDate *setMinPickerTimeOD;
                 [self.btnParkingPickUp setTitle:[formatter2 stringFromDate:setMinPickerTimeOD] forState:UIControlStateNormal];
             }
 //            [self.btnCounterPickupTime setTitle:[formatter2 stringFromDate:setMinPickerTimeOD] forState:UIControlStateNormal];
-            
+
         }
         else
         {
@@ -600,7 +659,7 @@ NSDate *setMinPickerTimeOD;
                 [self.btnParkingPickUp setTitle:[formatter2 stringFromDate:setMinPickerTimeOD] forState:UIControlStateNormal];
             }
 //            [self.btnCounterPickupTime setTitle:[formatter2 stringFromDate:setMinPickerTimeOD] forState:UIControlStateNormal];
-            
+
         }
     }
     else
@@ -616,7 +675,7 @@ NSDate *setMinPickerTimeOD;
         }
 
 //        [self.btnCounterPickupTime setTitle:[formatter2 stringFromDate:selectedTime] forState:UIControlStateNormal];
-        
+
     }
     NSLog(@"%@",selectedTime);
 
@@ -660,7 +719,7 @@ NSDate *setMinPickerTimeOD;
         _viewCounter.hidden = YES;
         _viewDesignationLocation.hidden = YES;
         _viewParking.hidden = YES;
-        
+
     }
 }
 
@@ -697,17 +756,17 @@ NSDate *setMinPickerTimeOD;
 }
 
 - (IBAction)btnPickupTimeDL:(id)sender {
-    
+
 }
 
 - (IBAction)btnLocationClicked:(id)sender {
-    
+
     [ActionSheetStringPicker showPickerWithTitle:@"Select a delivery location"
                                             rows:deliveryLocation
                                 initialSelection:0
                                        doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
                                            NSLog(@"Picker: %@, Index: %ld, value: %@",
-                                                 picker, (long)selectedIndex, selectedValue);
+                                                   picker, (long)selectedIndex, selectedValue);
                                            [AppData sharedInstance].consumer_Delivery_Location_Id = [self.locationArray[selectedIndex] objectForKey:@"delivery_locations_id"];
                                            [self.btnLocation setTitle:selectedValue forState:UIControlStateNormal];
                                        }
@@ -719,7 +778,7 @@ NSDate *setMinPickerTimeOD;
 }
 
 - (IBAction)btnCounterPickUpClicked:(id)sender {
-        
+
 //    [self.view endEditing:true];
 //    NSDate *now = [NSDate date];
 //    
@@ -729,30 +788,30 @@ NSDate *setMinPickerTimeOD;
 //    datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"select time" datePickerMode:UIDatePickerModeTime selectedDate:now target:self action:@selector(timeWasSelected:element:) origin:sender];
 //    [datePicker showActionSheetPicker];
 
-    
+
     NSString *time1 = deliveryStartTime;
     NSDate *now = [NSDate date];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"HH:mm:ss"];
-    
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:TIME24HOURFORMAT];
+
     NSLog(@"The Current Time is %@",[formatter stringFromDate:now]);
     NSString *time2 = [formatter stringFromDate:now];
-    
+
     NSDate *date1= [formatter dateFromString:time1];
     NSDate *date2 = [formatter dateFromString:time2];
-    
+
     NSString *time3 = deliveryEndTime;
     NSDate *date3= [formatter dateFromString:time3];
-    
+
     NSComparisonResult result = [date1 compare:date2];
-    
+
     if(result == NSOrderedDescending)
     {
         NSLog(@"date1 is later than date2");
         setMinPickerTimeOD = date1;
-            datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date1 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
-            datePicker.minuteInterval = [deliveryTimeInterval integerValue];
-            [datePicker showActionSheetPicker];
+        datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date1 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
+        datePicker.minuteInterval = [deliveryTimeInterval integerValue];
+        [datePicker showActionSheetPicker];
 
 //        NSString *message = [NSString stringWithFormat:@"Sorry! \n We are not able to deliever today."];
 //        [UIAlertController showErrorAlert:message];
@@ -760,13 +819,13 @@ NSDate *setMinPickerTimeOD;
     else if(result == NSOrderedAscending)
     {
         NSLog(@"date2 is later than date1");
-        
+
         NSComparisonResult result2 = [date2 compare:date3];
         if(result2 == NSOrderedAscending)
         {
             NSLog(@"date3 is later than date2, endTime is big than now time");
             setMinPickerTimeOD =[date2 dateByAddingTimeInterval:60*[deliveryTimeInterval integerValue]];
-            
+
             NSCalendar *calendar = [NSCalendar currentCalendar];
             NSDateComponents *components = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:setMinPickerTimeOD];
             NSInteger minute = [components minute];
@@ -775,7 +834,7 @@ NSDate *setMinPickerTimeOD;
             if(minute % [deliveryTimeInterval integerValue] == 0)
             {
                 setMinPickerTimeOD =[date2 dateByAddingTimeInterval:60*[deliveryTimeInterval integerValue]];
-                
+
                 datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date2 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
                 datePicker.minuteInterval = [deliveryTimeInterval integerValue];
                 [datePicker showActionSheetPicker];
@@ -790,7 +849,7 @@ NSDate *setMinPickerTimeOD;
                     [datePicker showActionSheetPicker];
 //                    NSString *message = [NSString stringWithFormat:@"Sorry! \n We are not able to deliever today."];
 //                    [UIAlertController showErrorAlert:message];
-                    
+
                 }
                 else
                 {
@@ -804,7 +863,7 @@ NSDate *setMinPickerTimeOD;
                         setMinPickerTimeOD =[date2 dateByAddingTimeInterval:60*[delieverTime integerValue]];
                     }
                     NSLog(@"%@",setMinPickerTimeOD);
-                    
+
                     datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date2 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
                     datePicker.minuteInterval = [deliveryTimeInterval integerValue];
                     [datePicker showActionSheetPicker];
@@ -826,7 +885,7 @@ NSDate *setMinPickerTimeOD;
     {
         NSLog(@"date1 is equal to date2");
         setMinPickerTimeOD = date1;
-        
+
         datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date2 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
         datePicker.minuteInterval = [deliveryTimeInterval integerValue];
         [datePicker showActionSheetPicker];
@@ -843,20 +902,20 @@ NSDate *setMinPickerTimeOD;
 //    [datePicker showActionSheetPicker];
     NSString *time1 = deliveryStartTime;
     NSDate *now = [NSDate date];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"HH:mm:ss"];
-    
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:TIME24HOURFORMAT];
+
     NSLog(@"The Current Time is %@",[formatter stringFromDate:now]);
     NSString *time2 = [formatter stringFromDate:now];
-    
+
     NSDate *date1= [formatter dateFromString:time1];
     NSDate *date2 = [formatter dateFromString:time2];
-    
+
     NSString *time3 = deliveryEndTime;
     NSDate *date3= [formatter dateFromString:time3];
-    
+
     NSComparisonResult result = [date1 compare:date2];
-    
+
     if(result == NSOrderedDescending)
     {
         NSLog(@"date1 is later than date2");
@@ -870,14 +929,14 @@ NSDate *setMinPickerTimeOD;
     else if(result == NSOrderedAscending)
     {
         NSLog(@"date2 is later than date1");
-        
+
         NSComparisonResult result2 = [date2 compare:date3];
         if(result2 == NSOrderedAscending)
         {
             NSLog(@"date3 is later than date2, endTime is big than now time");
             setMinPickerTimeOD =[date2 dateByAddingTimeInterval:60*[deliveryTimeInterval integerValue]];
-            
-            
+
+
             NSCalendar *calendar = [NSCalendar currentCalendar];
             NSDateComponents *components = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:setMinPickerTimeOD];
             NSInteger minute = [components minute];
@@ -886,7 +945,7 @@ NSDate *setMinPickerTimeOD;
             if(minute % [deliveryTimeInterval integerValue] == 0)
             {
                 setMinPickerTimeOD =[date2 dateByAddingTimeInterval:60*[deliveryTimeInterval integerValue]];
-                
+
                 datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date2 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
                 datePicker.minuteInterval = [deliveryTimeInterval integerValue];
                 [datePicker showActionSheetPicker];
@@ -901,7 +960,7 @@ NSDate *setMinPickerTimeOD;
                     [datePicker showActionSheetPicker];
 //                    NSString *message = [NSString stringWithFormat:@"Sorry! \n We are not able to deliever today."];
 //                    [UIAlertController showErrorAlert:message];
-                    
+
                 }
                 else
                 {
@@ -915,7 +974,7 @@ NSDate *setMinPickerTimeOD;
                         setMinPickerTimeOD =[date2 dateByAddingTimeInterval:60*[delieverTime integerValue]];
                     }
                     NSLog(@"%@",setMinPickerTimeOD);
-                    
+
                     datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date2 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
                     datePicker.minuteInterval = [deliveryTimeInterval integerValue];
                     [datePicker showActionSheetPicker];
@@ -937,7 +996,7 @@ NSDate *setMinPickerTimeOD;
     {
         NSLog(@"date1 is equal to date2");
         setMinPickerTimeOD = date1;
-        
+
         datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date2 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
         datePicker.minuteInterval = [deliveryTimeInterval integerValue];
         [datePicker showActionSheetPicker];
@@ -954,20 +1013,20 @@ NSDate *setMinPickerTimeOD;
 //    [datePicker showActionSheetPicker];
     NSString *time1 = deliveryStartTime;
     NSDate *now = [NSDate date];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"HH:mm:ss"];
-    
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:TIME24HOURFORMAT];
+
     NSLog(@"The Current Time is %@",[formatter stringFromDate:now]);
     NSString *time2 = [formatter stringFromDate:now];
-    
+
     NSDate *date1= [formatter dateFromString:time1];
     NSDate *date2 = [formatter dateFromString:time2];
-    
+
     NSString *time3 = deliveryEndTime;
     NSDate *date3= [formatter dateFromString:time3];
-    
+
     NSComparisonResult result = [date1 compare:date2];
-    
+
     if(result == NSOrderedDescending)
     {
         NSLog(@"date1 is later than date2");
@@ -981,14 +1040,14 @@ NSDate *setMinPickerTimeOD;
     else if(result == NSOrderedAscending)
     {
         NSLog(@"date2 is later than date1");
-        
+
         NSComparisonResult result2 = [date2 compare:date3];
         if(result2 == NSOrderedAscending)
         {
             NSLog(@"date3 is later than date2, endTime is big than now time");
             setMinPickerTimeOD =[date2 dateByAddingTimeInterval:60*[deliveryTimeInterval integerValue]];
-            
-            
+
+
             NSCalendar *calendar = [NSCalendar currentCalendar];
             NSDateComponents *components = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:setMinPickerTimeOD];
             NSInteger minute = [components minute];
@@ -997,7 +1056,7 @@ NSDate *setMinPickerTimeOD;
             if(minute % [deliveryTimeInterval integerValue] == 0)
             {
                 setMinPickerTimeOD =[date2 dateByAddingTimeInterval:60*[deliveryTimeInterval integerValue]];
-                
+
                 datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date2 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
                 datePicker.minuteInterval = [deliveryTimeInterval integerValue];
                 [datePicker showActionSheetPicker];
@@ -1012,7 +1071,7 @@ NSDate *setMinPickerTimeOD;
                     [datePicker showActionSheetPicker];
 //                    NSString *message = [NSString stringWithFormat:@"Sorry! \n We are not able to deliever today."];
 //                    [UIAlertController showErrorAlert:message];
-                    
+
                 }
                 else
                 {
@@ -1026,7 +1085,7 @@ NSDate *setMinPickerTimeOD;
                         setMinPickerTimeOD =[date2 dateByAddingTimeInterval:60*[delieverTime integerValue]];
                     }
                     NSLog(@"%@",setMinPickerTimeOD);
-                    
+
                     datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date2 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
                     datePicker.minuteInterval = [deliveryTimeInterval integerValue];
                     [datePicker showActionSheetPicker];
@@ -1048,7 +1107,7 @@ NSDate *setMinPickerTimeOD;
     {
         NSLog(@"date1 is equal to date2");
         setMinPickerTimeOD = date1;
-        
+
         datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date2 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
         datePicker.minuteInterval = [deliveryTimeInterval integerValue];
         [datePicker showActionSheetPicker];
@@ -1069,13 +1128,10 @@ NSDate *setMinPickerTimeOD;
     {
         self.noteTextOD = @"";
     }
-    NSDateFormatter* df = [[NSDateFormatter alloc] init];
+    NSDateFormatter* df = [[AppData sharedInstance] setDateFormatter:TIME24HOURFORMAT];
     [df setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
     [df setTimeZone:[NSTimeZone systemTimeZone]];
-    [df setDateFormat:@"hh:mm a"];
 
-    
-    
     if(self.btnDesignatedLocation.isSelected){
         if(self.btnLocation.titleLabel.text.length == 0){
             [self showAlert:@"Error" :@"Please select location."];
@@ -1084,51 +1140,52 @@ NSDate *setMinPickerTimeOD;
             [self showAlert:@"Error" :@"Please select pickup time."];
         }
         else {
-            
+
             [HUD showAnimated:YES];
             NSDate* newDate = [df dateFromString:self.btnDesignationLocationPickUp.titleLabel.text];
-            [df setDateFormat:@"HH:mm:ss"];
+            [df setDateFormat:TIME24HOURFORMAT];
 //            newDate = [df stringFromDate:newDate];
             uploadTime = (NSString *)[df stringFromDate:newDate];
             NSLog(@"%@",uploadTime);
             NSDictionary *inDataDict;
-            
+
             if(uploadTime != nil)
             {
-                
+
                 inDataDict = @{              @"delivery_address_name":self.btnLocation.titleLabel.text,
-                                             @"delivery_instruction":self.txtNotes.text,
-                                             @"delivery_time":uploadTime,
-                                             @"cmd":@"save_consumer_delivery",
-                                             @"consumer_id":stringUId
-                                             };
+                        @"delivery_instruction":self.txtNotes.text,
+                        @"delivery_time":uploadTime,
+                        @"cmd":@"save_consumer_delivery",
+                        @"consumer_id":stringUId
+                };
             }else
             {
-                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                dateFormatter.dateFormat = @"hh:mm a";
+//                NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//                dateFormatter.dateFormat = @"hh:mm a";
+                NSDateFormatter *dateFormatter = [[AppData sharedInstance] setDateFormatter:TIME12HOURFORMAT];
                 NSDate *now = [NSDate date];
-                
-                dateFormatter.dateFormat = @"HH:mm:ss";
+
+                dateFormatter.dateFormat = TIME24HOURFORMAT;
                 uploadTime = [dateFormatter stringFromDate:now];
-                
+
                 inDataDict = @{              @"delivery_address_name":self.btnLocation.titleLabel.text,
-                                             @"delivery_instruction":self.txtNotes.text,
-                                             @"delivery_time":uploadTime,
-                                             @"cmd":@"save_consumer_delivery",
-                                             @"consumer_id":stringUId
-                                             };
+                        @"delivery_instruction":self.txtNotes.text,
+                        @"delivery_time":uploadTime,
+                        @"cmd":@"save_consumer_delivery",
+                        @"consumer_id":stringUId
+                };
             }
             NSLog(@"%@",inDataDict);
             [[APIUtility sharedInstance] ConsumerDelivaryInfoSaveAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
                 if([[response valueForKey:@"status"] integerValue] >= 0)
                 {
                     if( ((NSArray *)response).count > 0 && [[response valueForKey:@"status"] integerValue] == 1) {
-                        
+
                         [AppData sharedInstance].consumer_Delivery_Id =[NSString stringWithFormat:@"%@", [response valueForKey:@"consumer_delivery_id"]];
                         [AppData sharedInstance].consumer_Delivery_Location = self.btnLocation.titleLabel.text;
                         [AppData sharedInstance].Pick_Time = uploadTime;
                         [AppData sharedInstance].Pd_Mode = DELIVERY_LOCATION;
-                        
+
                         [self showAlertForNavigate:@"Detail" :[NSString stringWithFormat:@"\n Your Delivery Location is %@ \n Your Pick up time is %@ \n",[AppData sharedInstance].consumer_Delivery_Location,self.btnDesignationLocationPickUp.titleLabel.text]];
                     }
                     else
@@ -1136,10 +1193,10 @@ NSDate *setMinPickerTimeOD;
                         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error"
                                                                                        message:@"Something went wrong."
                                                                                 preferredStyle:UIAlertControllerStyleAlert];
-                        
+
                         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                                               handler:^(UIAlertAction * action) {}];
-                        
+
                         [alert addAction:defaultAction];
                         [self presentViewController:alert animated:YES completion:nil];
                     }
@@ -1158,10 +1215,11 @@ NSDate *setMinPickerTimeOD;
             [self showAlert:@"Error" :@"Please select pickup time."];
         }
         else{
+            [df setDateFormat:TIME12HOURFORMAT];
             NSDate* newDate = [df dateFromString:self.btnCounterPickupTime.titleLabel.text];
-            [df setDateFormat:@"HH:mm:ss"];
+            [df setDateFormat:TIME24HOURFORMAT];
 //            newDate = [df stringFromDate:newDate];
-            uploadTime = (NSString *)[df stringFromDate:newDate];;
+            uploadTime = (NSString *)[df stringFromDate:newDate];
             NSLog(@"%@",uploadTime);
 
             [AppData sharedInstance].consumer_Delivery_Id =@"";
@@ -1181,11 +1239,11 @@ NSDate *setMinPickerTimeOD;
             [AppData sharedInstance].consumer_Delivery_Location_Id = @"";
             [AppData sharedInstance].consumer_Delivery_Location = @"";
             [AppData sharedInstance].consumer_Delivery_Location_Id = self.tableDropDown.titleLabel.text;
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            dateFormatter.dateFormat = @"hh:mm a";
+//            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//            dateFormatter.dateFormat = @"hh:mm a";
+            NSDateFormatter *dateFormatter = [[AppData sharedInstance] setDateFormatter:TIME12HOURFORMAT];
             NSDate *now = [NSDate date];
-            
-            dateFormatter.dateFormat = @"HH:mm:ss";
+            dateFormatter.dateFormat = TIME24HOURFORMAT;
             uploadTime = [dateFormatter stringFromDate:now];
             [AppData sharedInstance].Pick_Time = uploadTime;
             [AppData sharedInstance].Pd_Mode = DELIVERY_TABLE;
@@ -1197,8 +1255,9 @@ NSDate *setMinPickerTimeOD;
             [self showAlert:@"Error" :@"Please select pickup time."];
         }
         else{
+            [df setDateFormat:TIME12HOURFORMAT];
             NSDate* newDate = [df dateFromString:self.btnParkingPickUp.titleLabel.text];
-            [df setDateFormat:@"HH:mm:ss"];
+            [df setDateFormat:TIME24HOURFORMAT];
 //            newDate = [df stringFromDate:newDate];
             uploadTime = (NSString *)[df stringFromDate:newDate];
             NSLog(@"%@",uploadTime);
@@ -1212,7 +1271,7 @@ NSDate *setMinPickerTimeOD;
         }
     }
     else{
-        
+
     }
 }
 
@@ -1225,7 +1284,7 @@ NSDate *setMinPickerTimeOD;
                                 initialSelection:0
                                        doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
                                            NSLog(@"Picker: %@, Index: %ld, value: %@",
-                                                 picker, (long)selectedIndex, selectedValue);
+                                                   picker, (long)selectedIndex, selectedValue);
                                            [self.tableDropDown setTitle:selectedValue forState:UIControlStateNormal];
                                        }
                                      cancelBlock:^(ActionSheetStringPicker *picker) {

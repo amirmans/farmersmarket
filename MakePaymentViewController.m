@@ -64,6 +64,13 @@
     _waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
     self.lblTitle.text = self.restTitle;
     self.lblTotalPrice.text = [NSString stringWithFormat:@"$ %.2f",self.totalVal];
+    
+    if (![self enoughPointsToRedeem]){
+        self.btnRedeemPoint.enabled = false;
+    }
+    else{
+        self.btnRedeemPoint.enabled = true;
+    }
     // Do any additional setup after loading the view from its nib.
 }
 -(void)viewWillAppear:(BOOL)animated{

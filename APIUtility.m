@@ -62,6 +62,7 @@ static APIUtility *sharedObj;
           }];
 }
 
+
 //-(void)BusinessListAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished
 //{
 //    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])

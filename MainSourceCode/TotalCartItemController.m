@@ -89,19 +89,11 @@ UITextView *alertTextView;
         NSLog(@"---parameter---%@",inDataDict);
         [[APIUtility sharedInstance] BusinessDelivaryInfoAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
             NSLog(@"----response : %@",response);
-            if([[response valueForKey:@"status"] integerValue] >= 0)
-            {
-                if(((NSArray *)[response valueForKey:@"data"]).count > 0) {
-                    NSArray *dataDict = [response valueForKey:@"data"];
-                    deliveryamount = [[[dataDict objectAtIndex:0] valueForKey:@"delivery_charge"] doubleValue];
-                    delivery_start_time = [[dataDict objectAtIndex:0] valueForKey:@"delivery_start_time"];
-                    delivery_end_time = [[dataDict objectAtIndex:0] valueForKey:@"delivery_end_time"];
-                }
-            }
-            else
-            {
-                [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
-            }
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(postPDInfomationFromServer:)
+                                                         name:@"GotPickupDeliveryData"
+                                                       object:nil];
+
         }];
     }
     else{
@@ -949,6 +941,24 @@ UITextView *alertTextView;
 //    [testAlert show];
 }
 
+- (void)postPDInfomationFromServer:(NSDictionary *)response {
+    if([[response valueForKey:@"status"] integerValue] >= 0)
+    {
+        if(((NSArray *)[response valueForKey:@"data"]).count > 0) {
+            NSArray *dataDict = [response valueForKey:@"data"];
+            deliveryamount = [[[dataDict objectAtIndex:0] valueForKey:@"delivery_charge"] doubleValue];
+            delivery_start_time = [[dataDict objectAtIndex:0] valueForKey:@"delivery_start_time"];
+            delivery_end_time = [[dataDict objectAtIndex:0] valueForKey:@"delivery_end_time"];
+        }
+    }
+    else
+    {
+        [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
+    }
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
 #pragma mark - UITextView Delegate
 - (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     textView.text = @"";
@@ -1118,11 +1128,12 @@ UITextView *alertTextView;
         
         if(result == NSOrderedDescending)
         {
-            NSDateFormatter* dateFormatter1 = [[NSDateFormatter alloc] init];
-            dateFormatter1.dateFormat = @"HH:mm:ss";
+            NSDateFormatter* dateFormatter1 = [[AppData sharedInstance] setDateFormatter:TIME24HOURFORMAT];
+//            NSDateFormatter* dateFormatter1 = [[NSDateFormatter alloc] init];
+//            dateFormatter1.dateFormat = @"HH:mm:ss";
             NSDate *startDate = [dateFormatter1 dateFromString:delivery_start_time];
             NSDate *endDate = [dateFormatter1 dateFromString:delivery_end_time];
-            dateFormatter1.dateFormat = @"hh:mm a";
+            dateFormatter1.dateFormat = TIME12HOURFORMAT;
             NSString *message = [NSString stringWithFormat:@"Not available at this time.  Deliveries only between %@ - %@",[dateFormatter1 stringFromDate:startDate],[dateFormatter1 stringFromDate:endDate]];
             [UIAlertController showErrorAlert:message];
         }
@@ -1130,11 +1141,12 @@ UITextView *alertTextView;
         {
             if([date2 compare:date3] == NSOrderedDescending)
             {
-                NSDateFormatter* dateFormatter1 = [[NSDateFormatter alloc] init];
-                dateFormatter1.dateFormat = @"HH:mm:ss";
+                NSDateFormatter* dateFormatter1 = [[AppData sharedInstance] setDateFormatter:TIME24HOURFORMAT];
+//                NSDateFormatter* dateFormatter1 = [[NSDateFormatter alloc] init];
+//                dateFormatter1.dateFormat = @"HH:mm:ss";
                 NSDate *startDate = [dateFormatter1 dateFromString:delivery_start_time];
                 NSDate *endDate = [dateFormatter1 dateFromString:delivery_end_time];
-                dateFormatter1.dateFormat = @"hh:mm a";
+                dateFormatter1.dateFormat = TIME12HOURFORMAT;
                 NSString *message = [NSString stringWithFormat:@"Not available at this time.  Deliveries only between %@ - %@",[dateFormatter1 stringFromDate:startDate],[dateFormatter1 stringFromDate:endDate]];
                 [UIAlertController showErrorAlert:message];
             }

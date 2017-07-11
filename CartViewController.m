@@ -605,6 +605,30 @@ double deliveryAmount = 0.0;        // Delivery Amount
                     TotalCartItemVC.delivery_startTimeOD = deliveryStartTime;
                     TotalCartItemVC.delivery_endTimeOD = deliveryEndTime;
                 }
+                
+                
+                
+                long business_id_long = [CurrentBusiness sharedCurrentBusinessManager].business.businessID;
+                NSNumber *business_id = [NSNumber numberWithLongLong:business_id_long];
+                NSDictionary *inDataDict = @{@"business_id":business_id};
+                NSLog(@"%@",inDataDict);
+                
+                [[APIUtility sharedInstance] BusinessDelivaryInfoAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"GotDeliveryInfo" object:nil userInfo:response];
+                    
+                }];
+
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 [self.navigationController pushViewController:TotalCartItemVC animated:YES];
             }
         }
@@ -702,11 +726,12 @@ double deliveryAmount = 0.0;        // Delivery Amount
             
             if(result == NSOrderedDescending)
             {
-                NSDateFormatter* dateFormatter1 = [[NSDateFormatter alloc] init];
-                dateFormatter1.dateFormat = @"HH:mm:ss";
+                NSDateFormatter* dateFormatter1 = [[AppData sharedInstance] setDateFormatter:TIME24HOURFORMAT];
+//                NSDateFormatter* dateFormatter1 = [[NSDateFormatter alloc] init];
+//                dateFormatter1.dateFormat = @"HH:mm:ss";
                 NSDate *startDate = [dateFormatter1 dateFromString:deliveryStartTime];
                 NSDate *endDate = [dateFormatter1 dateFromString:deliveryEndTime];
-                dateFormatter1.dateFormat = @"hh:mm a";
+                dateFormatter1.dateFormat = TIME12HOURFORMAT;
                 NSString *message = [NSString stringWithFormat:@"Not available at this time.  Deliveries only between %@ - %@",[dateFormatter1 stringFromDate:startDate],[dateFormatter1 stringFromDate:endDate]];
                 [UIAlertController showErrorAlert:message];
             }
@@ -714,11 +739,12 @@ double deliveryAmount = 0.0;        // Delivery Amount
             {
                 if([date2 compare:date3] == NSOrderedDescending)
                 {
-                    NSDateFormatter* dateFormatter1 = [[NSDateFormatter alloc] init];
-                    dateFormatter1.dateFormat = @"HH:mm:ss";
+                    NSDateFormatter* dateFormatter1 = [[AppData sharedInstance] setDateFormatter:TIME24HOURFORMAT];
+//                    NSDateFormatter* dateFormatter1 = [[NSDateFormatter alloc] init];
+//                    dateFormatter1.dateFormat = @"HH:mm:ss";
                     NSDate *startDate = [dateFormatter1 dateFromString:deliveryStartTime];
                     NSDate *endDate = [dateFormatter1 dateFromString:deliveryEndTime];
-                    dateFormatter1.dateFormat = @"hh:mm a";
+                    dateFormatter1.dateFormat = TIME12HOURFORMAT;
                     NSString *message = [NSString stringWithFormat:@"Not available at this time.  Deliveries only between %@ - %@",[dateFormatter1 stringFromDate:startDate],[dateFormatter1 stringFromDate:endDate]];
                     [UIAlertController showErrorAlert:message];
                 }
@@ -761,9 +787,9 @@ double deliveryAmount = 0.0;        // Delivery Amount
     [self.view endEditing:true];
     
     NSDate *now = [NSDate date];
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"hh:mm a"];
+    NSDateFormatter *formatter = [[AppData sharedInstance] setDateFormatter:TIME12HOURFORMAT];
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:@"hh:mm a"];
     NSLog(@"The Current Time is %@",[formatter stringFromDate:now]);
     datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"" datePickerMode:UIDatePickerModeTime selectedDate:now doneBlock:^(ActionSheetDatePicker *picker, id selectedDate, id origin) {
         NSLog(@"%@",selectedDate);

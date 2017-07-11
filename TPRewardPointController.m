@@ -90,8 +90,9 @@ NSInteger current_points_level_int  = 0;
     }
     
     if (date != (id)[NSNull null]) {
-        NSDateFormatter *dateformater = [[NSDateFormatter alloc] init];
-        dateformater.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+        NSDateFormatter *dateformater = [[AppData sharedInstance] setDateFormatter:@"yyyy-MM-dd HH:mm:ss"];
+//        NSDateFormatter *dateformater = [[NSDateFormatter alloc] init];
+//        dateformater.dateFormat = @"yyyy-MM-dd HH:mm:ss";
         NSDate *converteddate = [dateformater dateFromString:date];
         dateformater.dateFormat = @"MMM-dd HH:mm a";
         NSString *localdate = [dateformater stringFromDate:converteddate];

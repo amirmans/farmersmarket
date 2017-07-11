@@ -68,7 +68,7 @@ Business *biz;
     ListofBusinesses* businesses = [ListofBusinesses sharedListofBusinesses];
 //    businessListArray = [businesses businessListArray];
     self.ResponseDataArray = [businesses businessListArray];
-    NSLog(@"%@",_ResponseDataArray);
+//    NSLog(@"%@",_ResponseDataArray);
     if (self.ResponseDataArray.count > 0 ) {
         [businessListArray removeAllObjects];
         for (int i = 0; i < self.ResponseDataArray.count ; i++) {
@@ -608,7 +608,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         cell.rateView.rating =  0;
     }
     
-    NSLog(@"%@",biz.opening_time);
+//    NSLog(@"%@",biz.opening_time);
     
     if([cellDict objectForKey:@"opening_time"] == [NSNull null] || [cellDict objectForKey:@"closing_time"] == [NSNull null]) {
         cell.lblOpenClose.hidden = true;
@@ -818,7 +818,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
             if (1) {
                 if(response != nil) {
                     NSDictionary *reward = response;
-                    NSLog(@"%@",reward);
+//                    NSLog(@"%@",reward);
                     NSString *total_available_points = [[[reward valueForKey:@"data"] valueForKey:@"total_available_points"] stringValue];
                     
                     [[self.tabBarController.tabBar.items objectAtIndex:3] setBadgeValue:total_available_points];

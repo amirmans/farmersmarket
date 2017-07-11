@@ -34,7 +34,7 @@
 @property (retain, nonatomic) NSString *Pick_Time;
 @property (retain, nonatomic) NSString *Pd_Mode;
 
-
+- (NSDateFormatter *) setDateFormatter : (NSString *) dateFormat;
 - (void) locationManager ;
 
 + (AppData *) sharedInstance;

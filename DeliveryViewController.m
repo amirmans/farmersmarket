@@ -133,13 +133,12 @@
                 }
                 
                 self.titleLable.text = [[dataDict objectAtIndex:0] valueForKey:@"message_to_consumers"];
-                
-                NSDateFormatter* dateFormatter1 = [[NSDateFormatter alloc] init];
-                dateFormatter1.dateFormat = @"HH:mm:ss";
+                NSDateFormatter* dateFormatter1 = [[AppData sharedInstance] setDateFormatter:TIME24HOURFORMAT];
+//                NSDateFormatter* dateFormatter1 = [[NSDateFormatter alloc] init];
+//                dateFormatter1.dateFormat = @"HH:mm:ss";
                 NSDate *startDate = [dateFormatter1 dateFromString:delivery_start_time];
                 NSDate *endDate = [dateFormatter1 dateFromString:delivery_end_time];
-                
-                dateFormatter1.dateFormat = @"hh:mm a";
+                dateFormatter1.dateFormat = TIME12HOURFORMAT;
                 
                 self.lblDeliveryStartEndTime.hidden = NO;
                 
@@ -595,10 +594,10 @@
                                          };
         }else
         {
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            dateFormatter.dateFormat = @"hh:mm a";
+            NSDateFormatter *dateFormatter = [[AppData sharedInstance] setDateFormatter:TIME12HOURFORMAT];
+//            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//            dateFormatter.dateFormat = @"hh:mm a";
             NSDate *date = [dateFormatter dateFromString:self.lblDeliveryTIme.text];
-            
             dateFormatter.dateFormat = @"HH:mm";
             NSString *pmamDateString = [dateFormatter stringFromDate:date];
             
@@ -677,9 +676,9 @@
 //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 //    dateFormatter.dateFormat = @"HH:mm:ss";
     
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"HH:mm:ss"];
+    NSDateFormatter *formatter = [[AppData sharedInstance] setDateFormatter:TIME24HOURFORMAT];
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:@"HH:mm:ss"];
     
     
 //    NSDate *sourceDate = [NSDate dateWithTimeIntervalSinceNow:3600 * 24 * 60];
