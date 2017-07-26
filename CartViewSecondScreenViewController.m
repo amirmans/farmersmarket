@@ -231,6 +231,7 @@ double deliveryAmountValue; //Delievery amount value in $
     makePaymentVC.deliveryAmountValue = deliveryAmountValue;
     makePaymentVC.deliveryamt = deliveryamt;
     makePaymentVC.noteText = self.noteText;
+    makePaymentVC.pd_noteText = self.pd_noteText;
     makePaymentVC.restTitle = self.lblTitle.text;
     [self.navigationController pushViewController:makePaymentVC animated:YES];
 //    if(defaultCardData != nil){
@@ -470,7 +471,7 @@ double deliveryAmountValue; //Delievery amount value in $
                             double doublePromo = [[CurrentBusiness sharedCurrentBusinessManager].business.promotion_discount_amount doubleValue];
                             globalPromotnal = doublePromo;
                             promotionalamt = doublePromo;
-                            self.lblPromotionCode.text = [NSString stringWithFormat:@"Promotional Code: %@",[CurrentBusiness sharedCurrentBusinessManager].business.promotion_code];
+                            self.lblPromotionCode.text = [NSString stringWithFormat:@"Promotion Code: %@",[CurrentBusiness sharedCurrentBusinessManager].business.promotion_code];
                             self.lblPromotionCode.adjustsFontSizeToFitWidth = YES;
                         }
                         if(globalPromotnal > cartTotalValue)
@@ -690,8 +691,7 @@ double deliveryAmountValue; //Delievery amount value in $
         NSLog(@"Json format of data send to save_order: %@", jsonString);
     }
     hud = [[MBProgressHUD alloc] initWithView:self.view];
-    hud.label.text = @"Updating businesses...";
-    hud.detailsLabel.text = @"Tap-in is sending order to merchant...";
+    hud.label.text = @"Tap-in is sending order information to merchant...";
     hud.mode = MBProgressHUDModeIndeterminate;
     [hud.bezelView setBackgroundColor:[UIColor orangeColor]];
     hud.bezelView.color = [UIColor orangeColor];

@@ -354,16 +354,18 @@ static NSArray *consumerProfileDataArray = nil;
     return !badInformation;
 }
 
-- (IBAction)saveButtonAction:(id)sender {
-    [self saveProfile];
-}
+//- (IBAction)saveButtonAction:(id)sender {
+//    [self saveProfile];
+//}
 
 - (IBAction)ageGroupSegmentedControlAction:(id)sender {
     ageGroupTextField.text = [ageGroupSegmentedControl titleForSegmentAtIndex:ageGroupSegmentedControl.selectedSegmentIndex];
 }
 
 
-- (IBAction)resetButtonAction:(id)sender {
+//- (IBAction)resetButtonAction:(id)sender {
+- (IBAction)saveButtonAction:(id)sender {
+
     [super viewDidLoad];
     BOOL successfulSave = [self saveProfile];
     if (successfulSave) {

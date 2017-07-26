@@ -107,6 +107,10 @@ static NSString *const TIME12HOURFORMAT = @"hh:mm a";
 // overhead and the name of the sender.
 #define MaxMessageLength 190
 
+#define Default_Text_Color  @"rgb(0,0,0)";
+#define Default_BG_Color    @"rgb(255, 134, 57)";
+
+
 // compatibility between different ios
 #ifdef __IPHONE_8_0
 #define Compatible_setImageWithURL sd_setImageWithURL

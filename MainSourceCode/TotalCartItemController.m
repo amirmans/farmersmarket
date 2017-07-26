@@ -552,8 +552,8 @@ UITextView *alertTextView;
         NSLog(@"Json format of data send to save_order: %@", jsonString);
     }
     hud = [[MBProgressHUD alloc] initWithView:self.view];
-    hud.label.text = @"Updating businesses...";
-    hud.detailsLabel.text = @"Tap-in is sending order to merchant...";
+    hud.label.text = @"Tap-in is sending order to merchant";
+    hud.detailsLabel.text = @"...";
     hud.mode = MBProgressHUDModeIndeterminate;
     [hud.bezelView setBackgroundColor:[UIColor orangeColor]];
     hud.bezelView.color = [UIColor orangeColor];

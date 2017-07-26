@@ -26,6 +26,7 @@
 
 @property (strong,nonatomic) NSString *subTotal;
 @property (strong,nonatomic) NSString *noteText;
+@property (strong,nonatomic) NSString *pd_noteText;
 @property (assign) NSString* delivery_startTime;
 @property (assign) NSString* delivery_endTime;
 @property (strong,nonatomic) NSString *earnPts;

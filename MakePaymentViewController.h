@@ -47,6 +47,7 @@
 @property (assign) double deliveryAmountValue;
 @property (assign) double deliveryamt;
 @property (strong,nonatomic) NSString *noteText;
+@property (strong,nonatomic) NSString *pd_noteText;
 @property (strong,nonatomic) NSString *restTitle;
 
 

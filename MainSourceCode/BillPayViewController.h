@@ -12,6 +12,8 @@
 #import "ConsumerCCModelObject.h"
 #import "MBProgressHUD.h"
 
+#import "BKCardNumberField.h"
+
 @class Business;
 
 @interface BillPayViewController : UIViewController <STPPaymentCardTextFieldDelegate, UIAlertViewDelegate, UITextFieldDelegate, UITableViewDataSource,UITableViewDelegate> {
@@ -46,7 +48,9 @@
 @property (strong, nonatomic) NSDictionary *orderInfoDict;
 
 @property (weak, nonatomic) IBOutlet UITextField *txtCardHolderName;
-@property (weak, nonatomic) IBOutlet UITextField *txtCardNumber;
+@property (weak, nonatomic) IBOutlet BKCardNumberField *txtCardNumber;
+
+//@property (weak, nonatomic) IBOutlet UITextField *txtCardNumber;
 @property (weak, nonatomic) IBOutlet UITextField *txtExpMonth;
 @property (weak, nonatomic) IBOutlet UITextField *txtExpYear;
 @property (weak, nonatomic) IBOutlet UITextField *txtCVV;

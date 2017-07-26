@@ -11,5 +11,7 @@
 @interface HomeViewController : UIViewController
 - (IBAction)btnNewOrderClicked:(id)sender;
 - (IBAction)btnPickOrderClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *btnPickupOrder;
+@property (strong, nonatomic) IBOutlet UIButton *btnNewOrder;
 
 @end

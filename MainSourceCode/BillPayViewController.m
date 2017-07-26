@@ -71,6 +71,7 @@ NSMutableArray *cardDataArray;
     self.automaticallyAdjustsScrollViewInsets = YES;
     self.edgesForExtendedLayout = UIRectEdgeNone;
 
+    self.txtCardNumber.showsCardLogo = YES;
     self.txtCardHolderName.delegate = self;
     self.txtCardNumber.delegate = self;
     self.txtExpMonth.delegate = self;
@@ -242,6 +243,9 @@ NSMutableArray *cardDataArray;
         NSString *zipCode = self.txtZipCode.text;
         if([self.txtCardNumber.text isEqualToString:@""] || [self.txtExpMonth.text isEqualToString:@""] || [self.txtExpYear.text isEqualToString:@""] || [self.txtCVV.text isEqualToString:@""] || [self.txtZipCode.text isEqualToString:@""]){
             [self showAlert:@"Error" :@"Please fill all fields."];
+        }
+        else if(self.txtCardNumber.cardNumberFormatter.cardPatternInfo == NULL){
+            [self showAlert:@"Error" :@"Enter Valid Card Number."];
         }
         else if([self.txtExpMonth.text intValue] > 12){
             [self showAlert:@"Error" :@"Enter Valid Card Expiration Month."];
@@ -451,7 +455,7 @@ NSMutableArray *cardDataArray;
         
         NSUInteger newLength = [textField.text length] + [string length] - range.length;
         if(textField == self.txtCardNumber){
-            return newLength <= 16;
+            return newLength <= 19;
         }
         else if(textField == self.txtExpMonth){
             return newLength <= 2;

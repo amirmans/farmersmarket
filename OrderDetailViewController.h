@@ -17,6 +17,7 @@
 }
 @property (strong,nonatomic) NSString *subTotalOD;
 @property (strong,nonatomic) NSString *noteTextOD;
+@property (strong,nonatomic) NSString *pd_noteTextOD;
 @property (assign) NSString* delivery_startTimeOD;
 @property (assign) NSString* delivery_endTimeOD;
 @property (strong,nonatomic) NSString *earnPtsOD;

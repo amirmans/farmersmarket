@@ -512,6 +512,7 @@ NSDate *setMinPickerTimeOD;
                                                               TotalCartItemVC.subTotal = [NSString stringWithFormat:@"%@",self.subTotalOD];
                                                               TotalCartItemVC.earnPts = self.earnPtsOD;
                                                               TotalCartItemVC.noteText = self.noteTextOD;
+                                                              TotalCartItemVC.pd_noteText = self.pd_noteTextOD;
                                                               TotalCartItemVC.pickupTime = self.pickupTimeOD;
                                                               if([AppData sharedInstance].consumer_Delivery_Id != nil){
                                                                   TotalCartItemVC.deliveryamt = self.deliveryamtOD;

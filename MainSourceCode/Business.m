@@ -403,7 +403,13 @@
     [self setBGImageFromString:bg_image_URLString];
     
     bg_color = [self stringFromDataDictionary:data forKey:@"bg_color"];
+    if (!bg_color) {
+        bg_color = Default_BG_Color;
+    }
     text_color = [self stringFromDataDictionary:data forKey:@"text_color"];
+    if (!text_color) {
+        text_color = Default_Text_Color;
+    }
     
     sub_businesses = [self stringFromDataDictionary:data forKey:@"sub_businesses"];
     
@@ -659,11 +665,11 @@
 
 - (void)setBGImageFromString:(NSString *)bgImageString {
     if (!bgImageString) {
-        bg_image = [UIImage imageNamed:@"bg_image"];
-        self.businessBackgroundImage = [UIImage imageNamed:@"bg_image"];
+        bg_image = [UIImage imageNamed:@"bg_Image"];
+        self.businessBackgroundImage = [UIImage imageNamed:@"bg_Image"];
         return;
     }
-    
+
     NSString *iconURLString = [BusinessCustomerBGImageDirectory stringByAppendingString:bgImageString];
     NSURL *iconUrl = [NSURL URLWithString:iconURLString];
     //We have a valid icon path - retrieve the image from our own server

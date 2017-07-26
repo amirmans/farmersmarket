@@ -16,10 +16,14 @@
 
 @implementation HomeViewController
 
+@synthesize btnNewOrder, btnPickupOrder;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view from its nib.
+    btnPickupOrder.enabled = FALSE;
+    btnPickupOrder.alpha = 0.7;
 }
 
 - (void)didReceiveMemoryWarning {

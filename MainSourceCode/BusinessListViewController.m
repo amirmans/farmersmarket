@@ -78,13 +78,15 @@ Business *biz;
         if (businessListArray.count > 0 ) {
             [bizListTimer invalidate];
             bizListTimer = nil;
+       
             [HUD hideAnimated:YES];
             NSMutableArray *SortByLocationArray = [self getSortByLocationTapForApp];
             [self.businessListArray removeAllObjects];
             self.businessListArray = SortByLocationArray;
-            
+
+
             [bizTableView reloadData];
-            [self addMarkersToMap];
+//            TODO [self addMarkersToMap];
         }
     }
 }
@@ -199,9 +201,9 @@ Business *biz;
     if (businessListArray.count <= 0 ) {
         bizListTimer = [NSTimer scheduledTimerWithTimeInterval:0.02 target:self selector:@selector(timerCallBack) userInfo:nil repeats:YES];
     }
-    else {
+//    else {
        [HUD hideAnimated:YES];
-    }
+//    }
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     filteredBusinessListArray = [[NSMutableArray alloc] initWithCapacity:businessListArray.count];
