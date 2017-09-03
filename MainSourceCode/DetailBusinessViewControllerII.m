@@ -5,7 +5,7 @@
 //  Copyright (c) 2016 TapforIt.com . All rights reserved.
 
 #import <GoogleMaps/GoogleMaps.h>
-#import "VoteToAddBusinessConfirmation.h"
+//#import "VoteToAddBusinessConfirmation.h"
 //#import "ServicesForBusinessViewController.h"
 //#import "GooglePlacesObject.h"
 #import "DetailBusinessViewControllerII.h"
@@ -15,8 +15,8 @@
 #import "TapTalkLooks.h"
 #import "CurrentBusiness.h"
 #import "UIAlertView+TapTalkAlerts.h"
-#import "LoginViewController.h"
-#import "ChatMessagesViewController.h"
+//#import "LoginViewController.h"
+//#import "ChatMessagesViewController.h"
 #import "UtilityConsumerProfile.h"
 #import "KASlideShow.h"
 #import "JBKenBurnsView.h"
@@ -527,8 +527,8 @@ static const CGFloat DefaultZoom = 12.0f;
 }
 
 - (IBAction)voteTobeCustomerAction:(id)sender {
-    VoteToAddBusinessConfirmation *confirmation = [[VoteToAddBusinessConfirmation alloc] initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:confirmation animated:YES];
+//    VoteToAddBusinessConfirmation *confirmation = [[VoteToAddBusinessConfirmation alloc] initWithNibName:nil bundle:nil];
+//    [self.navigationController pushViewController:confirmation animated:YES];
 }
 
 #pragma mark - GMSMapViewDelegate
@@ -692,15 +692,15 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
                 biz.needsBizChat = false;
                 // show the user that are about to connect to a new business chatroom
                 [DataModel sharedDataModelManager].shouldDownloadChatMessages = TRUE;
-                LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
-                loginController.modalTransitionStyle = UIModalTransitionStylePartialCurl;
-                
-                [self presentViewController:loginController animated:YES completion:nil];
-                loginController = nil;
+//                LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
+//                loginController.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+//                
+//                [self presentViewController:loginController animated:YES completion:nil];
+//                loginController = nil;
             }
-            
-            ChatMessagesViewController *chatViewContoller = [[ChatMessagesViewController alloc] initWithNibName:nil bundle:nil];
-            [self.navigationController pushViewController:chatViewContoller animated:YES];
+//
+//            ChatMessagesViewController *chatViewContoller = [[ChatMessagesViewController alloc] initWithNibName:nil bundle:nil];
+//            [self.navigationController pushViewController:chatViewContoller animated:YES];
         }
     }
     else {

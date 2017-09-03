@@ -17,7 +17,7 @@
 #import "MenuItemViewController.h"
 #import "KASlideShow.h"
 #import <MBProgressHUD.h>
-#import "AskForSeviceViewController.h"
+
 //#import "MenuViewController.h"
 //#import "BillViewController.h"
 #import "StoreMapViewController.h"

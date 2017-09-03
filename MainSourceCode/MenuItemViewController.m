@@ -13,12 +13,12 @@
 #import "MenuItemTableViewCell.h"
 #import "MenuItemViewController.h"
 #import "SHMultipleSelect.h"
-#import "TotalCartItemController.h"
+#import "TotalCartItemCell.h"
 #import "TPBusinessDetail.h"
 #import "UIAlertView+TapTalkAlerts.h"
 #import "UIImageView+WebCache.h"
 #import <BBBadgeBarButtonItem.h>
-#import "TotalCartItemCell.h"
+
 #import "MBProgressHUD.h"
 
 @interface MenuItemViewController ()<UITextFieldDelegate,CAAnimationDelegate,UIAlertViewDelegate>{
@@ -1682,7 +1682,7 @@ bool shouldOpenOptionMenu = false;
                     businessDetail.category_name = [responseData objectForKey:@"category_name"];
                     businessDetail.note = @"";
                     businessDetail.availability_status = [[responseData objectForKey:@"availability_status"] integerValue];
-
+                    businessDetail.product_keywords = [responseData objectForKey:@"product_keywords"];
                     NSMutableArray * arr = [responseData objectForKey:@"options"];
 
                     if (arr.count > 0) {

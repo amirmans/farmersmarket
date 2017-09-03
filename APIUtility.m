@@ -9,6 +9,7 @@
 #import "APIUtility.h"
 #import "AppData.h"
 #import "Reachability.h"
+#import "AFNetworking.h"
 
 static APIUtility *sharedObj;
 
@@ -378,6 +379,8 @@ static APIUtility *sharedObj;
     {
         return;
     }
+    NSError *error = [NSError alloc];
+    NSData *data1 = [NSJSONSerialization dataWithJSONObject:param options:NSJSONWritingPrettyPrinted error:&error];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -395,6 +398,33 @@ static APIUtility *sharedObj;
               NSLog(@"Error saving credit card in the server: %@", error.description);
               finished(@{@"error":error.description});
           }];
+   
+    
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:remove_cc] cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:10];
+//    
+//    [request setHTTPMethod:@"POST"];
+//    [request setValue: @"application/json" forHTTPHeaderField:@"Content-Type"];
+//    [request setHTTPBody: data1];
+//
+//    AFURLSessionManager *manager1 = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+//
+//    [[manager1 dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+//        
+//        if (!error) {
+//            NSLog(@"Reply JSON: %@", responseObject);
+//             finished(responseObject);
+//            if ([responseObject isKindOfClass:[NSDictionary class]]) {
+//                //blah blah
+//            }
+//        } else {
+//            NSLog(@"Error: %@, %@, %@", error, response, responseObject);
+//            finished(@{@"error":error.description});
+//        }
+//    }] resume];
+   
+    
+    
+   
 }
 
 - (void) getAllCCInfo : (NSString *) consumer_id completiedBlock:(void (^)(NSDictionary *response))finished {

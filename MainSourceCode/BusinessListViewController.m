@@ -15,7 +15,7 @@
 #import "ListofBusinesses.h"
 #import "Business.h"
 #import "AppData.h"
-#import "MyLocationViewController.h"
+//#import "MyLocationViewController.h"
 #import "APIUtility.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "DataModel.h"
@@ -125,6 +125,9 @@ Business *biz;
             if([[[self.ResponseDataArray objectAtIndex:i]valueForKey:@"branch"] isEqualToString:@"0"])
                 [businessListArray addObject:[self.ResponseDataArray objectAtIndex:i]];
         }
+        NSMutableArray *SortByLocationArray = [self getSortByLocationTapForApp];
+        [self.businessListArray removeAllObjects];
+        self.businessListArray = SortByLocationArray;
     }
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.navigationController.navigationBar.translucent = NO;
@@ -289,10 +292,10 @@ Business *biz;
 - (void)displayMapView:(UIBarButtonItem *)button{
 //    [self.navigationController popToRootViewControllerAnimated:YES];
 //    BusinessListTableViewController *listTableView = [[BusinessListTableViewController alloc] initWithNibName:nil bundle:nil];
-    MyLocationViewController *myLocation = [[MyLocationViewController alloc] initWithNibName:nil bundle:nil];
-
-    [self.navigationController pushViewController:myLocation animated:YES];
-    myLocation = nil;
+//    MyLocationViewController *myLocation = [[MyLocationViewController alloc] initWithNibName:nil bundle:nil];
+//
+//    [self.navigationController pushViewController:myLocation animated:YES];
+//    myLocation = nil;
 }
 
 - (void)addMarkersToMap {
@@ -521,8 +524,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *CellIdentifier = @"BusinessListCell";
-    static NSString *searchCellIdentifier = @"SearchBusinessListCell";
+    static NSString *CellIdentifier = @"BusinessListCell";     static NSString *searchCellIdentifier = @"SearchBusinessListCell";
     BusinessTableViewCell *cell = nil;
     
     if (self.searchController.active) {

@@ -61,6 +61,7 @@
 @synthesize map_image_url;
 @synthesize picturesString;
 @synthesize validate_chat;
+@synthesize pickup_counter_later;
 @synthesize inquiryForProduct, needsBizChat;
 @synthesize bg_image;
 @synthesize text_color, bg_color;
@@ -147,7 +148,7 @@
     pickup_location_charge = nil;
     pickup_counter_charge = nil;
     tax_rate = nil;
-    
+    pickup_counter_later = nil;
     business_delivery_id = nil;
     business_promotion_id = nil;
     display_icon_product_categories = nil;
@@ -391,7 +392,7 @@
 //    else {
 //        chat_masters =  @[];
 //    }
-    
+    pickup_counter_later = [[self stringFromDataDictionary:data forKey:@"pickup_counter_later"] integerValue];
     map_image_url = [self stringFromDataDictionary:data forKey:@"map_image_url"];
     picturesString = [self stringFromDataDictionary:data forKey:@"pictures"];
     validate_chat = [[data objectForKey:@"validate_chat"] boolValue];

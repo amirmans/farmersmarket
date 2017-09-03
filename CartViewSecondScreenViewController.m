@@ -691,7 +691,7 @@ double deliveryAmountValue; //Delievery amount value in $
         NSLog(@"Json format of data send to save_order: %@", jsonString);
     }
     hud = [[MBProgressHUD alloc] initWithView:self.view];
-    hud.label.text = @"Tap-in is sending order information to merchant...";
+    hud.label.text = @"Sending order information to merchant...";
     hud.mode = MBProgressHUDModeIndeterminate;
     [hud.bezelView setBackgroundColor:[UIColor orangeColor]];
     hud.bezelView.color = [UIColor orangeColor];

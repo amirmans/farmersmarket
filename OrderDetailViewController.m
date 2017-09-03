@@ -26,6 +26,7 @@
     NSString *uploadTime;
     NSString *stringUId;
     CGSize keyboardSize;
+    Business *biz;
 }
 @property (strong, nonatomic) NSString *notesTextOrderDetail;
 @property (strong, nonatomic) NSDateFormatter *formatter;
@@ -185,8 +186,13 @@ NSDate *setMinPickerTimeOD;
             for (int i = [tableMinNo intValue] ; i <= [tableMaxNo intValue] ; i++) {
                 [tableNoArr addObject:[NSString stringWithFormat:@"%d",i]];
             }
-            self.btnCounterPickupTime.enabled = YES;
-            
+//            self.btnCounterPickupTime.enabled = YES;
+            if(biz.pickup_counter_later == 0){
+                self.btnCounterPickupTime.enabled = NO;
+            }
+            else{
+                self.btnCounterPickupTime.enabled = YES;
+            }
         }
     }
     else{
@@ -210,6 +216,7 @@ NSDate *setMinPickerTimeOD;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     tableNoArr = [[NSMutableArray alloc] init];
 
+    biz = [CurrentBusiness sharedCurrentBusinessManager].business;
     formatter = [[AppData sharedInstance] setDateFormatter:TIME24HOURFORMAT];
 //    formatter = [[NSDateFormatter alloc] init];
 //    [formatter setDateFormat:@"HH:mm:ss"];
@@ -295,10 +302,13 @@ NSDate *setMinPickerTimeOD;
     openingTime = [dateFormatter stringFromDate:dateFromString];
     
     [formatter setTimeZone:[NSTimeZone systemTimeZone]];
+
     if(result == NSOrderedDescending) // opening time is in future.  Display opening time
     {
         [self.btnParkingPickUp setTitle:openingTime forState:UIControlStateNormal];
         [self.btnDesignationLocationPickUp setTitle:openingTime forState:UIControlStateNormal];
+        NSLog(@"%ld",(long)biz.pickup_counter_later);
+        
         [self.btnCounterPickupTime setTitle:openingTime forState:UIControlStateNormal];
         self.btnOk.enabled = true;
     }
@@ -312,6 +322,7 @@ NSDate *setMinPickerTimeOD;
                 NSString *currentTime = openingTime;
                 [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
                 [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
+                NSLog(@"%ld",(long)biz.pickup_counter_later);
                 [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
                 self.btnOk.enabled = true;
             }
@@ -321,6 +332,7 @@ NSDate *setMinPickerTimeOD;
                 NSString *currentTime = [formatter stringFromDate:newDate];
                 [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
                 [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
+                NSLog(@"%ld",(long)biz.pickup_counter_later);
                 [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
                 self.btnOk.enabled = true;
             }
@@ -331,6 +343,7 @@ NSDate *setMinPickerTimeOD;
 //            NSString *currentTime = [formatter stringFromDate:openingTime];
             [self.btnParkingPickUp setTitle:openingTime forState:UIControlStateNormal];
             [self.btnDesignationLocationPickUp setTitle:openingTime forState:UIControlStateNormal];
+            NSLog(@"%ld",(long)biz.pickup_counter_later);
             [self.btnCounterPickupTime setTitle:openingTime forState:UIControlStateNormal];
             self.btnOk.enabled = true;
         }
@@ -341,9 +354,11 @@ NSDate *setMinPickerTimeOD;
         NSString *currentTime = openingTime;
         [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
         [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
+        NSLog(@"%ld",(long)biz.pickup_counter_later);
         [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
         self.btnOk.enabled = true;
     }
+
 
     deliveryLocation = self.locationNameArray;
 //    [_btnLocation setTitle:deliveryLocation[0] forState:UIControlStateNormal];
@@ -762,7 +777,7 @@ NSDate *setMinPickerTimeOD;
 
 - (IBAction)btnLocationClicked:(id)sender {
 
-    [ActionSheetStringPicker showPickerWithTitle:@"Select a delivery location"
+    [ActionSheetStringPicker showPickerWithTitle:@"Select a location"
                                             rows:deliveryLocation
                                 initialSelection:0
                                        doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {

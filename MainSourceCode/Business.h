@@ -87,7 +87,7 @@
     NSString *promotion_code;
     NSString *promotion_discount_amount;
     NSString *promotion_message;
-    
+    NSInteger pickup_counter_later;
     NSString *pickup_later;
 }
 
@@ -140,6 +140,7 @@
 @property(nonatomic, strong) NSString *picturesString;
 @property(atomic, assign) NSInteger validate_chat;
 @property(atomic, assign) NSInteger is_collection;
+@property(atomic, assign) NSInteger pickup_counter_later;
 @property(atomic, assign) BOOL inquiryForProduct;
 @property(atomic, assign) BOOL needsBizChat;
 @property(nonatomic, retain) NSString *marketing_statement;

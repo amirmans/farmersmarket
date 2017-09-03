@@ -47,7 +47,7 @@
     [self.collectionView registerNib:cellNib forCellWithReuseIdentifier:@"cardDetailCollectionCell"];
 
     //init
-    pd_noteText = @"";
+//    pd_noteText = @"";
     cardDataArray = [[NSMutableArray alloc] init];
     self.automaticallyAdjustsScrollViewInsets = YES;
     self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -417,7 +417,7 @@
                                    @"business_id":business_id,@"points_redeemed":[NSString stringWithFormat:@"%ld",(long)currentRedeemPoints],
                                    @"points_dollar_amount":[NSString stringWithFormat:@"%f",redeemPointsDollarValue],
                                    @"tip_amount":[NSNumber numberWithDouble:tipAmt], @"subtotal":[NSNumber numberWithDouble:self.subTotalVal], @"tax_amount":[NSNumber numberWithDouble:self.taxVal],
-                                   @"cc_last_4_digits":[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)], @"note":self.noteText,@"pd_instruction":self.pd_noteText,
+                                   @"cc_last_4_digits":[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)], @"note":self.pd_noteText,@"pd_instruction":self.noteText,
                                    @"consumer_delivery_id":[AppData sharedInstance].consumer_Delivery_Id.length > 0 ? [AppData sharedInstance].consumer_Delivery_Id : @"",
                                    @"delivery_charge_amount":[NSNumber numberWithDouble:self.deliveryamt],
                                    @"promotion_code":[CurrentBusiness sharedCurrentBusinessManager].business.promotion_code,
@@ -438,7 +438,7 @@
         NSLog(@"Json format of data send to save_order: %@", jsonString);
     }
     hud = [[MBProgressHUD alloc] initWithView:self.view];
-    hud.label.text = @"Tap-in is sending order information to merchant...";
+    hud.label.text = @"Sending order information to merchant...";
 //    hud.detailsLabel.text = @"Tap-in is sending order to merchant...";
     hud.mode = MBProgressHUDModeIndeterminate;
     [hud.bezelView setBackgroundColor:[UIColor orangeColor]];
@@ -568,7 +568,7 @@
             {
                 [hud hideAnimated:YES];
                 hud = nil;
-                [self showAlert:@"Info" :@"Please save card information for as default card"];
+                [self showAlert:@"Info" :@"Please add your credit card. We will save it securely for your later use"];
             }
         }
         else{

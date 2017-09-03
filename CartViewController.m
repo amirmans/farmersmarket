@@ -11,7 +11,7 @@
 #import "APIUtility.h"
 #import "UIAlertView+TapTalkAlerts.h"
 #import "AppDelegate.h"
-#import "DeliveryViewController.h"
+
 #import "ActionSheetPicker.h"
 #import "IQKeyboardManager.h"
 #define kOFFSET_FOR_KEYBOARD 80.0
@@ -598,15 +598,13 @@ double deliveryAmount = 0.0;        // Delivery Amount
                 TotalCartItemVC.orderItemsOD = self.orderItems;
                 TotalCartItemVC.subTotalOD = [NSString stringWithFormat:@"%.2f",cartSubTotal];
                 TotalCartItemVC.earnPtsOD = self.lblEarnPoints.text;
-                TotalCartItemVC.noteTextOD = self.notesText;
+                TotalCartItemVC.pd_noteTextOD = self.notesText;
                 TotalCartItemVC.pickupTimeOD = self.pickupTime;
                 if([AppData sharedInstance].consumer_Delivery_Id != nil){
                     TotalCartItemVC.deliveryamtOD = deliveryAmount;
                     TotalCartItemVC.delivery_startTimeOD = deliveryStartTime;
                     TotalCartItemVC.delivery_endTimeOD = deliveryEndTime;
                 }
-                
-                
                 
                 long business_id_long = [CurrentBusiness sharedCurrentBusinessManager].business.businessID;
                 NSNumber *business_id = [NSNumber numberWithLongLong:business_id_long];
@@ -750,20 +748,20 @@ double deliveryAmount = 0.0;        // Delivery Amount
                 }
                 else
                 {
-                    DeliveryViewController *delivaryInfoVC = [[DeliveryViewController alloc] initWithNibName:nil bundle:nil];
-                    delivaryInfoVC.latestDeliveryInfo = latestInfoArray;
-                    [self.navigationController presentViewController:delivaryInfoVC animated:YES completion:^{
-                        NSLog(@"%@",[AppData sharedInstance].consumer_Delivery_Location);
-                    }];
+//                    DeliveryViewController *delivaryInfoVC = [[DeliveryViewController alloc] initWithNibName:nil bundle:nil];
+//                    delivaryInfoVC.latestDeliveryInfo = latestInfoArray;
+//                    [self.navigationController presentViewController:delivaryInfoVC animated:YES completion:^{
+//                        NSLog(@"%@",[AppData sharedInstance].consumer_Delivery_Location);
+//                    }];
                 }
             }
             else
             {
-                DeliveryViewController *delivaryInfoVC = [[DeliveryViewController alloc] initWithNibName:nil bundle:nil];
-                delivaryInfoVC.latestDeliveryInfo = latestInfoArray;
-                [self.navigationController presentViewController:delivaryInfoVC animated:YES completion:^{
-                    NSLog(@"%@",[AppData sharedInstance].consumer_Delivery_Location);
-                }];
+//                DeliveryViewController *delivaryInfoVC = [[DeliveryViewController alloc] initWithNibName:nil bundle:nil];
+//                delivaryInfoVC.latestDeliveryInfo = latestInfoArray;
+//                [self.navigationController presentViewController:delivaryInfoVC animated:YES completion:^{
+//                    NSLog(@"%@",[AppData sharedInstance].consumer_Delivery_Location);
+//                }];
             }
         }
         else

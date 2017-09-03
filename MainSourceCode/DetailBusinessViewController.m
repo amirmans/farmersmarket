@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 MyDoosts.com . All rights reserved.
 //
 
-#import "VoteToAddBusinessConfirmation.h"
+//#import "VoteToAddBusinessConfirmation.h"
 //#import "ServicesForBusinessViewController.h"
 //#import "GooglePlacesObject.h"
 #import "DetailBusinessViewController.h"
@@ -18,8 +18,8 @@
 #import "CurrentBusiness.h"
 
 #import "UIAlertView+TapTalkAlerts.h"
-#import "LoginViewController.h"
-#import "ChatMessagesViewController.h"
+//#import "LoginViewController.h"
+//#import "ChatMessagesViewController.h"
 #import "UtilityConsumerProfile.h"
 
 #import "KASlideShow.h"
@@ -309,16 +309,16 @@
                 biz.needsBizChat = false;
                 // show the user that are about to connect to a new business chatroom
                 [DataModel sharedDataModelManager].shouldDownloadChatMessages = TRUE;
-                LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
-                loginController.modalTransitionStyle = UIModalTransitionStylePartialCurl;
-                
-                [self presentViewController:loginController animated:YES completion:nil];
-                loginController = nil;
+//                LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
+//                loginController.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+//                
+//                [self presentViewController:loginController animated:YES completion:nil];
+//                loginController = nil;
             }
             
-            ChatMessagesViewController *chatViewContoller = [[ChatMessagesViewController alloc] initWithNibName:nil bundle:nil];
-            [self.navigationController pushViewController:chatViewContoller animated:YES];
-        }        
+//            ChatMessagesViewController *chatViewContoller = [[ChatMessagesViewController alloc] initWithNibName:nil bundle:nil];
+//            [self.navigationController pushViewController:chatViewContoller animated:YES];
+        }
     }
     else {
         biz.needsBizChat = true;
@@ -370,8 +370,8 @@
 }
 
 - (IBAction)voteTobeCustomerAction:(id)sender {
-    VoteToAddBusinessConfirmation *confirmation = [[VoteToAddBusinessConfirmation alloc] initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:confirmation animated:YES];
+//    VoteToAddBusinessConfirmation *confirmation = [[VoteToAddBusinessConfirmation alloc] initWithNibName:nil bundle:nil];
+//    [self.navigationController pushViewController:confirmation animated:YES];
 }
 
 

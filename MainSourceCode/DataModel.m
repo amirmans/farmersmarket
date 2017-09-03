@@ -1,6 +1,6 @@
 #import "DataModel.h"
 #import "APIUtility.h"
-#import "TapTalkChatMessage.h"
+//#import "TapTalkChatMessage.h"
 #import "SAMKeychain.h"
 
 
@@ -132,20 +132,20 @@ static DataModel *sharedDataModel = nil;
 - (void)buildBusinessChatMessages {
     [[DataModel sharedDataModelManager].businessMessages removeAllObjects];
     
-    NSMutableDictionary *arrayElement;
-    TapTalkChatMessage *chatMessage = [TapTalkChatMessage alloc];
-    
-    
-    for (int i = 0; i < [DataModel sharedDataModelManager].messages.count; i++) {
-        arrayElement = [[[DataModel sharedDataModelManager].messages objectAtIndex:i] mutableCopy];
-        
-        chatMessage = [chatMessage initWithMessage:arrayElement];
-        NSString *bizNameForChatMessage = [chatMessage businessNameIfMessageSentByBusiness];
-        if ([bizNameForChatMessage length] > 0 ) {
-            [arrayElement setObject:bizNameForChatMessage forKey:@"business_name"];
-            [[DataModel sharedDataModelManager].businessMessages addObject:arrayElement];
-        }
-    }
+//    NSMutableDictionary *arrayElement;
+//    TapTalkChatMessage *chatMessage = [TapTalkChatMessage alloc];
+//    
+//    
+//    for (int i = 0; i < [DataModel sharedDataModelManager].messages.count; i++) {
+//        arrayElement = [[[DataModel sharedDataModelManager].messages objectAtIndex:i] mutableCopy];
+//        
+//        chatMessage = [chatMessage initWithMessage:arrayElement];
+//        NSString *bizNameForChatMessage = [chatMessage businessNameIfMessageSentByBusiness];
+//        if ([bizNameForChatMessage length] > 0 ) {
+//            [arrayElement setObject:bizNameForChatMessage forKey:@"business_name"];
+//            [[DataModel sharedDataModelManager].businessMessages addObject:arrayElement];
+//        }
+//    }
     
 //    for (arrayElement in [DataModel sharedDataModelManager].messages) {
 //        chatMessage = [chatMessage initWithMessage:arrayElement];

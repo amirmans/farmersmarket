@@ -12,7 +12,7 @@
 #import "KASlideShow.h"
 #import "DataModel.h"
 #import "AppDelegate.h"
-#import "TotalCartItemController.h"
+
 
 @interface BusinessServicesViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate, KASlideShowDelegate, MFMessageComposeViewControllerDelegate, KASlideShowDataSource, UIAlertViewDelegate> {
 
