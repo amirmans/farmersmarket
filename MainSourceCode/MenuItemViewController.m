@@ -1611,6 +1611,7 @@ bool shouldOpenOptionMenu = false;
 //    [[APIUtility sharedInstance]BusinessListAPICall:data completiedBlock:^(NSDictionary *response) {
 //        NSLog(@"asd");
     shouldOpenOptionMenu = true;
+    NSString* ServerForBusiness = DefinedServerForBusiness;
 
     NSDictionary *products = [CurrentBusiness sharedCurrentBusinessManager].business.businessProducts;
 
