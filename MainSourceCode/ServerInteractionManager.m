@@ -20,6 +20,8 @@
     NSString *urlString = BusinessInformationServer;
     NSDictionary *params = @{@"businessID":[NSNumber numberWithInt:0], @"cmd":@"getBusinessInfoWithConsumerRating"};
     
+    NSLog(@"Getting list of businesses using server: %@, and business ID %@", urlString, params);
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager  manager];
     
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];

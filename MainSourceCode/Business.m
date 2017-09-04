@@ -253,6 +253,7 @@
 }
 
 - (void)startLoadingBusinessEvents {
+    NSString * ServerForBusiness = DefinedServerForBusiness;
     
     NSString *urlString = [NSString stringWithFormat:@"%@?businessID=%i", ServerForBusiness, businessID];
 //    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];

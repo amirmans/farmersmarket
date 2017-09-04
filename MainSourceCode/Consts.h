@@ -1,15 +1,23 @@
 // The URL for the server API
 @class NSString;
 
+#ifdef DEBUG
+#define TapInEndpointHost @"https://tapforall.com/staging/tap-in/"
+#else
+#define TapInEndpointHost @"https://tapforall.com/merchants/tap-in/"
+#endif
+
 #define TT_CommunicationWithServerQ dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
-#define AddChatServer @"https://tapforall.com/staging/tap-in/chatrooms/addchatmessage.php"
-#define LoadChatServer @"https://tapforall.com/staging/tap-in/chatrooms/loadchatmessages.php"
-#define ChatSystemServer @"https://tapforall.com/staging/tap-in/chatsystem/index.php"
+#define AddChatServer (TapInEndpointHost @"chatrooms/addchatmessage.php")
+#define LoadChatServer (TapInEndpointHost @"chatrooms/loadchatmessages.php")
+#define ChatSystemServer (TapInEndpointHost @"chatsystem/index.php"
 //#define ChatSystemServer @"https://tapforall.com/staging/TapForAll/chatsystem/index.php"
 //#define OrderServerURL @"http://tapit-servers.dev/businessinfo/model.php"
-#define OrderServerURL @"https://tapforall.com/staging/tap-in/include/model.php"
-static NSString *const ServerForBusiness = @"https://tapforall.com/staging/tap-in/include/model.php";
+#define OrderServerURL (TapInEndpointHost @"include/model.php")
+//static NSString *const ServerForBusiness = @"https://tapforall.com/staging/tap-in/include/model.php";
+
+#define DefinedServerForBusiness (TapInEndpointHost @"include/model.php")
 
 #define timeInterval 60 // network time interval
 
@@ -20,35 +28,35 @@ static NSString *const ServerForBusiness = @"https://tapforall.com/staging/tap-i
 #define ChatValidationWorkflow_Validated 2
 #define ChatValidationWorkflow_Not_Valid 3
 #define ChatValidationWorkflow_ErrorFromServer -1
-#define BusinessAndProductionInformationServer @"https://tapforall.com/staging/tap-in/include/model.php"
-//#define BusinessInformationServer @"https://tapforall.com/staging/tap-in/businessinfo/index.php"
-#define BusinessInformationServer @"https://tapforall.com/staging/tap-in/include/model.php"
-#define ConsumerProfileServer @"https://tapforall.com/staging/tap-in/profilesystem/consumerprofile.php"
-#define SetFavoriteServer @"https://tapforall.com/staging/tap-in/include/model.php"
-#define GetRewardPoints @"https://tapforall.com/staging/tap-in/include/model.php"
-#define GetPrevious_order @"https://tapforall.com/staging/tap-in/include/model.php"
-#define Save_cc_info @"https://tapforall.com/staging/tap-in/include/model.php"
-#define save_notifications @"https://tapforall.com/staging/tap-in/include/model.php"
-#define Get_notifications @"https://tapforall.com/staging/tap-in/include/model.php"
-#define Get_consumer_all_cc_info @"https://tapforall.com/staging/tap-in/include/model.php"
-#define remove_cc @"https://tapforall.com/staging/tap-in/include/model.php"
+#define BusinessAndProductionInformationServer (TapInEndpointHost @"include/model.php")
+//#define BusinessInformationServer (TapInEndpointHost @"businessinfo/index.php"
+#define BusinessInformationServer (TapInEndpointHost @"include/model.php")
+#define ConsumerProfileServer (TapInEndpointHost @"profilesystem/consumerprofile.php")
+#define SetFavoriteServer (TapInEndpointHost @"include/model.php")
+#define GetRewardPoints (TapInEndpointHost @"include/model.php")
+#define GetPrevious_order (TapInEndpointHost @"include/model.php")
+#define Save_cc_info (TapInEndpointHost @"include/model.php")
+#define save_notifications (TapInEndpointHost @"include/model.php")
+#define Get_notifications (TapInEndpointHost @"include/model.php")
+#define Get_consumer_all_cc_info (TapInEndpointHost @"include/model.php")
+#define remove_cc (TapInEndpointHost @"include/model.php")
 //data directories
 
-#define BusinessCustomerIndividualDirectory @"https://tapforall.com/staging/tap-in/customer_files/"
+#define BusinessCustomerIndividualDirectory (TapInEndpointHost @"customer_files/")
 #define BusinessCustomerIndividualDirectory_ProductItems @"products"
-#define BusinessCustomerIconDirectory @"https://tapforall.com/staging/tap-in/customer_files/icons/"
-#define BusinessCustomerBGImageDirectory @"https://tapforall.com/staging/tap-in/customer_files/bg_images/"
-#define QRImageDomain @"https://tapforall.com/staging/tap-in/consumer_files/qr_images/"
-#define BusinessCustomersMapDirectory @"https://tapforall.com/staging/tap-in/customer_files/maps/"
+#define BusinessCustomerIconDirectory (TapInEndpointHost @"customer_files/icons/")
+#define BusinessCustomerBGImageDirectory (TapInEndpointHost @"customer_files/bg_images/")
+#define QRImageDomain (TapInEndpointHost @"consumer_files/qr_images/")
+#define BusinessCustomersMapDirectory (TapInEndpointHost @"customer_files/maps/")
 
 //payment processing
 //#define STRIPE_TEST_PUBLIC_KEY @"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi"
 //NSString * const StripePublishableKey = @"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi";
-#define TapForAllPaymentServer @"https://tapforall.com/staging/tap-in/paymentsystem/charge.php"
+#define TapForAllPaymentServer (TapInEndpointHost @"paymentsystem/charge.php")
 
-#define BusinessDelivaryInformationServer @"https://tapforall.com/staging/tap-in/include/model.php?cmd=get_business_delivery_info"
+#define BusinessDelivaryInformationServer (TapInEndpointHost @"include/model.php?cmd=get_business_delivery_info")
 
-#define ConsumerDelivaryInformationSaveServer @"https://tapforall.com/staging/tap-in/include/model.php?cmd=save_consumer_delivery"
+#define ConsumerDelivaryInformationSaveServer (TapInEndpointHost @"include/model.php?cmd=save_consumer_delivery")
 
 
 #define TapInApplicationThemeColor [UIColor colorWithRed:74.0/255.0 green:182.0/255.0 blue:190.0/255.0 alpha:1];
