@@ -70,7 +70,7 @@ static NSArray *consumerProfileDataArray = nil;
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-//        consumerProfileDataDic = [[NSMutableDictionary alloc] init];
+        consumerProfileDataDic = [[NSMutableDictionary alloc] init];
 //        ConsumerProfileDataModel *consumerProfileDataModel = [[ConsumerProfileDataModel alloc] init];
 //        consumerProfileDataArray = consumerProfileDataModel.consumerProfileDataArray;
     }
@@ -225,7 +225,9 @@ static NSArray *consumerProfileDataArray = nil;
     ageGroupSegmentedControl.selectedSegmentIndex = ageGroupfromDefault;
     ageGroupTextField.text = [ageGroupSegmentedControl titleForSegmentAtIndex:ageGroupfromDefault];
     zipcodeTextField.text = [[DataModel sharedDataModelManager] zipcode];
-    smsNoTextField.text = [[APIUtility sharedInstance] usPhoneNumber:[[DataModel sharedDataModelManager] sms_no]];
+//    smsNoTextField.text = [[APIUtility sharedInstance] usPhoneNumber:[[DataModel sharedDataModelManager] sms_no]];
+    smsNoTextField.text = [[DataModel sharedDataModelManager] sms_no];
+
     
     emailTextField.text = [[DataModel sharedDataModelManager] emailAddress];
 }
@@ -492,6 +494,7 @@ static NSArray *consumerProfileDataArray = nil;
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
     
     NSDictionary *params = [self getCorrespondingParameters];
+    NSLog(@"In ConsumerProfileViewController::postSaveRequest urlString is:%@, and params are:%@", urlString, params);
     [manager POST:urlString parameters:params progress:nil success:^(NSURLSessionTask *operation, id responseObject)
     {
         if ([self isViewLoaded]) {
@@ -519,6 +522,7 @@ static NSArray *consumerProfileDataArray = nil;
             
             [[DataModel sharedDataModelManager] setZipcode:zipcodeTextField.text];
             [[DataModel sharedDataModelManager] setEmailAddress:emailTextField.text];
+            [[DataModel sharedDataModelManager] setSms_no:smsNoTextField.text];
 //                [DataModel sharedDataModelManager].zipcode = zipcodeTextField.text;
 //                [DataModel sharedDataModelManager].emailAddress = emailTextField.text;
             

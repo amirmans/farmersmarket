@@ -788,7 +788,8 @@ static APIUtility *sharedObj;
     stringts = [stringts stringByReplacingOccurrencesOfString:@"+"  withString:@""];
     
     NSRange range = [stringts rangeOfString:@"1"];
-    stringts= [stringts stringByReplacingCharactersInRange:range withString:@""];
+    if (range.length > 0)
+        stringts= [stringts stringByReplacingCharactersInRange:range withString:@""];
     
     NSMutableString* usNumber = [NSMutableString stringWithString:stringts];
     [usNumber insertString: @"(" atIndex:0];
