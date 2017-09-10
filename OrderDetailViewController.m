@@ -282,34 +282,39 @@ NSDate *setMinPickerTimeOD;
     self.btnOk.enabled = false;
 
     NSDate *now = [NSDate date];
-    [formatter setDateFormat:TIME12HOURFORMAT];
+//    [formatter setDateFormat:TIME12HOURFORMAT];
+    NSTimeZone *tz= [NSTimeZone localTimeZone];
+    [formatter setTimeZone:tz];
+    [formatter setDateFormat:@"HH:mm:ss"];
+    NSString *tzName = [tz name];
 
-    NSLog(@"The Current Time is %@",[formatter stringFromDate:now]);
-    NSString *stringNow = [formatter stringFromDate:now];
 
-    NSDate *dateOpeningTime= [formatter dateFromString:openingTime];
-    NSDate *dateNow = [formatter dateFromString:stringNow];
+    NSDateFormatter *displayFormatter = [[NSDateFormatter alloc] init];
+    [displayFormatter setTimeZone:tz];
+    [displayFormatter setDateFormat:@"hh:mm a"];
 
-    NSDate *dateClosingTime= [formatter dateFromString:closingTime];
+    NSLog(@"Local timezone is: %@",  tzName);
+
+    NSDate *dateOpeningTime = [formatter dateFromString:openingTime];
+    NSDate *dateClosingTime = [formatter dateFromString:closingTime];
+    NSString *nowString =  [formatter stringFromDate:now];
+    NSDate *dateNow = [formatter dateFromString:nowString];
+
+
+//    NSDate *dateFromString = [dateFormatter dateFromString:openingTime];
+//   [ddateFormatter setDateFormat:TIME12HOURFORMAT];
+//    openingTime = [dateFormatter stringFromDate:dateFromString];
 
     NSComparisonResult result = [dateOpeningTime compare:dateNow];
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    
-    [dateFormatter setDateFormat:TIME24HOURFORMAT];
-    NSDate *dateFromString = [dateFormatter dateFromString:openingTime];
-    [dateFormatter setDateFormat:TIME12HOURFORMAT];
-    openingTime = [dateFormatter stringFromDate:dateFromString];
-    
-    [formatter setTimeZone:[NSTimeZone systemTimeZone]];
 
     if(result == NSOrderedDescending) // opening time is in future.  Display opening time
     {
-        [self.btnParkingPickUp setTitle:openingTime forState:UIControlStateNormal];
-        [self.btnDesignationLocationPickUp setTitle:openingTime forState:UIControlStateNormal];
+        NSString *titleTime = [displayFormatter stringFromDate:dateOpeningTime];
+        [self.btnParkingPickUp setTitle:titleTime forState:UIControlStateNormal];
+        [self.btnDesignationLocationPickUp setTitle:titleTime forState:UIControlStateNormal];
         NSLog(@"%ld",(long)biz.pickup_counter_later);
         
-        [self.btnCounterPickupTime setTitle:openingTime forState:UIControlStateNormal];
+        [self.btnCounterPickupTime setTitle:titleTime forState:UIControlStateNormal];
         self.btnOk.enabled = true;
     }
     else if(result == NSOrderedAscending) // "now" is in future of opening time  - display now
@@ -319,21 +324,29 @@ NSDate *setMinPickerTimeOD;
         {
             if([dateNow compare:dateClosingTime] == NSOrderedDescending) // Closing time in is in future of
             {
-                NSString *currentTime = openingTime;
-                [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
-                [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
+                NSString *titleTime = [displayFormatter stringFromDate:dateOpeningTime];
+                [self.btnParkingPickUp setTitle:titleTime forState:UIControlStateNormal];
+                [self.btnDesignationLocationPickUp setTitle:titleTime forState:UIControlStateNormal];
                 NSLog(@"%ld",(long)biz.pickup_counter_later);
-                [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
+                [self.btnCounterPickupTime setTitle:titleTime forState:UIControlStateNormal];
                 self.btnOk.enabled = true;
             }
-            else
-            {
-                NSDate *newDate = [now dateByAddingTimeInterval:60*[deliveryTimeInterval intValue]]; // Add XXX seconds to *now
-                NSString *currentTime = [formatter stringFromDate:newDate];
-                [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
-                [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
+            else {
+                if (bis.pickup_later) {
+                   NSDate *newDate = [now dateByAddingTimeInterval:60 * [deliveryTimeInterval intValue]]; // Add XXX seconds to *now
+//                    NSString *currentTime = [formatter stringFromDate:newDate];
+                    dateNow = newDate;
+                }
+                else {
+
+                }
+
+                NSString *titleTime = [displayFormatter stringFromDate:dateNow];
+
+                [self.btnParkingPickUp setTitle:titleTime forState:UIControlStateNormal];
+                [self.btnDesignationLocationPickUp setTitle:titleTime forState:UIControlStateNormal];
                 NSLog(@"%ld",(long)biz.pickup_counter_later);
-                [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
+                [self.btnCounterPickupTime setTitle:titleTime forState:UIControlStateNormal];
                 self.btnOk.enabled = true;
             }
         }
@@ -341,21 +354,23 @@ NSDate *setMinPickerTimeOD;
         {
 
 //            NSString *currentTime = [formatter stringFromDate:openingTime];
-            [self.btnParkingPickUp setTitle:openingTime forState:UIControlStateNormal];
-            [self.btnDesignationLocationPickUp setTitle:openingTime forState:UIControlStateNormal];
+            NSString *titleTime = [displayFormatter stringFromDate:dateOpeningTime];
+            [self.btnParkingPickUp setTitle:titleTime forState:UIControlStateNormal];
+            [self.btnDesignationLocationPickUp setTitle:titleTime forState:UIControlStateNormal];
             NSLog(@"%ld",(long)biz.pickup_counter_later);
-            [self.btnCounterPickupTime setTitle:openingTime forState:UIControlStateNormal];
+            [self.btnCounterPickupTime setTitle:titleTime forState:UIControlStateNormal];
             self.btnOk.enabled = true;
         }
     }
     else
     {
         NSLog(@"date1 is equal to date2");
-        NSString *currentTime = openingTime;
-        [self.btnParkingPickUp setTitle:currentTime forState:UIControlStateNormal];
-        [self.btnDesignationLocationPickUp setTitle:currentTime forState:UIControlStateNormal];
+        NSString *titleTime = [displayFormatter stringFromDate:dateOpeningTime];
+
+        [self.btnParkingPickUp setTitle:titleTime forState:UIControlStateNormal];
+        [self.btnDesignationLocationPickUp setTitle:titleTime forState:UIControlStateNormal];
         NSLog(@"%ld",(long)biz.pickup_counter_later);
-        [self.btnCounterPickupTime setTitle:currentTime forState:UIControlStateNormal];
+        [self.btnCounterPickupTime setTitle:titleTime forState:UIControlStateNormal];
         self.btnOk.enabled = true;
     }
 
