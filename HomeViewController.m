@@ -9,6 +9,7 @@
 #import "HomeViewController.h"
 #import "BusinessListViewController.h"
 #import "ListofBusinesses.h"
+#import "AppData.h"
 
 @interface HomeViewController ()
 
@@ -20,6 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view from its nib.
     btnPickupOrder.enabled = FALSE;
@@ -32,6 +34,8 @@
 }
 
 -(void) viewWillAppear:(BOOL)animated{
+    [self.tabBarController setSelectedIndex:0];
+    [AppData sharedInstance].Current_Selected_Tab = @"0";
     self.navigationController.navigationBar.hidden = YES;
 }
 -(void) viewWillDisappear:(BOOL)animated{

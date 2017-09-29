@@ -257,6 +257,7 @@ Business *biz;
 
 - (void) backButtonPressed {
     NSLog(@"backButtonPressed");
+    [self.searchController setActive:NO];
     [self.navigationController popViewControllerAnimated:TRUE];
 }
 
@@ -359,6 +360,7 @@ Business *biz;
 }
 - (IBAction) backBUttonClicked: (id) sender;
 {
+    [self.searchController setActive:NO];
     [self.navigationController popViewControllerAnimated:true];
     //    [self.navigationController popToRootViewControllerAnimated:true];
     

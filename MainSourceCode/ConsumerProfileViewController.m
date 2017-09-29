@@ -16,7 +16,7 @@
 #import "AFNetworking.h"
 #import "APIUtility.h"
 #import <QuartzCore/QuartzCore.h>
-
+#import "AppData.h"
 
 @interface ConsumerProfileViewController () {
     NSMutableDictionary *consumerProfileDataDic;
@@ -88,7 +88,8 @@ static NSArray *consumerProfileDataArray = nil;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+    [self.tabBarController setSelectedIndex:1];
+      [AppData sharedInstance].Current_Selected_Tab = @"1";
 //    [TapTalkLooks setBackgroundImage:self.view];
 //    [TapTalkLooks setToTapTalkLooks:self.topContainerButton isActionButton:NO makeItRound:YES];
 //    [TapTalkLooks setToTapTalkLooks:self.lowerContainerButton isActionButton:NO makeItRound:YES];
@@ -414,6 +415,8 @@ static NSArray *consumerProfileDataArray = nil;
 #pragma UITextFieldDelegate
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+    
+    [AppData sharedInstance].is_Profile_Changed = @"YES";
     if (textField == nicknameTextField)
         return;
     if (passwordAgainTextField.text.length < 1)
@@ -533,7 +536,9 @@ static NSArray *consumerProfileDataArray = nil;
                                                                         preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                                      handler:^(UIAlertAction * action) {}];
+                                                                      handler:^(UIAlertAction * action) {
+                                                                      
+                                                                      [AppData sharedInstance].is_Profile_Changed = @"NO";}];
                 
                 [alert addAction:defaultAction];
                 [self presentViewController:alert animated:YES completion:nil];

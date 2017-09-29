@@ -33,7 +33,8 @@
 @property (retain, nonatomic) NSString *consumer_Delivery_Location_Id;
 @property (retain, nonatomic) NSString *Pick_Time;
 @property (retain, nonatomic) NSString *Pd_Mode;
-
+@property (retain, nonatomic) NSString *Current_Selected_Tab;
+@property (retain, nonatomic) NSString *is_Profile_Changed;
 - (NSDateFormatter *) setDateFormatter : (NSString *) dateFormat;
 - (void) locationManager ;
 

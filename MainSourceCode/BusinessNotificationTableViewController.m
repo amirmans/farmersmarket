@@ -97,7 +97,8 @@ Business *currentBiz;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+    [self.tabBarController setSelectedIndex:2];
+      [AppData sharedInstance].Current_Selected_Tab = @"2";
     self.businessListArray = [[NSMutableArray alloc] init];
     currentBiz = [CurrentBusiness sharedCurrentBusinessManager].business;
 

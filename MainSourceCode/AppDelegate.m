@@ -58,6 +58,8 @@ static AppDelegate *sharedObj;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    [AppData sharedInstance].Current_Selected_Tab = @"0";
+    [AppData sharedInstance].is_Profile_Changed = @"NO";
 //    [GMSServices provideAPIKey:@"AIzaSyD7WfHjPssiG_nJi5P0rF4GJHUxxrFCono"];
 //      [GMSServices provideAPIKey:@"AIzaSyAnP9ELVL1xHQqJGhba_3gH9nWLXV5N5n8"];
     [[NSUserDefaults standardUserDefaults] setValue:@(NO) forKey:@"_UIConstraintBasedLayoutLogUnsatisfiable"];
@@ -125,7 +127,7 @@ static AppDelegate *sharedObj;
     //consumer profile tab
 //    UIImage *profileTabBarImage = [UIImage imageNamed:@"ic_profile_normal.png"];
     UIImage *profileTabBarImage = [UIImage imageNamed:@"tab_profile"];
-    UITabBarItem *consumerProfileTabBar = [[UITabBarItem alloc] initWithTitle:@"Profile" image:profileTabBarImage tag:2];
+    UITabBarItem *consumerProfileTabBar = [[UITabBarItem alloc] initWithTitle:@"Profile" image:profileTabBarImage tag:1];
 //    consumerProfileTabBar.selectedImage = [UIImage imageNamed:@"ic_profile_selected.png"];
     consumerProfileTabBar.selectedImage = [UIImage imageNamed:@"tab_profile1"];
     ConsumerProfileViewController *consumerProfileViewController = [[ConsumerProfileViewController alloc] initWithNibName:nil bundle:nil];
@@ -141,7 +143,7 @@ static AppDelegate *sharedObj;
     // notifications from businesses
 //    UIImage *notificationImage = [UIImage imageNamed:@"ic_notifications_normal.png"];
     UIImage *notificationImage = [UIImage imageNamed:@"tab_notification"];
-    notificationsTabBar = [[UITabBarItem alloc] initWithTitle:@"Notifications" image:notificationImage tag:3];
+    notificationsTabBar = [[UITabBarItem alloc] initWithTitle:@"Notifications" image:notificationImage tag:2];
     
     
 //    notificationsTabBar.selectedImage = [UIImage imageNamed:@"ic_notifications_selected.png"];
@@ -158,7 +160,7 @@ static AppDelegate *sharedObj;
 //    UIImage *payImage = [UIImage imageNamed:@"ic_pay_normal.png"];
     UIImage *payImage = [UIImage imageNamed:@"tab_points"];
     TPRewardPointController *payViewController = [[TPRewardPointController alloc] initWithNibName:nil bundle:nil];
-    UITabBarItem *payTabBar = [[UITabBarItem alloc] initWithTitle:@"Points" image:payImage tag:4];
+    UITabBarItem *payTabBar = [[UITabBarItem alloc] initWithTitle:@"Points" image:payImage tag:3];
 //    payTabBar.selectedImage = [UIImage imageNamed:@"ic_pay_selected.png"];
     payTabBar.selectedImage = [UIImage imageNamed:@"tab_points1"];
 //    [payTabBar setBadgeValue:@"1"];
@@ -334,7 +336,46 @@ self.tt_tabBarController.tabBar.tintColor = [UIColor colorWithDisplayP3Red:249.0
 
 - (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController {
 
-    BOOL returnVal = TRUE;
+    BOOL returnVal = false;
+    NSString *currenttab = [AppData sharedInstance].Current_Selected_Tab;
+    NSString *ProfileChanged = [AppData sharedInstance].is_Profile_Changed;
+    
+    if (tabBarController.tabBar.selectedItem.tag == 0){
+        
+        if([currenttab isEqualToString:@"1"] && [ProfileChanged isEqualToString:@"YES"]){
+            [self showAlert:@"Alert" :@"Make sure you save your profile if you have made any changes" : 0];
+        }else{
+            returnVal = TRUE;
+        }
+        
+    }
+    
+    if (tabBarController.tabBar.selectedItem.tag == 1){
+        [AppData sharedInstance].Current_Selected_Tab = @"1";
+         returnVal = TRUE;
+       
+    }
+
+    if (tabBarController.tabBar.selectedItem.tag == 2){
+        if([currenttab isEqualToString:@"1"] && [ProfileChanged isEqualToString:@"YES"]){
+           [self showAlert:@"Alert" :@"Make sure you save your profile if you have made any changes":2];
+        }else{
+            returnVal = TRUE;
+        }
+       
+    }
+
+    if (tabBarController.tabBar.selectedItem.tag == 3){
+        if([currenttab isEqualToString:@"1"] && [ProfileChanged isEqualToString:@"YES"]){
+            [self showAlert:@"Alert" :@"Make sure you save your profile if you have made any changes" : 3];
+        }else{
+             returnVal = TRUE;
+        }
+       
+    }
+
+    
+    
 //    // Check to see if Chat tabbar is selected
 //    if (tabBarController.tabBar.selectedItem.tag == 1) {
 //        returnVal = FALSE;
@@ -809,7 +850,28 @@ self.tt_tabBarController.tabBar.tintColor = [UIColor colorWithDisplayP3Red:249.0
 //    }
 }
 
-
+- (void)showAlert:(NSString *)Title :(NSString *)Message :(int)CurrentTab{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:Title message:Message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              
+                                                              
+                                                              [alert dismissViewControllerAnimated:YES completion:nil];
+                                                          }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              self.tt_tabBarController.selectedIndex = CurrentTab;
+                                                              [AppData sharedInstance].is_Profile_Changed = @"NO";
+                                                              [alert dismissViewControllerAnimated:YES completion:nil];
+                                                          }];
+    [alert addAction:defaultAction];
+    [alert addAction:cancel];
+    UIWindow *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    alertWindow.rootViewController = [[UIViewController alloc] init];
+    alertWindow.windowLevel = UIWindowLevelAlert + 1;
+    [alertWindow makeKeyAndVisible];
+    [alertWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+}
 
 
 #ifdef __IPHONE_8_0
