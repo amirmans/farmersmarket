@@ -40,7 +40,8 @@
 @synthesize orderItems;
 @synthesize flagRedeemPoint, originalPointsValue, originalNoPoints,dollarValueForEachPoints,
 currenPointsLevel, redeemNoPoints, redeemPointsValue, hud,pickupTime;
-
+@synthesize currency_symbol;
+@synthesize currency_code;
 
 NSString *Note_defaultText = @"Note for order(Optional)";
 NSString *deliveryStartTime;
@@ -57,6 +58,9 @@ double deliveryAmount = 0.0;        // Delivery Amount
     [self.tableView registerNib:[UINib nibWithNibName:@"CartViewTableViewCell" bundle:nil] forCellReuseIdentifier:@"CartViewTableViewCell"];
     [self.tableView layoutIfNeeded];
     self.title = @"Order";
+    
+    self.currency_code =  [CurrentBusiness sharedCurrentBusinessManager].business.curr_code;
+    self.currency_symbol = [CurrentBusiness sharedCurrentBusinessManager].business.curr_symbol;
     
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
@@ -187,12 +191,12 @@ double deliveryAmount = 0.0;        // Delivery Amount
     CGFloat val = [[self.currentObject valueForKey:@"price"] floatValue];
     val =  val * [[self.currentObject valueForKey:@"quantity"] integerValue];
     CGFloat rounded_down = [AppData calculateRoundPrice:val];
-    
+    NSUInteger len = [self.currency_symbol length];
     NSString *v = [NSString stringWithFormat:@"%.f",rounded_down];
-    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"$%.2f",rounded_down]];
+    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%.2f",self.currency_symbol,rounded_down]];
     [attString addAttribute:NSFontAttributeName
                       value:[UIFont boldSystemFontOfSize:25.0]
-                      range:NSMakeRange(1, v.length)];
+                      range:NSMakeRange(len, v.length)];
     cell.lbl_Price.attributedText = attString;
     
     NSString *myString = [self.currentObject valueForKey:@"product_option"];
@@ -383,10 +387,11 @@ double deliveryAmount = 0.0;        // Delivery Amount
     
     NSString *val = [NSString stringWithFormat:@"%.f",cartSubTotal];
     NSLog(@"%@",val);
-    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"$%.2f",cartSubTotal]];
+     NSUInteger len = [self.currency_symbol length];
+    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@%.2f",self.currency_symbol,cartSubTotal]];
     [attString addAttribute:NSFontAttributeName
                   value:[UIFont boldSystemFontOfSize:25.0]
-                  range:NSMakeRange(1, val.length)];
+                  range:NSMakeRange(len, val.length)];
     self.lblSubtotalAmount.attributedText = attString;
     NSString *totalPointsStr = [NSString stringWithFormat:@"%ld",(long)cartSubTotal * PointsValueMultiplier];
     self.lblEarnPoints.text = [NSString stringWithFormat:@"EARN %@ Pts",totalPointsStr];

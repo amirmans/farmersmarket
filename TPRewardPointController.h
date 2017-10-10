@@ -27,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *btnRedeem;
 
 @property (assign, nonatomic) BOOL isFromTotalCart;
+@property(strong,nonatomic) NSString *currency_code;
+@property  (strong,nonatomic) NSString *currency_symbol;
 
 - (IBAction)btnRedeemClicked:(id)sender;
 - (IBAction)btnWaitClicked:(id)sender;

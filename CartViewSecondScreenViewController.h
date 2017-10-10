@@ -59,6 +59,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblPayNow;
 @property (weak, nonatomic) IBOutlet UILabel *lblTaxRate;
 
+@property(strong,nonatomic) NSString *currency_code;
+@property  (strong,nonatomic) NSString *currency_symbol;
 
 @property (weak, nonatomic) IBOutlet UIView *viewDeliveryAndPickup;
 

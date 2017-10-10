@@ -18,10 +18,13 @@
 
 double dollarValueDouble = 0;
 NSInteger current_points_level_int  = 0;
+@synthesize currency_symbol;
+@synthesize currency_code;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.currency_code =  [CurrentBusiness sharedCurrentBusinessManager].business.curr_code;
+    self.currency_symbol = [CurrentBusiness sharedCurrentBusinessManager].business.curr_symbol;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -176,7 +179,7 @@ NSInteger current_points_level_int  = 0;
                     
                     if (nextLevelpoints > 0) {
                         self.lblNextLevelPoints.hidden = false;
-                        self.lblNextLevelPoints.text = [NSString stringWithFormat:@"Next level is %ld points for $%.2f",(long)nextLevelpoints,dollarValue];
+                        self.lblNextLevelPoints.text = [NSString stringWithFormat:@"Next level is %ld points for %@%.2f",(long)nextLevelpoints,self.currency_symbol,dollarValue];
                     }
                     else {
                         self.lblNextLevelPoints.hidden = true;

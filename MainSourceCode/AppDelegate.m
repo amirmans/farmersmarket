@@ -642,17 +642,16 @@ self.tt_tabBarController.tabBar.tintColor = [UIColor colorWithDisplayP3Red:249.0
     }];
 }
 
-
+//
 - (void) postProcessForSuccess:(NSDictionary *)consumerInfo {
     [[DataModel sharedDataModelManager] setUserIDWithString:consumerInfo[@"uid"]];
-//    [DataModel sharedDataModelManager].nickname = consumerInfo[@"nickname"];
-//    [[DataModel sharedDataModelManager] setAgeGroupWithString:consumerInfo[@"age_group"]];
-//    [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
-//    [DataModel sharedDataModelManager].sms_no = consumerInfo[@"sms_no"];
-    
-//    [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
-//    [DataModel sharedDataModelManager].emailAddress = consumerInfo[@"email1"];
-    
+    [DataModel sharedDataModelManager].nickname = consumerInfo[@"nickname"];
+    [[DataModel sharedDataModelManager] setAgeGroupWithString:consumerInfo[@"age_group"]];
+    [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
+    [DataModel sharedDataModelManager].sms_no = consumerInfo[@"sms_no"];
+    [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
+    [DataModel sharedDataModelManager].emailAddress = consumerInfo[@"email1"];
+
     [self getDefaultCCForConsumer];
     
 }

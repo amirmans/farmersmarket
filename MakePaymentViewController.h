@@ -49,7 +49,8 @@
 @property (strong,nonatomic) NSString *noteText;
 @property (strong,nonatomic) NSString *pd_noteText;
 @property (strong,nonatomic) NSString *restTitle;
-
+@property(strong,nonatomic) NSString *currency_code;
+@property  (strong,nonatomic) NSString *currency_symbol;
 
 - (IBAction)btnAddCardCliked:(id)sender;
 - (IBAction)btnRedeemPointClicked:(id)sender;

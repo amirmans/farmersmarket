@@ -28,7 +28,8 @@
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize redeemPointsVal,hud,dollarValForEachPoints,redeemNoPoint,currentPointsLevel,originalNoPoint,originalPointsVal,flagRedeemPointVal,delivery_startTime,delivery_endTime,deliveryamt,selectedButtonNumber;
-
+@synthesize currency_symbol;
+@synthesize currency_code;
 NSInteger currentTipVal = 0;   // Selected Tip Value
 NSString *delivery_location;   // Delivery location
 double globalPromotnal = 0.0;  // Variable for manage promotional amount with total amount value
@@ -51,7 +52,8 @@ double deliveryAmountValue; //Delievery amount value in $
     
     self.automaticallyAdjustsScrollViewInsets = YES;
     self.edgesForExtendedLayout = UIRectEdgeNone;
-
+    self.currency_code =  [CurrentBusiness sharedCurrentBusinessManager].business.curr_code;
+    self.currency_symbol = [CurrentBusiness sharedCurrentBusinessManager].business.curr_symbol;
     flagRedeemPointVal = false;
     originalPointsVal = 0.0;
     originalNoPoint = 0;
@@ -109,12 +111,12 @@ double deliveryAmountValue; //Delievery amount value in $
         self.viewDeliveryAndPickup.hidden = false;
     }
     
-    self.lblSubtotalAmount.text = [NSString stringWithFormat:@"$%@",self.subTotal];
+    self.lblSubtotalAmount.text = [NSString stringWithFormat:@"%@%@",self.currency_symbol,self.subTotal];
     self.lblEarnedPoint.text = self.earnPts;
     
-    NSString *tip10String = [NSString stringWithFormat:@"$%.2f",[self.subTotal doubleValue] * .10];
-    NSString *tip15String = [NSString stringWithFormat:@"$%.2f",[self.subTotal doubleValue] * .15];
-    NSString *tip20String = [NSString stringWithFormat:@"$%.2f",[self.subTotal doubleValue] * .20];
+    NSString *tip10String = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,[self.subTotal doubleValue] * .10];
+    NSString *tip15String = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,[self.subTotal doubleValue] * .15];
+    NSString *tip20String = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,[self.subTotal doubleValue] * .20];
     [self.btnTip10 setTitle:tip10String forState:UIControlStateNormal];
     [self.btnTip15 setTitle:tip15String forState:UIControlStateNormal];
     [self.btnTip20 setTitle:tip20String forState:UIControlStateNormal];
@@ -196,13 +198,13 @@ double deliveryAmountValue; //Delievery amount value in $
         if (flagRedeemPointVal == false) {
             flagRedeemPointVal = true;
             [self changePointsAndUI:flagRedeemPointVal];
-            self.lblSubTotalPrice.text =  [NSString stringWithFormat:@"$%.2f",totalVal];
+            self.lblSubTotalPrice.text =  [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,totalVal];
         }
         else {
             flagRedeemPointVal = false;
             redeemPointsVal = 0.00;
             [self changePointsAndUI:flagRedeemPointVal];
-            self.lblSubTotalPrice.text =  [NSString stringWithFormat:@"$%.2f",totalVal];
+            self.lblSubTotalPrice.text =  [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,totalVal];
         }
     }
     else {
@@ -331,13 +333,13 @@ double deliveryAmountValue; //Delievery amount value in $
         tipAmt = cartTotalValue* (tip/100);
         if(globalPromotnal > cartTotalValue)
         {
-            self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%.2f",cartTotalValue];
+            self.lblPromotionalAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,cartTotalValue];
             promotionalamt = cartTotalValue;
         }
         else
         {
             promotionalamt = globalPromotnal;
-            self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%.2f",promotionalamt];
+            self.lblPromotionalAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,promotionalamt];
         }
         
         if(flagRedeemPointVal){
@@ -348,7 +350,7 @@ double deliveryAmountValue; //Delievery amount value in $
         {
             totalVal = cartTotalValue + taxVal + tipAmt + deliveryAmountValue - promotionalamt - redeemPointsVal ;
         }
-        self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f",totalVal];
+        self.lblSubTotalPrice.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,totalVal];
     }
 }
 // set total order and Price
@@ -358,10 +360,10 @@ double deliveryAmountValue; //Delievery amount value in $
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
     cartTotalValue = [self.subTotal doubleValue];
     taxVal = ([self.subTotal doubleValue]*[billBusiness.tax_rate doubleValue])/100;
-    self.lblTaxRate.text = [NSString stringWithFormat:@"$%.2f",taxVal];
+    self.lblTaxRate.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,taxVal];
 
     totalVal = [self.subTotal doubleValue] + taxVal + deliveryAmountValue - promotionalamt;
-    self.lblSubTotalPrice.text = [NSString stringWithFormat:@"$%.2f",totalVal];
+    self.lblSubTotalPrice.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,totalVal];
     
     self.lblDeliveryAmount.hidden = false;
     NSDateFormatter* df = [[NSDateFormatter alloc] init];
@@ -373,14 +375,14 @@ double deliveryAmountValue; //Delievery amount value in $
         if ([billBusiness.pickup_counter_charge rangeOfString:@"%"].location == NSNotFound)
         {
             deliveryAmountValue = [billBusiness.pickup_counter_charge doubleValue];
-            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",deliveryAmountValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
         else
         {
             NSString *newStr = [billBusiness.pickup_counter_charge stringByReplacingOccurrencesOfString:@"%" withString:@""];
             double del_charge = [newStr doubleValue];
             deliveryAmountValue = (cartTotalValue * del_charge)/100;
-            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",deliveryAmountValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
         NSDate* newDate = [df dateFromString:[AppData sharedInstance].Pick_Time];
         [df setDateFormat:@"hh:mm a"];
@@ -390,40 +392,40 @@ double deliveryAmountValue; //Delievery amount value in $
     else if(selectedButtonNumber == 2){
         if ([billBusiness.delivery_table_charge rangeOfString:@"%"].location == NSNotFound) {
             deliveryAmountValue = [billBusiness.delivery_table_charge doubleValue];
-            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",deliveryAmountValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
         else{
             NSString *newStr = [billBusiness.delivery_table_charge stringByReplacingOccurrencesOfString:@"%" withString:@""];
             double del_charge = [newStr doubleValue];
             deliveryAmountValue = (cartTotalValue * del_charge)/100;
-            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",deliveryAmountValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
         self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Your food will be deliver at table number %@",[AppData sharedInstance].consumer_Delivery_Location_Id];
     }
     else if(selectedButtonNumber == 3){
         if ([billBusiness.delivery_location_charge rangeOfString:@"%"].location == NSNotFound) {
             deliveryAmountValue = [billBusiness.delivery_location_charge doubleValue];
-            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",deliveryAmountValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
         else{
             NSString *newStr = [billBusiness.delivery_location_charge stringByReplacingOccurrencesOfString:@"%" withString:@""];
             double del_charge = [newStr doubleValue];
             deliveryAmountValue = (cartTotalValue * del_charge)/100;
-            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",deliveryAmountValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
         self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Your food will be deliver at %@",[AppData sharedInstance].consumer_Delivery_Location];
     }
     else if(selectedButtonNumber == 4){
         if ([billBusiness.pickup_location_charge rangeOfString:@"%"].location == NSNotFound) {
             deliveryAmountValue = [billBusiness.pickup_location_charge doubleValue];
-            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",deliveryAmountValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
         else
         {
             NSString *newStr = [billBusiness.pickup_location_charge stringByReplacingOccurrencesOfString:@"%" withString:@""];
             double del_charge = [newStr doubleValue];
             deliveryAmountValue = (cartTotalValue * del_charge)/100;
-            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"$%.2f",deliveryAmountValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
         NSDate* newDate = [df dateFromString:[AppData sharedInstance].Pick_Time];
         [df setDateFormat:@"hh:mm a"];
@@ -476,13 +478,13 @@ double deliveryAmountValue; //Delievery amount value in $
                         }
                         if(globalPromotnal > cartTotalValue)
                         {
-                            self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%.2f",cartTotalValue];
+                            self.lblPromotionalAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,cartTotalValue];
                             promotionalamt = cartTotalValue;
                         }
                         else
                         {
                             promotionalamt = globalPromotnal;
-                            self.lblPromotionalAmount.text = [NSString stringWithFormat:@"$%@",billBusiness.promotion_discount_amount];
+                            self.lblPromotionalAmount.text = [NSString stringWithFormat:@"%@%@",self.currency_symbol,billBusiness.promotion_discount_amount];
                         }
                     }
  

@@ -30,6 +30,8 @@
 @implementation MakePaymentViewController
 
 @synthesize redeemPointsVal,hud,dollarValForEachPoints,redeemNoPoint,currentPointsLevel,originalNoPoint,originalPointsVal,flagRedeemPointVal,tipAmt,subTotalVal,deliveryAmountValue, pd_noteText;
+@synthesize currency_symbol;
+@synthesize currency_code;
 
 #pragma mark - Lifecycle
 
@@ -40,7 +42,8 @@
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
-    
+    self.currency_code =  [CurrentBusiness sharedCurrentBusinessManager].business.curr_code;
+    self.currency_symbol = [CurrentBusiness sharedCurrentBusinessManager].business.curr_symbol;
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     UINib *cellNib = [UINib nibWithNibName:@"cardDetailCollectionCell" bundle:nil];
@@ -65,7 +68,7 @@
     self.lblPickUpDate.text = [dateFormatter stringFromDate:[NSDate date]];
     _waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
     self.lblTitle.text = self.restTitle;
-    self.lblTotalPrice.text = [NSString stringWithFormat:@"$ %.2f",self.totalVal];
+    self.lblTotalPrice.text = [NSString stringWithFormat:@"%@ %.2f",self.currency_symbol,self.totalVal];
     
     if (![self enoughPointsToRedeem]){
         self.btnRedeemPoint.enabled = false;
@@ -201,13 +204,13 @@
         if (flagRedeemPointVal == false) {
             flagRedeemPointVal = true;
             [self changePointsAndUI:flagRedeemPointVal];
-            self.lblTotalPrice.text =  [NSString stringWithFormat:@"$%.2f",self.totalVal];
+            self.lblTotalPrice.text =  [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,self.totalVal];
         }
         else {
             flagRedeemPointVal = false;
             redeemPointsVal = 0.00;
             [self changePointsAndUI:flagRedeemPointVal];
-            self.lblTotalPrice.text =  [NSString stringWithFormat:@"$%.2f",self.totalVal];
+            self.lblTotalPrice.text =  [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,self.totalVal];
         }
     }
     else {
@@ -367,7 +370,7 @@
         }
         NSString *price = [product valueForKey:@"price"];
         CGFloat rounded_down = [AppData calculateRoundPoints:[price floatValue]];
-        NSString *Points = [NSString stringWithFormat:@"$%.2f",rounded_down];
+        NSString *Points = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,rounded_down];
         
         if(![itemNote isEqual:[NSNull null]])
         {

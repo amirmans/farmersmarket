@@ -41,7 +41,8 @@
 @property (strong,nonatomic)NSMutableArray *FetchedRecordArray;
 @property (strong) NSManagedObject *currentObject;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewBottomConstraint;
-
+@property(strong,nonatomic) NSString *currency_code;
+@property  (strong,nonatomic) NSString *currency_symbol;
 - (IBAction)btnContinueClicked:(id)sender;
 - (IBAction)btnPickUpFoodClicked:(id)sender;
 - (IBAction)btnDeliverToMeClicked:(id)sender;

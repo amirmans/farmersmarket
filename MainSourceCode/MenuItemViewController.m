@@ -34,7 +34,8 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize favesBeenInit;
-
+@synthesize currency_symbol;
+@synthesize currency_code;
 #pragma mark - Life Cycle
 
 UIBarButtonItem *backButton;
@@ -75,7 +76,8 @@ bool shouldOpenOptionMenu = false;
     [super viewDidLoad];
 
     self.noteViewHeightConstraint.constant = 1.0;
-
+     self.currency_code =  [CurrentBusiness sharedCurrentBusinessManager].business.curr_code;
+    self.currency_symbol = [CurrentBusiness sharedCurrentBusinessManager].business.curr_symbol;
 //    NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
 //    NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
 //
@@ -108,6 +110,7 @@ bool shouldOpenOptionMenu = false;
 
     [self.view addSubview:HUD];
     self.txtNote.delegate = self;
+    
     
 //    [HUD showWhileExecuting:@selector(doSomeFunkyStuff) onTarget:self withObject:nil animated:YES];
     [HUD showAnimated:YES];
@@ -648,7 +651,7 @@ bool shouldOpenOptionMenu = false;
         val =  val * [[self.currentObject valueForKey:@"quantity"] integerValue];
         CGFloat rounded_down = floorf(val * 100) / 100;
 
-        cell.lbl_Price.text = [NSString stringWithFormat:@"$%.2f",rounded_down];
+        cell.lbl_Price.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol, rounded_down];
         cell.lbl_OrderOption.text = [self.currentObject valueForKey:@"product_option"];
         cell.lbl_Description.text = [self.currentObject valueForKey:@"product_descrption"];
         cell.lbl_Title.text = [self.currentObject valueForKey:@"productname"];
@@ -709,7 +712,7 @@ bool shouldOpenOptionMenu = false;
             optionCell.availabilityStatusView.hidden = false;
         }
 
-        NSString *str = [NSString stringWithFormat:@"%@ ($%@)",itemModel.itemName,itemModel.itemPrice];
+        NSString *str = [NSString stringWithFormat:@"%@ (%@%@)",itemModel.itemName,self.currency_symbol,itemModel.itemPrice];
 
         optionCell.lblItemName.text = str;
 
@@ -839,7 +842,7 @@ bool shouldOpenOptionMenu = false;
     
     cell.lbl_title.text = [catArray[indexPath.row] valueForKey:@"name"];
 
-    cell.lbl_money.text = [catArray[indexPath.row] valueForKey:@"price"];
+    cell.lbl_money.text = [NSString stringWithFormat:@"%@%@",self.currency_symbol,[catArray[indexPath.row] valueForKey:@"price"]];
 
     CGFloat val = [[catArray[indexPath.row] valueForKey:@"price"] floatValue];
     int rounded_down = [AppData calculateRoundPoints:val];
@@ -918,7 +921,7 @@ bool shouldOpenOptionMenu = false;
     
     cell.lbl_title.text = [catArray[indexPath.row] valueForKey:@"name"];
 
-    cell.lbl_money.text = [catArray[indexPath.row] valueForKey:@"price"];
+    cell.lbl_money.text = [NSString stringWithFormat:@"%@%@",self.currency_symbol,[catArray[indexPath.row] valueForKey:@"price"]];
 
     CGFloat val = [[catArray[indexPath.row] valueForKey:@"price"] floatValue];
     int rounded_down = [AppData calculateRoundPoints:val];
@@ -2039,7 +2042,7 @@ bool shouldOpenOptionMenu = false;
         for (NSIndexPath *indexPath in selectedIndexPaths) {
             NSLog(@"%@", _dataSource[indexPath.row]);
 
-            selectedItemString = [selectedItemString stringByAppendingString:[NSString stringWithFormat:@"%@ ($%@) ,",[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"name"],[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"price"]]];
+            selectedItemString = [selectedItemString stringByAppendingString:[NSString stringWithFormat:@"%@ (%@%@) ,",[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"name"],self.currency_symbol,[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"price"]]];
 
             [productID_array addObject:[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"option_id"]];
 
@@ -2070,7 +2073,7 @@ bool shouldOpenOptionMenu = false;
 
 - (NSString*)multipleSelectView:(SHMultipleSelect*)multipleSelectView titleForRowAtIndexPath:(NSIndexPath*)indexPath {
 
-    NSString *str = [NSString stringWithFormat:@"%@ ($%@)",[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"name"],[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"price"]];
+    NSString *str = [NSString stringWithFormat:@"%@ (%@%@)",[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"name"],self.currency_symbol,[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"price"]];
     return str;
 }
 
@@ -2272,7 +2275,7 @@ bool shouldOpenOptionMenu = false;
     
     
     for (MenuOptionItemModel *model in selectedItemsArray) {
-        selectedItemString = [selectedItemString stringByAppendingString:[NSString stringWithFormat:@"%@ ($%@) ,",model.itemName,model.itemPrice]];
+        selectedItemString = [selectedItemString stringByAppendingString:[NSString stringWithFormat:@"%@ (%@%@) ,",model.itemName,self.currency_symbol,model.itemPrice]];
         [productID_array addObject:model.itemOption_ID];
         
         optionTotal = optionTotal + [model.itemPrice doubleValue];

@@ -89,6 +89,8 @@
     NSString *promotion_message;
     NSInteger pickup_counter_later;
     NSString *pickup_later;
+    NSString *curr_code;
+    NSString *curr_symbol;
 }
 
 @property(nonatomic, weak) id <TaptalkBusinessDelegate> businessDelegate;
@@ -173,6 +175,8 @@
 @property(nonatomic, strong) NSString *promotion_message;
 
 @property(nonatomic, strong) NSString *pickup_later;
+@property(nonatomic, strong) NSString *curr_code;
+@property(nonatomic, strong) NSString *curr_symbol;
 
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;
 - (void)startLoadingBusinessProductCategoriesAndProducts;

@@ -88,6 +88,8 @@
 @synthesize promotion_code;
 @synthesize promotion_discount_amount;
 @synthesize promotion_message;
+@synthesize curr_code;
+@synthesize curr_symbol;
 
 
 
@@ -158,6 +160,8 @@
     promotion_message = nil;
     
     pickup_later = nil;
+    curr_symbol = nil;
+    curr_code = nil;
 }
 
 - (int)isCustomer {
@@ -442,6 +446,9 @@
      }
      
      */
+    //Currency
+    curr_code = [self stringFromDataDictionary:data forKey:@"curr_code"];
+    curr_symbol = [self stringFromDataDictionary:data forKey:@"curr_symbol"];
     
     business_bg_color =  [self setUIColorFromString:bg_color];
     business_text_color = [self setUIColorFromString:text_color];

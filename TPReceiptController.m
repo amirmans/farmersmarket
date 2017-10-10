@@ -23,11 +23,16 @@
 
 @synthesize totalPaid, tipAmount, subTotal, lblTextFromPayConfirmation, lbl_thankYou, lblBusinessName, lbl_emailSentShortly;
 
+@synthesize currency_symbol;
+@synthesize currency_code;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     BusinessData = [CurrentBusiness sharedCurrentBusinessManager].business;
-    
+    self.currency_code =  [CurrentBusiness sharedCurrentBusinessManager].business.curr_code;
+    self.currency_symbol = [CurrentBusiness sharedCurrentBusinessManager].business.curr_symbol;
+
     if ([DataModel sharedDataModelManager].emailAddress.length < 1) {
         lbl_emailSentShortly.hidden = true;
     } else {
@@ -121,7 +126,7 @@
     CGFloat val = [businessDetail.price floatValue];
     val =  val * businessDetail.quantity ;
     CGFloat rounded_down = [AppData calculateRoundPrice:val];
-    cell.lbl_Price.text = [NSString stringWithFormat:@"$%.2f",rounded_down];
+    cell.lbl_Price.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,rounded_down];
     
     
     cell.lbl_Title.text = businessDetail.name;

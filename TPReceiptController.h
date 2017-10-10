@@ -47,7 +47,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *lbl_thankYou;
 @property (strong, nonatomic) IBOutlet UILabel *lblBusinessName;
 @property (strong, nonatomic) IBOutlet UILabel *lbl_emailSentShortly;
-
+@property(strong,nonatomic) NSString *currency_code;
+@property  (strong,nonatomic) NSString *currency_symbol;
 - (IBAction)btnTextFromPayConfirmation:(id)sender;
 
 @end

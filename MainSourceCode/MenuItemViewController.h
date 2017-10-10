@@ -36,7 +36,8 @@
 @property (nonatomic, strong) UISearchController *searchController;
 @property (weak, nonatomic) IBOutlet UIView *noteView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *noteViewHeightConstraint;
-
+@property(strong,nonatomic) NSString *currency_code;
+@property  (strong,nonatomic) NSString *currency_symbol;
 @property (strong, nonatomic) IBOutlet UIView *MenuItems_back_view;
 @property (strong, nonatomic) IBOutlet UILabel *lbl_menuItems;
 @property (strong, nonatomic) IBOutlet UITableView *MenuItemTableView;
@@ -99,6 +100,7 @@
 @property (strong, nonatomic) NSMutableArray *optionTab1Array;
 @property (strong, nonatomic) NSMutableArray *optionTab2Array;
 @property (strong, nonatomic) NSMutableArray *optionTab3Array;
+
 
 @property (assign, nonatomic) BOOL isOptionTab1Selected;
 @property (assign, nonatomic) BOOL isOptionTab2Selected;
