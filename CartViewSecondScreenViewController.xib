@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13526" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -61,24 +61,6 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S4x-NC-eXx">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="61"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="delevery address" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Yek-EI-zA6">
-                                    <rect key="frame" x="157" y="5" width="210" height="41"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="41" id="sa6-n5-MRq"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delivery to:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMZ-Fg-LYi">
-                                    <rect key="frame" x="8" y="15" width="132" height="21"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="21" id="FMe-aR-Xpf"/>
-                                        <constraint firstAttribute="width" constant="132" id="yeF-bI-09b"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="keD-wo-R0R">
                                     <rect key="frame" x="0.0" y="60" width="375" height="0.5"/>
                                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -86,21 +68,25 @@
                                         <constraint firstAttribute="height" constant="0.5" id="tH1-5X-tUI"/>
                                     </constraints>
                                 </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="delevery address" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Yek-EI-zA6">
+                                    <rect key="frame" x="8" y="5" width="359" height="41"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="41" id="sa6-n5-MRq"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="Yek-EI-zA6" firstAttribute="top" secondItem="S4x-NC-eXx" secondAttribute="top" constant="5" id="3mh-Ip-tS4"/>
                                 <constraint firstAttribute="trailing" secondItem="keD-wo-R0R" secondAttribute="trailing" id="AS5-Px-W0f"/>
-                                <constraint firstItem="hMZ-Fg-LYi" firstAttribute="top" secondItem="S4x-NC-eXx" secondAttribute="top" constant="15" id="FpA-JO-pid"/>
-                                <constraint firstItem="Yek-EI-zA6" firstAttribute="leading" secondItem="hMZ-Fg-LYi" secondAttribute="trailing" constant="17" id="MOv-Po-TCj"/>
                                 <constraint firstItem="keD-wo-R0R" firstAttribute="top" secondItem="Yek-EI-zA6" secondAttribute="bottom" constant="14" id="Uyq-kU-UM5"/>
                                 <constraint firstAttribute="height" constant="61" id="VY2-jX-Kdw"/>
                                 <constraint firstAttribute="trailing" secondItem="Yek-EI-zA6" secondAttribute="trailing" constant="8" id="dFz-V5-LHv"/>
-                                <constraint firstItem="hMZ-Fg-LYi" firstAttribute="leading" secondItem="S4x-NC-eXx" secondAttribute="leading" constant="8" id="iaw-a6-TMu"/>
-                                <constraint firstItem="keD-wo-R0R" firstAttribute="top" secondItem="hMZ-Fg-LYi" secondAttribute="bottom" constant="24" id="jJz-jT-smF"/>
-                                <constraint firstItem="Yek-EI-zA6" firstAttribute="leading" secondItem="hMZ-Fg-LYi" secondAttribute="trailing" constant="17" id="k5f-zs-04p"/>
                                 <constraint firstItem="keD-wo-R0R" firstAttribute="leading" secondItem="S4x-NC-eXx" secondAttribute="leading" id="pOR-vr-wXl"/>
                                 <constraint firstAttribute="bottom" secondItem="keD-wo-R0R" secondAttribute="bottom" constant="0.5" id="qSy-ja-l53"/>
+                                <constraint firstItem="Yek-EI-zA6" firstAttribute="centerX" secondItem="S4x-NC-eXx" secondAttribute="centerX" id="zkB-Jf-PJ5"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lhh-Lj-GNj">

@@ -1348,8 +1348,8 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-TapForAll/Pods-TapForAll-resources.sh",
 				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 				"${PODS_ROOT}/IQKeyboardManager/IQKeyboardManager/Resources/IQKeyboardManager.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/SHMultipleSelect/SHMultipleSelect.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/Stripe/Stripe.bundle",
+				$PODS_CONFIGURATION_BUILD_DIR/SHMultipleSelect/SHMultipleSelect.bundle,
+				$PODS_CONFIGURATION_BUILD_DIR/Stripe/Stripe.bundle,
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
