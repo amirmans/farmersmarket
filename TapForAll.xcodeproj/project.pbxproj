@@ -94,7 +94,7 @@
 		4AAF9C331CFDB101009ECFB2 /* NotificationDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF9C321CFDB101009ECFB2 /* NotificationDetailModel.m */; };
 		4ABB681C1CAD653D0099570C /* RemoveFromCartView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4ABB681B1CAD653D0099570C /* RemoveFromCartView.xib */; };
 		4AC80A901C69FF6A00A42EE2 /* restaurant.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4AC80A8F1C69FF6900A42EE2 /* restaurant.jpg */; };
-		4ACD41AF1E1FDEAB002F9379 /* CartViewSecondScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACD41AD1E1FDEAB002F9379 /* CartViewSecondScreenViewController.m */; };
+		4ACD41AF1E1FDEAB002F9379 /* PaymentSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACD41AD1E1FDEAB002F9379 /* PaymentSummaryViewController.m */; };
 		4AD6E47A1CE099240025676C /* ic_minus.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AD6E4771CE099240025676C /* ic_minus.png */; };
 		4AD6E47B1CE099240025676C /* ic_minus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AD6E4781CE099240025676C /* ic_minus@2x.png */; };
 		4AD6E47C1CE099240025676C /* ic_minus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AD6E4791CE099240025676C /* ic_minus@3x.png */; };
@@ -197,7 +197,7 @@
 		C6FE85DC1D82974500B0D295 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FE85DB1D82974500B0D295 /* GameKit.framework */; };
 		C6FE85DE1D82974F00B0D295 /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FE85DD1D82974F00B0D295 /* PassKit.framework */; };
 		C6FE85E01D82975400B0D295 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6FE85DF1D82975400B0D295 /* StoreKit.framework */; };
-		DA3C19C31E974BFC00ADDE31 /* OrderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3C19C11E974BFC00ADDE31 /* OrderDetailViewController.m */; };
+		DA3C19C31E974BFC00ADDE31 /* PickupDeliveryOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3C19C11E974BFC00ADDE31 /* PickupDeliveryOptionsViewController.m */; };
 		DA3C19C41E974BFC00ADDE31 /* OrderDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA3C19C21E974BFC00ADDE31 /* OrderDetailViewController.xib */; };
 		DA3E43A31E9A1CF6004FF1BA /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3E43A11E9A1CF6004FF1BA /* HomeViewController.m */; };
 		DA3E43A41E9A1CF6004FF1BA /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA3E43A21E9A1CF6004FF1BA /* HomeViewController.xib */; };
@@ -353,8 +353,8 @@
 		4ABB681B1CAD653D0099570C /* RemoveFromCartView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemoveFromCartView.xib; sourceTree = "<group>"; };
 		4AC80A8F1C69FF6900A42EE2 /* restaurant.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = restaurant.jpg; sourceTree = "<group>"; };
 		4ACD296C1CD7628B00BAA006 /* TapForAll_V2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TapForAll_V2.xcdatamodel; sourceTree = "<group>"; };
-		4ACD41AC1E1FDEAB002F9379 /* CartViewSecondScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartViewSecondScreenViewController.h; sourceTree = "<group>"; };
-		4ACD41AD1E1FDEAB002F9379 /* CartViewSecondScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartViewSecondScreenViewController.m; sourceTree = "<group>"; };
+		4ACD41AC1E1FDEAB002F9379 /* PaymentSummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentSummaryViewController.h; sourceTree = "<group>"; };
+		4ACD41AD1E1FDEAB002F9379 /* PaymentSummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentSummaryViewController.m; sourceTree = "<group>"; };
 		4AD6E4771CE099240025676C /* ic_minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_minus.png; sourceTree = "<group>"; };
 		4AD6E4781CE099240025676C /* ic_minus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_minus@2x.png"; sourceTree = "<group>"; };
 		4AD6E4791CE099240025676C /* ic_minus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_minus@3x.png"; sourceTree = "<group>"; };
@@ -489,8 +489,8 @@
 		C6FE85DB1D82974500B0D295 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		C6FE85DD1D82974F00B0D295 /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		C6FE85DF1D82975400B0D295 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		DA3C19C01E974BFC00ADDE31 /* OrderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderDetailViewController.h; sourceTree = "<group>"; };
-		DA3C19C11E974BFC00ADDE31 /* OrderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderDetailViewController.m; sourceTree = "<group>"; };
+		DA3C19C01E974BFC00ADDE31 /* PickupDeliveryOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickupDeliveryOptionsViewController.h; sourceTree = "<group>"; };
+		DA3C19C11E974BFC00ADDE31 /* PickupDeliveryOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickupDeliveryOptionsViewController.m; sourceTree = "<group>"; };
 		DA3C19C21E974BFC00ADDE31 /* OrderDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OrderDetailViewController.xib; sourceTree = "<group>"; };
 		DA3E43A01E9A1CF6004FF1BA /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		DA3E43A11E9A1CF6004FF1BA /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
@@ -953,8 +953,8 @@
 				12C090E31DDDDB600033CEA9 /* CartViewController.h */,
 				12C090E41DDDDB600033CEA9 /* CartViewController.m */,
 				12C090E51DDDDB600033CEA9 /* CartViewController.xib */,
-				4ACD41AC1E1FDEAB002F9379 /* CartViewSecondScreenViewController.h */,
-				4ACD41AD1E1FDEAB002F9379 /* CartViewSecondScreenViewController.m */,
+				4ACD41AC1E1FDEAB002F9379 /* PaymentSummaryViewController.h */,
+				4ACD41AD1E1FDEAB002F9379 /* PaymentSummaryViewController.m */,
 				4A32F15B1E3ADD9A002F4565 /* CartViewSecondScreenViewController.xib */,
 				DA6580AD1ED05F4C0043862A /* MakePaymentViewController.h */,
 				DA6580AE1ED05F4C0043862A /* MakePaymentViewController.m */,
@@ -1074,8 +1074,8 @@
 			isa = PBXGroup;
 			children = (
 				DAB7A2431E9811D200FFD508 /* DropDown */,
-				DA3C19C01E974BFC00ADDE31 /* OrderDetailViewController.h */,
-				DA3C19C11E974BFC00ADDE31 /* OrderDetailViewController.m */,
+				DA3C19C01E974BFC00ADDE31 /* PickupDeliveryOptionsViewController.h */,
+				DA3C19C11E974BFC00ADDE31 /* PickupDeliveryOptionsViewController.m */,
 				DA3C19C21E974BFC00ADDE31 /* OrderDetailViewController.xib */,
 			);
 			name = "Order Detail";
@@ -1440,7 +1440,7 @@
 				C671530B1EAEA04D00DA5D01 /* SMCalloutView.m in Sources */,
 				C6F475601CDFDBA4009E24E4 /* BusinessDetailsTableCell.m in Sources */,
 				4AAF9C331CFDB101009ECFB2 /* NotificationDetailModel.m in Sources */,
-				4ACD41AF1E1FDEAB002F9379 /* CartViewSecondScreenViewController.m in Sources */,
+				4ACD41AF1E1FDEAB002F9379 /* PaymentSummaryViewController.m in Sources */,
 				4A06471D1DE456B900416969 /* CartViewTableViewCell.m in Sources */,
 				291850CA153E8DA8008B6EBB /* DetailBusinessViewController.m in Sources */,
 				29D29A2015DB5AFA00990F62 /* GooglePlacesConnection.m in Sources */,
@@ -1450,7 +1450,7 @@
 				12C090EB1DDDEC6E0033CEA9 /* CartItemTableViewCell.m in Sources */,
 				29D29A2115DB5AFA00990F62 /* GooglePlacesObject.m in Sources */,
 				4A1DA88C1C7603CA00E16F30 /* TPReceiptController.m in Sources */,
-				DA3C19C31E974BFC00ADDE31 /* OrderDetailViewController.m in Sources */,
+				DA3C19C31E974BFC00ADDE31 /* PickupDeliveryOptionsViewController.m in Sources */,
 				12C090F01DDDEF940033CEA9 /* CartTotalTableViewCell.m in Sources */,
 				4A6643EA1C74A04000C10421 /* SIMenuCell.m in Sources */,
 				C61E552518E794C1007027C7 /* CurrentBusiness.m in Sources */,

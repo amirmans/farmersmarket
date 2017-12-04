@@ -73,7 +73,10 @@
     NSDictionary *businessProducts;
     NSError *businessError;
     NSString *process_time;
-    
+
+    NSNumber *process_cycle_time;
+    NSNumber *process_lead_time;
+
     NSString *delivery_location_charge;
     NSString *delivery_table_charge;
     NSString *pickup_counter_charge;
@@ -177,6 +180,9 @@
 @property(nonatomic, strong) NSString *pickup_later;
 @property(nonatomic, strong) NSString *curr_code;
 @property(nonatomic, strong) NSString *curr_symbol;
+
+@property(nonatomic, strong) NSNumber *process_cycle_time;
+@property(nonatomic, strong) NSNumber *process_lead_time;
 
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;
 - (void)startLoadingBusinessProductCategoriesAndProducts;

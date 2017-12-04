@@ -72,6 +72,7 @@
 @synthesize bg_image_name;
 @synthesize is_collection;
 @synthesize process_time;
+@synthesize process_cycle_time, process_lead_time;
 @synthesize keywords;
 @synthesize sub_businesses;
 
@@ -141,6 +142,8 @@
     closing_time = nil;
     bg_image_name = nil;
     process_time = nil;
+    process_cycle_time = nil;
+    process_lead_time = nil;
     keywords = nil;
     
     sub_businesses = nil;
@@ -460,6 +463,9 @@
     process_time = [self stringFromDataDictionary:data forKey:@"process_time"];
     if (process_time == nil)
         process_time = Default_Process_Time;
+
+    process_cycle_time = [self stringFromDataDictionary:data forKey:@"process_cycle_time"];
+    process_lead_time = [self stringFromDataDictionary:data forKey:@"process_lead_time"];
     
     keywords = [self stringFromDataDictionary:data forKey:@"keywords"];
     // no keywords is ginven at least use the business name for our searches

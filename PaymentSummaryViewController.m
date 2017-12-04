@@ -6,9 +6,9 @@
 //
 //
 
-#import "CartViewSecondScreenViewController.h"
+#import "PaymentSummaryViewController.h"
 
-@interface CartViewSecondScreenViewController (){
+@interface PaymentSummaryViewController (){
     NSString *stringUid;
 }
 
@@ -24,7 +24,7 @@
 
 @end
 
-@implementation CartViewSecondScreenViewController
+@implementation PaymentSummaryViewController
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize redeemPointsVal,hud,dollarValForEachPoints,redeemNoPoint,currentPointsLevel,originalNoPoint,originalPointsVal,flagRedeemPointVal,delivery_startTime,delivery_endTime,deliveryamt,selectedButtonNumber;
@@ -353,7 +353,7 @@ double deliveryAmountValue; //Delievery amount value in $
         self.lblSubTotalPrice.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,totalVal];
     }
 }
-// set total order and Price
+// set total order and price
 - (void)paymentSummary {
     
     totalVal = 0.00;
@@ -384,10 +384,10 @@ double deliveryAmountValue; //Delievery amount value in $
             deliveryAmountValue = (cartTotalValue * del_charge)/100;
             self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
-        NSDate* newDate = [df dateFromString:[AppData sharedInstance].Pick_Time];
+        NSDate* newDate = [df dateFromString:[AppData sharedInstance].consumerPDTimeChosen];
         [df setDateFormat:@"hh:mm a"];
         NSString *p_time = [df stringFromDate:newDate];
-        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Pick up your food from counter at %@",(NSString *)p_time];
+        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Pick up from counter at %@",(NSString *)p_time];
     }
     else if(selectedButtonNumber == 2){
         if ([billBusiness.delivery_table_charge rangeOfString:@"%"].location == NSNotFound) {
@@ -400,7 +400,7 @@ double deliveryAmountValue; //Delievery amount value in $
             deliveryAmountValue = (cartTotalValue * del_charge)/100;
             self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
-        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Your food will be deliver at table number %@",[AppData sharedInstance].consumer_Delivery_Location_Id];
+        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Delivery to table number %@",[AppData sharedInstance].consumer_Delivery_Location_Id];
     }
     else if(selectedButtonNumber == 3){
         if ([billBusiness.delivery_location_charge rangeOfString:@"%"].location == NSNotFound) {
@@ -413,7 +413,7 @@ double deliveryAmountValue; //Delievery amount value in $
             deliveryAmountValue = (cartTotalValue * del_charge)/100;
             self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
-        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Your food will be deliver at %@",[AppData sharedInstance].consumer_Delivery_Location];
+        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Delivery to %@",[AppData sharedInstance].consumer_Delivery_Location];
     }
     else if(selectedButtonNumber == 4){
         if ([billBusiness.pickup_location_charge rangeOfString:@"%"].location == NSNotFound) {
@@ -427,10 +427,10 @@ double deliveryAmountValue; //Delievery amount value in $
             deliveryAmountValue = (cartTotalValue * del_charge)/100;
             self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
-        NSDate* newDate = [df dateFromString:[AppData sharedInstance].Pick_Time];
+        NSDate* newDate = [df dateFromString:[AppData sharedInstance].consumerPDTimeChosen];
         [df setDateFormat:@"hh:mm a"];
         NSString *p_time = [df stringFromDate:newDate];
-        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Pickup your food at %@ from parking.",p_time];
+        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Pickup at %@ from a parking space.",p_time];
     }
     
 }

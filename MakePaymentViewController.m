@@ -66,7 +66,13 @@
     // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
     NSLog(@"%@",[dateFormatter stringFromDate:[NSDate date]]);
     self.lblPickUpDate.text = [dateFormatter stringFromDate:[NSDate date]];
-    _waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
+    if ( [[AppData sharedInstance].consumerPDMethodChosen isEqualToString:PICKUP_COUNTER] ) {
+        _waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
+    } else if ( [[AppData sharedInstance].consumerPDMethodChosen isEqualToString:DELIVERY_LOCATION] ) {
+        NSString* pd_time= [AppData sharedInstance].consumerPDTimeChosen;
+        _waitTimeLabel.text = [@"Your order will be delivered to you at " stringByAppendingString:pd_time];
+    }
+    //_waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
     self.lblTitle.text = self.restTitle;
     self.lblTotalPrice.text = [NSString stringWithFormat:@"%@ %.2f",self.currency_symbol,self.totalVal];
     
@@ -426,9 +432,9 @@
                                    @"promotion_code":[CurrentBusiness sharedCurrentBusinessManager].business.promotion_code,
                                    @"promotion_discount_amount" : [NSString stringWithFormat:@"%f",self.promotionalamt],
                                    @"pd_charge_amount": @"",
-                                   @"pd_mode": [AppData sharedInstance].Pd_Mode.length > 0 ? [AppData sharedInstance].Pd_Mode : @"",
+                                   @"pd_mode": [AppData sharedInstance].consumerPDMethodChosen.length > 0 ? [AppData sharedInstance].consumerPDMethodChosen : @"",
                                    @"pd_locations_id": [AppData sharedInstance].consumer_Delivery_Location_Id.length > 0 ? [AppData sharedInstance].consumer_Delivery_Location_Id : @"",
-                                   @"pd_time": [AppData sharedInstance].Pick_Time.length > 0 ? [AppData sharedInstance].Pick_Time : @""
+                                   @"pd_time": [AppData sharedInstance].consumerPDTimeChosen.length > 0 ? [AppData sharedInstance].consumerPDTimeChosen : @""
                                    };
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:orderInfoDict

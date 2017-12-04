@@ -27,12 +27,12 @@
 }
 
 @property (nonatomic, strong) CLLocation *currentLocation;
-@property (assign, nonatomic) BOOL isFromTotalCart;
+@property (assign, nonatomic) BOOL isFromTotalCart; // we are coming to points page from the cart view
 @property (retain, nonatomic) NSString *consumer_Delivery_Id;
 @property (retain, nonatomic) NSString *consumer_Delivery_Location;
 @property (retain, nonatomic) NSString *consumer_Delivery_Location_Id;
-@property (retain, nonatomic) NSString *Pick_Time;
-@property (retain, nonatomic) NSString *Pd_Mode;
+@property (retain, nonatomic) NSString *consumerPDTimeChosen;
+@property (retain, nonatomic) NSString *consumerPDMethodChosen;
 @property (retain, nonatomic) NSString *Current_Selected_Tab;
 @property (retain, nonatomic) NSString *is_Profile_Changed;
 - (NSDateFormatter *) setDateFormatter : (NSString *) dateFormat;

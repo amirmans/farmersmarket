@@ -6,19 +6,20 @@
 //
 //
 
-#import "OrderDetailViewController.h"
+#import "PickupDeliveryOptionsViewController.h"
 //#import "AppData.h"
 #import "ActionSheetPicker.h"
 #import "NYAlertViewController.h"
 #import "IQKeyboardManager.h"
 #define kOFFSET_FOR_KEYBOARD 80.0
 
-@interface OrderDetailViewController ()<UITextViewDelegate>{
+@interface PickupDeliveryOptionsViewController ()<UITextViewDelegate>{
     NSArray *deliveryLocation;
     ActionSheetDatePicker *datePicker;
     NSString *deliveryStartTime;
     NSString *deliveryEndTime;
     NSNumber *deliveryTimeInterval;
+    NSNumber *deliveryLeadTime;
     NSNumber *tableMinNo;
     NSNumber *tableMaxNo;
     NSMutableArray *tableNoArr;
@@ -42,7 +43,7 @@
 
 @end
 
-@implementation OrderDetailViewController
+@implementation PickupDeliveryOptionsViewController
 @synthesize orderItemsOD;
 @synthesize /*flagRedeemPointOD, originalPointsValueOD, originalNoPointsOD, dollarValueForEachPointsOD,currenPointsLevelOD,redeemNoPointsOD, redeemPointsValueOD,*/ hud,pickupTimeOD, formatter;
 
@@ -173,6 +174,7 @@ NSDate *setMinPickerTimeOD;
             deliveryStartTime = [locationDict valueForKey:@"delivery_start_time"];
             deliveryEndTime = [locationDict valueForKey:@"delivery_end_time"];
             deliveryTimeInterval = [locationDict valueForKey:@"delivery_time_interval_in_minutes"];
+            deliveryLeadTime = [locationDict valueForKey:@"delivery_lead_time_in_minutes"];
             self.lblBusinessNote.text = [tableDict valueForKey:@"message_to_consumers"];
             tableMinNo = [tableDict valueForKey:@"table_no_min"];
             tableMaxNo = [tableDict valueForKey:@"table_no_max"];
@@ -206,7 +208,7 @@ NSDate *setMinPickerTimeOD;
 #pragma mark - Life Cycles
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"Pickup/Delivery Options";
+    self.title = @"Carry out/Delivery";
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
                                                                    style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
@@ -287,7 +289,6 @@ NSDate *setMinPickerTimeOD;
     [formatter setTimeZone:tz];
     [formatter setDateFormat:@"HH:mm:ss"];
     NSString *tzName = [tz name];
-
 
     NSDateFormatter *displayFormatter = [[NSDateFormatter alloc] init];
     [displayFormatter setTimeZone:tz];
@@ -537,7 +538,7 @@ NSDate *setMinPickerTimeOD;
     [alertViewController addAction:[NYAlertAction actionWithTitle:NSLocalizedString(@"Confirm", nil)
                                                             style:UIAlertActionStyleCancel
                                                           handler:^(NYAlertAction *action) {
-                                                              CartViewSecondScreenViewController *TotalCartItemVC = [[CartViewSecondScreenViewController alloc] initWithNibName:@"CartViewSecondScreenViewController" bundle:nil];
+                                                              PaymentSummaryViewController *TotalCartItemVC = [[PaymentSummaryViewController alloc] initWithNibName:@"CartViewSecondScreenViewController" bundle:nil];
                                                               TotalCartItemVC.orderItems = self.orderItemsOD;
                                                               TotalCartItemVC.subTotal = [NSString stringWithFormat:@"%@",self.subTotalOD];
                                                               TotalCartItemVC.earnPts = self.earnPtsOD;
@@ -1168,10 +1169,9 @@ NSDate *setMinPickerTimeOD;
             [self showAlert:@"Error" :@"Please select location."];
         }
         else if([self.btnDesignationLocationPickUp.titleLabel.text isEqualToString:@"-- Select Time --"]){
-            [self showAlert:@"Error" :@"Please select pickup time."];
+            [self showAlert:@"Error" :@"Please select the time."];
         }
         else {
-
             [HUD showAnimated:YES];
             NSDate* newDate = [df dateFromString:self.btnDesignationLocationPickUp.titleLabel.text];
             [df setDateFormat:TIME24HOURFORMAT];
@@ -1214,8 +1214,8 @@ NSDate *setMinPickerTimeOD;
 
                         [AppData sharedInstance].consumer_Delivery_Id =[NSString stringWithFormat:@"%@", [response valueForKey:@"consumer_delivery_id"]];
                         [AppData sharedInstance].consumer_Delivery_Location = self.btnLocation.titleLabel.text;
-                        [AppData sharedInstance].Pick_Time = uploadTime;
-                        [AppData sharedInstance].Pd_Mode = DELIVERY_LOCATION;
+                        [AppData sharedInstance].consumerPDTimeChosen = uploadTime;
+                        [AppData sharedInstance].consumerPDMethodChosen = DELIVERY_LOCATION;
 
                         [self showAlertForNavigate:@"Detail" :[NSString stringWithFormat:@"\n Your Delivery Location is %@ \n Your Pick up time is %@ \n",[AppData sharedInstance].consumer_Delivery_Location,self.btnDesignationLocationPickUp.titleLabel.text]];
                     }
@@ -1251,13 +1251,13 @@ NSDate *setMinPickerTimeOD;
             [df setDateFormat:TIME24HOURFORMAT];
 //            newDate = [df stringFromDate:newDate];
             uploadTime = (NSString *)[df stringFromDate:newDate];
-            NSLog(@"%@",uploadTime);
+            NSLog(@"time in carry out delivery ok%@",uploadTime);
 
             [AppData sharedInstance].consumer_Delivery_Id =@"";
             [AppData sharedInstance].consumer_Delivery_Location_Id = @"";
             [AppData sharedInstance].consumer_Delivery_Location = @"";
-            [AppData sharedInstance].Pick_Time = uploadTime;
-            [AppData sharedInstance].Pd_Mode = PICKUP_COUNTER;
+            [AppData sharedInstance].consumerPDTimeChosen = uploadTime;
+            [AppData sharedInstance].consumerPDMethodChosen = PICKUP_COUNTER;
             [self showAlertForNavigate:@"Detail" :[NSString stringWithFormat:@"\n  Your Pick up time is %@ \n",self.btnCounterPickupTime.titleLabel.text]];
         }
     }
@@ -1276,8 +1276,8 @@ NSDate *setMinPickerTimeOD;
             NSDate *now = [NSDate date];
             dateFormatter.dateFormat = TIME24HOURFORMAT;
             uploadTime = [dateFormatter stringFromDate:now];
-            [AppData sharedInstance].Pick_Time = uploadTime;
-            [AppData sharedInstance].Pd_Mode = DELIVERY_TABLE;
+            [AppData sharedInstance].consumerPDTimeChosen = uploadTime;
+            [AppData sharedInstance].consumerPDMethodChosen = DELIVERY_TABLE;
             [self showAlertForNavigate:@"Detail" :[NSString stringWithFormat:@"\n  Your Table Number is %@ \n",[AppData sharedInstance].consumer_Delivery_Location_Id]];
         }
     }
@@ -1296,8 +1296,8 @@ NSDate *setMinPickerTimeOD;
             [AppData sharedInstance].consumer_Delivery_Id =@"";
             [AppData sharedInstance].consumer_Delivery_Location_Id = @"";
             [AppData sharedInstance].consumer_Delivery_Location = @"";
-            [AppData sharedInstance].Pick_Time = uploadTime;
-            [AppData sharedInstance].Pd_Mode = PICKUP_LOCATION;
+            [AppData sharedInstance].consumerPDTimeChosen = uploadTime;
+            [AppData sharedInstance].consumerPDMethodChosen = PICKUP_LOCATION;
             [self showAlertForNavigate:@"Detail" :[NSString stringWithFormat:@"\n  Your Pick up time is %@ \n",self.btnParkingPickUp.titleLabel.text]];
         }
     }

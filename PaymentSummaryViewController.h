@@ -17,7 +17,7 @@
 #import "TPReceiptController.h"
 #import "MakePaymentViewController.h"
 
-@interface CartViewSecondScreenViewController : UIViewController{
+@interface PaymentSummaryViewController : UIViewController{
     Business  *billBusiness;
     NSDictionary *defaultCardData;
 }

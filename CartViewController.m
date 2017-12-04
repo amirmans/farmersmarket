@@ -599,7 +599,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
                     self.notesText = @"";
                 }
                 
-                OrderDetailViewController *TotalCartItemVC = [[OrderDetailViewController alloc] initWithNibName:@"OrderDetailViewController" bundle:nil];
+                PickupDeliveryOptionsViewController *TotalCartItemVC = [[PickupDeliveryOptionsViewController alloc] initWithNibName:@"OrderDetailViewController" bundle:nil];
                 TotalCartItemVC.orderItemsOD = self.orderItems;
                 TotalCartItemVC.subTotalOD = [NSString stringWithFormat:@"%.2f",cartSubTotal];
                 TotalCartItemVC.earnPtsOD = self.lblEarnPoints.text;
@@ -614,7 +614,6 @@ double deliveryAmount = 0.0;        // Delivery Amount
                 long business_id_long = [CurrentBusiness sharedCurrentBusinessManager].business.businessID;
                 NSNumber *business_id = [NSNumber numberWithLongLong:business_id_long];
                 NSDictionary *inDataDict = @{@"business_id":business_id};
-                NSLog(@"%@",inDataDict);
                 
                 [[APIUtility sharedInstance] BusinessDelivaryInfoAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
                     
@@ -682,7 +681,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
                 {
                     self.notesText = @"";
                 }
-                CartViewSecondScreenViewController *TotalCartItemVC = [[CartViewSecondScreenViewController alloc] initWithNibName:@"CartViewSecondScreenViewController" bundle:nil];
+                PaymentSummaryViewController *TotalCartItemVC = [[PaymentSummaryViewController alloc] initWithNibName:@"CartViewSecondScreenViewController" bundle:nil];
                 TotalCartItemVC.orderItems = self.orderItems;
                 TotalCartItemVC.subTotal = [NSString stringWithFormat:@"%.2f",cartSubTotal];
                 TotalCartItemVC.earnPts = self.lblEarnPoints.text;

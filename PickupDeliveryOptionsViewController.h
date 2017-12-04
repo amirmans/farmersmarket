@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CartViewSecondScreenViewController.h"
+#import "PaymentSummaryViewController.h"
 #import "Business.h"
 @class MBProgressHUD;
 
-@interface OrderDetailViewController : UIViewController{
+@interface PickupDeliveryOptionsViewController : UIViewController{
     Business  *billBusiness;
     MBProgressHUD *HUD;
 }
