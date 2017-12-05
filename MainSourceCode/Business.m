@@ -91,9 +91,6 @@
 @synthesize promotion_message;
 @synthesize curr_code;
 @synthesize curr_symbol;
-
-
-
 @synthesize pickup_later;
 
 - (void)initMemberData {
@@ -145,9 +142,7 @@
     process_cycle_time = nil;
     process_lead_time = nil;
     keywords = nil;
-    
     sub_businesses = nil;
-    
     delivery_location_charge = nil;
     delivery_table_charge = nil;
     pickup_location_charge = nil;
@@ -162,7 +157,8 @@
     promotion_discount_amount = nil;
     promotion_message = nil;
     
-    pickup_later = nil;
+    pickup_later = 0;
+    offers_points = 1;
     curr_symbol = nil;
     curr_code = nil;
 }
@@ -393,6 +389,8 @@
     branch = [[data objectForKey:@"branch"] intValue];
     lat = [[data objectForKey:@"lat"] doubleValue];
     lng = [[data objectForKey:@"lng"] doubleValue];
+    pickup_later = [[data objectForKey:@"pickup_later"] boolValue];
+    offers_points = [[data objectForKey:@"offers_points"] boolValue];
     
 //    if ([data objectForKey:@"chat_masters"] != [NSNull null]) {
 //        chat_masters = [self nsArrayFromDataDictionary:data forKey:@"chat_masters"];
@@ -438,8 +436,6 @@
     promotion_discount_amount  = [self stringFromDataDictionary:data forKey:@"promotion_discount_amount"];
     promotion_message  = [self stringFromDataDictionary:data forKey:@"promotion_message"];
     
-    pickup_later = [self stringFromDataDictionary:data forKey:@"pickup_later"];
-    
     /*
      
      bg_colorRGB {
@@ -464,8 +460,10 @@
     if (process_time == nil)
         process_time = Default_Process_Time;
 
-    process_cycle_time = [self stringFromDataDictionary:data forKey:@"process_cycle_time"];
-    process_lead_time = [self stringFromDataDictionary:data forKey:@"process_lead_time"];
+    NSString *tempCycleTimeInString = [self stringFromDataDictionary:data forKey:@"process_cycle_time"];
+    NSString *tempLeadTimeInString = [self stringFromDataDictionary:data forKey:@"process_lead_time"];
+    process_cycle_time = [NSNumber numberWithInt:[tempCycleTimeInString intValue]];
+    process_lead_time = [NSNumber numberWithInt:[tempLeadTimeInString intValue]];
     
     keywords = [self stringFromDataDictionary:data forKey:@"keywords"];
     // no keywords is ginven at least use the business name for our searches

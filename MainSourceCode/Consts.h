@@ -1,11 +1,11 @@
 // The URL for the server API
 @class NSString;
 
-#ifdef DEBUG
-#define TapInEndpointHost @"https://tapforall.com/staging/tap-in/"
-#else
+//#ifdef DEBUG
+//#define TapInEndpointHost @"https://tapforall.com/staging/tap-in/"
+//#else
 #define TapInEndpointHost @"https://tapforall.com/merchants/tap-in/"
-#endif
+//#endif
 
 #define TT_CommunicationWithServerQ dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
@@ -118,6 +118,8 @@ static NSString *const TIME12HOURFORMAT = @"h:mm a";
 #define Default_Text_Color  @"rgb(0,0,0)";
 #define Default_BG_Color    @"rgb(255, 134, 57)";
 
+//points
+static const int Points_to_dollar=10;
 
 // compatibility between different ios
 #ifdef __IPHONE_8_0

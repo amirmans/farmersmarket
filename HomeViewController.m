@@ -25,7 +25,7 @@
     self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view from its nib.
     btnPickupOrder.enabled = FALSE;
-    btnPickupOrder.alpha = 0.7;
+    btnPickupOrder.alpha = 0.0;
 }
 
 - (void)didReceiveMemoryWarning {

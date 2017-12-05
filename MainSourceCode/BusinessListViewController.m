@@ -218,7 +218,7 @@ Business *biz;
 //    self.title = @"Biz Partners";
     
 //    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tap-in-logo-navigation-bar"]];
-    self.title = @"Tapin";
+    self.title = @"Tap-In Here";
     
     self.calloutView = [[SMCalloutView alloc] init];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
@@ -245,7 +245,7 @@ Business *biz;
     self.mapView.delegate = self;
     self.mapView.mapType =  kGMSTypeNormal;
     emptyCalloutView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self addMarkersToMap];
+//    [self addMarkersToMap];
 
 }
 
@@ -442,7 +442,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     self.calloutView.hidden = YES;
 }
 
-- (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
+- (BOOL)mapView:(GMSMapView *)mapView didTahoursarker:(GMSMarker *)marker {
     /* don't move map camera to center marker on tap */
     
     NSDictionary *dataDict = marker.userData;
@@ -522,7 +522,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     
     // for some odd reasons when the table is reload after a search row height doesn't get its value from the nib
     // file - so I had to do this - the value should correspond to the value in the cell xib file 
-    return 130;
+    return 131;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -618,7 +618,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     
     if([cellDict objectForKey:@"opening_time"] == [NSNull null] || [cellDict objectForKey:@"closing_time"] == [NSNull null]) {
         cell.lblOpenClose.hidden = true;
-        cell.lblOpenCloseDate.hidden = true;
+//        cell.lblOpenCloseDate.hidden = true;
     }
     else {
         cell.lblOpenClose.hidden = false;
@@ -631,7 +631,9 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         }else{
             cell.lblOpenClose.text = @"NOW CLOSED";
             cell.lblOpenClose.textColor = [UIColor grayColor];
-            cell.lblOpenCloseDate.text = @"";
+//            cell.lblOpenCloseDate.text = @"";
+            cell.lblOpenCloseDate.textColor = [UIColor grayColor];
+            cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:[cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]];
         }
 
     }
@@ -660,13 +662,18 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     double lat = [[cellDict valueForKey:@"lat"] doubleValue];
     double lng = [[cellDict valueForKey:@"lng"] doubleValue];
     
-    cell.distance.text = [NSString stringWithFormat:@"%.1f mi.",[[AppData sharedInstance]getDistance:lat longitude:lng]];
+    NSString *distanceText = [NSString stringWithFormat:@"%.1f mi",[[AppData sharedInstance]getDistance:lat longitude:lng]];
+//    cell.distance.text = [NSString stringWithFormat:@"%.1f mi",[[AppData sharedInstance]getDistance:lat longitude:lng]];
+    cell.distance.text= @"";
     
-    NSString *neighborhood = [cellDict objectForKey:@"neighborhood"];
-    if (neighborhood != (id)[NSNull null] && neighborhood != nil )
+//    NSString *neighborhood = [cellDict objectForKey:@"neighborhood"];
+    NSString *businessAddress = [cellDict objectForKey:@"address"];
+    if (businessAddress != (id)[NSNull null] && businessAddress != nil )
     {
         //        cell.neighborhoodTextField.text = neighborhood;
-        cell.businessAddress.text = neighborhood;
+//        cell.businessAddress.text = neighborhood;
+        NSString *businessAddressTest = [NSString stringWithFormat:@"%@     %@",businessAddress,distanceText];
+        cell.businessAddress.text = businessAddressTest;
     }
 
 //    cell.btnFevorite.tag = indexPath.row;

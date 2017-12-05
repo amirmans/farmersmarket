@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -227,8 +227,8 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kJ1-L3-Yh1">
                             <rect key="frame" x="8" y="8" width="359" height="161"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yDM-iy-HVk">
-                                    <rect key="frame" x="8" y="21" width="92" height="27"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ready at:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yDM-iy-HVk">
+                                    <rect key="frame" x="20" y="21" width="92" height="27"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="27" id="IuB-je-2iI"/>
                                         <constraint firstAttribute="width" constant="92" id="P0p-HQ-FOi"/>
@@ -238,7 +238,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eYa-OY-JlM">
-                                    <rect key="frame" x="124" y="18" width="140" height="34"/>
+                                    <rect key="frame" x="136" y="18" width="128" height="34"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="34" id="oC3-pr-OWL"/>
                                     </constraints>
@@ -255,7 +255,7 @@
                                 <constraint firstItem="eYa-OY-JlM" firstAttribute="leading" secondItem="yDM-iy-HVk" secondAttribute="trailing" constant="24" id="3Ix-r2-xYK"/>
                                 <constraint firstItem="yDM-iy-HVk" firstAttribute="top" secondItem="kJ1-L3-Yh1" secondAttribute="top" constant="21" id="V8L-cW-FzA"/>
                                 <constraint firstAttribute="trailing" secondItem="eYa-OY-JlM" secondAttribute="trailing" constant="95" id="beQ-wa-Ng8"/>
-                                <constraint firstItem="yDM-iy-HVk" firstAttribute="leading" secondItem="kJ1-L3-Yh1" secondAttribute="leading" constant="8" id="mBM-Ql-BiP"/>
+                                <constraint firstItem="yDM-iy-HVk" firstAttribute="leading" secondItem="kJ1-L3-Yh1" secondAttribute="leading" constant="20" id="mBM-Ql-BiP"/>
                                 <constraint firstItem="eYa-OY-JlM" firstAttribute="top" secondItem="kJ1-L3-Yh1" secondAttribute="top" constant="18" id="tPR-HI-cM6"/>
                             </constraints>
                         </view>
@@ -320,8 +320,8 @@
                                         <action selector="btnLocationClicked:" destination="-1" eventType="touchUpInside" id="BEq-DR-jaA"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YNb-pS-vJX">
-                                    <rect key="frame" x="8" y="38" width="94" height="27"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ready at:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YNb-pS-vJX">
+                                    <rect key="frame" x="20" y="38" width="94" height="27"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="94" id="7Gn-4Y-m4t"/>
                                         <constraint firstAttribute="height" constant="27" id="W6o-pf-hhD"/>
@@ -331,7 +331,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="stR-6Q-EXK">
-                                    <rect key="frame" x="117" y="39" width="140" height="26"/>
+                                    <rect key="frame" x="129" y="39" width="128" height="26"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="26" id="IeZ-RB-I40"/>
                                     </constraints>
@@ -352,7 +352,7 @@
                                 <constraint firstAttribute="trailing" secondItem="stR-6Q-EXK" secondAttribute="trailing" constant="102" id="JGI-qN-B3P"/>
                                 <constraint firstItem="stR-6Q-EXK" firstAttribute="top" secondItem="9pO-DB-Kmc" secondAttribute="bottom" constant="9" id="U61-c7-0Ta"/>
                                 <constraint firstAttribute="trailing" secondItem="9pO-DB-Kmc" secondAttribute="trailing" constant="8" id="jsz-a8-bzY"/>
-                                <constraint firstItem="YNb-pS-vJX" firstAttribute="leading" secondItem="o45-7D-ivn" secondAttribute="leading" constant="8" id="nFp-S3-kxe"/>
+                                <constraint firstItem="YNb-pS-vJX" firstAttribute="leading" secondItem="o45-7D-ivn" secondAttribute="leading" constant="20" id="nFp-S3-kxe"/>
                                 <constraint firstItem="9pO-DB-Kmc" firstAttribute="leading" secondItem="RM2-m7-Z7t" secondAttribute="trailing" constant="30" id="q2Y-4h-Eal"/>
                                 <constraint firstItem="RM2-m7-Z7t" firstAttribute="top" secondItem="o45-7D-ivn" secondAttribute="top" constant="2" id="uxt-Wz-ewv"/>
                                 <constraint firstItem="YNb-pS-vJX" firstAttribute="top" secondItem="RM2-m7-Z7t" secondAttribute="bottom" constant="9" id="xXd-WA-hYJ"/>
@@ -361,8 +361,8 @@
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bws-kp-ewd">
                             <rect key="frame" x="8" y="11" width="359" height="161"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qRo-NC-aQZ">
-                                    <rect key="frame" x="8" y="22" width="92" height="27"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ready at:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qRo-NC-aQZ">
+                                    <rect key="frame" x="20" y="22" width="92" height="27"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="27" id="2V3-py-WAQ"/>
                                         <constraint firstAttribute="width" constant="92" id="rJe-e1-eQN"/>
@@ -372,7 +372,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xoy-Pi-MR5">
-                                    <rect key="frame" x="124" y="18" width="140" height="34"/>
+                                    <rect key="frame" x="136" y="18" width="128" height="34"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="34" id="L1z-Xz-nrn"/>
                                     </constraints>
@@ -388,7 +388,7 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="Xoy-Pi-MR5" firstAttribute="leading" secondItem="qRo-NC-aQZ" secondAttribute="trailing" constant="24" id="3zi-9A-H0d"/>
-                                <constraint firstItem="qRo-NC-aQZ" firstAttribute="leading" secondItem="Bws-kp-ewd" secondAttribute="leading" constant="8" id="AXt-S6-Rf3"/>
+                                <constraint firstItem="qRo-NC-aQZ" firstAttribute="leading" secondItem="Bws-kp-ewd" secondAttribute="leading" constant="20" id="AXt-S6-Rf3"/>
                                 <constraint firstItem="Xoy-Pi-MR5" firstAttribute="top" secondItem="Bws-kp-ewd" secondAttribute="top" constant="18" id="Py5-BX-CkR"/>
                                 <constraint firstItem="qRo-NC-aQZ" firstAttribute="top" secondItem="Bws-kp-ewd" secondAttribute="top" constant="22" id="Xfd-i9-8Ft"/>
                                 <constraint firstAttribute="trailing" secondItem="Xoy-Pi-MR5" secondAttribute="trailing" constant="95" id="qRg-fY-Yxf"/>

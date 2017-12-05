@@ -122,7 +122,7 @@
         [picturesView setImagesContentMode:UIViewContentModeScaleAspectFill]; // Choose a content mode for images to display
         
         NSArray *bizpictureArray = [biz.picturesString componentsSeparatedByString:@","];
-        //*******ZZZZZ
+        
         NSString *imageRelativePathString;
         UIImage  *image;
         //[[self view] bringSubviewToFront:picturesView_KSSlide];

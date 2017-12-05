@@ -100,7 +100,8 @@ double deliveryAmountValue; //Delievery amount value in $
     }
     else{
         self.lblDeliveryLocation.hidden = false;
-        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Your Order is delievered at %@",[AppData sharedInstance].consumer_Delivery_Location];
+        self.lblDeliveryLocation.text = @"";
+//        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Your Order is delievered at %@",[AppData sharedInstance].consumer_Delivery_Location];
     }
     
     if(self.lblDeliveryLocation.hidden == true && self.lblPickUpTime.hidden ==true){

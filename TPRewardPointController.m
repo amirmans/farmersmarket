@@ -132,7 +132,7 @@ NSInteger current_points_level_int  = 0;
                 total_available_points = [[data valueForKeyPath:@"total_available_points"] stringValue];
                 self.lblPoints.text = [NSString stringWithFormat:@"Points: %@",total_available_points];
                 
-                dollarValueDouble = [total_available_points doubleValue]/10; //zzz
+                dollarValueDouble = [total_available_points doubleValue]/Points_to_dollar; //zzz
             }
             
             if ([CurrentBusiness sharedCurrentBusinessManager].business) {
@@ -221,12 +221,12 @@ NSInteger current_points_level_int  = 0;
 }
 
 - (void) checkCurrentPoints {
-    if((dollarValueDouble*10) > 0) {
-        if((dollarValueDouble*10) > current_points_level_int) {
+    if((dollarValueDouble*Points_to_dollar) > 0) {
+        if((dollarValueDouble*Points_to_dollar) > current_points_level_int) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RedeemPoints object:nil];
         }
         else {
-            NSString *message = [NSString stringWithFormat:@"You have %ld points, You need more %.f points to redeem",(long)current_points_level_int,((dollarValueDouble*10) - current_points_level_int)];
+            NSString *message = [NSString stringWithFormat:@"You have %ld points, You need more %.f points to redeem",(long)current_points_level_int,((dollarValueDouble*Points_to_dollar) - current_points_level_int)];
             
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

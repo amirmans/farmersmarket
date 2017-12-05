@@ -34,6 +34,7 @@
 @property (assign) NSInteger redeemNoPoints;  // number of points being redeemed
 @property (assign) double  redeemPointsValue;// value for the points that we are redeeming
 @property (assign) NSDate* pickupTime;
+
 @end
 
 @implementation CartViewController
@@ -52,7 +53,6 @@ double deliveryAmount = 0.0;        // Delivery Amount
 #pragma mark - LifeCycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"CartViewTableViewCell" bundle:nil] forCellReuseIdentifier:@"CartViewTableViewCell"];
@@ -86,7 +86,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
     [self setButtonBorder:self.btnPickUpFood];
     [self setButtonBorder:self.btnDeliverToMe];
     
-    if([billBusiness.pickup_later isEqualToString:@"1"]){
+    if(billBusiness.pickup_later){
         self.btnScheduleForLater.enabled = YES;
         self.lblSchedule.alpha = 1.0;
     }
@@ -96,23 +96,23 @@ double deliveryAmount = 0.0;        // Delivery Amount
         self.lblSchedule.alpha = 0.7;
     }
     
-    NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
-    NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
-    BOOL businessIsClosed = false;
-    if(openTime == (id)[NSNull null] || closeTime == (id)[NSNull null]) {
-        businessIsClosed = true;
-    } else if (![[APIUtility sharedInstance] isOpenBussiness:openTime CloseTime:closeTime]) {
-        businessIsClosed = true;
-    }
+//    NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
+//    NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
+//    BOOL businessIsClosed = false;
+//    if(openTime == (id)[NSNull null] || closeTime == (id)[NSNull null]) {
+//        businessIsClosed = true;
+//    } else if (![[APIUtility sharedInstance] isOpenBussiness:openTime CloseTime:closeTime]) {
+//        businessIsClosed = true;
+//    }
     
-    if (businessIsClosed) {
-        NSString *openCivilianTime = [[APIUtility sharedInstance] getCivilianTime:openTime];
-        NSString *waitTime = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
-        NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
-        NSString *message = [NSString stringWithFormat:@"You may add items to your cart.\nBut if you pay, your order will be ready after the opening time (%@).\n\n%@ after opening.", openCivilianTime, waitTime];
-        NSString *title = [NSString stringWithFormat:@"%@ is closed now!", businessName];
-        [UIAlertController showInformationAlert:message withTitle:title];
-    }
+//    if (businessIsClosed) {
+//        NSString *openCivilianTime = [[APIUtility sharedInstance] getCivilianTime:openTime];
+//        NSString *waitTime = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
+//        NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
+//        NSString *message = [NSString stringWithFormat:@"You may add items to your cart.\nBut if you pay, your order will be ready after the opening time on the next business day(%@).\n\n%@ after opening.", openCivilianTime, waitTime];
+//        NSString *title = [NSString stringWithFormat:@"%@ is closed now!", businessName];
+//        [UIAlertController showInformationAlert:message withTitle:title];
+//    }
     
     if([[CurrentBusiness sharedCurrentBusinessManager].business.business_delivery_id integerValue] > 0){
         // Get Delivery info API
@@ -148,11 +148,12 @@ double deliveryAmount = 0.0;        // Delivery Amount
     defaultCardData = [defaults valueForKey:StripeDefaultCard];
     [IQKeyboardManager sharedManager].enable = NO;
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
+   
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
@@ -272,15 +273,18 @@ double deliveryAmount = 0.0;        // Delivery Amount
         self.txtNote.text = @"";
         self.txtNote.textColor = [UIColor blackColor];
     }
-    if ([textView isEqual:self.txtNote])
-    {
-        //move the main view, so that the keyboard does not hide it.
-        if  (self.view.frame.origin.y >= 0)
-        {
-            [self setViewMovedUp:YES];
-        }
-    }
-    return YES;}
+//    if ([textView isEqual:self.txtNote])
+//    {
+//        //move the main view, so that the keyboard does not hide it.
+//        int note_y_position = self.view.frame.origin.y;
+//        if  (note_y_position >= 0)
+//        {
+//            [self setViewMovedUp:YES];
+//        }
+//    }
+    return YES;
+
+}
 
 -(void) textViewDidChange:(UITextView *)textView
 {
@@ -307,20 +311,21 @@ double deliveryAmount = 0.0;        // Delivery Amount
 #pragma mark - User Functions
 -(void)keyboardWillShow:(NSNotification *)notification {
     // Animate the current view out of the way
-    
-    
-    if (self.view.frame.origin.y >= 0)
+
+    int note_y_position = self.view.frame.origin.y;
+
+    if (note_y_position >= 0)
     {
         [self setViewMovedUp:YES];
     }
-    else if (self.view.frame.origin.y < 0)
+    else if (note_y_position < 0)
     {
         [self setViewMovedUp:NO];
     }
 }
 
 -(void)keyboardWillHide:(NSNotification *)notification {
-    
+
     if (self.view.frame.origin.y >= 0)
     {
         [self setViewMovedUp:YES];
@@ -335,14 +340,12 @@ double deliveryAmount = 0.0;        // Delivery Amount
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:0.2]; // if you want to slide up the view
     //Given size may not account for screen rotation
-
-    
     CGRect rect = self.view.frame;
     if (movedUp)
     {
         // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
         // 2. increase the size of the view so that the area behind the keyboard is covered up.
-        
+
 //        [self.view setFrame:CGRectMake(0,-115,rect.size.width,rect.size.height)];
         rect.origin.y -= 180;
         rect.size.height += kOFFSET_FOR_KEYBOARD;
@@ -354,7 +357,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
         rect.origin.y += 180;
         rect.size.height -= kOFFSET_FOR_KEYBOARD;
     }
-    
+
     self.view.frame = rect;
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -590,7 +593,9 @@ double deliveryAmount = 0.0;        // Delivery Amount
                 [self.navigationController pushViewController:payBillViewController animated:YES];
             }
             else {
-                if(![self.txtNote.text isEqualToString:@""] && ![self.txtNote.text isEqualToString:Note_defaultText])
+                if(![self.txtNote.text isEqualToString:@""]
+                   && ![self.txtNote.text isEqualToString:Note_defaultText]
+                   )
                 {
                     self.notesText = self.txtNote.text;
                 }
@@ -673,7 +678,9 @@ double deliveryAmount = 0.0;        // Delivery Amount
                 [self.navigationController pushViewController:payBillViewController animated:YES];
             }
             else {
-                if(![self.txtNote.text isEqualToString:@""] && ![self.txtNote.text isEqualToString:Note_defaultText])
+                if(![self.txtNote.text isEqualToString:@""]
+                   && ![self.txtNote.text isEqualToString:Note_defaultText]
+                   )
                 {
                     self.notesText = self.txtNote.text;
                 }

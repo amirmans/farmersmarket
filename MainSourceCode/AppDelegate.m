@@ -85,6 +85,8 @@ static AppDelegate *sharedObj;
 //    [GMSServices provideAPIKey:@"AIzaSyBjJcsPVsRERXqA5SKas-nseCmrZaajEeE"];
     
     [[IQKeyboardManager sharedManager] setEnable:YES];
+    [[IQKeyboardManager sharedManager] setEnableAutoToolbar:YES];
+    
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     // Override point for customization after application launch
 //    NSBundle *bundle = [NSBundle mainBundle];

@@ -282,7 +282,7 @@ static const CGFloat DefaultZoom = 12.0f;
     mapViews.mapType =  kGMSTypeNormal;
     [self.viewMap addSubview:mapViews];
     emptyCalloutView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self addMarkersToMap];
+//    [self addMarkersToMap];
     
     NSMutableArray *SortByLocationArray = [self getSortByLocationTapForApp];
     [self.bussinessListByBranch removeAllObjects];

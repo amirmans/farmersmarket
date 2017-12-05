@@ -620,6 +620,25 @@ UIBarButtonItem *btn_heart;
 
 - (void) addPreviousOrdersToCoreData {
     if ([previousOrderArray count] > 0) {
+    
+        NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
+        NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
+        BOOL businessIsClosed = false;
+        if(openTime == (id)[NSNull null] || closeTime == (id)[NSNull null]) {
+            businessIsClosed = true;
+        } else if (![[APIUtility sharedInstance] isOpenBussiness:openTime CloseTime:closeTime]) {
+            businessIsClosed = true;
+        }
+        if (businessIsClosed && !biz.pickup_later) {
+            NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
+            NSString *message = [NSString stringWithFormat:@"However, you may view the menu items"];
+            NSString *title = [NSString stringWithFormat:@"%@ doesn't accept previous orders!", businessName];
+            [UIAlertController showInformationAlert:message withTitle:title];
+            
+            return;
+        }
+        
+        
         for (TPBusinessDetail *businessDetail in previousOrderArray) {
             [self addItemToCoreData:businessDetail];
         }
