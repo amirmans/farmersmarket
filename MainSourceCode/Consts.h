@@ -1,11 +1,11 @@
 // The URL for the server API
 @class NSString;
 
-#ifdef DEBUG
+//#ifdef DEBUG
 #define TapInEndpointHost @"https://tapforall.com/staging/tap-in/"
-#else
-#define TapInEndpointHost @"https://tapforall.com/merchants/tap-in/"
-#endif
+//#else
+//#define TapInEndpointHost @"https://tapforall.com/merchants/tap-in/"
+//#endif
 
 #define TT_CommunicationWithServerQ dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 

@@ -631,7 +631,7 @@ static APIUtility *sharedObj;
     }
     
     NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
-    timeFormatter.dateFormat = @"h:mm a";
+    timeFormatter.dateFormat = @"h:mma";
     
     NSLog(@"%@",[timeFormatter stringFromDate:date2]);
     

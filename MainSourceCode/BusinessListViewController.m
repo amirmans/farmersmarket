@@ -442,7 +442,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     self.calloutView.hidden = YES;
 }
 
-- (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
+- (BOOL)mapView:(GMSMapView *)mapView didTahoursarker:(GMSMarker *)marker {
     /* don't move map camera to center marker on tap */
     
     NSDictionary *dataDict = marker.userData;
@@ -522,7 +522,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     
     // for some odd reasons when the table is reload after a search row height doesn't get its value from the nib
     // file - so I had to do this - the value should correspond to the value in the cell xib file 
-    return 130;
+    return 131;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -632,6 +632,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
             cell.lblOpenClose.text = @"NOW CLOSED";
             cell.lblOpenClose.textColor = [UIColor grayColor];
             cell.lblOpenCloseDate.text = @"";
+//            cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:[cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]];
         }
 
     }
@@ -660,13 +661,15 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     double lat = [[cellDict valueForKey:@"lat"] doubleValue];
     double lng = [[cellDict valueForKey:@"lng"] doubleValue];
     
-    cell.distance.text = [NSString stringWithFormat:@"%.1f mi.",[[AppData sharedInstance]getDistance:lat longitude:lng]];
+    cell.distance.text = [NSString stringWithFormat:@"%.1f mi",[[AppData sharedInstance]getDistance:lat longitude:lng]];
     
     NSString *neighborhood = [cellDict objectForKey:@"neighborhood"];
+    NSString *businessAddress = [cellDict objectForKey:@"address"];
     if (neighborhood != (id)[NSNull null] && neighborhood != nil )
     {
         //        cell.neighborhoodTextField.text = neighborhood;
-        cell.businessAddress.text = neighborhood;
+//        cell.businessAddress.text = neighborhood;
+        cell.businessAddress.text = businessAddress;
     }
 
 //    cell.btnFevorite.tag = indexPath.row;

@@ -284,6 +284,7 @@ NSDate *setMinPickerTimeOD;
     self.btnOk.enabled = false;
 
     NSDate *now = [NSDate date];
+    now = [now dateByAddingTimeInterval:[biz.process_lead_time integerValue]*60];
 //    [formatter setDateFormat:TIME12HOURFORMAT];
     NSTimeZone *tz= [NSTimeZone localTimeZone];
     [formatter setTimeZone:tz];
@@ -1258,7 +1259,7 @@ NSDate *setMinPickerTimeOD;
             [AppData sharedInstance].consumer_Delivery_Location = @"";
             [AppData sharedInstance].consumerPDTimeChosen = uploadTime;
             [AppData sharedInstance].consumerPDMethodChosen = PICKUP_COUNTER;
-            [self showAlertForNavigate:@"Detail" :[NSString stringWithFormat:@"\n  Your Pick up time is %@ \n",self.btnCounterPickupTime.titleLabel.text]];
+            [self showAlertForNavigate:@"Detail" :[NSString stringWithFormat:@"\n  Your carry-out time is %@ \n",self.btnCounterPickupTime.titleLabel.text]];
         }
     }
     else if(self.btnTable.isSelected){
