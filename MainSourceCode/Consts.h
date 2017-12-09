@@ -2,9 +2,9 @@
 @class NSString;
 
 //#ifdef DEBUG
-//#define TapInEndpointHost @"https://tapforall.com/staging/tap-in/"
+#define TapInEndpointHost @"https://tapforall.com/staging/tap-in/"
 //#else
-#define TapInEndpointHost @"https://tapforall.com/merchants/tap-in/"
+//#define TapInEndpointHost @"https://tapforall.com/merchants/tap-in/"
 //#endif
 
 #define TT_CommunicationWithServerQ dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
@@ -62,13 +62,10 @@
 #define TapInApplicationThemeColor [UIColor colorWithRed:74.0/255.0 green:182.0/255.0 blue:190.0/255.0 alpha:1];
 
 #define IsFromTotalCartNotification @"IsFromTotalCartNotification"
-#define RedeemPoints @"RedeemPoints"
 
 #define NoLogoForMenuItems 1
-static const int PointsValueMultiplier = 1;
 
 // We store our settings in the NSUserDefaults dictionary using these keys
-
 static NSString *const NicknameKey = @"nickname";
 static NSString *const PasswordKey = @"password";
 static NSString *const JoinedChatKey = @"joinedChat";
@@ -119,7 +116,9 @@ static NSString *const TIME12HOURFORMAT = @"h:mm a";
 #define Default_BG_Color    @"rgb(255, 134, 57)";
 
 //points
-static const int Points_to_dollar=10;
+static const int PointsValueMultiplier = 1;  // for each dollar you can one point -  acquiring
+static const int Points_to_dollar=10;        // value of 1 point n points for a dollar to spend
+#define RedeemPoints @"RedeemPoints" // Used in notification
 
 // compatibility between different ios
 #ifdef __IPHONE_8_0

@@ -200,7 +200,7 @@ NSDate *setMinPickerTimeOD;
     else{
         [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
     }
-           
+
     [HUD hideAnimated:YES];
 
 }
@@ -248,7 +248,7 @@ NSDate *setMinPickerTimeOD;
 
     [[NSNotificationCenter defaultCenter]
             addObserver:self selector:@selector(triggerAction:) name:@"GotDeliveryInfo" object:nil];
-    
+
     [HUD showAnimated:YES];
 
     //---------- Set Button enable/disable ------//
@@ -315,7 +315,7 @@ NSDate *setMinPickerTimeOD;
         [self.btnParkingPickUp setTitle:titleTime forState:UIControlStateNormal];
         [self.btnDesignationLocationPickUp setTitle:titleTime forState:UIControlStateNormal];
         NSLog(@"%ld",(long)biz.pickup_counter_later);
-        
+
         [self.btnCounterPickupTime setTitle:titleTime forState:UIControlStateNormal];
         self.btnOk.enabled = true;
     }
@@ -448,7 +448,8 @@ NSDate *setMinPickerTimeOD;
 #pragma mark - User Functions
 -(void)keyboardWillShow:(NSNotification *)notification {
     // Animate the current view out of the way
-    keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+
     if (self.view.frame.origin.y >= 0)
     {
         [self setViewMovedUp:YES];
@@ -460,7 +461,7 @@ NSDate *setMinPickerTimeOD;
 }
 
 -(void)keyboardWillHide:(NSNotification *)notification {
-    keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+//    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     if (self.view.frame.origin.y >= 0)
     {
         [self setViewMovedUp:YES];
@@ -473,21 +474,21 @@ NSDate *setMinPickerTimeOD;
 -(void)setViewMovedUp:(BOOL)movedUp
 {
     [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.2]; // if you want to slide up the view
-    int height = MIN(keyboardSize.height,keyboardSize.width);
+    [UIView setAnimationDuration:0.3]; // if you want to slide up the view
+//    int height = MIN(keyboardSize.height,keyboardSize.width);
     CGRect rect = self.view.frame;
     if (movedUp)
     {
         // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
         // 2. increase the size of the view so that the area behind the keyboard is covered up.
-        rect.origin.y -= height;
-        rect.size.height += kOFFSET_FOR_KEYBOARD;
+        rect.origin.y -= keyboardSize.height;
+//        rect.size.height += kOFFSET_FOR_KEYBOARD;
     }
     else
     {
         // revert back to the normal state.
-        rect.origin.y += height;
-        rect.size.height -= kOFFSET_FOR_KEYBOARD;
+        rect.origin.y += keyboardSize.height;
+//        rect.size.height -= kOFFSET_FOR_KEYBOARD;
     }
     self.view.frame = rect;
 
@@ -539,7 +540,7 @@ NSDate *setMinPickerTimeOD;
     [alertViewController addAction:[NYAlertAction actionWithTitle:NSLocalizedString(@"Confirm", nil)
                                                             style:UIAlertActionStyleCancel
                                                           handler:^(NYAlertAction *action) {
-                                                              PaymentSummaryViewController *TotalCartItemVC = [[PaymentSummaryViewController alloc] initWithNibName:@"CartViewSecondScreenViewController" bundle:nil];
+                                                              PaymentSummaryViewController *TotalCartItemVC = [[PaymentSummaryViewController alloc] initWithNibName:nil bundle:nil];
                                                               TotalCartItemVC.orderItems = self.orderItemsOD;
                                                               TotalCartItemVC.subTotal = [NSString stringWithFormat:@"%@",self.subTotalOD];
                                                               TotalCartItemVC.earnPts = self.earnPtsOD;
@@ -580,7 +581,7 @@ NSDate *setMinPickerTimeOD;
 //                                 alertControllerWithTitle:Title
 //                                 message:Message
 //                                 preferredStyle:UIAlertControllerStyleAlert];
-//    
+//
 //    UIAlertAction* OKButton = [UIAlertAction
 //                               actionWithTitle:@"Confirm"
 //                               style:UIAlertActionStyleDefault
@@ -605,10 +606,10 @@ NSDate *setMinPickerTimeOD;
 //                                   [self dismissViewControllerAnimated:true completion:nil];
 //                               }];
 //
-//    
+//
 //    [alert addAction:OKButton];
 //    [alert addAction:CancelButton];
-//    
+//
 //    [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -814,7 +815,7 @@ NSDate *setMinPickerTimeOD;
 
 //    [self.view endEditing:true];
 //    NSDate *now = [NSDate date];
-//    
+//
 //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 //    dateFormatter.dateFormat = @"hh:mm:ss";
 //    [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
@@ -927,7 +928,7 @@ NSDate *setMinPickerTimeOD;
 
 - (IBAction)btnParkingPickUpClicked:(id)sender {
 //    NSDate *now = [NSDate date];
-//    
+//
 //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 //    dateFormatter.dateFormat = @"hh:mm:ss";
 //    [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
@@ -1038,7 +1039,7 @@ NSDate *setMinPickerTimeOD;
 
 - (IBAction)btnDesignationLocationPickupClicked:(id)sender {
 //    NSDate *now = [NSDate date];
-//    
+//
 //    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
 //    dateFormatter.dateFormat = @"hh:mm:ss";
 //    [dateFormatter setTimeZone:[NSTimeZone systemTimeZone]];

@@ -604,7 +604,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
                     self.notesText = @"";
                 }
                 
-                PickupDeliveryOptionsViewController *TotalCartItemVC = [[PickupDeliveryOptionsViewController alloc] initWithNibName:@"OrderDetailViewController" bundle:nil];
+                PickupDeliveryOptionsViewController *TotalCartItemVC = [[PickupDeliveryOptionsViewController alloc] initWithNibName:@"PickupDeliveryOptionsViewController" bundle:nil];
                 TotalCartItemVC.orderItemsOD = self.orderItems;
                 TotalCartItemVC.subTotalOD = [NSString stringWithFormat:@"%.2f",cartSubTotal];
                 TotalCartItemVC.earnPtsOD = self.lblEarnPoints.text;
