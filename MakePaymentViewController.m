@@ -66,11 +66,16 @@
     // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
     NSLog(@"%@",[dateFormatter stringFromDate:[NSDate date]]);
     self.lblPickUpDate.text = [dateFormatter stringFromDate:[NSDate date]];
+    NSString* pd_time= [AppData sharedInstance].consumerPDTimeChosen;
     if ( [[AppData sharedInstance].consumerPDMethodChosen isEqualToString:PICKUP_COUNTER] ) {
-        _waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
+//        _waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
+        _waitTimeLabel.text = [@"Pick up at " stringByAppendingString:pd_time];
     } else if ( [[AppData sharedInstance].consumerPDMethodChosen isEqualToString:DELIVERY_LOCATION] ) {
-        NSString* pd_time= [AppData sharedInstance].consumerPDTimeChosen;
-        _waitTimeLabel.text = [@"Your order will be delivered to you at " stringByAppendingString:pd_time];
+        _waitTimeLabel.text = [@"Delivery at " stringByAppendingString:pd_time];
+    } else if ( [[AppData sharedInstance].consumerPDMethodChosen isEqualToString:PICKUP_LOCATION]) {
+        _waitTimeLabel.text = [@"Bringing your order to you at " stringByAppendingString:pd_time];
+    } else if ( [[AppData sharedInstance].consumerPDMethodChosen isEqualToString:DELIVERY_TABLE] ) {
+        _waitTimeLabel.text = [@"Pick up at " stringByAppendingString:pd_time];
     }
     //_waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
     self.lblTitle.text = self.restTitle;

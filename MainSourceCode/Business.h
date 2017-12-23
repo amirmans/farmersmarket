@@ -91,7 +91,7 @@
     NSString *promotion_discount_amount;
     NSString *promotion_message;
     NSInteger pickup_counter_later;
-    BOOL pickup_later;
+    BOOL accept_orders_when_closed;
     BOOL offers_points;
     NSString *curr_code;
     NSString *curr_symbol;
@@ -178,7 +178,7 @@
 @property(nonatomic, strong) NSString *promotion_discount_amount;
 @property(nonatomic, strong) NSString *promotion_message;
 
-@property(atomic, assign) BOOL pickup_later;
+@property(atomic, assign) BOOL accept_orders_when_closed;
 @property(atomic, assign) BOOL offers_points;
 @property(nonatomic, strong) NSString *curr_code;
 @property(nonatomic, strong) NSString *curr_symbol;

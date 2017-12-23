@@ -192,7 +192,7 @@
     self.lbl_StateAndDist.text = self.business.neighborhood;
     
     
-    if([[APIUtility sharedInstance]isOpenBussiness:self.business.opening_time CloseTime:self.business.closing_time]){
+    if([[APIUtility sharedInstance]isBusinessOpen:self.business.opening_time CloseTime:self.business.closing_time]){
         self.lbl_OpenNow.text = @"OPEN NOW";
         self.lbl_OpenNow.textColor = [UIColor greenColor];
     }else{

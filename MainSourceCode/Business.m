@@ -91,7 +91,7 @@
 @synthesize promotion_message;
 @synthesize curr_code;
 @synthesize curr_symbol;
-@synthesize pickup_later;
+@synthesize accept_orders_when_closed;
 
 - (void)initMemberData {
     
@@ -157,7 +157,7 @@
     promotion_discount_amount = nil;
     promotion_message = nil;
     
-    pickup_later = 0;
+    accept_orders_when_closed = 0;
     offers_points = 1;
     curr_symbol = nil;
     curr_code = nil;
@@ -389,7 +389,7 @@
     branch = [[data objectForKey:@"branch"] intValue];
     lat = [[data objectForKey:@"lat"] doubleValue];
     lng = [[data objectForKey:@"lng"] doubleValue];
-    pickup_later = [[data objectForKey:@"pickup_later"] boolValue];
+    accept_orders_when_closed = [[data objectForKey:@"pickup_later"] boolValue];
     offers_points = [[data objectForKey:@"offers_points"] boolValue];
     
 //    if ([data objectForKey:@"chat_masters"] != [NSNull null]) {

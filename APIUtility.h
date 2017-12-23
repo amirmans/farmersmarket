@@ -20,8 +20,8 @@
 @property(nonatomic, strong) NSString *appendUrl;
 
 - (NSString *) GMTToLocalTime: (NSString *)GMTTime;
-- (NSString *) getCurrentTime;
-- (BOOL) isOpenBussiness: (NSString *)openTime CloseTime:(NSString *)closeTime;
+- (BOOL)isBusinessOpenAt:(NSString *)givenDate OpenTime:(NSString *)openTime CloseTime:(NSString *)closeTime;
+- (BOOL) isBusinessOpen: (NSString *)openTime CloseTime:(NSString *)closeTime;
 - (NSString *) getOpenCloseTime: (NSString *)openTime CloseTime:(NSString *)closeTime;
 - (NSString *)getCivilianTime: (NSString *)militaryTime;
 

@@ -800,7 +800,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     cell.distance.text = [NSString stringWithFormat:@"%.1f m",[[AppData sharedInstance]getDistance:biz1.lat longitude:biz1.lng]];
     cell.rateView.rating = [biz1.rating floatValue];
 
-    if([[APIUtility sharedInstance]isOpenBussiness:biz1.opening_time CloseTime:biz1.closing_time]){
+    if([[APIUtility sharedInstance]isBusinessOpen:biz1.opening_time CloseTime:biz1.closing_time]){
         cell.lblOpenClose.text = @"OPEN NOW";
         cell.lblOpenClose.textColor = [UIColor grayColor];
     }else{

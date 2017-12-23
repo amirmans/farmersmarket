@@ -441,7 +441,7 @@ UIBarButtonItem *btn_heart;
                                       [NSCharacterSet characterSetWithCharactersInString:@", "]] mutableCopy];
     [BgPictureArray removeObject:@""];
     
-    if([[APIUtility sharedInstance]isOpenBussiness:biz.opening_time CloseTime:biz.closing_time]){
+    if([[APIUtility sharedInstance]isBusinessOpen:biz.opening_time CloseTime:biz.closing_time]){
         self.lbl_OpenNow.text = @"OPEN NOW";
         self.lbl_OpenNow.textColor = [UIColor orangeColor];
     }else{
@@ -626,10 +626,10 @@ UIBarButtonItem *btn_heart;
         BOOL businessIsClosed = false;
         if(openTime == (id)[NSNull null] || closeTime == (id)[NSNull null]) {
             businessIsClosed = true;
-        } else if (![[APIUtility sharedInstance] isOpenBussiness:openTime CloseTime:closeTime]) {
+        } else if (![[APIUtility sharedInstance] isBusinessOpen:openTime CloseTime:closeTime]) {
             businessIsClosed = true;
         }
-        if (businessIsClosed && !biz.pickup_later) {
+        if (businessIsClosed && !biz.accept_orders_when_closed) {
             NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
             NSString *message = [NSString stringWithFormat:@"However, you may view the menu items"];
             NSString *title = [NSString stringWithFormat:@"%@ doesn't accept previous orders!", businessName];

@@ -218,7 +218,7 @@ Business *biz;
 //    self.title = @"Biz Partners";
     
 //    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tap-in-logo-navigation-bar"]];
-    self.title = @"Tap-In Here";
+    self.title = NSBundle.mainBundle.infoDictionary[@"CFBundleDisplayName"]; //@"Tap-In Here";
     
     self.calloutView = [[SMCalloutView alloc] init];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
@@ -623,7 +623,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     else {
         cell.lblOpenClose.hidden = false;
         cell.lblOpenCloseDate.hidden = false;
-        if([[APIUtility sharedInstance]isOpenBussiness: [cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]]){
+        if([[APIUtility sharedInstance]isBusinessOpen: [cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]]){
             cell.lblOpenClose.text = @"OPEN NOW";
             cell.lblOpenClose.textColor = [UIColor orangeColor];
             cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:[cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]];

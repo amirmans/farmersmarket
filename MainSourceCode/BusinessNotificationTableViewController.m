@@ -198,7 +198,7 @@ Business *currentBiz;
         cell.lblOpenClose.hidden = false;
         cell.lblOpenCloseDate.hidden = false;
         
-        if([[APIUtility sharedInstance]isOpenBussiness:selectedBusiness.opening_time CloseTime:selectedBusiness.closing_time]){
+        if([[APIUtility sharedInstance]isBusinessOpen:selectedBusiness.opening_time CloseTime:selectedBusiness.closing_time]){
             cell.lblOpenClose.text = @"OPEN NOW";
             cell.lblOpenClose.textColor = [UIColor orangeColor];
             cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:selectedBusiness.opening_time CloseTime:selectedBusiness.closing_time];

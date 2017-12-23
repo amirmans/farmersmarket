@@ -12,6 +12,7 @@
 #import "AFNetworking.h"
 
 static APIUtility *sharedObj;
+static NSDateFormatter* utilyDateFormatter;
 
 @implementation APIUtility
 
@@ -23,6 +24,9 @@ static APIUtility *sharedObj;
         sharedObj.sessionManager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
         sharedObj.operationManager = [AFHTTPSessionManager manager];
         sharedObj.operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+        
+        utilyDateFormatter = [[NSDateFormatter alloc]init];
+        [utilyDateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"HH:mm:ss" options:0 locale:[NSLocale currentLocale]]];
     }
     return sharedObj;
 }
@@ -227,18 +231,6 @@ static APIUtility *sharedObj;
             }
         }
     }];
-    
-//    [manager POST:OrderServerURL
-//       parameters:data progress:nil
-//          success:^(NSURLSessionTask *task, id responseObject) {
-//              NSLog(@"JSON: %@", responseObject);
-//              finished(responseObject);
-//          }
-//          failure:^(NSURLSessionDataTask *task, NSError *error) {
-//              
-//              NSLog(@"Error saving delivary info in the server: %@", error.description);
-//              finished(@{@"error":error.description});
-//          }];
 }
 
 
@@ -379,8 +371,8 @@ static APIUtility *sharedObj;
     {
         return;
     }
-    NSError *error = [NSError alloc];
-    NSData *data1 = [NSJSONSerialization dataWithJSONObject:param options:NSJSONWritingPrettyPrinted error:&error];
+//    NSError *error = [NSError alloc];
+//    NSData *data1 = [NSJSONSerialization dataWithJSONObject:param options:NSJSONWritingPrettyPrinted error:&error];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -398,33 +390,6 @@ static APIUtility *sharedObj;
               NSLog(@"Error saving credit card in the server: %@", error.description);
               finished(@{@"error":error.description});
           }];
-   
-    
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:remove_cc] cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:10];
-//    
-//    [request setHTTPMethod:@"POST"];
-//    [request setValue: @"application/json" forHTTPHeaderField:@"Content-Type"];
-//    [request setHTTPBody: data1];
-//
-//    AFURLSessionManager *manager1 = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-//
-//    [[manager1 dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-//        
-//        if (!error) {
-//            NSLog(@"Reply JSON: %@", responseObject);
-//             finished(responseObject);
-//            if ([responseObject isKindOfClass:[NSDictionary class]]) {
-//                //blah blah
-//            }
-//        } else {
-//            NSLog(@"Error: %@, %@, %@", error, response, responseObject);
-//            finished(@{@"error":error.description});
-//        }
-//    }] resume];
-   
-    
-    
-   
 }
 
 - (void) getAllCCInfo : (NSString *) consumer_id completiedBlock:(void (^)(NSDictionary *response))finished {
@@ -577,41 +542,50 @@ static APIUtility *sharedObj;
     return timeStamp;
 }
 
-- (NSString *) getCurrentTime{
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"HH:mm:ss" options:0 locale:[NSLocale currentLocale]]];
-    NSString *theTime = [dateFormatter stringFromDate:[NSDate date]];
-    return theTime;
-}
+- (BOOL)isBusinessOpenAt:(NSString *)givenDate OpenTime:(NSString *)openTime CloseTime:(NSString *)closeTime {
 
-- (BOOL) isOpenBussiness: (NSString *)openTime CloseTime:(NSString *)closeTime{
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-
-   [dateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"HH:mm:ss" options:0 locale:[NSLocale currentLocale]]];
-    NSString *currentTime = [dateFormatter stringFromDate:[NSDate date]];
-    
     NSString *time1 = openTime;
     NSString *time2 = closeTime;
-    NSString *time3 = currentTime;
+    NSString *time3 = givenDate;
     
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"HH:mm:ss"];
-    
-    NSDate *date1= [formatter dateFromString:time1];
-    NSDate *date2 = [formatter dateFromString:time2];
-    NSDate *date3 = [formatter dateFromString:time3];
+    NSDate *date1 = [utilyDateFormatter dateFromString:time1];
+    NSDate *date2 = [utilyDateFormatter dateFromString:time2];
+    NSDate *date3 = [utilyDateFormatter dateFromString:time3];
     
     NSComparisonResult result = [date1 compare:date3];
     NSComparisonResult result1 = [date2 compare:date3];
     if(result == NSOrderedAscending && result1 == NSOrderedDescending)
     {
-//        NSLog(@"date1 is later than date2");
         return true;
     } else if(result == NSOrderedSame || result1 == NSOrderedSame){
-//        NSLog(@"date2 is later than date1");
         return true;
     } else {
-//        NSLog(@"date1 is equal to date2");
+        return false;
+    }
+    
+    return  false;
+}
+
+
+- (BOOL) isBusinessOpen: (NSString *)openTime CloseTime:(NSString *)closeTime {
+    NSString *currentTime = [utilyDateFormatter stringFromDate:[NSDate date]];
+    
+    NSString *time1 = openTime;
+    NSString *time2 = closeTime;
+    NSString *time3 = currentTime;
+    
+    NSDate *date1 = [utilyDateFormatter dateFromString:time1];
+    NSDate *date2 = [utilyDateFormatter dateFromString:time2];
+    NSDate *date3 = [utilyDateFormatter dateFromString:time3];
+    
+    NSComparisonResult result = [date1 compare:date3];
+    NSComparisonResult result1 = [date2 compare:date3];
+    if(result == NSOrderedAscending && result1 == NSOrderedDescending)
+    {
+        return true;
+    } else if(result == NSOrderedSame || result1 == NSOrderedSame){
+        return true;
+    } else {
         return false;
     }
     return  false;

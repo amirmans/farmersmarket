@@ -90,12 +90,17 @@ static NSString *const Default_Process_Time = @"Average wait time: 25 min";
 
 // pick up  and delivery modes
 #define PICKUP_COUNTER @"1"
-#define PICKUP_LOCATION @"2";
-#define PICKUP_BOTH @"3";
+#define PICKUP_LOCATION @"2"
+#define PICKUP_BOTH @"3"
 
-#define DELIVERY_TABLE @"4";
+#define DELIVERY_TABLE @"4"
 #define DELIVERY_LOCATION @"8"
 #define DELIVERY_BOTH @"12"
+
+static const int PickUpAtCounter=1;
+static const int PickUpAtLocation=2;
+static const int DeliveryToTable=4;
+static const int DeliveryToLocation=8;
 
 // Time Format
 static NSString *const TIME24HOURFORMAT = @"HH:mm:ss";

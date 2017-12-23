@@ -356,7 +356,6 @@ double deliveryAmountValue; //Delievery amount value in $
 }
 // set total order and price
 - (void)paymentSummary {
-    
     totalVal = 0.00;
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
     cartTotalValue = [self.subTotal doubleValue];
@@ -367,11 +366,8 @@ double deliveryAmountValue; //Delievery amount value in $
     self.lblSubTotalPrice.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,totalVal];
     
     self.lblDeliveryAmount.hidden = false;
-    NSDateFormatter* df = [[NSDateFormatter alloc] init];
-    [df setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"]];
-    [df setTimeZone:[NSTimeZone systemTimeZone]];
-    [df setDateFormat:@"HH:mm:ss"];
-
+    NSString *p_time = [AppData sharedInstance].consumerPDTimeChosen;
+    
     if(selectedButtonNumber == 1){
         if ([billBusiness.pickup_counter_charge rangeOfString:@"%"].location == NSNotFound)
         {
@@ -385,9 +381,6 @@ double deliveryAmountValue; //Delievery amount value in $
             deliveryAmountValue = (cartTotalValue * del_charge)/100;
             self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
-        NSDate* newDate = [df dateFromString:[AppData sharedInstance].consumerPDTimeChosen];
-        [df setDateFormat:@"hh:mm a"];
-        NSString *p_time = [df stringFromDate:newDate];
         self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Pick up from counter at %@",(NSString *)p_time];
     }
     else if(selectedButtonNumber == 2){
@@ -414,7 +407,7 @@ double deliveryAmountValue; //Delievery amount value in $
             deliveryAmountValue = (cartTotalValue * del_charge)/100;
             self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
-        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Delivery to %@",[AppData sharedInstance].consumer_Delivery_Location];
+        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Delivery to %@ at %@",[AppData sharedInstance].consumer_Delivery_Location, p_time];
     }
     else if(selectedButtonNumber == 4){
         if ([billBusiness.pickup_location_charge rangeOfString:@"%"].location == NSNotFound) {
@@ -428,9 +421,6 @@ double deliveryAmountValue; //Delievery amount value in $
             deliveryAmountValue = (cartTotalValue * del_charge)/100;
             self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
-        NSDate* newDate = [df dateFromString:[AppData sharedInstance].consumerPDTimeChosen];
-        [df setDateFormat:@"hh:mm a"];
-        NSString *p_time = [df stringFromDate:newDate];
         self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Pickup at %@ from a parking space.",p_time];
     }
     

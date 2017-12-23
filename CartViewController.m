@@ -86,7 +86,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
     [self setButtonBorder:self.btnPickUpFood];
     [self setButtonBorder:self.btnDeliverToMe];
     
-    if(billBusiness.pickup_later){
+    if(billBusiness.accept_orders_when_closed){
         self.btnScheduleForLater.enabled = YES;
         self.lblSchedule.alpha = 1.0;
     }

@@ -198,13 +198,13 @@ bool shouldOpenOptionMenu = false;
     BOOL businessIsClosed = false;
     if(openTime == (id)[NSNull null] || closeTime == (id)[NSNull null]) {
         businessIsClosed = true;
-    } else if (![[APIUtility sharedInstance] isOpenBussiness:openTime CloseTime:closeTime]) {
+    } else if (![[APIUtility sharedInstance] isBusinessOpen:openTime CloseTime:closeTime]) {
         businessIsClosed = true;
     }
     
     self.rightButton.enabled = true;
     if (businessIsClosed) {
-        if (business.pickup_later) {
+        if (business.accept_orders_when_closed) {
             NSString *openCivilianTime = [[APIUtility sharedInstance] getCivilianTime:openTime];
             NSString *waitTime = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
             NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
@@ -1664,7 +1664,7 @@ bool shouldOpenOptionMenu = false;
 //            NSLog(@"%@",self.sectionKeyArray);
 
 //            NSMutableArray *sortedArray = [NSMutableArray arrayWithArray:data.allKeys];
-            [self.sectionKeyArray sortUsingSelector:@selector(localizedStandardCompare:)];
+//            [self.sectionKeyArray sortUsingSelector:@selector(localizedStandardCompare:)];
 
             self.sectionKeysWithCountArray = [[NSMutableArray alloc] init];
             self.sectionKeysImageArray = [[NSMutableArray alloc] init];
