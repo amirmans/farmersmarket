@@ -569,22 +569,7 @@
 		2949CC2A14589C7100728B87 = {
 			isa = PBXGroup;
 			children = (
-				4A0F2CE81C729092005C6F22 /* TapForAll.xcdatamodeld */,
-				C699356218B969F6008FCF8A /* AppDelegate.h */,
-				C699356318B969F6008FCF8A /* AppDelegate.m */,
-				4A6643D01C74A04000C10421 /* NavigationMenuView */,
-				4A0F2CA01C71D584005C6F22 /* ModelClass */,
-				4A737B761C68B0A500ADCD49 /* APIUtility */,
-				29D29A2315DB77CB00990F62 /* Utility */,
-				4AD53C231C736535009D8FE0 /* ViewController */,
-				C699356118B969F6008FCF8A /* MainSourceCode */,
-				C6EABE1918B2E19D00F50D19 /* Business */,
-				C696970618BC97A300F0B4F5 /* Bill */,
-				2971AF4616071A630022B72E /* Notification */,
-				29D2999D15DB58A800990F62 /* External */,
-				2949CCC21458A21700728B87 /* Resources */,
-				2949CC4114589C7200728B87 /* TapForAll */,
-				2949CC5D14589C7200728B87 /* TapForAllTests */,
+				C66595861FEF772B0073972D /* src */,
 				2949CC3814589C7200728B87 /* Frameworks */,
 				2949CC3614589C7200728B87 /* Products */,
 				D06200CE00720C3D7677B436 /* Pods */,
@@ -638,7 +623,7 @@
 				2949CC4214589C7200728B87 /* Supporting Files */,
 			);
 			name = TapForAll;
-			path = TapTalk;
+			path = ../TapTalk;
 			sourceTree = "<group>";
 		};
 		2949CC4214589C7200728B87 /* Supporting Files */ = {
@@ -659,7 +644,7 @@
 				2949CC5E14589C7200728B87 /* Supporting Files */,
 			);
 			name = TapForAllTests;
-			path = TapTalkTests;
+			path = ../TapTalkTests;
 			sourceTree = "<group>";
 		};
 		2949CC5E14589C7200728B87 /* Supporting Files */ = {
@@ -945,7 +930,6 @@
 				5DBDB5C81C6AB3CF001828C5 /* MenuItemTableViewCell.m */,
 				5DBDB5C91C6AB3CF001828C5 /* MenuItemViewController.h */,
 				5DBDB5CA1C6AB3CF001828C5 /* MenuItemViewController.m */,
-				4A1DA8891C7603CA00E16F30 /* TPReceiptController.h */,
 				4A1DA88A1C7603CA00E16F30 /* TPReceiptController.m */,
 				4A1DA88E1C76235100E16F30 /* TPRewardPointController.h */,
 				4A1DA88F1C76235100E16F30 /* TPRewardPointController.m */,
@@ -972,6 +956,8 @@
 		4AD53C241C73660B009D8FE0 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				C6F475611CDFDCB7009E24E4 /* DetailBusinessVCTableViewCell.h */,
+				4A1DA8891C7603CA00E16F30 /* TPReceiptController.h */,
 				DA4564781F387A1100B60E46 /* TotalCartItemCell.h */,
 				DA4564791F387A1100B60E46 /* TotalCartItemCell.m */,
 				DA4564761F3879AD00B60E46 /* TotalCartItemCell.xib */,
@@ -983,7 +969,6 @@
 				4AE25A951CBFB83B00134D29 /* BusinessNotificationCell.h */,
 				4AE25A961CBFB83B00134D29 /* BusinessNotificationCell.m */,
 				4AE25A971CBFB83B00134D29 /* BusinessNotificationCell.xib */,
-				C6F475611CDFDCB7009E24E4 /* DetailBusinessVCTableViewCell.h */,
 				C6F475621CDFDCB7009E24E4 /* DetailBusinessVCTableViewCell.m */,
 				4A737B801C68D2CF00ADCD49 /* DetailBusinessVCTableViewCell.xib */,
 				4A8DA3461CC8DD5300C3890A /* MenuItemOptionsCell.h */,
@@ -1007,6 +992,29 @@
 				12C090EF1DDDEF940033CEA9 /* CartTotalTableViewCell.xib */,
 			);
 			name = Cell;
+			sourceTree = "<group>";
+		};
+		C66595861FEF772B0073972D /* src */ = {
+			isa = PBXGroup;
+			children = (
+				4A0F2CE81C729092005C6F22 /* TapForAll.xcdatamodeld */,
+				C699356218B969F6008FCF8A /* AppDelegate.h */,
+				C699356318B969F6008FCF8A /* AppDelegate.m */,
+				4A6643D01C74A04000C10421 /* NavigationMenuView */,
+				4A0F2CA01C71D584005C6F22 /* ModelClass */,
+				4A737B761C68B0A500ADCD49 /* APIUtility */,
+				29D29A2315DB77CB00990F62 /* Utility */,
+				4AD53C231C736535009D8FE0 /* ViewController */,
+				C699356118B969F6008FCF8A /* MainSourceCode */,
+				C6EABE1918B2E19D00F50D19 /* Business */,
+				C696970618BC97A300F0B4F5 /* Bill */,
+				2971AF4616071A630022B72E /* Notification */,
+				29D2999D15DB58A800990F62 /* External */,
+				2949CCC21458A21700728B87 /* Resources */,
+				2949CC4114589C7200728B87 /* TapForAll */,
+				2949CC5D14589C7200728B87 /* TapForAllTests */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 		C696970618BC97A300F0B4F5 /* Bill */ = {
@@ -1103,6 +1111,7 @@
 				DA4B3A181F1D205D002A4109 /* BKCardPatternInfo.m */,
 			);
 			name = CreditCardNumberFormat;
+			path = src;
 			sourceTree = "<group>";
 		};
 		DAB7A2431E9811D200FFD508 /* DropDown */ = {
