@@ -61,17 +61,25 @@ NSDate *setMinPickerTimeOD;
     if([[response valueForKey:@"status"] integerValue] >= 0)
     {
         if(((NSArray *)[response valueForKey:@"table"]).count > 0) {
-
+            
             NSArray *tableDict = [response valueForKey:@"table"];
+            self.lblBusinessNote.text = [tableDict valueForKey:@"message_to_consumers"];
+            tableMinNo = [tableDict valueForKey:@"table_no_min"];
+            tableMaxNo = [tableDict valueForKey:@"table_no_max"];
+            for (int i = [tableMinNo intValue]; i <= [tableMaxNo intValue]; i++) {
+                [tableNoArr addObject:[NSString stringWithFormat:@"%d",i]];
+            }
+        }
+        
+        if(((NSArray *)[response valueForKey:@"location_info"]).count > 0) {
             NSArray *locationDict = [response valueForKey:@"location_info"];
+            self.lblBusinessNote.text = [locationDict valueForKey:@"message_to_consumers"];
 //            NSLog(@"%@",tableDict);
             deliveryStartTime = [locationDict valueForKey:@"delivery_start_time"];
             deliveryEndTime = [locationDict valueForKey:@"delivery_end_time"];
             deliveryTimeInterval = [locationDict valueForKey:@"delivery_time_interval_in_minutes"];
             deliveryLeadTime = [locationDict valueForKey:@"delivery_lead_time_in_minutes"];
-            self.lblBusinessNote.text = [tableDict valueForKey:@"message_to_consumers"];
-            tableMinNo = [tableDict valueForKey:@"table_no_min"];
-            tableMaxNo = [tableDict valueForKey:@"table_no_max"];
+            
             self.locationArray = [[locationDict valueForKey:@"locations"] mutableCopy];
 
             for (int i = 0 ; i < self.locationArray.count ; i++) {
@@ -79,16 +87,14 @@ NSDate *setMinPickerTimeOD;
             }
 //            NSLog(@"%@",tableMinNo);
 //            NSLog(@"%@",tableMaxNo);
-            for (int i = [tableMinNo intValue] ; i <= [tableMaxNo intValue] ; i++) {
-                [tableNoArr addObject:[NSString stringWithFormat:@"%d",i]];
-            }
+
 //            self.btnCounterPickupTime.enabled = YES;
-            if(biz.pickup_counter_later == 0){
-                self.btnCounterPickupTime.enabled = NO;
-            }
-            else{
-                self.btnCounterPickupTime.enabled = YES;
-            }
+//            if(biz.pickup_counter_later == 0){
+//                self.btnCounterPickupTime.enabled = NO;
+//            }
+//            else{
+//                self.btnCounterPickupTime.enabled = YES;
+//            }
         }
     }
     else{
@@ -181,6 +187,10 @@ NSDate *setMinPickerTimeOD;
     }
     if(locationVal != -1){
         self.btnDesignatedLocation.enabled = YES;
+        
+        NSDate *startTime = [self getPDStartTime:DeliveryToLocation];
+        NSString *startTimeStr = [formatter2 stringFromDate:startTime];
+        [self.btnDesignationLocationPickUp setTitle:startTimeStr forState:UIControlStateNormal];
     }
 
     NSDateFormatter *displayFormatter = [[NSDateFormatter alloc] init];
@@ -616,10 +626,6 @@ NSDate *setMinPickerTimeOD;
         _viewCounter.hidden = YES;
         _viewTable.hidden = YES;
         _viewParking.hidden = YES;
-        
-        NSDate *startTime = [self getPDStartTime:DeliveryToLocation];
-        NSString *startTimeStr = [formatter2 stringFromDate:startTime];
-        [self.btnDesignationLocationPickUp setTitle:startTimeStr forState:UIControlStateNormal];
     }
 }
 
@@ -688,11 +694,11 @@ NSDate *setMinPickerTimeOD;
             break;
         case DeliveryToLocation:
             if (businessOpen) {
-                startTime = [[NSDate date] dateByAddingTimeInterval:[deliveryTimeInterval integerValue]*60];
+                startTime = [[NSDate date] dateByAddingTimeInterval:[deliveryLeadTime integerValue]*60];
             }
             else {
                 startTime = [formatter dateFromString:deliveryStartTime];
-                startTime = [startTime dateByAddingTimeInterval:60*[deliveryTimeInterval integerValue]];
+                startTime = [startTime dateByAddingTimeInterval:60*[deliveryLeadTime integerValue]];
             }
             
             break;
@@ -978,12 +984,16 @@ NSDate *setMinPickerTimeOD;
 //    [datePicker showActionSheetPicker];
 //    NSString *time1 = [[NSDate date];
     NSDate *date2= [NSDate date];//[formatter dateFromString:time1];
+    date2 = [date2 dateByAddingTimeInterval:60*[deliveryTimeInterval integerValue]];
     
     NSDate *date1 = [self getPDStartTime:DeliveryToLocation];
     
     NSString *time3 = deliveryEndTime;
     NSDate *date3= [formatter dateFromString:time3];
+    date3 = [date3 dateByAddingTimeInterval:60*[deliveryTimeInterval integerValue]];
 
+    NSLog(@"btnDesignationLocationPickupClicked Date1 (deliveryStartTime):%@, Date2 (now):%@, Date3 (deliveryEndTime):%@",
+          [formatter stringFromDate:date1], [formatter stringFromDate:date2], [formatter stringFromDate:date3]);
     NSComparisonResult result = [date1 compare:date2];
 
     if(result == NSOrderedDescending)
@@ -1004,7 +1014,8 @@ NSDate *setMinPickerTimeOD;
         if(result2 == NSOrderedAscending)
         {
             NSLog(@"date3 is later than date2, endTime is big than now time");
-            setMinPickerTimeOD =[date2 dateByAddingTimeInterval:60*[deliveryTimeInterval integerValue]];
+//            setMinPickerTimeOD =[date2 dateByAddingTimeInterval:60*[deliveryTimeInterval integerValue]];
+            setMinPickerTimeOD = date2;
 
 
             NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -1014,7 +1025,7 @@ NSDate *setMinPickerTimeOD;
             NSLog(@"%ld",(long)minute % [deliveryTimeInterval integerValue]);
             if(minute % [deliveryTimeInterval integerValue] == 0)
             {
-                setMinPickerTimeOD =[date2 dateByAddingTimeInterval:60*[deliveryTimeInterval integerValue]];
+//                setMinPickerTimeOD =[date2 dateByAddingTimeInterval:60*[deliveryTimeInterval integerValue]];
 
                 datePicker = [[ActionSheetDatePicker alloc] initWithTitle:@"Select a time" datePickerMode:UIDatePickerModeTime selectedDate:date2 minimumDate:setMinPickerTimeOD maximumDate:date3 target:self action:@selector(timeWasSelected:element:) origin:sender];
                 datePicker.minuteInterval = [deliveryTimeInterval integerValue];

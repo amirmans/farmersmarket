@@ -389,7 +389,7 @@
     branch = [[data objectForKey:@"branch"] intValue];
     lat = [[data objectForKey:@"lat"] doubleValue];
     lng = [[data objectForKey:@"lng"] doubleValue];
-    accept_orders_when_closed = [[data objectForKey:@"pickup_later"] boolValue];
+    accept_orders_when_closed = [[data objectForKey:@"order_when_closed"] boolValue];
     offers_points = [[data objectForKey:@"offers_points"] boolValue];
     
 //    if ([data objectForKey:@"chat_masters"] != [NSNull null]) {

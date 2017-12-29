@@ -688,7 +688,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
                 {
                     self.notesText = @"";
                 }
-                PaymentSummaryViewController *TotalCartItemVC = [[PaymentSummaryViewController alloc] initWithNibName:@"CartViewSecondScreenViewController" bundle:nil];
+                PaymentSummaryViewController *TotalCartItemVC = [[PaymentSummaryViewController alloc] initWithNibName:@"CartViewSecondScreenViewController" bundle:nil]; //TODO zzz
                 TotalCartItemVC.orderItems = self.orderItems;
                 TotalCartItemVC.subTotal = [NSString stringWithFormat:@"%.2f",cartSubTotal];
                 TotalCartItemVC.earnPts = self.lblEarnPoints.text;

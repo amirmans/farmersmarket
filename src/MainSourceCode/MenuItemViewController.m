@@ -213,11 +213,11 @@ bool shouldOpenOptionMenu = false;
             [UIAlertController showInformationAlert:message withTitle:title];
         } else {
             NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
-            NSString *message = [NSString stringWithFormat:@"However, you may view the menu items"];
             NSString *title = [NSString stringWithFormat:@"%@ is closed now!", businessName];
+            NSString *message = [NSString stringWithFormat:@"However, you may view the menu items"];
             [UIAlertController showInformationAlert:message withTitle:title];
             
-             self.rightButton.enabled = false;
+            self.rightButton.enabled = false;
         }
     }
 }
@@ -550,7 +550,7 @@ bool shouldOpenOptionMenu = false;
 //    [sectionHeaderBG setBackgroundColor:[UIColor redColor]];
     
     NSString *headerText = [NSString stringWithFormat:@"%@ (%ld)",self.sectionKeyArray[section],(long)rowCount];
-    NSUInteger length = [headerText length];
+//    NSUInteger length = [headerText length];
 //    NSLog(@"%lu",(unsigned long)length);
     
     

@@ -564,7 +564,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     }
     
     
-    Business * biz =[[Business alloc] initWithDataFromDatabase: cellDict];
+//    Business * biz =[[Business alloc] initWithDataFromDatabase: cellDict];
     
 //    NSLog(@"%@",cellDict);
     

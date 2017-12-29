@@ -275,7 +275,6 @@
 		29E693CF14CC044B007E958F /* EnterBusiness.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EnterBusiness.png; sourceTree = "<group>"; };
 		29ECC44B14CCC06C0098653A /* EnterBusiness@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "EnterBusiness@2x.png"; sourceTree = "<group>"; };
 		29ECC44C14CCC06C00986567 /* StoreMapViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StoreMapViewController.xib; sourceTree = "<group>"; };
-		29ECC44C14CCC06C00986569 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Consts.h; path = MainSourceCode/Consts.h; sourceTree = "<group>"; };
 		29ECC44C14CCC06C0098656A /* RateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RateView.h; path = MainSourceCode/RateView.h; sourceTree = "<group>"; };
 		29ECC44C14CCC06C0098656B /* RateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RateView.m; path = MainSourceCode/RateView.m; sourceTree = "<group>"; };
 		29ECC44C14CCC06C0098656D /* TapTalkLooks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TapTalkLooks.h; path = MainSourceCode/TapTalkLooks.h; sourceTree = "<group>"; };
@@ -426,6 +425,7 @@
 		C650705C18BD4CBD00E5D06B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Xibs/Default-568h@2x.png"; sourceTree = "<group>"; };
 		C66237FD18C03E5B00750F82 /* disabled_button_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disabled_button_bg.png; sourceTree = "<group>"; };
 		C662DDFD18D8442F00683BBF /* BubbleCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BubbleCenter.png; sourceTree = "<group>"; };
+		C66B0C5B1FF2471A00F9CA14 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Consts.h; sourceTree = SOURCE_ROOT; };
 		C6700CF91859D74B003814C9 /* NotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationTableViewCell.h; path = MainSourceCode/NotificationTableViewCell.h; sourceTree = "<group>"; };
 		C6700CFA1859D74B003814C9 /* NotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationTableViewCell.m; path = MainSourceCode/NotificationTableViewCell.m; sourceTree = "<group>"; };
 		C6700CFC1859DAA4003814C9 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
@@ -798,6 +798,7 @@
 		29D29A2315DB77CB00990F62 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				C66B0C5B1FF2471A00F9CA14 /* Consts.h */,
 				C67153071EAEA04D00DA5D01 /* SMCalloutView.h */,
 				C67153081EAEA04D00DA5D01 /* SMCalloutView.m */,
 				C67153091EAEA04D00DA5D01 /* SMClassicCalloutView.h */,
@@ -808,7 +809,6 @@
 				29ECC44C14CCC06C0098656D /* TapTalkLooks.h */,
 				29ECC44C14CCC06C0098656B /* RateView.m */,
 				29ECC44C14CCC06C0098656A /* RateView.h */,
-				29ECC44C14CCC06C00986569 /* Consts.h */,
 				C6FDD5CD187D079600F4D721 /* ServerInteractionManager.m */,
 				C6FDD5CE187D079600F4D721 /* ServerInteractionManager.h */,
 				C6AF154F18ED3D6C004DBEBA /* UtilityConsumerProfile.h */,
