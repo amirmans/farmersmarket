@@ -6,13 +6,13 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HomeViewController">
             <connections>
                 <outlet property="btnNewOrder" destination="x0X-b4-M5s" id="eR4-7b-lWm"/>
+                <outlet property="textViewMessageToConsumers" destination="0eP-5j-71n" id="L8L-HX-9KI"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -27,31 +27,20 @@
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bkgd" translatesAutoresizingMaskIntoConstraints="NO" id="zAf-2X-KvV">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" image="tap-in-only_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Hdw-nP-mlO">
-                            <rect key="frame" x="17" y="10" width="84" height="109"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="84" id="9Ig-5I-TB1"/>
-                                <constraint firstAttribute="height" constant="109" id="fdK-Ty-d3c"/>
-                            </constraints>
-                        </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WDE_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="mfT-Hb-Y0A">
-                            <rect key="frame" x="147" y="17" width="165" height="100"/>
-                        </imageView>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_statement.png" translatesAutoresizingMaskIntoConstraints="NO" id="4xb-Dg-n1w">
-                            <rect key="frame" x="0.0" y="122" width="320" height="86"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="86" id="Dyl-5v-tea"/>
-                            </constraints>
-                        </imageView>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" editable="NO" textAlignment="center" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0eP-5j-71n">
-                            <rect key="frame" x="2" y="210" width="316" height="36.5"/>
-                            <color key="textColor" red="1" green="0.80000000000000004" blue="0.40000000000000002" alpha="1" colorSpace="deviceRGB"/>
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" editable="NO" usesAttributedText="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0eP-5j-71n">
+                            <rect key="frame" x="2" y="210" width="316" height="41.5"/>
+                            <attributedString key="attributedText">
+                                <fragment content="Message to Consumers">
+                                    <attributes>
+                                        <font key="NSFont" size="21" name="Foco-BoldItalic"/>
+                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                    </attributes>
+                                </fragment>
+                            </attributedString>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x0X-b4-M5s">
-                            <rect key="frame" x="80" y="290" width="160" height="219"/>
+                            <rect key="frame" x="80" y="295" width="160" height="219"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="25"/>
                             <state key="normal" image="neworder">
@@ -61,27 +50,29 @@
                                 <action selector="btnNewOrderClicked:" destination="-1" eventType="touchUpInside" id="nt4-Y9-E3w"/>
                             </connections>
                         </button>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" image="tap-in-only_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="Hdw-nP-mlO">
+                            <rect key="frame" x="68" y="38" width="185" height="155"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="185" id="9Ig-5I-TB1"/>
+                                <constraint firstAttribute="height" constant="155" id="fdK-Ty-d3c"/>
+                            </constraints>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="zAf-2X-KvV" firstAttribute="width" secondItem="fj5-hg-slI" secondAttribute="width" id="0MX-zy-EcD"/>
                         <constraint firstItem="0eP-5j-71n" firstAttribute="leading" secondItem="fj5-hg-slI" secondAttribute="leading" constant="2" id="0RJ-LB-2o7"/>
                         <constraint firstItem="zAf-2X-KvV" firstAttribute="height" secondItem="fj5-hg-slI" secondAttribute="height" id="AmK-a5-Ulg"/>
+                        <constraint firstItem="x0X-b4-M5s" firstAttribute="top" secondItem="fj5-hg-slI" secondAttribute="top" constant="295" id="AvE-n2-0Fl"/>
                         <constraint firstItem="zAf-2X-KvV" firstAttribute="top" secondItem="fj5-hg-slI" secondAttribute="top" id="D5y-KP-UTr"/>
-                        <constraint firstAttribute="bottom" secondItem="x0X-b4-M5s" secondAttribute="bottom" constant="59" id="De8-mP-EfH"/>
-                        <constraint firstItem="4xb-Dg-n1w" firstAttribute="top" secondItem="fj5-hg-slI" secondAttribute="top" constant="122" id="FWc-dw-T16"/>
-                        <constraint firstItem="4xb-Dg-n1w" firstAttribute="top" secondItem="mfT-Hb-Y0A" secondAttribute="bottom" constant="5" id="LHL-vz-H3T"/>
                         <constraint firstAttribute="trailing" secondItem="0eP-5j-71n" secondAttribute="trailing" constant="2" id="M9K-zr-bCk"/>
-                        <constraint firstItem="mfT-Hb-Y0A" firstAttribute="leading" secondItem="Hdw-nP-mlO" secondAttribute="trailing" constant="46" id="aDM-So-oh2"/>
-                        <constraint firstItem="4xb-Dg-n1w" firstAttribute="centerX" secondItem="fj5-hg-slI" secondAttribute="centerX" id="aJI-bW-79D"/>
-                        <constraint firstItem="Hdw-nP-mlO" firstAttribute="leading" secondItem="fj5-hg-slI" secondAttribute="leading" constant="17" id="fUL-cY-jgS"/>
-                        <constraint firstItem="4xb-Dg-n1w" firstAttribute="leading" secondItem="fj5-hg-slI" secondAttribute="leading" id="hr6-lT-Fur"/>
-                        <constraint firstItem="0eP-5j-71n" firstAttribute="top" secondItem="4xb-Dg-n1w" secondAttribute="bottom" constant="2" id="lsP-OO-zdJ"/>
-                        <constraint firstItem="Hdw-nP-mlO" firstAttribute="top" secondItem="fj5-hg-slI" secondAttribute="top" constant="10" id="n6H-Hf-NkM"/>
-                        <constraint firstItem="mfT-Hb-Y0A" firstAttribute="trailing" secondItem="fj5-hg-slI" secondAttribute="trailingMargin" id="ree-lt-7cS"/>
+                        <constraint firstItem="Hdw-nP-mlO" firstAttribute="leading" secondItem="fj5-hg-slI" secondAttribute="leading" constant="68" id="fUL-cY-jgS"/>
+                        <constraint firstItem="0eP-5j-71n" firstAttribute="top" secondItem="fj5-hg-slI" secondAttribute="top" constant="210" id="ljz-fn-nWv"/>
+                        <constraint firstItem="Hdw-nP-mlO" firstAttribute="top" secondItem="fj5-hg-slI" secondAttribute="top" constant="38" id="n6H-Hf-NkM"/>
+                        <constraint firstItem="Hdw-nP-mlO" firstAttribute="centerX" secondItem="fj5-hg-slI" secondAttribute="centerX" id="qAg-CV-veW"/>
                         <constraint firstItem="x0X-b4-M5s" firstAttribute="centerX" secondItem="fj5-hg-slI" secondAttribute="centerX" id="vlD-W7-7KQ"/>
                         <constraint firstItem="zAf-2X-KvV" firstAttribute="leading" secondItem="fj5-hg-slI" secondAttribute="leading" id="wST-MT-Ve4"/>
-                        <constraint firstItem="mfT-Hb-Y0A" firstAttribute="top" secondItem="fj5-hg-slI" secondAttribute="top" constant="17" id="yta-lw-05h"/>
                     </constraints>
                 </view>
             </subviews>
@@ -96,9 +87,7 @@
         </view>
     </objects>
     <resources>
-        <image name="WDE_logo.png" width="225" height="121"/>
         <image name="bkgd" width="375" height="667"/>
-        <image name="logo_statement.png" width="777" height="264"/>
         <image name="neworder" width="160" height="194"/>
         <image name="tap-in-only_logo.png" width="564" height="717"/>
     </resources>

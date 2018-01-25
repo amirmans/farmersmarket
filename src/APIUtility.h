@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AFNetworking.h>
+#import "Business.h"
 
 
 @interface APIUtility : NSObject
@@ -22,6 +23,8 @@
 - (NSString *) GMTToLocalTime: (NSString *)GMTTime;
 - (BOOL)isBusinessOpenAt:(NSString *)givenDate OpenTime:(NSString *)openTime CloseTime:(NSString *)closeTime;
 - (BOOL) isBusinessOpen: (NSString *)openTime CloseTime:(NSString *)closeTime;
+- (BOOL)isServiceAvailable: (int)service during:(NSString *)openTime and:(NSString *)closeTime withType:(int)serivceBeforeOpen;
+- (int)serviceAvailableStatus: (int)service during:(NSString *)openTime and:(NSString *)closeTime withType:(int)serivceBeforeOpen;
 - (NSString *) getOpenCloseTime: (NSString *)openTime CloseTime:(NSString *)closeTime;
 - (NSString *)getCivilianTime: (NSString *)militaryTime;
 
@@ -52,6 +55,11 @@
 - (void) getDefaultCCInfo : (NSString *) consumer_id completiedBlock:(void (^)(NSDictionary *response))finished;
 
 - (BOOL)isZipCodeValid:(NSString *)zipCode;
+
++ (float)calcCharge:(float)subTotal using:(NSString *)chargeFormula;
+
+- (NSString *)laterTimeInString:(NSString *)time1 and:(NSString *)time2;
+- (NSString *)earlierTimeInString:(NSString *)time1 and:(NSString *)time2;
 
 - (NSString *)transformValidSMSNo:(NSString *)phone;
 - (NSString*)usPhoneNumber:(NSString *)E_164FormatNo;

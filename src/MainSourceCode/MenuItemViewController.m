@@ -192,34 +192,35 @@ bool shouldOpenOptionMenu = false;
 //                                                      selector:@selector(BusinessListAPICall)
 //                                                      name:@"GotProductData"
 //                                                       object:nil];
-    
-    NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
-    NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
-    BOOL businessIsClosed = false;
-    if(openTime == (id)[NSNull null] || closeTime == (id)[NSNull null]) {
-        businessIsClosed = true;
-    } else if (![[APIUtility sharedInstance] isBusinessOpen:openTime CloseTime:closeTime]) {
-        businessIsClosed = true;
-    }
-    
     self.rightButton.enabled = true;
-    if (businessIsClosed) {
-        if (business.accept_orders_when_closed) {
-            NSString *openCivilianTime = [[APIUtility sharedInstance] getCivilianTime:openTime];
-            NSString *waitTime = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
-            NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
-            NSString *message = [NSString stringWithFormat:@"You may add items to your cart.\nBut if you pay, your order will be ready after the opening time on the next business day(%@).\n\n%@ after opening.", openCivilianTime, waitTime];
-            NSString *title = [NSString stringWithFormat:@"%@ is closed to accepting orders now!", businessName];
-            [UIAlertController showInformationAlert:message withTitle:title];
-        } else {
-            NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
-            NSString *title = [NSString stringWithFormat:@"%@ is closed now!", businessName];
-            NSString *message = [NSString stringWithFormat:@"However, you may view the menu items"];
-            [UIAlertController showInformationAlert:message withTitle:title];
-            
-            self.rightButton.enabled = false;
-        }
-    }
+    
+//    NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
+//    NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
+//    BOOL businessIsClosed = false;
+//    if(openTime == (id)[NSNull null] || closeTime == (id)[NSNull null]) {
+//        businessIsClosed = true;
+//    } else if (![[APIUtility sharedInstance] isBusinessOpen:openTime CloseTime:closeTime]) {
+//        businessIsClosed = true;
+//    }
+//
+//
+//    if (businessIsClosed) {
+//        if (business.accept_orders_when_closed) {
+////            NSString *openCivilianTime = [[APIUtility sharedInstance] getCivilianTime:openTime];
+////            NSString *waitTime = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
+//            NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
+//            NSString *message = [NSString stringWithFormat:@"You may add items to your cart.\nAlthough, you cannot place your order, but it will be saved in your cart for the next time around."];
+//            NSString *title = [NSString stringWithFormat:@"%@ is closed to accepting orders now!", businessName];
+//            [UIAlertController showInformationAlert:message withTitle:title];
+//        } else {
+//            NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
+//            NSString *title = [NSString stringWithFormat:@"%@ is closed now and has chosen not to accept orders", businessName];
+//            NSString *message = [NSString stringWithFormat:@"However, you may view the menu items"];
+//            [UIAlertController showInformationAlert:message withTitle:title];
+//
+//            self.rightButton.enabled = false; // this doesn't work. That is why we are disallowing the selector to continue running
+//        }
+//    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -1444,8 +1445,28 @@ bool shouldOpenOptionMenu = false;
     [self.tblRemoveFromCart reloadData];
 }
 
-- (IBAction)PlusButtonClicked:(CustomUIButton *)sender {
-
+- (IBAction)PlusButtonClicked:(CustomUIButton *)sender { // addbutton
+//
+//    NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
+//    NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
+//    BOOL businessIsClosed = false;
+//    if(openTime == (id)[NSNull null] || closeTime == (id)[NSNull null]) {
+//        businessIsClosed = true;
+//    } else if (![[APIUtility sharedInstance] isBusinessOpen:openTime CloseTime:closeTime]) {
+//        businessIsClosed = true;
+//    }
+//
+//    if ( (businessIsClosed) && !(business.accept_orders_when_closed) ) {
+//        NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
+//        NSString *title = [NSString stringWithFormat:@"%@ is closed now and has chosen not to accept orders", businessName];
+//        NSString *message = [NSString stringWithFormat:@"However, you may view the menu items"];
+//        [UIAlertController showInformationAlert:message withTitle:title];
+//
+//        return;
+//    }
+//
+    
+    
     self.txtNote.text = @"";
     self.btnCancelNote.hidden = YES;
     
@@ -1569,6 +1590,26 @@ bool shouldOpenOptionMenu = false;
 
 - (IBAction)myCartButtonClicked:(UIButton *)sender
 {
+//    NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
+//    NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
+//    BOOL businessIsClosed = false;
+//    if(openTime == (id)[NSNull null] || closeTime == (id)[NSNull null]) {
+//        businessIsClosed = true;
+//    } else if (![[APIUtility sharedInstance] isBusinessOpen:openTime CloseTime:closeTime]) {
+//        businessIsClosed = true;
+//    }
+//    
+//    if ( (businessIsClosed) && !(business.accept_orders_when_closed) ) {
+//        NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
+//        NSString *title = [NSString stringWithFormat:@"%@ is closed now and has chosen not to accept orders", businessName];
+//        NSString *message = [NSString stringWithFormat:@"However, you may view the menu items"];
+//        [UIAlertController showInformationAlert:message withTitle:title];
+//        
+//        return;
+//    }
+//    
+//    
+    
     menu.menuButton.isActive = false;
     [menu.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
 

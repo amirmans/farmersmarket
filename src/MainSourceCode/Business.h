@@ -32,6 +32,7 @@
     int isCustomer;
     int businessID;
     int branch;
+    int time_interval;
     double lat;
     double lng;
     
@@ -74,9 +75,10 @@
     NSError *businessError;
     NSString *process_time;
 
-    NSNumber *process_cycle_time;
-    NSNumber *process_lead_time;
+    NSNumber *cycle_time;
+//    NSNumber *lead_time;
 
+    // these are strings because they can also be percentages
     NSString *delivery_location_charge;
     NSString *delivery_table_charge;
     NSString *pickup_counter_charge;
@@ -118,6 +120,7 @@
 @property(atomic, retain) NSString *customerProfileName;
 @property(atomic, assign) int businessID;
 @property(atomic, assign) int branch;
+@property(atomic, assign) int time_interval;
 
 @property(atomic, assign) double lat;
 @property(atomic, assign) double lng;
@@ -183,8 +186,8 @@
 @property(nonatomic, strong) NSString *curr_code;
 @property(nonatomic, strong) NSString *curr_symbol;
 
-@property(nonatomic, strong) NSNumber *process_cycle_time;
-@property(nonatomic, strong) NSNumber *process_lead_time;
+@property(nonatomic, strong) NSNumber *cycle_time;
+@property(nonatomic, strong) NSNumber *lead_time;
 
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;
 - (void)startLoadingBusinessProductCategoriesAndProducts;

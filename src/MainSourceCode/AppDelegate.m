@@ -42,6 +42,7 @@
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize notificationDelegate;
+@synthesize informationDate;
 
 
 @synthesize enterBusinessNav, tt_tabBarController;
@@ -58,6 +59,7 @@ static AppDelegate *sharedObj;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    informationDate = [NSDate date];
     [AppData sharedInstance].Current_Selected_Tab = @"0";
     [AppData sharedInstance].is_Profile_Changed = @"NO";
 //    [GMSServices provideAPIKey:@"AIzaSyD7WfHjPssiG_nJi5P0rF4GJHUxxrFCono"];

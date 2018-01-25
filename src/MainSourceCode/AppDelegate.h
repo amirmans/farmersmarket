@@ -19,6 +19,8 @@
     IBOutlet UINavigationController *enterBusinessNav;
     __strong id <NewNotificationProtocol> notificationDelegate; // default is strong which conflicts with the property
     
+    NSDate* batchInformationDate;
+    
     NSString *lat;
     NSString *lng;
 
@@ -31,6 +33,7 @@
 @property(atomic, retain) UITabBarController *tt_tabBarController;
 @property(atomic, retain) UINavigationController *enterBusinessNav;
 @property(nonatomic,retain) CLLocationManager *locationManager;
+@property(nonatomic, strong) NSDate* informationDate;  //keeps track of date and time our information has been retrieved
 
 //CoreData..
 

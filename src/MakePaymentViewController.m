@@ -29,7 +29,7 @@
 
 @implementation MakePaymentViewController
 
-@synthesize redeemPointsVal,hud,dollarValForEachPoints,redeemNoPoint,currentPointsLevel,originalNoPoint,originalPointsVal,flagRedeemPointVal,tipAmt,subTotalVal,deliveryAmountValue, pd_noteText;
+@synthesize redeemPointsVal,hud,dollarValForEachPoints,redeemNoPoint,currentPointsLevel,originalNoPoint,originalPointsVal,flagRedeemPointVal,tipAmt,subTotalVal,pd_charge, pd_noteText;
 @synthesize currency_symbol;
 @synthesize currency_code;
 
@@ -315,20 +315,20 @@
     if(self.currentTipVal > 0) {
     }
     else {
-        self.totalVal = self.subTotalVal + _taxVal + tipAmt - _promotionalamt +deliveryAmountValue ;
+        self.totalVal = self.subTotalVal + _taxVal + tipAmt - _promotionalamt +pd_charge ;
     }
 }
 
 - (void)adjustRedeemPointsAndTheirValues {
     double allAvailablePointsValue = [self calculateValueforGivenPoints:originalNoPoint];
     if ( allAvailablePointsValue <= self.subTotalVal) {
-        self.totalVal = self.subTotalVal + self.taxVal - allAvailablePointsValue + self.tipAmt - self.promotionalamt + self.deliveryAmountValue;
+        self.totalVal = self.subTotalVal + self.taxVal - allAvailablePointsValue + self.tipAmt - self.promotionalamt + self.pd_charge;
         redeemNoPoint = originalNoPoint;
         redeemPointsVal = allAvailablePointsValue;
         dollarValForEachPoints = redeemPointsVal / redeemNoPoint;
     } else {
         redeemNoPoint = [self pointsNeededForGivenAmount:self.subTotalVal];
-        dollarValForEachPoints = (self.subTotalVal + tipAmt + deliveryAmountValue - _promotionalamt) / redeemNoPoint;
+        dollarValForEachPoints = (self.subTotalVal + tipAmt + pd_charge - _promotionalamt) / redeemNoPoint;
         redeemPointsVal = redeemNoPoint * dollarValForEachPoints;
         _totalVal = tipAmt;
     }
@@ -433,10 +433,10 @@
                                    @"tip_amount":[NSNumber numberWithDouble:tipAmt], @"subtotal":[NSNumber numberWithDouble:self.subTotalVal], @"tax_amount":[NSNumber numberWithDouble:self.taxVal],
                                    @"cc_last_4_digits":[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)], @"note":self.pd_noteText,@"pd_instruction":self.noteText,
                                    @"consumer_delivery_id":[AppData sharedInstance].consumer_Delivery_Id.length > 0 ? [AppData sharedInstance].consumer_Delivery_Id : @"",
-                                   @"delivery_charge_amount":[NSNumber numberWithDouble:self.deliveryAmountValue],
+                                   @"delivery_charge_amount":[NSNumber numberWithDouble:self.pd_charge],
                                    @"promotion_code":[CurrentBusiness sharedCurrentBusinessManager].business.promotion_code,
                                    @"promotion_discount_amount" : [NSString stringWithFormat:@"%f",self.promotionalamt],
-                                   @"pd_charge_amount": [NSNumber numberWithDouble:self.deliveryAmountValue],
+                                   @"pd_charge_amount": [NSNumber numberWithDouble:self.pd_charge],
                                    @"pd_mode": [AppData sharedInstance].consumerPDMethodChosen.length > 0 ? [AppData sharedInstance].consumerPDMethodChosen : @"",
                                    @"pd_locations_id": [AppData sharedInstance].consumer_Delivery_Location_Id.length > 0 ? [AppData sharedInstance].consumer_Delivery_Location_Id : @"",
                                    @"pd_time": [AppData sharedInstance].consumerPDTimeChosen.length > 0 ? [AppData sharedInstance].consumerPDTimeChosen : @""
@@ -525,6 +525,8 @@
                     receiptVC.totalPaid = self.lblTotalPrice.text;
                     receiptVC.tipAmount = tipAmt;
                     receiptVC.subTotal = self.subTotalVal;
+                    receiptVC.receiptPDCharge = self.pd_charge;
+                    receiptVC.taxAmount = self.taxVal;
                     
                     [self removeAllOrderFromCoreData];
                     

@@ -49,6 +49,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *lbl_emailSentShortly;
 @property(strong,nonatomic) NSString *currency_code;
 @property  (strong,nonatomic) NSString *currency_symbol;
+
+@property (assign) double taxAmount;
+@property (assign) double receiptPDCharge;
+
 - (IBAction)btnTextFromPayConfirmation:(id)sender;
 
 @end

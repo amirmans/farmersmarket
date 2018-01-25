@@ -23,7 +23,7 @@
 @property (strong,nonatomic) NSString *earnPtsOD;
 @property (strong,nonatomic) NSDate *pickupTimeOD;
 @property (strong,nonatomic) NSMutableArray *orderItemsOD;
-@property (assign) double deliveryamtOD;
+//@property (assign) double deliveryamtOD;
 @property (strong, nonatomic) NSMutableArray *locationArray;
 @property (strong, nonatomic) NSMutableArray *locationNameArray;
 
@@ -39,7 +39,7 @@
 @property (weak, nonatomic) IBOutlet UIView *viewTable;
 @property (weak, nonatomic) IBOutlet UIView *viewDesignationLocation;
 @property (weak, nonatomic) IBOutlet UIView *viewParking;
-@property (weak, nonatomic) IBOutlet UILabel *lblHotelName;
+//@property (weak, nonatomic) IBOutlet UILabel *lblHotelName;
 @property (weak, nonatomic) IBOutlet UILabel *lblBusinessNote;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnCounterPickupTime;
@@ -48,6 +48,14 @@
 @property (weak, nonatomic) IBOutlet UITextView *txtNotes;
 @property (weak, nonatomic) IBOutlet UIButton *btnCancel;
 @property (weak, nonatomic) IBOutlet UIButton *btnOk;
+
+@property (strong, nonatomic) IBOutlet UILabel *lblTable;
+@property (strong, nonatomic) IBOutlet UILabel *lblParkingSpace;
+@property (strong, nonatomic) IBOutlet UILabel *lblDeliveryTo;
+@property (strong, nonatomic) IBOutlet UILabel *lblCarryout;
+@property (strong, nonatomic) IBOutlet UILabel *lblTitle;
+@property (strong, nonatomic) IBOutlet UILabel *lblDeliveryLocationTimeInstruction;
+@property (strong, nonatomic) IBOutlet UILabel *lblPickupTimeInstruction;
 
 - (IBAction)btnCancelClicked:(id)sender;
 - (IBAction)btnOkClicked:(id)sender;

@@ -173,6 +173,7 @@
 		C69935B018B969F6008FCF8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C699356318B969F6008FCF8A /* AppDelegate.m */; };
 		C69935BB18B969F6008FCF8A /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C699357A18B969F6008FCF8A /* DataModel.m */; };
 		C69935D118B969F6008FCF8A /* StoreMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C69935A718B969F6008FCF8A /* StoreMapViewController.m */; };
+		C6A437882019702D00376F4B /* tap-in-only_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C6A437872019702D00376F4B /* tap-in-only_logo.png */; };
 		C6A877341D498A62007E3167 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6A877331D498A62007E3167 /* Security.framework */; };
 		C6AF155118ED3D6C004DBEBA /* UtilityConsumerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C6AF155018ED3D6C004DBEBA /* UtilityConsumerProfile.m */; };
 		C6AF155218ED3D6C004DBEBA /* UtilityConsumerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C6AF155018ED3D6C004DBEBA /* UtilityConsumerProfile.m */; };
@@ -453,6 +454,7 @@
 		C699357A18B969F6008FCF8A /* DataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataModel.m; sourceTree = "<group>"; };
 		C69935A618B969F6008FCF8A /* StoreMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreMapViewController.h; sourceTree = "<group>"; };
 		C69935A718B969F6008FCF8A /* StoreMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreMapViewController.m; sourceTree = "<group>"; };
+		C6A437872019702D00376F4B /* tap-in-only_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tap-in-only_logo.png"; sourceTree = "<group>"; };
 		C6A877331D498A62007E3167 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C6AF154F18ED3D6C004DBEBA /* UtilityConsumerProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UtilityConsumerProfile.h; path = MainSourceCode/UtilityConsumerProfile.h; sourceTree = "<group>"; };
 		C6AF155018ED3D6C004DBEBA /* UtilityConsumerProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UtilityConsumerProfile.m; path = MainSourceCode/UtilityConsumerProfile.m; sourceTree = "<group>"; };
@@ -677,6 +679,7 @@
 		2949CCC61458A21700728B87 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				C6A437872019702D00376F4B /* tap-in-only_logo.png */,
 				4AC80A8F1C69FF6900A42EE2 /* restaurant.jpg */,
 				5D7AEDB71C692B6800B0929F /* tempImage.jpeg */,
 				5D7AEE041C696D2E00B0929F /* back.png */,
@@ -1335,6 +1338,7 @@
 				5D7AEDD11C6934E400B0929F /* ic_heart.png in Resources */,
 				4A5AD37C1C770AE700DCEA6F /* TPRewardPointCell.xib in Resources */,
 				29ECC44C14CCC06C00986568 /* StoreMapViewController.xib in Resources */,
+				C6A437882019702D00376F4B /* tap-in-only_logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

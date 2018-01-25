@@ -48,7 +48,7 @@ NSString *Note_defaultText = @"Note for order(Optional)";
 NSString *deliveryStartTime;
 NSString *deliveryEndTime;
 double cartSubTotal = 0;            // Subtotal Price
-double deliveryAmount = 0.0;        // Delivery Amount
+double deliveryCharge = 0.0;        // Delivery charge
 
 #pragma mark - LifeCycle
 - (void)viewDidLoad {
@@ -114,25 +114,26 @@ double deliveryAmount = 0.0;        // Delivery Amount
 //        [UIAlertController showInformationAlert:message withTitle:title];
 //    }
     
-    if([[CurrentBusiness sharedCurrentBusinessManager].business.business_delivery_id integerValue] > 0){
-        // Get Delivery info API
-        long business_id_long = [CurrentBusiness sharedCurrentBusinessManager].business.businessID;
-        NSNumber *business_id = [NSNumber numberWithLongLong:business_id_long];
-        NSDictionary *inDataDict = @{@"business_id":business_id};
-        NSLog(@"---parameter---%@",inDataDict);
-        [[APIUtility sharedInstance] BusinessDelivaryInfoAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
-            NSLog(@"----response : %@",response);
-            self.btnDeliverToMe.enabled = YES;
-            self.lblDeliver.alpha = 1.0;
-            if(((NSArray *)[response valueForKey:@"data"]).count > 0) {
-                NSArray *dataDict = [response valueForKey:@"data"];
-                deliveryAmount = [[[dataDict objectAtIndex:0] valueForKey:@"delivery_charge"] doubleValue];
-                deliveryStartTime = [[dataDict objectAtIndex:0] valueForKey:@"delivery_start_time"];
-                deliveryEndTime = [[dataDict objectAtIndex:0] valueForKey:@"delivery_end_time"];
-            }
-        }];
-    }
-    else{
+//    if([[CurrentBusiness sharedCurrentBusinessManager].business.business_delivery_id integerValue] > 0){
+//        // Get Delivery info API
+//        long business_id_long = [CurrentBusiness sharedCurrentBusinessManager].business.businessID;
+//        NSNumber *business_id = [NSNumber numberWithLongLong:business_id_long];
+//        NSDictionary *inDataDict = @{@"business_id":business_id};
+////        NSLog(@"---parameter---%@",inDataDict);
+//        [[APIUtility sharedInstance] BusinessDelivaryInfoAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
+////            NSLog(@"----response : %@",response);
+//            self.btnDeliverToMe.enabled = YES;
+//            self.lblDeliver.alpha = 1.0;
+//            if(((NSArray *)[response valueForKey:@"data"]).count > 0) {
+//                NSArray *dataDict = [response valueForKey:@"data"];
+//                deliveryCharge = [[[dataDict objectAtIndex:0] valueForKey:@"delivery_charge"] doubleValue];
+//                deliveryStartTime = [[dataDict objectAtIndex:0] valueForKey:@"delivery_start_time"];
+//                deliveryEndTime = [[dataDict objectAtIndex:0] valueForKey:@"delivery_end_time"];
+//            }
+//        }];
+//    }
+//    else
+    {
         self.btnDeliverToMe.enabled = NO;
         self.lblDeliver.alpha = 0.7;
     }
@@ -232,7 +233,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
         cell.lbl_Notes.hidden = true;
     }
     
-    NSLog(@"note ---------------- %@",[self.currentObject valueForKey:@"item_note"]);
+//    NSLog(@"note ---------------- %@",[self.currentObject valueForKey:@"item_note"]);
     cell.btnRemoveItem.tag = indexPath.row;
     cell.btnRemoveItem.section = indexPath.section;
     cell.btnRemoveItem.row = indexPath.row;
@@ -604,17 +605,17 @@ double deliveryAmount = 0.0;        // Delivery Amount
                     self.notesText = @"";
                 }
                 
-                PickupDeliveryOptionsViewController *TotalCartItemVC = [[PickupDeliveryOptionsViewController alloc] initWithNibName:@"PickupDeliveryOptionsViewController" bundle:nil];
-                TotalCartItemVC.orderItemsOD = self.orderItems;
-                TotalCartItemVC.subTotalOD = [NSString stringWithFormat:@"%.2f",cartSubTotal];
-                TotalCartItemVC.earnPtsOD = self.lblEarnPoints.text;
-                TotalCartItemVC.pd_noteTextOD = self.notesText;
-                TotalCartItemVC.pickupTimeOD = self.pickupTime;
-                if([AppData sharedInstance].consumer_Delivery_Id != nil){
-                    TotalCartItemVC.deliveryamtOD = deliveryAmount;
-                    TotalCartItemVC.delivery_startTimeOD = deliveryStartTime;
-                    TotalCartItemVC.delivery_endTimeOD = deliveryEndTime;
-                }
+                PickupDeliveryOptionsViewController *pdOptionsVC = [[PickupDeliveryOptionsViewController alloc] initWithNibName:@"PickupDeliveryOptionsViewController" bundle:nil];
+                    pdOptionsVC.orderItemsOD = self.orderItems;
+                    pdOptionsVC.subTotalOD = [NSString stringWithFormat:@"%.2f",cartSubTotal];
+                    pdOptionsVC.earnPtsOD = self.lblEarnPoints.text;
+                    pdOptionsVC.pd_noteTextOD = self.notesText;
+//                    pdOptionsVC.pickupTimeOD = self.pickupTime;
+//                if([AppData sharedInstance].consumer_Delivery_Id != nil){
+//                    pdOptionsVC.deliveryamtOD = deliveryCharge;
+//                    pdOptionsVC.delivery_startTimeOD = deliveryStartTime;
+//                    pdOptionsVC.delivery_endTimeOD = deliveryEndTime;
+//                }
                 
                 long business_id_long = [CurrentBusiness sharedCurrentBusinessManager].business.businessID;
                 NSNumber *business_id = [NSNumber numberWithLongLong:business_id_long];
@@ -626,17 +627,7 @@ double deliveryAmount = 0.0;        // Delivery Amount
                     
                 }];
 
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                [self.navigationController pushViewController:TotalCartItemVC animated:YES];
+                [self.navigationController pushViewController:pdOptionsVC animated:YES];
             }
         }
         else
@@ -694,11 +685,11 @@ double deliveryAmount = 0.0;        // Delivery Amount
                 TotalCartItemVC.earnPts = self.lblEarnPoints.text;
                 TotalCartItemVC.noteText = self.notesText;
                 TotalCartItemVC.pickupTime = self.pickupTime;
-                if([AppData sharedInstance].consumer_Delivery_Id != nil){
-                    TotalCartItemVC.deliveryamt = deliveryAmount;
-                    TotalCartItemVC.delivery_startTime = deliveryStartTime;
-                    TotalCartItemVC.delivery_endTime = deliveryEndTime;
-                }
+//                if([AppData sharedInstance].consumer_Delivery_Id != nil){
+//                    TotalCartItemVC.deliveryamt = deliveryCharge;
+//                    TotalCartItemVC.delivery_startTime = deliveryStartTime;
+//                    TotalCartItemVC.delivery_endTime = deliveryEndTime;
+//                }
                 [self.navigationController pushViewController:TotalCartItemVC animated:YES];
             }
         }

@@ -21,7 +21,7 @@
 
 @interface MenuItemViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,SHMultipleSelectDelegate, SINavigationMenuDelegate, UITextFieldDelegate, UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate> {
     int myCartCount;
-    UIButton *_btn;
+//    UIButton *_btn;
     NSMutableArray *_dataSource;
     //NSString * flagstr;
     SINavigationMenuView *menu;

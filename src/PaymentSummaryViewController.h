@@ -27,12 +27,12 @@
 @property (strong,nonatomic) NSString *subTotal;
 @property (strong,nonatomic) NSString *noteText;
 @property (strong,nonatomic) NSString *pd_noteText;
-@property (assign) NSString* delivery_startTime;
-@property (assign) NSString* delivery_endTime;
+//@property (assign) NSString* delivery_startTime;
+//@property (assign) NSString* delivery_endTime;
 @property (strong,nonatomic) NSString *earnPts;
 @property (strong,nonatomic) NSDate *pickupTime;
 @property (strong,nonatomic) NSMutableArray *orderItems;
-@property (assign) double deliveryamt;
+//@property (assign) double deliveryamt;
 @property (assign) NSInteger selectedButtonNumber;
 
 @property (strong, nonatomic) IBOutlet UIButton *btnNoTip;
@@ -44,7 +44,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *lblTitle;
 @property (weak, nonatomic) IBOutlet UILabel *lblPromotionCode;
-@property (weak, nonatomic) IBOutlet UILabel *lblPromotionalAmount;
+@property (weak, nonatomic) IBOutlet UILabel *lblDiscountValue;
 @property (weak, nonatomic) IBOutlet UILabel *lblSubTotalPrice;
 @property (weak, nonatomic) IBOutlet UILabel *lblDeliveryAmount;
 @property (strong, nonatomic) IBOutlet UILabel *lblCurrentPoints;
@@ -52,7 +52,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblDefaultCard;
 @property (weak, nonatomic) IBOutlet UILabel *lblDeliveryLocation;
 @property (weak, nonatomic) IBOutlet UILabel *lblPickUpTime;
-@property (weak, nonatomic) IBOutlet UILabel *lblPromotionalText;
+//@property (weak, nonatomic) IBOutlet UILabel *lblPromotionalText;
 @property (weak, nonatomic) IBOutlet UILabel *waitTimeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *lblSubtotalAmount;
 @property (strong, nonatomic) IBOutlet UILabel *lblEarnedPoint;
@@ -63,6 +63,10 @@
 @property  (strong,nonatomic) NSString *currency_symbol;
 
 @property (weak, nonatomic) IBOutlet UIView *viewDeliveryAndPickup;
+@property (strong, nonatomic) IBOutlet UILabel *lblDeliveryLabel;
+@property (strong, nonatomic) IBOutlet UILabel *lblPromotionLabel;
+@property (strong, nonatomic) IBOutlet UILabel *lblPromotionDiscountLabel;
+
 
 - (IBAction)btnNoTipClicked:(id)sender;
 - (IBAction)btnTip10Clicked:(id)sender;

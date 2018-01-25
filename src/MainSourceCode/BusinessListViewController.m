@@ -577,6 +577,8 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     {
 //        cell.businessTypesTextField.text = businessTypes;
         cell.businessType.text = businessTypes;
+    } else {
+        cell.businessType.text = @"";
     }
 //
 //    NSString *neighborhood = [cellDict objectForKey:@"neighborhood"];
@@ -590,6 +592,8 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     {
 //        cell.neighborhoodTextField.text = neighborhood;
         cell.subtitleLabel.text = marketing_statement;
+    } else {
+        cell.subtitleLabel.text = @""; 
     }
     
     NSString *tmpIconName = [cellDict objectForKey:@"icon"];
@@ -618,18 +622,19 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     
     if([cellDict objectForKey:@"opening_time"] == [NSNull null] || [cellDict objectForKey:@"closing_time"] == [NSNull null]) {
         cell.lblOpenClose.hidden = true;
-//        cell.lblOpenCloseDate.hidden = true;
+        cell.lblOpenCloseDate.hidden = true;
     }
     else {
         cell.lblOpenClose.hidden = false;
         cell.lblOpenCloseDate.hidden = false;
-        if([[APIUtility sharedInstance]isBusinessOpen: [cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]]){
-            cell.lblOpenClose.text = @"OPEN NOW";
+//        if([[APIUtility sharedInstance]isBusinessOpen: [cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"], objectForKey:@"pickup_counter_later]){
+if([[APIUtility sharedInstance] isServiceAvailable:PickUpAtCounter during:[cellDict objectForKey:@"opening_time"] and:[cellDict objectForKey:@"closing_time"] withType:(int)[cellDict objectForKey:@"pickup_counter_later"]]){
+            cell.lblOpenClose.text = @"OPEN For SERVICES";
             cell.lblOpenClose.textColor = [UIColor orangeColor];
             cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:[cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]];
 
         }else{
-            cell.lblOpenClose.text = @"NOW CLOSED";
+            cell.lblOpenClose.text = @"CLOSED for SERVICES";
             cell.lblOpenClose.textColor = [UIColor grayColor];
 //            cell.lblOpenCloseDate.text = @"";
             cell.lblOpenCloseDate.textColor = [UIColor grayColor];

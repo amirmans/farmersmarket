@@ -61,7 +61,7 @@
     managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
 //    FetchedRecordArray= [[NSMutableArray alloc]initWithArray:[AppDelegate sharedInstance].getRecord];
     NSLog(@"%ld",(unsigned long)self.fetchedRecordArray.count);
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+//    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self setOrderData];
     [self paymentSummary];
     [self setOrderItemArray];
@@ -108,6 +108,28 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    UIView *footer = [[UIView alloc] initWithFrame:CGRectZero];
+    if (section == [tableView numberOfSections] - 1)  {
+            if (_receiptPDCharge > 0)
+            {
+                footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.width-2, 10)];
+                footer.backgroundColor = [UIColor clearColor];
+                
+                UILabel *lbl = [[UILabel alloc]initWithFrame:footer.frame];
+                [lbl setFont:[UIFont systemFontOfSize:12]];
+                lbl.backgroundColor = [UIColor clearColor];
+                lbl.text = [NSString localizedStringWithFormat:@"Deivery charge: $ %.2f   ", _receiptPDCharge];;
+                lbl.textAlignment = NSTextAlignmentRight;
+                [footer addSubview:lbl];
+        
+                return footer;
+            }
+    }
+        
+    return footer;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

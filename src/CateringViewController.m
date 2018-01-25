@@ -192,11 +192,12 @@
     self.lbl_StateAndDist.text = self.business.neighborhood;
     
     
-    if([[APIUtility sharedInstance]isBusinessOpen:self.business.opening_time CloseTime:self.business.closing_time]){
-        self.lbl_OpenNow.text = @"OPEN NOW";
+//    if([[APIUtility sharedInstance]isBusinessOpen:self.business.opening_time CloseTime:self.business.closing_time]){
+        if([[APIUtility sharedInstance]isServiceAvailable:PickUpAtCounter during:self.business.opening_time and:self.business.closing_time withType:(int)self.business.pickup_counter_later]){
+        self.lbl_OpenNow.text = @"OPEN For SERVICES";
         self.lbl_OpenNow.textColor = [UIColor greenColor];
     }else{
-        self.lbl_OpenNow.text = @"CLOSED";
+        self.lbl_OpenNow.text = @"CLOSED For SERVICES";
         self.lbl_OpenNow.textColor = [UIColor redColor];
     }
     self.lbl_Time.text = [[APIUtility sharedInstance]getOpenCloseTime:self.business.opening_time CloseTime:self.business.closing_time];

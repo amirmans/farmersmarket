@@ -441,7 +441,8 @@ UIBarButtonItem *btn_heart;
                                       [NSCharacterSet characterSetWithCharactersInString:@", "]] mutableCopy];
     [BgPictureArray removeObject:@""];
     
-    if([[APIUtility sharedInstance]isBusinessOpen:biz.opening_time CloseTime:biz.closing_time]){
+//    if([[APIUtility sharedInstance]isBusinessOpen:biz.opening_time CloseTime:biz.closing_time]) {
+    if([[APIUtility sharedInstance] isServiceAvailable:PickUpAtCounter during:biz.opening_time and:biz.closing_time withType:(int)biz.pickup_counter_later]) {
         self.lbl_OpenNow.text = @"OPEN NOW";
         self.lbl_OpenNow.textColor = [UIColor orangeColor];
     }else{
@@ -621,22 +622,22 @@ UIBarButtonItem *btn_heart;
 - (void) addPreviousOrdersToCoreData {
     if ([previousOrderArray count] > 0) {
     
-        NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
-        NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
-        BOOL businessIsClosed = false;
-        if(openTime == (id)[NSNull null] || closeTime == (id)[NSNull null]) {
-            businessIsClosed = true;
-        } else if (![[APIUtility sharedInstance] isBusinessOpen:openTime CloseTime:closeTime]) {
-            businessIsClosed = true;
-        }
-        if (businessIsClosed && !biz.accept_orders_when_closed) {
-            NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
-            NSString *message = [NSString stringWithFormat:@"However, you may view the menu items"];
-            NSString *title = [NSString stringWithFormat:@"%@ doesn't accept previous orders!", businessName];
-            [UIAlertController showInformationAlert:message withTitle:title];
-            
-            return;
-        }
+//        NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
+//        NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
+//        BOOL businessIsClosed = false;
+//        if(openTime == (id)[NSNull null] || closeTime == (id)[NSNull null]) {
+//            businessIsClosed = true;
+//        } else if (![[APIUtility sharedInstance] isBusinessOpen:openTime CloseTime:closeTime]) {
+//            businessIsClosed = true;
+//        }
+//        if (businessIsClosed && !biz.accept_orders_when_closed) {
+//            NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
+//            NSString *message = [NSString stringWithFormat:@"However, you may view the menu items"];
+//            NSString *title = [NSString stringWithFormat:@"%@ doesn't accept previous orders!", businessName];
+//            [UIAlertController showInformationAlert:message withTitle:title];
+//            
+//            return;
+//        }
         
         
         for (TPBusinessDetail *businessDetail in previousOrderArray) {

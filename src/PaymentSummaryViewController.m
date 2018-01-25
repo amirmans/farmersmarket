@@ -27,9 +27,13 @@
 @implementation PaymentSummaryViewController
 
 @synthesize managedObjectContext = _managedObjectContext;
-@synthesize redeemPointsVal,hud,dollarValForEachPoints,redeemNoPoint,currentPointsLevel,originalNoPoint,originalPointsVal,flagRedeemPointVal,delivery_startTime,delivery_endTime,deliveryamt,selectedButtonNumber;
+@synthesize redeemPointsVal,hud,dollarValForEachPoints,redeemNoPoint,currentPointsLevel,originalNoPoint
+    ,originalPointsVal,flagRedeemPointVal,selectedButtonNumber;
 @synthesize currency_symbol;
 @synthesize currency_code;
+// ui stuff
+@synthesize lblDeliveryLabel, lblPromotionLabel, lblDiscountValue, lblPromotionDiscountLabel;
+
 NSInteger currentTipVal = 0;   // Selected Tip Value
 NSString *delivery_location;   // Delivery location
 double globalPromotnal = 0.0;  // Variable for manage promotional amount with total amount value
@@ -40,12 +44,13 @@ double taxVal = 0.0;         // Final Tax Amount value
 double tipAmt = 0.0;          // Tip Amount Value
 double deliveryAmountValue; //Delievery amount value in $
 
+
 #pragma mark - Life Cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"Order Summary";
+    self.title = @"Payment Summary";
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
@@ -78,39 +83,53 @@ double deliveryAmountValue; //Delievery amount value in $
     billBusiness = [CurrentBusiness sharedCurrentBusinessManager].business;
     self.lblTitle.text = billBusiness.title;
     
-    if(self.pickupTime != nil){
-        self.lblPickUpTime.hidden = false;
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"hh:mm a"];
-        NSLog(@"%@",[NSString stringWithFormat:@"PICK-UP AT %@",[formatter stringFromDate:self.pickupTime]]);
-        self.lblPickUpTime.text = [NSString stringWithFormat:@"Pickup Time at %@",[formatter stringFromDate:self.pickupTime]];
-    }
-    else
-    {
-        self.lblPickUpTime.hidden = true;
-    }
+//    if(self.pickupTime != nil){
+//        self.lblPickUpTime.hidden = false;
+//        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//        [formatter setDateFormat:@"hh:mm a"];
+//        NSLog(@"%@",[NSString stringWithFormat:@"PICK-UP AT %@",[formatter stringFromDate:self.pickupTime]]);
+//        self.lblPickUpTime.text = [NSString stringWithFormat:@"Pickup Time at %@",[formatter stringFromDate:self.pickupTime]];
+//    }
+//    else
+//    {
+//        self.lblPickUpTime.hidden = true;
+//    }
     if(self.noteText == nil)
     {
         self.noteText = @"";
     }
-    if([AppData sharedInstance].consumer_Delivery_Id == nil && [AppData sharedInstance].consumer_Delivery_Location == nil){
-        self.lblDeliveryLocation.hidden = true;
-        NSLog(@"%@",[AppData sharedInstance].consumer_Delivery_Location);
-        delivery_location = @"";
-    }
-    else{
-        self.lblDeliveryLocation.hidden = false;
-        self.lblDeliveryLocation.text = @"";
-//        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Your Order is delievered at %@",[AppData sharedInstance].consumer_Delivery_Location];
+    
+//    if([AppData sharedInstance].consumer_Delivery_Id == nil && [AppData sharedInstance].consumer_Delivery_Location == nil){
+//        self.lblDeliveryLocation.hidden = true;
+//        NSLog(@"%@",[AppData sharedInstance].consumer_Delivery_Location);
+//        delivery_location = @"";
+//    }
+//    else{
+//        self.lblDeliveryLocation.hidden = false;
+//        self.lblDeliveryLocation.text = @"";
+////        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Your Order is delievered at %@",[AppData sharedInstance].consumer_Delivery_Location];
+//    }
+    
+    // Take care of labels
+    if ([[CurrentBusiness sharedCurrentBusinessManager].business.promotion_discount_amount length] < 1) {
+        _lblPromotionCode.hidden = true;
+        lblPromotionLabel.hidden = true;
+        lblDiscountValue.hidden = true;
+        lblPromotionDiscountLabel.hidden = true;
+    } else {
+        lblPromotionLabel.hidden = false;
+        lblDiscountValue.hidden = false;
+        _lblPromotionCode.hidden = false;
+        lblPromotionDiscountLabel.hidden = false;
     }
     
-    if(self.lblDeliveryLocation.hidden == true && self.lblPickUpTime.hidden ==true){
-        self.viewDeliveryAndPickup.hidden = true;
-    }
-    else
-    {
-        self.viewDeliveryAndPickup.hidden = false;
-    }
+//    if(self.lblDeliveryLocation.hidden == true && self.lblPickUpTime.hidden ==true){
+//        self.viewDeliveryAndPickup.hidden = true;
+//    }
+//    else
+//    {
+//        self.viewDeliveryAndPickup.hidden = false;
+//    }
     
     self.lblSubtotalAmount.text = [NSString stringWithFormat:@"%@%@",self.currency_symbol,self.subTotal];
     self.lblEarnedPoint.text = self.earnPts;
@@ -165,6 +184,15 @@ double deliveryAmountValue; //Delievery amount value in $
     _waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
     [self getDefaultCardData];
     [self paymentSummary];
+    
+    //needs to be here after paymentSummary that is where deliveryAmountValue gets its value
+//    if (deliveryAmountValue < 1) {
+//        _lblDeliveryAmount.textColor = [UIColor grayColor];
+//        lblDeliveryLabel.textColor = [UIColor grayColor];
+//    } else {
+//        _lblDeliveryAmount.textColor = [UIColor blackColor];
+//        lblDeliveryLabel.textColor = [UIColor blackColor];
+//    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -231,8 +259,8 @@ double deliveryAmountValue; //Delievery amount value in $
     makePaymentVC.taxVal = taxVal;
     makePaymentVC.tipAmt = tipAmt;
     makePaymentVC.promotionalamt = promotionalamt;
-    makePaymentVC.deliveryAmountValue = deliveryAmountValue;
-    makePaymentVC.deliveryamt = deliveryamt;
+    makePaymentVC.pd_charge = deliveryAmountValue;
+//    makePaymentVC.deliveryamt = deliveryamt; //zzz
     makePaymentVC.noteText = self.noteText;
     makePaymentVC.pd_noteText = self.pd_noteText;
     makePaymentVC.restTitle = self.lblTitle.text;
@@ -334,13 +362,13 @@ double deliveryAmountValue; //Delievery amount value in $
         tipAmt = cartTotalValue* (tip/100);
         if(globalPromotnal > cartTotalValue)
         {
-            self.lblPromotionalAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,cartTotalValue];
+            self.lblDiscountValue.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,cartTotalValue];
             promotionalamt = cartTotalValue;
         }
         else
         {
             promotionalamt = globalPromotnal;
-            self.lblPromotionalAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,promotionalamt];
+            self.lblDiscountValue.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,promotionalamt];
         }
         
         if(flagRedeemPointVal){
@@ -365,14 +393,16 @@ double deliveryAmountValue; //Delievery amount value in $
     totalVal = [self.subTotal doubleValue] + taxVal + deliveryAmountValue - promotionalamt;
     self.lblSubTotalPrice.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,totalVal];
     
-    self.lblDeliveryAmount.hidden = false;
+//    self.lblDeliveryAmount.hidden = false;
     NSString *p_time = [AppData sharedInstance].consumerPDTimeChosen;
     
     if(selectedButtonNumber == 1){
+        lblDeliveryLabel.text = @"Service charge:";
         if ([billBusiness.pickup_counter_charge rangeOfString:@"%"].location == NSNotFound)
         {
-            deliveryAmountValue = [billBusiness.pickup_counter_charge doubleValue];
-            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f"
+                                           ,self.currency_symbol,[billBusiness.pickup_counter_charge doubleValue]];
+//            lblDeliveryLabel.textColor = [UIColor blackColor];
         }
         else
         {
@@ -397,6 +427,7 @@ double deliveryAmountValue; //Delievery amount value in $
         self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Delivery to table number %@",[AppData sharedInstance].consumer_Delivery_Location_Id];
     }
     else if(selectedButtonNumber == 3){
+        lblDeliveryLabel.text = @"Delivery charge:";
         if ([billBusiness.delivery_location_charge rangeOfString:@"%"].location == NSNotFound) {
             deliveryAmountValue = [billBusiness.delivery_location_charge doubleValue];
             self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
@@ -445,13 +476,13 @@ double deliveryAmountValue; //Delievery amount value in $
                     if( ((NSArray *)[response valueForKey:@"data"]).count > 0) {
                         globalPromotnal = 0.00;
                         promotionalamt = 0.00;
-                        self.lblPromotionalAmount.hidden = true;
+                        self.lblDiscountValue.hidden = true;
                         self.lblPromotionCode.hidden = true;
 //                        self.lblPromotionalText.hidden = true;
                     }
                     else
                     {
-                        self.lblPromotionalAmount.hidden = false;
+                        self.lblDiscountValue.hidden = false;
                         self.lblPromotionCode.hidden = false;
 //                        self.lblPromotionalText.hidden = false;
                         NSLog(@"%@", [CurrentBusiness sharedCurrentBusinessManager].business.promotion_code);
@@ -469,13 +500,13 @@ double deliveryAmountValue; //Delievery amount value in $
                         }
                         if(globalPromotnal > cartTotalValue)
                         {
-                            self.lblPromotionalAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,cartTotalValue];
+                            self.lblDiscountValue.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,cartTotalValue];
                             promotionalamt = cartTotalValue;
                         }
                         else
                         {
                             promotionalamt = globalPromotnal;
-                            self.lblPromotionalAmount.text = [NSString stringWithFormat:@"%@%@",self.currency_symbol,billBusiness.promotion_discount_amount];
+                            self.lblDiscountValue.text = [NSString stringWithFormat:@"%@%@",self.currency_symbol,billBusiness.promotion_discount_amount];
                         }
                     }
  

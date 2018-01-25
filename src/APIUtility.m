@@ -26,7 +26,10 @@ static NSDateFormatter* utilyDateFormatter;
         sharedObj.operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
         
         utilyDateFormatter = [[NSDateFormatter alloc]init];
-        [utilyDateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"HH:mm:ss" options:0 locale:[NSLocale currentLocale]]];
+        [utilyDateFormatter setDateFormat:@"HH:mm:ss"];
+        [utilyDateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+//        [utilyDateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"HH:mm:ss" options:0 locale:[NSLocale currentLocale]]];
+
     }
     return sharedObj;
 }
@@ -342,7 +345,7 @@ static NSDateFormatter* utilyDateFormatter;
     }];
 }
 
-- (void) save_cc_info :(NSDictionary *) param completiedBlock:(void (^)(NSDictionary *response))finished {
+- (void)save_cc_info :(NSDictionary *) param completiedBlock:(void (^)(NSDictionary *response))finished {
     if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
     {
         return;
@@ -366,7 +369,7 @@ static NSDateFormatter* utilyDateFormatter;
           }];
 }
 
-- (void) remove_cc_info :(NSDictionary *) param completiedBlock:(void (^)(NSDictionary *response))finished {
+- (void)remove_cc_info :(NSDictionary *) param completiedBlock:(void (^)(NSDictionary *response))finished {
     if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
     {
         return;
@@ -542,6 +545,45 @@ static NSDateFormatter* utilyDateFormatter;
     return timeStamp;
 }
 
+
+/** Returns a new NSDate object with the time set to the indicated hour,
+ * and minute.
+ * @param hour The hour to use in the new date.
+ * @param minute The number of minutes to use in the new date.
+ */
+- (NSDate *)dateFromGivenDate:(NSDate *)givenDate WithHour:(NSInteger)hour
+                       minute:(NSInteger)minute
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components: NSCalendarUnitYear|
+                                    NSCalendarUnitMonth|
+                                    NSCalendarUnitDay
+                                               fromDate:givenDate];
+    [components setHour:hour];
+    [components setMinute:minute];
+    
+    NSDate *newDate = [calendar dateFromComponents:components];
+    
+    return newDate;
+}
+
+- (NSDate *)dateFromGivenDate:(NSDate *)givenDate WithYear:(NSInteger)year
+                        month:(NSInteger)month  andDay:(NSInteger)day
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components: NSCalendarUnitHour|
+                                    NSCalendarUnitMinute|
+                                    NSCalendarUnitSecond
+                                               fromDate:givenDate];
+    [components setYear:year];
+    [components setMonth:month];
+    [components setDay:day];
+    
+    NSDate *newDate = [calendar dateFromComponents:components];
+    return newDate;
+}
+
+
 - (BOOL)isBusinessOpenAt:(NSString *)givenDate OpenTime:(NSString *)openTime CloseTime:(NSString *)closeTime {
 
     NSString *time1 = openTime;
@@ -567,7 +609,7 @@ static NSDateFormatter* utilyDateFormatter;
 }
 
 
-- (BOOL) isBusinessOpen: (NSString *)openTime CloseTime:(NSString *)closeTime {
+- (BOOL)isBusinessOpen: (NSString *)openTime CloseTime:(NSString *)closeTime {
     NSString *currentTime = [utilyDateFormatter stringFromDate:[NSDate date]];
     
     NSString *time1 = openTime;
@@ -591,6 +633,133 @@ static NSDateFormatter* utilyDateFormatter;
     return  false;
 }
 
+- (NSString *)earlierTimeInString:(NSString *)time1 and:(NSString *)time2 {
+
+    NSArray *time1_Array = [time1 componentsSeparatedByString:@":"];
+    NSArray *time2_Array = [time2 componentsSeparatedByString:@":"];
+    
+    long long time1InSeconds = [time1_Array[0] integerValue] * 3600 + [time1_Array[1] integerValue]* 60 + [time1_Array[2] integerValue];
+    long long time2InSeconds = [time2_Array[0] integerValue] * 3600 + [time2_Array[1] integerValue]* 60 + [time2_Array[2] integerValue];
+    
+    if (time2InSeconds < time1InSeconds) {
+        return time2;
+    } else {
+        return time1;
+    }
+}
+
+- (NSString *)laterTimeInString:(NSString *)time1 and:(NSString *)time2 {
+    
+    NSArray *time1_Array = [time1 componentsSeparatedByString:@":"];
+    NSArray *time2_Array = [time2 componentsSeparatedByString:@":"];
+    
+    long long time1InSeconds = [time1_Array[0] integerValue] * 3600 + [time1_Array[1] integerValue]* 60 + [time1_Array[2] integerValue];
+    long long time2InSeconds = [time2_Array[0] integerValue] * 3600 + [time2_Array[1] integerValue]* 60 + [time2_Array[2] integerValue];
+    
+    if (time2InSeconds > time1InSeconds) {
+        return time2;
+    } else {
+        return time1;
+    }
+}
+
+
+- (int)serviceAvailableStatus: (int)service during:(NSString *)openTime and:(NSString *)closeTime withType:(int)serviceBeforeOpen {
+    int returnVal = 0;
+    
+    
+    
+    //    static const int Pickup_closed_all_day = 1;
+    //    static const int Pickup_closed_rest_of_day = 2;
+    //    static const int Pickup_open_later_today = 4;
+    //    static const int Pickup_open = 8;
+    
+//    NSString *time1 = biz.opening_time;
+//    NSString *time2 = biz.closing_time;
+    
+    NSArray *openTimeArray = [openTime componentsSeparatedByString:@":"];
+    NSArray *closeTimeArray = [closeTime componentsSeparatedByString:@":"];
+    
+    long long openTimeInSeconds = [openTimeArray[0] integerValue] * 3600 + [openTimeArray[1] integerValue]* 60 + [openTimeArray[2] integerValue];
+    long long closeTimeInSeconds = [closeTimeArray[0] integerValue] * 3600 + [closeTimeArray[1] integerValue]* 60 + [closeTimeArray[2] integerValue];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components: NSCalendarUnitHour|
+                                    NSCalendarUnitMinute|
+                                    NSCalendarUnitSecond
+                                    fromDate:[NSDate date]];
+    long long currentTimeInSeconds = [components hour] * 3600 + [components minute] * 60 + [components second];
+    
+    
+//    NSDate *date1 = [utilyDateFormatter dateFromString:openTime];
+//    NSDate *date2 = [utilyDateFormatter dateFromString:closeTime];
+//    NSDate *date3 = [utilyDateFormatter dateFromString:time3];
+//    NSDate *date1 = [self dateFromGivenDate:[NSDate date] WithHour:[openTimeArray[0] integerValue]
+//                                     minute:(NSInteger)[openTimeArray[1] integerValue]];
+//    NSDate *date2 = [self dateFromGivenDate:[NSDate date] WithHour:[closeTimeArray[0] integerValue]
+//                                     minute:(NSInteger)[closeTimeArray[1] integerValue]];
+    
+    if (openTimeInSeconds >= closeTimeInSeconds) {
+        returnVal = Pickup_closed_all_day;
+    } else if (currentTimeInSeconds > closeTimeInSeconds) {
+        returnVal = Pickup_closed_rest_of_day;
+    } else if (currentTimeInSeconds < openTimeInSeconds) {
+        returnVal = Pickup_open_later_today;
+    } else {
+        returnVal = Pickup_open;
+    }
+    
+    return returnVal;
+    
+//    NSString *currentTime = [utilyDateFormatter stringFromDate:[NSDate date]];
+//    NSDate *date3 = [utilyDateFormatter dateFromString:currentTime];
+//    NSDate *date3 = [NSDate date];
+    
+//    NSComparisonResult result2 = [date1 compare:date2];
+//    NSComparisonResult result = [date1 compare:date3];
+//    NSComparisonResult result1 = [date2 compare:date3];
+//
+//    if(result2 == NSOrderedSame || result2 == NSOrderedDescending)
+//    {
+//        returnVal = Pickup_closed_all_day;
+//    } else if(result == NSOrderedAscending && result1 == NSOrderedDescending)
+//    {
+//        returnVal = Pickup_open;
+//    } else if(result == NSOrderedSame || result1 == NSOrderedSame){
+//        returnVal = Pickup_open;
+//    } else if (result == NSOrderedDescending)
+//    {
+//        returnVal = Pickup_open_later_today;
+//    }
+//    else {
+//        returnVal = Pickup_closed_rest_of_day;
+//    }
+    
+//    return returnVal;
+//    if (returnVal == Pickup_open)
+//    {
+//        return true;
+//    } else if ( (returnVal == Pickup_open_later_today) &&  (serviceBeforeOpen > 0) ) {
+//        return true;
+//    } else {
+//        return false;
+//    }
+}
+
+- (BOOL)isServiceAvailable:(int)service during:(NSString *)openTime and:(NSString *)closeTime withType:(int) serviceBeforeOpen {
+    int serviceStatus = [self serviceAvailableStatus:service during:openTime and:closeTime withType:serviceBeforeOpen];
+    
+    if (serviceStatus == Pickup_open)
+    {
+        return true;
+    } else if ( (serviceStatus == Pickup_open_later_today) &&  (serviceBeforeOpen > 0) ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+
 - (NSString *) getOpenCloseTime: (NSString *)openTime CloseTime:(NSString *)closeTime{
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"HH:mm:ss" options:0 locale:[NSLocale currentLocale]]];
@@ -607,14 +776,14 @@ static NSDateFormatter* utilyDateFormatter;
     NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
     timeFormatter.dateFormat = @"h:mma";
     
-    NSLog(@"%@",[timeFormatter stringFromDate:date2]);
+//    NSLog(@"%@",[timeFormatter stringFromDate:date2]);
     
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:date1];
-    NSInteger hour= [components hour];
-    NSInteger minute = [components minute];
-    NSInteger second = [components second];
+//    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:date1];
+//    NSInteger hour= [components hour];
+//    NSInteger minute = [components minute];
+//    NSInteger second = [components second];
 
-    NSLog(@"%ld-%ld-%ld",(long)hour,(long)minute,(long)second);
+//    NSLog(@"%ld-%ld-%ld",(long)hour,(long)minute,(long)second);
     NSString *openCloseTime = [NSString stringWithFormat:@"%@-%@",[timeFormatter stringFromDate:date1],[timeFormatter stringFromDate:date2]];
     return openCloseTime;
 }
@@ -669,7 +838,7 @@ static NSDateFormatter* utilyDateFormatter;
 
 
 - (void)getAverageWaitTimeForBusiness:(NSDictionary *)data server:(NSString *)url completiedBlock:(void (^)(NSDictionary *response))finished {
-
+//zzz TODO
     if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
     {
         return;
@@ -772,6 +941,21 @@ static NSDateFormatter* utilyDateFormatter;
     [usNumber insertString: @"-" atIndex:9];
     
     return usNumber;
+}
+
++ (float)calcCharge:(float)subTotal using:(NSString *)chargeFormula {
+    float returnVal = 0.0;
+    NSCharacterSet *cset = [NSCharacterSet characterSetWithCharactersInString:@"%"];
+    NSRange range = [chargeFormula rangeOfCharacterFromSet:cset];
+    if (range.location == NSNotFound) {
+        return ([chargeFormula floatValue]);
+    } else {
+        NSString* floatString =
+        [chargeFormula stringByReplacingOccurrencesOfString:@" %" withString:@""];
+        return ([floatString floatValue]);
+    }
+    
+    return returnVal;
 }
 
 @end

@@ -6,6 +6,7 @@
 //
 //
 
+#import "AppDelegate.h"
 #import "ListofBusinesses.h"
 #import "AppData.h"
 
@@ -59,7 +60,12 @@
 //    int status = [[responseData objectForKey:@"status"] intValue];
 //        NSAssert(status == 0, @"We could not get list of our businesses");
     if ([[responseData objectForKey:@"status"] integerValue] >= 0) {
-            businessListArray = [responseData objectForKey:@"data"];
+        businessListArray = [responseData objectForKey:@"data"];
+        AppDelegate * myAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        if ([responseData objectForKey:@"information_date"]) {
+            myAppDelegate.informationDate = [responseData objectForKey:@"information_date"];
+        }
+    
     }
     else
     {

@@ -16,15 +16,18 @@
 #import "AFNetworking.h"
 #import "APIUtility.h"
 
+static NSNumberFormatter *numberFormatter;
+
 @interface Business () {
     //    NSString *imageFileName;
     //    NSString *imageFileExt;
 @private
-    
+
 }
 
 //@property(nonatomic, retain) NSString *imageFileName;
 //@property(nonatomic, retain) NSString *imageFileExt;
+//@property(nonatomic, retain) NSNumberFormatter *numberFormatter;
 
 - (void)fetchProductData:(NSData *)responseData;
 - (void)prepareToGetGoogleDetailedData;
@@ -45,7 +48,7 @@
 @synthesize state;
 @synthesize phone;
 @synthesize sms_no;
-@synthesize isProductListLoaded, businessID, branch;
+@synthesize isProductListLoaded, businessID, branch, time_interval, offers_points;
 @synthesize lat,lng;
 @synthesize businessProducts;
 @synthesize businessEvents;
@@ -72,7 +75,8 @@
 @synthesize bg_image_name;
 @synthesize is_collection;
 @synthesize process_time;
-@synthesize process_cycle_time, process_lead_time;
+@synthesize cycle_time;
+//@synthesize lead_time;
 @synthesize keywords;
 @synthesize sub_businesses;
 
@@ -92,9 +96,10 @@
 @synthesize curr_code;
 @synthesize curr_symbol;
 @synthesize accept_orders_when_closed;
+//@synthesize numberFormatter;
 
 - (void)initMemberData {
-    
+
 //    self.Note = nil;
     self.iconRelativeURL = nil;
     self.isCustomer = -1;
@@ -108,7 +113,8 @@
     self.businessEvents = nil;
     self.businessID = -1;  // -1 is invalid like nil -  0 is a valid businessID
     self.branch = 0;  // 0 is no main bussiness branch - not 0 is under main business branch
-    
+    self.time_interval = 1;
+
     self.lat = 0;
     self.lng = 0;
     self.chatSystemURL = nil;
@@ -139,8 +145,8 @@
     closing_time = nil;
     bg_image_name = nil;
     process_time = nil;
-    process_cycle_time = nil;
-    process_lead_time = nil;
+    cycle_time = nil;
+//    lead_time = nil;
     keywords = nil;
     sub_businesses = nil;
     delivery_location_charge = nil;
@@ -148,7 +154,7 @@
     pickup_location_charge = nil;
     pickup_counter_charge = nil;
     tax_rate = nil;
-    pickup_counter_later = nil;
+    pickup_counter_later = 0;
     business_delivery_id = nil;
     business_promotion_id = nil;
     display_icon_product_categories = nil;
@@ -156,7 +162,7 @@
     promotion_code = nil;
     promotion_discount_amount = nil;
     promotion_message = nil;
-    
+
     accept_orders_when_closed = 0;
     offers_points = 1;
     curr_symbol = nil;
@@ -175,9 +181,9 @@
     // At this point even if isProductListLoaded is true.  we want to set to false.  So other modules wait for the new result.
     isProductListLoaded = false;
     businessProducts = nil;
-    
+
     NSString *consumer_id = [NSString stringWithFormat: @"%ld", [DataModel sharedDataModelManager].userID];
-    
+
     NSString *urlString = nil;
     if(sub_businesses == nil)
     {
@@ -191,7 +197,7 @@
 //    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlString];
-    
+
     //    isProductListLoaded = TRUE;
     dispatch_async(TT_CommunicationWithServerQ, ^{
         NSData* data = [NSData dataWithContentsOfURL:url];
@@ -202,7 +208,7 @@
 //- (void) startLoadingBusinessProductCategoriesAndProductsWithBusincessID : (NSString *) busiID {
 //    isProductListLoaded = false;
 //    businessProducts = nil;
-//    
+//
 //    NSString *consumer_id = [NSString stringWithFormat: @"%ld", [DataModel sharedDataModelManager].userID];
 //    NSString *urlString = nil;
 //    if(sub_businesses == nil)
@@ -218,7 +224,7 @@
 ////    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 //    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
 //    NSURL *url = [NSURL URLWithString:urlString];
-//    
+//
 //    //    isProductListLoaded = TRUE;
 //    dispatch_async(TT_CommunicationWithServerQ, ^{
 //        NSData* data = [NSData dataWithContentsOfURL:url];
@@ -232,7 +238,7 @@
     if(responseData != nil)
     {
         NSError* error =nil;
-        
+
         businessProducts = [NSJSONSerialization
                             JSONObjectWithData:responseData
                             options:kNilOptions
@@ -248,7 +254,7 @@
 }
 
 - (NSDictionary *)businessProducts {
-    
+
     if (businessProducts == nil) {
         [self startLoadingBusinessProductCategoriesAndProducts];
     }
@@ -257,12 +263,12 @@
 
 - (void)startLoadingBusinessEvents {
     NSString * ServerForBusiness = DefinedServerForBusiness;
-    
+
     NSString *urlString = [NSString stringWithFormat:@"%@?businessID=%i", ServerForBusiness, businessID];
 //    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
     NSURL *url = [NSURL URLWithString:urlString];
-    
+
     //    isProductListLoaded = TRUE;
     dispatch_async(TT_CommunicationWithServerQ, ^{
         NSData* data = [NSData dataWithContentsOfURL:url];
@@ -289,17 +295,17 @@
 
 
 - (NSDictionary *)businessEvents {
-    
+
     if (businessEvents == nil) {
         [self startLoadingBusinessEvents];
     }
     return businessEvents;
-    
+
 }
 
 - (NSString *)stringFromDataDictionary:(NSDictionary *)data forKey:(NSString *)key
 {
-    
+
     NSString* field = [data objectForKey:key];
     if (field == (id)[NSNull null] || field.length == 0 )
     {
@@ -329,12 +335,12 @@
 }
 
 - (NSArray *)nsArrayFromDataDictionary:(NSDictionary *)data forKey:(NSString *)key {
-    
+
     NSString *jsonString = [data objectForKey:key];
     NSData * jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     NSError * error=nil;
     id jsonObject = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:&error];
-    
+
     NSArray *jsonArray = nil;
     if ([jsonObject isKindOfClass:[NSArray class]]) {
         NSLog(@"its an array!");
@@ -346,15 +352,15 @@
         NSDictionary *jsonDictionary = (NSDictionary *)jsonObject;
         NSLog(@"jsonDictionary - %@",jsonDictionary);
     }
-  
+
     return jsonArray;
 }
 
 - (id)initWithDataFromDatabase:(NSDictionary *)data {
 //  [self initMemberData];
-    
+
     isCustomer = 1;
-    
+
     // since these values are coming from db, we should take care "[Null]" - database marks for null
     title = [data objectForKey:@"name"];
 //    Note = [data objectForKey:@"note"];
@@ -368,11 +374,11 @@
     email = [self stringFromDataDictionary:data forKey:@"email"];
     paymentProcessingID = [self stringFromDataDictionary:data forKey:@"payment_processing_id"];
     paymentProcessingEmail = [self stringFromDataDictionary:data forKey:@"payment_processing_email"];
-   
+
     if ((paymentProcessingEmail == nil) && (email != nil)) {
         paymentProcessingEmail = email;
     }
-    
+
     businessTypes = [self mutableStringFromDataDictionary:data forKey:@"businessTypes"];
     neighborhood = [self stringFromDataDictionary:data forKey:@"neighborhood"];
     address = [self stringFromDataDictionary:data forKey:@"address"];
@@ -387,11 +393,12 @@
     chatSystemURL = [self stringFromDataDictionary:data forKey:@"chatroom_table"];
     businessID = [[data objectForKey:@"businessID"] intValue];
     branch = [[data objectForKey:@"branch"] intValue];
+    time_interval = [[data objectForKey:@"time_interval"] intValue];
     lat = [[data objectForKey:@"lat"] doubleValue];
     lng = [[data objectForKey:@"lng"] doubleValue];
     accept_orders_when_closed = [[data objectForKey:@"order_when_closed"] boolValue];
     offers_points = [[data objectForKey:@"offers_points"] boolValue];
-    
+
 //    if ([data objectForKey:@"chat_masters"] != [NSNull null]) {
 //        chat_masters = [self nsArrayFromDataDictionary:data forKey:@"chat_masters"];
 //    }
@@ -404,11 +411,11 @@
     validate_chat = [[data objectForKey:@"validate_chat"] boolValue];
     is_collection = [[data objectForKey:@"is_collection"] boolValue];
     inquiryForProduct = [[data objectForKey:@"inquiry_for_product"] boolValue];
-    
+
     NSString* bg_image_URLString = [self stringFromDataDictionary:data forKey:@"bg_image"];
     bg_image_name = bg_image_URLString;
     [self setBGImageFromString:bg_image_URLString];
-    
+
     bg_color = [self stringFromDataDictionary:data forKey:@"bg_color"];
     if (!bg_color) {
         bg_color = Default_BG_Color;
@@ -417,9 +424,9 @@
     if (!text_color) {
         text_color = Default_Text_Color;
     }
-    
+
     sub_businesses = [self stringFromDataDictionary:data forKey:@"sub_businesses"];
-    
+
 //    pickup_mode = [self stringFromDataDictionary:data forKey:@"pickup_mode"];
 //    delivery_mode  = [self stringFromDataDictionary:data forKey:@"delivery_mode"];
     delivery_table_charge = [self stringFromDataDictionary:data forKey:@"delivery_table_charge"];
@@ -427,7 +434,7 @@
     pickup_counter_charge = [self stringFromDataDictionary:data forKey:@"pickup_counter_charge"];
     pickup_location_charge  = [self stringFromDataDictionary:data forKey:@"pickup_location_charge"];
     tax_rate  = [self stringFromDataDictionary:data forKey:@"tax_rate"];
-    
+
     business_delivery_id  = [self stringFromDataDictionary:data forKey:@"business_delivery_id"];
     business_promotion_id  = [self stringFromDataDictionary:data forKey:@"business_promotion_id"];
     display_icon_product_categories  = [self stringFromDataDictionary:data forKey:@"display_icon_product_categories"];
@@ -435,52 +442,68 @@
     promotion_code  = [self stringFromDataDictionary:data forKey:@"promotion_code"];
     promotion_discount_amount  = [self stringFromDataDictionary:data forKey:@"promotion_discount_amount"];
     promotion_message  = [self stringFromDataDictionary:data forKey:@"promotion_message"];
-    
+
     /*
-     
+
      bg_colorRGB {
         r = "",
         g = "",
         b = ""
      }
-     
+
      */
     //Currency
     curr_code = [self stringFromDataDictionary:data forKey:@"curr_code"];
     curr_symbol = [self stringFromDataDictionary:data forKey:@"curr_symbol"];
-    
+
     business_bg_color =  [self setUIColorFromString:bg_color];
     business_text_color = [self setUIColorFromString:text_color];
-    
+
     marketing_statement = [self stringFromDataDictionary:data forKey:@"marketing_statement"];
+
     opening_time = [self stringFromDataDictionary:data forKey:@"opening_time"];
-
     closing_time = [self stringFromDataDictionary:data forKey:@"closing_time"];
+    if (closing_time == nil || opening_time == nil) {
+        closing_time = @"00:00:00";
+        opening_time = @"00:00:00";
+    }
     process_time = [self stringFromDataDictionary:data forKey:@"process_time"];
-    if (process_time == nil)
+    if (process_time == nil) {
         process_time = Default_Process_Time;
+    }
 
-    NSString *tempCycleTimeInString = [self stringFromDataDictionary:data forKey:@"process_cycle_time"];
-    NSString *tempLeadTimeInString = [self stringFromDataDictionary:data forKey:@"process_lead_time"];
-    process_cycle_time = [NSNumber numberWithInt:[tempCycleTimeInString intValue]];
-    process_lead_time = [NSNumber numberWithInt:[tempLeadTimeInString intValue]];
+    if (!numberFormatter) {
+        numberFormatter = [[NSNumberFormatter alloc] init];
+    }
     
+    NSString *numberString;
+    NSScanner *scanner = [NSScanner scannerWithString:process_time];
+    NSCharacterSet *numbers = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    [scanner scanUpToCharactersFromSet:numbers intoString:NULL];
+    [scanner scanCharactersFromSet:numbers intoString:&numberString];
+    numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    cycle_time = [numberFormatter numberFromString:numberString];
+    if (cycle_time == nil || cycle_time < 0) {
+        NSString *tempCycleTimeInString = [self stringFromDataDictionary:data forKey:@"cycle_time"];
+        cycle_time = [NSNumber numberWithInt:[tempCycleTimeInString intValue]];
+    }
+
     keywords = [self stringFromDataDictionary:data forKey:@"keywords"];
     // no keywords is ginven at least use the business name for our searches
     if ([keywords length] <1) {
-        keywords = businessName;
+        keywords = businessName; //TODO
     }
 
-    
+
 //    if (validate_chat) {
 //        validate_chat = ChatValidationWorkflow_InProcess; // means in the process of validation
 //        // Create the HTTP request object for our URL
 //        AFHTTPRequestOperationManager *manager;
 //        manager = [AFHTTPRequestOperationManager manager];
-//        
+//
 //        [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
 //        [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
-//        
+//
 //        NSInteger userID = [DataModel sharedDataModelManager].userID;
 //        NSString *businessIDString = [NSString stringWithFormat:@"%i", businessID];
 //        NSString  *userIDString = [NSString stringWithFormat:@"%lu", (unsigned long)userID];
@@ -492,7 +515,7 @@
 //                  NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:kNilOptions error:&jsonError];
 //                  NSInteger statusCode = [[jsonResponse objectForKey:@"status_code"] integerValue];
 //                  NSInteger permissionCode = [[jsonResponse objectForKey:@"permission"] integerValue];
-//                  
+//
 //                  if ( (operation.response.statusCode != 200) || (statusCode != 0) ) {
 //                      [UIAlertController showErrorAlert:NSLocalizedString(@"No connection to Business's Chatroom", nil)];
 //                      validate_chat = ChatValidationWorkflow_ErrorFromServer; // error
@@ -507,7 +530,7 @@
 //                  NSLog(@"Response from chat system server for validation the user indicates error:%@", error);
 //              }
 //         ];
-//        
+//
 //    } else {
 //        validate_chat = ChatValidationWorkflow_NoNeedToValidate;
 //    };
@@ -521,9 +544,9 @@
     // to get the rest of info
     [self initMemberData];
     rating = googleObject.rating;
-    address = googleObject.vicinity;   
+    address = googleObject.vicinity;
     phone = googleObject.formattedPhoneNumber;
-    
+
     self.googlePlacesObject = googleObject;
     self.businessName = googleObject.name;
     coordinate = googleObject.coordinate;
@@ -543,35 +566,35 @@
 //    urlString = [urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
 //    NSURL *url = [NSURL URLWithString:urlString];
 //    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadRevalidatingCacheData timeoutInterval:10];
-    
+
 //    NSURLResponse *resp = nil;
     NSError *err = nil;
     NSData *responseData;
 //    responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&err];
-    
-    
-    
+
+
+
     NSURLSession *session = [NSURLSession sharedSession];
     [[session dataTaskWithURL:[NSURL URLWithString:urlString]
             completionHandler:^(NSData *data,
                                 NSURLResponse *resp,
                                 NSError *error) {
                 // handle response
-                
+
             }] resume];
     isCustomer = 0;
-  
+
     if (!err) {
         NSDictionary *responseDictionaryWithStatus = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&err];
-        
+
         if (nil != responseDictionaryWithStatus) {
             if ([[responseDictionaryWithStatus objectForKey:@"status"] integerValue ] == 0)  {
                 NSDictionary *responseDictionary = [responseDictionaryWithStatus objectForKey:@"data"];
                 if ([responseDictionary count] > 0) {
                     isCustomer = 1;
-                    
+
                     [self prepareToGetGoogleDetailedData];
-                    
+
                     self.businessID = [[responseDictionary valueForKey:@"businessID"] intValue];
                     customerProfileName = [responseDictionary valueForKey:@"customerProfileName"];
                     self.chatSystemURL = [responseDictionary valueForKey:@"chatroom_table"];
@@ -605,7 +628,7 @@
             }
         }
     }
-    
+
 #if (0)
     NSLog(@"In Business:initWithGooglePlacesObject for %@ with isCustomer of %d - %@ was called to get additional information from our own server", self.businessName, self.isCustomer, urlString);
 #endif
@@ -644,7 +667,7 @@
 
 
 - (void)googlePlacesConnection:(GooglePlacesConnection *)conn didFinishLoadingWithGooglePlacesObjects:(NSMutableArray *)objects {
-    
+
     if ([objects count] == 0) {
         NSDictionary *userInfo = @{NSLocalizedDescriptionKey : @"Error in getting detailed information from google."};
         businessError = [NSError errorWithDomain:@"Business"
@@ -654,7 +677,7 @@
         //        locations = objects;
         //UPDATED locationFilterResults for filtering later on
         GooglePlacesObject *googleDetailObject = [objects objectAtIndex:0];
-        
+
         if (googleDetailObject.rating)
         {
             rating = googleDetailObject.rating;
@@ -663,7 +686,7 @@
             rating = @"N/A";
         if (googleDetailObject.formattedAddress != nil)
             address = googleDetailObject.formattedAddress;
-        
+
         if (googleDetailObject.website)
             website = googleDetailObject.website;
         else
@@ -673,7 +696,7 @@
         else
             phone = @"Phone number not provided.";
     }
-    
+
 }
 
 - (void)setBGImageFromString:(NSString *)bgImageString {
@@ -701,19 +724,19 @@
 }
 
 - (UIColor *) setUIColorFromString : (NSString *) colorString {
-    
+
     NSCharacterSet *trim = [NSCharacterSet characterSetWithCharactersInString:@"rgb( )"];
-    
+
     NSString *removeRGBCharacter = [[colorString componentsSeparatedByCharactersInSet:trim] componentsJoinedByString:@""];
-    
+
 //    NSLog(@"%@",removeRGBCharacter);
- 
+
     NSArray *rgbArray = [removeRGBCharacter componentsSeparatedByString:@","];
-    
+
     NSInteger rColor = [[rgbArray objectAtIndex:0] integerValue];
     NSInteger gColor = [[rgbArray objectAtIndex:1] integerValue];
     NSInteger bColor = [[rgbArray objectAtIndex:2] integerValue];
-    
+
     return [UIColor colorWithRed:rColor/255.0 green:gColor/255.0 blue:bColor/255.0 alpha:1];
 }
 

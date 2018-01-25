@@ -17,7 +17,7 @@
 
 @implementation HomeViewController
 
-@synthesize btnNewOrder, btnPickupOrder;
+@synthesize btnNewOrder, btnPickupOrder, textViewMessageToConsumers;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,6 +26,8 @@
     // Do any additional setup after loading the view from its nib.
     btnPickupOrder.enabled = FALSE;
     btnPickupOrder.alpha = 0.0;
+    textViewMessageToConsumers.textColor = [UIColor whiteColor];
+    textViewMessageToConsumers.text = @"Carry-Out: ASAP (varies by merchant)\nDelivery: 45-60 min.";
 }
 
 - (void)didReceiveMemoryWarning {

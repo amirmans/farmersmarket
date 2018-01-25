@@ -35,6 +35,6 @@
 
 - (IBAction)saveButtonAction:(id)sender;
 - (IBAction)ageGroupSegmentedControlAction:(id)sender;
-- (IBAction)resetButtonAction:(id)sender;
+//- (IBAction)resetButtonAction:(id)sender;
 
 @end
