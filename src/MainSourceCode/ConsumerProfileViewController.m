@@ -86,6 +86,12 @@ static NSArray *consumerProfileDataArray = nil;
     //    [self SetTextFieldBorder:smsNoTextField];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.tabBarController setSelectedIndex:1];
@@ -184,6 +190,14 @@ static NSArray *consumerProfileDataArray = nil;
 
 }
 
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -203,6 +217,29 @@ static NSArray *consumerProfileDataArray = nil;
 
     [super viewDidUnload];
 }
+
+//#pragma mark - keyboard movements
+//- (void)keyboardWillShow:(NSNotification *)notification
+//{
+//    CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+//    keyboardSize.height = 10; //zzz
+//
+//    [UIView animateWithDuration:0.3 animations:^{
+//        CGRect f = self.view.frame;
+//        f.origin.y = -keyboardSize.height;
+//        self.view.frame = f;
+//    }];
+//}
+//
+//-(void)keyboardWillHide:(NSNotification *)notification
+//{
+//    [UIView animateWithDuration:0.3 animations:^{
+//        CGRect f = self.view.frame;
+//        f.origin.y = 0.0f;
+//        self.view.frame = f;
+//    }];
+//}
+
 
 - (void) getStripeDataArray {
     [savedCardDataArray removeAllObjects];
@@ -417,26 +454,38 @@ static NSArray *consumerProfileDataArray = nil;
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     
     [AppData sharedInstance].is_Profile_Changed = @"YES";
-    if (textField == nicknameTextField)
+    if (textField == nicknameTextField) {
+        if ([smsNoTextField.text length] <= 0)
+            [smsNoTextField becomeFirstResponder];
         return;
-    if (passwordAgainTextField.text.length < 1)
-        return;
-
-    NSString *textToCompare;
-    if (textField == passwordAgainTextField)
-        textToCompare = passwordTextField.text;
-    else
-        textToCompare = passwordAgainTextField.text;
-
-    errorMessageLabel.hidden = FALSE;
-    if (![textToCompare isEqualToString:textField.text]) {
-        errorMessageLabel.text = @"Passwords Don't match.";
-        errorMessageLabel.textColor = [UIColor blueColor];
     }
-    else {
-        errorMessageLabel.text = @"Passwords matched.";
-        errorMessageLabel.textColor = [UIColor greenColor];
+//    if (passwordAgainTextField.text.length < 1)
+//        return;
+//
+//    NSString *textToCompare;
+//    if (textField == passwordAgainTextField)
+//        textToCompare = passwordTextField.text;
+//    else
+//        textToCompare = passwordAgainTextField.text;
+//
+//    errorMessageLabel.hidden = FALSE;
+//    if (![textToCompare isEqualToString:textField.text]) {
+//        errorMessageLabel.text = @"Passwords Don't match.";
+//        errorMessageLabel.textColor = [UIColor blueColor];
+//    }
+//    else {
+//        errorMessageLabel.text = @"Passwords matched.";
+//        errorMessageLabel.textColor = [UIColor greenColor];
+//    }
+    
+    if (textField == smsNoTextField) {
+        if ([zipcodeTextField.text length] <= 0)
+            [zipcodeTextField becomeFirstResponder];
+    } else if (textField == emailTextField) {
+        if ([nicknameTextField.text length] <= 0)
+            [nicknameTextField becomeFirstResponder];
     }
+    
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

@@ -627,8 +627,9 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     else {
         cell.lblOpenClose.hidden = false;
         cell.lblOpenCloseDate.hidden = false;
+        int pickupLater = (int)[[cellDict objectForKey:@"pickup_counter_later"] integerValue];
 //        if([[APIUtility sharedInstance]isBusinessOpen: [cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"], objectForKey:@"pickup_counter_later]){
-if([[APIUtility sharedInstance] isServiceAvailable:PickUpAtCounter during:[cellDict objectForKey:@"opening_time"] and:[cellDict objectForKey:@"closing_time"] withType:(int)[cellDict objectForKey:@"pickup_counter_later"]]){
+        if([[APIUtility sharedInstance] isServiceAvailable:PickUpAtCounter during:[cellDict objectForKey:@"opening_time"] and:[cellDict objectForKey:@"closing_time"] withType:pickupLater]) {
             cell.lblOpenClose.text = @"OPEN For SERVICES";
             cell.lblOpenClose.textColor = [UIColor orangeColor];
             cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:[cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]];

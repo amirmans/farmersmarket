@@ -102,6 +102,13 @@ static const int PickUpAtLocation=2;
 static const int DeliveryToTable=4;
 static const int DeliveryToLocation=8;
 
+
+// the tags for the buttons in the pickupdeliveryoptionviewcontroller.xib
+static const int PICKUP_COUNTER_BUTTTON_TAG = 1;
+static const int DELIVERY_TO_TABLE = 3;
+static const int DELIVERY_TO_LOCATIONS_COUNTER_BUTTTON_TAG = 2;
+static const int PICKUP_PARKING_SPACE_TAG = 4;
+
 // Time Format
 static NSString *const TIME24HOURFORMAT = @"HH:mm:ss";
 static NSString *const TIME12HOURFORMAT = @"h:mm a";
@@ -124,6 +131,12 @@ static NSString *const TIME12HOURFORMAT = @"h:mm a";
 static const int PointsValueMultiplier = 1;  // for each dollar you can one point -  acquiring
 static const int Points_to_dollar=10;        // value of 1 point n points for a dollar to spend
 #define RedeemPoints @"RedeemPoints" // Used in notification
+
+//Service availability
+static const int Pickup_closed_all_day = 1;
+static const int Pickup_closed_rest_of_day = 2;
+static const int Pickup_open_later_today = 4;
+static const int Pickup_open = 8;
 
 // compatibility between different ios
 #ifdef __IPHONE_8_0
