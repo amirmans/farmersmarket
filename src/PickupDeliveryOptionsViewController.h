@@ -37,14 +37,14 @@
 
 @property (weak, nonatomic) IBOutlet UIView *viewCounter;
 @property (weak, nonatomic) IBOutlet UIView *viewTable;
-@property (weak, nonatomic) IBOutlet UIView *viewDesignationLocation;
+@property (weak, nonatomic) IBOutlet UIView *viewDesignatedLocation;
 @property (weak, nonatomic) IBOutlet UIView *viewParking;
 //@property (weak, nonatomic) IBOutlet UILabel *lblHotelName;
 @property (weak, nonatomic) IBOutlet UILabel *lblBusinessNote;
 
 @property (weak, nonatomic) IBOutlet UIButton *btnCounterPickupTime;
 @property (weak, nonatomic) IBOutlet UIButton *btnParkingPickUp;
-@property (weak, nonatomic) IBOutlet UIButton *btnDesignationLocationPickUp;
+@property (weak, nonatomic) IBOutlet UIButton *btnDesignatedLocationDeliveryTime;
 @property (weak, nonatomic) IBOutlet UITextView *txtNotes;
 @property (weak, nonatomic) IBOutlet UIButton *btnCancel;
 @property (weak, nonatomic) IBOutlet UIButton *btnOk;
@@ -68,6 +68,6 @@
 - (IBAction)btnLocationClicked:(id)sender;
 - (IBAction)btnCounterPickUpClicked:(id)sender;
 - (IBAction)btnParkingPickUpClicked:(id)sender;
-- (IBAction)btnDesignationLocationPickupClicked:(id)sender;
+- (IBAction)btnDesignatedLocationDeliveryClicked:(id)sender;
 
 @end

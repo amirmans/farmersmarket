@@ -2,9 +2,9 @@
 @class NSString;
 
 //#ifdef DEBUG
-#define TapInEndpointHost @"https://tapforall.com/staging/tap-in/"
+//#define TapInEndpointHost @"https://tapforall.com/staging/tap-in/"
 //#else
-//#define TapInEndpointHost @"https://tapforall.com/merchants/tap-in/"
+#define TapInEndpointHost @"https://tapforall.com/merchants/tap-in/"
 //#endif
 
 #define TT_CommunicationWithServerQ dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)

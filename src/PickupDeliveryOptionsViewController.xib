@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,7 +12,7 @@
                 <outlet property="btnCounter" destination="bcI-Bg-ZYy" id="6GX-wI-bMT"/>
                 <outlet property="btnCounterPickupTime" destination="eYa-OY-JlM" id="nAT-8g-k0b"/>
                 <outlet property="btnDesignatedLocation" destination="dd0-Z1-cd0" id="8mj-aN-b5h"/>
-                <outlet property="btnDesignationLocationPickUp" destination="stR-6Q-EXK" id="Vh0-sp-4Pf"/>
+                <outlet property="btnDesignatedLocationDeliveryTime" destination="stR-6Q-EXK" id="Vh0-sp-4Pf"/>
                 <outlet property="btnLocation" destination="9pO-DB-Kmc" id="i1X-We-ge6"/>
                 <outlet property="btnOk" destination="icO-iV-aty" id="M37-1b-lUH"/>
                 <outlet property="btnParking" destination="aNj-3b-mPv" id="mi6-VI-ctM"/>
@@ -34,7 +30,7 @@
                 <outlet property="txtNotes" destination="OqE-iA-vyI" id="kSa-81-iRA"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewCounter" destination="kJ1-L3-Yh1" id="z3i-sI-4HB"/>
-                <outlet property="viewDesignationLocation" destination="o45-7D-ivn" id="uOU-ug-Bp8"/>
+                <outlet property="viewDesignatedLocation" destination="o45-7D-ivn" id="uOU-ug-Bp8"/>
                 <outlet property="viewParking" destination="Bws-kp-ewd" id="Dco-u8-CWd"/>
                 <outlet property="viewTable" destination="qjF-DS-GCf" id="Pdh-ym-jsT"/>
             </connections>
@@ -395,7 +391,7 @@
                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
-                                        <action selector="btnDesignationLocationPickupClicked:" destination="-1" eventType="touchUpInside" id="sRR-KY-TnC"/>
+                                        <action selector="btnDesignatedLocationDeliveryClicked:" destination="-1" eventType="touchUpInside" id="sRR-KY-TnC"/>
                                     </connections>
                                 </button>
                             </subviews>
