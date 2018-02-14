@@ -614,11 +614,11 @@ double deliveryAmountValue; //Delievery amount value in $
     if (flag) {
         [self adjustRedeemPointsAndTheirValues];
         [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_checked"] forState:UIControlStateNormal];
-        self.lblPointsUsed.text = [NSString stringWithFormat:@"pts used: %@", redeemNoPoint];
+        self.lblPointsUsed.text = [NSString stringWithFormat:@"pts used: %li", redeemNoPoint];
     } else {
         [self revertRedeemPointsAndValuesToOriginal];
         [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_unchecked"] forState:UIControlStateNormal];
-        self.lblPointsUsed.text = [NSString stringWithFormat:@"pts used: %@", redeemNoPoint];
+        self.lblPointsUsed.text = [NSString stringWithFormat:@"pts used: %li", redeemNoPoint];
     }
 }
 

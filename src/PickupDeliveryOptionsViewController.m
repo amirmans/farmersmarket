@@ -135,6 +135,7 @@ NSDate *setMinPickerTimeOD;
                                                            ,timePickerTimeInterval];
                 [self.btnDesignatedLocationDeliveryTime setTitle:TimePlaceHolder forState:UIControlStateNormal];
             } else {
+                
                 //                lblDeliveryLocationTimeInstruction.text = ClosedTimeInstructionMessage;
                 if (deliveryAvailabilityStatus == Pickup_closed_all_day) {
                     lblDeliveryLocationTimeInstruction.text = @"";
@@ -155,6 +156,7 @@ NSDate *setMinPickerTimeOD;
         } else {
             NSLog(@"we don't have anything in location both for table and designated arrays");
             lblDeliveryLocationTimeInstruction.text = ClosedTimeInstructionMessage;
+            [self.btnDesignatedLocationDeliveryTime setTitle:@"Closed all day" forState:UIControlStateNormal];
             // we have all the info to determine if we have service available
             if (![self calcTimesForTimePicker:PickUpAtCounter]) {
                 [UIAlertController showErrorAlert:@"All services are closed.\nYour order is saved for the next time around."];
@@ -279,6 +281,7 @@ NSDate *setMinPickerTimeOD;
             break;
         case DeliveryToLocation:
             if (deliveryStartTime == nil ||  deliveryEndTime == nil) {
+                deliveryAvailabilityStatus=Pickup_closed_all_day;
                 returnVal = false;
                 break;
             }
@@ -294,6 +297,7 @@ NSDate *setMinPickerTimeOD;
                                   dateByAddingTimeInterval:[deliveryLeadTime integerValue]*60];
             
             if ([timePickerSelectedTime timeIntervalSinceReferenceDate] > [timePickerEndTime timeIntervalSinceReferenceDate]) {
+                deliveryAvailabilityStatus=Pickup_closed_rest_of_day;
                 returnVal = false;
             } else {
                 
@@ -1129,6 +1133,7 @@ NSDate *setMinPickerTimeOD;
             lblDeliveryLocationTimeInstruction.text = @"";
             [self.btnDesignatedLocationDeliveryTime setTitle:@"Closed all day" forState:UIControlStateNormal];
         } else {
+            [self.btnDesignatedLocationDeliveryTime setTitle:@"Closed for the rest of the day" forState:UIControlStateNormal];
             lblDeliveryLocationTimeInstruction.text = [NSString stringWithFormat:@"%@-%@"
                                                        ,[formatter2 stringFromDate:timePickerStartTime]
                                                        ,[formatter2 stringFromDate:timePickerEndTime]];

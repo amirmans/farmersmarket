@@ -162,6 +162,7 @@
 		C6700CFD1859DAA4003814C9 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6700CFC1859DAA4003814C9 /* NotificationTableViewCell.xib */; };
 		C671530B1EAEA04D00DA5D01 /* SMCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = C67153081EAEA04D00DA5D01 /* SMCalloutView.m */; };
 		C671530C1EAEA04D00DA5D01 /* SMClassicCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = C671530A1EAEA04D00DA5D01 /* SMClassicCalloutView.m */; };
+		C67486A42033F3CB007F4F41 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C67486A32033F3CB007F4F41 /* HomeViewController.xib */; };
 		C67622321BC9F96200B2F434 /* DetailBusinessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C67622341BC9F96200B2F434 /* DetailBusinessViewController.xib */; };
 		C6768BCD1D5688C000125E95 /* SAMKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C6768BC91D5688C000125E95 /* SAMKeychainQuery.m */; };
 		C6768BCE1D5688C000125E95 /* SAMKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C6768BCB1D5688C000125E95 /* SAMKeychain.m */; };
@@ -201,7 +202,6 @@
 		DA3C19C31E974BFC00ADDE31 /* PickupDeliveryOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3C19C11E974BFC00ADDE31 /* PickupDeliveryOptionsViewController.m */; };
 		DA3C19C41E974BFC00ADDE31 /* PickupDeliveryOptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA3C19C21E974BFC00ADDE31 /* PickupDeliveryOptionsViewController.xib */; };
 		DA3E43A31E9A1CF6004FF1BA /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DA3E43A11E9A1CF6004FF1BA /* HomeViewController.m */; };
-		DA3E43A41E9A1CF6004FF1BA /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA3E43A21E9A1CF6004FF1BA /* HomeViewController.xib */; };
 		DA4564771F3879AD00B60E46 /* TotalCartItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA4564761F3879AD00B60E46 /* TotalCartItemCell.xib */; };
 		DA45647A1F387A1100B60E46 /* TotalCartItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4564791F387A1100B60E46 /* TotalCartItemCell.m */; };
 		DA4B3A191F1D205D002A4109 /* BKCardNumberField.m in Sources */ = {isa = PBXBuildFile; fileRef = DA4B3A141F1D205D002A4109 /* BKCardNumberField.m */; };
@@ -434,6 +434,7 @@
 		C67153081EAEA04D00DA5D01 /* SMCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMCalloutView.m; sourceTree = "<group>"; };
 		C67153091EAEA04D00DA5D01 /* SMClassicCalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMClassicCalloutView.h; sourceTree = "<group>"; };
 		C671530A1EAEA04D00DA5D01 /* SMClassicCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMClassicCalloutView.m; sourceTree = "<group>"; };
+		C67486A32033F3CB007F4F41 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = SOURCE_ROOT; };
 		C67622331BC9F96200B2F434 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailBusinessViewController.xib; sourceTree = "<group>"; };
 		C6768BC91D5688C000125E95 /* SAMKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAMKeychainQuery.m; sourceTree = "<group>"; };
 		C6768BCA1D5688C000125E95 /* SAMKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAMKeychainQuery.h; sourceTree = "<group>"; };
@@ -496,7 +497,6 @@
 		DA3C19C21E974BFC00ADDE31 /* PickupDeliveryOptionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PickupDeliveryOptionsViewController.xib; sourceTree = "<group>"; };
 		DA3E43A01E9A1CF6004FF1BA /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		DA3E43A11E9A1CF6004FF1BA /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
-		DA3E43A21E9A1CF6004FF1BA /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		DA4564761F3879AD00B60E46 /* TotalCartItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TotalCartItemCell.xib; path = Resources/Xibs/TotalCartItemCell.xib; sourceTree = "<group>"; };
 		DA4564781F387A1100B60E46 /* TotalCartItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TotalCartItemCell.h; path = MainSourceCode/TotalCartItemCell.h; sourceTree = "<group>"; };
 		DA4564791F387A1100B60E46 /* TotalCartItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TotalCartItemCell.m; path = MainSourceCode/TotalCartItemCell.m; sourceTree = "<group>"; };
@@ -918,6 +918,7 @@
 		4AD53C231C736535009D8FE0 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				C67486A32033F3CB007F4F41 /* HomeViewController.xib */,
 				37D72FEA1F50A73400AECD71 /* CateringViewController.h */,
 				37D72FEB1F50A73400AECD71 /* CateringViewController.m */,
 				37D72FEC1F50A73400AECD71 /* CateringViewController.xib */,
@@ -948,7 +949,6 @@
 				DA6580AF1ED05F4C0043862A /* MakePaymentViewController.xib */,
 				DA3E43A01E9A1CF6004FF1BA /* HomeViewController.h */,
 				DA3E43A11E9A1CF6004FF1BA /* HomeViewController.m */,
-				DA3E43A21E9A1CF6004FF1BA /* HomeViewController.xib */,
 				DA6580B61ED075C20043862A /* cardDetailCollectionCell.h */,
 				DA6580B71ED075C20043862A /* cardDetailCollectionCell.m */,
 				DA6580B81ED075C20043862A /* cardDetailCollectionCell.xib */,
@@ -1240,7 +1240,6 @@
 				C6060DF31BA6265E0084D612 /* Images.xcassets in Resources */,
 				5D7AEDF61C696B3000B0929F /* pin3@2x.png in Resources */,
 				2949CCF21458A21700728B87 /* checkedRadioButton.png in Resources */,
-				DA3E43A41E9A1CF6004FF1BA /* HomeViewController.xib in Resources */,
 				4AD6E47B1CE099240025676C /* ic_minus@2x.png in Resources */,
 				2949CCF31458A21700728B87 /* flag.png in Resources */,
 				5D7AEDF11C696B2800B0929F /* pin2@3x.png in Resources */,
@@ -1282,6 +1281,7 @@
 				C67BC4B31BA808ED00C66AF8 /* customer_pin.png in Resources */,
 				4AD6E47C1CE099240025676C /* ic_minus@3x.png in Resources */,
 				C6EABE1818B2D1CD00F50D19 /* BusinessListViewController.xib in Resources */,
+				C67486A42033F3CB007F4F41 /* HomeViewController.xib in Resources */,
 				5D7AEDCB1C6934E400B0929F /* ic_calendar.png in Resources */,
 				12C090EC1DDDEC6E0033CEA9 /* CartItemTableViewCell.xib in Resources */,
 				DA6580BA1ED075C20043862A /* cardDetailCollectionCell.xib in Resources */,

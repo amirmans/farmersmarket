@@ -506,10 +506,10 @@ static NSArray *consumerProfileDataArray = nil;
     [consumerProfileDataDic setObject:[NSNumber numberWithInteger:ageGroup] forKey:@"age_group"];
     [consumerProfileDataDic setObject:E_164FormatPhoneNumber forKey:@"sms_no"];
 
-    NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
-    NSLog(@"%@",appBuildString);
+//    NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
 
-    [consumerProfileDataDic setObject:[NSString stringWithFormat:@"V%@",appBuildString] forKey:@"app_ver"];
+    [consumerProfileDataDic setObject:[NSString stringWithFormat:@"V%@",appVersionString] forKey:@"app_ver"];
 
     // notice update method in our server, takes care of both situations with or without device_token
     if (deviceToken != nil)
