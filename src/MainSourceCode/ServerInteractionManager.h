@@ -9,7 +9,7 @@
 @protocol PostProcesses <NSObject>
 
 @optional
-- (void)postProcessForSuccess:(NSDictionary *)consumerInfo;
+- (void)postProcessForConsumerProfile:(NSDictionary *)consumerInfo;
 - (void)postProcessForListOfBusinessesSuccess:(NSData *)responseObject;
 - (void)postProcessForFailure;
 
@@ -23,6 +23,7 @@
 
 - (BOOL)serverUpdateDeviceToken:(NSString *)deviceToken withUuid:(NSString *)uuid WithError:(NSError **)error;
 - (void)serverCallToGetListofAllBusinesses;
+- (void)serverCallToGetListofAllBusinessesForCorp:(NSString*)businesses;
 
 
 // borrowed from Google GTM

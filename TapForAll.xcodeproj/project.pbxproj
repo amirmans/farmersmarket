@@ -171,6 +171,7 @@
 		C67D4D4218AEFFEE00D6DF6C /* ListofBusinesses.m in Sources */ = {isa = PBXBuildFile; fileRef = C67D4D4118AEFFEE00D6DF6C /* ListofBusinesses.m */; };
 		C69298A918DF8FFE00B013E0 /* BillPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C69298A818DF8FFE00B013E0 /* BillPayViewController.m */; };
 		C69298AB18DF903400B013E0 /* BillPayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C69298AA18DF903400B013E0 /* BillPayViewController.xib */; };
+		C6970DA0204BF47400D330AF /* corp_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C6970D9F204BF47300D330AF /* corp_icon.png */; };
 		C69935B018B969F6008FCF8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C699356318B969F6008FCF8A /* AppDelegate.m */; };
 		C69935BB18B969F6008FCF8A /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C699357A18B969F6008FCF8A /* DataModel.m */; };
 		C69935D118B969F6008FCF8A /* StoreMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C69935A718B969F6008FCF8A /* StoreMapViewController.m */; };
@@ -448,6 +449,7 @@
 		C69298A818DF8FFE00B013E0 /* BillPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BillPayViewController.m; path = MainSourceCode/BillPayViewController.m; sourceTree = "<group>"; };
 		C69298AA18DF903400B013E0 /* BillPayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BillPayViewController.xib; sourceTree = "<group>"; };
 		C69653491C2A011E001A29DB /* TapForAll.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TapForAll.entitlements; path = TapForAll/TapForAll.entitlements; sourceTree = SOURCE_ROOT; };
+		C6970D9F204BF47300D330AF /* corp_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = corp_icon.png; sourceTree = "<group>"; };
 		C699356218B969F6008FCF8A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MainSourceCode/AppDelegate.h; sourceTree = "<group>"; };
 		C699356318B969F6008FCF8A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MainSourceCode/AppDelegate.m; sourceTree = "<group>"; };
 		C699357618B969F6008FCF8A /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Consts.h; sourceTree = "<group>"; };
@@ -679,6 +681,7 @@
 		2949CCC61458A21700728B87 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				C6970D9F204BF47300D330AF /* corp_icon.png */,
 				C6A437872019702D00376F4B /* tap-in-only_logo.png */,
 				4AC80A8F1C69FF6900A42EE2 /* restaurant.jpg */,
 				5D7AEDB71C692B6800B0929F /* tempImage.jpeg */,
@@ -1334,6 +1337,7 @@
 				4A1DA8921C76235100E16F30 /* TPRewardPointController.xib in Resources */,
 				C6F475671CDFE12F009E24E4 /* TotalItemCart.xib in Resources */,
 				4A9499851C7F337200400A53 /* SavedCardTableCell.xib in Resources */,
+				C6970DA0204BF47400D330AF /* corp_icon.png in Resources */,
 				5D7AEE051C696D2E00B0929F /* back.png in Resources */,
 				5D7AEDD11C6934E400B0929F /* ic_heart.png in Resources */,
 				4A5AD37C1C770AE700DCEA6F /* TPRewardPointCell.xib in Resources */,

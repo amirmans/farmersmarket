@@ -16,6 +16,7 @@
 @synthesize ageGroup;
 @synthesize password;
 @synthesize emailAddress;
+@synthesize emailWorkAddress;
 @synthesize shouldDownloadChatMessages;
 @synthesize qrImageFileName;
 @synthesize zipcode;
@@ -74,6 +75,7 @@ static DataModel *sharedDataModel = nil;
         uuid = nil;
         ageGroup = 0;
         emailAddress = @"";
+        emailWorkAddress = @"";
         password = @"";
         qrImageFileName = @"";
         zipcode = @"";
@@ -274,6 +276,17 @@ static DataModel *sharedDataModel = nil;
     return [[NSUserDefaults standardUserDefaults] stringForKey:EmailAddressKey];
 }
 
+- (void)setEmailWorkAddress:(NSString *)emailWorkAddr {
+    if (emailWorkAddr == (id)[NSNull null] || emailWorkAddr.length == 0 )
+    {
+        emailWorkAddr = @"";
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:emailWorkAddr forKey:EmailWorkAddressKey];
+}
+
+- (NSString *)emailWorkAddress {
+    return [[NSUserDefaults standardUserDefaults] stringForKey:EmailWorkAddressKey];
+}
 
 - (NSString *)password {
     return [[NSUserDefaults standardUserDefaults] stringForKey:PasswordKey];

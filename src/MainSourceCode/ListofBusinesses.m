@@ -53,6 +53,10 @@
     [myServer serverCallToGetListofAllBusinesses];
 }
 
+- (void)startGettingListofAllBusinessesForCorp:(NSString *)businesses
+{
+    [myServer serverCallToGetListofAllBusinessesForCorp:businesses];
+}
 
 - (void)postProcessForListOfBusinessesSuccess:(NSDictionary *)responseData
 {

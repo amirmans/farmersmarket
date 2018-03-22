@@ -39,6 +39,29 @@
     
 }
 
+- (void)serverCallToGetListofAllBusinessesForCorp:(NSString*)businesses {
+    NSString *urlString = BusinessInformationServer;
+    NSDictionary *params = @{@"ids":businesses
+                             ,@"cmd":@"get_all_businesses_for_set"};
+    
+    NSLog(@"Getting list of businesses for corp using server: %@, and params: %@", urlString, params);
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager  manager];
+    
+    [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
+    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+    [manager GET:urlString parameters:params progress:nil
+         success:^(NSURLSessionTask *operation, id responseObject) {
+             //remember in the data is already translated to NSDictionay - by AFJSONResponseSerializer
+             [postProcessesDelegate postProcessForListOfBusinessesSuccess:responseObject];
+         }
+         failure:^(NSURLSessionTask *operation, NSError *error) {
+             NSLog(@"Error in fetching list of businesses: %@", error);
+             
+         }
+     ];
+}
+
 
 - (BOOL)serverUpdateDeviceToken:(NSString *)deviceToken withUuid:(NSString *)uuid WithError:(NSError **)error
 {
@@ -62,7 +85,7 @@
           success:^(NSURLSessionTask *operation, id responseObject) {
 //              NSError *jsonError = nil;
 //              NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:kNilOptions error:&jsonError];
-              [postProcessesDelegate postProcessForSuccess:responseObject];
+              [postProcessesDelegate postProcessForConsumerProfile:responseObject];
           }
           failure:^(NSURLSessionTask *operation, NSError *error) {
               NSLog(@"Error in ServerUpdateDeviceToken: %@", error);

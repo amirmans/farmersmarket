@@ -40,6 +40,9 @@
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (atomic, assign) BOOL corpMode;
+@property (nonatomic, strong) NSMutableArray *corps;
+@property (atomic, assign) short corpIndex;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
@@ -47,6 +50,7 @@
 
 -(NSArray *)getRecord;// create this mathod for fetch data from any class...
 - (void)saveDeviceTokenAndUUID;
+- (void)getCorps:(NSString *)workEmail;
 
 
 @end

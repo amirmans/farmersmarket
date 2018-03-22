@@ -46,7 +46,7 @@ static NSDateFormatter* utilyDateFormatter;
 }
 
 
-- (void)orderToServer:(NSDictionary *)data server:(NSString *)url completiedBlock:(void (^)(NSDictionary *response))finished
+- (void)callServer:(NSDictionary *)data server:(NSString *)url method:(NSString *)method completiedBlock:(void (^)(NSDictionary *response))finished
 {
     if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
     {
@@ -57,6 +57,7 @@ static NSDateFormatter* utilyDateFormatter;
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
     
+    if ([method isEqual:@"POST"]) {
     [manager POST:url
        parameters:data progress:nil
           success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -68,6 +69,19 @@ static NSDateFormatter* utilyDateFormatter;
               NSLog(@"Error in sending order to the server: %@", error.description);
               finished(@{@"error":error.description});
           }];
+    } else {
+        [manager GET:url
+           parameters:data progress:nil
+              success:^(NSURLSessionDataTask *task, id responseObject) {
+                  NSLog(@"JSON: %@", responseObject);
+                  finished(responseObject);
+              }
+              failure:^(NSURLSessionDataTask *task, NSError *error) {
+                  
+                  NSLog(@"Error in sending order to the server: %@", error.description);
+                  finished(@{@"error":error.description});
+              }];
+    }
 }
 
 

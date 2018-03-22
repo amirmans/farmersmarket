@@ -17,6 +17,7 @@
 #import "APIUtility.h"
 #import <QuartzCore/QuartzCore.h>
 #import "AppData.h"
+#import "AppDelegate.h"
 
 @interface ConsumerProfileViewController () {
     NSMutableDictionary *consumerProfileDataDic;
@@ -50,6 +51,7 @@ static NSArray *consumerProfileDataArray = nil;
 @synthesize emailLabel;
 @synthesize zipcodeTextField;
 @synthesize emailTextField, hud;
+@synthesize emailWorkTextField, emailWorkLabel;
 @synthesize smsNoLabel, smsNoTextField, E_164FormatPhoneNumber;
 @synthesize consumerProfileDataDic;
 
@@ -268,6 +270,7 @@ static NSArray *consumerProfileDataArray = nil;
 
     
     emailTextField.text = [[DataModel sharedDataModelManager] emailAddress];
+    emailWorkTextField.text = [[DataModel sharedDataModelManager] emailWorkAddress];
 }
 
 - (BOOL)validatePassword:(NSString *)pass {
@@ -280,7 +283,7 @@ static NSArray *consumerProfileDataArray = nil;
 - (BOOL)validateAllUserInput
 {
     BOOL badInformation = FALSE;
-    short nVerificationSteps = 5;
+    short nVerificationSteps = 6;
     short loopIndex = 0;
     
     while ((loopIndex < nVerificationSteps) && (badInformation == FALSE)) {
@@ -329,7 +332,23 @@ static NSArray *consumerProfileDataArray = nil;
                 }
                 break;
 
+                
             case 3:
+                if (emailWorkTextField.text.length > 0)
+                {
+                    NSString *emailRegEx = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+                    NSPredicate *emailWorkTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx];
+                    
+                    if ([emailWorkTest evaluateWithObject:emailWorkTextField.text] == NO) {
+                        badInformation = TRUE;
+                        errorMessageLabel.hidden = FALSE;
+                        errorMessageLabel.text = @"Work email address is not valid";
+                        errorMessageLabel.textColor = [UIColor blueColor];
+                    }
+                }
+                break;
+
+            case 4:
                 if (zipcodeTextField.text.length > 0)
                 {
 //                    NSString *zipcodeRegEx = @"^[1..9][0-9,-]{4,}?";
@@ -346,7 +365,7 @@ static NSArray *consumerProfileDataArray = nil;
                     }
                 }
                 break;
-            case 4:
+            case 5:
                 if (smsNoTextField.text.length > 0)
                 {
                     
@@ -501,6 +520,7 @@ static NSArray *consumerProfileDataArray = nil;
     NSString *uuid = [DataModel sharedDataModelManager].uuid;
     
     [consumerProfileDataDic setObject:emailTextField.text forKey:@"email"];
+    [consumerProfileDataDic setObject:emailWorkTextField.text forKey:@"email_work"];
     [consumerProfileDataDic setObject:zipcodeTextField.text forKey:@"zipcode"];
     [consumerProfileDataDic setObject:nicknameTextField.text forKey:@"nickname"];
     [consumerProfileDataDic setObject:[NSNumber numberWithInteger:ageGroup] forKey:@"age_group"];
@@ -564,21 +584,25 @@ static NSArray *consumerProfileDataArray = nil;
                 // we set two fields in the database after registering the user - now we are getting those fields
                 //uid is determine by the database. so we set DataModel after we talk to the server
                 //
+                // saving information in our system
                 NSDictionary *jsonDictResponse = (NSDictionary *) responseObject;
-        
+            
+    
                 [DataModel sharedDataModelManager].ageGroup = ageGroupSegmentedControl.selectedSegmentIndex;
                 NSString *qrImageFileName = [jsonDictResponse objectForKey:@"qrcode_file"];
                 if ((qrImageFileName != nil) && (qrImageFileName != (id)[NSNull null])) {
                     [DataModel sharedDataModelManager].qrImageFileName = qrImageFileName;
                 }
             
-            [[DataModel sharedDataModelManager] setZipcode:zipcodeTextField.text];
-            [[DataModel sharedDataModelManager] setEmailAddress:emailTextField.text];
-            [[DataModel sharedDataModelManager] setSms_no:smsNoTextField.text];
-//                [DataModel sharedDataModelManager].zipcode = zipcodeTextField.text;
-//                [DataModel sharedDataModelManager].emailAddress = emailTextField.text;
+                [[DataModel sharedDataModelManager] setZipcode:zipcodeTextField.text];
+                [[DataModel sharedDataModelManager] setEmailAddress:emailTextField.text];
+                [[DataModel sharedDataModelManager] setSms_no:smsNoTextField.text];
+                [DataModel sharedDataModelManager].emailWorkAddress = emailWorkTextField.text;
             
                 [[DataModel sharedDataModelManager] setUserIDWithString:jsonDictResponse[@"uid"]];
+            
+                AppDelegate *delegate =((AppDelegate *)[[UIApplication sharedApplication] delegate]);
+                [delegate getCorps:emailWorkTextField.text];
             
                 UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
                                                                                message:@"Profile information saved successfully."

@@ -7,6 +7,7 @@
 //
 
 #import "CartViewController.h"
+#import "PaymentSummaryViewController.h"
 #import "DataModel.h"
 #import "APIUtility.h"
 #import "UIAlertView+TapTalkAlerts.h"
@@ -560,6 +561,15 @@ double deliveryCharge = 0.0;        // Delivery charge
     [self paymentSummary];
 }
 
+- (void)prepareToLoadPaymentSummary:(PaymentSummaryViewController *)viewController {
+    viewController.orderItems = self.orderItems;
+    viewController.subTotal = [NSString stringWithFormat:@"%.2f",cartSubTotal];
+    viewController.earnPts = self.lblEarnPoints.text;
+    viewController.noteText = self.notesText;;
+//    viewController.pd_noteText = self.pd_noteTextOD;
+    viewController.pickupTime = [NSDate date];
+    viewController.selectedButtonNumber = 3;
+}
 
 #pragma mark - Button Actions
 
@@ -604,30 +614,32 @@ double deliveryCharge = 0.0;        // Delivery charge
                 {
                     self.notesText = @"";
                 }
-                
-                PickupDeliveryOptionsViewController *pdOptionsVC = [[PickupDeliveryOptionsViewController alloc] initWithNibName:@"PickupDeliveryOptionsViewController" bundle:nil];
+                if (((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
+                    NSLog(@"corpMode is true");
+                    PaymentSummaryViewController *paymentSummaryViewController = [[PaymentSummaryViewController alloc] initWithNibName:nil bundle:nil];
+                    [self prepareToLoadPaymentSummary:paymentSummaryViewController];
+                    [self.navigationController pushViewController:paymentSummaryViewController animated:YES];
+                }
+                else {
+                    PickupDeliveryOptionsViewController *pdOptionsVC = [[PickupDeliveryOptionsViewController alloc] initWithNibName:@"PickupDeliveryOptionsViewController" bundle:nil];
                     pdOptionsVC.orderItemsOD = self.orderItems;
                     pdOptionsVC.subTotalOD = [NSString stringWithFormat:@"%.2f",cartSubTotal];
                     pdOptionsVC.earnPtsOD = self.lblEarnPoints.text;
                     pdOptionsVC.pd_noteTextOD = self.notesText;
-//                    pdOptionsVC.pickupTimeOD = self.pickupTime;
-//                if([AppData sharedInstance].consumer_Delivery_Id != nil){
-//                    pdOptionsVC.deliveryamtOD = deliveryCharge;
-//                    pdOptionsVC.delivery_startTimeOD = deliveryStartTime;
-//                    pdOptionsVC.delivery_endTimeOD = deliveryEndTime;
-//                }
-                
-                long business_id_long = [CurrentBusiness sharedCurrentBusinessManager].business.businessID;
-                NSNumber *business_id = [NSNumber numberWithLongLong:business_id_long];
-                NSDictionary *inDataDict = @{@"business_id":business_id};
-                
-                [[APIUtility sharedInstance] BusinessDelivaryInfoAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"GotDeliveryInfo" object:nil userInfo:response];
-                    
-                }];
 
-                [self.navigationController pushViewController:pdOptionsVC animated:YES];
+                
+                    long business_id_long = [CurrentBusiness sharedCurrentBusinessManager].business.businessID;
+                    NSNumber *business_id = [NSNumber numberWithLongLong:business_id_long];
+                    NSDictionary *inDataDict = @{@"business_id":business_id};
+                
+                    [[APIUtility sharedInstance] BusinessDelivaryInfoAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
+                    
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"GotDeliveryInfo" object:nil userInfo:response];
+                    
+                    }];
+
+                    [self.navigationController pushViewController:pdOptionsVC animated:YES];
+                }
             }
         }
         else

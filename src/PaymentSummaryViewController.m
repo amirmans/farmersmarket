@@ -395,6 +395,11 @@ double deliveryAmountValue; //Delievery amount value in $
     
 //    self.lblDeliveryAmount.hidden = false;
     NSString *p_time = [AppData sharedInstance].consumerPDTimeChosen;
+    if ( ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
+        NSMutableArray *corps = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
+        short corpIndex = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex;
+        p_time = [[corps objectAtIndex:corpIndex] valueForKey:@"delivery_time"];
+    }
     
     if(selectedButtonNumber == 1){
         lblDeliveryLabel.text = @"Service charge:";
@@ -428,17 +433,26 @@ double deliveryAmountValue; //Delievery amount value in $
     }
     else if(selectedButtonNumber == 3){
         lblDeliveryLabel.text = @"Delivery charge:";
-        if ([billBusiness.delivery_location_charge rangeOfString:@"%"].location == NSNotFound) {
-            deliveryAmountValue = [billBusiness.delivery_location_charge doubleValue];
+        NSString* consumerDeliveryLocation = [AppData sharedInstance].consumer_Delivery_Location;
+        NSString *deliveryLocationCharge = billBusiness.delivery_location_charge;
+        if ( ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
+            NSMutableArray *corps = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
+            short corpIndex = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex;
+            deliveryLocationCharge = [[corps objectAtIndex:corpIndex] valueForKey:@"delivery_charge"];
+            consumerDeliveryLocation = [[corps objectAtIndex:corpIndex] valueForKey:@"delivery_location"];
+        }
+        
+        if ([deliveryLocationCharge rangeOfString:@"%"].location == NSNotFound) {
+            deliveryAmountValue = [deliveryLocationCharge doubleValue];
             self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
         else{
-            NSString *newStr = [billBusiness.delivery_location_charge stringByReplacingOccurrencesOfString:@"%" withString:@""];
+            NSString *newStr = [deliveryLocationCharge stringByReplacingOccurrencesOfString:@"%" withString:@""];
             double del_charge = [newStr doubleValue];
             deliveryAmountValue = (cartTotalValue * del_charge)/100;
             self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
-        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Delivery to %@ at %@",[AppData sharedInstance].consumer_Delivery_Location, p_time];
+        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Delivery to %@ at %@",consumerDeliveryLocation, p_time];
     }
     else if(selectedButtonNumber == 4){
         if ([billBusiness.pickup_location_charge rangeOfString:@"%"].location == NSNotFound) {

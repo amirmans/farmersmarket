@@ -493,7 +493,7 @@
         }];
     }
     else{
-        [[APIUtility sharedInstance] orderToServer:orderInfoDict server:OrderServerURL completiedBlock:^(NSDictionary *response) {
+        [[APIUtility sharedInstance] callServer:orderInfoDict server:OrderServerURL method:@"POST" completiedBlock:^(NSDictionary *response) {
             [hud hideAnimated:YES];
             hud = nil;
             if([[response valueForKey:@"status"] integerValue] >= 0)

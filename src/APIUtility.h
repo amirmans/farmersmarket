@@ -30,7 +30,7 @@
 
 -(CLLocationCoordinate2D) getLocationFromAddressString: (NSString*) addressStr;
 
-- (void)orderToServer:(NSDictionary *)data server:(NSString *)url completiedBlock:(void (^)(NSDictionary *response))finished;
+- (void)callServer:(NSDictionary *)data server:(NSString *)url method:(NSString *)method completiedBlock:(void (^)(NSDictionary *response))finished;
 
 //-(void)BusinessListAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished;
 

@@ -32,6 +32,8 @@
 @property (strong, nonatomic) IBOutlet UITableView *savedCardTable;
 
 @property (weak, nonatomic) IBOutlet UISegmentedControl *ageGroupSegmentedControl;
+@property (strong, nonatomic) IBOutlet UITextField *emailWorkTextField;
+@property (strong, nonatomic) IBOutlet UILabel *emailWorkLabel;
 
 - (IBAction)saveButtonAction:(id)sender;
 - (IBAction)ageGroupSegmentedControlAction:(id)sender;

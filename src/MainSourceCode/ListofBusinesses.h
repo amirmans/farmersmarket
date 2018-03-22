@@ -19,6 +19,7 @@
 @property (strong, atomic) NSMutableArray *businessListArray;
 
 - (void)startGettingListofAllBusinesses;
+- (void)startGettingListofAllBusinessesForCorp:(NSString *)businesses;
 
 + (id)sharedListofBusinesses;
 

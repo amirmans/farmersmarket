@@ -121,7 +121,7 @@
                 UILabel *lbl = [[UILabel alloc]initWithFrame:footer.frame];
                 [lbl setFont:[UIFont systemFontOfSize:12]];
                 lbl.backgroundColor = [UIColor clearColor];
-                lbl.text = [NSString localizedStringWithFormat:@"Deivery charge: $ %.2f   ", _receiptPDCharge];;
+                lbl.text = [NSString localizedStringWithFormat:@"Delivery charge: $ %.2f   ", _receiptPDCharge];;
                 lbl.textAlignment = NSTextAlignmentRight;
                 [footer addSubview:lbl];
         

@@ -70,6 +70,7 @@
 @property(nonatomic, retain) NSString *password;
 @property(atomic, assign) short ageGroup;
 @property(nonatomic, retain) NSString *emailAddress;
+@property(nonatomic, retain) NSString *emailWorkAddress;
 @property(nonatomic, retain) NSMutableArray *notifications;
 @property(nonatomic, retain) NSMutableArray *messages;
 @property(nonatomic, retain) NSMutableArray *businessMessages;

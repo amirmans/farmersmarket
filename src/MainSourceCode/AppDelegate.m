@@ -42,8 +42,7 @@
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize notificationDelegate;
-@synthesize informationDate;
-
+@synthesize informationDate, corpMode, corps, corpIndex;
 
 @synthesize enterBusinessNav, tt_tabBarController;
 
@@ -58,8 +57,11 @@ static AppDelegate *sharedObj;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+//    corps = [[NSArray  alloc] init];
+    corpMode = false;
     
     informationDate = [NSDate date];
+    
     [AppData sharedInstance].Current_Selected_Tab = @"0";
     [AppData sharedInstance].is_Profile_Changed = @"NO";
 //    [GMSServices provideAPIKey:@"AIzaSyD7WfHjPssiG_nJi5P0rF4GJHUxxrFCono"];
@@ -80,7 +82,7 @@ static AppDelegate *sharedObj;
     [_locationManager requestWhenInUseAuthorization];
     [_locationManager startUpdatingLocation];
     
-    NSLog(@"%@",[DataModel sharedDataModelManager].emailAddress);
+//    NSLog(@"%@",[DataModel sharedDataModelManager].emailAddress);
 
 //    [[AppData sharedInstance] getCurruntLocation];
     
@@ -646,8 +648,33 @@ self.tt_tabBarController.tabBar.tintColor = [UIColor colorWithDisplayP3Red:249.0
     }];
 }
 
+- (void)getCorps:(NSString *)workEmail {
+    if (corps || [corps count]) {
+        [corps removeAllObjects];
+    }
+    if(workEmail == nil || [workEmail isKindOfClass:[NSNull class]] || workEmail.length==0) {
+        return;
+    }
+    
+    NSRange r1 = [workEmail rangeOfString:@"@"];
+    NSRange r2 = [workEmail rangeOfString:@"."];
+    NSRange rSub = NSMakeRange(r1.location + r1.length, r2.location - r1.location - r1.length);
+    NSString *domain = [workEmail substringWithRange:rSub];
+    NSString *param = @"domain";
+    NSDictionary* paramDict = @{@"cmd":@"getCorpsForDomain",param:domain};
+    [[APIUtility sharedInstance] callServer:paramDict server:BusinessAndProductionInformationServer method:@"GET" completiedBlock:^(NSDictionary *response) {
+        if([[response valueForKey:@"status"] integerValue] >= 0)
+        {
+            corps = [[response objectForKey:@"data"] mutableCopy];
+        }
+        else
+        {
+            NSLog(@"Could not get corps from the server");
+        }
+    }];
+}
 //
-- (void) postProcessForSuccess:(NSDictionary *)consumerInfo {
+- (void)postProcessForConsumerProfile:(NSDictionary *)consumerInfo {
     [[DataModel sharedDataModelManager] setUserIDWithString:consumerInfo[@"uid"]];
     [DataModel sharedDataModelManager].nickname = consumerInfo[@"nickname"];
     [[DataModel sharedDataModelManager] setAgeGroupWithString:consumerInfo[@"age_group"]];
@@ -655,9 +682,12 @@ self.tt_tabBarController.tabBar.tintColor = [UIColor colorWithDisplayP3Red:249.0
     [DataModel sharedDataModelManager].sms_no = consumerInfo[@"sms_no"];
     [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
     [DataModel sharedDataModelManager].emailAddress = consumerInfo[@"email1"];
+    [DataModel sharedDataModelManager].emailWorkAddress = consumerInfo[EmailWorkAddressKey];
 
     [self getDefaultCCForConsumer];
     
+    NSString* workEmail = consumerInfo[EmailWorkAddressKey];
+    [self getCorps:workEmail];
 }
 
 
