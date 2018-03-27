@@ -394,12 +394,13 @@ double deliveryAmountValue; //Delievery amount value in $
     self.lblSubTotalPrice.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,totalVal];
     
 //    self.lblDeliveryAmount.hidden = false;
-    NSString *p_time = [AppData sharedInstance].consumerPDTimeChosen;
+    
     if ( ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
         NSMutableArray *corps = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
         short corpIndex = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex;
-        p_time = [[corps objectAtIndex:corpIndex] valueForKey:@"delivery_time"];
+        [AppData sharedInstance].consumerPDTimeChosen = [[corps objectAtIndex:corpIndex] valueForKey:@"delivery_time"];
     }
+    NSString *p_time = [AppData sharedInstance].consumerPDTimeChosen;
     
     if(selectedButtonNumber == 1){
         lblDeliveryLabel.text = @"Service charge:";

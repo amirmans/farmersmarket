@@ -2,7 +2,8 @@
 @class NSString;
 
 //#ifdef DEBUG
-//#define TapInEndpointHost @"https://tapforall.com/staging/tap-in/"
+//#define TapInEndpointHost @"http://tapin-servers.dv.10.0.0.126.xip.io/tap-in/"
+//#define TapInEndpointHost @"https://tapforall.com/wilsonville/tap-in/"
 //#else
 #define TapInEndpointHost @"https://tapforall.com/merchants/tap-in/"
 //#endif
@@ -19,7 +20,7 @@
 
 #define DefinedServerForBusiness (TapInEndpointHost @"include/model.php")
 
-#define timeInterval 60 // network time interval
+#define timeInterval 30 // network time interval
 
 #define MaxRowsForLoadingChatMessages 150 // max number of messages
 #define TimeIntervalForLoadingChatMessages 1440 //Hours - 1440 means 2 months
@@ -71,6 +72,7 @@ static NSString *const PasswordKey = @"password";
 static NSString *const JoinedChatKey = @"joinedChat";
 static NSString *const DeviceTokenKey = @"deviceToken";
 static NSString *const EmailAddressKey = @"email1";
+static NSString *const EmailWorkAddressKey = @"email2";
 static NSString *const AgeGroupKey = @"age_group";
 static NSString *const UserIDKey = @"userID";
 

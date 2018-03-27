@@ -663,13 +663,14 @@ self.tt_tabBarController.tabBar.tintColor = [UIColor colorWithDisplayP3Red:249.0
     NSString *param = @"domain";
     NSDictionary* paramDict = @{@"cmd":@"getCorpsForDomain",param:domain};
     [[APIUtility sharedInstance] callServer:paramDict server:BusinessAndProductionInformationServer method:@"GET" completiedBlock:^(NSDictionary *response) {
-        if([[response valueForKey:@"status"] integerValue] >= 0)
+        if ( ([[response valueForKey:@"status"] integerValue] >= 0) && ([response valueForKey:@"server_error"] == 0) )
         {
             corps = [[response objectForKey:@"data"] mutableCopy];
         }
         else
         {
             NSLog(@"Could not get corps from the server");
+            
         }
     }];
 }

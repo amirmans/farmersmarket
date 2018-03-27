@@ -69,7 +69,6 @@
         if ([responseData objectForKey:@"information_date"]) {
             myAppDelegate.informationDate = [responseData objectForKey:@"information_date"];
         }
-    
     }
     else
     {
@@ -92,6 +91,12 @@
     
 //    NSLog(@"The status is: %i and our list of businesses is: %@", status, businessListArray);
 }
+
+- (void)postProcessForListOfBusinessesFailure:(NSDictionary *)responseData
+{
+ 
+}
+
 
 
 @end

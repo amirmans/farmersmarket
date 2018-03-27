@@ -39,7 +39,7 @@
     
 }
 
-- (void)serverCallToGetListofAllBusinessesForCorp:(NSString*)businesses {
+- (void)serverCallToGetListofAllBusinessesForCorp:(NSString*)businesses {    
     NSString *urlString = BusinessInformationServer;
     NSDictionary *params = @{@"ids":businesses
                              ,@"cmd":@"get_all_businesses_for_set"};
@@ -47,6 +47,7 @@
     NSLog(@"Getting list of businesses for corp using server: %@, and params: %@", urlString, params);
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager  manager];
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
     
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
@@ -57,7 +58,6 @@
          }
          failure:^(NSURLSessionTask *operation, NSError *error) {
              NSLog(@"Error in fetching list of businesses: %@", error);
-             
          }
      ];
 }

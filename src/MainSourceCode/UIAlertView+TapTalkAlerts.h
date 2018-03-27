@@ -3,7 +3,7 @@
 //  TapTalk
 //
 //  This category created by Amir on 6/2/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
+//  Copyright (c) 2012 __TapForAll, Inc.__. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

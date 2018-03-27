@@ -12,14 +12,18 @@
 #import "AppData.h"
 #import "ActionSheetPicker.h"
 #import "AppDelegate.h"
+#import "MBProgressHUD.h"
 
-@interface HomeViewController ()
+@interface HomeViewController () {
+    MBProgressHUD *HUD;
+}
 @property (strong, nonatomic) ActionSheetStringPicker *corpPicker;
+@property (atomic, strong) NSTimer *corpListTimer;
 @end
 
 @implementation HomeViewController
 
-@synthesize btnNewOrder, btnPickupOrder, textViewMessageToConsumers, corpButton;
+@synthesize btnNewOrder, btnPickupOrder, textViewMessageToConsumers, corpButton, corpListTimer;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,6 +35,16 @@
     textViewMessageToConsumers.textColor = [UIColor whiteColor];
 //    textViewMessageToConsumers.text = @"Carry-Out: ASAP (varies by merchant)\nDelivery: 45-60 min.";
     textViewMessageToConsumers.hidden = true;
+    
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    HUD.label.text = @"Finding your company...";
+
+    HUD.mode = MBProgressHUDModeIndeterminate;
+    // it seems this should be after setting the mode
+    [HUD.bezelView setBackgroundColor:[UIColor orangeColor]];
+    HUD.bezelView.color = [UIColor orangeColor];
+    HUD.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
+    [self.view addSubview:HUD];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -47,6 +61,57 @@
     self.navigationController.navigationBar.hidden = NO;
 }
 
+- (void)handleCorp {
+    NSArray* corpList = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
+    if ([corpList count] < 1) {
+        UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:@"Your company is not signed up to use our services!" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        [alert1 addAction:okAction];
+        [self presentViewController:alert1 animated:true completion:^{
+        }];
+        
+        return;
+    }
+    NSArray* deliveryLocations = [corpList valueForKey:@"delivery_location"];
+    
+    [ActionSheetStringPicker showPickerWithTitle:@"Delivery location?"
+                                rows:deliveryLocations
+                                initialSelection:0
+                                doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
+                                           NSLog(@"Picker: %@, Index: %ld, value: %@",
+                                                 picker, (long)selectedIndex, selectedValue);
+                                           [self.corpButton setTitle:selectedValue forState:UIControlStateNormal];
+                                           ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode = true;
+                                           
+                                           ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
+                                           ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex = selectedIndex;
+                                           NSString *businessesForCorp = [[corpList objectAtIndex:selectedIndex] objectForKey:@"merchant_ids"];
+                                           [businessArrays startGettingListofAllBusinessesForCorp:businessesForCorp];
+                                           BusinessListViewController *businessListContorller = [[BusinessListViewController alloc] initWithNibName:@"BusinessListViewController" bundle:nil];
+                                           [self.navigationController pushViewController:businessListContorller animated:YES];
+                                    }
+                                cancelBlock:^(ActionSheetStringPicker *picker) {
+                                         NSLog(@"Block Picker Canceled");
+                                    }
+                                origin:self.view];
+}
+
+
+- (void)timerCallBack {
+    AppDelegate *delegate = ((AppDelegate *)[[UIApplication sharedApplication] delegate]);
+    NSArray* corpList = delegate.corps;
+    //    NSLog(@"%@",_ResponseDataArray);
+    if (corpList) {
+        [corpListTimer invalidate];
+        corpListTimer = nil;
+        [HUD hideAnimated:YES];
+        [self handleCorp];
+    } else {
+//         NSString* workEmail= [DataModel sharedDataModelManager].emailWorkAddress;
+//        [delegate getCorps:workEmail];
+    }
+}
 /*
 #pragma mark - Navigation
 
@@ -71,7 +136,7 @@
 - (IBAction)ShowCorpsAction:(id)sender {
     NSString* workEmail= [DataModel sharedDataModelManager].emailWorkAddress;
     if(workEmail == nil || [workEmail isKindOfClass:[NSNull class]] || workEmail.length==0) {
-            UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:@"We are taking you to the profile page.  Please update your profile info \n then come back to this page." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:@"We are taking you to the profile page.  Please update your profile info and work email.\nThen come back to this page." preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 self.tabBarController.selectedIndex = 1;
             }];
@@ -82,37 +147,13 @@
         return;
     }
     NSArray* corpList = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
-    if ((!corpList) || ([corpList count] < 1)) {
-        UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:@"Your company is not signed up to use our services!" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        }];
-        [alert1 addAction:okAction];
-        [self presentViewController:alert1 animated:true completion:^{
-        }];
-        
-        return;
-    }
-    NSArray* deliveryLocations = [corpList valueForKey:@"delivery_location"];
     
-    [ActionSheetStringPicker showPickerWithTitle:@"Select a Table Number"
-                                            rows:deliveryLocations
-                                initialSelection:0
-                                       doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
-                                           NSLog(@"Picker: %@, Index: %ld, value: %@",
-                                                 picker, (long)selectedIndex, selectedValue);
-                                           [self.corpButton setTitle:selectedValue forState:UIControlStateNormal];
-                                           ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode = true;
-                                           
-                                           ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
-                                           ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex = selectedIndex;
-                                           NSString *businessesForCorp = [[corpList objectAtIndex:selectedIndex] objectForKey:@"merchant_ids"];
-                                           [businessArrays startGettingListofAllBusinessesForCorp:businessesForCorp];
-                                           BusinessListViewController *businessListContorller = [[BusinessListViewController alloc] initWithNibName:@"BusinessListViewController" bundle:nil];
-                                           [self.navigationController pushViewController:businessListContorller animated:YES];
-                                       }
-                                     cancelBlock:^(ActionSheetStringPicker *picker) {
-                                         NSLog(@"Block Picker Canceled");
-                                     }
-                                          origin:sender];
+    if (!corpList) {
+         [HUD showAnimated:YES];
+        corpListTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(timerCallBack) userInfo:nil repeats:YES];
+    } else {
+        [self handleCorp];
+    }
+   
 }
 @end

@@ -9,6 +9,7 @@
 #import "MakePaymentViewController.h"
 #import "cardDetailCollectionCell.h"
 #import "AppData.h"
+#import "AppDelegate.h"
 
 @interface MakePaymentViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 {
@@ -23,13 +24,15 @@
 @property (assign) NSInteger originalNoPoint;
 @property (assign) BOOL flagRedeemPointVal;
 @property (nonatomic, strong) MBProgressHUD *hud;
+@property (nonatomic, strong) NSNumber *corp_type; //1 or 0 string because it will be inside a nsdictionary
+
 - (float)calculateValueforGivenPoints:(NSInteger)points;
 
 @end
 
 @implementation MakePaymentViewController
 
-@synthesize redeemPointsVal,hud,dollarValForEachPoints,redeemNoPoint,currentPointsLevel,originalNoPoint,originalPointsVal,flagRedeemPointVal,tipAmt,subTotalVal,pd_charge, pd_noteText;
+@synthesize redeemPointsVal,hud,dollarValForEachPoints,redeemNoPoint,currentPointsLevel,originalNoPoint,originalPointsVal,flagRedeemPointVal,tipAmt,subTotalVal,pd_charge, pd_noteText, corp_type;
 @synthesize currency_symbol;
 @synthesize currency_code;
 
@@ -37,6 +40,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    corp_type = @0;
+    if ( ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
+        NSMutableArray *corps = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
+        short corpIndex = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex;
+        pd_charge = [[[corps objectAtIndex:corpIndex] valueForKey:@"delivery_charge"] doubleValue];
+        [AppData sharedInstance].consumerPDMethodChosen = DELIVERY_LOCATION;
+        [AppData sharedInstance].consumer_Delivery_Id = [[corps objectAtIndex:corpIndex] valueForKey:@"corp_id"];
+        [AppData sharedInstance].consumer_Delivery_Location_Id = @"";
+        self.pd_noteText =@"";
+//        [CurrentBusiness sharedCurrentBusinessManager].business.promotion_code = @"";
+//        _promotionalamt = 0.0;
+        corp_type = @1;
+    }
     
     self.title = @"Payment";
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
@@ -426,7 +443,7 @@
     if([CurrentBusiness sharedCurrentBusinessManager].business.promotion_code == NULL){
         [CurrentBusiness sharedCurrentBusinessManager].business.promotion_code = @"";
     }
-    NSLog(@"%@",[AppData sharedInstance].consumer_Delivery_Id);
+    
     NSDictionary *orderInfoDict= @{@"cmd":@"save_order",@"data":orderItemArray,@"consumer_id":userID,@"total":[NSString stringWithFormat:@"%f",self.totalVal],
                                    @"business_id":business_id,@"points_redeemed":[NSString stringWithFormat:@"%ld",(long)currentRedeemPoints],
                                    @"points_dollar_amount":[NSString stringWithFormat:@"%f",redeemPointsDollarValue],
@@ -439,8 +456,10 @@
                                    @"pd_charge_amount": [NSNumber numberWithDouble:self.pd_charge],
                                    @"pd_mode": [AppData sharedInstance].consumerPDMethodChosen.length > 0 ? [AppData sharedInstance].consumerPDMethodChosen : @"",
                                    @"pd_locations_id": [AppData sharedInstance].consumer_Delivery_Location_Id.length > 0 ? [AppData sharedInstance].consumer_Delivery_Location_Id : @"",
-                                   @"pd_time": [AppData sharedInstance].consumerPDTimeChosen.length > 0 ? [AppData sharedInstance].consumerPDTimeChosen : @""
+                                   @"pd_time": [AppData sharedInstance].consumerPDTimeChosen.length > 0 ? [AppData sharedInstance].consumerPDTimeChosen : @"",
+                                   @"corp_type":corp_type
                                    };
+
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:orderInfoDict
                                                        options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
