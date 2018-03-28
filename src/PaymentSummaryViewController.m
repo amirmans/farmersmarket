@@ -401,6 +401,13 @@ double deliveryAmountValue; //Delievery amount value in $
         [AppData sharedInstance].consumerPDTimeChosen = [[corps objectAtIndex:corpIndex] valueForKey:@"delivery_time"];
     }
     NSString *p_time = [AppData sharedInstance].consumerPDTimeChosen;
+    NSDateFormatter *displayFormatter = [[NSDateFormatter alloc] init];
+    displayFormatter.dateFormat = TIME24HOURFORMAT;
+    NSDate *tempDate = [displayFormatter dateFromString:p_time];
+    displayFormatter.dateFormat = TIME12HOURFORMAT;
+    p_time = [displayFormatter stringFromDate:tempDate];
+    
+    
     
     if(selectedButtonNumber == 1){
         lblDeliveryLabel.text = @"Service charge:";

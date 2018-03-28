@@ -140,6 +140,9 @@ static const int Pickup_closed_rest_of_day = 2;
 static const int Pickup_open_later_today = 4;
 static const int Pickup_open = 8;
 
+static const int CorpType = 1;
+static const int IndividualType = 1;
+
 // compatibility between different ios
 #ifdef __IPHONE_8_0
 #define Compatible_setImageWithURL sd_setImageWithURL

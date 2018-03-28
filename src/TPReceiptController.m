@@ -43,12 +43,13 @@
     lblBusinessName.textAlignment = NSTextAlignmentCenter;
     [lblBusinessName setNumberOfLines:0];
     [lblBusinessName sizeToFit];
-    lblBusinessName.text = [NSString stringWithFormat:@"%@", [CurrentBusiness sharedCurrentBusinessManager].business.businessName];
+    lblBusinessName.text = [NSString stringWithFormat:@"%@", [CurrentBusiness sharedCurrentBusinessManager].business.shortBusinessName];
     
     lbl_thankYou.textAlignment = NSTextAlignmentCenter;
     [lbl_thankYou setNumberOfLines:0];
     [lbl_thankYou sizeToFit];
-    lbl_thankYou.text = [NSString stringWithFormat:@"Thanks For Your Order #%@", self.order_id];
+    lbl_thankYou.text = [NSString stringWithFormat:@"%@ thanks you for #%@",
+                         [CurrentBusiness sharedCurrentBusinessManager].business.shortBusinessName,self.order_id];
     
 
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"< Done" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];

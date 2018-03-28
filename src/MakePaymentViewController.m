@@ -79,11 +79,20 @@
     [[NSDate date] descriptionWithLocale:currentLocale];
     
     NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"MMMM dd, yyyy hh:mm a"];
+//    [dateFormatter setDateFormat:@"MMMM dd, yyyy hh:mm a"];
+    [dateFormatter setDateFormat:@"MMMM dd, yyyy"];
     // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
     NSLog(@"%@",[dateFormatter stringFromDate:[NSDate date]]);
     self.lblPickUpDate.text = [dateFormatter stringFromDate:[NSDate date]];
     NSString* pd_time= [AppData sharedInstance].consumerPDTimeChosen;
+   
+    dateFormatter.dateFormat = TIME24HOURFORMAT;
+    NSDate *tempDate = [dateFormatter dateFromString:pd_time];
+    dateFormatter.dateFormat = TIME12HOURFORMAT;
+    pd_time = [dateFormatter stringFromDate:tempDate];
+    
+    
+    
     if ( [[AppData sharedInstance].consumerPDMethodChosen isEqualToString:PICKUP_COUNTER] ) {
 //        _waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
         _waitTimeLabel.text = [@"Pick up at " stringByAppendingString:pd_time];
