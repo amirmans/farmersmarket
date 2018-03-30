@@ -10,7 +10,8 @@
 
 @optional
 - (void)postProcessForConsumerProfile:(NSDictionary *)consumerInfo;
-- (void)postProcessForListOfBusinessesSuccess:(NSData *)responseObject;
+//- (void)postProcessForListOfBusinessesSuccess:(NSData *)responseObject;
+- (void)postProcessForListOfBusinessesSuccess:(NSDictionary *)responseData for:(short)dataType;
 - (void)postProcessForFailure;
 
 @end

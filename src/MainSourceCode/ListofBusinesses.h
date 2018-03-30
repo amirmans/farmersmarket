@@ -14,9 +14,11 @@
     Business *aBusiness;
     ServerInteractionManager *myServer;
     NSMutableArray *businessListArray;
+    NSMutableArray *corpBusinessListArray;
 }
 
 @property (strong, atomic) NSMutableArray *businessListArray;
+@property (strong, atomic) NSMutableArray *corpBusinessListArray;
 
 - (void)startGettingListofAllBusinesses;
 - (void)startGettingListofAllBusinessesForCorp:(NSString *)businesses;

@@ -160,7 +160,7 @@
     [TapTalkLooks setToTapTalkLooks:typesOfBusiness isActionButton:NO makeItRound:YES];
     [TapTalkLooks setToTapTalkLooks:contactInfo isActionButton:NO makeItRound:YES];
     [TapTalkLooks setToTapTalkLooks:rating isActionButton:NO makeItRound:NO];
-    //[TapTalkLooks setBackgroundImage:self.view]; zzzzz
+    
     [TapTalkLooks setToTapTalkLooks:enterAndGetService isActionButton:YES makeItRound:NO];
     [TapTalkLooks setToTapTalkLooks:ratingLabel isActionButton:NO makeItRound:NO];
     

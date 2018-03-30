@@ -260,7 +260,7 @@ double deliveryAmountValue; //Delievery amount value in $
     makePaymentVC.tipAmt = tipAmt;
     makePaymentVC.promotionalamt = promotionalamt;
     makePaymentVC.pd_charge = deliveryAmountValue;
-//    makePaymentVC.deliveryamt = deliveryamt; //zzz
+
     makePaymentVC.noteText = self.noteText;
     makePaymentVC.pd_noteText = self.pd_noteText;
     makePaymentVC.restTitle = self.lblTitle.text;

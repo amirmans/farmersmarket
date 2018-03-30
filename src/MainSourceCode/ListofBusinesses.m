@@ -24,7 +24,7 @@
 
 @implementation ListofBusinesses
 
-@synthesize businessListArray;
+@synthesize businessListArray, corpBusinessListArray;
 
 
 + (id)sharedListofBusinesses {
@@ -50,15 +50,24 @@
 
 - (void)startGettingListofAllBusinesses
 {
+    if ([businessListArray count]) {
+//        [businessListArray removeAllObjects]; // crashes
+        businessListArray = nil; // zzz
+    }
     [myServer serverCallToGetListofAllBusinesses];
 }
 
 - (void)startGettingListofAllBusinessesForCorp:(NSString *)businesses
 {
+    if ([businessListArray count]) {
+//        [businessListArray removeAllObjects]; // crashes
+        businessListArray = nil;
+    }
+//    [corpBusinessListArray removeAllObjects];
     [myServer serverCallToGetListofAllBusinessesForCorp:businesses];
 }
 
-- (void)postProcessForListOfBusinessesSuccess:(NSDictionary *)responseData
+- (void)postProcessForListOfBusinessesSuccess:(NSDictionary *)responseData for:(short)dataType
 {
     //    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
 //    int status = [[responseData objectForKey:@"status"] intValue];

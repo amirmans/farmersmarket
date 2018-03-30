@@ -48,15 +48,6 @@ static NSDateFormatter* utilyDateFormatter;
 
 - (void)callServer:(NSDictionary *)data server:(NSString *)url method:(NSString *)method completiedBlock:(void (^)(NSDictionary *response))finished
 {
-    //zzz TODO
-    if ([url isEqualToString:@"https://tapforall.com/merchants/tap-in/include/model.php"]) {
-        //zzz TOD
-        double delayInSeconds = 2.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            // do something
-        });
-    }
     if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
     {
         return;
@@ -88,7 +79,7 @@ static NSDateFormatter* utilyDateFormatter;
               failure:^(NSURLSessionDataTask *task, NSError *error) {
                   
                   NSLog(@"Error in sending order to the server: %@", error.description);
-                  finished(@{@"error":error.description});
+                  finished(@{@"server_error_message":error.description, @"server_error":@"-1"});
               }];
     }
 }
@@ -861,7 +852,7 @@ static NSDateFormatter* utilyDateFormatter;
 
 
 - (void)getAverageWaitTimeForBusiness:(NSDictionary *)data server:(NSString *)url completiedBlock:(void (^)(NSDictionary *response))finished {
-//zzz TODO
+
     if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
     {
         return;

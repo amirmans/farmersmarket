@@ -141,7 +141,7 @@ static const int Pickup_open_later_today = 4;
 static const int Pickup_open = 8;
 
 static const int CorpType = 1;
-static const int IndividualType = 1;
+static const int IndividualType = 0;
 
 // compatibility between different ios
 #ifdef __IPHONE_8_0

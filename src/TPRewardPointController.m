@@ -132,7 +132,7 @@ NSInteger current_points_level_int  = 0;
                 total_available_points = [[data valueForKeyPath:@"total_available_points"] stringValue];
                 self.lblPoints.text = [NSString stringWithFormat:@"Points: %@",total_available_points];
                 
-                dollarValueDouble = [total_available_points doubleValue]/Points_to_dollar; //zzz
+                dollarValueDouble = [total_available_points doubleValue]/Points_to_dollar; 
             }
             
             if ([CurrentBusiness sharedCurrentBusinessManager].business) {

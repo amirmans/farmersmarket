@@ -29,11 +29,13 @@
     [manager GET:urlString parameters:params progress:nil
           success:^(NSURLSessionTask *operation, id responseObject) {
               //remember in the data is already translated to NSDictionay - by AFJSONResponseSerializer
-              [postProcessesDelegate postProcessForListOfBusinessesSuccess:responseObject];
+              [postProcessesDelegate postProcessForListOfBusinessesSuccess:responseObject for:IndividualType];
           }
           failure:^(NSURLSessionTask *operation, NSError *error) {
               NSLog(@"Error in fetching list of businesses: %@", error);
               
+              NSDictionary* responseObject = @{@"server_error_message":error.description, @"server_error":@"-1"};
+              [postProcessesDelegate postProcessForListOfBusinessesSuccess:responseObject for:IndividualType];
           }
      ];
     
@@ -54,10 +56,12 @@
     [manager GET:urlString parameters:params progress:nil
          success:^(NSURLSessionTask *operation, id responseObject) {
              //remember in the data is already translated to NSDictionay - by AFJSONResponseSerializer
-             [postProcessesDelegate postProcessForListOfBusinessesSuccess:responseObject];
+             [postProcessesDelegate postProcessForListOfBusinessesSuccess:responseObject for:CorpType];
          }
          failure:^(NSURLSessionTask *operation, NSError *error) {
              NSLog(@"Error in fetching list of businesses: %@", error);
+             NSDictionary* responseObject = @{@"server_error_message":error.description, @"server_error":@"-1"};
+             [postProcessesDelegate postProcessForListOfBusinessesSuccess:responseObject for:CorpType];
          }
      ];
 }

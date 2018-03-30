@@ -70,7 +70,7 @@ Business *biz;
     self.ResponseDataArray = [businesses businessListArray];
 //    NSLog(@"%@",_ResponseDataArray);
     if (self.ResponseDataArray.count > 0 ) {
-        [businessListArray removeAllObjects];
+//        [businessListArray removeAllObjects];
         for (int i = 0; i < self.ResponseDataArray.count ; i++) {
             if([[[self.ResponseDataArray objectAtIndex:i]valueForKey:@"branch"] isEqualToString:@"0"])
                 [businessListArray addObject:[self.ResponseDataArray objectAtIndex:i]];
@@ -118,7 +118,9 @@ Business *biz;
     
     // Create a mutable array to contain products for the search results table.
     ListofBusinesses* businesses = [ListofBusinesses sharedListofBusinesses];
-    businessListArray= [[NSMutableArray alloc]init];
+    if (!businessListArray) {
+        businessListArray= [[NSMutableArray alloc]init];
+    }// must be there
     self.ResponseDataArray = [businesses businessListArray];
     if (self.ResponseDataArray.count > 0 ) {
         for (int i = 0; i < self.ResponseDataArray.count ; i++) {
