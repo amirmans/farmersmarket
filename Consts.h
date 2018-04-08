@@ -6,6 +6,7 @@
 //#define TapInEndpointHost @"https://tapforall.com/wilsonville/tap-in/"
 //#else
 #define TapInEndpointHost @"https://tapforall.com/merchants/tap-in/"
+//#define TapInEndpointHost @"http://tapforall.com/staging/tap-in/"
 //#endif
 
 #define TT_CommunicationWithServerQ dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)

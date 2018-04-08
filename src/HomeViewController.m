@@ -61,6 +61,36 @@
     self.navigationController.navigationBar.hidden = NO;
 }
 
+- (NSString *)isDayandTimeValidForCorp:(NSDictionary *)corpDictionary {
+    NSString *returnMessage = @"";
+    
+    // masure sure we have not passed the cutooff time and user can still order for lunch
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"HH:mm:ss"];
+    [formatter setTimeZone:[NSTimeZone localTimeZone]];
+    
+    NSString *nowString = [formatter stringFromDate:[NSDate date]];
+    NSDate* dayInhms = [formatter dateFromString:nowString];
+    
+    
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *comps = [gregorian components:NSCalendarUnitWeekday fromDate:[NSDate date]];
+    long weekday = [comps weekday];
+    NSString *weekDayStr = [NSString stringWithFormat: @"%ld", weekday];
+    NSString *businessWeekDaysStr = [corpDictionary objectForKey:@"delivery_week_days"];
+    if ([businessWeekDaysStr rangeOfString:weekDayStr].location == NSNotFound) {
+       returnMessage = @"There is no delivery today!";
+    } else {
+        NSString *cutoffStr = [corpDictionary objectForKey:@"cutoff_time"];
+        NSDate *cutoff  = [formatter dateFromString:cutoffStr];
+        if ([cutoff compare:dayInhms] == NSOrderedAscending) {
+            returnMessage = @"It is past the cutoff time for today's delivery!";
+        }
+    }
+    return returnMessage;
+}
+
+
 - (void)handleCorp {
     NSArray* corpList = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
     if ([corpList count] < 1) {
@@ -79,9 +109,21 @@
                                 rows:deliveryLocations
                                 initialSelection:0
                                 doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
-                                           NSLog(@"Picker: %@, Index: %ld, value: %@",
-                                                 picker, (long)selectedIndex, selectedValue);
-                                           [self.corpButton setTitle:selectedValue forState:UIControlStateNormal];
+                                    NSLog(@"Picker: %@, Index: %ld, value: %@",
+                                            picker, (long)selectedIndex, selectedValue);
+                                    [self.corpButton setTitle:selectedValue forState:UIControlStateNormal];
+                                    
+                                    NSDictionary *corpDict = [corpList objectAtIndex:selectedIndex];
+                                    NSString *errorMessage = [self isDayandTimeValidForCorp:corpDict];
+                                    if ([errorMessage length] > 0)
+                                    {
+                                        UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+                                        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                        }];
+                                        [alert1 addAction:okAction];
+                                        [self presentViewController:alert1 animated:true completion:^{
+                                        }];
+                                    } else {
                                            ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode = true;
                                            
                                            ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
@@ -90,6 +132,7 @@
                                            [businessArrays startGettingListofAllBusinessesForCorp:businessesForCorp];
                                            BusinessListViewController *businessListContorller = [[BusinessListViewController alloc] initWithNibName:@"BusinessListViewController" bundle:nil];
                                            [self.navigationController pushViewController:businessListContorller animated:YES];
+                                        }
                                     }
                                 cancelBlock:^(ActionSheetStringPicker *picker) {
                                          NSLog(@"Block Picker Canceled");

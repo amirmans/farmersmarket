@@ -579,7 +579,7 @@ static NSArray *consumerProfileDataArray = nil;
 //                [UIAlertController showErrorAlert:NSLocalizedString(@"Error in generating user ID.  Please try agin a few minutes!", nil)];
 //            }
 //            else {
-                [[DataModel sharedDataModelManager] setNickname:nicknameTextField.text];
+                [[DataModel sharedDataModelManager] setNickname:self.nicknameTextField.text];
 //                [[DataModel sharedDataModelManager] setPassword:passwordAgainTextField.text];
                 // we set two fields in the database after registering the user - now we are getting those fields
                 //uid is determine by the database. so we set DataModel after we talk to the server
@@ -588,21 +588,21 @@ static NSArray *consumerProfileDataArray = nil;
                 NSDictionary *jsonDictResponse = (NSDictionary *) responseObject;
             
     
-                [DataModel sharedDataModelManager].ageGroup = ageGroupSegmentedControl.selectedSegmentIndex;
+                [DataModel sharedDataModelManager].ageGroup = self.ageGroupSegmentedControl.selectedSegmentIndex;
                 NSString *qrImageFileName = [jsonDictResponse objectForKey:@"qrcode_file"];
                 if ((qrImageFileName != nil) && (qrImageFileName != (id)[NSNull null])) {
                     [DataModel sharedDataModelManager].qrImageFileName = qrImageFileName;
                 }
             
-                [[DataModel sharedDataModelManager] setZipcode:zipcodeTextField.text];
-                [[DataModel sharedDataModelManager] setEmailAddress:emailTextField.text];
-                [[DataModel sharedDataModelManager] setSms_no:smsNoTextField.text];
-                [DataModel sharedDataModelManager].emailWorkAddress = emailWorkTextField.text;
+                [[DataModel sharedDataModelManager] setZipcode:self.zipcodeTextField.text];
+                [[DataModel sharedDataModelManager] setEmailAddress:self.emailTextField.text];
+                [[DataModel sharedDataModelManager] setSms_no:self.smsNoTextField.text];
+                [DataModel sharedDataModelManager].emailWorkAddress = self.emailWorkTextField.text;
             
                 [[DataModel sharedDataModelManager] setUserIDWithString:jsonDictResponse[@"uid"]];
             
                 AppDelegate *delegate =((AppDelegate *)[[UIApplication sharedApplication] delegate]);
-                [delegate getCorps:emailWorkTextField.text];
+                [delegate getCorps:self.emailWorkTextField.text];
             
                 UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
                                                                                message:@"Profile information saved successfully."

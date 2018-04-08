@@ -69,13 +69,13 @@
     [manager downloadImageWithURL:imageURL options:SDWebImageRetryFailed progress:nil
                         completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *url) {
                             if (image && finished) {
-                                storeMapImageView.image = image;
-                                self.mapScrollView.contentSize = storeMapImageView.image.size;
-                                mapScrollView.clipsToBounds = YES;	// default is NO, we want to restrict drawing within our scrollview
-                                mapScrollView.minimumZoomScale = 1;
-                                mapScrollView.maximumZoomScale = 5;
-                                [mapScrollView setScrollEnabled:YES];
-                                mapScrollView.contentInset = UIEdgeInsetsZero;
+                                self.storeMapImageView.image = image;
+                                self.mapScrollView.contentSize = self.storeMapImageView.image.size;
+                                self.mapScrollView.clipsToBounds = YES;	// default is NO, we want to restrict drawing within our scrollview
+                                self.mapScrollView.minimumZoomScale = 1;
+                                self.mapScrollView.maximumZoomScale = 5;
+                                [self.mapScrollView setScrollEnabled:YES];
+                                self.mapScrollView.contentInset = UIEdgeInsetsZero;
                             }
                         }];
     

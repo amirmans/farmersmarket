@@ -47,8 +47,14 @@
 @property (strong, nonatomic) IBOutlet UILabel *lbl_thankYou;
 @property (strong, nonatomic) IBOutlet UILabel *lblBusinessName;
 @property (strong, nonatomic) IBOutlet UILabel *lbl_emailSentShortly;
+@property (strong, nonatomic) IBOutlet UILabel *lbl_alertWhenReady;
+
 @property(strong,nonatomic) NSString *currency_code;
 @property  (strong,nonatomic) NSString *currency_symbol;
+@property (strong, nonatomic) IBOutlet UILabel *lblTipAmount;
+@property (strong, nonatomic) IBOutlet UILabel *lblServiceCharge;
+@property (strong, nonatomic) IBOutlet UILabel *lblTipLabel;
+@property (strong, nonatomic) IBOutlet UILabel *lblServiceLabel;
 
 @property (assign) double taxAmount;
 @property (assign) double receiptPDCharge;

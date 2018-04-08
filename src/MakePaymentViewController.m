@@ -24,7 +24,7 @@
 @property (assign) NSInteger originalNoPoint;
 @property (assign) BOOL flagRedeemPointVal;
 @property (nonatomic, strong) MBProgressHUD *hud;
-@property (nonatomic, strong) NSNumber *corp_type; //1 or 0 string because it will be inside a nsdictionary
+@property (nonatomic, strong) NSNumber *order_type; //1 or 0 string because it will be inside a nsdictionary
 
 - (float)calculateValueforGivenPoints:(NSInteger)points;
 
@@ -32,7 +32,7 @@
 
 @implementation MakePaymentViewController
 
-@synthesize redeemPointsVal,hud,dollarValForEachPoints,redeemNoPoint,currentPointsLevel,originalNoPoint,originalPointsVal,flagRedeemPointVal,tipAmt,subTotalVal,pd_charge, pd_noteText, corp_type;
+@synthesize redeemPointsVal,hud,dollarValForEachPoints,redeemNoPoint,currentPointsLevel,originalNoPoint,originalPointsVal,flagRedeemPointVal,tipAmt,subTotalVal,pd_charge, pd_noteText, order_type;
 @synthesize currency_symbol;
 @synthesize currency_code;
 
@@ -41,7 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    corp_type = @0;
+    order_type = @0;
     if ( ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
         NSMutableArray *corps = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
         short corpIndex = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex;
@@ -49,10 +49,10 @@
         [AppData sharedInstance].consumerPDMethodChosen = DELIVERY_LOCATION;
         [AppData sharedInstance].consumer_Delivery_Id = [[corps objectAtIndex:corpIndex] valueForKey:@"corp_id"];
         [AppData sharedInstance].consumer_Delivery_Location_Id = @"";
-        self.pd_noteText =@"";
+//        self.pd_noteText =@"";
 //        [CurrentBusiness sharedCurrentBusinessManager].business.promotion_code = @"";
 //        _promotionalamt = 0.0;
-        corp_type = @1;
+        order_type = @1;
     }
     
     self.title = @"Payment";
@@ -68,7 +68,7 @@
 
     //init
 //    pd_noteText = @"";
-    cardDataArray = [[NSMutableArray alloc] init];
+    self->cardDataArray = [[NSMutableArray alloc] init];
     self.automaticallyAdjustsScrollViewInsets = YES;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self setInitialPointsValue];
@@ -88,8 +88,10 @@
    
     dateFormatter.dateFormat = TIME24HOURFORMAT;
     NSDate *tempDate = [dateFormatter dateFromString:pd_time];
-    dateFormatter.dateFormat = TIME12HOURFORMAT;
-    pd_time = [dateFormatter stringFromDate:tempDate];
+    if (tempDate != nil) {
+        dateFormatter.dateFormat = TIME12HOURFORMAT;
+        pd_time = [dateFormatter stringFromDate:tempDate];
+    }
     
     
     
@@ -457,8 +459,9 @@
                                    @"business_id":business_id,@"points_redeemed":[NSString stringWithFormat:@"%ld",(long)currentRedeemPoints],
                                    @"points_dollar_amount":[NSString stringWithFormat:@"%f",redeemPointsDollarValue],
                                    @"tip_amount":[NSNumber numberWithDouble:tipAmt], @"subtotal":[NSNumber numberWithDouble:self.subTotalVal], @"tax_amount":[NSNumber numberWithDouble:self.taxVal],
-                                   @"cc_last_4_digits":[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)], @"note":self.pd_noteText,@"pd_instruction":self.noteText,
-                                   @"consumer_delivery_id":[AppData sharedInstance].consumer_Delivery_Id.length > 0 ? [AppData sharedInstance].consumer_Delivery_Id : @"",
+                                   @"cc_last_4_digits":[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)]
+                                   , @"note":self.self.pd_noteText, @"pd_instruction":self.noteText
+                                   , @"consumer_delivery_id":[AppData sharedInstance].consumer_Delivery_Id.length > 0 ? [AppData sharedInstance].consumer_Delivery_Id : @"",
                                    @"delivery_charge_amount":[NSNumber numberWithDouble:self.pd_charge],
                                    @"promotion_code":[CurrentBusiness sharedCurrentBusinessManager].business.promotion_code,
                                    @"promotion_discount_amount" : [NSString stringWithFormat:@"%f",self.promotionalamt],
@@ -466,7 +469,7 @@
                                    @"pd_mode": [AppData sharedInstance].consumerPDMethodChosen.length > 0 ? [AppData sharedInstance].consumerPDMethodChosen : @"",
                                    @"pd_locations_id": [AppData sharedInstance].consumer_Delivery_Location_Id.length > 0 ? [AppData sharedInstance].consumer_Delivery_Location_Id : @"",
                                    @"pd_time": [AppData sharedInstance].consumerPDTimeChosen.length > 0 ? [AppData sharedInstance].consumerPDTimeChosen : @"",
-                                   @"corp_type":corp_type
+                                   @"order_type":order_type
                                    };
 
     NSError *error;
@@ -522,8 +525,8 @@
     }
     else{
         [[APIUtility sharedInstance] callServer:orderInfoDict server:OrderServerURL method:@"POST" completiedBlock:^(NSDictionary *response) {
-            [hud hideAnimated:YES];
-            hud = nil;
+            [self.hud hideAnimated:YES];
+            self->hud = nil;
             if([[response valueForKey:@"status"] integerValue] >= 0)
             {
                 if([response valueForKey:@"data"] != nil) {
@@ -535,12 +538,12 @@
                         NSDictionary *dictionary = [obj dictionaryWithValuesForKeys:keys];
                         [fetchedOrderArray addObject:dictionary];
                     }
-                    NSLog(@"%@",defaultCardData);
-                    NSString *cardType = [defaultCardData valueForKey:@"card_type"];
-                    NSString *cardNo = [defaultCardData valueForKey:@"cc_no"];
+                    
+                    NSString *cardType = [self->defaultCardData valueForKey:@"card_type"];
+                    NSString *cardNo = [self->defaultCardData valueForKey:@"cc_no"];
                     NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
                     NSString *cardDisplayNumber = [NSString stringWithFormat:@"XXXX XXXX XXXX %@",trimmedString];
-                    NSString *expDate =  [NSString stringWithFormat:@"%@/%@",[defaultCardData valueForKey:@"expMonth"],[defaultCardData valueForKey:@"expYear"]];
+                    NSString *expDate =  [NSString stringWithFormat:@"%@/%@",[self->defaultCardData valueForKey:@"expMonth"],[self->defaultCardData valueForKey:@"expYear"]];
                     TPReceiptController *receiptVC = [[TPReceiptController alloc] initWithNibName:@"TPReceiptController" bundle:nil];
                     receiptVC.fetchedRecordArray = fetchedOrderArray;
                     receiptVC.order_id = [[dataDict valueForKey:@"order_id"] stringValue];
@@ -551,7 +554,7 @@
                     NSInteger currentRedeemPoints = [self getRedeemNoPoints];
                     receiptVC.redeem_point = [NSString stringWithFormat:@"%ld",(long)currentRedeemPoints];
                     receiptVC.totalPaid = self.lblTotalPrice.text;
-                    receiptVC.tipAmount = tipAmt;
+                    receiptVC.tipAmount = self.tipAmt;
                     receiptVC.subTotal = self.subTotalVal;
                     receiptVC.receiptPDCharge = self.pd_charge;
                     receiptVC.taxAmount = self.taxVal;
@@ -580,10 +583,10 @@
 
     NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
     [[APIUtility sharedInstance] getAllCCInfo:userID completiedBlock:^(NSDictionary *response) {
-        [cardDataArray removeAllObjects];
+        [self->cardDataArray removeAllObjects];
         if (response != nil) {
-            [hud hideAnimated:YES];
-            hud = nil;
+            [self->hud hideAnimated:YES];
+            self->hud = nil;
             if ([[response valueForKey:@"status"] integerValue] >= 0){
                 if ([response valueForKey:@"data"] != nil) {
                     NSArray *data = [response valueForKey:@"data"];
@@ -600,24 +603,24 @@
                         ccModel.is_default = [dataDict valueForKey:@"default"];
                         ccModel.zip_code = [dataDict valueForKey:@"zip_code"];
                         
-                        [cardDataArray addObject:ccModel];
+                        [self->cardDataArray addObject:ccModel];
                     }
                 }
                 else{
-                    [hud hideAnimated:YES];
-                    hud = nil;
+                    [self->hud hideAnimated:YES];
+                    self->hud = nil;
                 }
             }
             else
             {
-                [hud hideAnimated:YES];
-                hud = nil;
+                [self->hud hideAnimated:YES];
+                self->hud = nil;
                 [self showAlert:@"Info" :@"Please add your credit card. We will save it securely for your later use"];
             }
         }
         else{
-            [hud hideAnimated:YES];
-            hud = nil;
+            [self->hud hideAnimated:YES];
+            self->hud = nil;
         }
         [self.collectionView reloadData];
     }];

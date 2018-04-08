@@ -404,8 +404,10 @@ double deliveryAmountValue; //Delievery amount value in $
     NSDateFormatter *displayFormatter = [[NSDateFormatter alloc] init];
     displayFormatter.dateFormat = TIME24HOURFORMAT;
     NSDate *tempDate = [displayFormatter dateFromString:p_time];
-    displayFormatter.dateFormat = TIME12HOURFORMAT;
-    p_time = [displayFormatter stringFromDate:tempDate];
+    if (tempDate !=nil ) {
+        displayFormatter.dateFormat = TIME12HOURFORMAT;
+        p_time = [displayFormatter stringFromDate:tempDate];
+    }
     
     
     

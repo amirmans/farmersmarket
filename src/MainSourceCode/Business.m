@@ -620,7 +620,7 @@ static NSNumberFormatter *numberFormatter;
                          {
                              if (webImage && finished)
                              {
-                                 iconImage = webImage;
+                                 self.iconImage = webImage;
                              }
                          }];
                     }
@@ -717,7 +717,7 @@ static NSNumberFormatter *numberFormatter;
      {
          if (webImage && finished)
          {
-             bg_image = webImage;
+             self.bg_image = webImage;
              self.businessBackgroundImage = webImage;
          }
      }];

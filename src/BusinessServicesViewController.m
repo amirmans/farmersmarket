@@ -442,15 +442,22 @@ UIBarButtonItem *btn_heart;
     [BgPictureArray removeObject:@""];
     
 //    if([[APIUtility sharedInstance]isBusinessOpen:biz.opening_time CloseTime:biz.closing_time]) {
-    if([[APIUtility sharedInstance] isServiceAvailable:PickUpAtCounter during:biz.opening_time and:biz.closing_time withType:(int)biz.pickup_counter_later]) {
-        self.lbl_OpenNow.text = @"OPEN NOW";
-        self.lbl_OpenNow.textColor = [UIColor orangeColor];
-    }else{
-        self.lbl_OpenNow.text = @"CLOSED";
-        self.lbl_OpenNow.textColor = [UIColor grayColor];
+    if (!((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
+        self.lbl_OpenNow.hidden = false;
+        self.lbl_time.hidden = false;
+        if([[APIUtility sharedInstance] isServiceAvailable:PickUpAtCounter during:biz.opening_time and:biz.closing_time withType:(int)biz.pickup_counter_later]) {
+            self.lbl_OpenNow.text = @"OPEN NOW";
+            self.lbl_OpenNow.textColor = [UIColor orangeColor];
+        }else{
+            self.lbl_OpenNow.text = @"CLOSED";
+            self.lbl_OpenNow.textColor = [UIColor grayColor];
+        }
+        self.lbl_time.text = [[APIUtility sharedInstance]getOpenCloseTime:biz.opening_time CloseTime:biz.closing_time];
+        //    [self setSliderForImage];
+    }else {
+        self.lbl_OpenNow.hidden = true;
+        self.lbl_time.hidden = true;
     }
-    self.lbl_time.text = [[APIUtility sharedInstance]getOpenCloseTime:biz.opening_time CloseTime:biz.closing_time];
-//    [self setSliderForImage];
 }
 
 - (void) setSliderForImage{

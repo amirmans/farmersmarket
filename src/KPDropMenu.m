@@ -154,10 +154,10 @@
         
         [UIView animateWithDuration:0.25 animations:^{
             
-            if(_DirectionDown)
-                tblView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, height);
+            if(self.DirectionDown)
+                self->tblView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height, self.frame.size.width, height);
             else
-                tblView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y - 5 - height, self.frame.size.width, height);
+                self->tblView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y - 5 - height, self.frame.size.width, height);
         }];
         
         if(_delegate != nil){

@@ -376,7 +376,7 @@ NSMutableArray *cardDataArray;
     card.expMonth = [expMonth integerValue];
     card.expYear = [expYear integerValue];
     card.cvc = cardCvc;
-    card.addressZip = ccModel.zip_code;
+    card.address.postalCode = ccModel.zip_code;
     
     [self saveAsDefaultCard:card];
     [self.navigationController popViewControllerAnimated:true];
@@ -647,8 +647,8 @@ NSMutableArray *cardDataArray;
                                               if (error) {
                                                   //                                           [self handleError:error];
                                                   NSLog(@"ERRRRR = %@",error);
-                                                  [hud hideAnimated:YES];
-                                                  hud = nil;
+                                                  [self->hud hideAnimated:YES];
+                                                  self->hud = nil;
                                                   
                                                   [self showAlert:@"Please try again" :[NSString stringWithFormat:@"%@",error.localizedDescription]];
                                               } else {
@@ -668,7 +668,7 @@ NSMutableArray *cardDataArray;
                                                   NSString *expiration_date = [NSString stringWithFormat:@"%@-%@-01", cardExpYear, cardExpMonth];
                                                   NSString *zip_code = self.txtZipCode.text;
                                                   if ([zip_code length] == 0) {
-                                                      zip_code = cardData.addressZip;
+                                                      zip_code = cardData.address.postalCode;
                                                   }
                                                   NSString *cardCvc = cardData.cvc;
                                                   NSString *cardType = [self getTypeFromCardNumber:cardData.number];
@@ -685,8 +685,8 @@ NSMutableArray *cardDataArray;
                                                   [[APIUtility sharedInstance]save_cc_info:severParam completiedBlock:^(NSDictionary *response) {
                                                       //        [self getCCForConsumer];
                                                       NSLog(@"%@",response);
-                                                      [hud hideAnimated:YES];
-                                                      hud = nil;
+                                                      [self->hud hideAnimated:YES];
+                                                      self->hud = nil;
                                                       
                                                       if(![[response objectForKey:@"status"] boolValue])
                                                       {

@@ -21,7 +21,7 @@
 
 @implementation TPReceiptController
 
-@synthesize totalPaid, tipAmount, subTotal, lblTextFromPayConfirmation, lbl_thankYou, lblBusinessName, lbl_emailSentShortly;
+@synthesize totalPaid, tipAmount, subTotal, lblTextFromPayConfirmation, lbl_thankYou, lblBusinessName, lbl_emailSentShortly, lbl_alertWhenReady;
 
 @synthesize currency_symbol;
 @synthesize currency_code;
@@ -39,6 +39,12 @@
         lbl_emailSentShortly.hidden = false;
     }
     
+    if ( ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
+        lbl_alertWhenReady.hidden = true;
+    } else {
+        lbl_alertWhenReady.hidden = false;
+    }
+    
     self.title = @"Confirmation";
     lblBusinessName.textAlignment = NSTextAlignmentCenter;
     [lblBusinessName setNumberOfLines:0];
@@ -48,7 +54,7 @@
     lbl_thankYou.textAlignment = NSTextAlignmentCenter;
     [lbl_thankYou setNumberOfLines:0];
     [lbl_thankYou sizeToFit];
-    lbl_thankYou.text = [NSString stringWithFormat:@"%@ thanks you for #%@",
+    lbl_thankYou.text = [NSString stringWithFormat:@"%@ thanks you for order #%@",
                          [CurrentBusiness sharedCurrentBusinessManager].business.shortBusinessName,self.order_id];
     
 
@@ -111,27 +117,27 @@
     return 1;
 }
 
--(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    UIView *footer = [[UIView alloc] initWithFrame:CGRectZero];
-    if (section == [tableView numberOfSections] - 1)  {
-            if (_receiptPDCharge > 0)
-            {
-                footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.width-2, 10)];
-                footer.backgroundColor = [UIColor clearColor];
-                
-                UILabel *lbl = [[UILabel alloc]initWithFrame:footer.frame];
-                [lbl setFont:[UIFont systemFontOfSize:12]];
-                lbl.backgroundColor = [UIColor clearColor];
-                lbl.text = [NSString localizedStringWithFormat:@"Delivery charge: $ %.2f   ", _receiptPDCharge];;
-                lbl.textAlignment = NSTextAlignmentRight;
-                [footer addSubview:lbl];
-        
-                return footer;
-            }
-    }
-        
-    return footer;
-}
+//-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+//    UIView *footer = [[UIView alloc] initWithFrame:CGRectZero];
+//    if (section == [tableView numberOfSections] - 1)  {
+//            if (_receiptPDCharge > 0)
+//            {
+//                footer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.width-2, 10)];
+//                footer.backgroundColor = [UIColor clearColor];
+//
+//                UILabel *lbl = [[UILabel alloc]initWithFrame:footer.frame];
+//                [lbl setFont:[UIFont systemFontOfSize:12]];
+//                lbl.backgroundColor = [UIColor clearColor];
+//                lbl.text = [NSString localizedStringWithFormat:@"Delivery charge: $ %.2f   ", _receiptPDCharge];;
+//                lbl.textAlignment = NSTextAlignmentRight;
+//                [footer addSubview:lbl];
+//
+//                return footer;
+//            }
+//    }
+//
+//    return footer;
+//}
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -226,7 +232,10 @@
     // TODO
 //    self.lbl_Total.text = [NSString stringWithFormat:@"$%.2f",TotalPrice];
 //    self.lbl_Total.text = [NSString stringWithFormat:@"$%.2f",totalPaid];
+    self.lblServiceCharge.text = [NSString localizedStringWithFormat:@"$ %.2f" , self.receiptPDCharge];;
+    self.lblTipAmount.text = [NSString localizedStringWithFormat:@"$ %.2f",self.tipAmount];
     self.lbl_Total.text = self.totalPaid;
+    
     [self.tableView reloadData];
 }
 

@@ -1192,10 +1192,10 @@ NSDate *setMinPickerTimeOD;
                         [AppData sharedInstance].consumer_Delivery_Location = self.btnLocation.titleLabel.text;
                         [AppData sharedInstance].consumerPDTimeChosen = self.btnDesignatedLocationDeliveryTime.titleLabel.text;
                         [AppData sharedInstance].consumerPDMethodChosen = DELIVERY_LOCATION;
-                        float deliveryCharge = [APIUtility calcCharge:[self.subTotalOD doubleValue] using:billBusiness.delivery_location_charge];
+                        float deliveryCharge = [APIUtility calcCharge:[self.subTotalOD doubleValue] using:self->billBusiness.delivery_location_charge];
                         if ( deliveryCharge > 0 ) {
                             [self showAlertForNavigate:@"Detail" :[NSString stringWithFormat:@"\nYour delivery location is %@ \n\n delivery time: %@\ndelivery charge: %@%.2f", [AppData sharedInstance].consumer_Delivery_Location,self.btnDesignatedLocationDeliveryTime.titleLabel.text
-                                                                   ,biz.curr_symbol ,deliveryCharge]];
+                                                                   ,self->biz.curr_symbol ,deliveryCharge]];
                         } else {
                             [self showAlertForNavigate:@"Detail" :[NSString stringWithFormat:@"\nYour delivery location is %@ \n The delivery time is %@", [AppData sharedInstance].consumer_Delivery_Location,self.btnDesignatedLocationDeliveryTime.titleLabel.text]];
                         }
@@ -1212,11 +1212,11 @@ NSDate *setMinPickerTimeOD;
                         [alert addAction:defaultAction];
                         [self presentViewController:alert animated:YES completion:nil];
                     }
-                    [HUD hideAnimated:YES];
+                    [self->HUD hideAnimated:YES];
                 }
                 else
                 {
-                    [HUD hideAnimated:YES];
+                    [self->HUD hideAnimated:YES];
                     [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
                 }
             }];
