@@ -40,7 +40,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     order_type = @0;
     if ( ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
         NSMutableArray *corps = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
@@ -54,7 +54,7 @@
 //        _promotionalamt = 0.0;
         order_type = @1;
     }
-    
+
     self.title = @"Payment";
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
@@ -74,10 +74,10 @@
     [self setInitialPointsValue];
 //    [self getDefaultCardData];
 //    [self getCCForConsumer];
-    
+
     NSLocale* currentLocale = [NSLocale currentLocale];
     [[NSDate date] descriptionWithLocale:currentLocale];
-    
+
     NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
 //    [dateFormatter setDateFormat:@"MMMM dd, yyyy hh:mm a"];
     [dateFormatter setDateFormat:@"MMMM dd, yyyy"];
@@ -85,16 +85,16 @@
     NSLog(@"%@",[dateFormatter stringFromDate:[NSDate date]]);
     self.lblPickUpDate.text = [dateFormatter stringFromDate:[NSDate date]];
     NSString* pd_time= [AppData sharedInstance].consumerPDTimeChosen;
-   
+
     dateFormatter.dateFormat = TIME24HOURFORMAT;
     NSDate *tempDate = [dateFormatter dateFromString:pd_time];
     if (tempDate != nil) {
         dateFormatter.dateFormat = TIME12HOURFORMAT;
         pd_time = [dateFormatter stringFromDate:tempDate];
     }
-    
-    
-    
+
+
+
     if ( [[AppData sharedInstance].consumerPDMethodChosen isEqualToString:PICKUP_COUNTER] ) {
 //        _waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
         _waitTimeLabel.text = [@"Pick up at " stringByAppendingString:pd_time];
@@ -108,7 +108,7 @@
     //_waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
     self.lblTitle.text = self.restTitle;
     self.lblTotalPrice.text = [NSString stringWithFormat:@"%@ %.2f",self.currency_symbol,self.totalVal];
-    
+
     if (![self enoughPointsToRedeem]){
         self.btnRedeemPoint.enabled = false;
     }
@@ -140,13 +140,13 @@
     cardDetailCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cardDetailCollectionCell" forIndexPath:indexPath];
     NSLog(@"card : %@",cardDataArray);
     ConsumerCCModelObject *ccModel = [cardDataArray objectAtIndex:indexPath.row];
-    
+
     NSString *cardNo = ccModel.cc_no;
-    
+
     NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
-    
+
     NSString *cardDisplayNumber = [NSString stringWithFormat:@"XXXX XXXX XXXX %@",trimmedString];
-    
+
     //    NSString *cardName = ccModel.name_on_card;
     NSString *cardType = [self getTypeFromCardNumber:cardNo];
     if([cardType isEqualToString:@"Visa"])
@@ -160,22 +160,22 @@
         cell.imgCard.image = [UIImage imageNamed:@"card_MasterCard"];
     }
     cell.lblCardNumber.text = cardDisplayNumber;
-    
+
     NSString *cardExpirationDateString = ccModel.expiration_date;
-    
+
     NSDateFormatter *severDateFormatter = [[NSDateFormatter alloc] init];
-    
+
     severDateFormatter.dateFormat = @"yyyy-MM-dd";
     NSDate *date =  [severDateFormatter dateFromString:cardExpirationDateString];
-    
+
     NSDateFormatter *localDateFormatter = [[NSDateFormatter alloc] init];
     localDateFormatter.dateFormat = @"yyyy/MM";
-    
+
     NSString *localDateString = [localDateFormatter stringFromDate:date];
-    
+
     //    cell.lblMonthYear.text = [NSString stringWithFormat:@"%@/%@",[cardDict valueForKey:@"expMonth"],[cardDict valueForKey:@"expYear"]];
     cell.lblExpiryDate.text = localDateString;
-    
+
     cell.lblCardHolderName.text = @"XXX";
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -190,7 +190,7 @@
             cell.layer.borderWidth = 0.0f;
         }
     }
-        
+
     return cell;
 
 }
@@ -211,7 +211,7 @@
         NSString *cvv = ccModel.cvv;
         NSString *cardType = [self getTypeFromCardNumber:cardNo];
         NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
-        
+
         NSDictionary *severParam = @{@"cmd":@"save_cc_info",@"consumer_id":userID,@"cc_no":cardNo
                                      ,@"expiration_date":cardExpirationDateString,@"cvv":cvv,@"zip_code":zipCode, @"card_type":cardType
                                      ,@"default":@"1"};
@@ -228,7 +228,7 @@
 {
     [self.navigationController popViewControllerAnimated:true];
     //    [self.navigationController popToRootViewControllerAnimated:true];
-    
+
 }
 
 - (IBAction)btnAddCardCliked:(id)sender {
@@ -275,7 +275,7 @@
 #pragma mark - User Functions
 
 - (void) getDefaultCardData {
-    
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     defaultCardData = [defaults valueForKey:StripeDefaultCard];
     if (defaultCardData != nil) {
@@ -318,7 +318,7 @@
     return points*dollarValForEachPoints;
 }
 - (bool)enoughPointsToRedeem {
-    NSLog(@"%f",dollarValForEachPoints);
+    NSLog(@"dollarValForEachPoint is:%f",dollarValForEachPoints);
     if (dollarValForEachPoints > 0)
         return TRUE;
     else
@@ -327,7 +327,7 @@
 - (NSInteger)getRedeemNoPoints {
     if (![self enoughPointsToRedeem])
         return 0;
-    
+
     if (flagRedeemPointVal) {
         return redeemNoPoint;
     }
@@ -388,7 +388,7 @@
     }
 }
 - (void) postOrderToServer {
-    
+
     NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
     if ([userID intValue] <=0) {
         userID = [NSString stringWithFormat:@"%@",[DataModel sharedDataModelManager].uuid];
@@ -410,7 +410,7 @@
         NSString *price = [product valueForKey:@"price"];
         CGFloat rounded_down = [AppData calculateRoundPoints:[price floatValue]];
         NSString *Points = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,rounded_down];
-        
+
         if(![itemNote isEqual:[NSNull null]])
         {
             if([itemNote isEqualToString:@""]){
@@ -444,17 +444,17 @@
             [orderItemArray addObject:product_orderDict];
         }
     }
-    
+
     long business_id_long = [CurrentBusiness sharedCurrentBusinessManager].business.businessID;
     NSNumber *business_id = [NSNumber numberWithLongLong:business_id_long];
     NSInteger currentRedeemPoints = [self getRedeemNoPoints];
     float redeemPointsDollarValue = [self redeemPointsVal];
     NSString *cardNo = [defaultCardData valueForKey:@"cc_no"];
-    
+
     if([CurrentBusiness sharedCurrentBusinessManager].business.promotion_code == NULL){
         [CurrentBusiness sharedCurrentBusinessManager].business.promotion_code = @"";
     }
-    
+
     NSDictionary *orderInfoDict= @{@"cmd":@"save_order",@"data":orderItemArray,@"consumer_id":userID,@"total":[NSString stringWithFormat:@"%f",self.totalVal],
                                    @"business_id":business_id,@"points_redeemed":[NSString stringWithFormat:@"%ld",(long)currentRedeemPoints],
                                    @"points_dollar_amount":[NSString stringWithFormat:@"%f",redeemPointsDollarValue],
@@ -491,7 +491,7 @@
     hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
     [self.view addSubview:hud];
     [hud showAnimated:YES];
-    
+
     if ([[orderInfoDict valueForKey:@"business_id"] integerValue] <= 0) {
         [hud hideAnimated:YES];
         hud = nil;
@@ -538,7 +538,7 @@
                         NSDictionary *dictionary = [obj dictionaryWithValuesForKeys:keys];
                         [fetchedOrderArray addObject:dictionary];
                     }
-                    
+
                     NSString *cardType = [self->defaultCardData valueForKey:@"card_type"];
                     NSString *cardNo = [self->defaultCardData valueForKey:@"cc_no"];
                     NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
@@ -558,9 +558,9 @@
                     receiptVC.subTotal = self.subTotalVal;
                     receiptVC.receiptPDCharge = self.pd_charge;
                     receiptVC.taxAmount = self.taxVal;
-                    
+
                     [self removeAllOrderFromCoreData];
-                    
+
                     [self.navigationController pushViewController:receiptVC animated:YES];
                 }
             }
@@ -590,7 +590,7 @@
             if ([[response valueForKey:@"status"] integerValue] >= 0){
                 if ([response valueForKey:@"data"] != nil) {
                     NSArray *data = [response valueForKey:@"data"];
-                    
+
                     for (NSDictionary *dataDict in data) {
                         ConsumerCCModelObject *ccModel = [ConsumerCCModelObject new];
                         ccModel.consumer_cc_info_id = [dataDict valueForKey:@"consumer_cc_info_id"];
@@ -602,7 +602,7 @@
                         ccModel.verified = [dataDict valueForKey:@"verified"];
                         ccModel.is_default = [dataDict valueForKey:@"default"];
                         ccModel.zip_code = [dataDict valueForKey:@"zip_code"];
-                        
+
                         [self->cardDataArray addObject:ccModel];
                     }
                 }
@@ -627,7 +627,7 @@
 }
 - (NSString *) getTypeFromCardNumber : (NSString *) cardNumber  {
     STPCardBrand brand = [STPCardValidator brandForNumber:cardNumber];
-    
+
     switch (brand) {
         case STPCardBrandVisa:
             NSLog(@"Visa");
@@ -669,7 +669,7 @@
     }
 }
 - (void) removeAllOrderFromCoreData {
-    
+
     NSManagedObjectContext *managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"MyCartItem"];
     NSError *error = nil;
@@ -687,16 +687,16 @@
                                  alertControllerWithTitle:Title
                                  message:Message
                                  preferredStyle:UIAlertControllerStyleAlert];
-    
+
     UIAlertAction* OKButton = [UIAlertAction
                                actionWithTitle:@"OK"
                                style:UIAlertActionStyleDefault
                                handler:^(UIAlertAction * action) {
                                    [self dismissViewControllerAnimated:true completion:nil];
                                }];
-    
+
     [alert addAction:OKButton];
-    
+
     [self presentViewController:alert animated:YES completion:nil];
 }
 

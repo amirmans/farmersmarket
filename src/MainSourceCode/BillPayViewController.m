@@ -624,6 +624,11 @@ NSMutableArray *cardDataArray;
         [STPCardValidator validationStateForNumber:_txtCardNumber.text validatingCardBrand:STPCardBrandJCB];
         return YES;
     }
+    else if ([txt_cc_type isEqualToString:@"Amex"]){
+        [STPCardValidator validationStateForCVC:_txtCVV.text cardBrand:STPCardBrandAmex];
+        [STPCardValidator validationStateForNumber:_txtCardNumber.text validatingCardBrand:STPCardBrandAmex];
+        return YES;
+    }
     else if ([txt_cc_type isEqualToString:@"Unknown"]){
         [STPCardValidator validationStateForCVC:_txtCVV.text cardBrand:STPCardBrandUnknown];
         [STPCardValidator validationStateForNumber:_txtCardNumber.text validatingCardBrand:STPCardBrandUnknown];

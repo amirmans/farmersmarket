@@ -303,7 +303,7 @@ static NSDateFormatter* utilyDateFormatter;
         }
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         
-        NSLog(@"Error: %@", error);
+        NSLog(@"Error in getting rewards: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
         NSDictionary *temp = @{};
         
