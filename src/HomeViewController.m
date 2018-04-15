@@ -79,19 +79,29 @@
     NSString *weekDayStr = [NSString stringWithFormat: @"%ld", weekday];
     NSString *businessWeekDaysStr = [corpDictionary objectForKey:@"delivery_week_days"];
     if ([businessWeekDaysStr rangeOfString:weekDayStr].location == NSNotFound) {
-       returnMessage = @"There is no delivery today!";
+       returnMessage = @"There is no delivery today!\nHowever, you may view the businesses and menus without ordering";
     } else {
         NSString *cutoffStr = [corpDictionary objectForKey:@"cutoff_time"];
         NSDate *cutoff  = [formatter dateFromString:cutoffStr];
         if ([cutoff compare:dayInhms] == NSOrderedAscending) {
-            returnMessage = @"It is past the cutoff time for today's delivery!";
+            returnMessage = @"It is past the cutoff time for today's delivery!\nHowever, you may view the businesses and menus without ordering";
         }
     }
     return returnMessage;
 }
 
 
+- (void)loadBusinessesForCorp:(NSString *)businessesForCorp {
+    ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode = true;
+    
+    ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
+    [businessArrays startGettingListofAllBusinessesForCorp:businessesForCorp];
+    BusinessListViewController *businessListContorller = [[BusinessListViewController alloc] initWithNibName:@"BusinessListViewController" bundle:nil];
+    [self.navigationController pushViewController:businessListContorller animated:YES];
+}
+
 - (void)handleCorp {
+    ((AppDelegate *)[[UIApplication sharedApplication] delegate]).viewMode = false;
     NSArray* corpList = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
     if ([corpList count] < 1) {
         UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:@"Your company is not signed up to use our services!" preferredStyle:UIAlertControllerStyleAlert];
@@ -117,23 +127,26 @@
                                     NSString *errorMessage = [self isDayandTimeValidForCorp:corpDict];
                                     if ([errorMessage length] > 0)
                                     {
+                                        ((AppDelegate *)[[UIApplication sharedApplication] delegate]).viewMode = true;
                                         UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
                                         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                                ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex = selectedIndex;
+                                                NSString *businessesForCorp = [[corpList objectAtIndex:selectedIndex] objectForKey:@"merchant_ids"];
+                                                [self loadBusinessesForCorp:businessesForCorp];
                                         }];
+                                        
                                         [alert1 addAction:okAction];
+                                        
                                         [self presentViewController:alert1 animated:true completion:^{
+                                            
                                         }];
-                                    } else {
-                                           ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode = true;
-                                           
-                                           ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
-                                           ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex = selectedIndex;
-                                           NSString *businessesForCorp = [[corpList objectAtIndex:selectedIndex] objectForKey:@"merchant_ids"];
-                                           [businessArrays startGettingListofAllBusinessesForCorp:businessesForCorp];
-                                           BusinessListViewController *businessListContorller = [[BusinessListViewController alloc] initWithNibName:@"BusinessListViewController" bundle:nil];
-                                           [self.navigationController pushViewController:businessListContorller animated:YES];
-                                        }
                                     }
+                                    else {
+                                        ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex = selectedIndex;
+                                        NSString *businessesForCorp = [[corpList objectAtIndex:selectedIndex] objectForKey:@"merchant_ids"];
+                                        [self loadBusinessesForCorp:businessesForCorp];
+                                    }
+                                }
                                 cancelBlock:^(ActionSheetStringPicker *picker) {
                                          NSLog(@"Block Picker Canceled");
                                     }
@@ -167,6 +180,7 @@
 
 - (IBAction)btnNewOrderClicked:(id)sender {
     ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode = false;
+    ((AppDelegate *)[[UIApplication sharedApplication] delegate]).viewMode = false;
     ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
     [businessArrays startGettingListofAllBusinesses];
     BusinessListViewController *businessListContorller = [[BusinessListViewController alloc] initWithNibName:@"BusinessListViewController" bundle:nil];

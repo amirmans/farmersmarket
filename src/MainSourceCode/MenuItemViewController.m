@@ -1609,15 +1609,28 @@ bool shouldOpenOptionMenu = false;
 //    }
 //    
 //    
-    
-    menu.menuButton.isActive = false;
-    [menu.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-
-    shouldOpenOptionMenu = false;
-//    TotalCartItemController *TotalCartItemVC = [[TotalCartItemController alloc] initWithNibName:@"TotalCartItemController" bundle:nil];
-//    [self.navigationController pushViewController:TotalCartItemVC animated:YES];
-    CartViewController *TotalCartItemVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
-    [self.navigationController pushViewController:TotalCartItemVC animated:YES];
+    if (((AppDelegate *)[[UIApplication sharedApplication] delegate]).viewMode) {
+        NSString *errorMessage = @"At this time, please only enjoy viewing the businesses and the menus";
+        
+        
+        UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        [alert1 addAction:okAction];
+        [self presentViewController:alert1 animated:true completion:^{
+        }];
+        
+        return;
+    } else {
+        menu.menuButton.isActive = false;
+        [menu.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+        
+        shouldOpenOptionMenu = false;
+        //    TotalCartItemController *TotalCartItemVC = [[TotalCartItemController alloc] initWithNibName:@"TotalCartItemController" bundle:nil];
+        //    [self.navigationController pushViewController:TotalCartItemVC animated:YES];
+        CartViewController *TotalCartItemVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
+        [self.navigationController pushViewController:TotalCartItemVC animated:YES];
+    }
 
 }
 
@@ -1781,8 +1794,8 @@ bool shouldOpenOptionMenu = false;
             self.navigationItem.titleView = menu;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
                 if(shouldOpenOptionMenu) {
-                    menu.menuButton.isActive = true;
-                    [menu.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+                    self->menu.menuButton.isActive = true;
+                    [self->menu.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
                 }
             });
 
@@ -1801,8 +1814,8 @@ bool shouldOpenOptionMenu = false;
                     {
 
                     } else {
-                    business.process_time = [dataDict valueForKey:@"process_time"];
-                }
+                        self->business.process_time = [dataDict valueForKey:@"process_time"];
+                    }
 
                 }
             }];
@@ -2170,7 +2183,7 @@ bool shouldOpenOptionMenu = false;
     [self disableBarButtons];
 }
 
-- (void) setMenuItemsArray : (NSArray *) optionsArray{
+- (void)setMenuItemsArray : (NSArray *) optionsArray{
 
     [self.optionTab1Array removeAllObjects];
     [self.optionTab2Array removeAllObjects];
@@ -2316,7 +2329,21 @@ bool shouldOpenOptionMenu = false;
 
 - (IBAction)btnAddToCartMenuItemOptionClicked:(id)sender {
     
-    [self addItemToMenuCart];
+    if (((AppDelegate *)[[UIApplication sharedApplication] delegate]).viewMode) {
+        NSString *errorMessage = @"At this time, please only enjoy viewing the businesses and the menus";
+        
+        
+        UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        }];
+        [alert1 addAction:okAction];
+        [self presentViewController:alert1 animated:true completion:^{
+        }];
+        
+        return;
+    } else {
+        [self addItemToMenuCart];
+    }
 }
 
 -(void)addItemToMenuCart{

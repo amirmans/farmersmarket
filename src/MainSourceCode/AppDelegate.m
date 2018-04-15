@@ -42,7 +42,7 @@
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize notificationDelegate;
-@synthesize informationDate, corpMode, corps, corpIndex;
+@synthesize informationDate, viewMode, corpMode, corps, corpIndex;
 
 @synthesize enterBusinessNav, tt_tabBarController;
 
@@ -59,6 +59,7 @@ static AppDelegate *sharedObj;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 //    corps = [[NSArray  alloc] init];
     corpMode = false;
+    viewMode = false;
     
     informationDate = [NSDate date];
     
@@ -242,10 +243,13 @@ self.tt_tabBarController.tabBar.tintColor = [UIColor colorWithDisplayP3Red:249.0
    
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    NSLog(@"didUpdateToLocation: %@", newLocation);
-    CLLocation* location = newLocation;
+    CLLocation *location = locations.lastObject;
+//    CLLocation *oldLocation;
+//    if (locations.count > 1) {
+//        oldLocation = locations[locations.count - 2];
+//    }
     
     // saving new location in nsuserdefaults
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
@@ -665,7 +669,7 @@ self.tt_tabBarController.tabBar.tintColor = [UIColor colorWithDisplayP3Red:249.0
     [[APIUtility sharedInstance] callServer:paramDict server:BusinessAndProductionInformationServer method:@"GET" completiedBlock:^(NSDictionary *response) {
         if ( ([[response valueForKey:@"status"] integerValue] >= 0) && ([response valueForKey:@"server_error"] == 0) )
         {
-            corps = [[response objectForKey:@"data"] mutableCopy];
+            self->corps = [[response objectForKey:@"data"] mutableCopy];
         }
         else
         {

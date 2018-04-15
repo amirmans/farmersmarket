@@ -244,7 +244,7 @@ NSMutableArray *cardDataArray;
         
         NSString *zipCode = self.txtZipCode.text;
         if([self.txtCardNumber.text isEqualToString:@""] || [self.txtExpMonth.text isEqualToString:@""] || [self.txtExpYear.text isEqualToString:@""] || [self.txtCVV.text isEqualToString:@""] || [self.txtZipCode.text isEqualToString:@""]){
-            [self showAlert:@"Error" :@"Please fill all fields."];
+            [self showAlert:@"Error" :@"Please fill all the fields."];
         }
         else if(self.txtCardNumber.cardNumberFormatter.cardPatternInfo == NULL){
             [self showAlert:@"Error" :@"Enter Valid Card Number."];

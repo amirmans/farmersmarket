@@ -41,6 +41,7 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (atomic, assign) BOOL corpMode;
+@property (atomic, assign) BOOL viewMode;
 @property (nonatomic, strong) NSMutableArray *corps;
 @property (atomic, assign) short corpIndex;
 
