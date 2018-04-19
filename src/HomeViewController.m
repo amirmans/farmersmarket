@@ -14,6 +14,9 @@
 #import "AppDelegate.h"
 #import "MBProgressHUD.h"
 
+static NSDateFormatter *formatter= nil;
+static NSDateFormatter *displayFormatter= nil;
+
 @interface HomeViewController () {
     MBProgressHUD *HUD;
 }
@@ -27,6 +30,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (formatter == nil) {
+        formatter = [[NSDateFormatter alloc]init];
+        [formatter setDateFormat:@"HH:mm:ss"];
+        [formatter setTimeZone:[NSTimeZone localTimeZone]];
+        
+    }
+    if (displayFormatter == nil) {
+        displayFormatter = [[NSDateFormatter alloc]init];
+        [displayFormatter setDateFormat:@"hh:mm a"];
+        [displayFormatter setTimeZone:[NSTimeZone localTimeZone]];
+    }
+    
     
     self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view from its nib.
@@ -65,10 +80,6 @@
     NSString *returnMessage = @"";
     
     // masure sure we have not passed the cutooff time and user can still order for lunch
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"HH:mm:ss"];
-    [formatter setTimeZone:[NSTimeZone localTimeZone]];
-    
     NSString *nowString = [formatter stringFromDate:[NSDate date]];
     NSDate* dayInhms = [formatter dateFromString:nowString];
     
@@ -79,12 +90,12 @@
     NSString *weekDayStr = [NSString stringWithFormat: @"%ld", weekday];
     NSString *businessWeekDaysStr = [corpDictionary objectForKey:@"delivery_week_days"];
     if ([businessWeekDaysStr rangeOfString:weekDayStr].location == NSNotFound) {
-       returnMessage = @"There is no delivery today!\nHowever, you may view the businesses and menus without ordering";
+       returnMessage = @"There is no delivery today!\nHowever, you may enjoy viewing the menus without ordering.";
     } else {
         NSString *cutoffStr = [corpDictionary objectForKey:@"cutoff_time"];
         NSDate *cutoff  = [formatter dateFromString:cutoffStr];
         if ([cutoff compare:dayInhms] == NSOrderedAscending) {
-            returnMessage = @"It is past the cutoff time for today's delivery!\nHowever, you may view the businesses and menus without ordering";
+            returnMessage = @"It is past the cut-off time for today's delivery!\nHowever, you may enjoy viewing the menus without ordering.";
         }
     }
     return returnMessage;
@@ -124,28 +135,37 @@
                                     [self.corpButton setTitle:selectedValue forState:UIControlStateNormal];
                                     
                                     NSDictionary *corpDict = [corpList objectAtIndex:selectedIndex];
-                                    NSString *errorMessage = [self isDayandTimeValidForCorp:corpDict];
-                                    if ([errorMessage length] > 0)
+                                    NSString *alertMessage = [self isDayandTimeValidForCorp:corpDict];
+                                    if ([alertMessage length] > 0)
                                     {
                                         ((AppDelegate *)[[UIApplication sharedApplication] delegate]).viewMode = true;
-                                        UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
-                                        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                                                ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex = selectedIndex;
-                                                NSString *businessesForCorp = [[corpList objectAtIndex:selectedIndex] objectForKey:@"merchant_ids"];
-                                                [self loadBusinessesForCorp:businessesForCorp];
-                                        }];
-                                        
-                                        [alert1 addAction:okAction];
-                                        
-                                        [self presentViewController:alert1 animated:true completion:^{
-                                            
-                                        }];
                                     }
                                     else {
+                                        ((AppDelegate *)[[UIApplication sharedApplication] delegate]).viewMode = false;
+                                        
+                                        NSString *deliveryTimeStr =[corpDict objectForKey:@"delivery_time"];
+                                        NSString *cuttoffTimeStr =[corpDict objectForKey:@"cutoff_time"];
+                                        
+                                        NSDate *cutoffTime  = [formatter dateFromString:cuttoffTimeStr];
+                                        cuttoffTimeStr = [displayFormatter stringFromDate:cutoffTime];
+                                        NSDate *deliveryTime  = [formatter dateFromString:deliveryTimeStr];
+                                        deliveryTimeStr = [displayFormatter stringFromDate:deliveryTime];
+                                    
+                                        alertMessage = [NSString stringWithFormat:@"It's a good time to order!\nCut-off time: %@\nfor delivery at: %@", cuttoffTimeStr, deliveryTimeStr];
+                                    }
+                                    
+                                    UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
+                                    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                                         ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex = selectedIndex;
                                         NSString *businessesForCorp = [[corpList objectAtIndex:selectedIndex] objectForKey:@"merchant_ids"];
                                         [self loadBusinessesForCorp:businessesForCorp];
-                                    }
+                                    }];
+                                    
+                                    [alert1 addAction:okAction];
+    
+                                    [self presentViewController:alert1 animated:true completion:^{
+                                        
+                                    }];
                                 }
                                 cancelBlock:^(ActionSheetStringPicker *picker) {
                                          NSLog(@"Block Picker Canceled");

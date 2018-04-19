@@ -41,6 +41,18 @@
 UIBarButtonItem *backButton;
 bool shouldOpenOptionMenu = false;
 
+- (void)DisplayAlertForViewOnly {
+    NSString *errorMessage = @"The ordering window is closed.\nPlease enjoy viewing the menus.";
+    
+    
+    UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    }];
+    [alert1 addAction:okAction];
+    [self presentViewController:alert1 animated:true completion:^{
+    }];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
@@ -1366,34 +1378,34 @@ bool shouldOpenOptionMenu = false;
     businessDetail.item_note = [content valueForKey:@"item_note"];
     businessDetail.note = [content valueForKey:@"note"];
     businessDetail.product_keywords = [content valueForKey:@"product_keywords"];
-
+    
     businessDetail.item_note = [content valueForKey:@"item_note"];
-//    NSManagedObjectContext *context = [self managedObjectContext];
-
+    //    NSManagedObjectContext *context = [self managedObjectContext];
+    
     //    NSLog(@"%@",_managedObjectContext.persistentStoreCoordinator.managedObjectModel.entities);
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
-
-//    self.FetchedRecordArray = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
-//    NSLog(@"%lu",(unsigned long)_FetchedRecordArray.count);
-//    NSLog(@"%@",_FetchedRecordArray.description);
-
+    
+    //    self.FetchedRecordArray = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
+    //    NSLog(@"%lu",(unsigned long)_FetchedRecordArray.count);
+    //    NSLog(@"%@",_FetchedRecordArray.description);
+    
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"MyCartItem"];
     NSError *error = nil;
     NSArray *results = [_managedObjectContext executeFetchRequest:request error:&error];
-
+    
     if (error != nil) {
-
+        
     }
     else {
         BOOL itemFound = false;
         for (NSManagedObject *obj in results) {
             NSArray *keys = [[[obj entity] attributesByName] allKeys];
             NSDictionary *dictionary = [obj dictionaryWithValuesForKeys:keys];
-//            NSLog(@"%@",[dictionary valueForKey:@"quantity"]);
-//            NSLog(@"Business PID :- %@",[dictionary valueForKey:@"product_id"]);
-//            NSLog(@"Business P_ID :- %@",businessDetail.product_id);
-//            NSLog(@"%ld",[[dictionary valueForKey:@"quantity"]integerValue]);
-//            NSLog(@"------------");
+            //            NSLog(@"%@",[dictionary valueForKey:@"quantity"]);
+            //            NSLog(@"Business PID :- %@",[dictionary valueForKey:@"product_id"]);
+            //            NSLog(@"Business P_ID :- %@",businessDetail.product_id);
+            //            NSLog(@"%ld",[[dictionary valueForKey:@"quantity"]integerValue]);
+            //            NSLog(@"------------");
             if([[dictionary valueForKey:@"product_order_id"] integerValue] == businessDetail.product_order_id ){
                 itemFound = true;
                 int ItemQty = [[dictionary valueForKey:@"quantity"]intValue];
@@ -1401,8 +1413,8 @@ bool shouldOpenOptionMenu = false;
                 ItemQty = ItemQty - 1;
                 if(ItemQty > 0){
                     NSManagedObject *storeManageObject = [NSEntityDescription
-                                                       insertNewObjectForEntityForName:@"MyCartItem"
-                                                       inManagedObjectContext:_managedObjectContext];
+                                                          insertNewObjectForEntityForName:@"MyCartItem"
+                                                          inManagedObjectContext:_managedObjectContext];
                     [storeManageObject setValue:businessDetail.price forKey:@"price"];
                     [storeManageObject setValue:businessDetail.short_description forKey:@"product_descrption"];
                     [storeManageObject setValue:businessDetail.product_id forKey:@"product_id"];
@@ -1434,7 +1446,7 @@ bool shouldOpenOptionMenu = false;
 }
 
 - (void) refreshRemoveFromCartDataWithProductId : (NSString *) product_id {
-
+    
     NSMutableArray *fetchedRecords = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
     self.FetchedRecordArray = [[NSMutableArray alloc]init];
     for (NSManagedObject *content in fetchedRecords) {
@@ -1446,145 +1458,150 @@ bool shouldOpenOptionMenu = false;
 }
 
 - (IBAction)PlusButtonClicked:(CustomUIButton *)sender { // addbutton
-//
-//    NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
-//    NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
-//    BOOL businessIsClosed = false;
-//    if(openTime == (id)[NSNull null] || closeTime == (id)[NSNull null]) {
-//        businessIsClosed = true;
-//    } else if (![[APIUtility sharedInstance] isBusinessOpen:openTime CloseTime:closeTime]) {
-//        businessIsClosed = true;
-//    }
-//
-//    if ( (businessIsClosed) && !(business.accept_orders_when_closed) ) {
-//        NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
-//        NSString *title = [NSString stringWithFormat:@"%@ is closed now and has chosen not to accept orders", businessName];
-//        NSString *message = [NSString stringWithFormat:@"However, you may view the menu items"];
-//        [UIAlertController showInformationAlert:message withTitle:title];
-//
-//        return;
-//    }
-//
-    
-    
-    self.txtNote.text = @"";
-    self.btnCancelNote.hidden = YES;
-    
-//    NSLog(@"%@", [[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"name"]);
-//    NSLog(@"%@",[[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"price"]);
-
-//    SHMultipleSelect *multipleSelect = [[SHMultipleSelect alloc] init];
-    TPBusinessDetail *businessDetail;
-
-    if (self.searchController.active) {
-        businessDetail = [self.filteredResult objectAtIndex:sender.row];
+    //
+    //    NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
+    //    NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
+    //    BOOL businessIsClosed = false;
+    //    if(openTime == (id)[NSNull null] || closeTime == (id)[NSNull null]) {
+    //        businessIsClosed = true;
+    //    } else if (![[APIUtility sharedInstance] isBusinessOpen:openTime CloseTime:closeTime]) {
+    //        businessIsClosed = true;
+    //    }
+    //
+    //    if ( (businessIsClosed) && !(business.accept_orders_when_closed) ) {
+    //        NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
+    //        NSString *title = [NSString stringWithFormat:@"%@ is closed now and has chosen not to accept orders", businessName];
+    //        NSString *message = [NSString stringWithFormat:@"However, you may view the menu items"];
+    //        [UIAlertController showInformationAlert:message withTitle:title];
+    //
+    //        return;
+    //    }
+    //
+    if (((AppDelegate *)[[UIApplication sharedApplication] delegate]).viewMode) {
+        [self DisplayAlertForViewOnly];
+        
+        return;
     }
     else {
-        businessDetail = [self.MainArray[sender.section] objectAtIndex:sender.row];
-    }
-    businessDetail.product_option = @"";
-    businessDetail.item_note = @"";
-    
-    self.searchController.active = false;
-
-//    TPBusinessDetail *BusinessDetail = [[TPBusinessDetail alloc]init];
-//    BusinessDetail.product_id = [responseData objectForKey:@"product_id"];
-//    BusinessDetail.businessID = [responseData objectForKey:@"businessID"];
-//    BusinessDetail.name = [responseData objectForKey:@"name"];
-//    BusinessDetail.pictures = [responseData objectForKey:@"pictures"];
-//    BusinessDetail.short_description = [responseData objectForKey:@"short_description"];
-//    BusinessDetail.long_description = [responseData objectForKey:@"long_description"];
-//
-//    NSString* field = [responseData objectForKey:@"ti_rating"];
-//    if (field == (id)[NSNull null] || field.length == 0 )
-//    {
-//        BusinessDetail.ti_rating = 0.0;
-//    }
-//    else {
-//        BusinessDetail.ti_rating = [[responseData objectForKey:@"ti_rating"] doubleValue];
-//    }
-//
-//    BusinessDetail.price = [responseData objectForKey:@"price"];
-//    BusinessDetail.category_name = [responseData objectForKey:@"category_name"];
-//    NSMutableArray * arr = [responseData objectForKey:@"options"];
-//
-//    NSLog(@"%@",responseData);
-//    NSMutableArray *arrOP = [responseData objectForKey:@"options"];
-//    BusinessDetail.arrOptions = arrOP;
-//
-//    NSLog(@"%@",arr.debugDescription);
-//    BusinessDetail.optionArray = arr;
-
-    if (businessDetail.arrOptions.count > 0) {
-        _dataSource = businessDetail.arrOptions;
-        selectedButton = sender;
-//        selectedBusinessDetail = BusinessDetail;
-        selectedBusinessDetail = [[TPBusinessDetail alloc] init];
-        selectedBusinessDetail.product_id = businessDetail.product_id;
-        selectedBusinessDetail.businessID = businessDetail.businessID;
-        selectedBusinessDetail.name = businessDetail.name;
-        selectedBusinessDetail.pictures = businessDetail.pictures;
-        selectedBusinessDetail.short_description = businessDetail.short_description;
-        selectedBusinessDetail.long_description = businessDetail.long_description;
-        selectedBusinessDetail.ti_rating = businessDetail.ti_rating;
-        selectedBusinessDetail.price = businessDetail.price;
-        selectedBusinessDetail.arrOptions = businessDetail.arrOptions;
-        selectedBusinessDetail.product_order_id = businessDetail.product_order_id;
-        selectedBusinessDetail.product_option = businessDetail.product_option;
-        selectedBusinessDetail.note = businessDetail.note;
         
-        selectedBusinessDetail.item_note = businessDetail.item_note;
-//        multipleSelect.delegate = self;
-//        multipleSelect.rowsCount = _dataSource.count;
-//        [multipleSelect show];
-        BOOL flag = false;
-
-        for (NSDictionary *itemOptions in businessDetail.arrOptions) {
-            NSArray *optionDataArray = [itemOptions valueForKey:@"optionData"];
-            if ([optionDataArray count] > 0) {
-                flag = true;
-            }
-        }
-
-        if (flag) {
-            [self setMenuItemOptionsViewWithDataSource:businessDetail.arrOptions];
+        self.txtNote.text = @"";
+        self.btnCancelNote.hidden = YES;
+        
+        //    NSLog(@"%@", [[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"name"]);
+        //    NSLog(@"%@",[[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"price"]);
+        
+        //    SHMultipleSelect *multipleSelect = [[SHMultipleSelect alloc] init];
+        TPBusinessDetail *businessDetail;
+        
+        if (self.searchController.active) {
+            businessDetail = [self.filteredResult objectAtIndex:sender.row];
         }
         else {
-            UIAlertController * alert=   [UIAlertController
-                                          alertControllerWithTitle:@"Tapin"
-                                          message:@"Add Note For This Item (Optional)."
-                                          preferredStyle:UIAlertControllerStyleAlert];
+            businessDetail = [self.MainArray[sender.section] objectAtIndex:sender.row];
+        }
+        businessDetail.product_option = @"";
+        businessDetail.item_note = @"";
+        
+        self.searchController.active = false;
+        
+        //    TPBusinessDetail *BusinessDetail = [[TPBusinessDetail alloc]init];
+        //    BusinessDetail.product_id = [responseData objectForKey:@"product_id"];
+        //    BusinessDetail.businessID = [responseData objectForKey:@"businessID"];
+        //    BusinessDetail.name = [responseData objectForKey:@"name"];
+        //    BusinessDetail.pictures = [responseData objectForKey:@"pictures"];
+        //    BusinessDetail.short_description = [responseData objectForKey:@"short_description"];
+        //    BusinessDetail.long_description = [responseData objectForKey:@"long_description"];
+        //
+        //    NSString* field = [responseData objectForKey:@"ti_rating"];
+        //    if (field == (id)[NSNull null] || field.length == 0 )
+        //    {
+        //        BusinessDetail.ti_rating = 0.0;
+        //    }
+        //    else {
+        //        BusinessDetail.ti_rating = [[responseData objectForKey:@"ti_rating"] doubleValue];
+        //    }
+        //
+        //    BusinessDetail.price = [responseData objectForKey:@"price"];
+        //    BusinessDetail.category_name = [responseData objectForKey:@"category_name"];
+        //    NSMutableArray * arr = [responseData objectForKey:@"options"];
+        //
+        //    NSLog(@"%@",responseData);
+        //    NSMutableArray *arrOP = [responseData objectForKey:@"options"];
+        //    BusinessDetail.arrOptions = arrOP;
+        //
+        //    NSLog(@"%@",arr.debugDescription);
+        //    BusinessDetail.optionArray = arr;
+        
+        if (businessDetail.arrOptions.count > 0) {
+            _dataSource = businessDetail.arrOptions;
+            selectedButton = sender;
+            //        selectedBusinessDetail = BusinessDetail;
+            selectedBusinessDetail = [[TPBusinessDetail alloc] init];
+            selectedBusinessDetail.product_id = businessDetail.product_id;
+            selectedBusinessDetail.businessID = businessDetail.businessID;
+            selectedBusinessDetail.name = businessDetail.name;
+            selectedBusinessDetail.pictures = businessDetail.pictures;
+            selectedBusinessDetail.short_description = businessDetail.short_description;
+            selectedBusinessDetail.long_description = businessDetail.long_description;
+            selectedBusinessDetail.ti_rating = businessDetail.ti_rating;
+            selectedBusinessDetail.price = businessDetail.price;
+            selectedBusinessDetail.arrOptions = businessDetail.arrOptions;
+            selectedBusinessDetail.product_order_id = businessDetail.product_order_id;
+            selectedBusinessDetail.product_option = businessDetail.product_option;
+            selectedBusinessDetail.note = businessDetail.note;
             
-            UIAlertAction* ok = [UIAlertAction
-                                 actionWithTitle:@"Ok"
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction * action)
-                                 {
-                                     NSLog(@"Resolving UIAlert Action for tapping OK Button");
-                                     NSArray * textfields = alert.textFields;
-                                     UITextField * notefield = textfields[0];
-                                     businessDetail.item_note = notefield.text;
-//                                     NSLog(@"%@",notefield.text);
-                                     [alert dismissViewControllerAnimated:YES completion:nil];
-                                     [self AddItemInCart:businessDetail CustomUIButton:sender];
-                                 }];
-            [alert addAction:ok];
+            selectedBusinessDetail.item_note = businessDetail.item_note;
+            //        multipleSelect.delegate = self;
+            //        multipleSelect.rowsCount = _dataSource.count;
+            //        [multipleSelect show];
+            BOOL flag = false;
             
-            [alert addTextFieldWithConfigurationHandler:^(UITextField * textField) {
-                textField.accessibilityIdentifier = @"";
-                textField.placeholder = @"";
-                textField.accessibilityLabel = @"";
-                textField.returnKeyType = UIReturnKeyDone;
-            }];
+            for (NSDictionary *itemOptions in businessDetail.arrOptions) {
+                NSArray *optionDataArray = [itemOptions valueForKey:@"optionData"];
+                if ([optionDataArray count] > 0) {
+                    flag = true;
+                }
+            }
             
-            [self presentViewController:alert animated:YES completion:nil];
-            
+            if (flag) {
+                [self setMenuItemOptionsViewWithDataSource:businessDetail.arrOptions];
+            }
+            else {
+                UIAlertController * alert=   [UIAlertController
+                                              alertControllerWithTitle:@"Tapin"
+                                              message:@"Add Note For This Item (Optional)."
+                                              preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* ok = [UIAlertAction
+                                     actionWithTitle:@"Ok"
+                                     style:UIAlertActionStyleDefault
+                                     handler:^(UIAlertAction * action)
+                                     {
+                                         NSLog(@"Resolving UIAlert Action for tapping OK Button");
+                                         NSArray * textfields = alert.textFields;
+                                         UITextField * notefield = textfields[0];
+                                         businessDetail.item_note = notefield.text;
+                                         //                                     NSLog(@"%@",notefield.text);
+                                         [alert dismissViewControllerAnimated:YES completion:nil];
+                                         [self AddItemInCart:businessDetail CustomUIButton:sender];
+                                     }];
+                [alert addAction:ok];
+                
+                [alert addTextFieldWithConfigurationHandler:^(UITextField * textField) {
+                    textField.accessibilityIdentifier = @"";
+                    textField.placeholder = @"";
+                    textField.accessibilityLabel = @"";
+                    textField.returnKeyType = UIReturnKeyDone;
+                }];
+                
+                [self presentViewController:alert animated:YES completion:nil];
+                
+            }
+        }
+        else{
+            [self AddItemInCart:businessDetail CustomUIButton:sender];
         }
     }
-    else{
-        [self AddItemInCart:businessDetail CustomUIButton:sender];
-    }
-
     NSLog(@"Plus Button Clicked");
 }
 
@@ -1610,16 +1627,7 @@ bool shouldOpenOptionMenu = false;
 //    
 //    
     if (((AppDelegate *)[[UIApplication sharedApplication] delegate]).viewMode) {
-        NSString *errorMessage = @"At this time, please only enjoy viewing the businesses and the menus";
-        
-        
-        UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        }];
-        [alert1 addAction:okAction];
-        [self presentViewController:alert1 animated:true completion:^{
-        }];
-        
+        [self DisplayAlertForViewOnly];
         return;
     } else {
         menu.menuButton.isActive = false;
@@ -1631,7 +1639,6 @@ bool shouldOpenOptionMenu = false;
         CartViewController *TotalCartItemVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
         [self.navigationController pushViewController:TotalCartItemVC animated:YES];
     }
-
 }
 
 
