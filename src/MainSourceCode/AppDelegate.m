@@ -515,7 +515,7 @@ self.tt_tabBarController.tabBar.tintColor = [UIColor colorWithDisplayP3Red:249.0
     }
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"TapForAll" withExtension:@"momd"];
     
-    NSLog(@"%@",modelURL);
+    NSLog(@"ManagedObjectModel: %@",modelURL);
     __managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return __managedObjectModel;
 }
@@ -539,6 +539,8 @@ self.tt_tabBarController.tabBar.tintColor = [UIColor colorWithDisplayP3Red:249.0
                               };
     
     __persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    if (__persistentStoreCoordinator == nil)
+        return __persistentStoreCoordinator;
     
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"TapForAll.sqlite"];
 
