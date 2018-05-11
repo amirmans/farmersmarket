@@ -55,6 +55,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *txtExpYear;
 @property (weak, nonatomic) IBOutlet UITextField *txtCVV;
 
+@property (nonatomic, strong) NSString *parentViewControllerName;
+
 
 
 //@property (nonatomic, weak) id<STPBackendCharging> backendCharger;

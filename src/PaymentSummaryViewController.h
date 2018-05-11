@@ -66,6 +66,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblDeliveryLabel;
 @property (strong, nonatomic) IBOutlet UILabel *lblPromotionLabel;
 @property (strong, nonatomic) IBOutlet UILabel *lblPromotionDiscountLabel;
+@property (strong, nonatomic) IBOutlet UITextView *deliveryInstruction_tv;
 
 
 - (IBAction)btnNoTipClicked:(id)sender;

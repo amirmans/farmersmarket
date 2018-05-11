@@ -5,8 +5,8 @@
 //#define TapInEndpointHost @"http://tapin-servers.dv.10.0.0.126.xip.io/tap-in/"
 //#define TapInEndpointHost @"https://tapforall.com/wilsonville/tap-in/"
 //#else
-#define TapInEndpointHost @"https://tapforall.com/merchants/tap-in/"
-//#define TapInEndpointHost @"http://tapforall.com/staging/tap-in/"
+//#define TapInEndpointHost @"https://tapforall.com/merchants/tap-in/"
+#define TapInEndpointHost @"http://tapforall.com/staging/tap-in/"
 //#endif
 
 #define TT_CommunicationWithServerQ dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
@@ -42,6 +42,7 @@
 #define Get_notifications (TapInEndpointHost @"include/model.php")
 #define Get_consumer_all_cc_info (TapInEndpointHost @"include/model.php")
 #define remove_cc (TapInEndpointHost @"include/model.php")
+#define ReferralServer (TapInEndpointHost @"include/model.php")
 //data directories
 
 #define BusinessCustomerIndividualDirectory (TapInEndpointHost @"customer_files/")
@@ -143,6 +144,8 @@ static const int Pickup_open = 8;
 
 static const int CorpType = 1;
 static const int IndividualType = 0;
+
+static const int Points_Tabbar_Position = 4;
 
 // compatibility between different ios
 #ifdef __IPHONE_8_0

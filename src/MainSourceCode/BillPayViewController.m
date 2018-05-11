@@ -23,11 +23,15 @@
 #import "SavedCardTableCell.h"
 #import "AppDelegate.h"
 #import "STPCardValidator.h"
+#import "ConsumerProfileViewController.h"
 
 @interface BillPayViewController ()<UITextFieldDelegate> {
     NSNumberFormatter *currencyFormatter;
 }
+
 @property (nonatomic, strong) MBProgressHUD *hud;
+
+
 @end
 
 NSMutableArray *cardDataArray;
@@ -42,7 +46,7 @@ NSMutableArray *cardDataArray;
 @synthesize stripeCard;
 @synthesize business;
 @synthesize totalBillInDollars;
-@synthesize paymentView;
+@synthesize paymentView, parentViewControllerName;
 
 #pragma mark - Life Cycle
 
@@ -56,6 +60,7 @@ NSMutableArray *cardDataArray;
         
         business = biz;
         totalBillInDollars = amt;
+        parentViewControllerName = @"";
     }
     return self;
 }
@@ -81,7 +86,7 @@ NSMutableArray *cardDataArray;
     //    [self getStripeDataArray];
     
     
-    UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
+    UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(goBackToPreviousViewController)];
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
     
@@ -119,6 +124,16 @@ NSMutableArray *cardDataArray;
     // Dispose of any resources that can be recreated.
 }
 
+
+- (void)viewWillDisappear:(BOOL)animated {
+//    [self goBackToPreviousViewController];
+    if ([parentViewControllerName isEqualToString:@"ConsumerProfileViewController"]) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    
+    [super viewWillDisappear:animated];
+}
+
 #pragma mark - Custom Methods
 
 - (void)greyoutView:(UIButton *)button {
@@ -130,6 +145,14 @@ NSMutableArray *cardDataArray;
     button.enabled = TRUE;
     [button setBackgroundColor:[UIColor blackColor]];
     //    [TapTalkLooks setToTapTalkLooks:button isActionButton:YES makeItRound:TRUE];
+}
+
+- (void)goBackToPreviousViewController {
+    NSInteger numberOfViewControllers = self.navigationController.viewControllers.count;
+    
+    UIViewController *vc = [self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2];
+    
+    [self.navigationController popToViewController:vc animated:NO];
 }
 
 - (void) removeAllOrderFromCoreData {
@@ -216,28 +239,29 @@ NSMutableArray *cardDataArray;
 }
 #pragma mark - Button Actions
 
-- (IBAction) backBUttonClicked: (id) sender;
-{
-    [self.navigationController popViewControllerAnimated:true];
-    //    [self.navigationController popToRootViewControllerAnimated:true];
-    
-}
+//- (IBAction) backBUttonClicked: (id) sender;
+//{
+//    [self goBackToPreviousViewController];
+//}
 
 - (IBAction)payAction:(id)sender {
     
-    NSString *userId = [NSString stringWithFormat:@"%ld", [DataModel sharedDataModelManager].userID];
-    if([userId isEqualToString:@"0"] || [DataModel sharedDataModelManager].uuid.length < 1)
-    {
-        [UIAlertController showErrorAlert:@"Please register on profile page.\nThen save your card information."];
-    }
-    else if ([DataModel sharedDataModelManager].emailAddress.length < 1) {
-        UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:@"" message:@"we are taking you to profile page. please update your profile info \n then go to home for save card information" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            self.tabBarController.selectedIndex = 1;
-        }];
-        [alert2 addAction:okAction];
-        [self presentViewController:alert2 animated:true completion:^{
-        }];
+    // don't what I was taking the user back to the profile page.  Delete when find out
+    if (0) {
+//    NSString *userId = [NSString stringWithFormat:@"%ld", [DataModel sharedDataModelManager].userID];
+//    if([userId isEqualToString:@"0"] || [DataModel sharedDataModelManager].uuid.length < 1)
+//    {
+//        [UIAlertController showErrorAlert:@"Please register on profile page.\nThen save your card information."];
+//    }
+//    else if ([DataModel sharedDataModelManager].emailAddress.length < 1) {
+//        UIAlertController *alert2 = [UIAlertController alertControllerWithTitle:@"" message:@"we are taking you to profile page. please update your profile info \n then go to home for save card information" preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            self.tabBarController.selectedIndex = 1;
+//        }];
+//        [alert2 addAction:okAction];
+//        [self presentViewController:alert2 animated:true completion:^{
+//        }];
+//    }
     }
     else
     {

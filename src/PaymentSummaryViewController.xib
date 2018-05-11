@@ -15,6 +15,7 @@
                 <outlet property="btnTip10" destination="bKY-5C-Jul" id="fxQ-4p-Taz"/>
                 <outlet property="btnTip15" destination="FL6-FW-fVR" id="gsG-4p-g0U"/>
                 <outlet property="btnTip20" destination="dvL-Zp-WCG" id="xu7-ko-hjo"/>
+                <outlet property="deliveryInstruction_tv" destination="XVu-2I-5Zk" id="7wE-gB-RBW"/>
                 <outlet property="lblDeliveryAmount" destination="aZ8-3D-jeC" id="uQH-hm-0tB"/>
                 <outlet property="lblDeliveryLabel" destination="Vcx-uq-KXk" id="19C-Sa-FsR"/>
                 <outlet property="lblDeliveryLocation" destination="Yek-EI-zA6" id="rA0-cg-cRS"/>
@@ -479,11 +480,24 @@
                         <constraint firstAttribute="height" constant="70" id="wiz-n6-S7c"/>
                     </constraints>
                 </view>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XVu-2I-5Zk">
+                    <rect key="frame" x="8" y="398" width="359" height="45"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="dMN-Gy-lhc"/>
+                    </constraints>
+                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="lqf-qB-9FH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2x1-2C-a14"/>
+                <constraint firstItem="XVu-2I-5Zk" firstAttribute="centerX" secondItem="2F2-Qt-n9Z" secondAttribute="centerX" id="DiC-gh-bld"/>
                 <constraint firstAttribute="bottom" secondItem="2F2-Qt-n9Z" secondAttribute="bottom" id="KoR-em-0y6"/>
+                <constraint firstItem="XVu-2I-5Zk" firstAttribute="leading" secondItem="2F2-Qt-n9Z" secondAttribute="leading" constant="8" id="MUJ-SU-BnR"/>
+                <constraint firstItem="3Ww-gb-a3Q" firstAttribute="top" secondItem="XVu-2I-5Zk" secondAttribute="bottom" constant="39.5" id="PXf-5W-yma"/>
                 <constraint firstAttribute="trailing" secondItem="lqf-qB-9FH" secondAttribute="trailing" id="Th4-WG-Wxc"/>
                 <constraint firstAttribute="trailing" secondItem="lbc-kT-be1" secondAttribute="trailing" id="lBe-QO-wuw"/>
                 <constraint firstItem="lbc-kT-be1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="lO1-AL-Z2D"/>

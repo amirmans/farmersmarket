@@ -38,5 +38,9 @@
 - (IBAction)saveButtonAction:(id)sender;
 - (IBAction)ageGroupSegmentedControlAction:(id)sender;
 //- (IBAction)resetButtonAction:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *orderHistoryBtn;
+- (IBAction)orderHistoryAction:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *manageCardsBtn;
+- (IBAction)manageCardsAction:(id)sender;
 
 @end

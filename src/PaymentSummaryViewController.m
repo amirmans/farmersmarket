@@ -32,7 +32,7 @@
 @synthesize currency_symbol;
 @synthesize currency_code;
 // ui stuff
-@synthesize lblDeliveryLabel, lblPromotionLabel, lblDiscountValue, lblPromotionDiscountLabel;
+@synthesize lblDeliveryLabel, lblPromotionLabel, lblDiscountValue, lblPromotionDiscountLabel, deliveryInstruction_tv;
 
 NSInteger currentTipVal = 0;   // Selected Tip Value
 NSString *delivery_location;   // Delivery location
@@ -49,6 +49,8 @@ double deliveryAmountValue; //Delievery amount value in $
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    deliveryInstruction_tv.hidden = true;
     
     self.title = @"Payment Summary";
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];

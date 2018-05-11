@@ -19,6 +19,8 @@
 #import "AppData.h"
 #import "AppDelegate.h"
 
+#import "BillPayViewController.h"
+
 @interface ConsumerProfileViewController () {
     NSMutableDictionary *consumerProfileDataDic;
 }
@@ -566,6 +568,17 @@ static NSArray *consumerProfileDataArray = nil;
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
     
     NSDictionary *params = [self getCorrespondingParameters];
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:params
+                                                       options:NSJSONWritingPrettyPrinted // Pass 0 if you don't care about the readability of the generated string
+                                                         error:&error];
+    if (! jsonData) {
+        NSLog(@"Got an error: %@", error);
+    } else {
+        NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        NSLog(@"Json format of data send to save_order: %@", jsonString);
+    }
+    
     NSLog(@"In ConsumerProfileViewController::postSaveRequest urlString is:%@, and params are:%@", urlString, params);
     [manager POST:urlString parameters:params progress:nil success:^(NSURLSessionTask *operation, id responseObject)
     {
@@ -629,4 +642,21 @@ static NSArray *consumerProfileDataArray = nil;
 }
 
 
+
+- (IBAction)orderHistoryAction:(id)sender {
+}
+
+- (IBAction)manageCardsAction:(id)sender {
+    BillPayViewController *payBillViewController = [[BillPayViewController alloc] initWithNibName:nil bundle:nil withAmount:0 forBusiness:[CurrentBusiness sharedCurrentBusinessManager].business];
+    payBillViewController.parentViewControllerName = @"ConsumerProfileViewController";
+    //                [AppData sharedInstance].consumer_Delivery_Id = nil;
+    NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+    NSUInteger nCount = [allViewControllers count];
+    
+    payBillViewController.business = [CurrentBusiness sharedCurrentBusinessManager].business;
+    [self.navigationController pushViewController:payBillViewController animated:YES];
+    
+    allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+    NSUInteger nCount2 = [allViewControllers count];
+}
 @end

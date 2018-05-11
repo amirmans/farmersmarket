@@ -57,9 +57,18 @@ static NSDateFormatter* utilyDateFormatter;
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
     
+    
+    NSDictionary* zzz = @{
+                                 @"msg_to_referred": @"what is going on?",
+                                 @"referred_email": @"aaabbbccc@aaabbb.com",
+                                 @"cmd": @"save_referral_info",
+                                 @"referrer_id": @"19"
+                         };
+
+    
     if ([method isEqual:@"POST"]) {
     [manager POST:url
-       parameters:data progress:nil
+       parameters:zzz progress:nil
           success:^(NSURLSessionDataTask *task, id responseObject) {
               NSLog(@"JSON: %@", responseObject);
               finished(responseObject);

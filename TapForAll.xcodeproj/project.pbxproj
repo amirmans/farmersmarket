@@ -179,6 +179,8 @@
 		C6A877341D498A62007E3167 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6A877331D498A62007E3167 /* Security.framework */; };
 		C6AF155118ED3D6C004DBEBA /* UtilityConsumerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C6AF155018ED3D6C004DBEBA /* UtilityConsumerProfile.m */; };
 		C6AF155218ED3D6C004DBEBA /* UtilityConsumerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C6AF155018ED3D6C004DBEBA /* UtilityConsumerProfile.m */; };
+		C6B9B2B3208FA7F10009F20E /* ReferralViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6B9B2B1208FA7F10009F20E /* ReferralViewController.m */; };
+		C6B9B2B4208FA7F10009F20E /* ReferralViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6B9B2B2208FA7F10009F20E /* ReferralViewController.xib */; };
 		C6C8ACA618DF9B6B005DAFD6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C6C8ACA418DF9B6B005DAFD6 /* InfoPlist.strings */; };
 		C6C8ACA918DF9B8F005DAFD6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C8ACA718DF9B8F005DAFD6 /* main.m */; };
 		C6C8ACAD18DF9BBC005DAFD6 /* TapForAllTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C8ACAC18DF9BBC005DAFD6 /* TapForAllTests.m */; };
@@ -460,6 +462,9 @@
 		C6A877331D498A62007E3167 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C6AF154F18ED3D6C004DBEBA /* UtilityConsumerProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UtilityConsumerProfile.h; path = MainSourceCode/UtilityConsumerProfile.h; sourceTree = "<group>"; };
 		C6AF155018ED3D6C004DBEBA /* UtilityConsumerProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UtilityConsumerProfile.m; path = MainSourceCode/UtilityConsumerProfile.m; sourceTree = "<group>"; };
+		C6B9B2B0208FA7F10009F20E /* ReferralViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReferralViewController.h; sourceTree = "<group>"; };
+		C6B9B2B1208FA7F10009F20E /* ReferralViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReferralViewController.m; sourceTree = "<group>"; };
+		C6B9B2B2208FA7F10009F20E /* ReferralViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReferralViewController.xib; sourceTree = "<group>"; };
 		C6C8ACA518DF9B6B005DAFD6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = TapForAll/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
 		C6C8ACA718DF9B8F005DAFD6 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = TapForAll/main.m; sourceTree = SOURCE_ROOT; };
 		C6C8ACA818DF9B8F005DAFD6 /* TapForAll-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "TapForAll-Info.plist"; path = "TapForAll/TapForAll-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -855,6 +860,7 @@
 		4A6643CF1C747D7B00C10421 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				C6B9B2B2208FA7F10009F20E /* ReferralViewController.xib */,
 				C620412D1C4995B5001D0DD7 /* DetailBusinessViewControllerII.xib */,
 				5DBDB5C41C6AB35A001828C5 /* MenuItemViewController.xib */,
 				4A1DA88B1C7603CA00E16F30 /* TPReceiptController.xib */,
@@ -920,6 +926,8 @@
 		4AD53C231C736535009D8FE0 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				C6B9B2B0208FA7F10009F20E /* ReferralViewController.h */,
+				C6B9B2B1208FA7F10009F20E /* ReferralViewController.m */,
 				C67486A32033F3CB007F4F41 /* HomeViewController.xib */,
 				37D72FEA1F50A73400AECD71 /* CateringViewController.h */,
 				37D72FEB1F50A73400AECD71 /* CateringViewController.m */,
@@ -1313,6 +1321,7 @@
 				DA4B3A2B1F1D20C5002A4109 /* BKMoneyKit.bundle in Resources */,
 				5D7AEE011C696B4000B0929F /* Pin@2x.png in Resources */,
 				5DBDB5C61C6AB35A001828C5 /* MenuItemViewController.xib in Resources */,
+				C6B9B2B4208FA7F10009F20E /* ReferralViewController.xib in Resources */,
 				4A6643F91C74B05C00C10421 /* arrow_down@2x.png in Resources */,
 				4ABB681C1CAD653D0099570C /* RemoveFromCartView.xib in Resources */,
 				29397892157B607600D3D23D /* BubbleLefthand.png in Resources */,
@@ -1500,6 +1509,7 @@
 				4AE25A981CBFB83B00134D29 /* BusinessNotificationCell.m in Sources */,
 				29ECC44C14CCC06C0098656F /* TapTalkLooks.m in Sources */,
 				C67C6AE218DF9B03009EF996 /* TapForAll.xcdatamodeld in Sources */,
+				C6B9B2B3208FA7F10009F20E /* ReferralViewController.m in Sources */,
 				4A8DA34D1CC8E13400C3890A /* MenuOptionItemModel.m in Sources */,
 				4A0F2CA31C71D5BA005C6F22 /* TPBusinessDetail.m in Sources */,
 				DA3E43A31E9A1CF6004FF1BA /* HomeViewController.m in Sources */,
@@ -1613,7 +1623,7 @@
 					"”$(TARGET_BUILD_DIR)/usr/local/lib/include”/**",
 					"”$(OBJROOT)/UninstalledProducts/include”/**",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -1665,7 +1675,7 @@
 					"”$(TARGET_BUILD_DIR)/usr/local/lib/include”/**",
 					"”$(OBJROOT)/UninstalledProducts/include”/**",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
