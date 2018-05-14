@@ -401,15 +401,15 @@ static NSArray *consumerProfileDataArray = nil;
     BOOL badInformation = [self validateAllUserInput];
     
     if (badInformation) {
-        [UIAlertController showErrorAlert:@"There are errors in your input. Please fix them first"];
+        [UIAlertController showErrorAlert:@"There are errors in your input. Please fix them first."];
     }
     else {
         errorMessageLabel.hidden = TRUE;
         errorMessageLabel.text = @"";
         
         [self postSaveRequest];
-        if (self.navigationController.parentViewController != nil)
-            [self.navigationController popViewControllerAnimated:YES];
+//        if (self.navigationController.parentViewController != nil)
+//            [self.navigationController popViewControllerAnimated:YES];
     }
 
     return !badInformation;
@@ -600,7 +600,6 @@ static NSArray *consumerProfileDataArray = nil;
                 // saving information in our system
                 NSDictionary *jsonDictResponse = (NSDictionary *) responseObject;
             
-    
                 [DataModel sharedDataModelManager].ageGroup = self.ageGroupSegmentedControl.selectedSegmentIndex;
                 NSString *qrImageFileName = [jsonDictResponse objectForKey:@"qrcode_file"];
                 if ((qrImageFileName != nil) && (qrImageFileName != (id)[NSNull null])) {
@@ -644,6 +643,9 @@ static NSArray *consumerProfileDataArray = nil;
 
 
 - (IBAction)orderHistoryAction:(id)sender {
+    // for now it has changed to be a cancel button
+//    [self.navigationController popViewControllerAnimated:true];
+    [self.tabBarController setSelectedIndex:0];
 }
 
 - (IBAction)manageCardsAction:(id)sender {

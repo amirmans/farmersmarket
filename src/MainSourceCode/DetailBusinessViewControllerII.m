@@ -671,7 +671,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
                 NSLog(@"%@",reward);
                 NSString *total_available_points = [[[reward valueForKey:@"data"] valueForKey:@"total_available_points"] stringValue];
                 
-                [[self.tabBarController.tabBar.items objectAtIndex:3] setBadgeValue:total_available_points];
+                [[self.tabBarController.tabBar.items objectAtIndex:Points_Tabbar_Position] setBadgeValue:total_available_points];
                 
             }
 

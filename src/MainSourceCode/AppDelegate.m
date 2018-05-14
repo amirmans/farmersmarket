@@ -665,9 +665,13 @@ static AppDelegate *sharedObj;
     }
 
     NSRange r1 = [workEmail rangeOfString:@"@"];
-    NSRange r2 = [workEmail rangeOfString:@"."];
+    NSRange r2 = [workEmail rangeOfString:@"." options:NSBackwardsSearch];
     NSRange rSub = NSMakeRange(r1.location + r1.length, r2.location - r1.location - r1.length);
     NSString *domain = [workEmail substringWithRange:rSub];
+    if (domain == (id)[NSNull null] || domain.length == 0)
+    {
+        domain = @"";
+    }
     NSString *param = @"domain";
     NSDictionary* paramDict = @{@"cmd":@"getCorpsForDomain",param:domain};
     [[APIUtility sharedInstance] callServer:paramDict server:BusinessAndProductionInformationServer method:@"GET" completiedBlock:^(NSDictionary *response) {
@@ -866,7 +870,7 @@ static AppDelegate *sharedObj;
                             NSLog(@"%@",reward);
                             NSString *total_available_points = [[[reward valueForKey:@"data"] valueForKey:@"total_available_points"] stringValue];
 
-                            [[self.tt_tabBarController.tabBar.items objectAtIndex:4] setBadgeValue:total_available_points];
+                            [[self.tt_tabBarController.tabBar.items objectAtIndex:Points_Tabbar_Position] setBadgeValue:total_available_points];
                         }
                     }
                 }];

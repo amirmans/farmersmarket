@@ -777,7 +777,7 @@ NSMutableArray *cardDataArray;
         }
     }else{
         
-        [self showAlert:@"Error" :@"Card is not valid . Please enter valid card number"];
+        [self showAlert:@"Error" :@"Card is not valid . Please enter a valid card number."];
         
     }
 }
