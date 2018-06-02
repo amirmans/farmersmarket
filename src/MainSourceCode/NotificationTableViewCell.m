@@ -5,7 +5,7 @@
 //  Created by Amir on 12/12/13.
 //
 //
-
+#import "AppDelegate.h"
 #import "NotificationTableViewCell.h"
 
 @implementation NotificationTableViewCell
@@ -15,6 +15,9 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        if (((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
+            
+        }
     }
     return self;
 }

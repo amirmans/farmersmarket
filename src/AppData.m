@@ -153,14 +153,6 @@ static AppData *sharedObj;
     return distance;
 }
 
-+ (void) showAlert:(NSString *)title message:(NSString *)message buttonTitle:(NSString *)buttonTitle viewClass:(UIViewController *)viewClass {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:buttonTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-    }];
-    [alert addAction:okAction];
-    [viewClass presentViewController:alert animated:true completion:^{
-    }];
-}
 
 - (float) getDistance:(double)lat longitude:(double)lng {
     

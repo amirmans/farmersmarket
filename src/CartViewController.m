@@ -600,7 +600,7 @@ double deliveryCharge = 0.0;        // Delivery charge
         }
         if (_FetchedRecordArray.count >  0) {
             if (defaultCardData == nil) {
-                BillPayViewController *payBillViewController = [[BillPayViewController alloc] initWithNibName:nil bundle:nil withAmount:0 forBusiness:billBusiness];
+                CardsViewController *payBillViewController = [[CardsViewController alloc] initWithNibName:nil bundle:nil withAmount:0 forBusiness:billBusiness];
                 //                [AppData sharedInstance].consumer_Delivery_Id = nil;
                 [self.navigationController pushViewController:payBillViewController animated:YES];
             }
@@ -677,7 +677,7 @@ double deliveryCharge = 0.0;        // Delivery charge
         }
         if (_FetchedRecordArray.count >  0) {
             if (defaultCardData == nil) {
-                BillPayViewController *payBillViewController = [[BillPayViewController alloc] initWithNibName:nil bundle:nil withAmount:0 forBusiness:billBusiness];
+                CardsViewController *payBillViewController = [[CardsViewController alloc] initWithNibName:nil bundle:nil withAmount:0 forBusiness:billBusiness];
 //                [AppData sharedInstance].consumer_Delivery_Id = nil;
                 [self.navigationController pushViewController:payBillViewController animated:YES];
             }
@@ -791,7 +791,7 @@ double deliveryCharge = 0.0;        // Delivery charge
     }
     else
     {
-        [AppData showAlert:@"" message:@"Delivery Time is Closed Now." buttonTitle:@"OK" viewClass:self];
+        [UIAlertController showAlert:@"" message:@"Delivery Time is Closed Now." buttonTitle:@"OK" viewClass:self];
     }
 }
 
@@ -821,7 +821,7 @@ double deliveryCharge = 0.0;        // Delivery charge
 
 - (IBAction)btnAddNoteClicked:(id)sender {
     if([self.txtNote.text isEqualToString:@""]){
-        [AppData showAlert:@"Error" message:@"Please enter notes." buttonTitle:@"Ok" viewClass:self];
+        [UIAlertController showAlert:@"Error" message:@"Please enter notes." buttonTitle:@"Ok" viewClass:self];
     }
     else{
         self.notesText = self.txtNote.text;

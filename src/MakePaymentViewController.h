@@ -13,7 +13,7 @@
 #import "DataModel.h"
 #import "MBProgressHUD.h"
 #import "RewardDetailsModel.h"
-#import "BillPayViewController.h"
+#import "CardsViewController.h"
 #import "TPReceiptController.h"
 #import "MakePaymentViewController.h"
 

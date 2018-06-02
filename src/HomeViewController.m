@@ -34,15 +34,15 @@ static NSDateFormatter *displayFormatter= nil;
         formatter = [[NSDateFormatter alloc]init];
         [formatter setDateFormat:@"HH:mm:ss"];
         [formatter setTimeZone:[NSTimeZone localTimeZone]];
-        
+
     }
     if (displayFormatter == nil) {
         displayFormatter = [[NSDateFormatter alloc]init];
         [displayFormatter setDateFormat:@"hh:mm a"];
         [displayFormatter setTimeZone:[NSTimeZone localTimeZone]];
     }
-    
-    
+
+
     self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view from its nib.
     btnPickupOrder.enabled = FALSE;
@@ -50,7 +50,7 @@ static NSDateFormatter *displayFormatter= nil;
     textViewMessageToConsumers.textColor = [UIColor whiteColor];
 //    textViewMessageToConsumers.text = @"Carry-Out: ASAP (varies by merchant)\nDelivery: 45-60 min.";
     textViewMessageToConsumers.hidden = true;
-    
+
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     HUD.label.text = @"Finding your company...";
 
@@ -78,12 +78,12 @@ static NSDateFormatter *displayFormatter= nil;
 
 - (NSString *)isDayandTimeValidForCorp:(NSDictionary *)corpDictionary {
     NSString *returnMessage = @"";
-    
-    // masure sure we have not passed the cutooff time and user can still order for lunch
+
+    // make sure we have not passed the cutoff time and user can still order for lunch
     NSString *nowString = [formatter stringFromDate:[NSDate date]];
     NSDate* dayInhms = [formatter dateFromString:nowString];
-    
-    
+
+
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents *comps = [gregorian components:NSCalendarUnitWeekday fromDate:[NSDate date]];
     long weekday = [comps weekday];
@@ -104,28 +104,58 @@ static NSDateFormatter *displayFormatter= nil;
 
 - (void)loadBusinessesForCorp:(NSString *)businessesForCorp {
     ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode = true;
-    
+
     ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
     [businessArrays startGettingListofAllBusinessesForCorp:businessesForCorp];
     BusinessListViewController *businessListContorller = [[BusinessListViewController alloc] initWithNibName:@"BusinessListViewController" bundle:nil];
     [self.navigationController pushViewController:businessListContorller animated:YES];
 }
 
+
+- (void)handleNoCorpFound:(NSArray *)corpList {
+    ((AppDelegate *)[[UIApplication sharedApplication] delegate]).viewMode = true;
+    NSString *businessesForCorp = [[corpList objectAtIndex:0] objectForKey:@"merchant_ids"];
+    [self loadBusinessesForCorp:businessesForCorp];
+}
+
+
+- (BOOL)isThereRealCorp:(NSArray *)corpList {
+    BOOL returnVal = true;
+    if (corpList.count < 1) {
+        returnVal = FALSE;
+    } else if (corpList.count == 1) {
+      if ([[[corpList objectAtIndex:0] objectForKey:@"domain"] isEqual:@"Default"] || [[[corpList objectAtIndex:0] objectForKey:@"domain"] isEqual:@"default"]) {
+        returnVal = FALSE;
+      }
+
+    }
+    return returnVal;
+}
+
+
 - (void)handleCorp {
     ((AppDelegate *)[[UIApplication sharedApplication] delegate]).viewMode = false;
     NSArray* corpList = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
-    if ([corpList count] < 1) {
-        UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:@"Your company is not signed up to use our services!" preferredStyle:UIAlertControllerStyleAlert];
+
+    if (![self isThereRealCorp:corpList]) {
+        UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@""
+                                    message:@"Your company is not signed up to use our services!\nWe need 10 registrations to start the process.\For now, you may view the menus." preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            if (corpList.count > 0) {
+                [self handleNoCorpFound:corpList];
+            }
         }];
         [alert1 addAction:okAction];
         [self presentViewController:alert1 animated:true completion:^{
+//            if (corpList.count > 0) {
+//                [self handleNoCorpFound:corpList];
+//            }
         }];
-        
+
         return;
     }
     NSArray* deliveryLocations = [corpList valueForKey:@"delivery_location"];
-    
+
     [ActionSheetStringPicker showPickerWithTitle:@"Delivery location?"
                                 rows:deliveryLocations
                                 initialSelection:0
@@ -133,7 +163,7 @@ static NSDateFormatter *displayFormatter= nil;
                                     NSLog(@"Picker: %@, Index: %ld, value: %@",
                                             picker, (long)selectedIndex, selectedValue);
                                     [self.corpButton setTitle:selectedValue forState:UIControlStateNormal];
-                                    
+
                                     NSDictionary *corpDict = [corpList objectAtIndex:selectedIndex];
                                     NSString *alertMessage = [self isDayandTimeValidForCorp:corpDict];
                                     if ([alertMessage length] > 0)
@@ -142,29 +172,29 @@ static NSDateFormatter *displayFormatter= nil;
                                     }
                                     else {
                                         ((AppDelegate *)[[UIApplication sharedApplication] delegate]).viewMode = false;
-                                        
+
                                         NSString *deliveryTimeStr =[corpDict objectForKey:@"delivery_time"];
                                         NSString *cuttoffTimeStr =[corpDict objectForKey:@"cutoff_time"];
-                                        
+
                                         NSDate *cutoffTime  = [formatter dateFromString:cuttoffTimeStr];
                                         cuttoffTimeStr = [displayFormatter stringFromDate:cutoffTime];
                                         NSDate *deliveryTime  = [formatter dateFromString:deliveryTimeStr];
                                         deliveryTimeStr = [displayFormatter stringFromDate:deliveryTime];
-                                    
+
                                         alertMessage = [NSString stringWithFormat:@"It's a good time to order!\nCut-off time: %@\nfor delivery at: %@", cuttoffTimeStr, deliveryTimeStr];
                                     }
-                                    
+
                                     UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
                                     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                                         ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex = selectedIndex;
                                         NSString *businessesForCorp = [[corpList objectAtIndex:selectedIndex] objectForKey:@"merchant_ids"];
                                         [self loadBusinessesForCorp:businessesForCorp];
                                     }];
-                                    
+
                                     [alert1 addAction:okAction];
-    
+
                                     [self presentViewController:alert1 animated:true completion:^{
-                                        
+
                                     }];
                                 }
                                 cancelBlock:^(ActionSheetStringPicker *picker) {
@@ -220,17 +250,17 @@ static NSDateFormatter *displayFormatter= nil;
             [alert1 addAction:okAction];
             [self presentViewController:alert1 animated:true completion:^{
             }];
-        
+
         return;
     }
     NSArray* corpList = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
-    
+
     if (!corpList) {
          [HUD showAnimated:YES];
         corpListTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(timerCallBack) userInfo:nil repeats:YES];
     } else {
         [self handleCorp];
     }
-   
+
 }
 @end

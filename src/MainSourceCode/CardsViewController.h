@@ -16,7 +16,7 @@
 
 @class Business;
 
-@interface BillPayViewController : UIViewController <STPPaymentCardTextFieldDelegate, UIAlertViewDelegate, UITextFieldDelegate, UITableViewDataSource,UITableViewDelegate> {
+@interface CardsViewController : UIViewController <STPPaymentCardTextFieldDelegate, UIAlertViewDelegate, UITextFieldDelegate, UITableViewDataSource,UITableViewDelegate> {
     
 }
 
@@ -34,11 +34,13 @@
 @property (strong, nonatomic) IBOutlet UITextField *txtZipCode;
 @property (weak, nonatomic) IBOutlet UIButton *payButton;
 @property (weak, nonatomic) IBOutlet UIButton *changeCardButton;
+@property (strong, nonatomic) IBOutlet UILabel *yourCardsLbl;
 
 
 
 - (IBAction)payAction:(id)sender;
 - (IBAction)changeCardAction:(id)sender;
+- (IBAction)doneAction:(id)sender;
 
 @property (nonatomic, weak) Business* business;
 @property (nonatomic, strong) NSDecimalNumber* totalBillInDollars;

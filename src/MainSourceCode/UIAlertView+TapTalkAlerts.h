@@ -13,5 +13,6 @@
 + (void)showErrorAlert:(NSString *)text;
 + (void)showOKAlertForViewController:(UIViewController *)vc withText:(NSString *)text;
 + (void)showInformationAlert:(NSString *)text withTitle:(NSString *)title;
++ (void)showAlert:(NSString *)title message:(NSString *)message buttonTitle:(NSString *)buttonTitle viewClass:(UIViewController *)viewClass;
 
 @end

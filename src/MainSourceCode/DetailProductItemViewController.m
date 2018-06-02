@@ -13,7 +13,7 @@
 #import "Consts.h"
 #import "CurrentBusiness.h"
 #import "MBProgressHUD.h"
-#import "BillPayViewController.h"
+#import "CardsViewController.h"
 
 // github library to load the images asynchronously
 #import <SDWebImage/UIImageView+WebCache.h>

@@ -12,7 +12,11 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *lblCardNo;
 @property (strong, nonatomic) IBOutlet UILabel *lblMonthYear;
-@property (strong, nonatomic) IBOutlet UILabel *lblCVC;
+
 @property (strong, nonatomic) IBOutlet UILabel *lblCardType;
+@property (strong, nonatomic) IBOutlet UILabel *defaultLabl;
+@property (strong, nonatomic) IBOutlet UISwitch *defaultSwitch;
+- (IBAction)defaultSwitchAction:(id)sender;
+@property (strong, nonatomic) IBOutlet UILabel *expDateLbl;
 
 @end

@@ -17,7 +17,7 @@
 #import "TPBusinessDetail.h"
 #import "UIAlertView+TapTalkAlerts.h"
 #import "UIImageView+WebCache.h"
-#import <BBBadgeBarButtonItem.h>
+#import "BBBadgeBarButtonItem.h"
 
 #import "MBProgressHUD.h"
 

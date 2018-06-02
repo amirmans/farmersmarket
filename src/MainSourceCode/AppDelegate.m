@@ -65,7 +65,7 @@ static AppDelegate *sharedObj;
     informationDate = [NSDate date];
 
     [AppData sharedInstance].Current_Selected_Tab = @"0";
-    [AppData sharedInstance].is_Profile_Changed = @"NO";
+    [AppData sharedInstance].is_Profile_Changed = false;
 //    [GMSServices provideAPIKey:@"AIzaSyD7WfHjPssiG_nJi5P0rF4GJHUxxrFCono"];
 //      [GMSServices provideAPIKey:@"AIzaSyAnP9ELVL1xHQqJGhba_3gH9nWLXV5N5n8"];
     [[NSUserDefaults standardUserDefaults] setValue:@(NO) forKey:@"_UIConstraintBasedLayoutLogUnsatisfiable"];
@@ -101,7 +101,7 @@ static AppDelegate *sharedObj;
 //    [businessArrays startGettingListofAllBusinesses];
 
 //    BusinessListViewController *listTableView = [[BusinessListViewController alloc] initWithNibName:nil bundle:nil];
-     HomeViewController *listTableView = [[HomeViewController alloc] initWithNibName:nil bundle:nil];
+     HomeViewController *listTableView = [[HomeViewController alloc] init];
 
 //    AddressVC *listTableView = [[AddressVC alloc] initWithNibName:nil bundle:nil];
 
@@ -122,7 +122,7 @@ static AppDelegate *sharedObj;
     enterBusinessNav.navigationBar.translucent = true;
     enterBusinessNav.extendedLayoutIncludesOpaqueBars = YES;
     enterBusinessNav.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
-    listTableView = nil;
+   
 
     // messages from others - chat to be offered in the next release
 //    UIImage *messagesImage = [UIImage imageNamed:@"ic_messages_normal.png"];
@@ -138,7 +138,7 @@ static AppDelegate *sharedObj;
     UITabBarItem *consumerProfileTabBar = [[UITabBarItem alloc] initWithTitle:@"Profile" image:profileTabBarImage tag:1];
 //    consumerProfileTabBar.selectedImage = [UIImage imageNamed:@"ic_profile_selected.png"];
     consumerProfileTabBar.selectedImage = [UIImage imageNamed:@"tab_profile1"];
-    ConsumerProfileViewController *consumerProfileViewController = [[ConsumerProfileViewController alloc] initWithNibName:nil bundle:nil];
+    ConsumerProfileViewController *consumerProfileViewController = [[ConsumerProfileViewController alloc] init];
     consumerProfileViewController.tabBarItem = consumerProfileTabBar;
     profileTabBarImage = nil;
     UINavigationController *profileNav = [[UINavigationController alloc] initWithRootViewController:consumerProfileViewController];
@@ -156,7 +156,7 @@ static AppDelegate *sharedObj;
 
 //    notificationsTabBar.selectedImage = [UIImage imageNamed:@"ic_notifications_selected.png"];
     notificationsTabBar.selectedImage = [UIImage imageNamed:@"tab_notification1"];
-    notificationController = [[BusinessNotificationTableViewController alloc] initWithNibName:nil bundle:nil];
+    notificationController = [[BusinessNotificationTableViewController alloc] init];
     notificationController.tabBarItem = notificationsTabBar;
     UINavigationController *notificationNav = [[UINavigationController alloc] initWithRootViewController:notificationController];
 //    notificationNav.navigationBar.barTintColor = [UIColor blackColor];
@@ -166,8 +166,8 @@ static AppDelegate *sharedObj;
 
 // referral
     UIImage *referralImage = [UIImage imageNamed:@"tab_referral"];
-    ReferralViewController *referralViewController = [[ReferralViewController alloc] initWithNibName:nil bundle:nil];
-    UITabBarItem *referralTabbar = [[UITabBarItem alloc] initWithTitle:@"Refer" image:referralImage tag:5];
+    ReferralViewController *referralViewController = [[ReferralViewController alloc] init];
+    UITabBarItem *referralTabbar = [[UITabBarItem alloc] initWithTitle:@"Refer" image:referralImage tag:3];
     //    payTabBar.selectedImage = [UIImage imageNamed:@"ic_pay_selected.png"];
 //    referralTabbar.selectedImage = [UIImage imageNamed:@"tab_referral"];
     //    [PointsTabbar setBadgeValue:@"1"];
@@ -181,7 +181,7 @@ static AppDelegate *sharedObj;
 
     // points
     UIImage *pointImage = [UIImage imageNamed:@"tab_points"];
-    TPRewardPointController *pointsViewController = [[TPRewardPointController alloc] initWithNibName:nil bundle:nil];
+    TPRewardPointController *pointsViewController = [[TPRewardPointController alloc] init];
     UITabBarItem *PointsTabbar = [[UITabBarItem alloc] initWithTitle:@"Points" image:pointImage tag:4];
 //    payTabBar.selectedImage = [UIImage imageNamed:@"ic_pay_selected.png"];
     PointsTabbar.selectedImage = [UIImage imageNamed:@"tab_points1"];
@@ -193,7 +193,7 @@ static AppDelegate *sharedObj;
     self.tt_tabBarController = [[UITabBarController alloc] init];
 
 //    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, chatNav, consumerProfileViewController, notificationNav, pointsViewController, nil];
-    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, /*chatNav,*/ profileNav, notificationNav, refrerralNav, pointsViewController, nil];
+    self.tt_tabBarController.viewControllers = [[NSArray alloc] initWithObjects:enterBusinessNav, /*chatNav,*/ profileNav, notificationNav, refrerralNav, pointsViewController, nil];
 
 //    self.tt_tabBarController.tabBar.tintColor = [UIColor whiteColor];
     self.tt_tabBarController.tabBar.tintColor = [UIColor colorWithDisplayP3Red:249.0/255.0 green:122.0/255.0 blue:18.0/255.0 alpha:1.0];
@@ -201,13 +201,20 @@ static AppDelegate *sharedObj;
     self.tt_tabBarController.tabBar.backgroundColor = [UIColor whiteColor];
 
     tt_tabBarController.delegate = self;
+    pointsViewController = nil;
+    notificationController = nil;
+    listTableView = nil;
+    pointsViewController = nil;
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.tt_tabBarController;
     [self.window makeKeyAndVisible];
 
-    locationImage = nil;
-    profileTabBarImage = nil;
-    notificationImage = nil;
+//    locationImage = nil;
+//    profileTabBarImage = nil;
+//    notificationImage = nil;
+//    referralImage = nil;
     /*messagesImage = nil;  chat to be offered in the next release */
 
     #ifdef __IPHONE_8_0
@@ -289,7 +296,7 @@ static AppDelegate *sharedObj;
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
     [[DataModel sharedDataModelManager] saveNotifications];
-    NSLog(@"All contents of NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+//    NSLog(@"All contents of NSUserDefaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
 //    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
 //    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 }
@@ -354,126 +361,66 @@ static AppDelegate *sharedObj;
 
     BOOL returnVal = false;
     NSString *currenttab = [AppData sharedInstance].Current_Selected_Tab;
-    NSString *ProfileChanged = [AppData sharedInstance].is_Profile_Changed;
-
-    if (tabBarController.tabBar.selectedItem.tag == 0){
-
-        if([currenttab isEqualToString:@"1"] && [ProfileChanged isEqualToString:@"YES"]){
-            [self showAlert:@"Alert" :@"Make sure you save your profile if you have made any changes" : 0];
-        }else{
+    BOOL ProfileChanged = [AppData sharedInstance].is_Profile_Changed;
+    
+  
+        if([currenttab isEqualToString:@"1"] && ProfileChanged)
+        {
+            [self showAlert:@"Alert" :@"Unsaved information in the profile page.\nLeave page?" : 0];
+            
+//            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Confirmation!"
+//                                                                           message:@"You have unsaved information in the profile page.\nLeave page?"
+//                                                                    preferredStyle:UIAlertControllerStyleAlert];
+//
+//            UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+//                [AppData sharedInstance].is_Profile_Changed = false;
+////                [self.tabBarController setSelectedIndex:0];
+//                return  TRUE;
+//
+//            }];
+//            UIAlertAction *cancelAction = [UIAlertAction
+//                                           actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+//                                           style:UIAlertActionStyleCancel
+//                                           handler:^(UIAlertAction *action)
+//                                           {
+//                                               return FALSE;
+//                                           }];
+//
+//            [alert addAction:okAction];
+//            [alert addAction:cancelAction];
+//            UIWindow *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//            alertWindow.rootViewController = [[UIViewController alloc] init];
+//            alertWindow.windowLevel = UIWindowLevelAlert + 1;
+//            [alertWindow makeKeyAndVisible];
+//            [alertWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+            
+        } else{
             returnVal = TRUE;
         }
+  
 
-    } else if (tabBarController.tabBar.selectedItem.tag == 1){
-        [AppData sharedInstance].Current_Selected_Tab = @"1";
-         returnVal = TRUE;
-
-    } else if (tabBarController.tabBar.selectedItem.tag == 2){
-        if([currenttab isEqualToString:@"1"] && [ProfileChanged isEqualToString:@"YES"]){
-           [self showAlert:@"Alert" :@"Make sure you save your profile if you have made any changes":2];
-        }else{
-            returnVal = TRUE;
-        }
-
-    } else if (tabBarController.tabBar.selectedItem.tag == 3){
-        if([currenttab isEqualToString:@"1"] && [ProfileChanged isEqualToString:@"YES"]){
-            [self showAlert:@"Alert" :@"Make sure you save your profile if you have made any changes" : 3];
-        }else{
-             returnVal = TRUE;
-        }
-
-    } else {
-        returnVal = TRUE;
-    }
-
-
-
-//    // Check to see if Chat tabbar is selected
-//    if (tabBarController.tabBar.selectedItem.tag == 1) {
-//        returnVal = FALSE;
-//        if ([DataModel sharedDataModelManager].chatSystemURL == nil) {
-////            [UIAlertController alertControllerWithTitle:nil message:@"Please enter a business first." preferredStyle:UIAlertControllerStyleAlert];
-////            UIAlertController * alert=   [UIAlertController
-////                                          alertControllerWithTitle:@""
-////                                          message:@"Please enter a business first."
-////                                          preferredStyle:UIAlertControllerStyleAlert];
-////
-////            [viewController presentViewController:alert animated:YES completion:nil];
+//    } else if (tabBarController.tabBar.selectedItem.tag == 1){
+//        [AppData sharedInstance].Current_Selected_Tab = @"1";
+//         returnVal = TRUE;
 //
-//
-////
-////            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
-////                                                                           message:@"Please enter a business first."
-////                                                                    preferredStyle:UIAlertControllerStyleAlert];
-////
-////            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-////                                                                  handler:^(UIAlertAction * action) {}];
-////
-////            [alert addAction:defaultAction];
-////            [[tabBarController.viewControllers objectAtIndex:1] presentViewController:alert animated:YES completion:nil];
-//            [UIAlertController showErrorAlert:@"Please enter a business first."];
-//
-//
-//
-//
-//
-//
-//
-//
-////            [UIAlertView showErrorAlert:@"Please enter a business first"];
-//        }
-//        else if ([DataModel sharedDataModelManager].nickname.length < 1) {
-//            [UIAlertController showErrorAlert:@"You don't have a nickname yet.  Please go to the profile page and get one."];
-//        }
-//        else if (![UtilityConsumerProfile canUserChat]) {
-//            [UIAlertController alertControllerWithTitle:nil message:@"You are NOT registered to particate in this chat.  Please ask the manager to add you." preferredStyle:UIAlertControllerStyleAlert];
-//
-//
-//
-//
-////            [UIAlertView showErrorAlert:@"You are NOT registered to particate in this chat.  Please ask the manager to add you."];
-//        }
-//        else {
-//            if (![[DataModel sharedDataModelManager] joinedChat]) {
-//                // show the user that are about to connect to a new business chatroom
-//                [DataModel sharedDataModelManager].shouldDownloadChatMessages = TRUE;
-//                LoginViewController *loginController = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
-//                loginController.modalTransitionStyle = UIModalTransitionStylePartialCurl;
-//
-//                [viewController presentViewController:loginController animated:YES completion:nil];
-//                loginController = nil;
-//            }
-//
-//            UINavigationController *nav = [tabBarController.viewControllers objectAtIndex:1];
-//            [nav popToRootViewControllerAnimated:YES];
+//    } else if (tabBarController.tabBar.selectedItem.tag == 2){
+//        if([currenttab isEqualToString:@"1"] && ProfileChanged){
+//           [self showAlert:@"Alert" :@"Make sure you save your profile if you have made any changes":2];
+//        }else{
 //            returnVal = TRUE;
 //        }
-//    }
 //
-////    if (tabBarController.tabBar.selectedItem.tag == 3) {
-////        Business *b =   [CurrentBusiness sharedCurrentBusinessManager].business;
-////        if(b.businessName == nil){
-////            [UIAlertController showErrorAlert:@"Please enter a business first."];
-////            returnVal = FALSE;
-////
-////        }else if ([DataModel sharedDataModelManager].nickname.length < 1) {
-////            [UIAlertController showErrorAlert:@"You don't have a nickname yet.  Please go to the profile page and get one."];
-////            returnVal = FALSE;
-////        }
-////    }
-//
-//    if (tabBarController.tabBar.selectedItem.tag == 4) {
-//        Business *b =   [CurrentBusiness sharedCurrentBusinessManager].business;
-//        if(b.businessName == nil){
-//         [UIAlertController showErrorAlert:@"Please enter a business first."];
-//            returnVal = FALSE;
-//
-//        }else if ([DataModel sharedDataModelManager].nickname.length < 1) {
-//            [UIAlertController showErrorAlert:@"You don't have a nickname yet.  Please go to the profile page and get one."];
-//            returnVal = FALSE;
+//    } else if (tabBarController.tabBar.selectedItem.tag == 3){
+//        if([currenttab isEqualToString:@"1"] && ProfileChanged){
+//            [self showAlert:@"Alert" :@"Make sure you save your profile if you have made any changes" : 3];
+//        }else{
+//             returnVal = TRUE;
 //        }
-//    }
 //
+//    } else {
+//        returnVal = TRUE;
+//    }
+
     return returnVal;
 }
 
@@ -614,7 +561,6 @@ static AppDelegate *sharedObj;
 
 
 - (void) getDefaultCCForConsumer {
-
     NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
     [[APIUtility sharedInstance] getDefaultCCInfo:userID completiedBlock:^(NSDictionary *response) {
         if (response != nil) {
@@ -654,6 +600,8 @@ static AppDelegate *sharedObj;
             }
         }
     }];
+    
+//    NSLog (@"In appdelegate:getdefaultccforcustomer %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
 }
 
 - (void)getCorps:(NSString *)workEmail {
@@ -898,20 +846,20 @@ static AppDelegate *sharedObj;
 
 - (void)showAlert:(NSString *)Title :(NSString *)Message :(int)CurrentTab{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:Title message:Message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault
+    UIAlertAction* noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
 
 
                                                               [alert dismissViewControllerAnimated:YES completion:nil];
                                                           }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault
+    UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
                                                               self.tt_tabBarController.selectedIndex = CurrentTab;
-                                                              [AppData sharedInstance].is_Profile_Changed = @"NO";
+                                                              [AppData sharedInstance].is_Profile_Changed = FALSE;
                                                               [alert dismissViewControllerAnimated:YES completion:nil];
                                                           }];
-    [alert addAction:defaultAction];
-    [alert addAction:cancel];
+    [alert addAction:noAction];
+    [alert addAction:yesAction];
     UIWindow *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     alertWindow.rootViewController = [[UIViewController alloc] init];
     alertWindow.windowLevel = UIWindowLevelAlert + 1;

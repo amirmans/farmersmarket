@@ -1,8 +1,9 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '9.0'
+use_frameworks!
 target 'TapForAll' do
 pod 'AFNetworking'
-pod 'SBJson4'
+pod 'SBJson', '~> 4.0.0'
 pod 'SDWebImage'
 pod 'AsyncImageView'
 pod 'MBProgressHUD'

@@ -248,7 +248,7 @@ double deliveryAmountValue; //Delievery amount value in $
     }
 }
 - (IBAction)btnChangePaymentMethodClicked:(id)sender {
-    BillPayViewController *payBillViewController = [[BillPayViewController alloc] initWithNibName:nil bundle:nil withAmount:0 forBusiness:billBusiness];
+    CardsViewController *payBillViewController = [[CardsViewController alloc] initWithNibName:nil bundle:nil withAmount:0 forBusiness:billBusiness];
     [self.navigationController pushViewController:payBillViewController animated:YES];
 }
 
@@ -496,7 +496,7 @@ double deliveryAmountValue; //Delievery amount value in $
                                          @"promotion_code":[CurrentBusiness sharedCurrentBusinessManager].business.promotion_code};
             [[APIUtility sharedInstance] CheckConsumerPromoCodeAPICall:inDataDict completiedBlock:^(NSDictionary *response) {
                 NSLog(@"%@",response);
-                [hud hideAnimated:YES];
+                [self->hud hideAnimated:YES];
                 if([[response valueForKey:@"status"] integerValue] >= 0){
                     
                     if( ((NSArray *)[response valueForKey:@"data"]).count > 0) {
@@ -532,7 +532,7 @@ double deliveryAmountValue; //Delievery amount value in $
                         else
                         {
                             promotionalamt = globalPromotnal;
-                            self.lblDiscountValue.text = [NSString stringWithFormat:@"%@%@",self.currency_symbol,billBusiness.promotion_discount_amount];
+                            self.lblDiscountValue.text = [NSString stringWithFormat:@"%@%@",self.currency_symbol,self->billBusiness.promotion_discount_amount];
                         }
                     }
  
@@ -540,9 +540,9 @@ double deliveryAmountValue; //Delievery amount value in $
                 }
                 else
                 {
-                    [hud hideAnimated:YES];
+                    [self->hud hideAnimated:YES];
                     [self paymentSummary];
-                    [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
+                    [UIAlertController showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
                 }
             }];
         }

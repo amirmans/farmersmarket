@@ -167,7 +167,7 @@ NSDate *setMinPickerTimeOD;
         }
     }
     else{
-        [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
+        [UIAlertController showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
     }
     
     [HUD hideAnimated:YES];
@@ -1217,7 +1217,7 @@ NSDate *setMinPickerTimeOD;
                 else
                 {
                     [self->HUD hideAnimated:YES];
-                    [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
+                    [UIAlertController showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
                 }
             }];
         }

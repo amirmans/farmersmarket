@@ -17,7 +17,7 @@
 @property (strong, nonatomic) NSString *expiration_date;
 @property (strong, nonatomic) NSString *cvv;
 @property (strong, nonatomic) NSString *zip_code;
-@property (strong, nonatomic) NSString *verified;
-@property (strong, nonatomic) NSString *is_default;
+@property (strong, nonatomic) NSNumber *verified;
+@property (strong, nonatomic) NSNumber *is_default;
 
 @end

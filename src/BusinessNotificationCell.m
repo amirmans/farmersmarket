@@ -6,6 +6,7 @@
 //
 //
 
+#import "AppDelegate.h"
 #import "BusinessNotificationCell.h"
 
 @implementation BusinessNotificationCell
@@ -14,6 +15,14 @@
     // Initialization code
     [super awakeFromNib];
     self.notificationBadgeView.layer.cornerRadius = self.notificationBadgeView.frame.size.height/2;
+    
+    _rateView.hidden = true;
+    if (((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
+        
+//        _lblOpenCloseDate.hidden = true;
+//        _lblOpenClose.hidden = true;
+        
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

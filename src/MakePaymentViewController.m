@@ -5,16 +5,17 @@
 //  Created by Trushal on 5/20/17.
 //
 //
-
+#import "UIAlertView+TapTalkAlerts.h"
 #import "MakePaymentViewController.h"
 #import "cardDetailCollectionCell.h"
-#import "AppData.h"
+//#import "AppData.h"
 #import "AppDelegate.h"
 
 @interface MakePaymentViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 {
     int selectCardIndex;
-    NSMutableArray *cardDataArray;
+
+    NSString *cardType;
 }
 @property (assign) double  redeemPointsVal;// value for the points that we are redeeming
 @property (assign) double dollarValForEachPoints;  //detemined by the points level's ceiling
@@ -24,6 +25,11 @@
 @property (assign) NSInteger originalNoPoint;
 @property (assign) BOOL flagRedeemPointVal;
 @property (nonatomic, strong) MBProgressHUD *hud;
+
+@property (nonatomic, strong) NSString *cardType;
+@property (nonatomic, strong) NSString *cardNo;
+@property (nonatomic, strong) NSString *uiExpirationDateString;
+
 @property (nonatomic, strong) NSNumber *order_type; //1 or 0 string because it will be inside a nsdictionary
 
 - (float)calculateValueforGivenPoints:(NSInteger)points;
@@ -32,7 +38,9 @@
 
 @implementation MakePaymentViewController
 
-@synthesize redeemPointsVal,hud,dollarValForEachPoints,redeemNoPoint,currentPointsLevel,originalNoPoint,originalPointsVal,flagRedeemPointVal,tipAmt,subTotalVal,pd_charge, pd_noteText, order_type;
+@synthesize redeemPointsVal,hud,dollarValForEachPoints,redeemNoPoint,currentPointsLevel,originalNoPoint
+    ,originalPointsVal,flagRedeemPointVal,tipAmt,subTotalVal,pd_charge, pd_noteText, order_type
+    ,cardType, cardNo, uiExpirationDateString;
 @synthesize currency_symbol;
 @synthesize currency_code;
 
@@ -68,7 +76,6 @@
 
     //init
 //    pd_noteText = @"";
-    self->cardDataArray = [[NSMutableArray alloc] init];
     self.automaticallyAdjustsScrollViewInsets = YES;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self setInitialPointsValue];
@@ -119,7 +126,8 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [self getDefaultCardData];
-    [self getCCForConsumer];
+    [self.collectionView reloadData];
+  //  [self getCCForConsumer];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -131,24 +139,15 @@
     return 1;
 }
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    if(cardDataArray.count > 0){
-        return cardDataArray.count;
-    }
-    return 0;
+
+    return 1;
 }
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     cardDetailCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cardDetailCollectionCell" forIndexPath:indexPath];
-    NSLog(@"card : %@",cardDataArray);
-    ConsumerCCModelObject *ccModel = [cardDataArray objectAtIndex:indexPath.row];
-
-    NSString *cardNo = ccModel.cc_no;
 
     NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
-
     NSString *cardDisplayNumber = [NSString stringWithFormat:@"XXXX XXXX XXXX %@",trimmedString];
 
-    //    NSString *cardName = ccModel.name_on_card;
-    NSString *cardType = [self getTypeFromCardNumber:cardNo];
     if([cardType isEqualToString:@"Visa"])
     {
         cell.imgCard.image = [UIImage imageNamed:@"card_VisaCard"];
@@ -160,40 +159,32 @@
         cell.imgCard.image = [UIImage imageNamed:@"card_MasterCard"];
     }
     cell.lblCardNumber.text = cardDisplayNumber;
-
-    NSString *cardExpirationDateString = ccModel.expiration_date;
-
-    NSDateFormatter *severDateFormatter = [[NSDateFormatter alloc] init];
-
-    severDateFormatter.dateFormat = @"yyyy-MM-dd";
-    NSDate *date =  [severDateFormatter dateFromString:cardExpirationDateString];
-
-    NSDateFormatter *localDateFormatter = [[NSDateFormatter alloc] init];
-    localDateFormatter.dateFormat = @"yyyy/MM";
-
-    NSString *localDateString = [localDateFormatter stringFromDate:date];
-
-    //    cell.lblMonthYear.text = [NSString stringWithFormat:@"%@/%@",[cardDict valueForKey:@"expMonth"],[cardDict valueForKey:@"expYear"]];
-    cell.lblExpiryDate.text = localDateString;
+    cell.lblExpiryDate.text = uiExpirationDateString;
+    
+    NSLog(@"Here is lblCardNumber read from nsuserdefault %@", cell.lblExpiryDate.text);
 
     cell.lblCardHolderName.text = @"XXX";
 
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults valueForKey:StripeDefaultCard] != nil) {
-       NSDictionary *defaultCardDict = [defaults objectForKey:StripeDefaultCard];
-        NSString *defaultCardNumber = [defaultCardDict valueForKey:@"cc_no"];
-        if ([defaultCardNumber isEqualToString:cardNo]) {
-            cell.layer.borderWidth = 2.0f;
-            cell.layer.borderColor = [UIColor colorWithDisplayP3Red:249.0/255.0 green:122.0/255.0 blue:18.0/255.0 alpha:1.0].CGColor;
-        }
-        else{
-            cell.layer.borderWidth = 0.0f;
-        }
-    }
+    // NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    // if ([defaults valueForKey:StripeDefaultCard] != nil) {
+    //    NSDictionary *defaultCardDict = [defaults objectForKey:StripeDefaultCard];
+    //     NSString *defaultCardNumber = [defaultCardDict valueForKey:@"cc_no"];
+    //     if ([defaultCardNumber isEqualToString:cardNo]) {
+    //         cell.layer.borderWidth = 2.0f;
+    //         cell.layer.borderColor = [UIColor colorWithDisplayP3Red:249.0/255.0 green:122.0/255.0 blue:18.0/255.0 alpha:1.0].CGColor;
+    //     }
+    //     else{
+    //         cell.layer.borderWidth = 0.0f;
+    //     }
+    // }
+
+    cell.layer.borderWidth = 2.0f;
+    cell.layer.borderColor = [UIColor colorWithDisplayP3Red:249.0/255.0 green:122.0/255.0 blue:18.0/255.0 alpha:1.0].CGColor;
 
     return cell;
 
 }
+
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -201,28 +192,12 @@
     // Adjust cell size for orientation
     return CGSizeMake(self.collectionView.frame.size.width, self.collectionView.frame.size.height);
 }
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    selectCardIndex = (int)indexPath.row;
-    if(defaultCardData != nil){
-        ConsumerCCModelObject *ccModel = [cardDataArray objectAtIndex:indexPath.row];
-        NSString *cardNo = ccModel.cc_no;
-        NSString *cardExpirationDateString = ccModel.expiration_date;
-        NSString *zipCode = ccModel.zip_code;
-        NSString *cvv = ccModel.cvv;
-        NSString *cardType = [self getTypeFromCardNumber:cardNo];
-        NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
 
-        NSDictionary *severParam = @{@"cmd":@"save_cc_info",@"consumer_id":userID,@"cc_no":cardNo
-                                     ,@"expiration_date":cardExpirationDateString,@"cvv":cvv,@"zip_code":zipCode, @"card_type":cardType
-                                     ,@"default":@"1"};
 
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:severParam forKey:StripeDefaultCard];
-        [defaults synchronize];
-        [self getDefaultCardData];
-    }
-    [self.collectionView reloadData];
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+
 }
+
 #pragma mark - Button Actions
 - (IBAction) backBUttonClicked: (id) sender;
 {
@@ -232,7 +207,7 @@
 }
 
 - (IBAction)btnAddCardCliked:(id)sender {
-    BillPayViewController *payBillViewController = [[BillPayViewController alloc] initWithNibName:nil bundle:nil withAmount:0 forBusiness:billBusiness];
+    CardsViewController *payBillViewController = [[CardsViewController alloc] initWithNibName:nil bundle:nil withAmount:0 forBusiness:billBusiness];
     //                [AppData sharedInstance].consumer_Delivery_Id = nil;
     payBillViewController.business = [CurrentBusiness sharedCurrentBusinessManager].business;
     [self.navigationController pushViewController:payBillViewController animated:YES];
@@ -268,7 +243,7 @@
     }
     else
     {
-        [AppData showAlert:@"Error" message:@"Please set first any one default card" buttonTitle:@"Ok" viewClass:self];
+        [UIAlertController showAlert:@"Error" message:@"Please set first any one default card" buttonTitle:@"Ok" viewClass:self];
     }
 }
 
@@ -277,21 +252,31 @@
 - (void) getDefaultCardData {
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSLog (@"%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+
     defaultCardData = [defaults valueForKey:StripeDefaultCard];
     if (defaultCardData != nil) {
-        NSString *cardType = [defaultCardData valueForKey:@"card_type"];
-        NSString *cardNo = [defaultCardData valueForKey:@"cc_no"];
+        cardType = [defaultCardData valueForKey:@"card_type"];
+        cardNo = [defaultCardData valueForKey:@"cc_no"];
         if (cardType.length == 0) {
             cardType = @"CARD";
         }
+
+        uiExpirationDateString = [NSString stringWithFormat:@"20%@/%@", [defaultCardData valueForKey:@"expYear"]
+                                  , [defaultCardData valueForKey:@"expMonth"]];
         NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
         NSString *defaultCardString = [NSString stringWithFormat:@"%@ xxxx xxxx xxxx %@",cardType,trimmedString];
         self.lblDefaultCard.text = defaultCardString;
     }
     else {
         self.lblDefaultCard.text = @"NO DEFAULT CARD!";
+        cardType = @"";
+        cardNo = @"";
+        uiExpirationDateString = @"";
     }
 }
+
+
 - (void) setInitialPointsValue {
     NSLog(@"%@",[RewardDetailsModel sharedInstance].rewardDict);
     NSDictionary *rewards = [RewardDetailsModel sharedInstance].rewardDict;
@@ -314,9 +299,11 @@
         self.lblRedeemPointText.text = @"You don't have enough points to use";
     }
 }
+
 - (float)calculateValueforGivenPoints:(NSInteger)points {
     return points*dollarValForEachPoints;
 }
+
 - (bool)enoughPointsToRedeem {
     NSLog(@"dollarValForEachPoint is:%f",dollarValForEachPoints);
     if (dollarValForEachPoints > 0)
@@ -376,7 +363,7 @@
     [self btnRedeemPointClicked:self];
 }
 
-- (void) changePointsAndUI:(BOOL)flag {
+- (void)changePointsAndUI:(BOOL)flag {
     if (flag) {
         [self adjustRedeemPointsAndTheirValues];
         [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_checked"] forState:UIControlStateNormal];
@@ -387,6 +374,7 @@
         self.lblPointsUsed.text = [NSString stringWithFormat:@"pts used: %ld", redeemNoPoint];
     }
 }
+
 - (void) postOrderToServer {
 
     NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
@@ -449,7 +437,7 @@
     NSNumber *business_id = [NSNumber numberWithLongLong:business_id_long];
     NSInteger currentRedeemPoints = [self getRedeemNoPoints];
     float redeemPointsDollarValue = [self redeemPointsVal];
-    NSString *cardNo = [defaultCardData valueForKey:@"cc_no"];
+//    NSString *cardNo = [defaultCardData valueForKey:@"cc_no"];
 
     if([CurrentBusiness sharedCurrentBusinessManager].business.promotion_code == NULL){
         [CurrentBusiness sharedCurrentBusinessManager].business.promotion_code = @"";
@@ -540,8 +528,8 @@
                     }
 
                     NSString *cardType = [self->defaultCardData valueForKey:@"card_type"];
-                    NSString *cardNo = [self->defaultCardData valueForKey:@"cc_no"];
-                    NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
+//                    NSString *cardNo = [self->defaultCardData valueForKey:@"cc_no"];
+                    NSString *trimmedString=[self.cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
                     NSString *cardDisplayNumber = [NSString stringWithFormat:@"XXXX XXXX XXXX %@",trimmedString];
                     NSString *expDate =  [NSString stringWithFormat:@"%@/%@",[self->defaultCardData valueForKey:@"expMonth"],[self->defaultCardData valueForKey:@"expYear"]];
                     TPReceiptController *receiptVC = [[TPReceiptController alloc] initWithNibName:@"TPReceiptController" bundle:nil];
@@ -566,108 +554,13 @@
             }
             else
             {
-                [AppData showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
+                [UIAlertController showAlert:@"Error" message:@"Something went wrong." buttonTitle:@"ok" viewClass:self];
             }
         }];
     }
 }
-- (void) getCCForConsumer {
-    hud = [[MBProgressHUD alloc] initWithView:self.view];
-    hud.label.text = @"Fetching Credit Card Info...";
-    hud.mode = MBProgressHUDModeIndeterminate;
-    [hud.bezelView setBackgroundColor:[UIColor orangeColor]];
-    hud.bezelView.color = [UIColor orangeColor];
-    hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
-    [self.view addSubview:hud];
-    [hud showAnimated:YES];
 
-    NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
-    [[APIUtility sharedInstance] getAllCCInfo:userID completiedBlock:^(NSDictionary *response) {
-        [self->cardDataArray removeAllObjects];
-        if (response != nil) {
-            [self->hud hideAnimated:YES];
-            self->hud = nil;
-            if ([[response valueForKey:@"status"] integerValue] >= 0){
-                if ([response valueForKey:@"data"] != nil) {
-                    NSArray *data = [response valueForKey:@"data"];
 
-                    for (NSDictionary *dataDict in data) {
-                        ConsumerCCModelObject *ccModel = [ConsumerCCModelObject new];
-                        ccModel.consumer_cc_info_id = [dataDict valueForKey:@"consumer_cc_info_id"];
-                        ccModel.consumer_id = [dataDict valueForKey:@"consumer_id"];
-                        ccModel.name_on_card = [dataDict valueForKey:@"name_on_card"];
-                        ccModel.cc_no = [dataDict valueForKey:@"cc_no"];
-                        ccModel.expiration_date = [dataDict valueForKey:@"expiration_date"];
-                        ccModel.cvv = [dataDict valueForKey:@"cvv"];
-                        ccModel.verified = [dataDict valueForKey:@"verified"];
-                        ccModel.is_default = [dataDict valueForKey:@"default"];
-                        ccModel.zip_code = [dataDict valueForKey:@"zip_code"];
-
-                        [self->cardDataArray addObject:ccModel];
-                    }
-                }
-                else{
-                    [self->hud hideAnimated:YES];
-                    self->hud = nil;
-                }
-            }
-            else
-            {
-                [self->hud hideAnimated:YES];
-                self->hud = nil;
-                [self showAlert:@"Info" :@"Please add your credit card. We will save it securely for your later use"];
-            }
-        }
-        else{
-            [self->hud hideAnimated:YES];
-            self->hud = nil;
-        }
-        [self.collectionView reloadData];
-    }];
-}
-- (NSString *) getTypeFromCardNumber : (NSString *) cardNumber  {
-    STPCardBrand brand = [STPCardValidator brandForNumber:cardNumber];
-
-    switch (brand) {
-        case STPCardBrandVisa:
-            NSLog(@"Visa");
-            return @"Visa";
-            break;
-        case STPCardBrandAmex:
-            NSLog(@"Amex");
-            return @"Amex";
-            //do something
-            break;
-        case STPCardBrandMasterCard:
-            NSLog(@"Master Card");
-            return @"Master Card";
-            //do something
-            break;
-        case STPCardBrandDiscover:
-            //do something
-            NSLog(@"Discover");
-            return @"Discover";
-            break;
-        case STPCardBrandJCB:
-            //do something
-            NSLog(@"JCB");
-            return @"JCB";
-            break;
-        case STPCardBrandDinersClub:
-            //do something
-            NSLog(@"DinersClub");
-            return @"Diners Club";
-            break;
-        case STPCardBrandUnknown:
-            //do something
-            NSLog(@"Unknown");
-            return @"Unknown";
-            break;
-        default:
-            return @"Unknown";
-            break;
-    }
-}
 - (void) removeAllOrderFromCoreData {
 
     NSManagedObjectContext *managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
@@ -681,6 +574,7 @@
     error = nil;
     [managedObjectContext save:&error];
 }
+
 #pragma mark - Show Alertbox
 - (void)showAlert:(NSString *)Title :(NSString *)Message{
     UIAlertController * alert = [UIAlertController

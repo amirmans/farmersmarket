@@ -34,8 +34,8 @@ NSInteger current_points_level_int  = 0;
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.tabBarController setSelectedIndex:3];
-      [AppData sharedInstance].Current_Selected_Tab = @"3";
+    [self.tabBarController setSelectedIndex:4];
+      [AppData sharedInstance].Current_Selected_Tab = @"4";
     Business *biz = [CurrentBusiness sharedCurrentBusinessManager].business;
     self.businessBackgrounImage.image = biz.bg_image;
 
@@ -119,7 +119,7 @@ NSInteger current_points_level_int  = 0;
     NSDictionary *param = @{@"cmd":@"get_all_points",@"consumerID":[NSNumber numberWithInteger:[DataModel sharedDataModelManager].userID],@"businessID":[NSNumber numberWithInteger:businessid]};
     NSLog(@"param=%@",param);
     
-    [[APIUtility sharedInstance]getRevardpointsForBusiness:param completiedBlock:^(NSDictionary *response) {
+    [[APIUtility sharedInstance]getRewardpointsForBusiness:param completiedBlock:^(NSDictionary *response) {
         
         int status = [[response objectForKey:@"status"] intValue];
         

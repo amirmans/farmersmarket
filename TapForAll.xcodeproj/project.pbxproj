@@ -158,6 +158,7 @@
 		C6571B761D650A4700FD83F5 /* BusinessListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C91ECD189E3EA700AE6478 /* BusinessListViewController.m */; };
 		C66237FE18C03E5B00750F82 /* disabled_button_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = C66237FD18C03E5B00750F82 /* disabled_button_bg.png */; };
 		C662DDFE18D8442F00683BBF /* BubbleCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = C662DDFD18D8442F00683BBF /* BubbleCenter.png */; };
+		C66C861C20AFD694001BBFF0 /* CardsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C66C861B20AFD694001BBFF0 /* CardsViewController.xib */; };
 		C6700CFB1859D74B003814C9 /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6700CFA1859D74B003814C9 /* NotificationTableViewCell.m */; };
 		C6700CFD1859DAA4003814C9 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6700CFC1859DAA4003814C9 /* NotificationTableViewCell.xib */; };
 		C671530B1EAEA04D00DA5D01 /* SMCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = C67153081EAEA04D00DA5D01 /* SMCalloutView.m */; };
@@ -169,8 +170,7 @@
 		C67BC4B31BA808ED00C66AF8 /* customer_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = C67BC4B21BA808ED00C66AF8 /* customer_pin.png */; };
 		C67C6AE218DF9B03009EF996 /* TapForAll.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C67C6AE118DF9B03009EF996 /* TapForAll.xcdatamodeld */; };
 		C67D4D4218AEFFEE00D6DF6C /* ListofBusinesses.m in Sources */ = {isa = PBXBuildFile; fileRef = C67D4D4118AEFFEE00D6DF6C /* ListofBusinesses.m */; };
-		C69298A918DF8FFE00B013E0 /* BillPayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C69298A818DF8FFE00B013E0 /* BillPayViewController.m */; };
-		C69298AB18DF903400B013E0 /* BillPayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C69298AA18DF903400B013E0 /* BillPayViewController.xib */; };
+		C69298A918DF8FFE00B013E0 /* CardsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C69298A818DF8FFE00B013E0 /* CardsViewController.m */; };
 		C6970DA0204BF47400D330AF /* corp_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C6970D9F204BF47300D330AF /* corp_icon.png */; };
 		C69935B018B969F6008FCF8A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C699356318B969F6008FCF8A /* AppDelegate.m */; };
 		C69935BB18B969F6008FCF8A /* DataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C699357A18B969F6008FCF8A /* DataModel.m */; };
@@ -430,6 +430,7 @@
 		C66237FD18C03E5B00750F82 /* disabled_button_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disabled_button_bg.png; sourceTree = "<group>"; };
 		C662DDFD18D8442F00683BBF /* BubbleCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BubbleCenter.png; sourceTree = "<group>"; };
 		C66B0C5B1FF2471A00F9CA14 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Consts.h; sourceTree = SOURCE_ROOT; };
+		C66C861B20AFD694001BBFF0 /* CardsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardsViewController.xib; sourceTree = "<group>"; };
 		C6700CF91859D74B003814C9 /* NotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationTableViewCell.h; path = MainSourceCode/NotificationTableViewCell.h; sourceTree = "<group>"; };
 		C6700CFA1859D74B003814C9 /* NotificationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationTableViewCell.m; path = MainSourceCode/NotificationTableViewCell.m; sourceTree = "<group>"; };
 		C6700CFC1859DAA4003814C9 /* NotificationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationTableViewCell.xib; sourceTree = "<group>"; };
@@ -447,9 +448,8 @@
 		C67C6AE018DF9ADE009EF996 /* TapForAll-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TapForAll-Prefix.pch"; path = "TapForAll/TapForAll-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		C67D4D4018AEFFEE00D6DF6C /* ListofBusinesses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListofBusinesses.h; path = MainSourceCode/ListofBusinesses.h; sourceTree = "<group>"; };
 		C67D4D4118AEFFEE00D6DF6C /* ListofBusinesses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ListofBusinesses.m; path = MainSourceCode/ListofBusinesses.m; sourceTree = "<group>"; };
-		C69298A718DF8FFE00B013E0 /* BillPayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BillPayViewController.h; path = MainSourceCode/BillPayViewController.h; sourceTree = "<group>"; };
-		C69298A818DF8FFE00B013E0 /* BillPayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BillPayViewController.m; path = MainSourceCode/BillPayViewController.m; sourceTree = "<group>"; };
-		C69298AA18DF903400B013E0 /* BillPayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BillPayViewController.xib; sourceTree = "<group>"; };
+		C69298A718DF8FFE00B013E0 /* CardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardsViewController.h; path = MainSourceCode/CardsViewController.h; sourceTree = "<group>"; };
+		C69298A818DF8FFE00B013E0 /* CardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CardsViewController.m; path = MainSourceCode/CardsViewController.m; sourceTree = "<group>"; };
 		C69653491C2A011E001A29DB /* TapForAll.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TapForAll.entitlements; path = TapForAll/TapForAll.entitlements; sourceTree = SOURCE_ROOT; };
 		C6970D9F204BF47300D330AF /* corp_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = corp_icon.png; sourceTree = "<group>"; };
 		C699356218B969F6008FCF8A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MainSourceCode/AppDelegate.h; sourceTree = "<group>"; };
@@ -748,8 +748,8 @@
 		2949CCDE1458A21700728B87 /* Xibs */ = {
 			isa = PBXGroup;
 			children = (
+				C66C861B20AFD694001BBFF0 /* CardsViewController.xib */,
 				C6F475661CDFE12F009E24E4 /* TotalItemCart.xib */,
-				C69298AA18DF903400B013E0 /* BillPayViewController.xib */,
 				2949CCE01458A21700728B87 /* BillViewController.xib */,
 				C6F475641CDFE0A8009E24E4 /* BusinessServicesViewController.xib */,
 				C6F475561CDFD13E009E24E4 /* BusinessDetailsTableCell.xib */,
@@ -1033,8 +1033,8 @@
 		C696970618BC97A300F0B4F5 /* Bill */ = {
 			isa = PBXGroup;
 			children = (
-				C69298A718DF8FFE00B013E0 /* BillPayViewController.h */,
-				C69298A818DF8FFE00B013E0 /* BillPayViewController.m */,
+				C69298A718DF8FFE00B013E0 /* CardsViewController.h */,
+				C69298A818DF8FFE00B013E0 /* CardsViewController.m */,
 			);
 			name = Bill;
 			sourceTree = "<group>";
@@ -1312,7 +1312,6 @@
 				4A8DA34A1CC8DD5300C3890A /* MenuItemOptionsCell.xib in Resources */,
 				5D7AEDD21C6934E400B0929F /* ic_heart@2x.png in Resources */,
 				29ECC44C14CCC06C0098653A /* EnterBusiness@2x.png in Resources */,
-				C69298AB18DF903400B013E0 /* BillPayViewController.xib in Resources */,
 				4AD6E47A1CE099240025676C /* ic_minus.png in Resources */,
 				4AE25A991CBFB83B00134D29 /* BusinessNotificationCell.xib in Resources */,
 				4A6643E61C74A04000C10421 /* arrow_down1@2x.png in Resources */,
@@ -1326,6 +1325,7 @@
 				4ABB681C1CAD653D0099570C /* RemoveFromCartView.xib in Resources */,
 				29397892157B607600D3D23D /* BubbleLefthand.png in Resources */,
 				29397893157B607600D3D23D /* BubbleRighthand.png in Resources */,
+				C66C861C20AFD694001BBFF0 /* CardsViewController.xib in Resources */,
 				29D4FCD415993CCE0034962C /* ConsumerProfileViewController.xib in Resources */,
 				C6FDD5CC187CDD2900F4D721 /* BusinessNotificationTableViewController.xib in Resources */,
 				4AAD6B6D1D018A4D00AED4F7 /* MenuItemNoImageTableViewCell.xib in Resources */,
@@ -1471,7 +1471,7 @@
 				4A06471D1DE456B900416969 /* CartViewTableViewCell.m in Sources */,
 				291850CA153E8DA8008B6EBB /* DetailBusinessViewController.m in Sources */,
 				29D29A2015DB5AFA00990F62 /* GooglePlacesConnection.m in Sources */,
-				C69298A918DF8FFE00B013E0 /* BillPayViewController.m in Sources */,
+				C69298A918DF8FFE00B013E0 /* CardsViewController.m in Sources */,
 				DA4B3A191F1D205D002A4109 /* BKCardNumberField.m in Sources */,
 				C671530C1EAEA04D00DA5D01 /* SMClassicCalloutView.m in Sources */,
 				12C090EB1DDDEC6E0033CEA9 /* CartItemTableViewCell.m in Sources */,

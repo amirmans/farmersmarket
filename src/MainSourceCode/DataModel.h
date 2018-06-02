@@ -56,7 +56,8 @@
 
 // Get and set the device token. We cache the token so we can determine whether
 // to send an "update" request to the server.
-- (NSString *)deviceToken;- (void)setDeviceToken:(NSString *)token;
+- (NSString *)deviceToken;
+- (void)setDeviceToken:(NSString *)token;
 
 - (NSMutableArray *) sortNotificationsinReverseChronologicalOrder : (NSMutableArray *) notificationArray;
 

@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ReferralViewController : UIViewController
+@interface ReferralViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UILabel *referredEmailLabel;
 @property (strong, nonatomic) IBOutlet UITextField *referredEmailTextField;
