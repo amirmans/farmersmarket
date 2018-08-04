@@ -721,7 +721,9 @@ NSMutableArray *cardDataArray;
 
 - (void) showAlertForDefaultCard : (STPCardParams *) card {
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"This is your default card now" message:@"We will be using this card for your future transactions" preferredStyle:UIAlertControllerStyleAlert];
+    NSString *last4digits=[card.number substringFromIndex:MAX((int)[card.number length]-4, 0)];
+    NSString *alertTitle = [NSString stringWithFormat:@"%@ is your default card now", last4digits];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:alertTitle message:@"It is moved to the top of the list\nWe will be using this card for your future transactions" preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         

@@ -21,4 +21,6 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)defaultSwitchAction:(id)sender {
+}
 @end

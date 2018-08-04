@@ -92,6 +92,8 @@ static NSArray *consumerProfileDataArray = nil;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [self populateFieldsWithInitialValues];
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
@@ -173,7 +175,7 @@ static NSArray *consumerProfileDataArray = nil;
     //    [passwordAgainTextField setReturnKeyType:UIReturnKeyDone];
     //    passwordAgainTextField.delegate = self;
     
-    [self populateFieldsWithInitialValues];
+//    [self populateFieldsWithInitialValues];
     
     self.topView.layer.borderWidth = 2.0;
     self.topView.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -198,12 +200,12 @@ static NSArray *consumerProfileDataArray = nil;
 - (void)viewWillDisappear:(BOOL)animated {
     
     
-    [self setNicknameTextField:nil];
-    [self setPasswordTextField:nil];
-    [self setPasswordAgainTextField:nil];
-    [self setErrorMessageLabel:nil];
-    [self setPasswordAgainTextField:nil];
-    [self setAgeGroupSegmentedControl:nil];
+//    [self setNicknameTextField:nil];
+//    [self setPasswordTextField:nil];
+//    [self setPasswordAgainTextField:nil];
+//    [self setErrorMessageLabel:nil];
+//    [self setPasswordAgainTextField:nil];
+//    [self setAgeGroupSegmentedControl:nil];
     
     [super viewWillDisappear:animated];
     //    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
@@ -682,8 +684,18 @@ static NSArray *consumerProfileDataArray = nil;
         
         UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             [AppData sharedInstance].is_Profile_Changed = false;
-            [self.tabBarController setSelectedIndex:0];
             
+            CardsViewController *cardsViewController = [[CardsViewController alloc] initWithNibName:nil bundle:nil withAmount:0 forBusiness:[CurrentBusiness sharedCurrentBusinessManager].business];
+            cardsViewController.parentViewControllerName = @"ConsumerProfileViewController";
+            //                [AppData sharedInstance].consumer_Delivery_Id = nil;
+//            NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+//            NSUInteger nCount = [allViewControllers count];
+            
+            cardsViewController.business = [CurrentBusiness sharedCurrentBusinessManager].business;
+            [self.navigationController pushViewController:cardsViewController animated:YES];
+            
+//            allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+//            NSUInteger nCount2 = [allViewControllers count];
         }];
         UIAlertAction *cancelAction = [UIAlertAction
                                        actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")

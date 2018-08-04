@@ -100,7 +100,7 @@
     // Do any additional setup after loading the view from its nib.
     referralInstructionTextView.text = @"We will send an email to your friend.  Once your friend registers and orders, you'll be awarded 100 points\n(value of $5).\nThank you for being a loyal customer.";
     
-    referralMessageTextView.text =@"Hi,\nI am enjoying Tap In Here; Variety of food, with quality and reliability you need.  On top of that you accumulate reward points.  Download it and use it.  Enjoy!";
+    referralMessageTextView.text =@"Hi,\nJust wanted to let you know how I get my lunch at work.\nI use the \“Tap-In Here\” app ( http://www.bit.ly/TapInHere).\nI like the quality and the variety of food.  The food is always on time and it is hot.\nOn top of that I can accumulate reward points. \nIf you download and use it, I will get points too.  Enjoy!";
     
     self.referralMessageTextView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     self.referralMessageTextView.layer.borderWidth = 1.0;
@@ -161,7 +161,7 @@
                 UIAlertAction* doneAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault
                                                                       handler:^(UIAlertAction * action) {
                                                                           }];
-                UIAlertAction* addMoreAction = [UIAlertAction actionWithTitle:@"Done" style:UIAlertActionStyleDefault
+                UIAlertAction* addMoreAction = [UIAlertAction actionWithTitle:@"Send More" style:UIAlertActionStyleDefault
                                                                       handler:^(UIAlertAction * action) {
                                                                           self.referredEmailTextField.text = @"";
                                                                           self.referredNicknameTextField.text = @"";

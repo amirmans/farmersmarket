@@ -35,21 +35,21 @@ Business *currentBiz;
 #pragma mark - Life Cycle
 - (void)updateUIWithNewNotification
 {
-//    notificationsInReverseChronological = [[[DataModel sharedDataModelManager] notifications] mutableCopy];
-//    dispatch_async(dispatch_get_main_queue(), ^(void) {
-//        [self.tableView reloadData];
-//    });
-//    self.tabBarItem.badgeValue = nil;
+    //    notificationsInReverseChronological = [[[DataModel sharedDataModelManager] notifications] mutableCopy];
+    //    dispatch_async(dispatch_get_main_queue(), ^(void) {
+    //        [self.tableView reloadData];
+    //    });
+    //    self.tabBarItem.badgeValue = nil;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-
+        
         AppDelegate * myAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         myAppDelegate.notificationDelegate = self;
-                                       
+        
     }
     return self;
 }
@@ -68,10 +68,10 @@ Business *currentBiz;
     [super viewDidLoad];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-//    self.navigationItem.rightBarButtonItem = self.editButtonItem;
-//    self.editButtonItem.tintColor = [UIColor whiteColor];
+    //    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //    self.editButtonItem.tintColor = [UIColor whiteColor];
     
     notificationsInReverseChronological = [[NSMutableArray alloc] init];
     
@@ -79,15 +79,15 @@ Business *currentBiz;
     self.title = @"Notifications";
     //resizing for different screen size (done by adding constraint and add chosing auto layout in the xib file)
     //happens after viewDidLoad and before viewDidAppear, so I moved the following method to viewDidAppear
-//    [TapTalkLooks setBackgroundImage:self.tableView];
+    //    [TapTalkLooks setBackgroundImage:self.tableView];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-//    self.tableView.rowHeight = 130; // change this number whenever you change the ui in NotificationTableViewCell
+    //    self.tableView.rowHeight = 130; // change this number whenever you change the ui in NotificationTableViewCell
     
-//    [self setNotificationsData];
+    //    [self setNotificationsData];
     // we want to show the notifications in the reverse chronological order: the last
     // one should be displayed first
-//    notificationsInReverseChronological = [[[[[DataModel sharedDataModelManager] notifications]
-//                                             reverseObjectEnumerator] allObjects] mutableCopy];
+    //    notificationsInReverseChronological = [[[[[DataModel sharedDataModelManager] notifications]
+    //                                             reverseObjectEnumerator] allObjects] mutableCopy];
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -98,10 +98,10 @@ Business *currentBiz;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.tabBarController setSelectedIndex:2];
-      [AppData sharedInstance].Current_Selected_Tab = @"2";
+    [AppData sharedInstance].Current_Selected_Tab = @"2";
     self.businessListArray = [[NSMutableArray alloc] init];
     currentBiz = [CurrentBusiness sharedCurrentBusinessManager].business;
-
+    
     [self getNotificationForConsumer];
     
     ListofBusinesses* businesses = [ListofBusinesses sharedListofBusinesses];
@@ -154,9 +154,9 @@ Business *currentBiz;
     
     NotificationDetailModel *notification = [self.notificationsInReverseChronological objectAtIndex:indexPath.row];
     
-//    Business *biz1 = [self.notificationsInReverseChronological objectAtIndex:indexPath.row];
+    //    Business *biz1 = [self.notificationsInReverseChronological objectAtIndex:indexPath.row];
     
-//    cell.lblOpenCloseDate.text =[[APIUtility sharedInstance]getOpenCloseTime:biz1.opening_time CloseTime:biz1.closing_time];
+    //    cell.lblOpenCloseDate.text =[[APIUtility sharedInstance]getOpenCloseTime:biz1.opening_time CloseTime:biz1.closing_time];
     
     
     Business *selectedBusiness;
@@ -190,31 +190,62 @@ Business *currentBiz;
     cell.distance.text = [NSString stringWithFormat:@"%.1f m",[[AppData sharedInstance]getDistance:selectedBusiness.lat longitude:selectedBusiness.lng]];
     cell.rateView.rating = [selectedBusiness.rating floatValue];
     
-    if ([selectedBusiness.opening_time isEqual:[NSNull null]] || [selectedBusiness.closing_time isEqual:[NSNull null]]) {
+    //----------------------------
+    if( selectedBusiness.opening_time == 0 || selectedBusiness.closing_time == 0) {
         cell.lblOpenClose.hidden = true;
         cell.lblOpenCloseDate.hidden = true;
     }
     else {
         cell.lblOpenClose.hidden = false;
         cell.lblOpenCloseDate.hidden = false;
-        
-        if([[APIUtility sharedInstance]isBusinessOpen:selectedBusiness.opening_time CloseTime:selectedBusiness.closing_time]){
-            cell.lblOpenClose.text = @"OPEN NOW";
+        int pickupLater = (int)selectedBusiness.pickup_counter_later;
+        //        if([[APIUtility sharedInstance]isBusinessOpen: [cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"], objectForKey:@"pickup_counter_later]){
+        if([[APIUtility sharedInstance] isServiceAvailable:PickUpAtCounter during:selectedBusiness.opening_time and: selectedBusiness.closing_time withType:pickupLater]) {
+            cell.lblOpenClose.text = @"OPEN For SERVICES";
             cell.lblOpenClose.textColor = [UIColor orangeColor];
-            cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:selectedBusiness.opening_time CloseTime:selectedBusiness.closing_time];
-        }
-        else{
-            cell.lblOpenClose.text = @"NOW CLOSED";
+            cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:selectedBusiness.opening_time CloseTime: selectedBusiness.closing_time];
+            
+        }else{
+            cell.lblOpenClose.text = @"CLOSED for SERVICES";
             cell.lblOpenClose.textColor = [UIColor grayColor];
-            cell.lblOpenCloseDate.text = @"";
+            //            cell.lblOpenCloseDate.text = @"";
+            cell.lblOpenCloseDate.textColor = [UIColor grayColor];
+            cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime: selectedBusiness.opening_time CloseTime: selectedBusiness.closing_time];
         }
-        
         
     }
     
+    //-----------------------------
+//    if (!((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
+//        if ([selectedBusiness.opening_time isEqual:[NSNull null]] || [selectedBusiness.closing_time isEqual:[NSNull null]]) {
+//            cell.lblOpenClose.hidden = true;
+//            cell.lblOpenCloseDate.hidden = true;
+//        }
+//        else {
+//            cell.lblOpenClose.hidden = false;
+//            cell.lblOpenCloseDate.hidden = false;
+//            
+//            if([[APIUtility sharedInstance]isBusinessOpen:selectedBusiness.opening_time CloseTime:selectedBusiness.closing_time]){
+//                cell.lblOpenClose.text = @"OPEN NOW";
+//                cell.lblOpenClose.textColor = [UIColor orangeColor];
+//                cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:selectedBusiness.opening_time CloseTime:selectedBusiness.closing_time];
+//            }
+//            else{
+//                cell.lblOpenClose.text = @"NOW CLOSED";
+//                cell.lblOpenClose.textColor = [UIColor grayColor];
+//                cell.lblOpenCloseDate.text = @"";
+//            }
+//            
+//            
+//        }
+//    }
+    
+    // zzz for now, we are hiding it, because it's value is not correct
+    cell.lblOpenClose.hidden = true;
+    
     cell.btnFevorite.tag = indexPath.row;
     [cell.btnFevorite  addTarget:self action:@selector(FevoriteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-
+    
     if (!notification.isRead)
     {
         cell.notificationBadgeView.backgroundColor = [UIColor redColor];
@@ -264,7 +295,7 @@ Business *currentBiz;
     }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -282,15 +313,15 @@ Business *currentBiz;
 
 - (IBAction)FevoriteButtonClicked:(UIButton *) sender
 {
-//    NSInteger index = sender.tag;
-//    Business *business = [[Business alloc] initWithDataFromDatabase:[self.bussinessListByBranch objectAtIndex:index]];
+    //    NSInteger index = sender.tag;
+    //    Business *business = [[Business alloc] initWithDataFromDatabase:[self.bussinessListByBranch objectAtIndex:index]];
     
     if(sender.selected) {
-//        [self setFavoriteAPICallWithBusinessId:[NSString stringWithFormat:@"%d",business.businessID] rating:@"0"];
+        //        [self setFavoriteAPICallWithBusinessId:[NSString stringWithFormat:@"%d",business.businessID] rating:@"0"];
         sender.selected = false;
     }
     else {
-//        [self setFavoriteAPICallWithBusinessId:[NSString stringWithFormat:@"%d",business.businessID] rating:@"5"];
+        //        [self setFavoriteAPICallWithBusinessId:[NSString stringWithFormat:@"%d",business.businessID] rating:@"5"];
         sender.selected = true;
     }
 }
@@ -300,15 +331,15 @@ Business *currentBiz;
 //TODO
 - (void)didSaveMessage:(NSString *)message atIndex:(int)index
 {
-	// This method is called when a push notification is received. We remove the "There are
-	// no messages" label from the table view's footer if it is present, and
-	// add a new row to the table view with a nice animation.
-//TODO	if ([self isViewLoaded])
-	{
-		self.tableView.tableFooterView = nil;
-		[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-//TODO		[self scrollToNewestMessage];
-	}
+    // This method is called when a push notification is received. We remove the "There are
+    // no messages" label from the table view's footer if it is present, and
+    // add a new row to the table view with a nice animation.
+    //TODO	if ([self isViewLoaded])
+    {
+        self.tableView.tableFooterView = nil;
+        [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
+        //TODO		[self scrollToNewestMessage];
+    }
 }
 
 - (void) getNotificationForConsumer {
@@ -348,10 +379,10 @@ Business *currentBiz;
                     [notificationArray addObject:notification];
                 }
                 
-                notificationsInReverseChronological = notificationArray;
-//                if (notificationArray.count > 0) {
-//                    notificationsInReverseChronological = [[DataModel sharedDataModelManager] sortNotificationsinReverseChronologicalOrder:notificationArray];
-//                }
+                self->notificationsInReverseChronological = notificationArray;
+                //                if (notificationArray.count > 0) {
+                //                    notificationsInReverseChronological = [[DataModel sharedDataModelManager] sortNotificationsinReverseChronologicalOrder:notificationArray];
+                //                }
             }
         }
         [self.tableView reloadData];
@@ -366,8 +397,8 @@ Business *currentBiz;
     NSString *readTime = [AppData getUTCFormateDate:[NSDate date]];
     
     NSDictionary *dataDict = @{@"notification_id":[NSString stringWithFormat:@"%ld",(long)notification.notification_id] ,@"message":notification.message,@"image":@"",@"time_sent":notification.time_sent,@"time_read":readTime, @"business_id":businessID,@"is_deleted":[NSString stringWithFormat:@"%d",notification.isDelete]};
-
-//    NSDictionary *param = @{@"cmd":@"save_all_notifications_for_consumer",consumerID:consumerID,@"business_id":businessID, @"notification_id" :[NSString stringWithFormat:@"%ld",notification.notification_id], @"is_read" : [NSString stringWithFormat:@"%d",notification.isRead],@"is_delete":[NSString stringWithFormat:@"%d",notification.isDelete]};
+    
+    //    NSDictionary *param = @{@"cmd":@"save_all_notifications_for_consumer",consumerID:consumerID,@"business_id":businessID, @"notification_id" :[NSString stringWithFormat:@"%ld",notification.notification_id], @"is_read" : [NSString stringWithFormat:@"%d",notification.isRead],@"is_delete":[NSString stringWithFormat:@"%d",notification.isDelete]};
     
     NSDictionary *param = @{@"cmd":@"save_all_notifications_for_consumer",@"consumer_id":consumerID,@"data":@[dataDict]};
     
