@@ -5,3 +5,5 @@ TapForAll.xcodeproj/xcuserdata/
 Pods
 Podfile.lock
 /DataModel.mwb.bak
+*.xcuserdata
+/TapForAll.xcodeproj/project.xcworkspace/xcuserdata/amiramirmansoury.xcuserdatad

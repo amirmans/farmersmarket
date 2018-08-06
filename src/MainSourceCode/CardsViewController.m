@@ -933,6 +933,13 @@ NSMutableArray *cardDataArray;
     NSString *cardExpMonth = [NSString stringWithFormat:@"%tu",cardData.expMonth];
     NSString *cardExpYear = [NSString stringWithFormat:@"%tu",cardData.expYear];
     
+    //if we are coming here from add a card or choosing a  new default card exp year is four digit, for the
+    //user default structure we want a two digit year
+    cardExpYear=[cardExpYear substringFromIndex:MAX((int)[cardExpYear length]-2, 0)];
+    
+    
+    
+    
     if ([cardExpMonth length] < 2)
     {
         cardExpMonth = [NSString stringWithFormat:@"0%@",cardExpMonth];

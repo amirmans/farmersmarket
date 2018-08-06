@@ -262,8 +262,8 @@
             cardType = @"CARD";
         }
 
-        uiExpirationDateString = [NSString stringWithFormat:@"20%@/%@", [defaultCardData valueForKey:@"expYear"]
-                                  , [defaultCardData valueForKey:@"expMonth"]];
+        uiExpirationDateString = [NSString stringWithFormat:@"%@/%@", [defaultCardData valueForKey:@"expMonth"]
+                                  ,[defaultCardData valueForKey:@"expYear"]];
         NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
         NSString *defaultCardString = [NSString stringWithFormat:@"%@ xxxx xxxx xxxx %@",cardType,trimmedString];
         self.lblDefaultCard.text = defaultCardString;
