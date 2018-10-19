@@ -40,7 +40,7 @@
                             <rect key="frame" x="0.0" y="-8" width="320" height="452"/>
                             <subviews>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="jiA-OB-QxJ">
-                                    <rect key="frame" x="10" y="26" width="171" height="18"/>
+                                    <rect key="frame" x="10" y="26" width="300" height="18"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="18" id="rSa-3G-iDm"/>
                                     </constraints>
@@ -57,11 +57,10 @@
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </textField>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Work Email (optional)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="bDT-Uq-ut6" userLabel="Work Email Label">
-                                    <rect key="frame" x="10" y="92" width="171" height="18"/>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Work Email (optional for individual services)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="bDT-Uq-ut6" userLabel="Work Email Label">
+                                    <rect key="frame" x="10" y="92" width="300" height="18"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="18" id="IQR-m4-5Xp"/>
-                                        <constraint firstAttribute="width" constant="171" id="pKW-OR-PXi"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
@@ -192,6 +191,7 @@
                                 <constraint firstItem="kjC-4Y-VcP" firstAttribute="top" secondItem="jiA-OB-QxJ" secondAttribute="bottom" id="ETR-db-CdB"/>
                                 <constraint firstAttribute="bottom" secondItem="d2D-xU-qrr" secondAttribute="bottom" constant="12" id="JKB-f3-mYq"/>
                                 <constraint firstItem="BUQ-kG-N1S" firstAttribute="leading" secondItem="Rvs-6v-kc3" secondAttribute="leading" constant="10" id="Jfj-8Y-HBa"/>
+                                <constraint firstItem="bDT-Uq-ut6" firstAttribute="width" secondItem="kjC-4Y-VcP" secondAttribute="width" id="NbQ-1c-usL"/>
                                 <constraint firstItem="86V-V1-ZRP" firstAttribute="top" secondItem="413" secondAttribute="bottom" constant="24" id="PrP-SG-CX0"/>
                                 <constraint firstItem="36" firstAttribute="top" secondItem="kjC-4Y-VcP" secondAttribute="bottom" constant="85" id="Rvh-o8-grC"/>
                                 <constraint firstItem="F4D-by-BAx" firstAttribute="top" secondItem="86V-V1-ZRP" secondAttribute="top" id="SBX-yy-fCt"/>

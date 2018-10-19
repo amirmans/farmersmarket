@@ -11,7 +11,7 @@ pod 'Reachability'
 pod 'KASlideShow'
 pod 'Stripe'
 pod 'GoogleMaps'
-pod "SHMultipleSelect"
+pod 'SHMultipleSelect'
 pod 'ActionSheetPicker-3.0'
 pod 'BBBadgeBarButtonItem'
 pod 'IQKeyboardManager'

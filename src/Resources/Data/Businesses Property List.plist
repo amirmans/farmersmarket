@@ -132,7 +132,7 @@
 					<key>name</key>
 					<string>Order Food</string>
 					<key>display_name</key>
-					<string>Order Food</string>
+					<string>Order</string>
 					<key>icon</key>
 					<string>Order Food.png</string>
 				</dict>
@@ -143,14 +143,6 @@
 					<string>Request Service</string>
 					<key>icon</key>
 					<string>waitingToServe.png</string>
-				</dict>
-				<dict>
-					<key>display_name</key>
-					<string>Catering</string>
-					<key>name</key>
-					<string>Catering</string>
-					<key>icon</key>
-					<string>Catering.png</string>
 				</dict>
 			</array>
 		</dict>

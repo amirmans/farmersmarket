@@ -28,6 +28,7 @@ static NSDateFormatter *displayFormatter= nil;
 
 @synthesize btnNewOrder, btnPickupOrder, textViewMessageToConsumers, corpButton, corpListTimer;
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (formatter == nil) {
@@ -47,10 +48,9 @@ static NSDateFormatter *displayFormatter= nil;
     // Do any additional setup after loading the view from its nib.
     btnPickupOrder.enabled = FALSE;
     btnPickupOrder.alpha = 0.0;
-    textViewMessageToConsumers.textColor = [UIColor whiteColor];
-//    textViewMessageToConsumers.text = @"Carry-Out: ASAP (varies by merchant)\nDelivery: 45-60 min.";
-    textViewMessageToConsumers.hidden = true;
-
+    
+    [self displayInitialCorpMessage];
+    
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     HUD.label.text = @"Finding your company...";
 
@@ -72,6 +72,7 @@ static NSDateFormatter *displayFormatter= nil;
     [AppData sharedInstance].Current_Selected_Tab = @"0";
     self.navigationController.navigationBar.hidden = YES;
 }
+
 -(void) viewWillDisappear:(BOOL)animated{
     self.navigationController.navigationBar.hidden = NO;
 }
@@ -101,6 +102,27 @@ static NSDateFormatter *displayFormatter= nil;
     return returnMessage;
 }
 
+- (NSString *)determineInitialCorpMessage {
+    NSString *returnVal;
+    
+    NSString* workEmail= [DataModel sharedDataModelManager].emailWorkAddress;
+    if(workEmail == nil || [workEmail isKindOfClass:[NSNull class]] || workEmail.length==0) {
+        return @"Please update your profile info and work email.\nThen come back to this page.";
+    }
+    
+    
+    NSArray* corpList = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
+    NSDictionary *corpDict = [corpList objectAtIndex:0];
+    returnVal = [self isDayandTimeValidForCorp:corpDict];
+    
+    return returnVal;
+}
+
+-(void)displayInitialCorpMessage {
+    textViewMessageToConsumers.textColor = [UIColor whiteColor];
+    textViewMessageToConsumers.text = [self determineInitialCorpMessage];
+    
+}
 
 - (void)loadBusinessesForCorp:(NSString *)businessesForCorp {
     ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode = true;
@@ -139,7 +161,7 @@ static NSDateFormatter *displayFormatter= nil;
 
     if (![self isThereRealCorp:corpList]) {
         UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@""
-                                    message:@"Your company is not signed up to use our services!\nWe need 10 registrations to start the process.\For now, you may view the menus." preferredStyle:UIAlertControllerStyleAlert];
+                                    message:@"Your company is not signed up to use our services!\nWe need 10 registrations to start the process. For now, you may view the menus." preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             if (corpList.count > 0) {
                 [self handleNoCorpFound:corpList];

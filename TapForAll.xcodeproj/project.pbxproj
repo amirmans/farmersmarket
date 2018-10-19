@@ -53,7 +53,6 @@
 		4A06471E1DE456B900416969 /* CartViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A06471C1DE456B900416969 /* CartViewTableViewCell.xib */; };
 		4A0F2CA31C71D5BA005C6F22 /* TPBusinessDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A0F2CA21C71D5BA005C6F22 /* TPBusinessDetail.m */; };
 		4A0F2CA91C7224B1005C6F22 /* CustomUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A0F2CA81C7224B1005C6F22 /* CustomUIButton.m */; };
-		4A0F2CEA1C729092005C6F22 /* TapForAll.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4A0F2CE81C729092005C6F22 /* TapForAll.xcdatamodeld */; };
 		4A1DA88C1C7603CA00E16F30 /* TPReceiptController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DA88A1C7603CA00E16F30 /* TPReceiptController.m */; };
 		4A1DA88D1C7603CA00E16F30 /* TPReceiptController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A1DA88B1C7603CA00E16F30 /* TPReceiptController.xib */; };
 		4A1DA8911C76235100E16F30 /* TPRewardPointController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1DA88F1C76235100E16F30 /* TPRewardPointController.m */; };
@@ -293,7 +292,6 @@
 		4A0F2CA21C71D5BA005C6F22 /* TPBusinessDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPBusinessDetail.m; sourceTree = "<group>"; };
 		4A0F2CA71C7224B1005C6F22 /* CustomUIButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomUIButton.h; sourceTree = "<group>"; };
 		4A0F2CA81C7224B1005C6F22 /* CustomUIButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomUIButton.m; sourceTree = "<group>"; };
-		4A0F2CE91C729092005C6F22 /* TapForAll.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TapForAll.xcdatamodel; sourceTree = "<group>"; };
 		4A1DA8891C7603CA00E16F30 /* TPReceiptController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPReceiptController.h; sourceTree = "<group>"; };
 		4A1DA88A1C7603CA00E16F30 /* TPReceiptController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPReceiptController.m; sourceTree = "<group>"; };
 		4A1DA88B1C7603CA00E16F30 /* TPReceiptController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TPReceiptController.xib; sourceTree = "<group>"; };
@@ -350,10 +348,8 @@
 		4AAD6B6B1D018A4D00AED4F7 /* MenuItemNoImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuItemNoImageTableViewCell.xib; sourceTree = "<group>"; };
 		4AAF9C311CFDB101009ECFB2 /* NotificationDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationDetailModel.h; sourceTree = "<group>"; };
 		4AAF9C321CFDB101009ECFB2 /* NotificationDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationDetailModel.m; sourceTree = "<group>"; };
-		4AB105711CFEE5E800254FE0 /* TapForAll_V3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TapForAll_V3.xcdatamodel; sourceTree = "<group>"; };
 		4ABB681B1CAD653D0099570C /* RemoveFromCartView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemoveFromCartView.xib; sourceTree = "<group>"; };
 		4AC80A8F1C69FF6900A42EE2 /* restaurant.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = restaurant.jpg; sourceTree = "<group>"; };
-		4ACD296C1CD7628B00BAA006 /* TapForAll_V2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TapForAll_V2.xcdatamodel; sourceTree = "<group>"; };
 		4ACD41AC1E1FDEAB002F9379 /* PaymentSummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentSummaryViewController.h; sourceTree = "<group>"; };
 		4ACD41AD1E1FDEAB002F9379 /* PaymentSummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentSummaryViewController.m; sourceTree = "<group>"; };
 		4AD6E4771CE099240025676C /* ic_minus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_minus.png; sourceTree = "<group>"; };
@@ -1007,7 +1003,6 @@
 		C66595861FEF772B0073972D /* src */ = {
 			isa = PBXGroup;
 			children = (
-				4A0F2CE81C729092005C6F22 /* TapForAll.xcdatamodeld */,
 				C699356218B969F6008FCF8A /* AppDelegate.h */,
 				C699356318B969F6008FCF8A /* AppDelegate.m */,
 				4A6643D01C74A04000C10421 /* NavigationMenuView */,
@@ -1504,7 +1499,6 @@
 				4A6C9B341CB7D67000D1B60D /* RewardDetailsModel.m in Sources */,
 				C69935B018B969F6008FCF8A /* AppDelegate.m in Sources */,
 				5DBDB5CC1C6AB3CF001828C5 /* MenuItemViewController.m in Sources */,
-				4A0F2CEA1C729092005C6F22 /* TapForAll.xcdatamodeld in Sources */,
 				C69935D118B969F6008FCF8A /* StoreMapViewController.m in Sources */,
 				C620412C1C49959D001D0DD7 /* DetailBusinessViewControllerII.m in Sources */,
 				C69935BB18B969F6008FCF8A /* DataModel.m in Sources */,
@@ -1850,18 +1844,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		4A0F2CE81C729092005C6F22 /* TapForAll.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				4AB105711CFEE5E800254FE0 /* TapForAll_V3.xcdatamodel */,
-				4ACD296C1CD7628B00BAA006 /* TapForAll_V2.xcdatamodel */,
-				4A0F2CE91C729092005C6F22 /* TapForAll.xcdatamodel */,
-			);
-			currentVersion = 4AB105711CFEE5E800254FE0 /* TapForAll_V3.xcdatamodel */;
-			path = TapForAll.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
 		C67C6AE118DF9B03009EF996 /* TapForAll.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

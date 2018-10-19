@@ -277,7 +277,7 @@ static DataModel *sharedDataModel = nil;
 }
 
 - (void)setEmailWorkAddress:(NSString *)emailWorkAddr {
-    if (emailWorkAddr == (id)[NSNull null] || emailWorkAddr.length == 0 )
+    if (emailWorkAddr == nil || emailWorkAddr == (id)[NSNull null] || emailWorkAddr.length == 0)
     {
         emailWorkAddr = @"";
     }
