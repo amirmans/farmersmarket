@@ -16,6 +16,7 @@
 
 static NSDateFormatter *formatter= nil;
 static NSDateFormatter *displayFormatter= nil;
+NSString *companyNotSignedUpMessage =@"Based on your work email, your company has not joined our dedicated lunch services.\nRequest service at info@Tap-In.co. For now, You are welcome to browse the menus.";
 
 @interface HomeViewController () {
     MBProgressHUD *HUD;
@@ -28,6 +29,72 @@ static NSDateFormatter *displayFormatter= nil;
 
 @synthesize btnNewOrder, btnPickupOrder, textViewMessageToConsumers, corpButton, corpListTimer;
 
+
+- (NSInteger)indexOfDayOfWeek {
+//    NSDate *now = [NSDate date];
+    NSDateFormatter *nowDateFormatter = [[NSDateFormatter alloc] init];
+//    NSArray *daysOfWeek = @[@"",@"Su",@"M",@"T",@"W",@"Th",@"F",@"S"];
+//    [nowDateFormatter setDateFormat:@"e"];
+    NSInteger weekdayNumber = (NSInteger)[[nowDateFormatter stringFromDate:[NSDate date]] integerValue];
+    return weekdayNumber;
+}
+
+- (NSInteger)findTheNextDayIndex:(NSString *)weekDaysStr inCompareto:(long)todaysIndex {
+    NSInteger nextBusinessDayIndex = 0;
+    NSArray *arr = [weekDaysStr componentsSeparatedByString:@","];
+    if (arr.count < 2) {
+        nextBusinessDayIndex = [arr[0] integerValue];
+        
+        return nextBusinessDayIndex;
+    }
+        
+    [arr sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        
+        if ([obj1 intValue] == [obj2 intValue])
+            return NSOrderedSame;
+        
+        else if ([obj1 intValue] < [obj2 intValue])
+            return NSOrderedAscending;
+        
+        else
+            return NSOrderedDescending;
+        
+    }];
+    
+    NSLog(@"The sorted weekday str is %@", arr);
+    
+    if (todaysIndex >= [arr[(arr.count -1)] integerValue]) {
+        nextBusinessDayIndex = [arr[0] integerValue];
+        
+        return nextBusinessDayIndex;
+    }
+    
+    for (int i = 0; i < arr.count; i++) {
+        if (todaysIndex < [arr[i] integerValue]) {
+            nextBusinessDayIndex = [arr[i] integerValue];
+            break;
+        }
+    }
+    
+    return(nextBusinessDayIndex);
+}
+
+- (NSString *)stringFromWeekday:(NSInteger)weekday {
+    NSDateFormatter * dateFormatter = [NSDateFormatter new];
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    return dateFormatter.shortWeekdaySymbols[weekday];
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {        
+//        [[NSNotificationCenter defaultCenter]   addObserver:self
+//                                                selector:@selector(displayInitialCorpMessage)
+//                                                name:@"GotCorps"
+//                                                object:nil];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -49,7 +116,7 @@ static NSDateFormatter *displayFormatter= nil;
     btnPickupOrder.enabled = FALSE;
     btnPickupOrder.alpha = 0.0;
     
-    [self displayInitialCorpMessage];
+//    [self displayInitialCorpMessage];
     
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     HUD.label.text = @"Finding your company...";
@@ -68,13 +135,25 @@ static NSDateFormatter *displayFormatter= nil;
 }
 
 -(void) viewWillAppear:(BOOL)animated{
+    textViewMessageToConsumers.text = @"";
+    
     [self.tabBarController setSelectedIndex:0];
+    
     [AppData sharedInstance].Current_Selected_Tab = @"0";
     self.navigationController.navigationBar.hidden = YES;
+    
+    [[NSNotificationCenter defaultCenter]   addObserver:self
+                                               selector:@selector(displayInitialCorpMessage)
+                                                   name:@"GotCorps"
+                                                 object:nil];
+    // We need this to stick the meesage, i.e when we come back from other tabs
+    [self displayInitialCorpMessage];
 }
 
--(void) viewWillDisappear:(BOOL)animated{
+-(void) viewWillDisappear:(BOOL)animated {
     self.navigationController.navigationBar.hidden = NO;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super viewWillDisappear:animated];
 }
 
 - (NSString *)isDayandTimeValidForCorp:(NSDictionary *)corpDictionary {
@@ -91,12 +170,31 @@ static NSDateFormatter *displayFormatter= nil;
     NSString *weekDayStr = [NSString stringWithFormat: @"%ld", weekday];
     NSString *businessWeekDaysStr = [corpDictionary objectForKey:@"delivery_week_days"];
     if ([businessWeekDaysStr rangeOfString:weekDayStr].location == NSNotFound) {
-       returnMessage = @"There is no delivery today!\nHowever, you may enjoy viewing the menus without ordering.";
+        NSInteger nextDeliveryDayIndex = [self findTheNextDayIndex:businessWeekDaysStr inCompareto:weekday];
+        NSString *nextDeliveryDayStr =  [self stringFromWeekday:nextDeliveryDayIndex];
+        returnMessage = [NSString stringWithFormat:@"There is no delivery today!\nThe next delivery day is: %@.\nYou may view the menus without ordering.", nextDeliveryDayStr];
     } else {
         NSString *cutoffStr = [corpDictionary objectForKey:@"cutoff_time"];
         NSDate *cutoff  = [formatter dateFromString:cutoffStr];
+        
+        // get the cutoffString in user friendly format
+        
+        NSDateFormatter *displayDateFormatter = [APIUtility sharedInstance].utilityDisplayDateFormatter;
+        [displayDateFormatter setDateFormat:@"H:mm"];
+        [displayDateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+        
+        
+        //            NSDateFormatter *displayDateFormatter = [APIUtility sharedInstance].utilityDisplayDateFormatter;
+        NSDate *cuttoffDisplayDate = [formatter dateFromString:cutoffStr];
+        NSString *cutoffDisplayDateStr = [displayDateFormatter stringFromDate:cuttoffDisplayDate];
+        
+        
+        
         if ([cutoff compare:dayInhms] == NSOrderedAscending) {
-            returnMessage = @"It is past the cut-off time for today's delivery!\nHowever, you may enjoy viewing the menus without ordering.";
+            returnMessage = [NSString stringWithFormat:@"For today's delivery cut-off time (%@) is past!\nHowever, you may view the menus without ordering.",cutoffDisplayDateStr ];
+        } else
+        {
+            returnMessage = [NSString stringWithFormat:@"Based on your work email, corp delivery service is open until %@.", cutoffDisplayDateStr];
         }
     }
     return returnMessage;
@@ -107,21 +205,43 @@ static NSDateFormatter *displayFormatter= nil;
     
     NSString* workEmail= [DataModel sharedDataModelManager].emailWorkAddress;
     if(workEmail == nil || [workEmail isKindOfClass:[NSNull class]] || workEmail.length==0) {
-        return @"Please update your profile info and work email.\nThen come back to this page.";
+        return @"There is no work email in your pofile so we cannot determine your corporation.";
     }
     
-    
     NSArray* corpList = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
-    NSDictionary *corpDict = [corpList objectAtIndex:0];
-    returnVal = [self isDayandTimeValidForCorp:corpDict];
+    if (corpList == nil) {
+        returnVal = @"";
+    } else {
+        if ([self isThereRealCorp:corpList]) {
+            NSDictionary *corpDict = [corpList objectAtIndex:0];
+            returnVal = [self isDayandTimeValidForCorp:corpDict];
+        } else {
+            returnVal = companyNotSignedUpMessage;
+            returnVal = @"Based on your work email, your company has not joined our lunch services.\nRequest service at info@Tap-In.co.";
+        }
+    }
     
     return returnVal;
 }
 
 -(void)displayInitialCorpMessage {
+//    textViewMessageToConsumers.hidden = false;
+    // user has changed the profile, we wait until we need more infor from the server to display it here
+    if ([AppData sharedInstance].is_Profile_Changed) {
+        return;
+    }
     textViewMessageToConsumers.textColor = [UIColor whiteColor];
     textViewMessageToConsumers.text = [self determineInitialCorpMessage];
     
+}
+
+- (BOOL)messageSaysGoodToOrder:(NSString *)alertMessage {
+    
+    if ([alertMessage rangeOfString:@"open"].location == NSNotFound) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 - (void)loadBusinessesForCorp:(NSString *)businessesForCorp {
@@ -160,8 +280,9 @@ static NSDateFormatter *displayFormatter= nil;
     NSArray* corpList = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
 
     if (![self isThereRealCorp:corpList]) {
+        
         UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@""
-                                    message:@"Your company is not signed up to use our services!\nWe need 10 registrations to start the process. For now, you may view the menus." preferredStyle:UIAlertControllerStyleAlert];
+                                    message:companyNotSignedUpMessage preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             if (corpList.count > 0) {
                 [self handleNoCorpFound:corpList];
@@ -188,7 +309,7 @@ static NSDateFormatter *displayFormatter= nil;
 
                                     NSDictionary *corpDict = [corpList objectAtIndex:selectedIndex];
                                     NSString *alertMessage = [self isDayandTimeValidForCorp:corpDict];
-                                    if ([alertMessage length] > 0)
+                                    if (![self messageSaysGoodToOrder:alertMessage])
                                     {
                                         ((AppDelegate *)[[UIApplication sharedApplication] delegate]).viewMode = true;
                                     }

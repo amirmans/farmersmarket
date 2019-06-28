@@ -12,27 +12,72 @@
 #import "AFNetworking.h"
 
 static APIUtility *sharedObj;
-static NSDateFormatter* utilyDateFormatter;
+static NSDateFormatter* utilityDateFormatter;
 
 @implementation APIUtility
 
-+ (APIUtility *) sharedInstance
-{
-    if(sharedObj == nil)
-    {
-        sharedObj = [[APIUtility alloc] init];
-        sharedObj.sessionManager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
-        sharedObj.operationManager = [AFHTTPSessionManager manager];
-        sharedObj.operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
-        
-        utilyDateFormatter = [[NSDateFormatter alloc]init];
-        [utilyDateFormatter setDateFormat:@"HH:mm:ss"];
-        [utilyDateFormatter setTimeZone:[NSTimeZone localTimeZone]];
-//        [utilyDateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"HH:mm:ss" options:0 locale:[NSLocale currentLocale]]];
+static id sharedInstance;
+@synthesize  utilityDisplayDateFormatter;
 
-    }
-    return sharedObj;
++ (APIUtility *) sharedInstance {
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    
+    return sharedInstance;
 }
+
+
+- (APIUtility *)init {
+    if (sharedInstance) {
+        return sharedInstance;
+    }
+    @synchronized(self) {
+        self = [super init];
+        if (self) {
+            sharedInstance = self;
+            
+            sharedObj = [[APIUtility alloc] init];
+            sharedObj.sessionManager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
+            sharedObj.operationManager = [AFHTTPSessionManager manager];
+            sharedObj.operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+            
+            utilityDateFormatter = [[NSDateFormatter alloc]init];
+            [utilityDateFormatter setDateFormat:@"HH:mm:ss"];
+            [utilityDateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+            
+            utilityDisplayDateFormatter = [[NSDateFormatter alloc]init];
+            [utilityDisplayDateFormatter setDateFormat:@"HH:mm"];
+            [utilityDisplayDateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+        }
+        return self;
+    }
+}
+
+//
+//+ (APIUtility *) sharedInstance
+//{
+//    if(sharedObj == nil)
+//    {
+//        sharedObj = [[APIUtility alloc] init];
+//        sharedObj.sessionManager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
+//        sharedObj.operationManager = [AFHTTPSessionManager manager];
+//        sharedObj.operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
+//
+//        utilityDateFormatter = [[NSDateFormatter alloc]init];
+//        [utilityDateFormatter setDateFormat:@"HH:mm:ss"];
+//        [utilityDateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+//
+//        utilityDisplayDateFormatter = [[NSDateFormatter alloc]init];
+//        [utilityDisplayDateFormatter setDateFormat:@"HH:mm"];
+//        [utilityDisplayDateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+////        [utilityDateFormatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"HH:mm:ss" options:0 locale:[NSLocale currentLocale]]];
+//
+//    }
+//    return sharedObj;
+//}
+
 
 -(void)cancelRequest
 {
@@ -604,9 +649,9 @@ static NSDateFormatter* utilyDateFormatter;
     NSString *time2 = closeTime;
     NSString *time3 = givenDate;
     
-    NSDate *date1 = [utilyDateFormatter dateFromString:time1];
-    NSDate *date2 = [utilyDateFormatter dateFromString:time2];
-    NSDate *date3 = [utilyDateFormatter dateFromString:time3];
+    NSDate *date1 = [utilityDateFormatter dateFromString:time1];
+    NSDate *date2 = [utilityDateFormatter dateFromString:time2];
+    NSDate *date3 = [utilityDateFormatter dateFromString:time3];
     
     NSComparisonResult result = [date1 compare:date3];
     NSComparisonResult result1 = [date2 compare:date3];
@@ -624,15 +669,15 @@ static NSDateFormatter* utilyDateFormatter;
 
 
 - (BOOL)isBusinessOpen: (NSString *)openTime CloseTime:(NSString *)closeTime {
-    NSString *currentTime = [utilyDateFormatter stringFromDate:[NSDate date]];
+    NSString *currentTime = [utilityDateFormatter stringFromDate:[NSDate date]];
     
     NSString *time1 = openTime;
     NSString *time2 = closeTime;
     NSString *time3 = currentTime;
     
-    NSDate *date1 = [utilyDateFormatter dateFromString:time1];
-    NSDate *date2 = [utilyDateFormatter dateFromString:time2];
-    NSDate *date3 = [utilyDateFormatter dateFromString:time3];
+    NSDate *date1 = [utilityDateFormatter dateFromString:time1];
+    NSDate *date2 = [utilityDateFormatter dateFromString:time2];
+    NSDate *date3 = [utilityDateFormatter dateFromString:time3];
     
     NSComparisonResult result = [date1 compare:date3];
     NSComparisonResult result1 = [date2 compare:date3];
@@ -704,9 +749,9 @@ static NSDateFormatter* utilyDateFormatter;
     long long currentTimeInSeconds = [components hour] * 3600 + [components minute] * 60 + [components second];
     
     
-//    NSDate *date1 = [utilyDateFormatter dateFromString:openTime];
-//    NSDate *date2 = [utilyDateFormatter dateFromString:closeTime];
-//    NSDate *date3 = [utilyDateFormatter dateFromString:time3];
+//    NSDate *date1 = [utilityDateFormatter dateFromString:openTime];
+//    NSDate *date2 = [utilityDateFormatter dateFromString:closeTime];
+//    NSDate *date3 = [utilityDateFormatter dateFromString:time3];
 //    NSDate *date1 = [self dateFromGivenDate:[NSDate date] WithHour:[openTimeArray[0] integerValue]
 //                                     minute:(NSInteger)[openTimeArray[1] integerValue]];
 //    NSDate *date2 = [self dateFromGivenDate:[NSDate date] WithHour:[closeTimeArray[0] integerValue]
@@ -724,8 +769,8 @@ static NSDateFormatter* utilyDateFormatter;
     
     return returnVal;
     
-//    NSString *currentTime = [utilyDateFormatter stringFromDate:[NSDate date]];
-//    NSDate *date3 = [utilyDateFormatter dateFromString:currentTime];
+//    NSString *currentTime = [utilityDateFormatter stringFromDate:[NSDate date]];
+//    NSDate *date3 = [utilityDateFormatter dateFromString:currentTime];
 //    NSDate *date3 = [NSDate date];
     
 //    NSComparisonResult result2 = [date1 compare:date2];

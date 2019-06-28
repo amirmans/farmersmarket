@@ -11,7 +11,9 @@
 #import "Business.h"
 
 
-@interface APIUtility : NSObject
+@interface APIUtility : NSObject {
+    NSDateFormatter* utilityDisplayDateFormatter;
+}
 
 + (APIUtility *) sharedInstance;
 
@@ -19,6 +21,7 @@
 @property(nonatomic) AFHTTPSessionManager *operationManager;
 @property(nonatomic, strong) NSMutableURLRequest *requestOperation;
 @property(nonatomic, strong) NSString *appendUrl;
+@property(nonatomic, strong) NSDateFormatter *utilityDisplayDateFormatter;
 
 - (NSString *) GMTToLocalTime: (NSString *)GMTTime;
 - (BOOL)isBusinessOpenAt:(NSString *)givenDate OpenTime:(NSString *)openTime CloseTime:(NSString *)closeTime;
@@ -72,5 +75,6 @@
 -(void)ConsumerDelivaryInfoAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished;
 
 -(void)CheckConsumerPromoCodeAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished;
+
 
 @end

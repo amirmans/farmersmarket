@@ -8,7 +8,7 @@
 
 #import "Business.h"
 #import "GooglePlacesConnection.h"
-#import "SBJson4Parser.h"
+#import "SBJson5Parser.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIAlertView+TapTalkAlerts.h"
 #import "Consts.h"

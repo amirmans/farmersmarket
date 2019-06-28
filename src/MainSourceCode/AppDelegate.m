@@ -604,11 +604,13 @@ static AppDelegate *sharedObj;
 //    NSLog (@"In appdelegate:getdefaultccforcustomer %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
 }
 
+
 - (void)getCorps:(NSString *)workEmail {
     if (corps || [corps count]) {
         [corps removeAllObjects];
     }
     if(workEmail == nil || [workEmail isKindOfClass:[NSNull class]] || workEmail.length==0) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GotCorps" object:nil];
         return;
     }
 
@@ -626,6 +628,7 @@ static AppDelegate *sharedObj;
         if ( ([[response valueForKey:@"status"] integerValue] >= 0) && ([response valueForKey:@"server_error"] == 0) )
         {
             self->corps = [[response objectForKey:@"data"] mutableCopy];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GotCorps" object:nil];
         }
         else
         {
@@ -653,6 +656,21 @@ static AppDelegate *sharedObj;
 
 
 - (void)saveDeviceTokenAndUUID {
+    
+    NSString *string = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"Config"];
+    long longID = [NSBundle mainBundle].bundleIdentifier;
+    
+#ifdef DEBUG
+    NSLog(@"I am in Debug mode.");
+#elif STAGING
+    NSLog(@"I am in Staging mode.");
+#else
+    NSLog("PRODUCTION");
+#endif
+    
+
+    
+    
 //    NSString *newToken = [deviceToken description];
 //    newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
 //    newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];

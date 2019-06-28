@@ -17,7 +17,7 @@
 
 #import <Foundation/Foundation.h>
 //#import "../SBJSON/Classes/SBJson4.h"
-#import "SBJson4.h"
+#import "SBJson5.h"
 #import "GooglePlacesObject.h"
 
 @protocol GooglePlacesConnectionDelegate;

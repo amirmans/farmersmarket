@@ -64,14 +64,15 @@
                                         <action selector="btnNewOrderClicked:" destination="-1" eventType="touchUpInside" id="qv9-VM-aai"/>
                                     </connections>
                                 </button>
-                                <textView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0eP-5j-71n">
-                                    <rect key="frame" x="0.0" y="257" width="320" height="35"/>
+                                <textView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="bottom" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0eP-5j-71n">
+                                    <rect key="frame" x="0.0" y="236" width="320" height="35"/>
                                     <color key="textColor" red="0.94615966080000002" green="0.94615966080000002" blue="0.94615966080000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <fontDescription key="fontDescription" name=".SFUIText" family=".SF UI Text" pointSize="16"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                 </textView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7VC-eV-p7v" userLabel="Corp Icon">
-                                    <rect key="frame" x="80" y="300" width="160" height="161"/>
+                                    <rect key="frame" x="80" y="313" width="160" height="161"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="161" id="bKt-tI-CuT"/>
                                     </constraints>
@@ -81,7 +82,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M9A-zI-aeA" userLabel="Corp Button">
-                                    <rect key="frame" x="56" y="450" width="208" height="33"/>
+                                    <rect key="frame" x="56" y="463" width="208" height="33"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
                                     <state key="normal" title="Delivery to your company?"/>
                                     <connections>
@@ -97,17 +98,17 @@
                                 <constraint firstItem="x0X-b4-M5s" firstAttribute="centerX" secondItem="zAf-2X-KvV" secondAttribute="centerX" id="D2e-Nr-8Kd"/>
                                 <constraint firstItem="M9A-zI-aeA" firstAttribute="centerX" secondItem="7VC-eV-p7v" secondAttribute="centerX" id="FE7-gV-Ibg"/>
                                 <constraint firstItem="zAf-2X-KvV" firstAttribute="leading" secondItem="fj5-hg-slI" secondAttribute="leading" id="Kae-L3-hMS"/>
-                                <constraint firstItem="7VC-eV-p7v" firstAttribute="top" secondItem="0eP-5j-71n" secondAttribute="bottom" constant="8" id="PSh-Pt-jdI"/>
                                 <constraint firstItem="0eP-5j-71n" firstAttribute="leading" secondItem="zAf-2X-KvV" secondAttribute="leading" id="UEQ-7H-19u"/>
                                 <constraint firstItem="Hdw-nP-mlO" firstAttribute="leading" secondItem="fj5-hg-slI" secondAttribute="leading" constant="2" id="UeS-uG-ddY"/>
                                 <constraint firstItem="M9A-zI-aeA" firstAttribute="top" secondItem="7VC-eV-p7v" secondAttribute="bottom" constant="-11" id="ZpL-cB-QdQ"/>
                                 <constraint firstItem="zAf-2X-KvV" firstAttribute="top" secondItem="fj5-hg-slI" secondAttribute="top" id="dvy-as-t5Z"/>
                                 <constraint firstItem="Hdw-nP-mlO" firstAttribute="top" secondItem="fj5-hg-slI" secondAttribute="top" constant="2" id="f0l-Jw-ZvQ"/>
-                                <constraint firstItem="0eP-5j-71n" firstAttribute="top" secondItem="eBj-1B-I6d" secondAttribute="bottom" constant="42" id="g9V-fi-XWx"/>
+                                <constraint firstItem="0eP-5j-71n" firstAttribute="top" secondItem="eBj-1B-I6d" secondAttribute="bottom" constant="21" id="g9V-fi-XWx"/>
                                 <constraint firstItem="zAf-2X-KvV" firstAttribute="height" secondItem="fj5-hg-slI" secondAttribute="height" id="i7j-B4-Ugx"/>
                                 <constraint firstItem="eBj-1B-I6d" firstAttribute="top" secondItem="x0X-b4-M5s" secondAttribute="bottom" constant="-35" id="jt6-nG-yCz"/>
                                 <constraint firstItem="zAf-2X-KvV" firstAttribute="width" secondItem="fj5-hg-slI" secondAttribute="width" id="mO8-0f-Hyh"/>
                                 <constraint firstItem="x0X-b4-M5s" firstAttribute="leading" secondItem="zAf-2X-KvV" secondAttribute="leading" constant="80" id="pz2-eJ-EPj"/>
+                                <constraint firstItem="7VC-eV-p7v" firstAttribute="top" secondItem="x0X-b4-M5s" secondAttribute="bottom" constant="96" id="vzN-uE-KLM"/>
                                 <constraint firstItem="x0X-b4-M5s" firstAttribute="top" secondItem="zAf-2X-KvV" secondAttribute="top" constant="32" id="wMd-FV-fv2"/>
                                 <constraint firstItem="7VC-eV-p7v" firstAttribute="leading" secondItem="x0X-b4-M5s" secondAttribute="leading" id="zfM-dL-fYM"/>
                                 <constraint firstAttribute="trailing" secondItem="zAf-2X-KvV" secondAttribute="trailing" id="zpC-FX-ZrV"/>

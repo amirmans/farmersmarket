@@ -28,6 +28,7 @@
 @property (nonatomic, strong) NSDictionary *consumerProfileDataDic;
 @property (nonatomic, strong) MBProgressHUD *hud;
 @property (nonatomic, strong) NSString *E_164FormatPhoneNumber;
+@property (nonatomic, strong) NSString *originalWorkEmail;
 
 - (BOOL)validatePassword:(NSString *)pass;
 - (BOOL)validateAllUserInput;
@@ -53,12 +54,12 @@ static NSArray *consumerProfileDataArray = nil;
 @synthesize emailLabel;
 @synthesize zipcodeTextField;
 @synthesize emailTextField, hud;
-@synthesize emailWorkTextField, emailWorkLabel;
+@synthesize emailWorkTextField, emailWorkLabel, originalWorkEmail;
 @synthesize smsNoLabel, smsNoTextField, E_164FormatPhoneNumber;
 @synthesize consumerProfileDataDic;
 
 -(void)SetTextFieldBorder :(UITextField *)textField{
-    
+
     CALayer *border = [CALayer layer];
     CGFloat borderWidth = 2;
     border.borderColor = [UIColor grayColor].CGColor;
@@ -67,7 +68,7 @@ static NSArray *consumerProfileDataArray = nil;
     //    border.borderWidth = borderWidth;
     [textField.layer addSublayer:border];
     textField.layer.masksToBounds = YES;
-    
+
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -83,7 +84,7 @@ static NSArray *consumerProfileDataArray = nil;
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    
+
     //    [self SetTextFieldBorder:emailTextField];
     //    [self SetTextFieldBorder:zipcodeTextField];
     //    [self SetTextFieldBorder:nicknameTextField];
@@ -92,7 +93,7 @@ static NSArray *consumerProfileDataArray = nil;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+
     [self populateFieldsWithInitialValues];
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -116,7 +117,7 @@ static NSArray *consumerProfileDataArray = nil;
     //    [TapTalkLooks setToTapTalkLooks:emailTextField isActionButton:NO makeItRound:YES];
     //
     //    ageGroupSegmentedControl.tintColor = [UIColor colorWithRed: 0/255.0 green:0/255.0 blue:255.0f/255.0 alpha:1.0];
-    
+
 }
 
 - (void)viewDidLoad {
@@ -137,36 +138,37 @@ static NSArray *consumerProfileDataArray = nil;
     //    [TapTalkLooks setToTapTalkLooks:emailTextField isActionButton:NO makeItRound:YES];
     //
     //    ageGroupSegmentedControl.tintColor = [UIColor colorWithRed: 0/255.0 green:0/255.0 blue:255.0f/255.0 alpha:1.0];
+    originalWorkEmail = @"";
     
     [self SetTextFieldBorder:emailTextField];
     [self SetTextFieldBorder:zipcodeTextField];
     [self SetTextFieldBorder:nicknameTextField];
     [self SetTextFieldBorder:smsNoTextField];
-    
+
     savedCardDataArray = [[NSMutableArray alloc] init];
-    
+
     errorMessageLabel.hidden = TRUE;
-    
+
     nicknameTextField.delegate = self;
     nicknameTextField.keyboardAppearance = UIKeyboardAppearanceDark;
     [nicknameTextField setReturnKeyType:UIReturnKeyDone];
     nicknameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    
+
     zipcodeTextField.delegate = self;
     zipcodeTextField.keyboardAppearance = UIKeyboardAppearanceDark;
     [zipcodeTextField setReturnKeyType:UIReturnKeyDone];
     zipcodeTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    
+
     emailTextField.delegate = self;
     emailTextField.keyboardAppearance = UIKeyboardAppearanceDark;
     [emailTextField setReturnKeyType:UIReturnKeyDone];
     emailTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    
+
     smsNoTextField.delegate = self;
     smsNoTextField.keyboardAppearance = UIKeyboardAppearanceDark;
     [smsNoTextField setReturnKeyType:UIReturnKeyDone];
     smsNoTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    
+
     //    passwordTextField.secureTextEntry = YES;
     //    [passwordTextField setReturnKeyType:UIReturnKeyDone];
     //    passwordTextField.delegate = self;
@@ -174,39 +176,39 @@ static NSArray *consumerProfileDataArray = nil;
     //    passwordAgainTextField.secureTextEntry = YES;
     //    [passwordAgainTextField setReturnKeyType:UIReturnKeyDone];
     //    passwordAgainTextField.delegate = self;
-    
+
 //    [self populateFieldsWithInitialValues];
-    
+
     self.topView.layer.borderWidth = 2.0;
     self.topView.layer.borderColor = [UIColor whiteColor].CGColor;
     self.topView.layer.cornerRadius = 10.0;
-    
+
     self.bottomView.layer.borderWidth = 2.0;
     self.bottomView.layer.borderColor = [UIColor whiteColor].CGColor;
     self.bottomView.layer.cornerRadius = 10.0;
-    
+
     self.title = @"Profile";
-    
+
     self.savedCardTable.delegate = self;
     self.savedCardTable.dataSource = self;
-    
+
     self.savedCardTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    
+
     [self getStripeDataArray];
-    
+
 }
 
 
 - (void)viewWillDisappear:(BOOL)animated {
-    
-    
+
+
 //    [self setNicknameTextField:nil];
 //    [self setPasswordTextField:nil];
 //    [self setPasswordAgainTextField:nil];
 //    [self setErrorMessageLabel:nil];
 //    [self setPasswordAgainTextField:nil];
 //    [self setAgeGroupSegmentedControl:nil];
-    
+
     [super viewWillDisappear:animated];
     //    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     //    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
@@ -242,6 +244,18 @@ static NSArray *consumerProfileDataArray = nil;
 //    }];
 //}
 
+- (bool)isWorkEmailDirty:(NSString *)originalWorkEmail  {
+    bool returnValue = false;
+    
+    if ([originalWorkEmail isEqualToString:emailWorkTextField.text]) {
+        returnValue = false;
+    } else
+    {
+        returnValue = true;
+    }
+    
+    return returnValue;
+}
 
 - (void) getStripeDataArray {
     [savedCardDataArray removeAllObjects];
@@ -260,7 +274,7 @@ static NSArray *consumerProfileDataArray = nil;
     passwordAgainTextField.text = [DataModel sharedDataModelManager].password;
     errorMessageLabel.text = @"";
     E_164FormatPhoneNumber = @"";
-    
+
     int ageGroupfromDefault = [[DataModel sharedDataModelManager] ageGroup];
     ageGroupSegmentedControl.selectedSegmentIndex = ageGroupfromDefault;
     ageGroupTextField.text = [ageGroupSegmentedControl titleForSegmentAtIndex:ageGroupfromDefault];
@@ -268,9 +282,10 @@ static NSArray *consumerProfileDataArray = nil;
     //    smsNoTextField.text = [[APIUtility sharedInstance] usPhoneNumber:[[DataModel sharedDataModelManager] sms_no]];
     smsNoTextField.text = [[DataModel sharedDataModelManager] sms_no];
     
-    
+
     emailTextField.text = [[DataModel sharedDataModelManager] emailAddress];
     emailWorkTextField.text = [[DataModel sharedDataModelManager] emailWorkAddress];
+    originalWorkEmail = [[DataModel sharedDataModelManager] emailWorkAddress];
 }
 
 - (BOOL)validatePassword:(NSString *)pass {
@@ -285,7 +300,7 @@ static NSArray *consumerProfileDataArray = nil;
     BOOL badInformation = FALSE;
     short nVerificationSteps = 6;
     short loopIndex = 0;
-    
+
     while ((loopIndex < nVerificationSteps) && (badInformation == FALSE)) {
         switch (loopIndex) {
             case 0:
@@ -295,7 +310,7 @@ static NSArray *consumerProfileDataArray = nil;
                     errorMessageLabel.text = @"Nickname must be more the 2 chars long.";
                     errorMessageLabel.textColor = [UIColor blueColor];
                 }
-                
+
                 break;
                 //            case 1:
                 //                if (![self validatePassword:passwordTextField.text]) {
@@ -314,7 +329,7 @@ static NSArray *consumerProfileDataArray = nil;
                 {
                     NSString *emailRegEx = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
                     NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx];
-                    
+
                     if ([emailTest evaluateWithObject:emailTextField.text] == NO) {
                         badInformation = TRUE;
                         errorMessageLabel.hidden = FALSE;
@@ -322,7 +337,7 @@ static NSArray *consumerProfileDataArray = nil;
                         errorMessageLabel.textColor = [UIColor blueColor];
                     }
                     else {
-                        
+
                     }
                 } else {
                     badInformation = TRUE;
@@ -331,14 +346,14 @@ static NSArray *consumerProfileDataArray = nil;
                     errorMessageLabel.textColor = [UIColor blueColor];
                 }
                 break;
-                
-                
+
+
             case 3:
                 if (emailWorkTextField.text.length > 0)
                 {
                     NSString *emailRegEx = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
                     NSPredicate *emailWorkTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegEx];
-                    
+
                     if ([emailWorkTest evaluateWithObject:emailWorkTextField.text] == NO) {
                         badInformation = TRUE;
                         errorMessageLabel.hidden = FALSE;
@@ -347,7 +362,7 @@ static NSArray *consumerProfileDataArray = nil;
                     }
                 }
                 break;
-                
+
             case 4:
                 if (zipcodeTextField.text.length > 0)
                 {
@@ -368,7 +383,7 @@ static NSArray *consumerProfileDataArray = nil;
             case 5:
                 if (smsNoTextField.text.length > 0)
                 {
-                    
+
                     if ([[APIUtility sharedInstance] transformValidSMSNo:smsNoTextField.text].length != 12) {
                         //                    if ([zipcodeTest evaluateWithObject:zipcodeTextField.text] == NO) {
                         badInformation = TRUE;
@@ -383,33 +398,60 @@ static NSArray *consumerProfileDataArray = nil;
                     }
                 }
                 break;
-                
+
             default:
                 break;
         }
         loopIndex++;
     } // while
-    
+
     return badInformation;
 }
 
+/**
+ * Description:
+ * we add the internal data model before we send the  pofile information to the server to save time
+ * We need to update the corp information based on the workemail as soon as possibe before user's going to the
+ * profile page.
+ * The Risk:
+ * if for any reasons updating the server fail our data will be out of sind with the server
+ * The means the next time that the user launch the app, the customer profile information from the server (the older one)
+ * will repleace the internal datamodel (the newer one)
+ */
+//- (void)updateInteralDataStructures {
+//    [DataModel sharedDataModelManager].ageGroup = self.ageGroupSegmentedControl.selectedSegmentIndex;
+//
+//    [[DataModel sharedDataModelManager] setZipcode:self.zipcodeTextField.text];
+//    [[DataModel sharedDataModelManager] setEmailAddress:self.emailTextField.text];
+//    [[DataModel sharedDataModelManager] setSms_no:self.smsNoTextField.text];
+//    [DataModel sharedDataModelManager].emailWorkAddress = self.emailWorkTextField.text;
+//
+//    AppDelegate *delegate =((AppDelegate *)[[UIApplication sharedApplication] delegate]);
+//
+//    if (([DataModel sharedDataModelManager].emailWorkAddress.length > 2) && [self isWorkEmailDirty:originalWorkEmail]) {
+//        originalWorkEmail = self.emailWorkTextField.text;
+////        delegate.corps = nil;
+//        [delegate getCorps:self.emailWorkTextField.text];
+//    }
+//}
 
 - (BOOL)saveProfile {
     //Validating input by the user - These rules should match the ones in the server
     BOOL badInformation = [self validateAllUserInput];
-    
+
     if (badInformation) {
         [UIAlertController showErrorAlert:@"There are errors in your input. Please fix them first."];
     }
     else {
         errorMessageLabel.hidden = TRUE;
         errorMessageLabel.text = @"";
-        
+
+//        [self updateInteralDataStructures];
         [self postSaveRequest];
         //        if (self.navigationController.parentViewController != nil)
         //            [self.navigationController popViewControllerAnimated:YES];
     }
-    
+
     return !badInformation;
 }
 
@@ -424,13 +466,13 @@ static NSArray *consumerProfileDataArray = nil;
 
 //- (IBAction)resetButtonAction:(id)sender {
 - (IBAction)saveButtonAction:(id)sender {
-    
-    [super viewDidLoad];
+
+//    [super viewDidLoad];
     BOOL successfulSave = [self saveProfile];
     if (successfulSave) {
         [self.tabBarController setSelectedIndex:0];
     }
-    
+
     //    [self populateFieldsWithInitialValues];
 }
 
@@ -443,25 +485,25 @@ static NSArray *consumerProfileDataArray = nil;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *simpleTableIdentifier = @"SavedCardTableCell";
-    
+
     SavedCardTableCell *cell = (SavedCardTableCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     if (cell == nil)
     {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"SavedCardTableCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
-    
+
     NSDictionary *cardDict = [savedCardDataArray objectAtIndex:indexPath.row];
-    
+
     NSString *cardNo = [cardDict valueForKey:@"number"];
-    
+
     NSString *trimmedString=[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)];
-    
+
     NSString *cardDisplayNumber = [NSString stringWithFormat:@"XXXX XXXX XXXX %@",trimmedString];
-    
+
     cell.lblCardNo.text = cardDisplayNumber;
     cell.lblMonthYear.text = [NSString stringWithFormat:@"%@/%@",[cardDict valueForKey:@"expMonth"],[cardDict valueForKey:@"expYear"]];
-    
+
     return cell;
 }
 
@@ -474,7 +516,7 @@ static NSArray *consumerProfileDataArray = nil;
 
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    
+
 //    [AppData sharedInstance].is_Profile_Changed = true;
     if (textField == nicknameTextField) {
         if ([smsNoTextField.text length] <= 0)
@@ -499,7 +541,7 @@ static NSArray *consumerProfileDataArray = nil;
     //        errorMessageLabel.text = @"Passwords matched.";
     //        errorMessageLabel.textColor = [UIColor greenColor];
     //    }
-    
+
     if (textField == smsNoTextField) {
         if ([zipcodeTextField.text length] <= 0)
             [zipcodeTextField becomeFirstResponder];
@@ -507,7 +549,7 @@ static NSArray *consumerProfileDataArray = nil;
         if ([nicknameTextField.text length] <= 0)
             [nicknameTextField becomeFirstResponder];
     }
-    
+
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -521,29 +563,29 @@ static NSArray *consumerProfileDataArray = nil;
     NSInteger ageGroup = ageGroupSegmentedControl.selectedSegmentIndex;
     NSString *deviceToken = [[DataModel sharedDataModelManager] deviceToken];
     NSString *uuid = [DataModel sharedDataModelManager].uuid;
-    
+
     [consumerProfileDataDic setObject:emailTextField.text forKey:@"email"];
     [consumerProfileDataDic setObject:emailWorkTextField.text forKey:@"email_work"];
     [consumerProfileDataDic setObject:zipcodeTextField.text forKey:@"zipcode"];
     [consumerProfileDataDic setObject:nicknameTextField.text forKey:@"nickname"];
     [consumerProfileDataDic setObject:[NSNumber numberWithInteger:ageGroup] forKey:@"age_group"];
     [consumerProfileDataDic setObject:E_164FormatPhoneNumber forKey:@"sms_no"];
-    
+
     //    NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
     NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    
+
     [consumerProfileDataDic setObject:[NSString stringWithFormat:@"V%@",appVersionString] forKey:@"app_ver"];
-    
+
     // notice update method in our server, takes care of both situations with or without device_token
     if (deviceToken != nil)
         params = @{@"cmd": @"update", @"uuid": uuid, @"device_token":deviceToken};
     else
         params = @{@"cmd": @"update", @"uuid": uuid};
-    
+
     [consumerProfileDataDic addEntriesFromDictionary:params];
-    
+
     return consumerProfileDataDic;
-    
+
 }
 
 - (void)postSaveRequest {
@@ -551,23 +593,23 @@ static NSArray *consumerProfileDataArray = nil;
     hud = [[MBProgressHUD alloc] initWithView:self.view];
     hud.label.text = @"Updating you info...";
     hud.detailsLabel.text = @"Your info is being saved securly in a secure place.";
-    
+
     hud.mode = MBProgressHUDModeIndeterminate;
-    
+
     // it seems this should be after setting the mode
     [hud.bezelView setBackgroundColor:[UIColor orangeColor]];
     hud.bezelView.color = [UIColor orangeColor];
     hud.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
     [self.view addSubview:hud];
     [hud showAnimated:YES];
-    
+
     NSString *urlString = ConsumerProfileServer;
     AFHTTPSessionManager *manager;
     manager = [AFHTTPSessionManager manager];
-    
+
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
-    
+
     NSDictionary *params = [self getCorrespondingParameters];
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:params
@@ -579,7 +621,7 @@ static NSArray *consumerProfileDataArray = nil;
         NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         NSLog(@"Json format of data send to save_order: %@", jsonString);
     }
-    
+
     NSLog(@"In ConsumerProfileViewController::postSaveRequest urlString is:%@, and params are:%@", urlString, params);
     [manager POST:urlString parameters:params progress:nil success:^(NSURLSessionTask *operation, id responseObject)
      {
@@ -587,12 +629,6 @@ static NSArray *consumerProfileDataArray = nil;
              [self.hud hideAnimated:YES];
              self.hud = nil;
              
-             //            NSLog(@"operation (saving profile information) response status code: %ld", (long)operation.response.statusCode);
-             //            //status code = 200 is html code for OK - so anything else means not OK
-             //            if (operation.response.statusCode != 200) {
-             //                [UIAlertController showErrorAlert:NSLocalizedString(@"Error in generating user ID.  Please try agin a few minutes!", nil)];
-             //            }
-             //            else {
              [[DataModel sharedDataModelManager] setNickname:self.nicknameTextField.text];
              //                [[DataModel sharedDataModelManager] setPassword:passwordAgainTextField.text];
              // we set two fields in the database after registering the user - now we are getting those fields
@@ -600,35 +636,39 @@ static NSArray *consumerProfileDataArray = nil;
              //
              // saving information in our system
              NSDictionary *jsonDictResponse = (NSDictionary *) responseObject;
-             
-             [DataModel sharedDataModelManager].ageGroup = self.ageGroupSegmentedControl.selectedSegmentIndex;
+
              NSString *qrImageFileName = [jsonDictResponse objectForKey:@"qrcode_file"];
              if ((qrImageFileName != nil) && (qrImageFileName != (id)[NSNull null])) {
                  [DataModel sharedDataModelManager].qrImageFileName = qrImageFileName;
              }
-             
+             [DataModel sharedDataModelManager].ageGroup = self.ageGroupSegmentedControl.selectedSegmentIndex;
              [[DataModel sharedDataModelManager] setZipcode:self.zipcodeTextField.text];
              [[DataModel sharedDataModelManager] setEmailAddress:self.emailTextField.text];
              [[DataModel sharedDataModelManager] setSms_no:self.smsNoTextField.text];
              [DataModel sharedDataModelManager].emailWorkAddress = self.emailWorkTextField.text;
-             
+
              [[DataModel sharedDataModelManager] setUserIDWithString:jsonDictResponse[@"uid"]];
-             
+
              AppDelegate *delegate =((AppDelegate *)[[UIApplication sharedApplication] delegate]);
+             //let's try this way.  Let's see what happens if we always get the corps
+//             if (([DataModel sharedDataModelManager].emailWorkAddress.length > 2) && [self isWorkEmailDirty:self.originalWorkEmail]) {
+//                 self.originalWorkEmail = self.emailWorkTextField.text;
+//                 //        delegate.corps = nil;
+//                 [delegate getCorps:self.emailWorkTextField.text];
+//             }
              [delegate getCorps:self.emailWorkTextField.text];
-             
+
              UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
                                                                             message:@"Profile information saved successfully."
                                                                      preferredStyle:UIAlertControllerStyleAlert];
-             
+
              UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                                    handler:^(UIAlertAction * action) {
-                                                                       
+
                                                                        [AppData sharedInstance].is_Profile_Changed = false;}];
-             
+
              [alert addAction:defaultAction];
              [self presentViewController:alert animated:YES completion:nil];
-             //            }
          }
      }
           failure:^(NSURLSessionTask *operation, NSError *error) {
@@ -637,7 +677,7 @@ static NSArray *consumerProfileDataArray = nil;
                   [MBProgressHUD hideHUDForView:self.view animated:YES];
                   [UIAlertController showErrorAlert:@"Error in accessing profile system.  Please try again in a few min"];
               }
-              
+
           }];
 }
 
@@ -650,11 +690,11 @@ static NSArray *consumerProfileDataArray = nil;
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Confirmation!"
                                                                        message:@"You have made some changes. Are you sure you want to cancel and leave the page?"
                                                                 preferredStyle:UIAlertControllerStyleAlert];
-        
+
         UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             [AppData sharedInstance].is_Profile_Changed = false;
             [self.tabBarController setSelectedIndex:0];
-            
+
         }];
         UIAlertAction *cancelAction = [UIAlertAction
                                        actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
@@ -662,38 +702,38 @@ static NSArray *consumerProfileDataArray = nil;
                                        handler:^(UIAlertAction *action)
                                        {
                                        }];
-        
+
         [alert addAction:okAction];
         [alert addAction:cancelAction];
-        
+
         [self presentViewController:alert animated:true completion:^{
-            
+
         }];
-        
+
     } else {
         [self.tabBarController setSelectedIndex:0];
     }
 }
 
 - (IBAction)manageCardsAction:(id)sender {
-    
+
     if ([AppData sharedInstance].is_Profile_Changed) {
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Confirmation!"
                                                                        message:@"You have made some changes. Are you sure you want to cancel and leave the page?"
                                                                 preferredStyle:UIAlertControllerStyleAlert];
-        
+
         UIAlertAction* okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             [AppData sharedInstance].is_Profile_Changed = false;
-            
+
             CardsViewController *cardsViewController = [[CardsViewController alloc] initWithNibName:nil bundle:nil withAmount:0 forBusiness:[CurrentBusiness sharedCurrentBusinessManager].business];
             cardsViewController.parentViewControllerName = @"ConsumerProfileViewController";
             //                [AppData sharedInstance].consumer_Delivery_Id = nil;
 //            NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
 //            NSUInteger nCount = [allViewControllers count];
-            
+
             cardsViewController.business = [CurrentBusiness sharedCurrentBusinessManager].business;
             [self.navigationController pushViewController:cardsViewController animated:YES];
-            
+
 //            allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
 //            NSUInteger nCount2 = [allViewControllers count];
         }];
@@ -704,23 +744,23 @@ static NSArray *consumerProfileDataArray = nil;
                                        {
                                            NSLog(@"Cancel action");
                                        }];
-        
+
         [alert addAction:okAction];
         [alert addAction:cancelAction];
-        
+
         [self presentViewController:alert animated:true completion:^{
-            
+
         }];
-        
+
         return;
     } else {
-            
+
         CardsViewController *payBillViewController = [[CardsViewController alloc] initWithNibName:nil bundle:nil withAmount:0 forBusiness:[CurrentBusiness sharedCurrentBusinessManager].business];
         payBillViewController.parentViewControllerName = @"ConsumerProfileViewController";
         //                [AppData sharedInstance].consumer_Delivery_Id = nil;
         //    NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
         //    NSUInteger nCount = [allViewControllers count];
-        
+
         payBillViewController.business = [CurrentBusiness sharedCurrentBusinessManager].business;
         [self.navigationController pushViewController:payBillViewController animated:YES];
     }

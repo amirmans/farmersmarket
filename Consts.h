@@ -1,14 +1,16 @@
 // The URL for the server API
 @class NSString;
 
-//#ifdef DEBUG
-//#define TapInEndpointHost @"http://tapin-servers.dv.10.0.0.126.xip.io/tap-in/"
+
+#ifdef DEBUG
+#define TapInEndpointHost @"http://tapin-servers.dv.10.0.1.5.xip.io/"
 //#define TapInEndpointHost @"https://tapforall.com/wilsonville/tap-in/"
-//#else
-//#define TapInEndpointHost @"https://tapforall.com/merchants/tap-in/"
-//#define TapInEndpointHost @"http://tapforall.com/staging/tap-in/"
-#define TapInEndpointHost @"http://tapin-servers.dv.10.0.1.11.xip.io/tap-in/"
-//#endif
+#elif STAGING
+#define TapInEndpointHost @"http://tapforall.com/staging/tap-in/"
+#else
+#define TapInEndpointHost @"https://tapforall.com/merchants/tap-in/"
+//#define TapInEndpointHost @"http://tapin-servers.dv.10.0.1.11.xip.io/tap-in/"
+#endif
 
 #define TT_CommunicationWithServerQ dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 

@@ -64,10 +64,10 @@ bool shouldOpenOptionMenu = false;
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//        [[NSNotificationCenter defaultCenter] addObserver:self
-//                                                 selector:@selector(BusinessListAPICall)
-//                                                     name:@"GotProductData"
-//                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(BusinessListAPICall)
+                                                     name:@"GotProductData"
+                                                   object:nil];
     self.view.backgroundColor = [UIColor orangeColor];
 
     [self setMyCartValue];
@@ -1678,10 +1678,10 @@ bool shouldOpenOptionMenu = false;
     if ([CurrentBusiness sharedCurrentBusinessManager].business.isProductListLoaded) {
         [self BusinessListAPICall];
     } else {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(BusinessListAPICall)
-                                                     name:@"GotProductData"
-                                                   object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self
+//                                                 selector:@selector(BusinessListAPICall)
+//                                                     name:@"GotProductData"
+//                                                   object:nil];
     }
 }
 
@@ -1919,6 +1919,8 @@ bool shouldOpenOptionMenu = false;
                         [storeManageObject setValue:businessDetail.name forKey:@"productname"];
                         [storeManageObject setValue:businessDetail.product_option forKey:@"product_option"];
                         
+                        //zzzzz
+                        [storeManageObject setValue:businessDetail.item_note forKey:@"zzz"];
                         [storeManageObject setValue:businessDetail.item_note forKey:@"item_note"];
                         
                         [storeManageObject setValue:[NSString stringWithFormat:@"%f",businessDetail.ti_rating]  forKey:@"ti_rating"];

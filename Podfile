@@ -3,7 +3,7 @@ platform :ios, '9.0'
 use_frameworks!
 target 'TapForAll' do
 pod 'AFNetworking'
-pod 'SBJson', '~> 4.0.0'
+pod 'SBJson'
 pod 'SDWebImage'
 pod 'AsyncImageView'
 pod 'MBProgressHUD'
