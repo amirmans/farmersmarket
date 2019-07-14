@@ -1919,8 +1919,7 @@ bool shouldOpenOptionMenu = false;
                         [storeManageObject setValue:businessDetail.name forKey:@"productname"];
                         [storeManageObject setValue:businessDetail.product_option forKey:@"product_option"];
                         
-                        //zzzzz
-                        [storeManageObject setValue:businessDetail.item_note forKey:@"zzz"];
+                        //zzzzz [storeManageObject setValue:businessDetail.item_note forKey:@"zzz"];
                         [storeManageObject setValue:businessDetail.item_note forKey:@"item_note"];
                         
                         [storeManageObject setValue:[NSString stringWithFormat:@"%f",businessDetail.ti_rating]  forKey:@"ti_rating"];

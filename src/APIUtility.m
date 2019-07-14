@@ -174,7 +174,7 @@ static id sharedInstance;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
     
-    NSLog(@"%@",data);
+//    NSLog(@"%@",data);
     [manager GET:[NSString stringWithFormat:@"%@",BusinessDelivaryInformationServer] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
