@@ -657,15 +657,15 @@ static AppDelegate *sharedObj;
 
 - (void)saveDeviceTokenAndUUID {
     
-    NSString *string = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"Config"];
-    long longID = [NSBundle mainBundle].bundleIdentifier;
+//    NSString *string = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"Config"];
+//    long longID = [NSBundle mainBundle].bundleIdentifier;
     
 #ifdef DEBUG
     NSLog(@"I am in Debug mode.");
 #elif STAGING
     NSLog(@"I am in Staging mode.");
 #else
-    NSLog("PRODUCTION");
+    NSLog(@"PRODUCTION");
 #endif
     
 
@@ -785,7 +785,7 @@ static AppDelegate *sharedObj;
 
 //    int notification_type = [[aps valueForKey:@"notification_type"] intValue];
     int notification_type = [[aps valueForKey:@"type"] intValue];
-    NSLog(@"%d",notification_type);
+//    NSLog(@"%d",notification_type);
     if (notification_type == 1 || notification_type == 2) {
 
         [self.tt_tabBarController setSelectedIndex:0];

@@ -550,7 +550,7 @@ static id sharedInstance;
         }
     } failure:^(NSURLSessionTask  *operation, NSError *error) {
         
-        NSLog(@"Error: %@", error);
+        NSLog(@"Error after calling business notifications: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
         //        NSDictionary *temp = @{};
         

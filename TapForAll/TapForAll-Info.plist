@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationAlwaysUsageDescription </key>
-	<string>We only use this info to show you the merchants closer to you.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -23,11 +21,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.14</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>0.1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
@@ -39,6 +37,8 @@
 	</dict>
 	<key>NSCalendarsUsageDescription</key>
 	<string>Tap-In wants to help you mark your calendars</string>
+	<key>NSLocationAlwaysUsageDescription </key>
+	<string>We only use this info to show you the merchants closer to you.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Tap-In wants to use your location to find closest biz</string>
 	<key>UIRequiredDeviceCapabilities</key>

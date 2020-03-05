@@ -555,7 +555,7 @@ bool shouldOpenOptionMenu = false;
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, tableView.bounds.size.width,40)]; //10px top and 10px bottom. Just for illustration purposes.
     
     UIImageView *sectionHeaderBG = [[UIImageView alloc]initWithFrame:CGRectMake(0, 15, 30, 30)];
-    [sectionHeaderBG sd_setImageWithURL:[NSURL URLWithString:self.sectionKeysImageArray[section]]];
+//    [sectionHeaderBG sd_setImageWithURL:[NSURL URLWithString:self.sectionKeysImageArray[section]]];
     [sectionHeaderBG layoutIfNeeded];
     sectionHeaderBG.layer.cornerRadius = sectionHeaderBG.frame.size.width / 2;
     sectionHeaderBG.clipsToBounds = YES;
