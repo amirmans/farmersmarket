@@ -864,25 +864,46 @@ static AppDelegate *sharedObj;
 
 - (void)showAlert:(NSString *)Title :(NSString *)Message :(int)CurrentTab{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:Title message:Message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action) {
+//    UIAlertAction* noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDefault
+//                                                          handler:^(UIAlertAction * action) {
+//
+//
+//                                                              [alert dismissViewControllerAnimated:YES completion:nil];
+//                                                          }];
+//    UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault
+//                                                          handler:^(UIAlertAction * action) {
+//                                                              self.tt_tabBarController.selectedIndex = CurrentTab;
+//                                                              [AppData sharedInstance].is_Profile_Changed = FALSE;
+//                                                              [alert dismissViewControllerAnimated:YES completion:nil];
+//                                                          }];
+//    [alert addAction:noAction];
+//    [alert addAction:yesAction];
+//    UIWindow *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    alertWindow.rootViewController = [[UIViewController alloc] init];
+//    alertWindow.windowLevel = UIWindowLevelAlert + 1;
+//    [alertWindow makeKeyAndVisible];
+//    [alertWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+    
+    
+    UIWindow* topWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    topWindow.rootViewController = [UIViewController new];
+    topWindow.windowLevel = UIWindowLevelAlert + 1;
 
+//    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"APNS" message:@"received Notification" preferredStyle:UIAlertControllerStyleAlert];
 
-                                                              [alert dismissViewControllerAnimated:YES completion:nil];
-                                                          }];
-    UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action) {
-                                                              self.tt_tabBarController.selectedIndex = CurrentTab;
-                                                              [AppData sharedInstance].is_Profile_Changed = FALSE;
-                                                              [alert dismissViewControllerAnimated:YES completion:nil];
-                                                          }];
-    [alert addAction:noAction];
-    [alert addAction:yesAction];
-    UIWindow *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    alertWindow.rootViewController = [[UIViewController alloc] init];
-    alertWindow.windowLevel = UIWindowLevelAlert + 1;
-    [alertWindow makeKeyAndVisible];
-    [alertWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",@"confirm") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        // continue your work
+
+        // important to hide the window after work completed.
+        // this also keeps a reference to the window until the action is invoked.
+        topWindow.hidden = YES; // if you want to hide the topwindow then use this
+//        topWindow = nil; // if you want to remove the topwindow then use this
+    }]];
+
+    [topWindow makeKeyAndVisible];
+    [topWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+    
+    
 }
 
 

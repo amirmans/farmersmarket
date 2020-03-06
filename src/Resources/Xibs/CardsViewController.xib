@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -44,7 +41,9 @@
                                 </label>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="xxxx xxxx xxxx xxxx" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PY5-OU-duG" customClass="BKCardNumberField">
                                     <rect key="frame" x="25" y="48" width="325" height="30"/>
-                                    <nil key="textColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="j7r-gn-U0z"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 </textField>
@@ -65,13 +64,11 @@
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="139" id="lt9-Ws-bdw"/>
                                             </constraints>
-                                            <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         </textField>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="YY" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Spk-Uz-AJh">
-                                            <rect key="frame" x="178" y="4" width="139" height="30"/>
-                                            <nil key="textColor"/>
+                                            <rect key="frame" x="178" y="4" width="139" height="34"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         </textField>
@@ -80,6 +77,7 @@
                                     <constraints>
                                         <constraint firstItem="WfX-4m-Tql" firstAttribute="top" secondItem="bik-cD-apA" secondAttribute="top" constant="4" id="3aE-ET-9Wk"/>
                                         <constraint firstItem="WfX-4m-Tql" firstAttribute="centerY" secondItem="bik-cD-apA" secondAttribute="centerY" id="6fa-iT-vHI"/>
+                                        <constraint firstItem="WfX-4m-Tql" firstAttribute="top" secondItem="Spk-Uz-AJh" secondAttribute="top" id="BLB-Yd-9wL"/>
                                         <constraint firstItem="WfX-4m-Tql" firstAttribute="leading" secondItem="bik-cD-apA" secondAttribute="leading" id="F2e-EF-s6l"/>
                                         <constraint firstItem="WfX-4m-Tql" firstAttribute="baseline" secondItem="Spk-Uz-AJh" secondAttribute="baseline" id="Lrz-Z0-xee"/>
                                         <constraint firstItem="Spk-Uz-AJh" firstAttribute="leading" secondItem="WfX-4m-Tql" secondAttribute="trailing" constant="39" id="Z7c-Yh-0lu"/>
@@ -100,12 +98,14 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="113" id="dJX-SF-lQm"/>
                                     </constraints>
-                                    <nil key="textColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 </textField>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 or 4 digit code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ys-TH-5fk">
                                     <rect key="frame" x="154" y="193" width="196" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="fIb-LG-2Ih"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -121,7 +121,9 @@
                                 </label>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="12345" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ply-hp-CD7">
                                     <rect key="frame" x="25" y="257" width="113" height="30"/>
-                                    <nil key="textColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="llq-JN-lh2"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                 </textField>
@@ -194,7 +196,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wc0-vo-7Yr">
-                            <rect key="frame" x="19.5" y="632" width="140" height="30"/>
+                            <rect key="frame" x="19" y="632" width="140" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="140" id="h7J-6K-1DT"/>
                                 <constraint firstAttribute="height" constant="30" id="hj5-1c-qBt"/>
@@ -241,10 +243,10 @@
                 <constraint firstItem="xbY-k4-mXQ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="boO-Y1-oGv"/>
                 <constraint firstItem="xbY-k4-mXQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="cFG-UD-s4G"/>
             </constraints>
-            <point key="canvasLocation" x="26.5" y="52.5"/>
+            <point key="canvasLocation" x="38.405797101449281" y="35.15625"/>
         </view>
     </objects>
     <resources>
-        <image name="action_btn" width="318" height="51"/>
+        <image name="action_btn" width="318.5" height="51.5"/>
     </resources>
 </document>
