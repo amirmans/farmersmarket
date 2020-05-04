@@ -34,7 +34,6 @@
 		2971AF4A16071AFA0022B72E /* NotificationPermissionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2971AF4816071AFA0022B72E /* NotificationPermissionViewController.m */; };
 		298A6C74156C740900986F29 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298A6C73156C740900986F29 /* CFNetwork.framework */; };
 		298A6C7B156C76B800986F29 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 298A6C7A156C76B800986F29 /* libz.1.2.5.dylib */; };
-		298A6C7F156C78E400986F29 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298A6C7E156C78E400986F29 /* MobileCoreServices.framework */; };
 		29D29A2015DB5AFA00990F62 /* GooglePlacesConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 29D29A1815DB5AFA00990F62 /* GooglePlacesConnection.m */; };
 		29D29A2115DB5AFA00990F62 /* GooglePlacesObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 29D29A1A15DB5AFA00990F62 /* GooglePlacesObject.m */; };
 		29D4FCD415993CCE0034962C /* ConsumerProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29D4FCD315993CCE0034962C /* ConsumerProfileViewController.xib */; };
@@ -140,19 +139,25 @@
 		5DD2E5801C6BB18100503BF6 /* ic_plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DD2E5771C6BB18100503BF6 /* ic_plus.png */; };
 		5DD2E5811C6BB18100503BF6 /* ic_plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DD2E5781C6BB18100503BF6 /* ic_plus@2x.png */; };
 		5DD2E5821C6BB18100503BF6 /* ic_plus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5DD2E5791C6BB18100503BF6 /* ic_plus@3x.png */; };
-		A265BD196C9AB16BEA6259B2 /* Pods_TapForAll.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CCB8C904FBB3FD5EE70F8ED /* Pods_TapForAll.framework */; };
 		C6060DF31BA6265E0084D612 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C6060DF21BA6265E0084D612 /* Images.xcassets */; };
+		C60824A7245DEF3400C0DB4C /* TADateUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = C60824A6245DEF3400C0DB4C /* TADateUtility.m */; };
 		C61E552518E794C1007027C7 /* CurrentBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C61E552418E794C1007027C7 /* CurrentBusiness.m */; };
 		C61E552618E794C1007027C7 /* CurrentBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = C61E552418E794C1007027C7 /* CurrentBusiness.m */; };
 		C620412C1C49959D001D0DD7 /* DetailBusinessViewControllerII.m in Sources */ = {isa = PBXBuildFile; fileRef = C620412B1C49959D001D0DD7 /* DetailBusinessViewControllerII.m */; };
 		C620412E1C4995B5001D0DD7 /* DetailBusinessViewControllerII.xib in Resources */ = {isa = PBXBuildFile; fileRef = C620412D1C4995B5001D0DD7 /* DetailBusinessViewControllerII.xib */; };
 		C6235F6718B2242400C216CB /* BusinessTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6235F6518B2242400C216CB /* BusinessTableViewCell.m */; };
+		C62C7A51245B956B00CB4613 /* MarketTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C62C7A50245B956B00CB4613 /* MarketTableViewCell.m */; };
+		C62C7A54245B963A00CB4613 /* MarketListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C62C7A52245B963900CB4613 /* MarketListViewController.xib */; };
+		C62C7A55245B963A00CB4613 /* MarketTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C62C7A53245B963A00CB4613 /* MarketTableViewCell.xib */; };
+		C62C7A58245B974200CB4613 /* MarketListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C62C7A56245B974200CB4613 /* MarketListViewController.m */; };
 		C6308DE11C3E52D000B6B8B0 /* EventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6308DE01C3E52D000B6B8B0 /* EventTableViewCell.xib */; };
 		C6308DE41C3E52EC00B6B8B0 /* EventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6308DE31C3E52EC00B6B8B0 /* EventTableViewCell.m */; };
 		C6371A351C3B98F100AC5A84 /* EventsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6371A341C3B98F100AC5A84 /* EventsTableViewController.m */; };
 		C6371A371C3B997500AC5A84 /* ShoppingCartTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6371A361C3B997500AC5A84 /* ShoppingCartTableViewController.xib */; };
+		C647BF37245AD2D30075117B /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C647BF36245AD2D30075117B /* CoreServices.framework */; };
 		C650705B18BCB88F00E5D06B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C650705A18BCB88F00E5D06B /* QuartzCore.framework */; };
 		C650705D18BD4CBD00E5D06B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C650705C18BD4CBD00E5D06B /* Default-568h@2x.png */; };
+		C6519221245AE2390041ED50 /* Pods_ManageMyMarket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6519220245AE2390041ED50 /* Pods_ManageMyMarket.framework */; };
 		C6571B761D650A4700FD83F5 /* BusinessListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C91ECD189E3EA700AE6478 /* BusinessListViewController.m */; };
 		C66237FE18C03E5B00750F82 /* disabled_button_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = C66237FD18C03E5B00750F82 /* disabled_button_bg.png */; };
 		C662DDFE18D8442F00683BBF /* BubbleCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = C662DDFD18D8442F00683BBF /* BubbleCenter.png */; };
@@ -182,7 +187,7 @@
 		C6C8ACA618DF9B6B005DAFD6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C6C8ACA418DF9B6B005DAFD6 /* InfoPlist.strings */; };
 		C6C8ACA918DF9B8F005DAFD6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C8ACA718DF9B8F005DAFD6 /* main.m */; };
 		C6C8ACAD18DF9BBC005DAFD6 /* TapForAllTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C8ACAC18DF9BBC005DAFD6 /* TapForAllTests.m */; };
-		C6C8ACAF18DF9BE5005DAFD6 /* TapForAllTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6C8ACAE18DF9BE5005DAFD6 /* TapForAllTests-Info.plist */; };
+		C6C8ACAF18DF9BE5005DAFD6 /* ManageMyMarketTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6C8ACAE18DF9BE5005DAFD6 /* ManageMyMarketTests-Info.plist */; };
 		C6C8ACB318DF9C1A005DAFD6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C6C8ACB118DF9C1A005DAFD6 /* InfoPlist.strings */; };
 		C6D20613195A8A23006E12FE /* JBKenBurnsView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6D20612195A8A23006E12FE /* JBKenBurnsView.m */; };
 		C6EABE1718B2D1CD00F50D19 /* BusinessTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6EABE1518B2D1CD00F50D19 /* BusinessTableViewCell.xib */; };
@@ -246,11 +251,11 @@
 		29397890157B607600D3D23D /* BubbleLefthand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BubbleLefthand.png; sourceTree = "<group>"; };
 		29397891157B607600D3D23D /* BubbleRighthand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BubbleRighthand.png; sourceTree = "<group>"; };
 		29496BDC15EFDE1200127A05 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
-		2949CC3514589C7200728B87 /* TapForAll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TapForAll.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2949CC3514589C7200728B87 /* ManageMyMarket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ManageMyMarket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2949CC3914589C7200728B87 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2949CC3B14589C7200728B87 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2949CC3F14589C7200728B87 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		2949CC5514589C7200728B87 /* TapForAllTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TapForAllTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2949CC5514589C7200728B87 /* ManageMyMarketTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ManageMyMarketTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2949CCC91458A21700728B87 /* checkedRadioButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkedRadioButton.png; sourceTree = "<group>"; };
 		2949CCCA1458A21700728B87 /* flag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flag.png; sourceTree = "<group>"; };
 		2949CCD61458A21700728B87 /* Notifications.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Notifications.png; sourceTree = "<group>"; };
@@ -358,7 +363,6 @@
 		4AE25A951CBFB83B00134D29 /* BusinessNotificationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BusinessNotificationCell.h; sourceTree = "<group>"; };
 		4AE25A961CBFB83B00134D29 /* BusinessNotificationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BusinessNotificationCell.m; sourceTree = "<group>"; };
 		4AE25A971CBFB83B00134D29 /* BusinessNotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessNotificationCell.xib; sourceTree = "<group>"; };
-		50010B33BA36FB7925AB3C7F /* Pods-TapForAll.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TapForAll.release.xcconfig"; path = "Pods/Target Support Files/Pods-TapForAll/Pods-TapForAll.release.xcconfig"; sourceTree = "<group>"; };
 		5D5498B51C6914FE00FC35FF /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		5D5498B71C69150600FC35FF /* navigation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navigation.png; sourceTree = "<group>"; };
 		5D7AEDB71C692B6800B0929F /* tempImage.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = tempImage.jpeg; sourceTree = "<group>"; };
@@ -403,10 +407,13 @@
 		5DD2E5771C6BB18100503BF6 /* ic_plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_plus.png; sourceTree = "<group>"; };
 		5DD2E5781C6BB18100503BF6 /* ic_plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_plus@2x.png"; sourceTree = "<group>"; };
 		5DD2E5791C6BB18100503BF6 /* ic_plus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_plus@3x.png"; sourceTree = "<group>"; };
-		69C4AD8B3AE44CCEA0D34384 /* Pods-TapForAll.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TapForAll.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TapForAll/Pods-TapForAll.debug.xcconfig"; sourceTree = "<group>"; };
-		771F884F074CE9375563C97D /* Pods-TapForAll.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TapForAll.staging.xcconfig"; path = "Pods/Target Support Files/Pods-TapForAll/Pods-TapForAll.staging.xcconfig"; sourceTree = "<group>"; };
-		9CCB8C904FBB3FD5EE70F8ED /* Pods_TapForAll.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TapForAll.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		704BF5C1DE6ED78C342AFE68 /* Pods-ManageMyMarket.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManageMyMarket.staging.xcconfig"; path = "Target Support Files/Pods-ManageMyMarket/Pods-ManageMyMarket.staging.xcconfig"; sourceTree = "<group>"; };
+		9BE4BC2B8857645F6EA8704A /* Pods-ManageMyMarket.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManageMyMarket.release.xcconfig"; path = "Target Support Files/Pods-ManageMyMarket/Pods-ManageMyMarket.release.xcconfig"; sourceTree = "<group>"; };
+		BEFE7FC720C74E6226CB1E07 /* Pods-ManageMyMarket.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ManageMyMarket.debug.xcconfig"; path = "Target Support Files/Pods-ManageMyMarket/Pods-ManageMyMarket.debug.xcconfig"; sourceTree = "<group>"; };
+		C541018E30D41C8C491154CC /* Pods_ManageMyMarket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ManageMyMarket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6060DF21BA6265E0084D612 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = TapForAll/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		C60824A6245DEF3400C0DB4C /* TADateUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TADateUtility.m; sourceTree = "<group>"; };
+		C60824A8245DEF6F00C0DB4C /* TADateUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TADateUtility.h; sourceTree = "<group>"; };
 		C61E552318E794C1007027C7 /* CurrentBusiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CurrentBusiness.h; path = MainSourceCode/CurrentBusiness.h; sourceTree = "<group>"; };
 		C61E552418E794C1007027C7 /* CurrentBusiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CurrentBusiness.m; path = MainSourceCode/CurrentBusiness.m; sourceTree = "<group>"; };
 		C620412A1C49959D001D0DD7 /* DetailBusinessViewControllerII.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailBusinessViewControllerII.h; path = MainSourceCode/DetailBusinessViewControllerII.h; sourceTree = "<group>"; };
@@ -414,14 +421,23 @@
 		C620412D1C4995B5001D0DD7 /* DetailBusinessViewControllerII.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DetailBusinessViewControllerII.xib; path = Resources/Xibs/DetailBusinessViewControllerII.xib; sourceTree = "<group>"; };
 		C6235F6418B2242400C216CB /* BusinessTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BusinessTableViewCell.h; path = MainSourceCode/BusinessTableViewCell.h; sourceTree = "<group>"; };
 		C6235F6518B2242400C216CB /* BusinessTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BusinessTableViewCell.m; path = MainSourceCode/BusinessTableViewCell.m; sourceTree = "<group>"; };
+		C62C7A4F245B94C100CB4613 /* MarketTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarketTableViewCell.h; path = MainSourceCode/MarketTableViewCell.h; sourceTree = "<group>"; };
+		C62C7A50245B956B00CB4613 /* MarketTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarketTableViewCell.m; path = MainSourceCode/MarketTableViewCell.m; sourceTree = "<group>"; };
+		C62C7A52245B963900CB4613 /* MarketListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MarketListViewController.xib; path = Resources/Xibs/MarketListViewController.xib; sourceTree = "<group>"; };
+		C62C7A53245B963A00CB4613 /* MarketTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MarketTableViewCell.xib; path = Resources/Xibs/MarketTableViewCell.xib; sourceTree = "<group>"; };
+		C62C7A56245B974200CB4613 /* MarketListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarketListViewController.m; path = MainSourceCode/MarketListViewController.m; sourceTree = "<group>"; };
+		C62C7A57245B974200CB4613 /* MarketListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarketListViewController.h; path = MainSourceCode/MarketListViewController.h; sourceTree = "<group>"; };
+		C62C7A59245C0B0300CB4613 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DetailBusinessViewController.xib; sourceTree = "<group>"; };
 		C6308DE01C3E52D000B6B8B0 /* EventTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventTableViewCell.xib; sourceTree = "<group>"; };
 		C6308DE21C3E52EC00B6B8B0 /* EventTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTableViewCell.h; sourceTree = "<group>"; };
 		C6308DE31C3E52EC00B6B8B0 /* EventTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventTableViewCell.m; sourceTree = "<group>"; };
 		C6371A331C3B98F100AC5A84 /* EventsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsTableViewController.h; sourceTree = "<group>"; };
 		C6371A341C3B98F100AC5A84 /* EventsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsTableViewController.m; sourceTree = "<group>"; };
 		C6371A361C3B997500AC5A84 /* ShoppingCartTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShoppingCartTableViewController.xib; sourceTree = "<group>"; };
+		C647BF36245AD2D30075117B /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		C650705A18BCB88F00E5D06B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C650705C18BD4CBD00E5D06B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Xibs/Default-568h@2x.png"; sourceTree = "<group>"; };
+		C6519220245AE2390041ED50 /* Pods_ManageMyMarket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_ManageMyMarket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C66237FD18C03E5B00750F82 /* disabled_button_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disabled_button_bg.png; sourceTree = "<group>"; };
 		C662DDFD18D8442F00683BBF /* BubbleCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BubbleCenter.png; sourceTree = "<group>"; };
 		C66B0C5B1FF2471A00F9CA14 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Consts.h; sourceTree = SOURCE_ROOT; };
@@ -434,7 +450,6 @@
 		C67153091EAEA04D00DA5D01 /* SMClassicCalloutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMClassicCalloutView.h; sourceTree = "<group>"; };
 		C671530A1EAEA04D00DA5D01 /* SMClassicCalloutView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMClassicCalloutView.m; sourceTree = "<group>"; };
 		C67486A32033F3CB007F4F41 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = SOURCE_ROOT; };
-		C67622331BC9F96200B2F434 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailBusinessViewController.xib; sourceTree = "<group>"; };
 		C6768BC91D5688C000125E95 /* SAMKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAMKeychainQuery.m; sourceTree = "<group>"; };
 		C6768BCA1D5688C000125E95 /* SAMKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SAMKeychainQuery.h; sourceTree = "<group>"; };
 		C6768BCB1D5688C000125E95 /* SAMKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAMKeychain.m; sourceTree = "<group>"; };
@@ -445,7 +460,7 @@
 		C67D4D4118AEFFEE00D6DF6C /* ListofBusinesses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ListofBusinesses.m; path = MainSourceCode/ListofBusinesses.m; sourceTree = "<group>"; };
 		C69298A718DF8FFE00B013E0 /* CardsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CardsViewController.h; path = MainSourceCode/CardsViewController.h; sourceTree = "<group>"; };
 		C69298A818DF8FFE00B013E0 /* CardsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CardsViewController.m; path = MainSourceCode/CardsViewController.m; sourceTree = "<group>"; };
-		C69653491C2A011E001A29DB /* TapForAll.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = TapForAll.entitlements; path = TapForAll/TapForAll.entitlements; sourceTree = SOURCE_ROOT; };
+		C69653491C2A011E001A29DB /* ManageMyMarket.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ManageMyMarket.entitlements; path = TapForAll/ManageMyMarket.entitlements; sourceTree = SOURCE_ROOT; };
 		C6970D9F204BF47300D330AF /* corp_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = corp_icon.png; sourceTree = "<group>"; };
 		C699356218B969F6008FCF8A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MainSourceCode/AppDelegate.h; sourceTree = "<group>"; };
 		C699356318B969F6008FCF8A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MainSourceCode/AppDelegate.m; sourceTree = "<group>"; };
@@ -462,10 +477,10 @@
 		C6B9B2B2208FA7F10009F20E /* ReferralViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReferralViewController.xib; sourceTree = "<group>"; };
 		C6C8ACA518DF9B6B005DAFD6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = TapForAll/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
 		C6C8ACA718DF9B8F005DAFD6 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = TapForAll/main.m; sourceTree = SOURCE_ROOT; };
-		C6C8ACA818DF9B8F005DAFD6 /* TapForAll-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "TapForAll-Info.plist"; path = "TapForAll/TapForAll-Info.plist"; sourceTree = SOURCE_ROOT; };
+		C6C8ACA818DF9B8F005DAFD6 /* ManageMyMarket-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "ManageMyMarket-Info.plist"; path = "TapForAll/ManageMyMarket-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C6C8ACAB18DF9BBC005DAFD6 /* TapForAllTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TapForAllTests.h; path = TapForAllTests/TapForAllTests.h; sourceTree = SOURCE_ROOT; };
 		C6C8ACAC18DF9BBC005DAFD6 /* TapForAllTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TapForAllTests.m; path = TapForAllTests/TapForAllTests.m; sourceTree = SOURCE_ROOT; };
-		C6C8ACAE18DF9BE5005DAFD6 /* TapForAllTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "TapForAllTests-Info.plist"; path = "TapForAllTests/TapForAllTests-Info.plist"; sourceTree = SOURCE_ROOT; };
+		C6C8ACAE18DF9BE5005DAFD6 /* ManageMyMarketTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "ManageMyMarketTests-Info.plist"; path = "TapForAllTests/ManageMyMarketTests-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C6C8ACB218DF9C1A005DAFD6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = TapForAllTests/en.lproj/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
 		C6C91ECC189E3EA700AE6478 /* BusinessListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BusinessListViewController.h; path = MainSourceCode/BusinessListViewController.h; sourceTree = "<group>"; };
 		C6C91ECD189E3EA700AE6478 /* BusinessListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BusinessListViewController.m; path = MainSourceCode/BusinessListViewController.m; sourceTree = "<group>"; };
@@ -542,7 +557,6 @@
 				29D51BFB156C9D2F009F0571 /* SystemConfiguration.framework in Frameworks */,
 				C6FE85E01D82975400B0D295 /* StoreKit.framework in Frameworks */,
 				29D51BED156C98E5009F0571 /* CoreGraphics.framework in Frameworks */,
-				298A6C7F156C78E400986F29 /* MobileCoreServices.framework in Frameworks */,
 				C6FE85DC1D82974500B0D295 /* GameKit.framework in Frameworks */,
 				298A6C7B156C76B800986F29 /* libz.1.2.5.dylib in Frameworks */,
 				298A6C74156C740900986F29 /* CFNetwork.framework in Frameworks */,
@@ -552,7 +566,8 @@
 				2949CC3A14589C7200728B87 /* UIKit.framework in Frameworks */,
 				2949CC3C14589C7200728B87 /* Foundation.framework in Frameworks */,
 				2949CC4014589C7200728B87 /* CoreData.framework in Frameworks */,
-				A265BD196C9AB16BEA6259B2 /* Pods_TapForAll.framework in Frameworks */,
+				C647BF37245AD2D30075117B /* CoreServices.framework in Frameworks */,
+				C6519221245AE2390041ED50 /* Pods_ManageMyMarket.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,15 +590,15 @@
 				C66595861FEF772B0073972D /* src */,
 				2949CC3814589C7200728B87 /* Frameworks */,
 				2949CC3614589C7200728B87 /* Products */,
-				D06200CE00720C3D7677B436 /* Pods */,
+				F1A16206FEBF4C7DBEB54B9A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
 		2949CC3614589C7200728B87 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2949CC3514589C7200728B87 /* TapForAll.app */,
-				2949CC5514589C7200728B87 /* TapForAllTests.xctest */,
+				2949CC3514589C7200728B87 /* ManageMyMarket.app */,
+				2949CC5514589C7200728B87 /* ManageMyMarketTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -591,6 +606,8 @@
 		2949CC3814589C7200728B87 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C6519220245AE2390041ED50 /* Pods_ManageMyMarket.framework */,
+				C647BF36245AD2D30075117B /* CoreServices.framework */,
 				DA4B3A121F1D203F002A4109 /* CreditCardNumberFormat */,
 				C6FE85DF1D82975400B0D295 /* StoreKit.framework */,
 				C6FE85DD1D82974F00B0D295 /* PassKit.framework */,
@@ -611,21 +628,21 @@
 				2949CC3914589C7200728B87 /* UIKit.framework */,
 				2949CC3B14589C7200728B87 /* Foundation.framework */,
 				2949CC3F14589C7200728B87 /* CoreData.framework */,
-				9CCB8C904FBB3FD5EE70F8ED /* Pods_TapForAll.framework */,
+				C541018E30D41C8C491154CC /* Pods_ManageMyMarket.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		2949CC4114589C7200728B87 /* TapForAll */ = {
+		2949CC4114589C7200728B87 /* ManageMyMarket */ = {
 			isa = PBXGroup;
 			children = (
-				C69653491C2A011E001A29DB /* TapForAll.entitlements */,
+				C69653491C2A011E001A29DB /* ManageMyMarket.entitlements */,
 				C67C6AE118DF9B03009EF996 /* TapForAll.xcdatamodeld */,
 				C67C6AE018DF9ADE009EF996 /* TapForAll-Prefix.pch */,
 				C6060DF21BA6265E0084D612 /* Images.xcassets */,
 				2949CC4214589C7200728B87 /* Supporting Files */,
 			);
-			name = TapForAll;
+			name = ManageMyMarket;
 			path = ../TapTalk;
 			sourceTree = "<group>";
 		};
@@ -633,20 +650,20 @@
 			isa = PBXGroup;
 			children = (
 				C6C8ACA718DF9B8F005DAFD6 /* main.m */,
-				C6C8ACA818DF9B8F005DAFD6 /* TapForAll-Info.plist */,
+				C6C8ACA818DF9B8F005DAFD6 /* ManageMyMarket-Info.plist */,
 				C6C8ACA418DF9B6B005DAFD6 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		2949CC5D14589C7200728B87 /* TapForAllTests */ = {
+		2949CC5D14589C7200728B87 /* ManageMyMarketTests */ = {
 			isa = PBXGroup;
 			children = (
 				C6C8ACAB18DF9BBC005DAFD6 /* TapForAllTests.h */,
 				C6C8ACAC18DF9BBC005DAFD6 /* TapForAllTests.m */,
 				2949CC5E14589C7200728B87 /* Supporting Files */,
 			);
-			name = TapForAllTests;
+			name = ManageMyMarketTests;
 			path = ../TapTalkTests;
 			sourceTree = "<group>";
 		};
@@ -654,7 +671,7 @@
 			isa = PBXGroup;
 			children = (
 				C6C8ACB118DF9C1A005DAFD6 /* InfoPlist.strings */,
-				C6C8ACAE18DF9BE5005DAFD6 /* TapForAllTests-Info.plist */,
+				C6C8ACAE18DF9BE5005DAFD6 /* ManageMyMarketTests-Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -817,6 +834,8 @@
 				C6FDD5CE187D079600F4D721 /* ServerInteractionManager.h */,
 				C6AF154F18ED3D6C004DBEBA /* UtilityConsumerProfile.h */,
 				C6AF155018ED3D6C004DBEBA /* UtilityConsumerProfile.m */,
+				C60824A6245DEF3400C0DB4C /* TADateUtility.m */,
+				C60824A8245DEF6F00C0DB4C /* TADateUtility.h */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -854,6 +873,8 @@
 		4A6643CF1C747D7B00C10421 /* Xib */ = {
 			isa = PBXGroup;
 			children = (
+				C62C7A52245B963900CB4613 /* MarketListViewController.xib */,
+				C62C7A53245B963A00CB4613 /* MarketTableViewCell.xib */,
 				C6B9B2B2208FA7F10009F20E /* ReferralViewController.xib */,
 				C620412D1C4995B5001D0DD7 /* DetailBusinessViewControllerII.xib */,
 				5DBDB5C41C6AB35A001828C5 /* MenuItemViewController.xib */,
@@ -920,6 +941,8 @@
 		4AD53C231C736535009D8FE0 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				C62C7A57245B974200CB4613 /* MarketListViewController.h */,
+				C62C7A56245B974200CB4613 /* MarketListViewController.m */,
 				C6B9B2B0208FA7F10009F20E /* ReferralViewController.h */,
 				C6B9B2B1208FA7F10009F20E /* ReferralViewController.m */,
 				C67486A32033F3CB007F4F41 /* HomeViewController.xib */,
@@ -963,6 +986,8 @@
 		4AD53C241C73660B009D8FE0 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				C62C7A50245B956B00CB4613 /* MarketTableViewCell.m */,
+				C62C7A4F245B94C100CB4613 /* MarketTableViewCell.h */,
 				C6F475611CDFDCB7009E24E4 /* DetailBusinessVCTableViewCell.h */,
 				4A1DA8891C7603CA00E16F30 /* TPReceiptController.h */,
 				DA4564781F387A1100B60E46 /* TotalCartItemCell.h */,
@@ -1017,8 +1042,8 @@
 				2971AF4616071A630022B72E /* Notification */,
 				29D2999D15DB58A800990F62 /* External */,
 				2949CCC21458A21700728B87 /* Resources */,
-				2949CC4114589C7200728B87 /* TapForAll */,
-				2949CC5D14589C7200728B87 /* TapForAllTests */,
+				2949CC4114589C7200728B87 /* ManageMyMarket */,
+				2949CC5D14589C7200728B87 /* ManageMyMarketTests */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -1074,16 +1099,6 @@
 			name = Business;
 			sourceTree = "<group>";
 		};
-		D06200CE00720C3D7677B436 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				69C4AD8B3AE44CCEA0D34384 /* Pods-TapForAll.debug.xcconfig */,
-				50010B33BA36FB7925AB3C7F /* Pods-TapForAll.release.xcconfig */,
-				771F884F074CE9375563C97D /* Pods-TapForAll.staging.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		DA3C19BF1E974B8000ADDE31 /* Order Detail */ = {
 			isa = PBXGroup;
 			children = (
@@ -1129,32 +1144,42 @@
 			name = DropDown;
 			sourceTree = "<group>";
 		};
+		F1A16206FEBF4C7DBEB54B9A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BEFE7FC720C74E6226CB1E07 /* Pods-ManageMyMarket.debug.xcconfig */,
+				9BE4BC2B8857645F6EA8704A /* Pods-ManageMyMarket.release.xcconfig */,
+				704BF5C1DE6ED78C342AFE68 /* Pods-ManageMyMarket.staging.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2949CC3414589C7200728B87 /* TapForAll */ = {
+		2949CC3414589C7200728B87 /* ManageMyMarket */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2949CC6814589C7200728B87 /* Build configuration list for PBXNativeTarget "TapForAll" */;
+			buildConfigurationList = 2949CC6814589C7200728B87 /* Build configuration list for PBXNativeTarget "ManageMyMarket" */;
 			buildPhases = (
-				996F31FC54012C620D2B26AA /* [CP] Check Pods Manifest.lock */,
+				78B43DCD316202102946E653 /* [CP] Check Pods Manifest.lock */,
 				2949CC3114589C7200728B87 /* Sources */,
 				2949CC3214589C7200728B87 /* Frameworks */,
 				2949CC3314589C7200728B87 /* Resources */,
-				B363820411F5CD91861D911C /* [CP] Embed Pods Frameworks */,
-				16DEAD1D28A6B7C0EC812343 /* [CP] Copy Pods Resources */,
+				4E309834B6825B82A66E741D /* [CP] Embed Pods Frameworks */,
+				A4528B4767711031B1B55A03 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = TapForAll;
+			name = ManageMyMarket;
 			productName = TapTalk;
-			productReference = 2949CC3514589C7200728B87 /* TapForAll.app */;
+			productReference = 2949CC3514589C7200728B87 /* ManageMyMarket.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2949CC5414589C7200728B87 /* TapForAllTests */ = {
+		2949CC5414589C7200728B87 /* ManageMyMarketTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2949CC6B14589C7200728B87 /* Build configuration list for PBXNativeTarget "TapForAllTests" */;
+			buildConfigurationList = 2949CC6B14589C7200728B87 /* Build configuration list for PBXNativeTarget "ManageMyMarketTests" */;
 			buildPhases = (
 				2949CC5014589C7200728B87 /* Sources */,
 				2949CC5114589C7200728B87 /* Frameworks */,
@@ -1166,9 +1191,9 @@
 			dependencies = (
 				2949CC5C14589C7200728B87 /* PBXTargetDependency */,
 			);
-			name = TapForAllTests;
+			name = ManageMyMarketTests;
 			productName = TapTalkTests;
-			productReference = 2949CC5514589C7200728B87 /* TapForAllTests.xctest */;
+			productReference = 2949CC5514589C7200728B87 /* ManageMyMarketTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1178,7 +1203,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0510;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1140;
 				TargetAttributes = {
 					2949CC3414589C7200728B87 = {
 						DevelopmentTeam = E79MNN58JH;
@@ -1215,21 +1240,21 @@
 					};
 				};
 			};
-			buildConfigurationList = 2949CC2F14589C7100728B87 /* Build configuration list for PBXProject "TapForAll" */;
+			buildConfigurationList = 2949CC2F14589C7100728B87 /* Build configuration list for PBXProject "ManageMyMarket" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
+				Base,
 			);
 			mainGroup = 2949CC2A14589C7100728B87;
 			productRefGroup = 2949CC3614589C7200728B87 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2949CC3414589C7200728B87 /* TapForAll */,
-				2949CC5414589C7200728B87 /* TapForAllTests */,
+				2949CC3414589C7200728B87 /* ManageMyMarket */,
+				2949CC5414589C7200728B87 /* ManageMyMarketTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1295,6 +1320,7 @@
 				C6371A371C3B997500AC5A84 /* ShoppingCartTableViewController.xib in Resources */,
 				5D5498B81C69150600FC35FF /* navigation.png in Resources */,
 				4A6643F81C74B05C00C10421 /* arrow_down.png in Resources */,
+				C62C7A54245B963A00CB4613 /* MarketListViewController.xib in Resources */,
 				5DD2E5821C6BB18100503BF6 /* ic_plus@3x.png in Resources */,
 				5D5498B61C6914FE00FC35FF /* heart.png in Resources */,
 				C6F475651CDFE0A8009E24E4 /* BusinessServicesViewController.xib in Resources */,
@@ -1313,6 +1339,7 @@
 				5D7AEDF01C696B2800B0929F /* pin2@2x.png in Resources */,
 				DA4B3A2B1F1D20C5002A4109 /* BKMoneyKit.bundle in Resources */,
 				5D7AEE011C696B4000B0929F /* Pin@2x.png in Resources */,
+				C62C7A55245B963A00CB4613 /* MarketTableViewCell.xib in Resources */,
 				5DBDB5C61C6AB35A001828C5 /* MenuItemViewController.xib in Resources */,
 				C6B9B2B4208FA7F10009F20E /* ReferralViewController.xib in Resources */,
 				4A6643F91C74B05C00C10421 /* arrow_down@2x.png in Resources */,
@@ -1327,7 +1354,7 @@
 				5D7AEDDC1C6934E400B0929F /* img@3x.png in Resources */,
 				DA3C19C41E974BFC00ADDE31 /* PickupDeliveryOptionsViewController.xib in Resources */,
 				12C090F11DDDEF940033CEA9 /* CartTotalTableViewCell.xib in Resources */,
-				C6C8ACAF18DF9BE5005DAFD6 /* TapForAllTests-Info.plist in Resources */,
+				C6C8ACAF18DF9BE5005DAFD6 /* ManageMyMarketTests-Info.plist in Resources */,
 				5D7AEDFC1C696B3800B0929F /* pin4@2x.png in Resources */,
 				4AA5F8BE1CAFC418007F4DFE /* Businesses Property List.plist in Resources */,
 				4A06471E1DE456B900416969 /* CartViewTableViewCell.xib in Resources */,
@@ -1357,24 +1384,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		16DEAD1D28A6B7C0EC812343 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TapForAll/Pods-TapForAll-resources.sh",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TapForAll/Pods-TapForAll-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2949CC5314589C7200728B87 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1388,31 +1397,13 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
-		996F31FC54012C620D2B26AA /* [CP] Check Pods Manifest.lock */ = {
+		4E309834B6825B82A66E741D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TapForAll-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B363820411F5CD91861D911C /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TapForAll/Pods-TapForAll-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-ManageMyMarket/Pods-ManageMyMarket-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/ActionSheetPicker-3.0/ActionSheetPicker_3_0.framework",
 				"${BUILT_PRODUCTS_DIR}/AsyncImageView/AsyncImageView.framework",
@@ -1445,7 +1436,47 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TapForAll/Pods-TapForAll-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ManageMyMarket/Pods-ManageMyMarket-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		78B43DCD316202102946E653 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ManageMyMarket-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A4528B4767711031B1B55A03 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ManageMyMarket/Pods-ManageMyMarket-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ManageMyMarket/Pods-ManageMyMarket-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1457,6 +1488,7 @@
 			files = (
 				4A6643E81C74A04000C10421 /* SICellSelection.m in Sources */,
 				C6235F6718B2242400C216CB /* BusinessTableViewCell.m in Sources */,
+				C62C7A58245B974200CB4613 /* MarketListViewController.m in Sources */,
 				DA4B3A281F1D20C5002A4109 /* BKCardNumberLabel.m in Sources */,
 				C6308DE41C3E52EC00B6B8B0 /* EventTableViewCell.m in Sources */,
 				4A737B7C1C68B0DD00ADCD49 /* AppData.m in Sources */,
@@ -1467,6 +1499,7 @@
 				4A9499841C7F337200400A53 /* SavedCardTableCell.m in Sources */,
 				2949CD351458A9CC00728B87 /* Business.m in Sources */,
 				DA4B3A1A1F1D205D002A4109 /* BKCardNumberFormatter.m in Sources */,
+				C60824A7245DEF3400C0DB4C /* TADateUtility.m in Sources */,
 				C6768BCE1D5688C000125E95 /* SAMKeychain.m in Sources */,
 				DA4B3A271F1D20C5002A4109 /* BKCardExpiryField.m in Sources */,
 				12C090E61DDDDB600033CEA9 /* CartViewController.m in Sources */,
@@ -1510,6 +1543,7 @@
 				C6571B761D650A4700FD83F5 /* BusinessListViewController.m in Sources */,
 				C6F475631CDFDCB7009E24E4 /* DetailBusinessVCTableViewCell.m in Sources */,
 				DA4B3A1B1F1D205D002A4109 /* BKCardPatternInfo.m in Sources */,
+				C62C7A51245B956B00CB4613 /* MarketTableViewCell.m in Sources */,
 				4A74ECA31D0985F60088662C /* ConsumerCCModelObject.m in Sources */,
 				C6FDD5CF187D079600F4D721 /* ServerInteractionManager.m in Sources */,
 				C6AF155118ED3D6C004DBEBA /* UtilityConsumerProfile.m in Sources */,
@@ -1554,7 +1588,7 @@
 /* Begin PBXTargetDependency section */
 		2949CC5C14589C7200728B87 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2949CC3414589C7200728B87 /* TapForAll */;
+			target = 2949CC3414589C7200728B87 /* ManageMyMarket */;
 			targetProxy = 2949CC5B14589C7200728B87 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1563,7 +1597,7 @@
 		C67622341BC9F96200B2F434 /* DetailBusinessViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				C67622331BC9F96200B2F434 /* en */,
+				C62C7A59245C0B0300CB4613 /* Base */,
 			);
 			name = DetailBusinessViewController.xib;
 			sourceTree = "<group>";
@@ -1591,6 +1625,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -1651,6 +1686,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -1702,11 +1738,11 @@
 		};
 		2949CC6914589C7200728B87 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 69C4AD8B3AE44CCEA0D34384 /* Pods-TapForAll.debug.xcconfig */;
+			baseConfigurationReference = BEFE7FC720C74E6226CB1E07 /* Pods-ManageMyMarket.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TapForAll/ManageMyMarket.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1.25;
@@ -1716,10 +1752,10 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TapForAll/TapForAll-Prefix.pch";
+				GCC_PREFIX_HEADER = "TapForAll/ManageMyMarket-Prefix.pch";
 				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/TapForAll/TapForAll-Info.plist";
+				INFOPLIST_FILE = "TapForAll/ManageMyMarket-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MARKETING_VERSION = 2.16;
 				OTHER_LDFLAGS = (
@@ -1727,7 +1763,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tapin;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ManageMyMarket;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1742,11 +1778,11 @@
 		};
 		2949CC6A14589C7200728B87 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 50010B33BA36FB7925AB3C7F /* Pods-TapForAll.release.xcconfig */;
+			baseConfigurationReference = 9BE4BC2B8857645F6EA8704A /* Pods-ManageMyMarket.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TapForAll/ManageMyMarket.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1.25;
@@ -1756,10 +1792,10 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TapForAll/TapForAll-Prefix.pch";
+				GCC_PREFIX_HEADER = "TapForAll/ManageMyMarket-Prefix.pch";
 				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/TapForAll/TapForAll-Info.plist";
+				INFOPLIST_FILE = "TapForAll/ManageMyMarket-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MARKETING_VERSION = 2.16;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1768,7 +1804,7 @@
 					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tapin;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ManageMyMarket;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1790,9 +1826,9 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TapForAll/TapForAll-Prefix.pch";
-				INFOPLIST_FILE = "TapForAllTests/TapForAllTests-Info.plist";
+				INFOPLIST_FILE = "TapForAllTests/ManageMyMarketTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "MyDoosts.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = TapForAllTests;
+				PRODUCT_NAME = ManageMyMarketTests;
 				PROVISIONING_PROFILE = "643cf8aa-6e64-4f3f-9550-9fec4d6d719e";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "643cf8aa-6e64-4f3f-9550-9fec4d6d719e";
 				TEST_HOST = "$(BUNDLE_LOADER)";
@@ -1810,9 +1846,9 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TapForAll/TapForAll-Prefix.pch";
-				INFOPLIST_FILE = "TapForAllTests/TapForAllTests-Info.plist";
+				INFOPLIST_FILE = "TapForAllTests/ManageMyMarketTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "MyDoosts.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = TapForAllTests;
+				PRODUCT_NAME = ManageMyMarketTests;
 				PROVISIONING_PROFILE = "643cf8aa-6e64-4f3f-9550-9fec4d6d719e";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
@@ -1822,6 +1858,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
@@ -1874,11 +1911,11 @@
 		};
 		C694DEE222A8DA2B00D328B6 /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 771F884F074CE9375563C97D /* Pods-TapForAll.staging.xcconfig */;
+			baseConfigurationReference = 704BF5C1DE6ED78C342AFE68 /* Pods-ManageMyMarket.staging.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = TapForAll/TapForAll.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TapForAll/ManageMyMarket.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1.25;
@@ -1888,10 +1925,10 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TapForAll/TapForAll-Prefix.pch";
+				GCC_PREFIX_HEADER = "TapForAll/ManageMyMarket-Prefix.pch";
 				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				HEADER_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = "$(SRCROOT)/TapForAll/TapForAll-Info.plist";
+				INFOPLIST_FILE = "TapForAll/ManageMyMarket-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MARKETING_VERSION = 2.16;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1900,7 +1937,7 @@
 					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tapin;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ManageMyMarket;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1922,9 +1959,9 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TapForAll/TapForAll-Prefix.pch";
-				INFOPLIST_FILE = "TapForAllTests/TapForAllTests-Info.plist";
+				INFOPLIST_FILE = "TapForAllTests/ManageMyMarketTests-Info.plist";
 				PRODUCT_BUNDLE_IDENTIFIER = "MyDoosts.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = TapForAllTests;
+				PRODUCT_NAME = ManageMyMarketTests;
 				PROVISIONING_PROFILE = "643cf8aa-6e64-4f3f-9550-9fec4d6d719e";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 			};
@@ -1933,7 +1970,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2949CC2F14589C7100728B87 /* Build configuration list for PBXProject "TapForAll" */ = {
+		2949CC2F14589C7100728B87 /* Build configuration list for PBXProject "ManageMyMarket" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2949CC6614589C7200728B87 /* Debug */,
@@ -1943,7 +1980,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		2949CC6814589C7200728B87 /* Build configuration list for PBXNativeTarget "TapForAll" */ = {
+		2949CC6814589C7200728B87 /* Build configuration list for PBXNativeTarget "ManageMyMarket" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2949CC6914589C7200728B87 /* Debug */,
@@ -1953,7 +1990,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		2949CC6B14589C7200728B87 /* Build configuration list for PBXNativeTarget "TapForAllTests" */ = {
+		2949CC6B14589C7200728B87 /* Build configuration list for PBXNativeTarget "ManageMyMarketTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2949CC6C14589C7200728B87 /* Debug */,

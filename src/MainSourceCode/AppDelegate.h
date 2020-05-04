@@ -43,6 +43,7 @@
 @property (atomic, assign) BOOL corpMode;
 @property (atomic, assign) BOOL viewMode;
 @property (nonatomic, strong) NSMutableArray *corps;
+@property (nonatomic, strong) NSArray *allCorps;
 @property (atomic, assign) short corpIndex;
 
 - (void)saveContext;
@@ -52,6 +53,7 @@
 -(NSArray *)getRecord;// create this mathod for fetch data from any class...
 - (void)saveDeviceTokenAndUUID;
 - (void)getCorps:(NSString *)workEmail;
+- (void)getAllCorps;
 
 
 @end

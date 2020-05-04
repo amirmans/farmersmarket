@@ -1,15 +1,15 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '9.0'
 use_frameworks!
-target 'TapForAll' do
-pod 'AFNetworking'
+target 'ManageMyMarket' do
+pod 'AFNetworking', '~> 3.0'
 pod 'SBJson'
 pod 'SDWebImage'
 pod 'AsyncImageView'
 pod 'MBProgressHUD'
 pod 'Reachability'
 pod 'KASlideShow'
-pod 'Stripe'
+pod 'Stripe', '14.0.1'
 pod 'GoogleMaps'
 pod 'SHMultipleSelect'
 pod 'ActionSheetPicker-3.0'

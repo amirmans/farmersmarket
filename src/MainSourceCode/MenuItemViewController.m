@@ -88,7 +88,7 @@ bool shouldOpenOptionMenu = false;
     [super viewDidLoad];
 
     self.noteViewHeightConstraint.constant = 1.0;
-     self.currency_code =  [CurrentBusiness sharedCurrentBusinessManager].business.curr_code;
+    self.currency_code =  [CurrentBusiness sharedCurrentBusinessManager].business.curr_code;
     self.currency_symbol = [CurrentBusiness sharedCurrentBusinessManager].business.curr_symbol;
 //    NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
 //    NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;

@@ -1,15 +1,17 @@
 // The URL for the server API
 @class NSString;
 
-#ifdef DEBUG
-//#define TapInEndpointHost @"http://tapin-servers.dv.10.0.1.5.xip.io/"
-#define TapInEndpointHost @"http://tapinserver.us-east-1.elasticbeanstalk.com/tap-in/"
-//#define TapInEndpointHost @"https://tapforall.com/wilsonville/tap-in/"
-#elif STAGING
-#define TapInEndpointHost @"http://tapinserver.us-east-1.elasticbeanstalk.com/tap-in/"
-#else
-#define TapInEndpointHost @"https://tapforall.com/merchants/tap-in/"
-#endif
+//#ifdef DEBUG
+////#define TapInEndpointHost @"http://tapforall.com/tap-in-servers/tap-in/"
+//#define TapInEndpointHost @"http://tapin-servers.dv/tap-in/"
+////#define TapInEndpointHost @"https://tapforall.com/wilsonville/tap-in/"
+//#elif STAGING
+//    #define TapInEndpointHost @"http://tapforall.com/tap-in-servers/tap-in/"
+//#elif RELEASE
+//    #define TapInEndpointHost @"https://tapforall.com/tap-in-servers/tap-in/"
+//#endif
+
+#define TapInEndpointHost @"https://tapforall.com/tap-in-servers/tap-in/"
 
 #define TT_CommunicationWithServerQ dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
@@ -50,6 +52,7 @@
 #define BusinessCustomerIndividualDirectory (TapInEndpointHost @"customer_files/")
 #define BusinessCustomerIndividualDirectory_ProductItems @"products"
 #define BusinessCustomerIconDirectory (TapInEndpointHost @"customer_files/icons/")
+#define CorpsIconDirectory (TapInEndpointHost @"customer_files/corps/icons/")
 #define BusinessCustomerBGImageDirectory (TapInEndpointHost @"customer_files/bg_images/")
 #define QRImageDomain (TapInEndpointHost @"consumer_files/qr_images/")
 #define BusinessCustomersMapDirectory (TapInEndpointHost @"customer_files/maps/")

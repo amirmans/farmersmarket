@@ -27,7 +27,8 @@
 //#import "DeliveryViewController.h"
 #import "IQKeyboardManager.h"
 #import "Business.h"
-#import "HomeViewController.h"
+//#import "HomeViewController.h"
+#import "MarketListViewController.h"
 #import "ReferralViewController.h"
 
 @interface AppDelegate () {
@@ -43,7 +44,7 @@
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 @synthesize notificationDelegate;
-@synthesize informationDate, viewMode, corpMode, corps, corpIndex;
+@synthesize informationDate, viewMode, corpMode, corps, corpIndex, allCorps;
 
 @synthesize enterBusinessNav, tt_tabBarController;
 
@@ -101,7 +102,7 @@ static AppDelegate *sharedObj;
 //    [businessArrays startGettingListofAllBusinesses];
 
 //    BusinessListViewController *listTableView = [[BusinessListViewController alloc] initWithNibName:nil bundle:nil];
-     HomeViewController *listTableView = [[HomeViewController alloc] init];
+     MarketListViewController *listTableView = [[MarketListViewController alloc] init];
 
 //    AddressVC *listTableView = [[AddressVC alloc] initWithNibName:nil bundle:nil];
 
@@ -605,6 +606,28 @@ static AppDelegate *sharedObj;
 }
 
 
+- (void)getAllCorps {
+    if (corps || [corps count]) {
+        [corps removeAllObjects];
+    }
+
+    NSDictionary* paramDict = @{@"cmd":@"getAllCorps"};
+    [[APIUtility sharedInstance] callServer:paramDict server:BusinessAndProductionInformationServer method:@"GET" completiedBlock:^(NSDictionary *response) {
+        if ( ([[response valueForKey:@"status"] integerValue] >= 0) && ([response valueForKey:@"server_error"] == 0) )
+        {
+            self->allCorps = [[response objectForKey:@"data"] mutableCopy];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"GotAllCorps" object:nil];
+        }
+        else
+        {
+            NSLog(@"Could not get corps from the server");
+
+        }
+    }];
+}
+
+
+
 - (void)getCorps:(NSString *)workEmail {
     if (corps || [corps count]) {
         [corps removeAllObjects];
@@ -651,6 +674,7 @@ static AppDelegate *sharedObj;
     [self getDefaultCCForConsumer];
 
     NSString* workEmail = consumerInfo[EmailWorkAddressKey];
+    [self getAllCorps];
     [self getCorps:workEmail];
 }
 
