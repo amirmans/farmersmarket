@@ -19,11 +19,11 @@
 {
     NSString *urlString = BusinessInformationServer;
     NSDictionary *params = @{@"businessID":[NSNumber numberWithInt:0], @"cmd":@"getBusinessInfoWithConsumerRating"};
-    
+
     NSLog(@"Getting list of businesses using server: %@, and business ID %@", urlString, params);
-    
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager  manager];
-    
+
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
     [manager GET:urlString parameters:params progress:nil
@@ -33,24 +33,24 @@
           }
           failure:^(NSURLSessionTask *operation, NSError *error) {
               NSLog(@"Error in fetching list of businesses: %@", error);
-              
+
               NSDictionary* responseObject = @{@"server_error_message":error.description, @"server_error":@"-1"};
               [self.postProcessesDelegate postProcessForListOfBusinessesSuccess:responseObject for:IndividualType];
           }
      ];
-    
+
 }
 
-- (void)serverCallToGetListofAllBusinessesForCorp:(NSString*)businesses {    
+- (void)serverCallToGetListofAllBusinessesForCorp:(NSString*)businesses {
     NSString *urlString = BusinessInformationServer;
     NSDictionary *params = @{@"ids":businesses
                              ,@"cmd":@"get_all_businesses_for_set"};
-    
+
     NSLog(@"Getting list of businesses for corp using server: %@, and params: %@", urlString, params);
-    
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager  manager];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
+
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
     [manager GET:urlString parameters:params progress:nil
@@ -71,19 +71,19 @@
 {
     NSString *urlString = ConsumerProfileServer;
     BOOL retcode = YES;
-    
+
     AFHTTPSessionManager *manager;
     manager = [AFHTTPSessionManager manager];
-    
+
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
 //    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"application/json"];
 
 
 //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
-    
+
 //        [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
-    
+
     NSDictionary *params = @{@"device_token": deviceToken, @"uuid":uuid};
     [manager POST:urlString parameters:params progress:nil
           success:^(NSURLSessionTask *operation, id responseObject) {
@@ -95,10 +95,10 @@
               NSLog(@"Error in ServerUpdateDeviceToken: %@", error);
 //              AppDelegate *appdelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
 //              [appdelegate saveDeviceTokenAndUUID];
-              
+
           }
      ];
-    
+
     return retcode;
 }
 
@@ -124,7 +124,7 @@
                                        range:NSMakeRange(0, [resultString length])];
     return [resultString stringByRemovingPercentEncoding];
 //    return [resultString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
+
 }
 
 

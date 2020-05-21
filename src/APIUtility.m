@@ -24,7 +24,7 @@ static id sharedInstance;
     dispatch_once(&once, ^{
         sharedInstance = [[self alloc] init];
     });
-    
+
     return sharedInstance;
 }
 
@@ -37,16 +37,16 @@ static id sharedInstance;
         self = [super init];
         if (self) {
             sharedInstance = self;
-            
+
             sharedObj = [[APIUtility alloc] init];
             sharedObj.sessionManager.securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
             sharedObj.operationManager = [AFHTTPSessionManager manager];
             sharedObj.operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
-            
+
             utilityDateFormatter = [[NSDateFormatter alloc]init];
             [utilityDateFormatter setDateFormat:@"HH:mm:ss"];
             [utilityDateFormatter setTimeZone:[NSTimeZone localTimeZone]];
-            
+
             utilityDisplayDateFormatter = [[NSDateFormatter alloc]init];
             [utilityDisplayDateFormatter setDateFormat:@"HH:mm"];
             [utilityDisplayDateFormatter setTimeZone:[NSTimeZone localTimeZone]];
@@ -101,7 +101,7 @@ static id sharedInstance;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
+
     if ([method isEqual:@"POST"]) {
     [manager POST:url
        parameters:data progress:nil
@@ -110,7 +110,7 @@ static id sharedInstance;
               finished(responseObject);
           }
           failure:^(NSURLSessionDataTask *task, NSError *error) {
-              
+
               NSLog(@"Error in sending order to the server: %@", error.description);
               finished(@{@"server_error_message":error.description, @"server_error":@"-1"});
           }];
@@ -122,7 +122,7 @@ static id sharedInstance;
                   finished(responseObject);
               }
               failure:^(NSURLSessionDataTask *task, NSError *error) {
-                  
+
                   NSLog(@"Error in sending order to the server: %@", error.description);
                   finished(@{@"server_error_message":error.description, @"server_error":@"-1"});
               }];
@@ -138,20 +138,20 @@ static id sharedInstance;
 //    }
 //    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
 //    [manager.requestSerializer setTimeoutInterval:timeInterval];
-//    
+//
 //    [manager GET:[NSString stringWithFormat:@"%@",BusinessInformationServer] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
 //        if (finished) {
 //            finished((NSDictionary*)responseObject);
 //        }
-//        
+//
 //    } failure:^(NSURLSessionTask *operation, NSError *error) {
-//        
+//
 //        NSLog(@"Error: %@", error);
 //        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
 //        NSDictionary *temp = @{};
-//        
+//
 //        if([error code] == -1004) {
-//            
+//
 //            if (finished) {
 //                finished(dic);
 //            }
@@ -173,21 +173,21 @@ static id sharedInstance;
     }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
+
 //    NSLog(@"%@",data);
     [manager GET:[NSString stringWithFormat:@"%@",BusinessDelivaryInformationServer] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
-        
+
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        
+
         NSLog(@"Error: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
         NSDictionary *temp = @{};
-        
+
         if([error code] == -1004) {
-            
+
             if (finished) {
                 finished(dic);
             }
@@ -209,20 +209,20 @@ static id sharedInstance;
     }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
+
     [manager GET:[NSString stringWithFormat:@"%@",OrderServerURL] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
-        
+
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        
+
         NSLog(@"Error: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
         NSDictionary *temp = @{};
-        
+
         if([error code] == -1004) {
-            
+
             if (finished) {
                 finished(dic);
             }
@@ -245,7 +245,7 @@ static id sharedInstance;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
+
     [manager POST:OrderServerURL
        parameters:data progress:nil
           success:^(NSURLSessionTask *task, id responseObject) {
@@ -253,7 +253,7 @@ static id sharedInstance;
               finished(responseObject);
           }
           failure:^(NSURLSessionDataTask *task, NSError *error) {
-              
+
               NSLog(@"Error saving delivary info in the server: %@", error.description);
               finished(@{@"error":error.description});
           }];
@@ -269,9 +269,9 @@ static id sharedInstance;
 //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
 //    manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
+
     [manager GET:[NSString stringWithFormat:@"%@",OrderServerURL] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
-        
+
         if (finished) {
             finished(responseObject);
         }
@@ -279,9 +279,9 @@ static id sharedInstance;
         NSLog(@"Error: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
         NSDictionary *temp = @{};
-        
+
         if([error code] == -1004) {
-            
+
             if (finished) {
                 finished(dic);
             }
@@ -297,27 +297,27 @@ static id sharedInstance;
 
 
 -(void)setFavoriteAPICall:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished {
-    
+
     if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
     {
         return;
     }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
+
     [manager GET:[NSString stringWithFormat:@"%@",SetFavoriteServer] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
-        
+
         if (finished) {
             finished(@{@"success":@"YES"});
         }
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        
+
         NSLog(@"Error: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
         NSDictionary *temp = @{};
-        
+
         if([error code] == -1004) {
-            
+
             if (finished) {
                 finished(dic);
             }
@@ -341,19 +341,19 @@ static id sharedInstance;
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
 //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    
+
     [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data progress: nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        
+
         NSLog(@"Error in getting rewards: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
         NSDictionary *temp = @{};
-        
+
         if([error code] == -1004) {
-            
+
             if (finished) {
                 finished(dic);
             }
@@ -372,25 +372,25 @@ static id sharedInstance;
     {
         return;
     }
-    
-    
+
+
     NSString *urlString = [NSString stringWithFormat:@"%@?cmd=previous_order&consumer_id=%@&business_id=%@",GetPrevious_order,consumer_id,business_id];
-    
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
+
     [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        
+
         NSLog(@"Error: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
 //        NSDictionary *temp = @{};
-        
+
         if([error code] == -1004) {
-            
+
             if (finished) {
                 finished(dic);
             }
@@ -409,12 +409,12 @@ static id sharedInstance;
     {
         return;
     }
-    
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
+
     [manager POST:Save_cc_info
        parameters:param progress:nil
           success:^(NSURLSessionTask *task, id responseObject) {
@@ -422,7 +422,7 @@ static id sharedInstance;
               finished(responseObject);
           }
           failure:^(NSURLSessionDataTask *task, NSError *error) {
-              
+
               NSLog(@"Error saving credit card in the server: %@", error.description);
               finished(@{@"error":error.description});
           }];
@@ -435,12 +435,12 @@ static id sharedInstance;
     }
 //    NSError *error = [NSError alloc];
 //    NSData *data1 = [NSJSONSerialization dataWithJSONObject:param options:NSJSONWritingPrettyPrinted error:&error];
-    
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
+
     [manager POST:remove_cc
        parameters:param progress:nil
           success:^(NSURLSessionTask *task, id responseObject) {
@@ -448,7 +448,7 @@ static id sharedInstance;
               finished(responseObject);
           }
           failure:^(NSURLSessionTask *task, NSError *error) {
-              
+
               NSLog(@"Error saving credit card in the server: %@", error.description);
               finished(@{@"error":error.description});
           }];
@@ -459,25 +459,25 @@ static id sharedInstance;
     {
         return;
     }
-    
+
     NSString *urlString = [NSString stringWithFormat:@"%@?cmd=get_consumer_all_cc_info&consumer_id=%@",Get_consumer_all_cc_info,consumer_id];
-    
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
+
     [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         NSLog(@"get %@", responseObject);
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        
+
         NSLog(@"Error: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
         //        NSDictionary *temp = @{};
-        
+
         if([error code] == -1004) {
-            
+
             if (finished) {
                 finished(dic);
             }
@@ -497,25 +497,25 @@ static id sharedInstance;
     {
         return;
     }
-    
+
     NSString *urlString = [NSString stringWithFormat:@"%@?cmd=get_consumer_default_cc&consumer_id=%@",Get_consumer_all_cc_info,consumer_id];
-    
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
+
     [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         NSLog(@"get %@", responseObject);
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        
+
         NSLog(@"Error: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
         //        NSDictionary *temp = @{};
-        
+
         if([error code] == -1004) {
-            
+
             if (finished) {
                 finished(dic);
             }
@@ -537,25 +537,25 @@ static id sharedInstance;
     {
         return;
     }
-    
+
     NSString *urlString = [NSString stringWithFormat:@"%@?cmd=get_all_notifications_for_consumer&consumer_id=%@",Get_notifications,consumer_id];
-    
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
+
     [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         NSLog(@"get %@", responseObject);
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
     } failure:^(NSURLSessionTask  *operation, NSError *error) {
-        
+
         NSLog(@"Error after calling business notifications: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
         //        NSDictionary *temp = @{};
-        
+
         if([error code] == -1004) {
-            
+
             if (finished) {
                 finished(dic);
             }
@@ -574,12 +574,12 @@ static id sharedInstance;
     {
         return;
     }
-    
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
+
     [manager POST:save_notifications
        parameters:param progress:nil
           success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -587,7 +587,7 @@ static id sharedInstance;
               finished(responseObject);
           }
           failure:^(NSURLSessionDataTask *task, NSError *error) {
-              
+
               NSLog(@"Error saving credit card in the server: %@", error.description);
               finished(@{@"error":error.description});
           }];
@@ -597,7 +597,7 @@ static id sharedInstance;
 - (NSString *) GMTToLocalTime: (NSString *)GMTTime{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"HH:mm:ss";
-    
+
     NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
     [dateFormatter setTimeZone:gmt];
     NSString *timeStamp = [dateFormatter stringFromDate:[NSDate date]];
@@ -620,9 +620,9 @@ static id sharedInstance;
                                                fromDate:givenDate];
     [components setHour:hour];
     [components setMinute:minute];
-    
+
     NSDate *newDate = [calendar dateFromComponents:components];
-    
+
     return newDate;
 }
 
@@ -637,7 +637,7 @@ static id sharedInstance;
     [components setYear:year];
     [components setMonth:month];
     [components setDay:day];
-    
+
     NSDate *newDate = [calendar dateFromComponents:components];
     return newDate;
 }
@@ -648,11 +648,11 @@ static id sharedInstance;
     NSString *time1 = openTime;
     NSString *time2 = closeTime;
     NSString *time3 = givenDate;
-    
+
     NSDate *date1 = [utilityDateFormatter dateFromString:time1];
     NSDate *date2 = [utilityDateFormatter dateFromString:time2];
     NSDate *date3 = [utilityDateFormatter dateFromString:time3];
-    
+
     NSComparisonResult result = [date1 compare:date3];
     NSComparisonResult result1 = [date2 compare:date3];
     if(result == NSOrderedAscending && result1 == NSOrderedDescending)
@@ -663,22 +663,22 @@ static id sharedInstance;
     } else {
         return false;
     }
-    
+
     return  false;
 }
 
 
 - (BOOL)isBusinessOpen: (NSString *)openTime CloseTime:(NSString *)closeTime {
     NSString *currentTime = [utilityDateFormatter stringFromDate:[NSDate date]];
-    
+
     NSString *time1 = openTime;
     NSString *time2 = closeTime;
     NSString *time3 = currentTime;
-    
+
     NSDate *date1 = [utilityDateFormatter dateFromString:time1];
     NSDate *date2 = [utilityDateFormatter dateFromString:time2];
     NSDate *date3 = [utilityDateFormatter dateFromString:time3];
-    
+
     NSComparisonResult result = [date1 compare:date3];
     NSComparisonResult result1 = [date2 compare:date3];
     if(result == NSOrderedAscending && result1 == NSOrderedDescending)
@@ -696,10 +696,10 @@ static id sharedInstance;
 
     NSArray *time1_Array = [time1 componentsSeparatedByString:@":"];
     NSArray *time2_Array = [time2 componentsSeparatedByString:@":"];
-    
+
     long long time1InSeconds = [time1_Array[0] integerValue] * 3600 + [time1_Array[1] integerValue]* 60 + [time1_Array[2] integerValue];
     long long time2InSeconds = [time2_Array[0] integerValue] * 3600 + [time2_Array[1] integerValue]* 60 + [time2_Array[2] integerValue];
-    
+
     if (time2InSeconds < time1InSeconds) {
         return time2;
     } else {
@@ -708,13 +708,13 @@ static id sharedInstance;
 }
 
 - (NSString *)laterTimeInString:(NSString *)time1 and:(NSString *)time2 {
-    
+
     NSArray *time1_Array = [time1 componentsSeparatedByString:@":"];
     NSArray *time2_Array = [time2 componentsSeparatedByString:@":"];
-    
+
     long long time1InSeconds = [time1_Array[0] integerValue] * 3600 + [time1_Array[1] integerValue]* 60 + [time1_Array[2] integerValue];
     long long time2InSeconds = [time2_Array[0] integerValue] * 3600 + [time2_Array[1] integerValue]* 60 + [time2_Array[2] integerValue];
-    
+
     if (time2InSeconds > time1InSeconds) {
         return time2;
     } else {
@@ -725,20 +725,20 @@ static id sharedInstance;
 
 - (int)serviceAvailableStatus: (int)service during:(NSString *)openTime and:(NSString *)closeTime withType:(int)serviceBeforeOpen {
     int returnVal = 0;
-    
-    
-    
+
+
+
     //    static const int Pickup_closed_all_day = 1;
     //    static const int Pickup_closed_rest_of_day = 2;
     //    static const int Pickup_open_later_today = 4;
     //    static const int Pickup_open = 8;
-    
+
 //    NSString *time1 = biz.opening_time;
 //    NSString *time2 = biz.closing_time;
-    
+
     NSArray *openTimeArray = [openTime componentsSeparatedByString:@":"];
     NSArray *closeTimeArray = [closeTime componentsSeparatedByString:@":"];
-    
+
     long long openTimeInSeconds = [openTimeArray[0] integerValue] * 3600 + [openTimeArray[1] integerValue]* 60 + [openTimeArray[2] integerValue];
     long long closeTimeInSeconds = [closeTimeArray[0] integerValue] * 3600 + [closeTimeArray[1] integerValue]* 60 + [closeTimeArray[2] integerValue];
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -747,8 +747,8 @@ static id sharedInstance;
                                     NSCalendarUnitSecond
                                     fromDate:[NSDate date]];
     long long currentTimeInSeconds = [components hour] * 3600 + [components minute] * 60 + [components second];
-    
-    
+
+
 //    NSDate *date1 = [utilityDateFormatter dateFromString:openTime];
 //    NSDate *date2 = [utilityDateFormatter dateFromString:closeTime];
 //    NSDate *date3 = [utilityDateFormatter dateFromString:time3];
@@ -756,7 +756,7 @@ static id sharedInstance;
 //                                     minute:(NSInteger)[openTimeArray[1] integerValue]];
 //    NSDate *date2 = [self dateFromGivenDate:[NSDate date] WithHour:[closeTimeArray[0] integerValue]
 //                                     minute:(NSInteger)[closeTimeArray[1] integerValue]];
-    
+
     if (openTimeInSeconds >= closeTimeInSeconds) {
         returnVal = Pickup_closed_all_day;
     } else if (currentTimeInSeconds > closeTimeInSeconds) {
@@ -766,13 +766,13 @@ static id sharedInstance;
     } else {
         returnVal = Pickup_open;
     }
-    
+
     return returnVal;
-    
+
 //    NSString *currentTime = [utilityDateFormatter stringFromDate:[NSDate date]];
 //    NSDate *date3 = [utilityDateFormatter dateFromString:currentTime];
 //    NSDate *date3 = [NSDate date];
-    
+
 //    NSComparisonResult result2 = [date1 compare:date2];
 //    NSComparisonResult result = [date1 compare:date3];
 //    NSComparisonResult result1 = [date2 compare:date3];
@@ -792,7 +792,7 @@ static id sharedInstance;
 //    else {
 //        returnVal = Pickup_closed_rest_of_day;
 //    }
-    
+
 //    return returnVal;
 //    if (returnVal == Pickup_open)
 //    {
@@ -806,7 +806,7 @@ static id sharedInstance;
 
 - (BOOL)isServiceAvailable:(int)service during:(NSString *)openTime and:(NSString *)closeTime withType:(int) serviceBeforeOpen {
     int serviceStatus = [self serviceAvailableStatus:service during:openTime and:closeTime withType:serviceBeforeOpen];
-    
+
     if (serviceStatus == Pickup_open)
     {
         return true;
@@ -822,7 +822,7 @@ static id sharedInstance;
 - (NSString *) getOpenCloseTime: (NSString *)openTime CloseTime:(NSString *)closeTime{
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"HH:mm:ss" options:0 locale:[NSLocale currentLocale]]];
-    
+
     NSString *time1 = openTime;
     NSString *time2 = closeTime;
     NSDate *date1= [formatter dateFromString:time1];
@@ -831,12 +831,12 @@ static id sharedInstance;
     if (distanceBetweenDates <= 0) {
         return @"Closed all day";
     }
-    
+
     NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
     timeFormatter.dateFormat = @"h:mma";
-    
+
 //    NSLog(@"%@",[timeFormatter stringFromDate:date2]);
-    
+
 //    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond fromDate:date1];
 //    NSInteger hour= [components hour];
 //    NSInteger minute = [components minute];
@@ -851,15 +851,15 @@ static id sharedInstance;
 - (NSString *)getCivilianTime: (NSString *)militaryTime {
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     [formatter setDateFormat:[NSDateFormatter dateFormatFromTemplate:@"HH:mm:ss" options:0 locale:[NSLocale currentLocale]]];
-    
+
     NSString *time1 = militaryTime;
-   
+
     NSDate *date1= [formatter dateFromString:time1];
 
-    
+
     NSDateFormatter *timeFormatter = [[NSDateFormatter alloc]init];
     timeFormatter.dateFormat = @"h a";
-    
+
     return [NSString stringWithFormat:@"%@",[timeFormatter stringFromDate:date1]];
 }
 
@@ -880,7 +880,7 @@ static id sharedInstance;
             }
         }
     }
-    
+
     CLLocationCoordinate2D center;
     center.latitude=latitude;
     center.longitude = longitude;
@@ -904,19 +904,19 @@ static id sharedInstance;
     }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
+
     [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
     } failure:^(NSURLSessionTask *operation, NSError *error) {
-        
+
         NSLog(@"Error: %@", error);
         NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
         NSDictionary *temp = @{};
-        
+
         if([error code] == -1004) {
-            
+
             if (finished) {
                 finished(dic);
             }
@@ -933,11 +933,11 @@ static id sharedInstance;
 
 - (BOOL)isZipCodeValid:(NSString *)zipCode {
     BOOL returnVal = FALSE;
-    
+
 //    NSString *zipcodeRegEx = @"^[1..9][0-9,-]{4,}?"; // for us
     NSString *zipcodeRegEx = @"^(\\d{5}(-\\d{4})?|[a-z]\\d[a-z][- ]*\\d[a-z]\\d)$"; // for us and canada
     NSPredicate *zipcodeTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", zipcodeRegEx];
-    
+
     if ([zipcodeTest evaluateWithObject:zipCode] == NO) {
         returnVal = FALSE;
     }
@@ -945,12 +945,12 @@ static id sharedInstance;
         returnVal = TRUE;
     }
 
-    
+
     return returnVal;
 }
 
 - (NSString *)transformValidSMSNo:(NSString *)phone {
-    
+
     NSString *phoneNumber = [phone stringByReplacingOccurrencesOfString:@", ()-+"  withString:@""];
     phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@","  withString:@""];
     phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@" "  withString:@""];
@@ -958,18 +958,18 @@ static id sharedInstance;
     phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@")"  withString:@""];
     phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"-"  withString:@""];
     phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"+"  withString:@""];
-    
+
     if (phoneNumber.length == 10)
     {
         phoneNumber = [@"+1" stringByAppendingString:phoneNumber];
     } else if (phoneNumber.length == 11) {
         phoneNumber = [@"+" stringByAppendingString:phoneNumber];
     }
-    
-    
+
+
     NSString *phoneRegex = @"^[+][1][2-9][0-9]{9}$";
     NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
-    
+
     if ([phoneTest evaluateWithObject:phoneNumber])
     {
         return phoneNumber;
@@ -982,23 +982,23 @@ static id sharedInstance;
 
 
 - (NSString*)usPhoneNumber:(NSString *)E_164FormatNo {
-    
+
     if (E_164FormatNo.length < 10) {
         return @"";
     }
     NSString* stringts = [NSMutableString stringWithString:E_164FormatNo];
     stringts = [stringts stringByReplacingOccurrencesOfString:@"+"  withString:@""];
-    
+
     NSRange range = [stringts rangeOfString:@"1"];
     if (range.length > 0)
         stringts= [stringts stringByReplacingCharactersInRange:range withString:@""];
-    
+
     NSMutableString* usNumber = [NSMutableString stringWithString:stringts];
     [usNumber insertString: @"(" atIndex:0];
     [usNumber insertString: @")" atIndex:4];
     [usNumber insertString: @"-" atIndex:5];
     [usNumber insertString: @"-" atIndex:9];
-    
+
     return usNumber;
 }
 
@@ -1013,7 +1013,7 @@ static id sharedInstance;
         [chargeFormula stringByReplacingOccurrencesOfString:@" %" withString:@""];
         return ([floatString floatValue]);
     }
-    
+
     return returnVal;
 }
 

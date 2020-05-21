@@ -10,6 +10,7 @@
 #import "cardDetailCollectionCell.h"
 //#import "AppData.h"
 #import "AppDelegate.h"
+#import "Corp.h"
 
 @interface MakePaymentViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 {
@@ -90,15 +91,19 @@
     [dateFormatter setDateFormat:@"MMMM dd, yyyy"];
     // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
     NSLog(@"%@",[dateFormatter stringFromDate:[NSDate date]]);
-    self.lblPickUpDate.text = [dateFormatter stringFromDate:[NSDate date]];
-    NSString* pd_time= [AppData sharedInstance].consumerPDTimeChosen;
+    //zzz change for manage my market
+//    self.lblPickUpDate.text = [dateFormatter stringFromDate:[NSDate date]];
+    self.lblPickUpDate.text = [NSString stringWithFormat:@"%@ %@", @"Pickup at: ", [[Corp sharedCorp].chosenCorp objectForKey:@"pickup_date"]];
+    //zzzz changed for manage my market
+//    NSString* pd_time= [AppData sharedInstance].consumerPDTimeChosen;
+    NSString* pd_time= [[Corp sharedCorp].chosenCorp objectForKey:@"pickup_date"];
 
-    dateFormatter.dateFormat = TIME24HOURFORMAT;
-    NSDate *tempDate = [dateFormatter dateFromString:pd_time];
-    if (tempDate != nil) {
-        dateFormatter.dateFormat = TIME12HOURFORMAT;
-        pd_time = [dateFormatter stringFromDate:tempDate];
-    }
+//    dateFormatter.dateFormat = TIME24HOURFORMAT;
+//    NSDate *tempDate = [dateFormatter dateFromString:pd_time];
+//    if (tempDate != nil) {
+//        dateFormatter.dateFormat = TIME12HOURFORMAT;
+//        pd_time = [dateFormatter stringFromDate:tempDate];
+//    }
 
 
 
@@ -123,6 +128,11 @@
         self.btnRedeemPoint.enabled = true;
     }
     // Do any additional setup after loading the view from its nib.
+    //zzzzz changed for managed my market
+//    self.waitTimeLabel.text = [NSString stringWithFormat:@"Pickup at %@ at %@", [[Corp sharedCorp].chosenCorp objectForKey:@"delivery_location"],
+//    [[Corp sharedCorp].chosenCorp objectForKey:@"pickup_date"] ];
+//
+    self.waitTimeLabel.text = [NSString stringWithFormat:@"Pickup at %@", [[Corp sharedCorp].chosenCorp objectForKey:@"delivery_location"]];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [self getDefaultCardData];

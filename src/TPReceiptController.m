@@ -21,10 +21,20 @@
 
 @implementation TPReceiptController
 
-@synthesize totalPaid, tipAmount, subTotal, lblTextFromPayConfirmation, lbl_thankYou, lblBusinessName, lbl_emailSentShortly, lbl_alertWhenReady;
+@synthesize totalPaid, tipAmount, subTotal, lblTextFromPayConfirmation, lbl_thankYou, lblBusinessName, lbl_emailSentShortly
+     , taxAmount, lbl_alertWhenReady
+    , tf_tax_amt;
 
 @synthesize currency_symbol;
 @synthesize currency_code;
+
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [AppData sharedInstance].Current_Selected_Tab = @"0";
+}
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -104,7 +114,9 @@
     [CurrentBusiness sharedCurrentBusinessManager].business.promotion_message = nil;
     [AppData sharedInstance].consumer_Delivery_Id = nil;
     [AppData sharedInstance].consumer_Delivery_Location = nil;
-    [self.navigationController popToRootViewControllerAnimated:true];
+//    [self.navigationController popToRootViewControllerAnimated:true];
+    NSArray *array = [self.navigationController viewControllers];
+    [self.navigationController popToViewController:[array objectAtIndex:1] animated:YES];
 }
 
 // Table View Delegate Method
@@ -234,6 +246,7 @@
 //    self.lbl_Total.text = [NSString stringWithFormat:@"$%.2f",totalPaid];
     self.lblServiceCharge.text = [NSString localizedStringWithFormat:@"$ %.2f" , self.receiptPDCharge];;
     self.lblTipAmount.text = [NSString localizedStringWithFormat:@"$ %.2f",self.tipAmount];
+    self.tf_tax_amt.text = [NSString localizedStringWithFormat:@"$ %.2f",self.taxAmount];
     self.lbl_Total.text = self.totalPaid;
     
     [self.tableView reloadData];

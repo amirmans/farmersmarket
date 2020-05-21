@@ -38,7 +38,7 @@ static NSNumberFormatter *numberFormatter;
 @implementation Business
 
 
-@synthesize iconRelativeURL, iconImage, coordinate, title, subtitle,businessName, shortBusinessName, customerProfileName, imageFileName, imageFileExt, googlePlacesObject, businessDelegate;
+@synthesize iconRelativeURL, iconImage, coordinate, title, subtitle,businessName, shortBusinessName, customerProfileName, imageFileName, imageFileExt, googlePlacesObject, businessDelegate, section_in_map, biz_description;
 
 //@synthesize Note;
 @synthesize rating;
@@ -167,7 +167,10 @@ static NSNumberFormatter *numberFormatter;
     offers_points = 1;
     curr_symbol = nil;
     curr_code = nil;
+    section_in_map = nil;
+    biz_description = nil;
 }
+
 
 - (int)isCustomer {
     return isCustomer;
@@ -455,6 +458,8 @@ static NSNumberFormatter *numberFormatter;
     //Currency
     curr_code = [self stringFromDataDictionary:data forKey:@"curr_code"];
     curr_symbol = [self stringFromDataDictionary:data forKey:@"curr_symbol"];
+    section_in_map = [self stringFromDataDictionary:data forKey:@"section_in_map"];
+    biz_description = [self stringFromDataDictionary:data forKey:@"description"];
 
     business_bg_color =  [self setUIColorFromString:bg_color];
     business_text_color = [self setUIColorFromString:text_color];

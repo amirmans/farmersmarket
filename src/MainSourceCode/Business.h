@@ -97,6 +97,8 @@
     BOOL offers_points;
     NSString *curr_code;
     NSString *curr_symbol;
+    NSString *section_in_map;
+    NSString *biz_description;
 }
 
 @property(nonatomic, weak) id <TaptalkBusinessDelegate> businessDelegate;
@@ -180,6 +182,8 @@
 @property(nonatomic, strong) NSString *promotion_code;
 @property(nonatomic, strong) NSString *promotion_discount_amount;
 @property(nonatomic, strong) NSString *promotion_message;
+@property(nonatomic, strong) NSString *biz_description;
+
 
 @property(atomic, assign) BOOL accept_orders_when_closed;
 @property(atomic, assign) BOOL offers_points;
@@ -188,6 +192,8 @@
 
 @property(nonatomic, strong) NSNumber *cycle_time;
 @property(nonatomic, strong) NSNumber *lead_time;
+
+@property(nonatomic, strong) NSString *section_in_map;
 
 - (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate;
 - (void)startLoadingBusinessProductCategoriesAndProducts;

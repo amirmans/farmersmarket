@@ -25,6 +25,7 @@
 
 #import "BusinessListViewController.h"
 #import "ListofBusinesses.h"
+#import "Corp.h"
 
 @interface NSLayoutConstraint (Description)
 
@@ -60,7 +61,7 @@
 @synthesize marketListArray;
 @synthesize filteredMarketListArray;
 @synthesize marketListTimer;
-@synthesize bizTableView;
+@synthesize corpTableView;
 @synthesize searchController;
 @synthesize currentLocation;
 
@@ -95,7 +96,7 @@ MKCoordinateRegion marketRegion;
             self.marketListArray = SortByLocationArray;
 
 
-            [bizTableView reloadData];
+            [corpTableView reloadData];
 //            TODO [self addMarkersToMap];
         }
     }
@@ -116,11 +117,12 @@ MKCoordinateRegion marketRegion;
 
 
 - (void)becomeActive:(NSNotification *)notification {
-    NSLog(@"becoming active");
+    NSLog(@"MarketList is becoming active");
 }
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    [Corp sharedCorp].chosenCorp = nil;
 
     if (!marketListArray) {
         marketListArray= [[NSMutableArray alloc]init];
@@ -182,12 +184,12 @@ MKCoordinateRegion marketRegion;
     searchController.hidesNavigationBarDuringPresentation = NO;
     searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
 
-    self.bizTableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
+    self.corpTableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
 
-    self.bizTableView.tableHeaderView = self.searchController.searchBar;
+    self.corpTableView.tableHeaderView = self.searchController.searchBar;
 
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    HUD.label.text = @"Updating businesses...";
+    HUD.label.text = @"Updating Farmers Markets...";
 //    HUD.detailsLabel.text = @"It is worth the wait!";
 
     HUD.mode = MBProgressHUDModeIndeterminate;
@@ -251,6 +253,7 @@ MKCoordinateRegion marketRegion;
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
+    [AppData sharedInstance].Current_Selected_Tab = @"0";
 //    [TapTalkLooks setBackgroundImage:bizTableView];
     [[NSNotificationCenter defaultCenter]   addObserver:self
                                                   selector:@selector(setMarketList)
@@ -519,7 +522,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 
     // for some odd reasons when the table is reload after a search row height doesn't get its value from the nib
     // file - so I had to do this - the value should correspond to the value in the cell xib file
-    return 250;
+    return 304;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -579,6 +582,10 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         cell.businessType.text = @"";
     }
 //
+//    [cell.tf_corp_website setText:[cellDict objectForKey:@"website"]];
+    [cell.lbl_mkt_pickup_location setText:[cellDict objectForKey:@"location_abbr"]];
+    [cell.tf_cutoff_datetime setText:[cellDict objectForKey:@"cutoff_date"]];
+    
 //    NSString *neighborhood = [cellDict objectForKey:@"neighborhood"];
 //    if (neighborhood != (id)[NSNull null] && neighborhood != nil )
 //    {
@@ -593,7 +600,10 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     } else {
         cell.subtitleLabel.text = @"";
     }
-
+    NSString *open_hours = [cellDict objectForKey:@"market_open_hours"];
+     if (open_hours != (id)[NSNull null] && open_hours.length != 0 ) {
+         cell.lbl_market_open_hours.text = open_hours;
+     }
     NSString *tmpIconName = [cellDict objectForKey:@"pictures"];
     if (tmpIconName != (id)[NSNull null] && tmpIconName.length != 0 )
     {
@@ -601,6 +611,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         NSURL *imageURL = [NSURL URLWithString:imageURLString];
         [[cell businessIconImageView] Compatible_setImageWithURL:imageURL placeholderImage:nil];
     }
+    cell.businessIconImageView.clipsToBounds  = true;
 
     cell.rateView.notSelectedImage = [UIImage imageNamed:@"Star.png"];
     cell.rateView.halfSelectedImage = [UIImage imageNamed:@"Star_Half_Empty.png"];
@@ -617,30 +628,30 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     }
 
 //    NSLog(@"%@",biz.opening_time);
-
-    if([cellDict objectForKey:@"driver_pickup_time"] == [NSNull null] || [cellDict objectForKey:@"cutoff_time"] == [NSNull null]) {
-        cell.lblOpenClose.hidden = true;
-        cell.lblOpenCloseDate.hidden = true;
-    }
-    else {
-        cell.lblOpenClose.hidden = false;
-        cell.lblOpenCloseDate.hidden = false;
-        int pickupLater = (int)[[cellDict objectForKey:@"pickup_counter_later"] integerValue];
-//        if([[APIUtility sharedInstance]isBusinessOpen: [cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"], objectForKey:@"pickup_counter_later]){
-        if([[APIUtility sharedInstance] isServiceAvailable:PickUpAtCounter during:[cellDict objectForKey:@"opening_time"] and:[cellDict objectForKey:@"closing_time"] withType:pickupLater]) {
-            cell.lblOpenClose.text = @"OPEN For SERVICES";
-            cell.lblOpenClose.textColor = [UIColor orangeColor];
-            cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:[cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]];
-
-        }else{
-            cell.lblOpenClose.text = @"CLOSED for SERVICES";
-            cell.lblOpenClose.textColor = [UIColor grayColor];
-//            cell.lblOpenCloseDate.text = @"";
-            cell.lblOpenCloseDate.textColor = [UIColor grayColor];
-            cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:[cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]];
-        }
-
-    }
+// zzz For farmers market
+//    if([cellDict objectForKey:@"driver_pickup_time"] == [NSNull null] || [cellDict objectForKey:@"cutoff_time"] == [NSNull null]) {
+//        cell.lbl_mkt_pickup_location.hidden = true;
+//        cell.lblOpenCloseDate.hidden = true;
+//    }
+//    else {
+//        cell.lbl_mkt_pickup_location.hidden = false;
+//        cell.lblOpenCloseDate.hidden = false;
+//        int pickupLater = (int)[[cellDict objectForKey:@"pickup_counter_later"] integerValue];
+////        if([[APIUtility sharedInstance]isBusinessOpen: [cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"], objectForKey:@"pickup_counter_later]){
+//        if([[APIUtility sharedInstance] isServiceAvailable:PickUpAtCounter during:[cellDict objectForKey:@"opening_time"] and:[cellDict objectForKey:@"closing_time"] withType:pickupLater]) {
+//            cell.lbl_mkt_pickup_location.text = @"OPEN For SERVICES";
+//            cell.lbl_mkt_pickup_location.textColor = [UIColor orangeColor];
+//            cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:[cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]];
+//
+//        }else{
+//            cell.lbl_mkt_pickup_location.text = @"CLOSED for SERVICES";
+//            cell.lbl_mkt_pickup_location.textColor = [UIColor grayColor];
+////            cell.lblOpenCloseDate.text = @"";
+//            cell.lblOpenCloseDate.textColor = [UIColor grayColor];
+//            cell.lblOpenCloseDate.text = [[APIUtility sharedInstance]getOpenCloseTime:[cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]];
+//        }
+//
+//    }
 
 //    if([[APIUtility sharedInstance]isOpenBussiness: [cellDict objectForKey:@"opening_time"] CloseTime:[cellDict objectForKey:@"closing_time"]]){
 //        cell.lblOpenClose.text = @"OPEN NOW";
@@ -668,7 +679,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 
     NSString *distanceText = [NSString stringWithFormat:@"%.1f mi",[[AppData sharedInstance]getDistance:lat longitude:lng]];
 //    cell.distance.text = [NSString stringWithFormat:@"%.1f mi",[[AppData sharedInstance]getDistance:lat longitude:lng]];
-    cell.distance.text= @"";
+    cell.distance.text= distanceText;
 
 //    NSString *neighborhood = [cellDict objectForKey:@"neighborhood"];
     NSString *businessAddress = [cellDict objectForKey:@"address"];
@@ -676,8 +687,10 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     {
         //        cell.neighborhoodTextField.text = neighborhood;
 //        cell.businessAddress.text = neighborhood;
-        NSString *businessAddressTest = [NSString stringWithFormat:@"%@     %@",businessAddress,distanceText];
-        cell.businessAddress.text = businessAddressTest;
+//        NSString *businessAddressTest = [NSString stringWithFormat:@"%@     %@",businessAddress,distanceText];
+//        cell.businessAddress.text = businessAddress;
+         cell.businessAddress.text = [NSString stringWithFormat:@"%@\n\n%@", businessAddress, [cellDict objectForKey:@"website"]];
+
     }
 
 //    cell.btnFevorite.tag = indexPath.row;
@@ -809,6 +822,10 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
     [businessArrays startGettingListofAllBusinessesForCorp:businessesForCorp];
     BusinessListViewController *businessListContorller = [[BusinessListViewController alloc] initWithNibName:@"BusinessListViewController" bundle:nil];
+    businessListContorller.title = [cellDict objectForKey:@"domain"];
+    [Corp sharedCorp].chosenCorp = ((Corp *)cellDict);//[marketListArray objectAtIndex:indexPath.row];
+    [AppData sharedInstance].market_mode = true;
+    [AppData sharedInstance].consumerPDTimeChosen = [cellDict objectForKey:@"pickup_date"];
     [self.navigationController pushViewController:businessListContorller animated:YES];
 
 }
@@ -842,7 +859,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 #pragma mark - UISearchResultsUpdating
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller{
-    [self.bizTableView reloadData];
+    [self.corpTableView reloadData];
 }
 
 #pragma mark -
@@ -866,7 +883,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     [self filterContentForSearchText:searchString scope:[[self.searchController.searchBar scopeButtonTitles] objectAtIndex:[self.searchController.searchBar selectedScopeButtonIndex]]];
 
 
-    [self.bizTableView reloadData];
+    [self.corpTableView reloadData];
 }
 
 

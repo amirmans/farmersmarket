@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -268,23 +266,22 @@
                             <rect key="frame" x="0.0" y="435" width="375" height="90"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ULU-GC-1tK">
-                                    <rect key="frame" x="89.5" y="0.0" width="196" height="20"/>
+                                    <rect key="frame" x="89.5" y="0.0" width="196" height="29"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PD time reminder" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="gqf-ac-p2B">
-                                            <rect key="frame" x="-5" y="0.0" width="201" height="20"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pick up at 2:00 in front of the store" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" adjustsFontForContentSizeCategory="YES" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="gqf-ac-p2B">
+                                            <rect key="frame" x="0.0" y="21.5" width="200" height="19.5"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="196" id="1px-bu-Z0m"/>
-                                        <constraint firstItem="gqf-ac-p2B" firstAttribute="top" secondItem="ULU-GC-1tK" secondAttribute="top" id="7TH-N6-1gg"/>
-                                        <constraint firstAttribute="trailing" secondItem="gqf-ac-p2B" secondAttribute="trailing" id="Hnn-Mr-SgY"/>
-                                        <constraint firstAttribute="height" constant="20" id="eiG-xH-2OD"/>
-                                        <constraint firstAttribute="bottom" secondItem="gqf-ac-p2B" secondAttribute="bottom" id="phd-we-fZe"/>
-                                        <constraint firstItem="gqf-ac-p2B" firstAttribute="leading" secondItem="ULU-GC-1tK" secondAttribute="leading" constant="-5" id="qU6-aA-9bi"/>
+                                        <constraint firstAttribute="trailing" secondItem="gqf-ac-p2B" secondAttribute="trailing" constant="-4" id="Hnn-Mr-SgY"/>
+                                        <constraint firstAttribute="height" constant="29" id="eiG-xH-2OD"/>
+                                        <constraint firstAttribute="bottom" secondItem="gqf-ac-p2B" secondAttribute="bottom" constant="-12" id="phd-we-fZe"/>
+                                        <constraint firstItem="gqf-ac-p2B" firstAttribute="leading" secondItem="ULU-GC-1tK" secondAttribute="leading" id="qU6-aA-9bi"/>
                                     </constraints>
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fk0-2g-a4T">
@@ -309,7 +306,7 @@
                                 <constraint firstItem="fk0-2g-a4T" firstAttribute="centerX" secondItem="7rk-MT-F0Q" secondAttribute="centerX" id="QVI-mb-KQi"/>
                                 <constraint firstAttribute="bottom" secondItem="fk0-2g-a4T" secondAttribute="bottom" constant="8" id="dVT-Fm-UJS"/>
                                 <constraint firstAttribute="height" constant="90" id="fkh-iG-9Ii"/>
-                                <constraint firstItem="fk0-2g-a4T" firstAttribute="top" secondItem="ULU-GC-1tK" secondAttribute="bottom" constant="17" id="xFJ-Te-TKn"/>
+                                <constraint firstItem="fk0-2g-a4T" firstAttribute="top" secondItem="ULU-GC-1tK" secondAttribute="bottom" constant="8" id="xFJ-Te-TKn"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -339,7 +336,7 @@
                 <constraint firstAttribute="bottom" secondItem="XFW-xw-EuY" secondAttribute="bottom" id="lZu-LB-cA9"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="26.5" y="51.5"/>
+            <point key="canvasLocation" x="26.399999999999999" y="50.824587706146929"/>
         </view>
     </objects>
     <resources>

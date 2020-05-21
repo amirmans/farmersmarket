@@ -106,7 +106,7 @@ Business *biz;
 
 
 - (void)becomeActive:(NSNotification *)notification {
-    NSLog(@"becoming active");
+    NSLog(@"BusinessList is becoming active");
 }
 
 - (void)viewDidLoad{
@@ -220,7 +220,9 @@ Business *biz;
 //    self.title = @"Biz Partners";
 
 //    self.navigationItem.titleView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tap-in-logo-navigation-bar"]];
-    self.title = NSBundle.mainBundle.infoDictionary[@"CFBundleDisplayName"]; //@"Tap-In Here";
+    if (self.title.length < 1)
+        self.title = NSBundle.mainBundle.infoDictionary[@"CFBundleDisplayName"];
+    //@"Tap-In Here";
 
     self.calloutView = [[SMCalloutView alloc] init];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
@@ -249,6 +251,11 @@ Business *biz;
     emptyCalloutView = [[UIView alloc] initWithFrame:CGRectZero];
 //    [self addMarkersToMap];
 
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [AppData sharedInstance].Current_Selected_Tab = @"0";
 }
 
 
@@ -605,7 +612,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         NSURL *imageURL = [NSURL URLWithString:imageURLString];
         [[cell businessIconImageView] Compatible_setImageWithURL:imageURL placeholderImage:nil];
     }
-
+    cell.tv_business_desc.text = [cellDict objectForKey:@"description"];
     cell.rateView.notSelectedImage = [UIImage imageNamed:@"Star.png"];
     cell.rateView.halfSelectedImage = [UIImage imageNamed:@"Star_Half_Empty.png"];
     cell.rateView.fullSelectedImage = [UIImage imageNamed:@"Star_Filled.png"];

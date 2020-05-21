@@ -1,10 +1,11 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '9.0'
 use_frameworks!
+inhibit_all_warnings!
 target 'ManageMyMarket' do
 pod 'AFNetworking', '~> 3.0'
 pod 'SBJson'
-pod 'SDWebImage'
+pod 'SDWebImage', '~> 3.8'
 pod 'AsyncImageView'
 pod 'MBProgressHUD'
 pod 'Reachability'

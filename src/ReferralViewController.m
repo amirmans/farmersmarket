@@ -100,7 +100,7 @@
     // Do any additional setup after loading the view from its nib.
     referralInstructionTextView.text = @"We will send an email to your friend.  Once your friend registers and orders, you'll be awarded 100 points\n(value of $5).\nThank you for being a loyal customer.";
     
-    referralMessageTextView.text =@"Hi,\nJust wanted to let you know how I get my lunch at work.\nI use the \“Tap-In Here\” app ( http://www.bit.ly/TapInHere).\nI like the quality and the variety of food.  The food is always on time and it is hot.\nOn top of that I can accumulate reward points. \nIf you download and use it, I will get points too.  Enjoy!";
+    referralMessageTextView.text =@"Hi,\nJust wanted to let you know how I shop from local framers.\nI use the \“Tap4Markets\” app ( http://www.bit.ly/TapInHere).\nI like how easy, robust and safe it is. \nOn top of that I can accumulate reward points. \nIf you download and use it, I will get points too.  Enjoy!";
     
     self.referralMessageTextView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     self.referralMessageTextView.layer.borderWidth = 1.0;

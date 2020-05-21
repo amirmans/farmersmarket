@@ -30,6 +30,7 @@
 //#import "HomeViewController.h"
 #import "MarketListViewController.h"
 #import "ReferralViewController.h"
+#import "Corp.h"
 
 @interface AppDelegate () {
     BusinessNotificationTableViewController *notificationController;
@@ -67,6 +68,7 @@ static AppDelegate *sharedObj;
 
     [AppData sharedInstance].Current_Selected_Tab = @"0";
     [AppData sharedInstance].is_Profile_Changed = false;
+    [AppData sharedInstance].market_mode = false;
 //    [GMSServices provideAPIKey:@"AIzaSyD7WfHjPssiG_nJi5P0rF4GJHUxxrFCono"];
 //      [GMSServices provideAPIKey:@"AIzaSyAnP9ELVL1xHQqJGhba_3gH9nWLXV5N5n8"];
     [[NSUserDefaults standardUserDefaults] setValue:@(NO) forKey:@"_UIConstraintBasedLayoutLogUnsatisfiable"];
@@ -194,7 +196,7 @@ static AppDelegate *sharedObj;
     self.tt_tabBarController = [[UITabBarController alloc] init];
 
 //    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, chatNav, consumerProfileViewController, notificationNav, pointsViewController, nil];
-    self.tt_tabBarController.viewControllers = [[NSArray alloc] initWithObjects:enterBusinessNav, /*chatNav,*/ profileNav, notificationNav, refrerralNav, pointsViewController, nil];
+    self.tt_tabBarController.viewControllers = [[NSArray alloc] initWithObjects:enterBusinessNav, /*chatNav,*/ profileNav, /*notificationNav, */refrerralNav, pointsViewController, nil];
 
 //    self.tt_tabBarController.tabBar.tintColor = [UIColor whiteColor];
     self.tt_tabBarController.tabBar.tintColor = [UIColor colorWithDisplayP3Red:249.0/255.0 green:122.0/255.0 blue:18.0/255.0 alpha:1.0];
@@ -251,9 +253,9 @@ static AppDelegate *sharedObj;
 
 -(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
-    NSString *myString = [NSString stringWithFormat:[CLLocationManager locationServicesEnabled] ? @"YES" : @"NO"];
-    NSLog(@"%@",myString);
-    NSLog(@"LocationManagerStatus %i",[CLLocationManager authorizationStatus]);
+//    NSString *myString = [NSString stringWithFormat:[CLLocationManager locationServicesEnabled] ? @"YES" : @"NO"];
+//    NSLog(@"%@",myString);
+//    NSLog(@"LocationManagerStatus %i",[CLLocationManager authorizationStatus]);
 
 }
 
@@ -367,7 +369,77 @@ static AppDelegate *sharedObj;
   
         if([currenttab isEqualToString:@"1"] && ProfileChanged)
         {
-            [self showAlert:@"Alert" :@"Unsaved information in the profile page.\nLeave page?" : 0];
+            [self showAlert:@"Alert" :@"Unsaved information in the profile page.\nPlease choose bottons on the page to save or cancel" : 0];
+            
+//            UIWindow* topWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//                            topWindow.rootViewController = [UIViewController new];
+//                            topWindow.windowLevel = UIWindowLevelAlert + 1;
+//
+//                            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Alert" message:@"Possible unsaved information in the profile page.\nLeave page?" preferredStyle:UIAlertControllerStyleAlert];
+//
+//                            [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",@"confirm") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//                                // continue your work
+//                                [AppData sharedInstance].is_Profile_Changed = false;
+//                                // important to hide the window after work completed.
+//                                // this also keeps a reference to the window until the action is invoked.
+//                                topWindow.hidden = YES; // if you want to hide the topwindow then use this
+//                //                topWindow = nil; // if you want to remove the topwindow then use this
+//                            }]];
+//                            [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",@"confirm") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//                                            // continue your work
+//                                            // important to hide the window after work completed.
+//                                            // this also keeps a reference to the window until the action is invoked.
+//                                topWindow.hidden = YES; // if you want to hide the topwindow then use this
+////                                            topWindow = nil; // if you want to remove the topwindow then use this
+//                                [self.tt_tabBarController.delegate tabBarController:tabBarController didSelectViewController:viewController];
+//
+//                            }]];
+//
+//
+//                            [topWindow makeKeyAndVisible];
+//                            [topWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+//
+//
+//
+            
+            
+            
+            
+            
+            
+            
+//            [self alertWithResponse:^(BOOL didCancel) {
+//                if(didCancel) {
+//                    //alert returned Cancel
+//
+//                } else {
+//                    //alert returned OK
+//                    [AppData sharedInstance].is_Profile_Changed = false;
+//
+//                }
+//            }];
+//
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             
 //            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Confirmation!"
 //                                                                           message:@"You have unsaved information in the profile page.\nLeave page?"
@@ -395,11 +467,21 @@ static AppDelegate *sharedObj;
 //            [alertWindow makeKeyAndVisible];
 //            [alertWindow.rootViewController presentViewController:alert animated:YES completion:nil];
             
-        } else{
+        } else if ([currenttab isEqualToString:@"5"])
+        {
+//            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert" message:@"You have NOT placed your order yet. Are you sure you want to exit the page?" preferredStyle:  UIAlertControllerStyleAlert];
+//            UIAlertAction *defaultAction =[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction* action){}];
+//            [alert addAction:defaultAction];
+//            [self persentViewController:alert animaited:YES completion:nil];
+//
+//        }
+//        else {
+//            returnVal = TRUE;
+//        }
+            [self showAlert:@"Alert" :@"You have NOT placed your order yet.\nPlease use the back button to get back to where you find.": 0];
+        } else {
             returnVal = TRUE;
         }
-  
-
 //    } else if (tabBarController.tabBar.selectedItem.tag == 1){
 //        [AppData sharedInstance].Current_Selected_Tab = @"1";
 //         returnVal = TRUE;
@@ -675,7 +757,7 @@ static AppDelegate *sharedObj;
 
     NSString* workEmail = consumerInfo[EmailWorkAddressKey];
     [self getAllCorps];
-    [self getCorps:workEmail];
+//    [self getCorps:workEmail];
 }
 
 
@@ -779,6 +861,8 @@ static AppDelegate *sharedObj;
 
         [[DataModel sharedDataModelManager] setDeviceToken:newToken];
         serverManager = nil;
+    
+    [Corp sharedCorp].chosenCorp = nil;
 //    }
 }
 
@@ -884,6 +968,38 @@ static AppDelegate *sharedObj;
 //        MenuItemViewController *menuItemVC = [[MenuItemViewController alloc] initWithNibName:nil bundle:nil];
 //        [navController.visibleViewController.navigationController pushViewController:menuItemVC animated:true];
 //    }
+}
+
+- (void)alertWithResponse:(void (^)(BOOL didCancel))response {
+                UIWindow* topWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+                topWindow.rootViewController = [UIViewController new];
+                topWindow.windowLevel = UIWindowLevelAlert + 1;
+
+                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Alert" message:@"Possible unsaved information in the profile page.\nLeave page?" preferredStyle:UIAlertControllerStyleAlert];
+
+                [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",@"confirm") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    // continue your work
+                    [AppData sharedInstance].is_Profile_Changed = false;
+                    // important to hide the window after work completed.
+                    // this also keeps a reference to the window until the action is invoked.
+                    topWindow.hidden = YES; // if you want to hide the topwindow then use this
+    //                topWindow = nil; // if you want to remove the topwindow then use this
+//                    returnVal= true;
+    //                return false;
+                }]];
+                [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",@"confirm") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                                // continue your work
+//                    returnVal = false;
+                                // important to hide the window after work completed.
+                                // this also keeps a reference to the window until the action is invoked.
+                    topWindow.hidden = YES; // if you want to hide the topwindow then use this
+                //                topWindow = nil; // if you want to remove the topwindow then use this
+                    
+                }]];
+                    
+
+                [topWindow makeKeyAndVisible];
+                [topWindow.rootViewController presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)showAlert:(NSString *)Title :(NSString *)Message :(int)CurrentTab{

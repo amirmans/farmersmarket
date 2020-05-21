@@ -19,8 +19,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *businessType;
 //@property (strong, nonatomic) IBOutlet UILabel *businessAddress;
 @property (strong, nonatomic) IBOutlet UILabel *distance;
-@property (strong, nonatomic) IBOutlet UILabel *lblOpenCloseDate;
-@property (weak, nonatomic) IBOutlet UILabel *lblOpenClose;
+@property (strong, nonatomic) IBOutlet UILabel *lbl_market_open_hours;
+@property (strong, nonatomic) IBOutlet UILabel *lbl_mkt_pickup_location;
 @property (strong, nonatomic) IBOutlet UITextView *businessAddress;
+@property (strong, nonatomic) IBOutlet UITextField *tf_cutoff_datetime;
+@property (strong, nonatomic) IBOutlet UITextField *tf_corp_website;
 
 @end

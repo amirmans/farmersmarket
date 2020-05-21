@@ -25,6 +25,7 @@
 #import "CateringViewController.h"
 #import "CurrentBusiness.h"
 #import "UIAlertView+TapTalkAlerts.h"
+#import "Corp.h"
 
 
 @interface BusinessServicesViewController  (){
@@ -43,6 +44,8 @@
 
 @synthesize biz;
 @synthesize timerToLoadProducts;
+@synthesize tv_address, tv_website;
+
 
 
 UIBarButtonItem *btn_heart;
@@ -418,24 +421,29 @@ UIBarButtonItem *btn_heart;
 //    [self getDistanceFromLocation:businessDataObj.address];
 
 //    self.busicessBackgroundImage.image = businessDataObj.bg_image;
-    
-    self.lbl_Title.text = biz.address;
-    [self.btn_Address setTitle:biz.address forState:UIControlStateNormal];
+    self.lbl_cutoff_datetime.text = [[Corp sharedCorp].chosenCorp objectForKey:@"cutoff_date"];
+    NSString *bizAddress = [[Corp sharedCorp].chosenCorp objectForKey:@"address"];
+    if (biz.section_in_map.length >0) {
+        bizAddress = [bizAddress stringByAppendingFormat:@" Section: %@", biz.section_in_map];
+    }
+    [self.tv_address setText:[[Corp sharedCorp].chosenCorp objectForKey:@"address"]];
     
     if([biz.website  isEqual: @""]) {
-        [self.btn_Website setTitle:@"" forState:UIControlStateNormal];
+        [self.tv_website setText:@""];
     }
     else {
-        [self.btn_Website setTitle:biz.website forState:UIControlStateNormal];
+        [self.tv_website setText:biz.website];
     }
     
-    self.lbl_SubTitle.text = biz.customerProfileName;
-    [self.lbl_SubTitle sizeToFit];
+    self.tf_pickup_datatime.text = [Corp sharedCorp].chosenCorp[@"pickup_date"];
+    [self.tf_pickup_location setText:[[Corp sharedCorp].chosenCorp objectForKey:@"location_abbr"]];
+    self.lbl_businessType.text = biz.businessTypes;
+    [self.lbl_businessType sizeToFit];
     NSLog(@"%@",biz.customerProfileName);
     NSLog(@"%@ %.1f m",biz.state,[[AppData sharedInstance]getDistance:biz.lat longitude:biz.lng]);
 //    self.lbl_StateAndDist.text = [NSString stringWithFormat:@"%@ %.1f m",biz.state,[[AppData sharedInstance]getDistance:biz.lat longitude:biz.lng]];
     
-    self.lbl_StateAndDist.text = biz.neighborhood;
+//    self.lbl_distance.text = [self getDistanceFromLocation:[[Corp sharedCorp].chosenCorp objectForKey:@"address"]];
 
     BgPictureArray = [[biz.picturesString componentsSeparatedByCharactersInSet:
                                       [NSCharacterSet characterSetWithCharactersInString:@", "]] mutableCopy];
@@ -443,21 +451,26 @@ UIBarButtonItem *btn_heart;
     
 //    if([[APIUtility sharedInstance]isBusinessOpen:biz.opening_time CloseTime:biz.closing_time]) {
     if (!((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
-        self.lbl_OpenNow.hidden = false;
+        self.lbl_cutoff_datetime.hidden = false;
         self.lbl_time.hidden = false;
         if([[APIUtility sharedInstance] isServiceAvailable:PickUpAtCounter during:biz.opening_time and:biz.closing_time withType:(int)biz.pickup_counter_later]) {
-            self.lbl_OpenNow.text = @"OPEN NOW";
-            self.lbl_OpenNow.textColor = [UIColor orangeColor];
+            self.lbl_cutoff_datetime.text = @"OPEN NOW";
+            self.lbl_cutoff_datetime.textColor = [UIColor orangeColor];
         }else{
-            self.lbl_OpenNow.text = @"CLOSED";
-            self.lbl_OpenNow.textColor = [UIColor grayColor];
+            self.lbl_cutoff_datetime.text = @"CLOSED";
+            self.lbl_cutoff_datetime.textColor = [UIColor grayColor];
         }
-        self.lbl_time.text = [[APIUtility sharedInstance]getOpenCloseTime:biz.opening_time CloseTime:biz.closing_time];
+        //zzzz changed for manage my market
+//        self.lbl_time.text = [[APIUtility sharedInstance]getOpenCloseTime:biz.opening_time CloseTime:biz.closing_time];
+        self.lbl_time.text = [[Corp sharedCorp].chosenCorp objectForKey:@"market_open_hours"];
         //    [self setSliderForImage];
-    }else {
-        self.lbl_OpenNow.hidden = true;
-        self.lbl_time.hidden = true;
+    } else {
+//        self.lbl_cutoff_datetime.hidden = true;
+//        self.lbl_time.hidden = true;
     }
+           //zzzz changed for manage my market
+    //        self.lbl_time.text = [[APIUtility sharedInstance]getOpenCloseTime:biz.opening_time CloseTime:biz.closing_time];
+            self.lbl_time.text = [[Corp sharedCorp].chosenCorp objectForKey:@"market_open_hours"];
 }
 
 - (void) setSliderForImage{
@@ -487,10 +500,10 @@ UIBarButtonItem *btn_heart;
                 imageRelativePathString = [imageRelativePathString stringByTrimmingCharactersInSet:
                                            [NSCharacterSet whitespaceAndNewlineCharacterSet]];
                 NSString *imageURLString = BusinessCustomerIndividualDirectory;
-                imageURLString = [imageURLString stringByAppendingFormat:@"%i/%@",biz.businessID, imageRelativePathString];
+                imageURLString = [imageURLString stringByAppendingFormat:@"%i/%@",self->biz.businessID, imageRelativePathString];
                 image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURLString]]];
                 if (image != nil) {
-                    [_datasource addObject:image];
+                    [self->_datasource addObject:image];
 //                    [picturesView reloadData];
                 }
                 else {
@@ -503,7 +516,7 @@ UIBarButtonItem *btn_heart;
             //        [MBProgressHUD hideHUDForView:self.view animated:YES];
             dispatch_sync(dispatch_get_main_queue(), ^{
                 [self.ImageProgress stopAnimating];
-                [picturesView start];
+                [self->picturesView start];
             });
         });
     }
@@ -560,7 +573,7 @@ UIBarButtonItem *btn_heart;
                     businessDetail.quantity = [[orderDetail valueForKey:@"quantity"] integerValue];
                     businessDetail.ti_rating = [[orderDetail valueForKey:@"ti_rating"] doubleValue];
                     businessDetail.note = [orderDetail valueForKey:@"note"];
-                    previousOrderCount = previousOrderCount + [[orderDetail valueForKey:@"quantity"] integerValue];
+                    self->previousOrderCount = previousOrderCount + [[orderDetail valueForKey:@"quantity"] integerValue];
                     
                     NSArray *optionsArray = [orderDetail valueForKey:@"options"];
                     NSString *selectedItemString = @"";
@@ -576,7 +589,7 @@ UIBarButtonItem *btn_heart;
                     businessDetail.product_option = selectedItemString;
                     businessDetail.selected_ProductID_array = [NSMutableArray arrayWithArray:productID_array];
                     
-                    [previousOrderArray addObject:businessDetail];
+                    [self->previousOrderArray addObject:businessDetail];
                     productID_array = nil;
                 }
             }
@@ -647,27 +660,34 @@ UIBarButtonItem *btn_heart;
 //        }
         
         
-        for (TPBusinessDetail *businessDetail in previousOrderArray) {
-            [self addItemToCoreData:businessDetail];
-        }
-        
+//        for (TPBusinessDetail *businessDetail in previousOrderArray) {
+//            [self addItemToCoreData:businessDetail];
+//        }
+//        
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Your previous order was added to your cart, Proceed to" message:@"" preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *menuAction = [UIAlertAction actionWithTitle:@"Menu" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [[CurrentBusiness sharedCurrentBusinessManager].business startLoadingBusinessProductCategoriesAndProducts];
             MenuItemViewController *menuViewController = [[MenuItemViewController alloc] initWithNibName:@"MenuItemViewController" bundle:nil];
             [self.navigationController pushViewController:menuViewController animated:YES];
+            
+            for (TPBusinessDetail *businessDetail in previousOrderArray) {
+                [self addItemToCoreData:businessDetail];
+            }
         }];
         
         UIAlertAction *myCartAction = [UIAlertAction actionWithTitle:@"My Order" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             CartViewController *TotalCartItemVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
             [self.navigationController pushViewController:TotalCartItemVC animated:YES];
+            for (TPBusinessDetail *businessDetail in previousOrderArray) {
+                [self addItemToCoreData:businessDetail];
+            }
 //            TotalCartItemController *TotalCartItemVC = [[TotalCartItemController alloc] initWithNibName:@"TotalCartItemController" bundle:nil];
 //            [self.navigationController pushViewController:TotalCartItemVC animated:YES];
         }];
         
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            
+
         }];
         
         [alert addAction:menuAction];
@@ -748,52 +768,6 @@ UIBarButtonItem *btn_heart;
 
 #pragma mark - Button Actions
 
-- (IBAction)btn_Website_clicked:(id)sender {
-    
-     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:biz.website]];
-}
-
-- (IBAction)btn_GetDirection_Cllcked:(id)sender {
-    
-//    CLLocationCoordinate2D coord1;
-//    CLLocationCoordinate2D coord2;
-    
-    NSLog(@"Lat :- %f",biz.lat);
-    NSLog(@"Lat :- %f",biz.lng);
-    
-//    double dist = getDistanceMetresBetweenLocationCoordinates(coord1,coord2);
-//    double dist = [self getDistanceMetresBetweenLocationCoordinates:coord1 :coord2];
-
-    CLLocation* location = [[CLLocation alloc] initWithLatitude:biz.lat longitude:biz.lng];
-
-    Class itemClass = [MKMapItem class];
-    if (itemClass && [itemClass respondsToSelector:@selector(openMapsWithItems:launchOptions:)]) {
-        MKMapItem *currentLocation = [MKMapItem mapItemForCurrentLocation];
-        MKMapItem *toLocation = [[MKMapItem alloc] initWithPlacemark:[[MKPlacemark alloc] initWithCoordinate:location.coordinate addressDictionary:nil]];
-        toLocation.name = biz.businessName;
-        [MKMapItem openMapsWithItems:[NSArray arrayWithObjects:currentLocation, toLocation, nil]
-                       launchOptions:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:MKLaunchOptionsDirectionsModeDriving, [NSNumber numberWithBool:YES], nil]
-                                                                 forKeys:[NSArray arrayWithObjects:MKLaunchOptionsDirectionsModeKey, MKLaunchOptionsShowsTrafficKey, nil]]];
-    }
-//    NSLog(@"%f",dist);
-}
-
-- (IBAction)btn_CallClicked:(id)sender {
-    
-    NSString *str = [(UIButton *)sender currentTitle];
-    NSString *cleanedString = [[str componentsSeparatedByCharactersInSet:[[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet]] componentsJoinedByString:@""];
-    
-    NSURL *phoneUrl = [NSURL URLWithString:[NSString  stringWithFormat:@"telprompt:%@",cleanedString]];
-    if ([[UIApplication sharedApplication] canOpenURL:phoneUrl]) {
-        [[UIApplication sharedApplication] openURL:phoneUrl];
-    }
-    else {
-        [self showAlert:@"Alert" :@"Call facility is not available!!!"];
-//        UIAlertView *callAlert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Call facility is not available!!!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
-//        [callAlert show];
-    }
-}
-
 //double getDistanceMetresBetweenLocationCoordinates(
 //                                                   CLLocationCoordinate2D coord1,
 //                                                   CLLocationCoordinate2D coord2)
@@ -808,27 +782,6 @@ UIBarButtonItem *btn_heart;
         CLLocation* location2 = [[CLLocation alloc]initWithLatitude: coord2.latitude longitude: coord2.longitude];
         return [location1 distanceFromLocation: location2];
 }
-
-
-- (IBAction)btn_AddressClicked:(id)sender {
-    NSString *baseUrl = @"http://maps.apple.com/?q=";
-    
-    NSString *addressString = self.btn_Address.titleLabel.text;
-    
-    NSString *encodedUrl = [addressString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    
-    NSString *finalurl = [NSString stringWithFormat:@"%@%@",baseUrl,encodedUrl];
-    
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:finalurl]];
-}
-
-- (IBAction)btn_WebsiteClicked:(id)sender {
-    
-    NSString *websiteUrl = self.btn_Website.titleLabel.text;
-    
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:websiteUrl]];
-}
-
 
 - (void)textBusinessCustomer {
     NSString *my_sms_no = biz.sms_no;

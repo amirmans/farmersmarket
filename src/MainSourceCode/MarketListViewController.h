@@ -29,7 +29,7 @@
 @property (strong, nonatomic) SMCalloutView *calloutView;
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *listBusinessesActivityIndicator;
-@property (strong, nonatomic) IBOutlet UITableView *bizTableView;
+@property (strong, nonatomic) IBOutlet UITableView *corpTableView;
 @property (strong, nonatomic) IBOutlet GMSMapView *mapView;
 
 @end

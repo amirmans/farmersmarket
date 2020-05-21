@@ -25,20 +25,21 @@
 }
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *ImageProgress;
 
-@property (weak, nonatomic) IBOutlet UILabel *lbl_Title;
+@property (weak, nonatomic) IBOutlet UITextView *tv_address;
 
-@property (weak, nonatomic) IBOutlet UIButton *btn_Address;
-@property (weak, nonatomic) IBOutlet UIButton *btn_Website;
-
-@property (weak, nonatomic) IBOutlet UILabel *lbl_SubTitle;
-@property (weak, nonatomic) IBOutlet UILabel *lbl_StateAndDist;
+@property (weak, nonatomic) IBOutlet UITextView *tv_website;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_businessType;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_distance;
+@property (weak, nonatomic) IBOutlet UITextField *tf_pickup_datatime;
 
 @property(atomic, retain) Business *biz;
-//@property (strong, nonatomic) UIImage *cellBackGroundImageForCustomer;
+//@property (strong, nonatomic) UIImage *cellBackGroundImageForCustomer;i
 
 @property (strong, nonatomic) NSTimer *timerToLoadProducts;
 
 - (id)initWithData:(NSDictionary *)allChoices :(NSArray *)mainChoices :(NSString *)chosenMainMenu forBusiness:(Business *)argBiz;
+
+- (void) getDistanceFromLocation : (NSString *)address;
 
 //-(double)getDistanceMetresBetweenLocationCoordinates;
 
@@ -46,29 +47,20 @@
 
 @property (strong, nonatomic) IBOutlet UIView *DirectionView;
 
-@property (strong, nonatomic) IBOutlet UIButton *btn_GetDirection;
-- (IBAction)btn_GetDirection_Cllcked:(id)sender;
+@property (weak, nonatomic) IBOutlet UITextField *tf_pickup_location;
 
-- (IBAction)btn_CallClicked:(id)sender;
-@property (strong, nonatomic) IBOutlet UIButton *btn_Call;
-- (IBAction)btn_Website_clicked:(id)sender;
-
-@property (strong, nonatomic) IBOutlet UIView *addressView;
+@property (strong, nonatomic) IBOutlet UIView *topView;
 @property (strong, nonatomic) IBOutlet UILabel *lbl_time;
 
-@property (strong, nonatomic) IBOutlet UILabel *lbl_OpenNow;
+@property (strong, nonatomic) IBOutlet UILabel *lbl_cutoff_datetime;
 @property (strong, nonatomic) IBOutlet UILabel *lbl_Address;
-@property (strong, nonatomic) IBOutlet UIView *imageView;
+@property (strong, nonatomic) IBOutlet UIImageView *imageView;
 
 @property (strong, nonatomic) IBOutlet UIImageView *img_BusinessImage;
 @property (strong, nonatomic) IBOutlet UITableView *businessTableView;
 @property (strong, nonatomic) IBOutlet UILabel *lblHeaderTitle;
 
 @property (strong, nonatomic) IBOutlet UIImageView *busicessBackgroundImage;
-
-- (IBAction)btn_AddressClicked:(id)sender;
-
-- (IBAction)btn_WebsiteClicked:(id)sender;
 
 @property(strong,nonatomic)NSArray *img_Array;
 @property(strong,nonatomic)NSArray *name_Array;

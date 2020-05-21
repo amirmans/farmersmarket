@@ -19,7 +19,7 @@
 #import "Consts.h"
 #import "Business.h"
 #import <Stripe/Stripe.h>
-#import "TPReceiptController.h"
+//#import "TPReceiptController.h"
 #import "SavedCardTableCell.h"
 #import "AppDelegate.h"
 #import "STPCardValidator.h"

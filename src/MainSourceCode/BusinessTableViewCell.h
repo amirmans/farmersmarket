@@ -22,5 +22,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblOpenCloseDate;
 @property (weak, nonatomic) IBOutlet UILabel *lblOpenClose;
 @property (strong, nonatomic) IBOutlet UITextView *businessAddress;
+@property (strong, nonatomic) IBOutlet UITextView *tv_business_desc;
 
 @end

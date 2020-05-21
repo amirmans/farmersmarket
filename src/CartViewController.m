@@ -146,6 +146,8 @@ double deliveryCharge = 0.0;        // Delivery charge
     // Do any additional setup after loading the view from its nib.
 }
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [AppData sharedInstance].Current_Selected_Tab = @"5";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     defaultCardData = [defaults valueForKey:StripeDefaultCard];
     [IQKeyboardManager sharedManager].enable = NO;

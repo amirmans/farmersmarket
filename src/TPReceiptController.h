@@ -48,6 +48,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *lblBusinessName;
 @property (strong, nonatomic) IBOutlet UILabel *lbl_emailSentShortly;
 @property (strong, nonatomic) IBOutlet UILabel *lbl_alertWhenReady;
+@property (strong, nonatomic) IBOutlet UITextField *tf_tax_amt;
 
 @property(strong,nonatomic) NSString *currency_code;
 @property  (strong,nonatomic) NSString *currency_symbol;

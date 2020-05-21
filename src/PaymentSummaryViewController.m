@@ -7,6 +7,7 @@
 //
 
 #import "PaymentSummaryViewController.h"
+#import "Corp.h"
 
 @interface PaymentSummaryViewController (){
     NSString *stringUid;
@@ -183,7 +184,11 @@ double deliveryAmountValue; //Delievery amount value in $
     [self setNoTip];
     flagRedeemPointVal = false;
     [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_unchecked"] forState:UIControlStateNormal];
-    _waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
+    //zzz
+    //changed for Manage My Market
+//    _waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
+    self.waitTimeLabel.text = [NSString stringWithFormat:@"Pickup at %@ at %@", [[Corp sharedCorp].chosenCorp objectForKey:@"delivery_location"],
+                               [[Corp sharedCorp].chosenCorp objectForKey:@"pickup_date"] ];
     [self getDefaultCardData];
     [self paymentSummary];
     
@@ -390,26 +395,30 @@ double deliveryAmountValue; //Delievery amount value in $
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
     cartTotalValue = [self.subTotal doubleValue];
     taxVal = ([self.subTotal doubleValue]*[billBusiness.tax_rate doubleValue])/100;
+    if ([AppData sharedInstance].market_mode) {
+        taxVal = ([self.subTotal doubleValue]*[[Corp sharedCorp].chosenCorp[@"tax_rate"] doubleValue])/100;
+    }
     self.lblTaxRate.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,taxVal];
 
     totalVal = [self.subTotal doubleValue] + taxVal + deliveryAmountValue - promotionalamt;
     self.lblSubTotalPrice.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,totalVal];
     
 //    self.lblDeliveryAmount.hidden = false;
-    
-    if ( ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
-        NSMutableArray *corps = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
-        short corpIndex = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex;
-        [AppData sharedInstance].consumerPDTimeChosen = [[corps objectAtIndex:corpIndex] valueForKey:@"delivery_time"];
-    }
-    NSString *p_time = [AppData sharedInstance].consumerPDTimeChosen;
-    NSDateFormatter *displayFormatter = [[NSDateFormatter alloc] init];
-    displayFormatter.dateFormat = TIME24HOURFORMAT;
-    NSDate *tempDate = [displayFormatter dateFromString:p_time];
-    if (tempDate !=nil ) {
-        displayFormatter.dateFormat = TIME12HOURFORMAT;
-        p_time = [displayFormatter stringFromDate:tempDate];
-    }
+    // zzzz changed for manage my market.
+    NSString *p_time = [Corp sharedCorp].chosenCorp[@"pickup_date"];
+//    if ( ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
+//        NSMutableArray *corps = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
+//        short corpIndex = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex;
+//        [AppData sharedInstance].consumerPDTimeChosen = [[corps objectAtIndex:corpIndex] valueForKey:@"delivery_time"];
+//    }
+//    NSString *p_time = [AppData sharedInstance].consumerPDTimeChosen;
+//    NSDateFormatter *displayFormatter = [[NSDateFormatter alloc] init];
+//    displayFormatter.dateFormat = TIME24HOURFORMAT;
+//    NSDate *tempDate = [displayFormatter dateFromString:p_time];
+//    if (tempDate !=nil ) {
+//        displayFormatter.dateFormat = TIME12HOURFORMAT;
+//        p_time = [displayFormatter stringFromDate:tempDate];
+//    }
     
     
     
@@ -481,6 +490,7 @@ double deliveryAmountValue; //Delievery amount value in $
         self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Pickup at %@ from a parking space.",p_time];
     }
     
+    self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Pickup at %@ at %@", [Corp sharedCorp].chosenCorp[@"delivery_location"], p_time];
 }
 //Check Promotion Code available
 -(void)checkPromoCodeForUser {

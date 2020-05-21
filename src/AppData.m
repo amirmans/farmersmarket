@@ -14,6 +14,7 @@ static AppData *sharedObj;
 
 
 @implementation AppData
+@synthesize market_mode;
 
 + (AppData *) sharedInstance
 {

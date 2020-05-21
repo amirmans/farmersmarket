@@ -100,7 +100,8 @@ static NSString *const Default_Process_Time = @"Average wait time: 25 min";
 // pick up  and delivery modes
 #define PICKUP_COUNTER @"1"
 #define PICKUP_LOCATION @"2"
-#define PICKUP_BOTH @"3"
+#define PICKUP_CURBSIDE @"3"
+#define PICKUP_BOTH @"4"
 
 #define DELIVERY_TABLE @"4"
 #define DELIVERY_LOCATION @"8"
@@ -150,7 +151,7 @@ static const int Pickup_open = 8;
 static const int CorpType = 1;
 static const int IndividualType = 0;
 
-static const int Points_Tabbar_Position = 4;
+static const int Points_Tabbar_Position = 3;  // change when you change the tabbar items.
 
 // compatibility between different ios
 #ifdef __IPHONE_8_0

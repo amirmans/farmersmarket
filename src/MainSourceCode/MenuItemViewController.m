@@ -64,7 +64,9 @@ bool shouldOpenOptionMenu = false;
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-        [[NSNotificationCenter defaultCenter] addObserver:self
+    [AppData sharedInstance].Current_Selected_Tab = @"0";
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(BusinessListAPICall)
                                                      name:@"GotProductData"
                                                    object:nil];

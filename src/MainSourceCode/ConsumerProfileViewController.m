@@ -606,7 +606,7 @@ static NSArray *consumerProfileDataArray = nil;
     NSString *urlString = ConsumerProfileServer;
     AFHTTPSessionManager *manager;
     manager = [AFHTTPSessionManager manager];
-
+    
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
 

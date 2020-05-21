@@ -21,8 +21,8 @@
 {
     [super setSelected:selected animated:animated];
     if (((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
-        _lblOpenCloseDate.hidden = true;
-        [_lblOpenClose setHidden:true];
+//        _lbl_market_open_hours.hidden = true;
+//        [_lbl_mkt_pickup_location setHidden:true];
     }
     // Configure the view for the selected state
 }

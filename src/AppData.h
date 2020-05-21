@@ -35,6 +35,7 @@
 @property (retain, nonatomic) NSString *consumerPDMethodChosen;
 @property (retain, nonatomic) NSString *Current_Selected_Tab;
 @property (assign, atomic) BOOL is_Profile_Changed;
+@property (assign, atomic) BOOL market_mode;
 - (NSDateFormatter *) setDateFormatter : (NSString *) dateFormat;
 - (void) locationManager ;
 

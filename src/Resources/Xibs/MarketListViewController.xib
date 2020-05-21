@@ -9,7 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MarketListViewController">
             <connections>
-                <outlet property="bizTableView" destination="4" id="3Nc-gQ-Gau"/>
+                <outlet property="corpTableView" destination="4" id="a7O-2E-mRU"/>
                 <outlet property="listBusinessesActivityIndicator" destination="JEF-X8-ZUf" id="aUJ-ey-lzV"/>
                 <outlet property="view" destination="AG0-dN-m2b" id="B5J-xg-B7Z"/>
             </connections>
@@ -22,7 +22,7 @@
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="JEF-X8-ZUf">
                     <rect key="frame" x="169" y="315" width="37" height="37"/>
                 </activityIndicatorView>
-                <tableView autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFit" bouncesZoom="NO" style="grouped" rowHeight="130" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="4">
+                <tableView autoresizesSubviews="NO" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFit" bouncesZoom="NO" style="grouped" rowHeight="310" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="4">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <connections>
