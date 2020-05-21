@@ -93,7 +93,7 @@
     NSLog(@"%@",[dateFormatter stringFromDate:[NSDate date]]);
     //zzz change for manage my market
 //    self.lblPickUpDate.text = [dateFormatter stringFromDate:[NSDate date]];
-    self.lblPickUpDate.text = [NSString stringWithFormat:@"%@ %@", @"Pickup at: ", [[Corp sharedCorp].chosenCorp objectForKey:@"pickup_date"]];
+    self.lblPickUpDate.text = [NSString stringWithFormat:@"%@ %@", @"Pickup on ", [[Corp sharedCorp].chosenCorp objectForKey:@"pickup_date"]];
     //zzzz changed for manage my market
 //    NSString* pd_time= [AppData sharedInstance].consumerPDTimeChosen;
     NSString* pd_time= [[Corp sharedCorp].chosenCorp objectForKey:@"pickup_date"];

@@ -369,7 +369,7 @@ static AppDelegate *sharedObj;
   
         if([currenttab isEqualToString:@"1"] && ProfileChanged)
         {
-            [self showAlert:@"Alert" :@"Unsaved information in the profile page.\nPlease choose bottons on the page to save or cancel" : 0];
+            [self showAlert:@"Alert" :@"Unsaved information in the profile.\nPlease use buttons to save or cancel" : 0];
             
 //            UIWindow* topWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 //                            topWindow.rootViewController = [UIViewController new];

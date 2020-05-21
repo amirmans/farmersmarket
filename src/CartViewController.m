@@ -342,7 +342,7 @@ double deliveryCharge = 0.0;        // Delivery charge
 -(void)setViewMovedUp:(BOOL)movedUp
 {
     [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:0.2]; // if you want to slide up the view
+    [UIView setAnimationDuration:0.1]; // if you want to slide up the view
     //Given size may not account for screen rotation
     CGRect rect = self.view.frame;
     if (movedUp)
@@ -351,14 +351,14 @@ double deliveryCharge = 0.0;        // Delivery charge
         // 2. increase the size of the view so that the area behind the keyboard is covered up.
 
 //        [self.view setFrame:CGRectMake(0,-115,rect.size.width,rect.size.height)];
-        rect.origin.y -= 180;
+        rect.origin.y -= 240;
         rect.size.height += kOFFSET_FOR_KEYBOARD;
     }
     else
     {
         // revert back to the normal state.
 //        [self.view setFrame:CGRectMake(0,115,rect.size.width,rect.size.height)];
-        rect.origin.y += 180;
+        rect.origin.y += 240;
         rect.size.height -= kOFFSET_FOR_KEYBOARD;
     }
 
