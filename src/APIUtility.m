@@ -101,10 +101,11 @@ static id sharedInstance;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
 
     if ([method isEqual:@"POST"]) {
     [manager POST:url
-       parameters:data progress:nil
+       parameters:data headers:headers progress:nil
           success:^(NSURLSessionDataTask *task, id responseObject) {
               NSLog(@"JSON: %@", responseObject);
               finished(responseObject);
@@ -116,7 +117,7 @@ static id sharedInstance;
           }];
     } else {
         [manager GET:url
-           parameters:data progress:nil
+           parameters:data headers:headers progress:nil
               success:^(NSURLSessionDataTask *task, id responseObject) {
                   NSLog(@"JSON: %@", responseObject);
                   finished(responseObject);
@@ -175,7 +176,8 @@ static id sharedInstance;
     [manager.requestSerializer setTimeoutInterval:timeInterval];
 
 //    NSLog(@"%@",data);
-    [manager GET:[NSString stringWithFormat:@"%@",BusinessDelivaryInformationServer] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
+    [manager GET:[NSString stringWithFormat:@"%@",BusinessDelivaryInformationServer] parameters:data headers:headers progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
@@ -209,8 +211,8 @@ static id sharedInstance;
     }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-
-    [manager GET:[NSString stringWithFormat:@"%@",OrderServerURL] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
+    [manager GET:[NSString stringWithFormat:@"%@",OrderServerURL] parameters:data headers:headers progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
@@ -245,9 +247,11 @@ static id sharedInstance;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
+    
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
 
     [manager POST:OrderServerURL
-       parameters:data progress:nil
+       parameters:data headers:headers progress:nil
           success:^(NSURLSessionTask *task, id responseObject) {
               NSLog(@"JSON: %@", responseObject);
               finished(responseObject);
@@ -269,8 +273,8 @@ static id sharedInstance;
 //    manager.requestSerializer = [AFJSONRequestSerializer serializer];
 //    manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-
-    [manager GET:[NSString stringWithFormat:@"%@",OrderServerURL] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
+    [manager GET:[NSString stringWithFormat:@"%@",OrderServerURL] parameters:data headers:headers progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
 
         if (finished) {
             finished(responseObject);
@@ -304,8 +308,8 @@ static id sharedInstance;
     }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-
-    [manager GET:[NSString stringWithFormat:@"%@",SetFavoriteServer] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
+    [manager GET:[NSString stringWithFormat:@"%@",SetFavoriteServer] parameters:data headers:headers progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
 
         if (finished) {
             finished(@{@"success":@"YES"});
@@ -341,8 +345,8 @@ static id sharedInstance;
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
 //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-
-    [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data progress: nil success:^(NSURLSessionTask *operation, id responseObject) {
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
+    [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data headers:headers progress: nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
@@ -378,8 +382,8 @@ static id sharedInstance;
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-
-    [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
+    [manager GET:urlString parameters:nil headers:headers progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
         }
@@ -414,9 +418,9 @@ static id sharedInstance;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
     [manager POST:Save_cc_info
-       parameters:param progress:nil
+       parameters:param headers:headers progress:nil
           success:^(NSURLSessionTask *task, id responseObject) {
               NSLog(@"JSON: %@", responseObject);
               finished(responseObject);
@@ -436,14 +440,29 @@ static id sharedInstance;
 //    NSError *error = [NSError alloc];
 //    NSData *data1 = [NSJSONSerialization dataWithJSONObject:param options:NSJSONWritingPrettyPrinted error:&error];
 
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    [manager.requestSerializer setTimeoutInterval:timeInterval];
+    [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
+    [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
+    
+    
+//    [manager.requestSerializer setTimeoutInterval:timeInterval];
+    
+    
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
 
-    [manager POST:remove_cc
-       parameters:param progress:nil
-          success:^(NSURLSessionTask *task, id responseObject) {
+    [manager POST:@"remove_cc.com" parameters:param
+            headers:headers progress:nil success:^(NSURLSessionTask *task, id responseObject)
+    
+
+//    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
+//    [manager POST:remove_cc parameters:param
+//          headers:headers progress:nil
+//          success:^(NSURLSessionTask *task, id responseObject)
+    {
               NSLog(@"JSON: %@", responseObject);
               finished(responseObject);
           }
@@ -464,8 +483,8 @@ static id sharedInstance;
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-
-    [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
+    [manager GET:urlString parameters:nil headers:headers progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         NSLog(@"get %@", responseObject);
         if (finished) {
             finished((NSDictionary*)responseObject);
@@ -502,8 +521,8 @@ static id sharedInstance;
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-
-    [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
+    [manager GET:urlString parameters:nil headers:headers progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         NSLog(@"get %@", responseObject);
         if (finished) {
             finished((NSDictionary*)responseObject);
@@ -542,8 +561,8 @@ static id sharedInstance;
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-
-    [manager GET:urlString parameters:nil progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
+    [manager GET:urlString parameters:nil headers:headers progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         NSLog(@"get %@", responseObject);
         if (finished) {
             finished((NSDictionary*)responseObject);
@@ -579,9 +598,9 @@ static id sharedInstance;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
     [manager POST:save_notifications
-       parameters:param progress:nil
+       parameters:param headers:headers progress:nil
           success:^(NSURLSessionDataTask *task, id responseObject) {
               NSLog(@"JSON: %@", responseObject);
               finished(responseObject);
@@ -904,8 +923,8 @@ static id sharedInstance;
     }
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-
-    [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
+    [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data headers:headers progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
         }

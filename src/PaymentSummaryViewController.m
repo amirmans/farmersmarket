@@ -187,7 +187,7 @@ double deliveryAmountValue; //Delievery amount value in $
     //zzz
     //changed for Manage My Market
 //    _waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
-    self.waitTimeLabel.text = [NSString stringWithFormat:@"Pickup at %@ at %@", [[Corp sharedCorp].chosenCorp objectForKey:@"delivery_location"],
+    self.waitTimeLabel.text = [NSString stringWithFormat:@"Pickup at %@ on %@", [[Corp sharedCorp].chosenCorp objectForKey:@"delivery_location"],
                                [[Corp sharedCorp].chosenCorp objectForKey:@"pickup_date"] ];
     [self getDefaultCardData];
     [self paymentSummary];
@@ -419,9 +419,9 @@ double deliveryAmountValue; //Delievery amount value in $
 //        displayFormatter.dateFormat = TIME12HOURFORMAT;
 //        p_time = [displayFormatter stringFromDate:tempDate];
 //    }
-    
-    
-    
+    if ( [AppData sharedInstance].market_mode) {
+        selectedButtonNumber = 5;
+    }
     if(selectedButtonNumber == 1){
         lblDeliveryLabel.text = @"Service charge:";
         if ([billBusiness.pickup_counter_charge rangeOfString:@"%"].location == NSNotFound)
@@ -475,7 +475,7 @@ double deliveryAmountValue; //Delievery amount value in $
         }
         self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Delivery to %@ at %@",consumerDeliveryLocation, p_time];
     }
-    else if(selectedButtonNumber == 4){
+    else if(selectedButtonNumber == 4) {
         if ([billBusiness.pickup_location_charge rangeOfString:@"%"].location == NSNotFound) {
             deliveryAmountValue = [billBusiness.pickup_location_charge doubleValue];
             self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
@@ -488,8 +488,25 @@ double deliveryAmountValue; //Delievery amount value in $
             self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
         }
         self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Pickup at %@ from a parking space.",p_time];
+    } else if (selectedButtonNumber == 5) {
+        lblDeliveryLabel.text = @"Service charge:";
+        NSString* consumerDeliveryLocation = [Corp sharedCorp].chosenCorp[@"location_abbr"];
+        NSString *deliveryLocationCharge = [Corp sharedCorp].chosenCorp[@"delivery_charge"];
+        
+        if ([deliveryLocationCharge rangeOfString:@"%"].location == NSNotFound) {
+            deliveryAmountValue = [deliveryLocationCharge doubleValue];
+            self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
+        }
+        else{
+            NSString *newStr = [deliveryLocationCharge stringByReplacingOccurrencesOfString:@"%" withString:@""];
+            double del_charge = [newStr doubleValue];
+            deliveryAmountValue = (cartTotalValue * del_charge)/100;
+        }
+        
+        self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Delivery to %@ on %@",consumerDeliveryLocation, p_time];
+        self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];
     }
-    
+
     self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Pickup at %@ at %@", [Corp sharedCorp].chosenCorp[@"delivery_location"], p_time];
 }
 //Check Promotion Code available

@@ -623,7 +623,8 @@ static NSArray *consumerProfileDataArray = nil;
     }
 
     NSLog(@"In ConsumerProfileViewController::postSaveRequest urlString is:%@, and params are:%@", urlString, params);
-    [manager POST:urlString parameters:params progress:nil success:^(NSURLSessionTask *operation, id responseObject)
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
+    [manager POST:urlString parameters:params headers:headers progress:nil success:^(NSURLSessionTask *operation, id responseObject)
      {
          if ([self isViewLoaded]) {
              [self.hud hideAnimated:YES];

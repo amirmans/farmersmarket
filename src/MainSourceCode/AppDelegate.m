@@ -478,7 +478,7 @@ static AppDelegate *sharedObj;
 //        else {
 //            returnVal = TRUE;
 //        }
-            [self showAlert:@"Alert" :@"You have NOT placed your order yet.\nPlease use the back button to get back to where you find.": 0];
+            [self showAlert:@"Alert" :@"You have NOT placed your order yet.\nPlease use the back button to get back to where you want.": 0];
         } else {
             returnVal = TRUE;
         }
@@ -640,8 +640,6 @@ static AppDelegate *sharedObj;
 	if (updateUI)
         [notificationDelegate updateUIWithNewNotification];
 }
-
-
 
 - (void) getDefaultCCForConsumer {
     NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];

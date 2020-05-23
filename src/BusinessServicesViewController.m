@@ -426,14 +426,17 @@ UIBarButtonItem *btn_heart;
     if (biz.section_in_map.length >0) {
         bizAddress = [bizAddress stringByAppendingFormat:@" Section: %@", biz.section_in_map];
     }
-    [self.tv_address setText:[[Corp sharedCorp].chosenCorp objectForKey:@"address"]];
+//    [self.tv_address setText:bizAddress];
     
-    if([biz.website  isEqual: @""]) {
+    NSString * biz_website = biz.website;
+    if([biz.website isEqual: @""]) {
         [self.tv_website setText:@""];
     }
     else {
         [self.tv_website setText:biz.website];
     }
+//    [self.tv_website setText:biz_website];
+    [self.tv_address setText:[NSString stringWithFormat:@"%@\n%@", bizAddress, biz_website]];
     
     self.tf_pickup_datatime.text = [Corp sharedCorp].chosenCorp[@"pickup_date"];
     [self.tf_pickup_location setText:[[Corp sharedCorp].chosenCorp objectForKey:@"location_abbr"]];

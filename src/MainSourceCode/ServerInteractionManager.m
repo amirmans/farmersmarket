@@ -20,14 +20,45 @@
     NSString *urlString = BusinessInformationServer;
     NSDictionary *params = @{@"businessID":[NSNumber numberWithInt:0], @"cmd":@"getBusinessInfoWithConsumerRating"};
 
-    NSLog(@"Getting list of businesses using server: %@, and business ID %@", urlString, params);
+     NSLog(@"Getting list of businesses using server: %@, and business ID %@", urlString, params);
 
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager  manager];
-
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
-    [manager GET:urlString parameters:params progress:nil
-          success:^(NSURLSessionTask *operation, id responseObject) {
+
+    NSString *path=[[NSString alloc]initWithFormat:@"%@",urlString];
+
+//    NSMutableDictionary *parameter = [[NSMutableDictionary alloc]init];
+//    [parameter setValue:@"123456" forKey:@"id"];
+
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
+
+     [manager POST:[NSURL URLWithString:path].absoluteString parameters:params
+           headers:headers progress:nil success:^(NSURLSessionTask *operation, id responseObject)
+//        {
+//         NSLog(@"Response Object response is....==%@",responseObject);
+//         }
+//             failure:^(NSURLSessionTask *operation, NSError *error)
+//        {
+//         NSLog(@"Error Last 2 Done: %@", [error localizedDescription]);
+//     }];
+
+    
+    
+    
+    
+    
+    
+    
+//    NSString *urlString = BusinessInformationServer;
+ 
+
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager  manager];
+
+
+//    [manager GET:urlString parameters:params progress:nil
+//          success:^(NSURLSessionTask *operation, id responseObject)
+        {
               //remember in the data is already translated to NSDictionay - by AFJSONResponseSerializer
               [self.postProcessesDelegate postProcessForListOfBusinessesSuccess:responseObject for:IndividualType];
           }
@@ -53,8 +84,10 @@
 
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
-    [manager GET:urlString parameters:params progress:nil
-         success:^(NSURLSessionTask *operation, id responseObject) {
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
+    [manager GET:urlString parameters:params
+          headers:headers progress:nil success:^(NSURLSessionTask *operation, id responseObject)
+    {
              //remember in the data is already translated to NSDictionay - by AFJSONResponseSerializer
              [self.postProcessesDelegate postProcessForListOfBusinessesSuccess:responseObject for:CorpType];
          }
@@ -85,7 +118,8 @@
 //        [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
 
     NSDictionary *params = @{@"device_token": deviceToken, @"uuid":uuid};
-    [manager POST:urlString parameters:params progress:nil
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
+    [manager POST:urlString parameters:params headers:headers progress:nil
           success:^(NSURLSessionTask *operation, id responseObject) {
 //              NSError *jsonError = nil;
 //              NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:(NSData *)responseObject options:kNilOptions error:&jsonError];

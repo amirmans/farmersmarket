@@ -52,8 +52,8 @@ RewardDetailsModel *sharedObject;
     NSDictionary *data= @{@"cmd":@"get_all_points",@"consumerID": [NSString stringWithFormat:@"%ld",(long)userID],
                                    @"businessID":[NSString stringWithFormat:@"%ld",(long)biz.businessID]};
     
-    
-    [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
+    [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data headers:headers progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
         self.rewardDict = responseObject;;
         if (finished) {
             finished(responseObject);

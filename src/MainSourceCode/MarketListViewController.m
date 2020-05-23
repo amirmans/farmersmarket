@@ -522,7 +522,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 
     // for some odd reasons when the table is reload after a search row height doesn't get its value from the nib
     // file - so I had to do this - the value should correspond to the value in the cell xib file
-    return 304;
+    return 320;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -585,6 +585,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 //    [cell.tf_corp_website setText:[cellDict objectForKey:@"website"]];
     [cell.lbl_mkt_pickup_location setText:[cellDict objectForKey:@"location_abbr"]];
     [cell.tf_cutoff_datetime setText:[cellDict objectForKey:@"cutoff_date"]];
+    [cell.tf_pickup_date setText:[cellDict objectForKey:@"pickup_date"]];
     
 //    NSString *neighborhood = [cellDict objectForKey:@"neighborhood"];
 //    if (neighborhood != (id)[NSNull null] && neighborhood != nil )
@@ -613,6 +614,15 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     }
     cell.businessIconImageView.clipsToBounds  = true;
 
+    tmpIconName = [cellDict objectForKey:@"logo"];
+    if (tmpIconName != (id)[NSNull null] && tmpIconName.length != 0 )
+    {
+        NSString *imageURLString = [CorpsIconDirectory stringByAppendingString:tmpIconName];
+        NSURL *imageURL = [NSURL URLWithString:imageURLString];
+        [[cell iv_market_logo] Compatible_setImageWithURL:imageURL placeholderImage:nil];
+    }
+//    cell.iv_market_logo.clipsToBounds  = true;
+    
     cell.rateView.notSelectedImage = [UIImage imageNamed:@"Star.png"];
     cell.rateView.halfSelectedImage = [UIImage imageNamed:@"Star_Half_Empty.png"];
     cell.rateView.fullSelectedImage = [UIImage imageNamed:@"Star_Filled.png"];
@@ -689,7 +699,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 //        cell.businessAddress.text = neighborhood;
 //        NSString *businessAddressTest = [NSString stringWithFormat:@"%@     %@",businessAddress,distanceText];
 //        cell.businessAddress.text = businessAddress;
-         cell.businessAddress.text = [NSString stringWithFormat:@"%@\n\n%@", businessAddress, [cellDict objectForKey:@"website"]];
+         cell.businessAddress.text = [NSString stringWithFormat:@"%@\n%@", businessAddress, [cellDict objectForKey:@"website"]];
 
     }
 

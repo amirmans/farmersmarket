@@ -54,7 +54,8 @@
     if ( ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
         NSMutableArray *corps = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
         short corpIndex = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex;
-        pd_charge = [[[corps objectAtIndex:corpIndex] valueForKey:@"delivery_charge"] doubleValue];
+        // zzz naged for martket manage mu market
+//        pd_charge = [[[corps objectAtIndex:corpIndex] valueForKey:@"delivery_charge"] doubleValue];
         [AppData sharedInstance].consumerPDMethodChosen = DELIVERY_LOCATION;
         [AppData sharedInstance].consumer_Delivery_Id = [[corps objectAtIndex:corpIndex] valueForKey:@"corp_id"];
         [AppData sharedInstance].consumer_Delivery_Location_Id = @"";
