@@ -111,6 +111,12 @@ Business *biz;
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+//    self.searchController.searchBar.text = @"Search for product categories";
+//    if (@available(iOS 13.0, *)) {
+//        self.searchController.searchBar.searchTextField.placeholder = @"Search for product categories";
+//    } else {
+//        // Fallback on earlier versions
+//    }
 
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
@@ -157,7 +163,7 @@ Business *biz;
 ////    self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"ScopeButtonCountry",@"Country"),
 ////                                                          NSLocalizedString(@"ScopeButtonCapital",@"Capital")];
 //    self.searchController.searchBar.delegate = self;
-//    [self.searchController.searchBar setPlaceholder:@"What Are You Looking For"];
+    [self.searchController.searchBar setPlaceholder:@"What Are You Looking For"];
 ////    self.searchController.searchBar.barTintColor = [UIColor blackColor];
 //
 ////    self.bizTableView.tableHeaderView = self.searchController.searchBar;
@@ -181,6 +187,12 @@ Business *biz;
     searchController.dimsBackgroundDuringPresentation = NO;
     searchController.hidesNavigationBarDuringPresentation = NO;
     searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
+    if (@available(iOS 13.0, *)) {
+        self.searchController.searchBar.searchTextField.placeholder = @"Search for Product Categories";
+    } else {
+        // Fallback on earlier versions
+        self.searchController.searchBar.placeholder  = @"Search for Product Categories";
+    }
 
     self.bizTableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
 

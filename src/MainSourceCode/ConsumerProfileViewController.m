@@ -619,7 +619,7 @@ static NSArray *consumerProfileDataArray = nil;
         NSLog(@"Got an error: %@", error);
     } else {
         NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        NSLog(@"Json format of data send to save_order: %@", jsonString);
+        NSLog(@"Json format of data send to save profile: %@", jsonString);
     }
 
     NSLog(@"In ConsumerProfileViewController::postSaveRequest urlString is:%@, and params are:%@", urlString, params);

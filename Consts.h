@@ -103,7 +103,7 @@ static NSString *const Default_Process_Time = @"Average wait time: 25 min";
 #define PICKUP_CURBSIDE @"3"
 #define PICKUP_BOTH @"4"
 
-#define DELIVERY_TABLE @"4"
+#define DELIVERY_TABLE @"6"
 #define DELIVERY_LOCATION @"8"
 #define DELIVERY_BOTH @"12"
 
@@ -151,7 +151,7 @@ static const int Pickup_open = 8;
 static const int CorpType = 1;
 static const int IndividualType = 0;
 
-static const int Points_Tabbar_Position = 3;  // change when you change the tabbar items.
+static const int Points_Tabbar_Position = 2;  // change when you change the tabbar items. it is zero based
 
 // compatibility between different ios
 #ifdef __IPHONE_8_0

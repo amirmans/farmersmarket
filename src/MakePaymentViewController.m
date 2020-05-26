@@ -63,6 +63,9 @@
 //        [CurrentBusiness sharedCurrentBusinessManager].business.promotion_code = @"";
 //        _promotionalamt = 0.0;
         order_type = @1;
+        if ([AppData sharedInstance].market_mode) {
+            order_type = @5;
+        }
     }
 
     self.title = @"Payment";
@@ -461,7 +464,7 @@
                                    @"cc_last_4_digits":[cardNo substringFromIndex:MAX((int)[cardNo length]-4, 0)]
                                    , @"note":self.self.pd_noteText, @"pd_instruction":self.noteText
                                    , @"consumer_delivery_id":[AppData sharedInstance].consumer_Delivery_Id.length > 0 ? [AppData sharedInstance].consumer_Delivery_Id : @"",
-                                   @"delivery_charge_amount":[NSNumber numberWithDouble:self.pd_charge],
+//                                   @"delivery_charge_amount":[NSNumber numberWithDouble:self.pd_charge],
                                    @"promotion_code":[CurrentBusiness sharedCurrentBusinessManager].business.promotion_code,
                                    @"promotion_discount_amount" : [NSString stringWithFormat:@"%f",self.promotionalamt],
                                    @"pd_charge_amount": [NSNumber numberWithDouble:self.pd_charge],

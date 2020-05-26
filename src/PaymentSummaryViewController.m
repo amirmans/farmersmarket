@@ -502,6 +502,14 @@ double deliveryAmountValue; //Delievery amount value in $
             double del_charge = [newStr doubleValue];
             deliveryAmountValue = (cartTotalValue * del_charge)/100;
         }
+        double max_charge = 0;
+        if ([[Corp sharedCorp].chosenCorp[@"max_charge"] length] > 0)
+            max_charge = [[Corp sharedCorp].chosenCorp[@"max_charge"] doubleValue];
+        if (max_charge > 0) {
+            if (deliveryAmountValue > max_charge) {
+                deliveryAmountValue = max_charge;
+            }
+        }
         
         self.lblDeliveryLocation.text = [NSString stringWithFormat:@"Delivery to %@ on %@",consumerDeliveryLocation, p_time];
         self.lblDeliveryAmount.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol,deliveryAmountValue];

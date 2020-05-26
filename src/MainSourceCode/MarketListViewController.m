@@ -179,14 +179,14 @@ MKCoordinateRegion marketRegion;
 
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.navigationController];
     searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    searchController.searchResultsUpdater = self;
-    searchController.dimsBackgroundDuringPresentation = NO;
-    searchController.hidesNavigationBarDuringPresentation = NO;
-    searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
+//  searchController.searchResultsUpdater = self;
+//  searchController.dimsBackgroundDuringPresentation = NO;
+//  searchController.hidesNavigationBarDuringPresentation = NO;
+//  searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
 
     self.corpTableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
 
-    self.corpTableView.tableHeaderView = self.searchController.searchBar;
+//  self.corpTableView.tableHeaderView = self.searchController.searchBar;
 
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     HUD.label.text = @"Updating Farmers Markets...";
@@ -586,7 +586,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     [cell.lbl_mkt_pickup_location setText:[cellDict objectForKey:@"location_abbr"]];
     [cell.tf_cutoff_datetime setText:[cellDict objectForKey:@"cutoff_date"]];
     [cell.tf_pickup_date setText:[cellDict objectForKey:@"pickup_date"]];
-    
+
 //    NSString *neighborhood = [cellDict objectForKey:@"neighborhood"];
 //    if (neighborhood != (id)[NSNull null] && neighborhood != nil )
 //    {
@@ -622,7 +622,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         [[cell iv_market_logo] Compatible_setImageWithURL:imageURL placeholderImage:nil];
     }
 //    cell.iv_market_logo.clipsToBounds  = true;
-    
+
     cell.rateView.notSelectedImage = [UIImage imageNamed:@"Star.png"];
     cell.rateView.halfSelectedImage = [UIImage imageNamed:@"Star_Half_Empty.png"];
     cell.rateView.fullSelectedImage = [UIImage imageNamed:@"Star_Filled.png"];
@@ -812,11 +812,11 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:true];
- 
+
     self.searchController.active = false;
     ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode = true;
-    
-    
+
+
     NSDictionary *cellDict;
     if (self.searchController.active)
 //    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView])
@@ -828,7 +828,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         cellDict = [marketListArray objectAtIndex:indexPath.row];
     }
     NSString* businessesForCorp  = [cellDict objectForKey:@"merchant_ids"];
-    
+
     ListofBusinesses *businessArrays = [ListofBusinesses sharedListofBusinesses];
     [businessArrays startGettingListofAllBusinessesForCorp:businessesForCorp];
     BusinessListViewController *businessListContorller = [[BusinessListViewController alloc] initWithNibName:@"BusinessListViewController" bundle:nil];

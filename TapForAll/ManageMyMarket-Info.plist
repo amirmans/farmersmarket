@@ -37,6 +37,8 @@
 	</dict>
 	<key>NSCalendarsUsageDescription</key>
 	<string>Tap-In wants to help you mark your calendars</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription </key>
+	<string>We only use this info to show you the merchants closer to you.</string>
 	<key>NSLocationAlwaysUsageDescription </key>
 	<string>We only use this info to show you the merchants closer to you.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

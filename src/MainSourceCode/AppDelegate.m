@@ -196,7 +196,7 @@ static AppDelegate *sharedObj;
     self.tt_tabBarController = [[UITabBarController alloc] init];
 
 //    self.tt_tabBarController.viewControllers = [NSArray arrayWithObjects:enterBusinessNav, chatNav, consumerProfileViewController, notificationNav, pointsViewController, nil];
-    self.tt_tabBarController.viewControllers = [[NSArray alloc] initWithObjects:enterBusinessNav, /*chatNav,*/ profileNav, /*notificationNav, */refrerralNav, pointsViewController, nil];
+    self.tt_tabBarController.viewControllers = [[NSArray alloc] initWithObjects:enterBusinessNav, /*chatNav,*/ profileNav, pointsViewController, /*notificationNav, */refrerralNav, nil];
 
 //    self.tt_tabBarController.tabBar.tintColor = [UIColor whiteColor];
     self.tt_tabBarController.tabBar.tintColor = [UIColor colorWithDisplayP3Red:249.0/255.0 green:122.0/255.0 blue:18.0/255.0 alpha:1.0];
@@ -206,8 +206,9 @@ static AppDelegate *sharedObj;
     tt_tabBarController.delegate = self;
     pointsViewController = nil;
     notificationController = nil;
+    consumerProfileViewController = nil;
     listTableView = nil;
-    pointsViewController = nil;
+//    pointsViewController = nil;
     
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
