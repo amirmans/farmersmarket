@@ -424,13 +424,14 @@ UIBarButtonItem *btn_heart;
     self.lbl_cutoff_datetime.text = [[Corp sharedCorp].chosenCorp objectForKey:@"cutoff_date"];
     NSString *bizAddress = [[Corp sharedCorp].chosenCorp objectForKey:@"address"];
     if (biz.section_in_map.length >0) {
-        bizAddress = [bizAddress stringByAppendingFormat:@" Section: %@", biz.section_in_map];
+        bizAddress = [bizAddress stringByAppendingFormat:@"\nStall No.: %@", biz.section_in_map];
     }
 //    [self.tv_address setText:bizAddress];
     
     NSString * biz_website = biz.website;
-    if([biz.website isEqual: @""]) {
+    if(!biz.website) {
         [self.tv_website setText:@""];
+        biz_website = @"";
     }
     else {
         [self.tv_website setText:biz.website];

@@ -46,10 +46,10 @@
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your receipt will be emailed shortly" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="59D-gT-TNz">
-                            <rect key="frame" x="35" y="72" width="305" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your receipt will be emailed when approved by vendor" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="59D-gT-TNz">
+                            <rect key="frame" x="12" y="72" width="351" height="21"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="305" id="ewN-Cv-xWI"/>
+                                <constraint firstAttribute="width" constant="351" id="ewN-Cv-xWI"/>
                                 <constraint firstAttribute="height" constant="21" id="i5l-v9-zVZ"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -275,7 +275,7 @@
                                 <constraint firstAttribute="height" constant="30" id="ngg-tD-pSX"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
-                            <state key="normal" title="Text KOI?"/>
+                            <state key="normal" title="Text Vendor?"/>
                             <connections>
                                 <action selector="btnTextFromPayConfirmation:" destination="-1" eventType="touchUpInside" id="rW0-W9-X8o"/>
                             </connections>

@@ -42,5 +42,6 @@
 - (IBAction)orderHistoryAction:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *manageCardsBtn;
 - (IBAction)manageCardsAction:(id)sender;
+@property (strong, nonatomic) IBOutlet UITextView *tv_tc_privacy;
 
 @end

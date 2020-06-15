@@ -247,7 +247,7 @@ static id sharedInstance;
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
+
     NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
 
     [manager POST:OrderServerURL
@@ -437,32 +437,15 @@ static id sharedInstance;
     {
         return;
     }
-//    NSError *error = [NSError alloc];
-//    NSData *data1 = [NSJSONSerialization dataWithJSONObject:param options:NSJSONWritingPrettyPrinted error:&error];
-
-//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    
+    NSString *urlString = remove_cc;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
     [manager setResponseSerializer:[AFJSONResponseSerializer serializer]];
-    
-    
-//    [manager.requestSerializer setTimeoutInterval:timeInterval];
-    
-    
+    [manager.requestSerializer setTimeoutInterval:timeInterval];
     NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
-
-    [manager POST:@"remove_cc.com" parameters:param
-            headers:headers progress:nil success:^(NSURLSessionTask *task, id responseObject)
-    
-
-//    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
-//    [manager POST:remove_cc parameters:param
-//          headers:headers progress:nil
-//          success:^(NSURLSessionTask *task, id responseObject)
-    {
+    [manager POST:urlString
+        parameters:param headers:headers progress:nil
+        success:^(NSURLSessionTask *task, id responseObject) {
               NSLog(@"JSON: %@", responseObject);
               finished(responseObject);
           }

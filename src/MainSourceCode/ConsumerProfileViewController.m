@@ -122,6 +122,13 @@ static NSArray *consumerProfileDataArray = nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:@"By saving and creating an account, you agree with our Terms & Conditions and Privacy Policy. "];
+    [str addAttribute: NSLinkAttributeName value:Terms_Conditions_URL  range: NSMakeRange(54, 18)];
+    [str addAttribute: NSLinkAttributeName value:Privacy_Policy_URL range: NSMakeRange(77, 14)];
+    _tv_tc_privacy.attributedText = str;
+    _tv_tc_privacy.textAlignment= NSTextAlignmentCenter;
+    
     // Do any additional setup after loading the view from its nib.
     // all these steps needs to be done to load the background image
     //    [TapTalkLooks setBackgroundImage:self.view];

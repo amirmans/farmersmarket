@@ -2,8 +2,8 @@
 @class NSString;
 
 //#ifdef DEBUG
-////#define TapInEndpointHost @"http://tapforall.com/tap-in-servers/tap-in/"
-//#define TapInEndpointHost @"http://tapin-servers.dv/tap-in/"
+//#define TapInEndpointHost @"http://tapforall.com/tap-in-servers/tap-in/"
+// #define TapInEndpointHost @"http://tapin-servers.dv/tap-in/"
 ////#define TapInEndpointHost @"https://tapforall.com/wilsonville/tap-in/"
 //#elif STAGING
 //    #define TapInEndpointHost @"http://tapforall.com/tap-in-servers/tap-in/"
@@ -12,6 +12,10 @@
 //#endif
 
 #define TapInEndpointHost @"https://tapforall.com/tap-in-servers/tap-in/"
+
+static NSString *const Terms_Conditions_URL = @"https://tapforall.com/tap-in-servers/legal/terms.php";
+static NSString *const Privacy_Policy_URL = @"https://tapforall.com/tap-in-servers/legal/privacy.php";
+
 
 #define TT_CommunicationWithServerQ dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
@@ -60,7 +64,7 @@
 //payment processing
 //#define STRIPE_TEST_PUBLIC_KEY @"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi"
 //NSString * const StripePublishableKey = @"pk_test_zrEfGQzrGZAQ4iUqpTilP6Bi";
-#define TapForAllPaymentServer (TapInEndpointHost @"paymentsystem/charge.php")
+//#define TapForAllPaymentServer (TapInEndpointHost @"paymentsystem/charge.php")
 
 #define BusinessDelivaryInformationServer (TapInEndpointHost @"include/model.php?cmd=get_business_delivery_info")
 

@@ -570,7 +570,8 @@ NSMutableArray *cardDataArray;
 
     }
     
-    if (cardDataArray.count < 2) {
+    yourCardsLbl.text = @"Your card:";
+    if (cardDataArray.count > 1) {
         yourCardsLbl.text = @"Your cards:";
     }
 }
