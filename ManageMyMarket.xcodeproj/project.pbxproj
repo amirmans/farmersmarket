@@ -161,6 +161,7 @@
 		C6571B761D650A4700FD83F5 /* BusinessListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C91ECD189E3EA700AE6478 /* BusinessListViewController.m */; };
 		C66237FE18C03E5B00750F82 /* disabled_button_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = C66237FD18C03E5B00750F82 /* disabled_button_bg.png */; };
 		C662DDFE18D8442F00683BBF /* BubbleCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = C662DDFD18D8442F00683BBF /* BubbleCenter.png */; };
+		C666EE4324884A6B00D69519 /* tap-in-logo_non_transparent.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C666EE4224884A6B00D69519 /* tap-in-logo_non_transparent.jpg */; };
 		C66C861C20AFD694001BBFF0 /* CardsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C66C861B20AFD694001BBFF0 /* CardsViewController.xib */; };
 		C6700CFB1859D74B003814C9 /* NotificationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C6700CFA1859D74B003814C9 /* NotificationTableViewCell.m */; };
 		C6700CFD1859DAA4003814C9 /* NotificationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6700CFC1859DAA4003814C9 /* NotificationTableViewCell.xib */; };
@@ -442,6 +443,7 @@
 		C6519220245AE2390041ED50 /* Pods_ManageMyMarket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_ManageMyMarket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C66237FD18C03E5B00750F82 /* disabled_button_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = disabled_button_bg.png; sourceTree = "<group>"; };
 		C662DDFD18D8442F00683BBF /* BubbleCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BubbleCenter.png; sourceTree = "<group>"; };
+		C666EE4224884A6B00D69519 /* tap-in-logo_non_transparent.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "tap-in-logo_non_transparent.jpg"; sourceTree = "<group>"; };
 		C66B0C5B1FF2471A00F9CA14 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Consts.h; sourceTree = SOURCE_ROOT; };
 		C66C861B20AFD694001BBFF0 /* CardsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardsViewController.xib; sourceTree = "<group>"; };
 		C6700CF91859D74B003814C9 /* NotificationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationTableViewCell.h; path = MainSourceCode/NotificationTableViewCell.h; sourceTree = "<group>"; };
@@ -702,6 +704,7 @@
 		2949CCC61458A21700728B87 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				C666EE4224884A6B00D69519 /* tap-in-logo_non_transparent.jpg */,
 				C6BDE1E32476090B0098BBCA /* mmm.png */,
 				C6970D9F204BF47300D330AF /* corp_icon.png */,
 				C6A437872019702D00376F4B /* tap-in-only_logo.png */,
@@ -1302,6 +1305,7 @@
 				C6308DE11C3E52D000B6B8B0 /* EventTableViewCell.xib in Resources */,
 				DA4564771F3879AD00B60E46 /* TotalCartItemCell.xib in Resources */,
 				5D7AEDD31C6934E400B0929F /* ic_heart@3x.png in Resources */,
+				C666EE4324884A6B00D69519 /* tap-in-logo_non_transparent.jpg in Resources */,
 				5D7AEDD51C6934E400B0929F /* ic_nav@2x.png in Resources */,
 				4A1DA88D1C7603CA00E16F30 /* TPReceiptController.xib in Resources */,
 				C6C8ACB318DF9C1A005DAFD6 /* InfoPlist.strings in Resources */,
@@ -1750,12 +1754,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BEFE7FC720C74E6226CB1E07 /* Pods-ManageMyMarket.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Tap4Markets";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/ManageMyMarket.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = E79MNN58JH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1767,7 +1771,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "TapForAll/ManageMyMarket-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.10;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -1790,12 +1794,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9BE4BC2B8857645F6EA8704A /* Pods-ManageMyMarket.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Tap4Markets";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/ManageMyMarket.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = E79MNN58JH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1807,7 +1811,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "TapForAll/ManageMyMarket-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.10;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1923,12 +1927,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 704BF5C1DE6ED78C342AFE68 /* Pods-ManageMyMarket.staging.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Tap4Markets";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/ManageMyMarket.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = E79MNN58JH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1940,7 +1944,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "TapForAll/ManageMyMarket-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.10;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",

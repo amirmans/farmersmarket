@@ -44,7 +44,7 @@
 
 @synthesize biz;
 @synthesize timerToLoadProducts;
-@synthesize tv_address, tv_website;
+@synthesize tv_address, tv_website, tv_biz_website;
 
 
 
@@ -421,6 +421,24 @@ UIBarButtonItem *btn_heart;
 //    [self getDistanceFromLocation:businessDataObj.address];
 
 //    self.busicessBackgroundImage.image = businessDataObj.bg_image;
+    
+    UIFont *font = [UIFont fontWithName:@"Palatino-Roman" size:14.0];
+    NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:font
+                                    forKey:NSFontAttributeName];
+    
+
+    NSMutableAttributedString *InteractiveMap;
+    NSString *temp_text = @"Interactive Map";
+    if (biz.section_in_map.length >0) {
+         temp_text = [temp_text stringByAppendingFormat:@" - Stall No.: %@", biz.section_in_map];
+    }
+
+    NSString *interactive_map_link = [[Corp sharedCorp].chosenCorp objectForKey:@"interactive_map"];
+    if (interactive_map_link.length >0 ) {
+        InteractiveMap = [[NSMutableAttributedString alloc] initWithString:temp_text attributes:attrsDictionary];
+        [InteractiveMap addAttribute: NSLinkAttributeName value:interactive_map_link  range:NSMakeRange(0, 15)];
+    }
+
     self.lbl_cutoff_datetime.text = [[Corp sharedCorp].chosenCorp objectForKey:@"cutoff_date"];
     NSString *bizAddress = [[Corp sharedCorp].chosenCorp objectForKey:@"address"];
     if (biz.section_in_map.length >0) {
@@ -437,7 +455,13 @@ UIBarButtonItem *btn_heart;
         [self.tv_website setText:biz.website];
     }
 //    [self.tv_website setText:biz_website];
-    [self.tv_address setText:[NSString stringWithFormat:@"%@\n%@", bizAddress, biz_website]];
+    if (InteractiveMap.length > 0) {
+        tv_biz_website.hidden = false;
+        tv_biz_website.text = biz_website;
+        [self.tv_address setAttributedText:InteractiveMap];
+    } else {
+        [self.tv_address setText:[NSString stringWithFormat:@"%@\n%@", bizAddress, biz_website]];
+    }
     
     self.tf_pickup_datatime.text = [Corp sharedCorp].chosenCorp[@"pickup_date"];
     [self.tf_pickup_location setText:[[Corp sharedCorp].chosenCorp objectForKey:@"location_abbr"]];

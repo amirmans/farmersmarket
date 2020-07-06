@@ -30,6 +30,7 @@
 @property (nonatomic, strong) NSString *cardType;
 @property (nonatomic, strong) NSString *cardNo;
 @property (nonatomic, strong) NSString *uiExpirationDateString;
+@property (nonatomic, assign) NSString *corp_id;
 
 @property (nonatomic, strong) NSNumber *order_type; //1 or 0 string because it will be inside a nsdictionary
 
@@ -43,7 +44,7 @@
     ,originalPointsVal,flagRedeemPointVal,tipAmt,subTotalVal,pd_charge, pd_noteText, order_type
     ,cardType, cardNo, uiExpirationDateString;
 @synthesize currency_symbol;
-@synthesize currency_code;
+@synthesize currency_code, corp_id;
 
 #pragma mark - Lifecycle
 
@@ -54,6 +55,9 @@
     if ( ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
         NSMutableArray *corps = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
         short corpIndex = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex;
+        corp_id = [[corps objectAtIndex:corpIndex] valueForKey:@"corp_id"];
+        //TODO
+        corp_id = [[Corp sharedCorp].chosenCorp valueForKey:@"corp_id"];
         // zzz naged for martket manage mu market
 //        pd_charge = [[[corps objectAtIndex:corpIndex] valueForKey:@"delivery_charge"] doubleValue];
         [AppData sharedInstance].consumerPDMethodChosen = DELIVERY_LOCATION;
@@ -62,7 +66,7 @@
 //        self.pd_noteText =@"";
 //        [CurrentBusiness sharedCurrentBusinessManager].business.promotion_code = @"";
 //        _promotionalamt = 0.0;
-        order_type = @1;
+//        order_type = @1;
         if ([AppData sharedInstance].market_mode) {
             order_type = @5;
         }
@@ -472,7 +476,7 @@
                                    @"pd_locations_id": [AppData sharedInstance].consumer_Delivery_Location_Id.length > 0 ? [AppData sharedInstance].consumer_Delivery_Location_Id : @"",
                                    @"pd_time": [AppData sharedInstance].consumerPDTimeChosen.length > 0 ? [AppData sharedInstance].consumerPDTimeChosen : @"",
                                    @"order_type":order_type,
-                                   @"corp_id_":[AppData sharedInstance].consumer_Delivery_Id
+                                   @"corp_id":corp_id
                                    };
 
     NSError *error;

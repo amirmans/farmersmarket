@@ -90,6 +90,8 @@ NSMutableArray *cardDataArray;
     self.txtExpYear.delegate = self;
     self.txtCVV.delegate = self;
     
+    [self.txtZipCode setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+    
     //    [self getStripeDataArray];
     
     UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(goBackToPreviousViewController)];
@@ -269,9 +271,9 @@ NSMutableArray *cardDataArray;
     NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
     NSString *card_no = [cardDict valueForKey:@"cc_no"];
     NSString *card_type = [self getTypeFromCardNumber:card_no];
-    NSArray *dataArray = [NSArray arrayWithObjects:cardDict, nil];
+//    NSArray *dataArray = [NSArray arrayWithObjects:cardDict, nil];
     
-    NSDictionary *param = @{@"cmd":@"remove_cc",@"consumer_id":userID,@"card_type":card_type,@"data":dataArray};
+    NSDictionary *param = @{@"cmd":@"remove_cc",@"consumer_id":userID,@"card_type":card_type,@"data":cardDict};
     
     
     [[APIUtility sharedInstance] remove_cc_info:param completiedBlock:^(NSDictionary *response) {
@@ -343,7 +345,7 @@ NSMutableArray *cardDataArray;
     else {
         UIAlertController * alert = [UIAlertController
                                      alertControllerWithTitle:@"Stop!"
-                                     message:@"Please enter valid Zipcode to continue your payment."
+                                     message:@"Please enter a valid Postal Code to continue your payment."
                                      preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction* OKButton = [UIAlertAction
@@ -584,7 +586,7 @@ NSMutableArray *cardDataArray;
         }
         
         NSUInteger newLength = [textField.text length] + [string length] - range.length;
-        return newLength <= 5;
+        return newLength <= 7;
         
     }
     else{
@@ -1038,7 +1040,16 @@ NSMutableArray *cardDataArray;
     return returnVal;
 }
 
-
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    
+    int tagInt = (int)(textField.tag);
+    int nextTag = (tagInt >= 5) ? 0:tagInt+1;
+    UITextField *temp_textField = (UITextField *)[self.view viewWithTag:nextTag];
+    [temp_textField becomeFirstResponder];
+    
+    return YES;
+}
 
 
 - (IBAction)btnExpYearClicked:(id)sender {

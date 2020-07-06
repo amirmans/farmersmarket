@@ -57,16 +57,16 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="May-FB-Je1">
-                            <rect key="frame" x="34.5" y="9" width="306" height="21"/>
+                            <rect key="frame" x="7.5" y="9" width="360" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="EyN-g7-gwg"/>
-                                <constraint firstAttribute="width" constant="306" id="Pb6-Zm-CvE"/>
+                                <constraint firstAttribute="width" constant="360" id="Pb6-Zm-CvE"/>
                             </constraints>
                             <attributedString key="attributedText">
                                 <fragment content="THANKS FOR YOUR ORDER!">
                                     <attributes>
                                         <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                        <font key="NSFont" size="13" name="HelveticaNeue"/>
                                         <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" headIndent="1" tighteningFactorForTruncation="0.0"/>
                                     </attributes>
                                 </fragment>

@@ -42,6 +42,7 @@
 - (void) getDistanceFromLocation : (NSString *)address;
 
 //-(double)getDistanceMetresBetweenLocationCoordinates;
+@property (strong, nonatomic) IBOutlet UITextView *tv_biz_website;
 
 @property (strong, nonatomic) IBOutlet RateView *ratingView;
 

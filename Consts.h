@@ -2,16 +2,16 @@
 @class NSString;
 
 //#ifdef DEBUG
-//#define TapInEndpointHost @"http://tapforall.com/tap-in-servers/tap-in/"
+#define TapInEndpointHost @"https://tapforall.com/tap-in-servers/tap-in/"
 // #define TapInEndpointHost @"http://tapin-servers.dv/tap-in/"
-////#define TapInEndpointHost @"https://tapforall.com/wilsonville/tap-in/"
+//#define TapInEndpointHost @"https://tapforall.com/wilsonville/tap-in/"
 //#elif STAGING
 //    #define TapInEndpointHost @"http://tapforall.com/tap-in-servers/tap-in/"
 //#elif RELEASE
 //    #define TapInEndpointHost @"https://tapforall.com/tap-in-servers/tap-in/"
 //#endif
 
-#define TapInEndpointHost @"https://tapforall.com/tap-in-servers/tap-in/"
+//#define TapInEndpointHost @"https://tapforall.com/tap-in-servers/tap-in/"
 
 static NSString *const Terms_Conditions_URL = @"https://tapforall.com/tap-in-servers/legal/terms.php";
 static NSString *const Privacy_Policy_URL = @"https://tapforall.com/tap-in-servers/legal/privacy.php";

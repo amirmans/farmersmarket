@@ -10,13 +10,13 @@ pod 'AsyncImageView'
 pod 'MBProgressHUD'
 pod 'Reachability'
 pod 'KASlideShow'
-pod 'Stripe', '14.0.1'
 pod 'GoogleMaps'
 pod 'SHMultipleSelect'
 pod 'ActionSheetPicker-3.0'
 pod 'BBBadgeBarButtonItem'
 pod 'IQKeyboardManager'
 pod 'NYAlertViewController'
+pod 'Stripe'
 
 post_install do |installer|
       installer.pods_project.targets.each do |target|

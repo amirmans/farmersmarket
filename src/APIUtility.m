@@ -940,7 +940,10 @@ static id sharedInstance;
     NSString *zipcodeRegEx = @"^(\\d{5}(-\\d{4})?|[a-z]\\d[a-z][- ]*\\d[a-z]\\d)$"; // for us and canada
     NSPredicate *zipcodeTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", zipcodeRegEx];
 
-    if ([zipcodeTest evaluateWithObject:zipCode] == NO) {
+    NSString *postalcodeRegEx = @"^(?!.*[DFIOQU])[A-VXY][0-9][A-Z] ?[0-9][A-Z][0-9]$";
+    NSPredicate *postalCodeTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", postalcodeRegEx];
+    
+    if ( ([zipcodeTest evaluateWithObject:zipCode] == NO) && ([postalCodeTest evaluateWithObject:zipCode] == NO) ) {
         returnVal = FALSE;
     }
     else {

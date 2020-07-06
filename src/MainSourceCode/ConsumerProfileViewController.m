@@ -30,6 +30,8 @@
 @property (nonatomic, strong) NSString *E_164FormatPhoneNumber;
 @property (nonatomic, strong) NSString *originalWorkEmail;
 
+
+
 - (BOOL)validatePassword:(NSString *)pass;
 - (BOOL)validateAllUserInput;
 - (void)populateFieldsWithInitialValues;
@@ -41,7 +43,9 @@ NSMutableArray *savedCardDataArray;
 
 static NSArray *consumerProfileDataArray = nil;
 
+
 @implementation ConsumerProfileViewController
+
 
 @synthesize nicknameTextField;
 @synthesize passwordTextField;
@@ -58,7 +62,8 @@ static NSArray *consumerProfileDataArray = nil;
 @synthesize smsNoLabel, smsNoTextField, E_164FormatPhoneNumber;
 @synthesize consumerProfileDataDic;
 
--(void)SetTextFieldBorder :(UITextField *)textField{
+
+-(void)SetTextFieldBorder :(UITextField *)textField {
 
     CALayer *border = [CALayer layer];
     CGFloat borderWidth = 2;
@@ -103,6 +108,7 @@ static NSArray *consumerProfileDataArray = nil;
     [super viewDidAppear:animated];
     [self.tabBarController setSelectedIndex:1];
     [AppData sharedInstance].Current_Selected_Tab = @"1";
+
     //    [TapTalkLooks setBackgroundImage:self.view];
     //    [TapTalkLooks setToTapTalkLooks:self.topContainerButton isActionButton:NO makeItRound:YES];
     //    [TapTalkLooks setToTapTalkLooks:self.lowerContainerButton isActionButton:NO makeItRound:YES];
@@ -157,22 +163,28 @@ static NSArray *consumerProfileDataArray = nil;
     errorMessageLabel.hidden = TRUE;
 
     nicknameTextField.delegate = self;
-    nicknameTextField.keyboardAppearance = UIKeyboardAppearanceDark;
+//    nicknameTextField.keyboardAppearance = UIKeyboardAppearanceDark;
     [nicknameTextField setReturnKeyType:UIReturnKeyDone];
     nicknameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
     zipcodeTextField.delegate = self;
-    zipcodeTextField.keyboardAppearance = UIKeyboardAppearanceDark;
+//    zipcodeTextField.keyboardAppearance = UIKeyboardAppearanceDark;
     [zipcodeTextField setReturnKeyType:UIReturnKeyDone];
     zipcodeTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    
 
     emailTextField.delegate = self;
-    emailTextField.keyboardAppearance = UIKeyboardAppearanceDark;
+//    emailTextField.keyboardAppearance = UIKeyboardAppearanceDark;
     [emailTextField setReturnKeyType:UIReturnKeyDone];
     emailTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    
+    emailWorkTextField.delegate = self;
+//    emailWorkTextField.keyboardAppearance = UIKeyboardAppearanceDark;
+    [emailWorkTextField setReturnKeyType:UIReturnKeyDone];
+    emailWorkTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
     smsNoTextField.delegate = self;
-    smsNoTextField.keyboardAppearance = UIKeyboardAppearanceDark;
+//    smsNoTextField.keyboardAppearance = UIKeyboardAppearanceDark;
     [smsNoTextField setReturnKeyType:UIReturnKeyDone];
     smsNoTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
 
@@ -315,7 +327,7 @@ static NSArray *consumerProfileDataArray = nil;
                     badInformation = TRUE;
                     errorMessageLabel.hidden = FALSE;
                     errorMessageLabel.text = @"Nickname must be more the 2 chars long.";
-                    errorMessageLabel.textColor = [UIColor blueColor];
+//                    errorMessageLabel.textColor = [UIColor blueColor];
                 }
 
                 break;
@@ -341,7 +353,7 @@ static NSArray *consumerProfileDataArray = nil;
                         badInformation = TRUE;
                         errorMessageLabel.hidden = FALSE;
                         errorMessageLabel.text = @"Please enter valid email address";
-                        errorMessageLabel.textColor = [UIColor blueColor];
+//                        errorMessageLabel.textColor = [UIColor blueColor];
                     }
                     else {
 
@@ -350,7 +362,7 @@ static NSArray *consumerProfileDataArray = nil;
                     badInformation = TRUE;
                     errorMessageLabel.hidden = FALSE;
                     errorMessageLabel.text = @"Please enter valid email address";
-                    errorMessageLabel.textColor = [UIColor blueColor];
+//                    errorMessageLabel.textColor = [UIColor blueColor];
                 }
                 break;
 
@@ -365,7 +377,7 @@ static NSArray *consumerProfileDataArray = nil;
                         badInformation = TRUE;
                         errorMessageLabel.hidden = FALSE;
                         errorMessageLabel.text = @"Work email address is not valid";
-                        errorMessageLabel.textColor = [UIColor blueColor];
+//                        errorMessageLabel.textColor = [UIColor blueColor];
                     }
                 }
                 break;
@@ -380,7 +392,7 @@ static NSArray *consumerProfileDataArray = nil;
                         badInformation = TRUE;
                         errorMessageLabel.hidden = FALSE;
                         errorMessageLabel.text = @"Please enter valid zip code";
-                        errorMessageLabel.textColor = [UIColor blueColor];
+//                        errorMessageLabel.textColor = [UIColor blueColor];
                     }
                     else {
                         // it checks to add to the params
@@ -396,7 +408,7 @@ static NSArray *consumerProfileDataArray = nil;
                         badInformation = TRUE;
                         errorMessageLabel.hidden = FALSE;
                         errorMessageLabel.text = @"Please enter valid SMS number";
-                        errorMessageLabel.textColor = [UIColor blueColor];
+//                        errorMessageLabel.textColor = [UIColor blueColor];
                         E_164FormatPhoneNumber = @"";
                     }
                     else {
@@ -561,6 +573,12 @@ static NSArray *consumerProfileDataArray = nil;
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    
+    int tagInt = (int)(textField.tag);
+    int nextTag = (tagInt >= 4) ? 0:tagInt+1;
+    UITextField *temp_textField = (UITextField *)[self.view viewWithTag:nextTag];
+    [temp_textField becomeFirstResponder];
+    
     return YES;
 }
 

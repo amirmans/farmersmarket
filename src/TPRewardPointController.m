@@ -87,10 +87,10 @@ NSInteger current_points_level_int  = 0;
     [cell.btnpoints setTitle:[NSString stringWithFormat:@"%ld",(long)points] forState:UIControlStateNormal];
     
     if([[dic objectForKey:@"points"] integerValue] > 0){
-        cell.lblreddemed.text  = @"Earned Points";
+        cell.lblreddemed.text  = @"Earned";
         date = [dic objectForKey:@"time_earned"];
     }else{
-        cell.lblreddemed.text  = @"Redeemed Points";
+        cell.lblreddemed.text  = @"Redeemed";
         date = [dic objectForKey:@"time_redeemed"];
     }
     
@@ -103,6 +103,7 @@ NSInteger current_points_level_int  = 0;
         NSString *localdate = [dateformater stringFromDate:converteddate];
         cell.lbldate.text =localdate;
     }
+    cell.lbl_order_no.text = [dic objectForKey:@"order_id"];
     //  cell.backgroundColor = [UIColor colorWithHue:245/255.0f saturation:245/255.0f brightness:245/255.0f alpha:1];
     
     return cell;

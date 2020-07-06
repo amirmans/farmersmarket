@@ -12,5 +12,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *lbldate;
 @property (strong, nonatomic) IBOutlet UILabel *lblreddemed;
 @property (strong, nonatomic) IBOutlet UIButton *btnpoints;
+@property (strong, nonatomic) IBOutlet UILabel *lbl_order_no;
 
 @end
