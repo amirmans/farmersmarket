@@ -55,7 +55,7 @@
     if ( ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
         NSMutableArray *corps = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
         short corpIndex = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex;
-        corp_id = [[corps objectAtIndex:corpIndex] valueForKey:@"corp_id"];
+//        corp_id = [[corps objectAtIndex:corpIndex] valueForKey:@"corp_id"];
         //TODO
         corp_id = [[Corp sharedCorp].chosenCorp valueForKey:@"corp_id"];
         // zzz naged for martket manage mu market
@@ -307,7 +307,7 @@
         self.lblCurrentPoints.textColor = [UIColor blackColor];
         [self.btnRedeemPoint setImage:[UIImage imageNamed:@"Unchecked"] forState:UIControlStateNormal];
         self.lblCurrentPoints.text = [NSString stringWithFormat:@"%ld points" ,(long)totaLAvailablePoints];
-        self.lblRedeemPointText.text = [NSString stringWithFormat:@"%ld points worth %2.0f¢ each.  Redeem some?",(long)totaLAvailablePoints,dollarValForEachPoints*100];
+        self.lblRedeemPointText.text = [NSString stringWithFormat:@"%ld points worth %.02f ¢ each.  Redeem some?",(long)totaLAvailablePoints,dollarValForEachPoints*100];
     }
     else {
         dollarValForEachPoints = 0.0;
@@ -342,14 +342,14 @@
 }
 
 - (void)revertRedeemPointsAndValuesToOriginal {
-    redeemNoPoint = 0;
-    redeemPointsVal = 0;
-    dollarValForEachPoints = originalPointsVal / currentPointsLevel;
-    if(self.currentTipVal > 0) {
-    }
-    else {
+//    redeemNoPoint = 0;
+//    redeemPointsVal = 0;
+//    dollarValForEachPoints = originalPointsVal / currentPointsLevel;
+//    if(self.currentTipVal > 0) {
+//    }
+//    else {
         self.totalVal = self.subTotalVal + _taxVal + tipAmt - _promotionalamt +pd_charge ;
-    }
+//    }
 }
 
 - (void)adjustRedeemPointsAndTheirValues {

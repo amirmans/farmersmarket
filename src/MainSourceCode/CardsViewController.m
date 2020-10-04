@@ -261,7 +261,7 @@ NSMutableArray *cardDataArray;
 //        self->currentCardInfo = nil;
         [self.cardsTable reloadData];
         if (cardDataArray.count > 1) {
-            self->yourCardsLbl.text = @"To select your default card tab on it.";
+            self->yourCardsLbl.text = @"To select your default card tap on it.";
         }
     }];
 }
@@ -361,7 +361,7 @@ NSMutableArray *cardDataArray;
     }
     
     if (cardDataArray.count > 1) {
-        yourCardsLbl.text = @"To select your default card tab on it.";
+        yourCardsLbl.text = @"To select your default card tap on it.";
     }
 }
 

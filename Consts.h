@@ -2,7 +2,8 @@
 @class NSString;
 
 //#ifdef DEBUG
-#define TapInEndpointHost @"https://tapforall.com/tap-in-servers/tap-in/"
+//#define TapInEndpointHost @"https://tapforall.com/tap-in-servers/tap-in/"
+#define TapInEndpointHost @"https://taptopickup.com/tap-in/"
 // #define TapInEndpointHost @"http://tapin-servers.dv/tap-in/"
 //#define TapInEndpointHost @"https://tapforall.com/wilsonville/tap-in/"
 //#elif STAGING
@@ -75,7 +76,7 @@ static NSString *const Privacy_Policy_URL = @"https://tapforall.com/tap-in-serve
 
 #define IsFromTotalCartNotification @"IsFromTotalCartNotification"
 
-#define NoLogoForMenuItems 1
+#define NoLogoForMenuItems 1 //TODO
 
 // We store our settings in the NSUserDefaults dictionary using these keys
 static NSString *const NicknameKey = @"nickname";

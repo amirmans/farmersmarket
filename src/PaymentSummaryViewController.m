@@ -48,6 +48,11 @@ double deliveryAmountValue; //Delievery amount value in $
 
 #pragma mark - Life Cycle
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -599,7 +604,7 @@ double deliveryAmountValue; //Delievery amount value in $
         dollarValForEachPoints = originalPointsVal / currentPointsLevel;
         self.lblCurrentPoints.textColor = [UIColor blackColor];
         [self.btnRedeemPoint setImage:[UIImage imageNamed:@"Unchecked"] forState:UIControlStateNormal];
-        self.lblCurrentPoints.text = [NSString stringWithFormat:@"%ld points worth %2.0f¢ each.  Redeem some?",(long)totaLAvailablePoints,dollarValForEachPoints*100];
+        self.lblCurrentPoints.text = [NSString stringWithFormat:@"%ld points worth %.02f ¢ each.  Redeem some?",(long)totaLAvailablePoints,dollarValForEachPoints*100];
     }
     else {
         dollarValForEachPoints = 0.0;
