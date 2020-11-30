@@ -705,7 +705,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 
 //    cell.btnFevorite.tag = indexPath.row;
 //    [cell.btnFevorite  addTarget:self action:@selector(FevoriteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 

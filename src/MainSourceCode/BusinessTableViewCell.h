@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RateView.h"
 @interface BusinessTableViewCell : UITableViewCell {
-    
+
 }
 
 @property (weak, nonatomic) IBOutlet UIImageView *businessIconImageView;

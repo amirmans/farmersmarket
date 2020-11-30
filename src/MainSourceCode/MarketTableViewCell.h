@@ -26,5 +26,6 @@
 @property (strong, nonatomic) IBOutlet UITextField *tf_corp_website;
 @property (strong, nonatomic) IBOutlet UITextField *tf_pickup_date;
 @property (strong, nonatomic) IBOutlet UIImageView *iv_market_logo;
+@property (strong, nonatomic) IBOutlet UIImageView *tempAccessoryImageView;
 
 @end

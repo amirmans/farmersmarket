@@ -139,8 +139,12 @@ bool shouldOpenOptionMenu = false;
     backButton.tintColor = [UIColor whiteColor];
 
     customButton = [[UIButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-85, 20, 80, 40)];
-    [customButton setTitle:@"Order" forState:UIControlStateNormal];
-    [customButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [customButton setTitle:@"Order" forState:UIControlStateNormal];
+//    [customButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    UIImage *btnImage = [UIImage imageNamed:@"shopping-cart.png"];
+    [customButton setImage:btnImage forState:UIControlStateNormal];
+    
     self.rightButton = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:customButton];
     self.rightButton.badgeOriginX = 65.0f;
     self.rightButton.badgeOriginY = 2.0f;
@@ -696,7 +700,7 @@ bool shouldOpenOptionMenu = false;
 
         cell.lbl_Price.text = [NSString stringWithFormat:@"%@%.2f",self.currency_symbol, rounded_down];
         cell.lbl_OrderOption.text = [self.currentObject valueForKey:@"product_option"];
-        cell.lbl_Description.text = [self.currentObject valueForKey:@"product_descrption"];
+//        cell.lbl_Description.text = [self.currentObject valueForKey:@"product_descrption"];
         cell.lbl_Title.text = [self.currentObject valueForKey:@"productname"];
 
 
@@ -866,9 +870,9 @@ bool shouldOpenOptionMenu = false;
 
     NSString* short_desc = [catArray[indexPath.row] valueForKey:@"short_description"];
     if(![short_desc isKindOfClass:[NSNull class]])
-        cell.lbl_description.text = short_desc;
+        cell.tv_desc.text = short_desc;
     else
-        cell.lbl_description.text = @"";
+        cell.tv_desc.text = @"";
     
     
     NSString *productIconURL = [catArray[indexPath.row] valueForKey:@"product_icon"];
@@ -945,9 +949,9 @@ bool shouldOpenOptionMenu = false;
 
     NSString* short_desc = [catArray[indexPath.row] valueForKey:@"short_description"];
     if(![short_desc isKindOfClass:[NSNull class]])
-        cell.lbl_description.text = short_desc;
+        cell.tv_desc.text = short_desc;
     else
-        cell.lbl_description.text = @"";
+        cell.tv_desc.text = @"";
     
     NSString *productIconURL = [catArray[indexPath.row] valueForKey:@"product_icon"];
     NSString *iconDirectory = BusinessCustomerIconDirectory;
@@ -1045,9 +1049,9 @@ bool shouldOpenOptionMenu = false;
 
 
     if(![businessDetail.short_description isKindOfClass:[NSNull class]])
-        cell.lbl_description.text = businessDetail.short_description;
+        cell.tv_desc.text = businessDetail.short_description;
     else
-        cell.lbl_description.text = @"";
+        cell.tv_desc.text = @"";
 
     cell.lbl_title.text = businessDetail.name;
 
@@ -1086,9 +1090,9 @@ bool shouldOpenOptionMenu = false;
     }
 
     if(![businessDetail.short_description isKindOfClass:[NSNull class]])
-        cell.lbl_description.text = businessDetail.short_description;
+        cell.tv_desc.text = businessDetail.short_description;
     else
-        cell.lbl_description.text = @"";
+        cell.tv_desc.text = @"";
 
     cell.lbl_title.text = businessDetail.name;
 

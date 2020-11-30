@@ -24,7 +24,9 @@
         _lblOpenCloseDate.hidden = true;
         [_lblOpenClose setHidden:true];
     }
-    // Configure the view for the selected state
+    [self.tv_business_desc setUserInteractionEnabled:TRUE];
+    [self.tv_business_desc setScrollEnabled:TRUE];
+
 }
 
 @end

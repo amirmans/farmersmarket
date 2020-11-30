@@ -14,7 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *img_menuImage;
 @property (weak, nonatomic) IBOutlet UILabel *lbl_Title;
 
-@property (weak, nonatomic) IBOutlet UILabel *lbl_Description;
+
 
 @property (weak, nonatomic) IBOutlet UILabel *lbl_totalItems;
 

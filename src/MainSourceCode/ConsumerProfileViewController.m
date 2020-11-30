@@ -595,6 +595,7 @@ static NSArray *consumerProfileDataArray = nil;
     [consumerProfileDataDic setObject:nicknameTextField.text forKey:@"nickname"];
     [consumerProfileDataDic setObject:[NSNumber numberWithInteger:ageGroup] forKey:@"age_group"];
     [consumerProfileDataDic setObject:E_164FormatPhoneNumber forKey:@"sms_no"];
+    [consumerProfileDataDic setObject:@"2" forKey:@"device_type"];
 
     //    NSString * appBuildString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
     NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];

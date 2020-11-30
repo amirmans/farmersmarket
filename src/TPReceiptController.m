@@ -68,7 +68,7 @@
                          [CurrentBusiness sharedCurrentBusinessManager].business.businessName,self.order_id];
     
 
-    UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"< Done" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
+    UIBarButtonItem *BackButton = [[UIBarButtonItem alloc] initWithTitle:@"< Continue shopping" style:UIBarButtonItemStylePlain target:self action:@selector(backBUttonClicked:)];
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
     self.orderDataArray = [[NSMutableArray alloc] init];

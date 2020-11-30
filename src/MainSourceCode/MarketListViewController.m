@@ -82,7 +82,7 @@ MKCoordinateRegion marketRegion;
         if (!marketListArray) {
             marketListArray= [[NSMutableArray alloc]init];
         }// m
-//        [marketListArray removeAllObjects];
+        [marketListArray removeAllObjects];
         for (int i = 0; i < self.ResponseDataArray.count ; i++) {
             [marketListArray addObject:[self.ResponseDataArray objectAtIndex:i]];
         }
@@ -564,7 +564,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         cellDict = [marketListArray objectAtIndex:indexPath.row];
     }
 
-
+//    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 //    Business * biz =[[Business alloc] initWithDataFromDatabase: cellDict];
 
 //    NSLog(@"%@",cellDict);

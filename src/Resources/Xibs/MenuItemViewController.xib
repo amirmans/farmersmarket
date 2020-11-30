@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -28,7 +28,7 @@
                                 <constraint firstAttribute="height" constant="22" id="0Sy-gs-4oK"/>
                                 <constraint firstAttribute="width" constant="21" id="PVO-Oz-0Gf"/>
                             </constraints>
-                            <state key="normal" image="ic_heart.png"/>
+                            <state key="normal" image="previous_order"/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dQx-72-PEV">
                             <rect key="frame" x="15" y="25" width="21" height="22"/>
@@ -87,7 +87,7 @@
         </view>
     </objects>
     <resources>
-        <image name="ic_heart.png" width="20.5" height="19"/>
         <image name="ic_nav.png" width="20.5" height="19"/>
+        <image name="previous_order" width="24" height="22.5"/>
     </resources>
 </document>
