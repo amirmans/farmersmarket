@@ -703,8 +703,6 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         cell.businessAddress.text = businessAddressTest;
     }
 
-//    cell.btnFevorite.tag = indexPath.row;
-//    [cell.btnFevorite  addTarget:self action:@selector(FevoriteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }

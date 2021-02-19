@@ -65,9 +65,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="11/29/20 10:00am" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4XU-Zm-w3J" userLabel="tf Cutoff Time">
-                        <rect key="frame" x="117.5" y="205.5" width="134" height="20"/>
+                        <rect key="frame" x="117.5" y="205.5" width="137" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="134" id="xa8-gQ-Bxu"/>
+                            <constraint firstAttribute="width" constant="137" id="xa8-gQ-Bxu"/>
                         </constraints>
                         <color key="textColor" systemColor="systemOrangeColor"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -107,7 +107,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="11/29/20 10:00am" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YZf-TE-4a9" userLabel="tf Pickup Date">
-                        <rect key="frame" x="117.5" y="231.5" width="139" height="20"/>
+                        <rect key="frame" x="117.5" y="231.5" width="137" height="20"/>
                         <color key="textColor" systemColor="systemOrangeColor"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                         <textInputTraits key="textInputTraits"/>
@@ -128,7 +128,6 @@
                     <constraint firstItem="qN2-0B-bFL" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.121622" id="7f2-an-VdW"/>
                     <constraint firstItem="JUO-Kl-6Mb" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.83" id="8N7-cX-mWu"/>
                     <constraint firstAttribute="bottom" secondItem="Ifz-1F-geV" secondAttribute="bottom" constant="15.5" id="9gC-dP-2us"/>
-                    <constraint firstItem="YZf-TE-4a9" firstAttribute="width" secondItem="4XU-Zm-w3J" secondAttribute="width" constant="5" id="BRX-5P-582"/>
                     <constraint firstItem="62s-jq-cLB" firstAttribute="top" secondItem="D2j-FA-vJ7" secondAttribute="bottom" constant="45.5" id="EwP-Aj-kZI"/>
                     <constraint firstItem="qN2-0B-bFL" firstAttribute="top" secondItem="6AB-k9-2VU" secondAttribute="bottom" id="KnO-bU-vkn"/>
                     <constraint firstItem="JUO-Kl-6Mb" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.0465465" id="LGw-wB-qrg"/>
@@ -137,6 +136,7 @@
                     <constraint firstItem="wfi-Rd-kv4" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.45" id="PrW-SB-Iwi"/>
                     <constraint firstItem="qN2-0B-bFL" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.140625" id="Q9A-4a-bRK"/>
                     <constraint firstItem="JUO-Kl-6Mb" firstAttribute="leading" secondItem="oEb-5w-WjK" secondAttribute="leading" id="RBe-78-GrI"/>
+                    <constraint firstItem="YZf-TE-4a9" firstAttribute="width" secondItem="4XU-Zm-w3J" secondAttribute="width" id="RY3-cO-WeL"/>
                     <constraint firstItem="4XU-Zm-w3J" firstAttribute="top" secondItem="62s-jq-cLB" secondAttribute="bottom" constant="-38" id="U9t-OK-Vwb"/>
                     <constraint firstItem="pQ1-lT-4Dm" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.17" id="UvE-rr-GAd"/>
                     <constraint firstAttribute="trailing" secondItem="D2j-FA-vJ7" secondAttribute="trailing" constant="2" id="VqW-m2-2Zf"/>
@@ -184,7 +184,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="accessory.png" width="55" height="64"/>
+        <image name="accessory.png" width="33" height="64"/>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

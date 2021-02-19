@@ -46,12 +46,12 @@
                         </constraints>
                     </view>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6AB-k9-2VU">
-                        <rect key="frame" x="224" y="21" width="96" height="89.5"/>
+                        <rect key="frame" x="224" y="21" width="80" height="89.5"/>
                         <accessibility key="accessibilityConfiguration">
                             <accessibilityTraits key="traits" image="YES" notEnabled="YES"/>
                         </accessibility>
                         <constraints>
-                            <constraint firstAttribute="width" constant="96" id="22N-bT-fog"/>
+                            <constraint firstAttribute="width" constant="80" id="22N-bT-fog"/>
                         </constraints>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iQt-7m-3JV" userLabel="SmallView">
@@ -95,6 +95,10 @@
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         <dataDetectorType key="dataDetectorTypes" link="YES" address="YES" calendarEvent="YES"/>
                     </textView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="accessory.png" translatesAutoresizingMaskIntoConstraints="NO" id="5bh-zL-1j5">
+                        <rect key="frame" x="299" y="52" width="21" height="26"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 <constraints>
@@ -111,13 +115,13 @@
                     <constraint firstItem="iQt-7m-3JV" firstAttribute="leading" secondItem="RUa-Yq-xMi" secondAttribute="leading" id="e0j-FH-pWG"/>
                     <constraint firstItem="oEb-5w-WjK" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.99375" id="fBb-vQ-yBF"/>
                     <constraint firstItem="6AB-k9-2VU" firstAttribute="leading" secondItem="iQt-7m-3JV" secondAttribute="trailing" constant="1" id="fkw-8T-saM"/>
-                    <constraint firstAttribute="trailing" secondItem="6AB-k9-2VU" secondAttribute="trailing" id="hcB-Sf-KkA"/>
+                    <constraint firstAttribute="trailing" secondItem="6AB-k9-2VU" secondAttribute="trailing" constant="16" id="hcB-Sf-KkA"/>
                     <constraint firstItem="RUa-Yq-xMi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="1" id="lTz-8p-Vlx"/>
-                    <constraint firstItem="Jz1-lH-5q6" firstAttribute="trailing" secondItem="6AB-k9-2VU" secondAttribute="trailing" constant="-97" id="oLh-ij-pEh"/>
+                    <constraint firstItem="Jz1-lH-5q6" firstAttribute="trailing" secondItem="6AB-k9-2VU" secondAttribute="trailing" constant="-81" id="oLh-ij-pEh"/>
                     <constraint firstAttribute="bottom" secondItem="iQt-7m-3JV" secondAttribute="bottom" constant="26.5" id="qT7-6Y-zlT"/>
                     <constraint firstItem="Jz1-lH-5q6" firstAttribute="top" secondItem="JUO-Kl-6Mb" secondAttribute="bottom" constant="2" id="sC5-7V-NSw"/>
                     <constraint firstItem="6AB-k9-2VU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="21" id="vdf-Q4-UIx"/>
-                    <constraint firstItem="Ifz-1F-geV" firstAttribute="trailing" secondItem="6AB-k9-2VU" secondAttribute="trailing" id="yxe-QM-zwU"/>
+                    <constraint firstItem="Ifz-1F-geV" firstAttribute="trailing" secondItem="6AB-k9-2VU" secondAttribute="trailing" constant="16" id="yxe-QM-zwU"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -134,6 +138,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="accessory.png" width="33" height="64"/>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
