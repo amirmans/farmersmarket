@@ -63,7 +63,7 @@ double deliveryAmountValue; //Delievery amount value in $
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
     
-    self.automaticallyAdjustsScrollViewInsets = YES;
+//    self.automaticallyAdjustsScrollViewInsets = YES;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.currency_code =  [CurrentBusiness sharedCurrentBusinessManager].business.curr_code;
     self.currency_symbol = [CurrentBusiness sharedCurrentBusinessManager].business.curr_symbol;
@@ -179,7 +179,7 @@ double deliveryAmountValue; //Delievery amount value in $
 
     [self checkPromoCodeForUser];
     [self paymentSummary];
-    [self setInitialPointsValue];
+//    [self setInitialPointsValue];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -192,7 +192,7 @@ double deliveryAmountValue; //Delievery amount value in $
     //zzz
     //changed for Manage My Market
 //    _waitTimeLabel.text = [CurrentBusiness sharedCurrentBusinessManager].business.process_time;
-    self.waitTimeLabel.text = [NSString stringWithFormat:@"Pickup at %@ on %@", [[Corp sharedCorp].chosenCorp objectForKey:@"delivery_location"],
+    self.waitTimeLabel.text = [NSString stringWithFormat:@"Pickup at %@ on %@", [[Corp sharedCorp].chosenCorp objectForKey:@"location_abbr"],
                                [[Corp sharedCorp].chosenCorp objectForKey:@"pickup_date"] ];
     [self getDefaultCardData];
     [self paymentSummary];
@@ -384,7 +384,7 @@ double deliveryAmountValue; //Delievery amount value in $
         }
         
         if(flagRedeemPointVal){
-            [self setInitialPointsValue];
+//            [self setInitialPointsValue];
             [self adjustRedeemPointsAndTheirValues];
         }
         else
@@ -593,26 +593,26 @@ double deliveryAmountValue; //Delievery amount value in $
         }
     }
 }
-- (void) setInitialPointsValue {
-    NSLog(@"%@",[RewardDetailsModel sharedInstance].rewardDict);
-    NSDictionary *rewards = [RewardDetailsModel sharedInstance].rewardDict;
-    currentPointsLevel = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"points"] integerValue];
-    originalNoPoint = [[[rewards valueForKey:@"data"] valueForKey:@"total_available_points"] integerValue];
-    originalPointsVal = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"dollar_value"] doubleValue];
-    int totaLAvailablePoints = [[[rewards valueForKey:@"data"] valueForKey:@"total_available_points"] intValue];
-    if (originalPointsVal > 0) {
-        dollarValForEachPoints = originalPointsVal / currentPointsLevel;
-        self.lblCurrentPoints.textColor = [UIColor blackColor];
-        [self.btnRedeemPoint setImage:[UIImage imageNamed:@"Unchecked"] forState:UIControlStateNormal];
-        self.lblCurrentPoints.text = [NSString stringWithFormat:@"%ld points worth %.02f ¢ each.  Redeem some?",(long)totaLAvailablePoints,dollarValForEachPoints*100];
-    }
-    else {
-        dollarValForEachPoints = 0.0;
-        self.lblCurrentPoints.textColor = [UIColor lightGrayColor];
-        [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_unchecked"] forState:UIControlStateNormal];
-        self.lblCurrentPoints.text = @"You don't have enough points to use";
-    }
-}
+//- (void) setInitialPointsValue {
+//    NSLog(@"%@",[RewardDetailsModel sharedInstance].rewardDict);
+//    NSDictionary *rewards = [RewardDetailsModel sharedInstance].rewardDict;
+//    currentPointsLevel = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"points"] integerValue];
+//    originalNoPoint = [[[rewards valueForKey:@"data"] valueForKey:@"total_available_points"] integerValue];
+//    originalPointsVal = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"dollar_value"] doubleValue];
+//    int totaLAvailablePoints = [[[rewards valueForKey:@"data"] valueForKey:@"total_available_points"] intValue];
+//    if (originalPointsVal > 0) {
+//        dollarValForEachPoints = originalPointsVal / currentPointsLevel;
+//        self.lblCurrentPoints.textColor = [UIColor blackColor];
+//        [self.btnRedeemPoint setImage:[UIImage imageNamed:@"Unchecked"] forState:UIControlStateNormal];
+//        self.lblCurrentPoints.text = [NSString stringWithFormat:@"%ld points worth %.02f ¢ each.  Redeem some?",(long)totaLAvailablePoints,dollarValForEachPoints*100];
+//    }
+//    else {
+//        dollarValForEachPoints = 0.0;
+//        self.lblCurrentPoints.textColor = [UIColor lightGrayColor];
+//        [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_unchecked"] forState:UIControlStateNormal];
+//        self.lblCurrentPoints.text = @"You don't have enough points to use";
+//    }
+//}
 - (float)calculateValueforGivenPoints:(NSInteger)points {
     return points*dollarValForEachPoints;
 }

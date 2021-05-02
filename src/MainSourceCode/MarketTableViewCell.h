@@ -21,11 +21,14 @@
 @property (strong, nonatomic) IBOutlet UILabel *distance;
 @property (strong, nonatomic) IBOutlet UILabel *lbl_market_open_hours;
 @property (strong, nonatomic) IBOutlet UILabel *lbl_mkt_pickup_location;
+@property (strong, nonatomic) IBOutlet UITextField *tf_mkt_pickup_location;
 @property (strong, nonatomic) IBOutlet UITextView *businessAddress;
 @property (strong, nonatomic) IBOutlet UITextField *tf_cutoff_datetime;
 @property (strong, nonatomic) IBOutlet UITextField *tf_corp_website;
 @property (strong, nonatomic) IBOutlet UITextField *tf_pickup_date;
 @property (strong, nonatomic) IBOutlet UIImageView *iv_market_logo;
 @property (strong, nonatomic) IBOutlet UIImageView *tempAccessoryImageView;
+@property (strong, nonatomic) IBOutlet UIButton *lbChangeLocation;
+
 
 @end

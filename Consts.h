@@ -144,7 +144,7 @@ static NSString *const TIME12HOURFORMAT = @"h:mm a";
 
 //points
 static const int PointsValueMultiplier = 1;  // for each dollar you can one point -  acquiring
-static const int Points_to_dollar=10;        // value of 1 point n points for a dollar to spend
+static const int Points_to_dollar=5;        // value of 1 point n points for a dollar to spend
 #define RedeemPoints @"RedeemPoints" // Used in notification
 
 //Service availability

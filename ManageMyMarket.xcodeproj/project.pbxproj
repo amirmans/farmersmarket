@@ -193,7 +193,6 @@
 		C6C8ACA918DF9B8F005DAFD6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C8ACA718DF9B8F005DAFD6 /* main.m */; };
 		C6C8ACAD18DF9BBC005DAFD6 /* TapForAllTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C8ACAC18DF9BBC005DAFD6 /* TapForAllTests.m */; };
 		C6C8ACAF18DF9BE5005DAFD6 /* ManageMyMarketTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6C8ACAE18DF9BE5005DAFD6 /* ManageMyMarketTests-Info.plist */; };
-		C6C8ACB318DF9C1A005DAFD6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C6C8ACB118DF9C1A005DAFD6 /* InfoPlist.strings */; };
 		C6D20613195A8A23006E12FE /* JBKenBurnsView.m in Sources */ = {isa = PBXBuildFile; fileRef = C6D20612195A8A23006E12FE /* JBKenBurnsView.m */; };
 		C6EABE1718B2D1CD00F50D19 /* BusinessTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6EABE1518B2D1CD00F50D19 /* BusinessTableViewCell.xib */; };
 		C6EABE1818B2D1CD00F50D19 /* BusinessListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6EABE1618B2D1CD00F50D19 /* BusinessListViewController.xib */; };
@@ -1315,7 +1314,6 @@
 				C666EE4324884A6B00D69519 /* tap-in-logo_non_transparent.jpg in Resources */,
 				5D7AEDD51C6934E400B0929F /* ic_nav@2x.png in Resources */,
 				4A1DA88D1C7603CA00E16F30 /* TPReceiptController.xib in Resources */,
-				C6C8ACB318DF9C1A005DAFD6 /* InfoPlist.strings in Resources */,
 				5D7AEDEB1C696B2100B0929F /* pin1@3x.png in Resources */,
 				5D7AEDF71C696B3000B0929F /* pin3@3x.png in Resources */,
 				2949CCFF1458A21700728B87 /* Notifications.png in Resources */,
@@ -1769,7 +1767,7 @@
 				CODE_SIGN_ENTITLEMENTS = TapForAll/ManageMyMarket.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = E79MNN58JH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1781,7 +1779,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "TapForAll/ManageMyMarket-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.11;
+				MARKETING_VERSION = 1.13;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -1809,7 +1807,7 @@
 				CODE_SIGN_ENTITLEMENTS = TapForAll/ManageMyMarket.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = E79MNN58JH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1821,7 +1819,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "TapForAll/ManageMyMarket-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.11;
+				MARKETING_VERSION = 1.13;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1943,7 +1941,7 @@
 				CODE_SIGN_ENTITLEMENTS = TapForAll/ManageMyMarket.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1.1;
+				CURRENT_PROJECT_VERSION = 1.0;
 				DEVELOPMENT_TEAM = E79MNN58JH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1955,7 +1953,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "TapForAll/ManageMyMarket-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.11;
+				MARKETING_VERSION = 1.13;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",

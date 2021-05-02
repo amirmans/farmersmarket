@@ -7,6 +7,7 @@
 //
 
 #import "APIUtility.h"
+#import "RewardDetailsModel.h"
 #import "AppData.h"
 #import "Reachability.h"
 #import "AFNetworking.h"
@@ -340,6 +341,7 @@ static id sharedInstance;
     {
         return;
     }
+   
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -349,6 +351,7 @@ static id sharedInstance;
     [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data headers:headers progress: nil success:^(NSURLSessionTask *operation, id responseObject) {
         if (finished) {
             finished((NSDictionary*)responseObject);
+            [RewardDetailsModel sharedInstance].rewardDict = responseObject;
         }
     } failure:^(NSURLSessionTask *operation, NSError *error) {
 
@@ -898,39 +901,39 @@ static id sharedInstance;
 
 
 
-- (void)getAverageWaitTimeForBusiness:(NSDictionary *)data server:(NSString *)url completiedBlock:(void (^)(NSDictionary *response))finished {
-
-    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
-    {
-        return;
-    }
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager.requestSerializer setTimeoutInterval:timeInterval];
-    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
-    [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data headers:headers progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
-        if (finished) {
-            finished((NSDictionary*)responseObject);
-        }
-    } failure:^(NSURLSessionTask *operation, NSError *error) {
-
-        NSLog(@"Error: %@", error);
-        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
-        NSDictionary *temp = @{};
-
-        if([error code] == -1004) {
-
-            if (finished) {
-                finished(dic);
-            }
-        }
-        else
-        {
-            if (finished) {
-                finished(temp);
-            }
-        }
-    }];
-}
+//- (void)getAverageWaitTimeForBusiness:(NSDictionary *)data server:(NSString *)url completiedBlock:(void (^)(NSDictionary *response))finished {
+//
+//    if ([[[AppData sharedInstance]checkNetworkConnectivity] isEqualToString:@"NoAccess"])
+//    {
+//        return;
+//    }
+//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    [manager.requestSerializer setTimeoutInterval:timeInterval];
+//    NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
+//    [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data headers:headers progress:nil success:^(NSURLSessionTask *operation, id responseObject) {
+//        if (finished) {
+//            finished((NSDictionary*)responseObject);
+//        }
+//    } failure:^(NSURLSessionTask *operation, NSError *error) {
+//
+//        NSLog(@"Error: %@", error);
+//        NSDictionary *dic= [[NSDictionary alloc] initWithObjects:@[@"NO"] forKeys:@[@"success"]];
+//        NSDictionary *temp = @{};
+//
+//        if([error code] == -1004) {
+//
+//            if (finished) {
+//                finished(dic);
+//            }
+//        }
+//        else
+//        {
+//            if (finished) {
+//                finished(temp);
+//            }
+//        }
+//    }];
+//}
 
 
 - (BOOL)isZipCodeValid:(NSString *)zipCode {

@@ -67,7 +67,7 @@ double deliveryCharge = 0.0;        // Delivery charge
     self.navigationItem.leftBarButtonItem = BackButton;
     BackButton.tintColor = [UIColor whiteColor];
 
-    self.automaticallyAdjustsScrollViewInsets = NO;
+//    self.automaticallyAdjustsScrollViewInsets = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
 
     self.txtNote.delegate = self;

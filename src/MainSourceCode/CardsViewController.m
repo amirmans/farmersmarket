@@ -80,7 +80,7 @@ NSMutableArray *cardDataArray;
     cardDataArray = [[NSMutableArray alloc] init];
     //    self.title = [NSString stringWithFormat:@"Pay %@", business.businessName];
     self.title = @"Manage Cards";
-    self.automaticallyAdjustsScrollViewInsets = YES;
+//    self.automaticallyAdjustsScrollViewInsets = YES;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.txtCardNumber.showsCardLogo = YES;
@@ -851,7 +851,7 @@ NSMutableArray *cardDataArray;
                                               } else {
                                                   
                                                   //when credit card details is correct code here
-                                                  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//                                                  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                                                   
                                                   NSString *cardNumber = [cardData.number stringByReplacingOccurrencesOfString:@" " withString:@""];
                                                   NSString *cardExpMonth = [NSString stringWithFormat:@"%tu",cardData.expMonth];
@@ -872,13 +872,13 @@ NSMutableArray *cardDataArray;
                                                   NSString *userID = [NSString stringWithFormat:@"%ld",[DataModel sharedDataModelManager].userID];
                                                   
                                                   //    [defaults setObject:defaultsParam forKey:StripeDefaultCard];
-                                                  NSDictionary *defaultsParam = @{@"consumer_id":userID,@"cc_no":cardNumber
-                                                                                  ,@"expMonth":cardExpMonth,@"expYear":cardExpYear,@"cvv":cardCvc,@"zip_code":zip_code, @"card_type":cardType};
+//                                                  NSDictionary *defaultsParam = @{@"consumer_id":userID,@"cc_no":cardNumber
+//                                                                                  ,@"expMonth":cardExpMonth,@"expYear":cardExpYear,@"cvv":cardCvc,@"zip_code":zip_code, @"card_type":cardType};
                                                   
                                                   
                                                   NSDictionary *severParam = @{@"cmd":@"save_cc_info",@"consumer_id":userID,@"cc_no":cardNumber
                                                                                ,@"expiration_date":expiration_date,@"cvv":cardCvc,@"zip_code":zip_code, @"card_type":cardType
-                                                                               ,@"default":@"1"};
+                                                                               ,@"default":@"1", @"stripe_token_id": token.tokenId};
                                                   [[APIUtility sharedInstance]save_cc_info:severParam completiedBlock:^(NSDictionary *response) {
                                                       //        [self getCCForConsumer];
                                                       NSLog(@"%@",response);
@@ -887,13 +887,13 @@ NSMutableArray *cardDataArray;
                                                       
                                                       if(![[response objectForKey:@"status"] boolValue])
                                                       {
-                                                          NSLog(@"%@",[response objectForKey:@"message"]);
-                                                          [defaults setObject:defaultsParam forKey:StripeDefaultCard];
+//                                                          NSLog(@"%@",[response objectForKey:@"message"]);
+//                                                          [defaults setObject:defaultsParam forKey:StripeDefaultCard];
                                                           //    [defaults registerDefaults:defaultsParam];
-                                                          [defaults synchronize];
+//                                                          [defaults synchronize];
                                                           [self showAlertForAddingCard:cardData];
                                                           
-                                                          NSLog(@"Saved this info for card default: %@", defaultsParam);
+//                                                          NSLog(@"Saved this info for card default: %@", defaultsParam);
                                                           [self getCCForConsumer];                                                   }
                                                       else
                                                       {
@@ -1021,14 +1021,14 @@ NSMutableArray *cardDataArray;
         //------
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults  removeObjectForKey:StripeDefaultCard];
-        NSString *cardName = @"";
-        NSString *cardType = [self getTypeFromCardNumber:cardData.number];
-        NSString *expMonthStr = [NSString stringWithFormat:@"%ld",cardData.expMonth];
-        NSString *expYearStr = [NSString stringWithFormat:@"%ld",cardData.expYear];
-        NSDictionary *cardDataDict = @{ @"cc_no":cardData.number,@"card_name":cardName,@"expMonth":expMonthStr,@"expYear":expYearStr ,@"cvc":cardData.cvc
-                                        , @"zip_code":cardData.address.postalCode, @"card_type":cardType};
-        [defaults setObject:cardDataDict forKey:StripeDefaultCard];
-        [defaults synchronize];
+//        NSString *cardName = @"";
+//        NSString *cardType = [self getTypeFromCardNumber:cardData.number];
+//        NSString *expMonthStr = [NSString stringWithFormat:@"%ld",cardData.expMonth];
+//        NSString *expYearStr = [NSString stringWithFormat:@"%ld",cardData.expYear];
+//        NSDictionary *cardDataDict = @{ @"cc_no":cardData.number,@"card_name":cardName,@"expMonth":expMonthStr,@"expYear":expYearStr ,@"cvc":cardData.cvc
+//                                        , @"zip_code":cardData.address.postalCode, @"card_type":cardType};
+//        [defaults setObject:cardDataDict forKey:StripeDefaultCard];
+//        [defaults synchronize];
         returnVal = TRUE;
         //---------
     }else{

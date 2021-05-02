@@ -44,38 +44,38 @@ NSString *companyNotSignedUpMessage =@"Based on your work email, your company ha
     NSArray *arr = [weekDaysStr componentsSeparatedByString:@","];
     if (arr.count < 2) {
         nextBusinessDayIndex = [arr[0] integerValue];
-        
+
         return nextBusinessDayIndex;
     }
-        
+
     [arr sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        
+
         if ([obj1 intValue] == [obj2 intValue])
             return NSOrderedSame;
-        
+
         else if ([obj1 intValue] < [obj2 intValue])
             return NSOrderedAscending;
-        
+
         else
             return NSOrderedDescending;
-        
+
     }];
-    
+
     NSLog(@"The sorted weekday str is %@", arr);
-    
+
     if (todaysIndex >= [arr[(arr.count -1)] integerValue]) {
         nextBusinessDayIndex = [arr[0] integerValue];
-        
+
         return nextBusinessDayIndex;
     }
-    
+
     for (int i = 0; i < arr.count; i++) {
         if (todaysIndex < [arr[i] integerValue]) {
             nextBusinessDayIndex = [arr[i] integerValue];
             break;
         }
     }
-    
+
     return(nextBusinessDayIndex);
 }
 
@@ -87,7 +87,7 @@ NSString *companyNotSignedUpMessage =@"Based on your work email, your company ha
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {        
+    if (self) {
 //        [[NSNotificationCenter defaultCenter]   addObserver:self
 //                                                selector:@selector(displayInitialCorpMessage)
 //                                                name:@"GotCorps"
@@ -115,9 +115,9 @@ NSString *companyNotSignedUpMessage =@"Based on your work email, your company ha
     // Do any additional setup after loading the view from its nib.
     btnPickupOrder.enabled = FALSE;
     btnPickupOrder.alpha = 0.0;
-    
+
 //    [self displayInitialCorpMessage];
-    
+
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     HUD.label.text = @"Finding your company...";
 
@@ -136,12 +136,12 @@ NSString *companyNotSignedUpMessage =@"Based on your work email, your company ha
 
 -(void) viewWillAppear:(BOOL)animated{
     textViewMessageToConsumers.text = @"";
-    
+
     [self.tabBarController setSelectedIndex:0];
-    
+
     [AppData sharedInstance].Current_Selected_Tab = @"0";
     self.navigationController.navigationBar.hidden = YES;
-    
+
     [[NSNotificationCenter defaultCenter]   addObserver:self
                                                selector:@selector(displayInitialCorpMessage)
                                                    name:@"GotCorps"
@@ -176,20 +176,20 @@ NSString *companyNotSignedUpMessage =@"Based on your work email, your company ha
     } else {
         NSString *cutoffStr = [corpDictionary objectForKey:@"cutoff_time"];
         NSDate *cutoff  = [formatter dateFromString:cutoffStr];
-        
+
         // get the cutoffString in user friendly format
-        
+
         NSDateFormatter *displayDateFormatter = [APIUtility sharedInstance].utilityDisplayDateFormatter;
         [displayDateFormatter setDateFormat:@"H:mm"];
         [displayDateFormatter setTimeZone:[NSTimeZone localTimeZone]];
-        
-        
+
+
         //            NSDateFormatter *displayDateFormatter = [APIUtility sharedInstance].utilityDisplayDateFormatter;
         NSDate *cuttoffDisplayDate = [formatter dateFromString:cutoffStr];
         NSString *cutoffDisplayDateStr = [displayDateFormatter stringFromDate:cuttoffDisplayDate];
-        
-        
-        
+
+
+
         if ([cutoff compare:dayInhms] == NSOrderedAscending) {
             returnMessage = [NSString stringWithFormat:@"For today's delivery cut-off time (%@) is past!\nHowever, you may view the menus without ordering.",cutoffDisplayDateStr ];
         } else
@@ -202,12 +202,12 @@ NSString *companyNotSignedUpMessage =@"Based on your work email, your company ha
 
 - (NSString *)determineInitialCorpMessage {
     NSString *returnVal;
-    
+
     NSString* workEmail= [DataModel sharedDataModelManager].emailWorkAddress;
     if(workEmail == nil || [workEmail isKindOfClass:[NSNull class]] || workEmail.length==0) {
         return @"There is no work email in your pofile so we cannot determine your corporation.";
     }
-    
+
     NSArray* corpList = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
     if (corpList == nil) {
         returnVal = @"";
@@ -220,7 +220,7 @@ NSString *companyNotSignedUpMessage =@"Based on your work email, your company ha
             returnVal = @"Based on your work email, your company has not joined our lunch services.\nRequest service at info@Tap-In.co.";
         }
     }
-    
+
     return returnVal;
 }
 
@@ -232,11 +232,11 @@ NSString *companyNotSignedUpMessage =@"Based on your work email, your company ha
     }
     textViewMessageToConsumers.textColor = [UIColor whiteColor];
     textViewMessageToConsumers.text = [self determineInitialCorpMessage];
-    
+
 }
 
 - (BOOL)messageSaysGoodToOrder:(NSString *)alertMessage {
-    
+
     if ([alertMessage rangeOfString:@"open"].location == NSNotFound) {
         return false;
     } else {
@@ -280,7 +280,7 @@ NSString *companyNotSignedUpMessage =@"Based on your work email, your company ha
     NSArray* corpList = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
 
     if (![self isThereRealCorp:corpList]) {
-        
+
         UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@""
                                     message:companyNotSignedUpMessage preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

@@ -41,7 +41,7 @@
 
 -(void)getRewardpointsForBusiness:(NSDictionary *)data completiedBlock:(void (^)(NSDictionary *response))finished ;
 
-- (void)getAverageWaitTimeForBusiness:(NSDictionary *)data server:(NSString *)url completiedBlock:(void (^)(NSDictionary *response))finished;
+//- (void)getAverageWaitTimeForBusiness:(NSDictionary *)data server:(NSString *)url completiedBlock:(void (^)(NSDictionary *response))finished;
 
 - (void) getPreviousOrderListWithConsumerID  :(NSString *) consumer_id BusinessID : (NSString *) business_id completiedBlock:(void (^)(NSDictionary *response))finished;
 

@@ -186,10 +186,10 @@
     if(isCollapsed){
         [UIView animateWithDuration:0.25 animations:^{
             
-            if(_DirectionDown)
-                tblView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height+5, self.frame.size.width, 0);
+            if(self.DirectionDown)
+                self->tblView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y + self.frame.size.height+5, self.frame.size.width, 0);
             else
-                tblView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, 0);
+                self->tblView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, 0);
         }];
         
         [[self.superview viewWithTag:99121] removeFromSuperview];

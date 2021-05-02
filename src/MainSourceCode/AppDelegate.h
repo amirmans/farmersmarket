@@ -13,14 +13,14 @@
 #import "MenuItemViewController.h"
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate, UITabBarControllerDelegate, UIActionSheetDelegate, PostProcesses, UIApplicationDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate,/*CLLocationManagerDelegate,*/ UITabBarControllerDelegate, UIActionSheetDelegate, PostProcesses, UIApplicationDelegate> {
     IBOutlet UIWindow *window;
     IBOutlet UITabBarController *tt_tabBarController;
     IBOutlet UINavigationController *enterBusinessNav;
     __strong id <NewNotificationProtocol> notificationDelegate; // default is strong which conflicts with the property
-    
+
     NSDate* batchInformationDate;
-    
+
     NSString *lat;
     NSString *lng;
 
@@ -45,6 +45,7 @@
 @property (nonatomic, strong) NSMutableArray *corps;
 @property (nonatomic, strong) NSArray *allCorps;
 @property (atomic, assign) short corpIndex;
+@property (atomic, assign) short pd_locations_id;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

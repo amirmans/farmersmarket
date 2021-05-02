@@ -7,6 +7,7 @@
 //
 
 #import "RewardDetailsModel.h"
+#import "Corp.h"
 
 RewardDetailsModel *sharedObject;
 
@@ -48,9 +49,13 @@ RewardDetailsModel *sharedObject;
     NSInteger userID = [DataModel sharedDataModelManager].userID;
   
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    
+    NSString *corp_id=@"";
+    if (([Corp sharedCorp].chosenCorp) && [[Corp sharedCorp].chosenCorp valueForKey:@"corp_id"]> 0 ) {
+        corp_id = [[Corp sharedCorp].chosenCorp valueForKey:@"corp_id"];
+    }
     NSDictionary *data= @{@"cmd":@"get_all_points",@"consumerID": [NSString stringWithFormat:@"%ld",(long)userID],
-                                   @"businessID":[NSString stringWithFormat:@"%ld",(long)biz.businessID]};
+                          @"businessID":[NSString stringWithFormat:@"%ld",(long)biz.businessID],
+                          @"corp_id":corp_id};
     
     NSDictionary *headers = @{@"Authorization":[NSString stringWithFormat:@"Bearer %@",@""]};
     [manager GET:[NSString stringWithFormat:@"%@",GetRewardPoints] parameters:data headers:headers progress:nil success:^(NSURLSessionTask *operation, id responseObject) {

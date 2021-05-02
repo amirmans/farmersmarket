@@ -6,30 +6,30 @@
 //
 //
 
+#import "RewardDetailsModel.h"
 #import "TPRewardPointController.h"
 #import "TPRewardPointCell.h"
 #import "APIUtility.h"
+#import "Corp.h"
 
 @interface TPRewardPointController ()
 
 @end
 
-@implementation TPRewardPointController
+@implementation  TPRewardPointController
 
-double dollarValueDouble = 0;
-NSInteger current_points_level_int  = 0;
 @synthesize currency_symbol;
 @synthesize currency_code;
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.currency_code =  [CurrentBusiness sharedCurrentBusinessManager].business.curr_code;
-    self.currency_symbol = [CurrentBusiness sharedCurrentBusinessManager].business.curr_symbol;
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.tableView.contentInsetAdjustmentBehavior = NO;
     self.edgesForExtendedLayout = UIRectEdgeAll;
-    self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
+//    self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(self.tabBarController.tabBar.frame), 0.0f);
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -38,6 +38,14 @@ NSInteger current_points_level_int  = 0;
       [AppData sharedInstance].Current_Selected_Tab = @"4";
     Business *biz = [CurrentBusiness sharedCurrentBusinessManager].business;
     self.businessBackgrounImage.image = biz.bg_image;
+    self.lbl_businessName.text = [DataModel sharedDataModelManager].shortBusinessName;
+    
+    if (([Corp sharedCorp].chosenCorp) && [[Corp sharedCorp].chosenCorp valueForKey:@"corp_id"]> 0 ) {
+//                 corp_id = [[Corp sharedCorp].chosenCorp valueForKey:@"corp_id"];
+    }
+
+    currency_code =  [CurrentBusiness sharedCurrentBusinessManager].business.curr_code;
+    currency_symbol = [CurrentBusiness sharedCurrentBusinessManager].business.curr_symbol;
 
 
     [self getRewardAPICallWithBusinessId];
@@ -114,106 +122,70 @@ NSInteger current_points_level_int  = 0;
 }
 
 - (void)getRewardAPICallWithBusinessId{
-
+    self.tv_points_msg3.text = @"";
+    self.lblRedeemPoints.text = @"";
 //  NSDictionary *data = [[NSDictionary alloc]initWithObjectsAndKeys:@"2",@"businessID", nil];
 
-    Business *b = [CurrentBusiness sharedCurrentBusinessManager].business;
+//    Business *b = [CurrentBusiness sharedCurrentBusinessManager].business;
+//
+//    int businessid = b.businessID;
+//
+//    NSString *corp_id=@"";
+//    if (([Corp sharedCorp].chosenCorp) && [[Corp sharedCorp].chosenCorp valueForKey:@"corp_id"]> 0 ) {
+//        corp_id = [[Corp sharedCorp].chosenCorp valueForKey:@"corp_id"];
+//    }
+//
+//    NSDictionary *param = @{@"cmd":@"get_all_points",@"consumerID":[NSNumber numberWithInteger:[DataModel sharedDataModelManager].userID],@"businessID":[NSNumber numberWithInteger:businessid], @"corp_id":corp_id};
+//    NSLog(@"param in getRewardApiCallWithBusinessID called from clicking on tabbar is =%@",param);
+//
+//    [[APIUtility sharedInstance]getRewardpointsForBusiness:param completiedBlock:^(NSDictionary *response) {
+//
+        NSDictionary *points_data = [RewardDetailsModel sharedInstance].rewardDict;
+        int status = [[points_data objectForKey:@"status"] intValue];
 
-    int businessid = b.businessID;
+        if (status == 1) {
+//            NSString *total_available_points= @"0";
+            NSMutableDictionary *data = [points_data valueForKeyPath:@"data"];
+            NSDictionary *current_points_level = [data valueForKeyPath:@"current_points_level"];
+            NSArray *summary_points_array = [data valueForKeyPath:@"summary_points_array"];
+            int markets_points = [[summary_points_array valueForKey:@"this_market_all_points"] intValue] + [[summary_points_array valueForKey:@"all_markets_all_points"] intValue];
+            self.lblCongrats.text = [NSString stringWithFormat:@"You have %i points for all vendors in this market.", markets_points];
+//            self.lblCongrats.text = @"For this market you have 0 points -  yay";
+            NSString *totalPoints = [summary_points_array valueForKey:@"total_points"];
+            self.lblPoints.text = [NSString stringWithFormat:@"%@",totalPoints];
+            int point_value =  ceil([[summary_points_array valueForKey:@"point_value"] floatValue] * 100);
+            self.lbl_point_value.text = [NSString stringWithFormat:@"Each point = %i cents.", point_value];
 
-    NSDictionary *param = @{@"cmd":@"get_all_points",@"consumerID":[NSNumber numberWithInteger:[DataModel sharedDataModelManager].userID],@"businessID":[NSNumber numberWithInteger:businessid]};
-    NSLog(@"param=%@",param);
-
-    [[APIUtility sharedInstance]getRewardpointsForBusiness:param completiedBlock:^(NSDictionary *response) {
-
-        int status = [[response objectForKey:@"status"] intValue];
-
-        if (status == 1){
-
-            NSMutableDictionary *data = [response valueForKeyPath:@"data"];
-//            NSDictionary *dic = [data valueForKeyPath:@"current_points_level"];
-            NSString *total_available_points= @"0";
-            if ([data valueForKeyPath:@"total_available_points"] != [NSNull null]) {
-                total_available_points = [[data valueForKeyPath:@"total_available_points"] stringValue];
-                self.lblPoints.text = [NSString stringWithFormat:@"Points: %@",total_available_points];
-
-                dollarValueDouble = [total_available_points doubleValue]/Points_to_dollar;
-            }
-
+            
             if ([CurrentBusiness sharedCurrentBusinessManager].business) {
+                NSString *this_business_all_points = [summary_points_array valueForKey:@"this_business_all_points"];
+                NSString *currentPointsMessage = [NSString stringWithFormat:@"For this business, You have %@ points.", this_business_all_points];
 
-                NSString *currentPointsMessage =@"";
-                double dollarValueForEachPoint = 0.0;
-                NSInteger nextLevelpoints = 0;
-                NSInteger currentPoints = 0;
-                if ([data valueForKeyPath:@"current_points_level"] != [NSNull null]) {
-                    NSDictionary *current_points_level = [data valueForKeyPath:@"current_points_level"];
-                    float dollarValue = 0.0;
-                    currentPoints = [[current_points_level valueForKey:@"points"] integerValue];
-
-                    current_points_level_int = currentPoints;
-                    if (currentPoints > 0) {
-                        if ([current_points_level valueForKey:@"dollar_value"] != [NSNull null]) {
-                            dollarValue = [[current_points_level valueForKey:@"dollar_value"] floatValue];
-                            if (dollarValue > 0) {
-                                dollarValueForEachPoint = dollarValue / currentPoints;
-//                                currentPointsMessage = [NSString stringWithFormat:@"Your points are worth %2.0f¢ each", dollarValueForEachPoint*100];
-                                currentPointsMessage = [NSString stringWithFormat:@"You passed the thereshold.  Redeem points"];
-                            }
-                        }
-                    }
-                }
-
-                if ([currentPointsMessage length] > 0) {
-    //                self.lblRedeemPoints.hidden = false;
-                    self.lblCongrats.hidden = false;
-                    NSString *congratsMessage = [NSString stringWithFormat:@"Congrats from %@", [CurrentBusiness sharedCurrentBusinessManager].business.businessName ];
-                    self.lblCongrats.text = congratsMessage;
-                    self.lblRedeemPoints.text = currentPointsMessage;
+                NSString *msg3_text;
+                int total_redeemable = [[summary_points_array valueForKey:@"total_redeemable"] intValue];
+                if (total_redeemable > 0) {
+                    msg3_text = [NSString stringWithFormat:@"Altogether: congrats, you passed the threshold and can redeem %i points", total_redeemable];
                 } else {
-    //                self.lblRedeemPoints.hidden = true;
-                    self.lblCongrats.hidden = true;
+                    msg3_text = [NSString stringWithFormat:@"You need to earm more points."];
                 }
-
-                if ([data valueForKeyPath:@"next_points_level"] != [NSNull null]) {
-                    NSDictionary *next_points_level = [data valueForKeyPath:@"next_points_level"];
-                    float dollarValue = 0.0;
-                    nextLevelpoints = [[next_points_level valueForKey:@"points"] integerValue];
-
-                    if ([next_points_level valueForKey:@"dollar_value"] != [NSNull null]) {
-                        dollarValue = [[next_points_level valueForKey:@"dollar_value"] floatValue];
-                    }
-
-                    if (nextLevelpoints > 0) {
-                        self.lblNextLevelPoints.hidden = false;
-                        self.lblNextLevelPoints.text = [NSString stringWithFormat:@"Next level is %ld points for %@%.2f",(long)nextLevelpoints,self.currency_symbol,dollarValue];
-                    }
-                    else {
-                        self.lblNextLevelPoints.hidden = true;
-                    }
-                }
-
-
-                if (dollarValueForEachPoint <= 0.0) {
-                    currentPointsMessage = [NSString stringWithFormat:@"Earn at least %ld points to redeem them", (long)nextLevelpoints];
+                self.tv_points_msg3.text = msg3_text;
+                
+                int current_point = 200;
+                if ([current_points_level valueForKeyPath:@"points"] != [NSNull null]) {
+                    current_point = [[current_points_level valueForKeyPath:@"points"] intValue];
+                if ([this_business_all_points intValue] <= current_point)
+                    currentPointsMessage = [NSString stringWithFormat:@"For this business earn at least %ld points to redeem them", (long)current_point];
                     self.lblRedeemPoints.text = currentPointsMessage;
                 }
 
-                // this was in the first release
-    //            self.lblRedeemPoints.text = @"Keep earning points.";
-    //            self.lblNextLevelPoints.text = @"Redeem them with the next app update.";
-
-    //            if ([dic valueForKeyPath:@"points_earned"] != [NSNull null])
             } else {
-                // we have not chosen an business yet
-                self.lblCongrats.hidden = true;
-                self.lblNextLevelPoints.hidden = true;
-                self.lblRedeemPoints.text = [NSString stringWithFormat:@"Your total points for all businesses: %@",total_available_points];
+                // we have not chosen a business yet
+//                self.lblCongrats.text = @"For this market you have 0 points";
+//                self.lblRedeemPoints.text = [NSString stringWithFormat:@"Your total points for all businesses in this market: %@",total_available_points];
             }
             self.pointsarray = [data valueForKeyPath:@"points"];
             [self.tableView reloadData];
         }
-    }];
 }
 
 - (void) redirectFromTotalCart : (BOOL) flag {
@@ -227,46 +199,46 @@ NSInteger current_points_level_int  = 0;
     }
 }
 
-- (void) checkCurrentPoints {
-    if((dollarValueDouble*Points_to_dollar) > 0) {
-        if((dollarValueDouble*Points_to_dollar) > current_points_level_int) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:RedeemPoints object:nil];
-        }
-        else {
-            NSString *message = [NSString stringWithFormat:@"You have %ld points, You need more %.f points to redeem",(long)current_points_level_int,((dollarValueDouble*Points_to_dollar) - current_points_level_int)];
-
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-
-            }];
-
-            [alert addAction:okAction];
-            [self presentViewController:alert animated:true completion:^{
-
-            }];
-        }
-    }
-    else {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"You have no points to redeem" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-
-        }];
-
-        [alert addAction:okAction];
-        [self presentViewController:alert animated:true completion:^{
-
-        }];
-    }
-}
+//- (void) checkCurrentPoints {
+//    if((dollarValueDouble*Points_to_dollar) > 0) {
+//        if((dollarValueDouble*Points_to_dollar) > current_points_level_int) {
+//            [[NSNotificationCenter defaultCenter] postNotificationName:RedeemPoints object:nil];
+//        }
+//        else {
+//            NSString *message = [NSString stringWithFormat:@"You have %ld points, You need more %.f points to redeem",(long)current_points_level_int,((dollarValueDouble*Points_to_dollar) - current_points_level_int)];
+//
+//            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
+//            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//
+//            }];
+//
+//            [alert addAction:okAction];
+//            [self presentViewController:alert animated:true completion:^{
+//
+//            }];
+//        }
+//    }
+//    else {
+//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:@"You have no points to redeem" preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//
+//        }];
+//
+//        [alert addAction:okAction];
+//        [self presentViewController:alert animated:true completion:^{
+//
+//        }];
+//    }
+//}
 
 #pragma mark - Button Actions
 
-- (IBAction)btnRedeemClicked:(id)sender {
-    [self checkCurrentPoints];
-}
-
-- (IBAction)btnWaitClicked:(id)sender {
-}
+//- (IBAction)btnRedeemClicked:(id)sender {
+//    [self checkCurrentPoints];
+//}
+//
+//- (IBAction)btnWaitClicked:(id)sender {
+//}
 
 
 @end

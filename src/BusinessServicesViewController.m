@@ -36,6 +36,7 @@
     NSMutableArray *previousOrderArray;
     NSMutableArray * _datasource;
 }
+@property(nonatomic, retain) NSMutableArray *previousOrderArray;
 @end
 
 
@@ -44,7 +45,7 @@
 
 @synthesize biz;
 @synthesize timerToLoadProducts;
-@synthesize tv_address, tv_website, tv_biz_website;
+@synthesize tv_address, tv_website, tv_biz_website, previousOrderArray;
 
 
 
@@ -699,7 +700,7 @@ UIBarButtonItem *btn_heart;
             MenuItemViewController *menuViewController = [[MenuItemViewController alloc] initWithNibName:@"MenuItemViewController" bundle:nil];
             [self.navigationController pushViewController:menuViewController animated:YES];
             
-            for (TPBusinessDetail *businessDetail in previousOrderArray) {
+            for (TPBusinessDetail *businessDetail in self.previousOrderArray) {
                 [self addItemToCoreData:businessDetail];
             }
         }];
@@ -707,7 +708,7 @@ UIBarButtonItem *btn_heart;
         UIAlertAction *myCartAction = [UIAlertAction actionWithTitle:@"My Order" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             CartViewController *TotalCartItemVC = [[CartViewController alloc] initWithNibName:@"CartViewController" bundle:nil];
             [self.navigationController pushViewController:TotalCartItemVC animated:YES];
-            for (TPBusinessDetail *businessDetail in previousOrderArray) {
+            for (TPBusinessDetail *businessDetail in self.previousOrderArray) {
                 [self addItemToCoreData:businessDetail];
             }
 //            TotalCartItemController *TotalCartItemVC = [[TotalCartItemController alloc] initWithNibName:@"TotalCartItemController" bundle:nil];

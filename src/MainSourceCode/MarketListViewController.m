@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MarketListViewController.h"
-#import "MarketTableViewCell.h"
+//#import "MarketTableViewCell.h"
 #import "Consts.h"
 #import "TapTalkLooks.h"
 #import "DetailBusinessViewControllerII.h"
@@ -26,6 +26,7 @@
 #import "BusinessListViewController.h"
 #import "ListofBusinesses.h"
 #import "Corp.h"
+#import "ActionSheetPicker.h"
 
 @interface NSLayoutConstraint (Description)
 
@@ -53,6 +54,8 @@
 @property (nonatomic, strong) NSMutableArray *searchResults; // Filtered search results
 
 @property (nonatomic, strong) CLLocation *currentLocation;
+
+- (void)corpChangeLocationAction:(UIButton *)sender;
 @end
 
 @implementation MarketListViewController
@@ -64,6 +67,7 @@
 @synthesize corpTableView;
 @synthesize searchController;
 @synthesize currentLocation;
+//@synthesize externalLocation;
 
 static const CGFloat CalloutYOffset = 50.0f;
 //static const CGFloat DefaultZoom = 12.0f;
@@ -75,8 +79,9 @@ MKCoordinateRegion marketRegion;
 - (void)setMarketList {
 
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.pd_locations_id = 0;
 //    marketListArray = [businesses marketListArray];
-    self.ResponseDataArray = appDelegate.allCorps;
+    self.ResponseDataArray = [appDelegate.allCorps mutableCopy];
 //    NSLog(@"%@",_ResponseDataArray);
     if (self.ResponseDataArray.count > 0 ) {
         if (!marketListArray) {
@@ -84,17 +89,14 @@ MKCoordinateRegion marketRegion;
         }// m
         [marketListArray removeAllObjects];
         for (int i = 0; i < self.ResponseDataArray.count ; i++) {
-            [marketListArray addObject:[self.ResponseDataArray objectAtIndex:i]];
+            [marketListArray addObject:[[self.ResponseDataArray objectAtIndex:i] mutableCopy]];
         }
         if (marketListArray.count > 0 ) {
             [marketListTimer invalidate];
             marketListTimer = nil;
 
             [HUD hideAnimated:YES];
-            NSMutableArray *SortByLocationArray = [self getSortByLocationTapForApp];
-            [self.marketListArray removeAllObjects];
-            self.marketListArray = SortByLocationArray;
-
+            self.marketListArray = [self getSortByLocationTapForApp];
 
             [corpTableView reloadData];
 //            TODO [self addMarkersToMap];
@@ -120,9 +122,26 @@ MKCoordinateRegion marketRegion;
     NSLog(@"MarketList is becoming active");
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [AppDelegate sharedInstance].pd_locations_id = 0;
+    if ([DataModel sharedDataModelManager].userID != 0) {
+        NSDictionary *param = @{@"cmd":@"get_all_points",@"consumerID":[NSNumber numberWithInteger:[DataModel sharedDataModelManager].userID],@"businessID":@"", @"corp_id":@""};
+        [[APIUtility sharedInstance]getRewardpointsForBusiness:param completiedBlock:^(NSDictionary *points_data) {
+            int status = [[points_data objectForKey:@"status"] intValue];
+            if (status == 1) {
+                NSString *total_earned_points = [points_data valueForKey:@"total_point"];
+                [[self.tabBarController.tabBar.items objectAtIndex:Points_Tabbar_Position] setBadgeValue:total_earned_points];
+            }
+        }];
+    }
+}
+
 - (void)viewDidLoad{
     [super viewDidLoad];
-    [Corp sharedCorp].chosenCorp = nil;
+    [CurrentBusiness sharedCurrentBusinessManager].business = nil;
+    [Corp sharedCorp].chosenCorp = [NSMutableDictionary dictionary];
+//    externalLocation = [[NSMutableDictionary alloc] init];
 
     if (!marketListArray) {
         marketListArray= [[NSMutableArray alloc]init];
@@ -146,7 +165,7 @@ MKCoordinateRegion marketRegion;
 //      self.marketListArray = SortByLocationArray;
 //  }
 
-    self.automaticallyAdjustsScrollViewInsets = NO;
+//    self.automaticallyAdjustsScrollViewInsets = NO;
     self.navigationController.navigationBar.translucent = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
 
@@ -262,7 +281,7 @@ MKCoordinateRegion marketRegion;
 }
 
 - (void) backButtonPressed {
-    NSLog(@"backButtonPressed");
+//    NSLog(@"backButtonPressed");
     [self.searchController setActive:NO];
     [self.navigationController popViewControllerAnimated:TRUE];
 }
@@ -461,22 +480,22 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     return YES;
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
-
-    NSString *latitudeString = [[NSUserDefaults standardUserDefaults] objectForKey:@"latitude"];
-    NSString *longitudeString = [[NSUserDefaults standardUserDefaults] objectForKey:@"longitude"];
-    //    NSLog(@"current location lat = %@ long = %@", latitudeString, longitudeString);
-    //  GMSCameraPosition *cameraPosition = [GMSCameraPosition cameraWithLatitude:[latitudeString doubleValue]
-    //                                                                        longitude:[longitudeString doubleValue]
-    //                                                                             zoom:DefaultZoom];
-
-    //  latitudeString = @"47.6210177";
-    //  longitudeString = @"-122.3268878";
-
-    [self setMapCameraTo:[latitudeString doubleValue] lng:[longitudeString doubleValue] mile:40];
-
-    [self calulateAndDisplayLocationFor:newLocation];
-}
+//- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
+//
+//    NSString *latitudeString = [[NSUserDefaults standardUserDefaults] objectForKey:@"latitude"];
+//    NSString *longitudeString = [[NSUserDefaults standardUserDefaults] objectForKey:@"longitude"];
+//    //    NSLog(@"current location lat = %@ long = %@", latitudeString, longitudeString);
+//    //  GMSCameraPosition *cameraPosition = [GMSCameraPosition cameraWithLatitude:[latitudeString doubleValue]
+//    //                                                                        longitude:[longitudeString doubleValue]
+//    //                                                                             zoom:DefaultZoom];
+//
+//    //  latitudeString = @"47.6210177";
+//    //  longitudeString = @"-122.3268878";
+//
+//    [self setMapCameraTo:[latitudeString doubleValue] lng:[longitudeString doubleValue] mile:40];
+//
+//    [self calulateAndDisplayLocationFor:newLocation];
+//}
 
 - (void)locationManager:(CLLocationManager *)manager
        didFailWithError:(NSError *)error {
@@ -522,7 +541,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 
     // for some odd reasons when the table is reload after a search row height doesn't get its value from the nib
     // file - so I had to do this - the value should correspond to the value in the cell xib file
-    return 320;
+    return 330;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -579,11 +598,11 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 //        cell.businessTypesTextField.text = businessTypes;
         cell.businessType.text = businessTypes;
     } else {
-        cell.businessType.text = @"";
+        cell.businessType.text = @"";  
     }
 //
 //    [cell.tf_corp_website setText:[cellDict objectForKey:@"website"]];
-    [cell.lbl_mkt_pickup_location setText:[cellDict objectForKey:@"location_abbr"]];
+    [cell.tf_mkt_pickup_location setText:[cellDict objectForKey:@"location_abbr"]];
     [cell.tf_cutoff_datetime setText:[cellDict objectForKey:@"cutoff_date"]];
     [cell.tf_pickup_date setText:[cellDict objectForKey:@"pickup_date"]];
 
@@ -704,7 +723,16 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     }
 
 //    cell.btnFevorite.tag = indexPath.row;
-//    [cell.btnFevorite  addTarget:self action:@selector(FevoriteButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    if (((NSString *)[cellDict valueForKey:@"has_external_pickup_location"]).intValue < 1) {
+        cell.lbChangeLocation.hidden = TRUE;
+    } else {
+        cell.lbChangeLocation.hidden = FALSE;
+    }
+        
+    cell.lbChangeLocation.tag = indexPath.row;
+
+    [cell.lbChangeLocation addTarget:self action:@selector(corpChangeLocationAction:) forControlEvents:UIControlEventTouchUpInside];
+
 
     return cell;
 }
@@ -833,7 +861,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     [businessArrays startGettingListofAllBusinessesForCorp:businessesForCorp];
     BusinessListViewController *businessListContorller = [[BusinessListViewController alloc] initWithNibName:@"BusinessListViewController" bundle:nil];
     businessListContorller.title = [cellDict objectForKey:@"domain"];
-    [Corp sharedCorp].chosenCorp = ((Corp *)cellDict);//[marketListArray objectAtIndex:indexPath.row];
+    [Corp sharedCorp].chosenCorp = [((Corp *)cellDict) mutableCopy];//[marketListArray objectAtIndex:indexPath.row];
     [AppData sharedInstance].market_mode = true;
     [AppData sharedInstance].consumerPDTimeChosen = [cellDict objectForKey:@"pickup_date"];
     [self.navigationController pushViewController:businessListContorller animated:YES];
@@ -945,5 +973,54 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 //        }
 //    }
 //}
+
+
+
+- (void)corpChangeLocationAction:(UIButton *)sender {
+    NSMutableDictionary *cellDict;
+    if (self.searchController.active)
+    {
+        cellDict = [filteredMarketListArray objectAtIndex:sender.tag];
+    }
+    else
+    {
+        cellDict = [marketListArray objectAtIndex:sender.tag];
+    }
+    NSArray *_deliveryLocations = [cellDict valueForKey:@"external_locations"];
+    if (_deliveryLocations == nil || [_deliveryLocations count] == 0) {
+        return;
+    }
+    
+    NSArray *deliveryLocations = [_deliveryLocations valueForKeyPath:@"Location address"];
+    __block long tag = sender.tag;
+    [ActionSheetStringPicker showPickerWithTitle:@"Delivery location?"
+                                rows:deliveryLocations
+                                initialSelection:0
+                                doneBlock:^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
+        NSLog(@"Picker: %@, Index: %ld, value: %@",
+              picker, (long)selectedIndex, selectedValue);
+        ((AppDelegate *)[[UIApplication sharedApplication] delegate]).pd_locations_id = selectedIndex;
+        
+        NSArray *externalLocations =  [[self.marketListArray objectAtIndex:tag] objectForKey:@"external_locations"];
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        NSString *locationArrayIndex = [[externalLocations objectAtIndex:selectedIndex] objectForKey:@"external_pickup_location_id"];
+        appDelegate.pd_locations_id = [locationArrayIndex intValue];
+        NSString* locationAddress = [[externalLocations objectAtIndex:selectedIndex] objectForKey:@"Location address"];
+        [[self.marketListArray objectAtIndex:tag] setObject:selectedValue forKey:@"delivery_location"];
+        [[self.marketListArray objectAtIndex:tag] setObject:locationAddress forKey:@"location_abbr"];
+        
+        
+        [[self.marketListArray objectAtIndex:tag] setObject:selectedValue forKey:@"location_abbr"];
+//        [self.externalLocation setObject:[NSNumber numberWithLong:tag] forKey:@"index"];
+//        [self.externalLocation setObject:selectedValue forKey:@"address"];
+        NSIndexPath *indexpath = [NSIndexPath indexPathForRow:tag inSection:0];
+        [self.corpTableView reloadRowsAtIndexPaths:@[indexpath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+    cancelBlock:^(ActionSheetStringPicker *picker) {
+        NSLog(@"Block Picker Canceled");
+    }
+    origin:self.view
+    ];
+}
 
 @end

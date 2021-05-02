@@ -55,6 +55,7 @@
     if ( ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpMode) {
         NSMutableArray *corps = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corps;
         short corpIndex = ((AppDelegate *)[[UIApplication sharedApplication] delegate]).corpIndex;
+        
 //        corp_id = [[corps objectAtIndex:corpIndex] valueForKey:@"corp_id"];
         //TODO
         corp_id = [[Corp sharedCorp].chosenCorp valueForKey:@"corp_id"];
@@ -296,7 +297,7 @@
 
 
 - (void) setInitialPointsValue {
-    NSLog(@"%@",[RewardDetailsModel sharedInstance].rewardDict);
+
     NSDictionary *rewards = [RewardDetailsModel sharedInstance].rewardDict;
     currentPointsLevel = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"points"] integerValue];
     originalNoPoint = [[[rewards valueForKey:@"data"] valueForKey:@"total_available_points"] integerValue];
@@ -307,7 +308,7 @@
         self.lblCurrentPoints.textColor = [UIColor blackColor];
         [self.btnRedeemPoint setImage:[UIImage imageNamed:@"Unchecked"] forState:UIControlStateNormal];
         self.lblCurrentPoints.text = [NSString stringWithFormat:@"%ld points" ,(long)totaLAvailablePoints];
-        self.lblRedeemPointText.text = [NSString stringWithFormat:@"%ld points worth %.02f ¢ each.  Redeem some?",(long)totaLAvailablePoints,dollarValForEachPoints*100];
+        self.lblRedeemPointText.text = [NSString stringWithFormat:@"%ld points worth %.00f ¢ each.  Redeem some?",(long)totaLAvailablePoints,dollarValForEachPoints*100];
     }
     else {
         dollarValForEachPoints = 0.0;
@@ -460,7 +461,7 @@
     if([CurrentBusiness sharedCurrentBusinessManager].business.promotion_code == NULL){
         [CurrentBusiness sharedCurrentBusinessManager].business.promotion_code = @"";
     }
-
+    NSNumber *pd_location_id = [NSNumber  numberWithInt:((AppDelegate *)[[UIApplication sharedApplication] delegate]).pd_locations_id];
     NSDictionary *orderInfoDict= @{@"cmd":@"save_order",@"data":orderItemArray,@"consumer_id":userID,@"total":[NSString stringWithFormat:@"%f",self.totalVal],
                                    @"business_id":business_id,@"points_redeemed":[NSString stringWithFormat:@"%ld",(long)currentRedeemPoints],
                                    @"points_dollar_amount":[NSString stringWithFormat:@"%f",redeemPointsDollarValue],
@@ -473,7 +474,8 @@
                                    @"promotion_discount_amount" : [NSString stringWithFormat:@"%f",self.promotionalamt],
                                    @"pd_charge_amount": [NSNumber numberWithDouble:self.pd_charge],
                                    @"pd_mode": [AppData sharedInstance].consumerPDMethodChosen.length > 0 ? [AppData sharedInstance].consumerPDMethodChosen : @"",
-                                   @"pd_locations_id": [AppData sharedInstance].consumer_Delivery_Location_Id.length > 0 ? [AppData sharedInstance].consumer_Delivery_Location_Id : @"",
+//                                   @"pd_locations_id": [AppData sharedInstance].consumer_Delivery_Location_Id.length > 0 ? [AppData sharedInstance].consumer_Delivery_Location_Id : @"",
+                                   @"pd_locations_id": pd_location_id,
                                    @"pd_time": [AppData sharedInstance].consumerPDTimeChosen.length > 0 ? [AppData sharedInstance].consumerPDTimeChosen : @"",
                                    @"order_type":order_type,
                                    @"corp_id":corp_id
@@ -580,7 +582,7 @@
 }
 
 
-- (void) removeAllOrderFromCoreData {
+- (void)removeAllOrderFromCoreData {
 
     NSManagedObjectContext *managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"MyCartItem"];

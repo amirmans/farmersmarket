@@ -10,10 +10,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface Corp : NSObject {
-    NSDictionary *chosenCorp;
+    NSMutableDictionary *chosenCorp;
 }
 
-@property (strong, atomic) NSDictionary *chosenCorp;
+@property (strong, atomic) NSMutableDictionary *chosenCorp;
 + (Corp *)sharedCorp;
 
 @end

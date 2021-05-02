@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -269,7 +269,7 @@
                                     <rect key="frame" x="89.5" y="0.0" width="196" height="29"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pick up at 2:00 in front of the store" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="7" adjustsFontForContentSizeCategory="YES" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="gqf-ac-p2B">
-                                            <rect key="frame" x="0.0" y="21.5" width="200" height="19.5"/>
+                                            <rect key="frame" x="-54" y="18" width="306" height="20"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <nil key="highlightedColor"/>
@@ -278,10 +278,10 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="196" id="1px-bu-Z0m"/>
-                                        <constraint firstAttribute="trailing" secondItem="gqf-ac-p2B" secondAttribute="trailing" constant="-4" id="Hnn-Mr-SgY"/>
+                                        <constraint firstAttribute="trailing" secondItem="gqf-ac-p2B" secondAttribute="trailing" constant="-56" id="Hnn-Mr-SgY"/>
                                         <constraint firstAttribute="height" constant="29" id="eiG-xH-2OD"/>
-                                        <constraint firstAttribute="bottom" secondItem="gqf-ac-p2B" secondAttribute="bottom" constant="-12" id="phd-we-fZe"/>
-                                        <constraint firstItem="gqf-ac-p2B" firstAttribute="leading" secondItem="ULU-GC-1tK" secondAttribute="leading" id="qU6-aA-9bi"/>
+                                        <constraint firstAttribute="bottom" secondItem="gqf-ac-p2B" secondAttribute="bottom" constant="-9" id="phd-we-fZe"/>
+                                        <constraint firstItem="gqf-ac-p2B" firstAttribute="leading" secondItem="ULU-GC-1tK" secondAttribute="leading" constant="-54" id="qU6-aA-9bi"/>
                                     </constraints>
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fk0-2g-a4T">

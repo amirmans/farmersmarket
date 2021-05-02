@@ -251,29 +251,37 @@ static AppDelegate *sharedObj;
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     NSLog(@"didFailWithError: %@", error);
 }
+//
+//-(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+//{
+////    NSString *myString = [NSString stringWithFormat:[CLLocationManager locationServicesEnabled] ? @"YES" : @"NO"];
+////    NSLog(@"%@",myString);
+////    NSLog(@"LocationManagerStatus %i",[CLLocationManager authorizationStatus]);
+//
+//}
 
--(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
-{
+//-(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+//{
 //    NSString *myString = [NSString stringWithFormat:[CLLocationManager locationServicesEnabled] ? @"YES" : @"NO"];
 //    NSLog(@"%@",myString);
 //    NSLog(@"LocationManagerStatus %i",[CLLocationManager authorizationStatus]);
+//
+//}
 
-}
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-{
-    CLLocation *location = locations.lastObject;
-//    CLLocation *oldLocation;
-//    if (locations.count > 1) {
-//        oldLocation = locations[locations.count - 2];
-//    }
-
-    // saving new location in nsuserdefaults
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:[NSNumber numberWithDouble:location.coordinate.latitude] forKey:@"latitude"];
-    [defaults setObject:[NSNumber numberWithDouble:location.coordinate.longitude] forKey:@"longitude"];
-    [defaults synchronize];
-}
+//- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+//{
+//    CLLocation *location = locations.lastObject;
+////    CLLocation *oldLocation;
+////    if (locations.count > 1) {
+////        oldLocation = locations[locations.count - 2];
+////    }
+//
+//    // saving new location in nsuserdefaults
+//    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+//    [defaults setObject:[NSNumber numberWithDouble:location.coordinate.latitude] forKey:@"latitude"];
+//    [defaults setObject:[NSNumber numberWithDouble:location.coordinate.longitude] forKey:@"longitude"];
+//    [defaults synchronize];
+//}
 
 //- (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
 //    UIApplicationState state = [application applicationState];
@@ -649,8 +657,8 @@ static AppDelegate *sharedObj;
             if ([response valueForKey:@"data"] != nil) {
                 NSArray *data = [response valueForKey:@"data"];
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                [defaults  removeObjectForKey:StripeDefaultCard];
-
+                [defaults  removeObjectForKey:@"StripeDefaultCard"];
+                [defaults synchronize];
                 for (NSDictionary *dataDict in data) {
                     NSString *cardName = [dataDict valueForKey:@"name_on_card"];
                     NSString *cardNumber = [dataDict valueForKey:@"cc_no"];
@@ -674,7 +682,7 @@ static AppDelegate *sharedObj;
 
                     NSDictionary *cardDataDict = @{ @"cc_no":cardNumber,@"card_name":cardName,@"expMonth":cardExpMonth,@"expYear":cardExpYear ,@"cvc":cardCvc
                                                     , @"zip_code":zipcode, @"card_type":cardType};
-                    [defaults setObject:cardDataDict forKey:StripeDefaultCard];
+                    [defaults setObject:cardDataDict forKey:@"StripeDefaultCard"];
                     [defaults synchronize];
 
                     break;
@@ -744,6 +752,22 @@ static AppDelegate *sharedObj;
 //
 - (void)postProcessForConsumerProfile:(NSDictionary *)consumerInfo {
     [[DataModel sharedDataModelManager] setUserIDWithString:consumerInfo[@"uid"]];
+    
+    if ([DataModel sharedDataModelManager].userID != 0) {
+        NSDictionary *param = @{@"cmd":@"get_all_points",@"consumerID":[NSNumber numberWithInteger:[DataModel sharedDataModelManager].userID],@"businessID":@"", @"corp_id":@""};
+        [[APIUtility sharedInstance]getRewardpointsForBusiness:param completiedBlock:^(NSDictionary *points_data) {
+            int status = [[points_data objectForKey:@"status"] intValue];
+            if (status == 1) {
+                [RewardDetailsModel sharedInstance].rewardDict = points_data;
+                NSString *total_earned_points = [points_data valueForKey:@"total_point"];
+                
+                
+                [[self.tt_tabBarController.tabBar.items objectAtIndex:Points_Tabbar_Position]
+                    setBadgeValue:total_earned_points];
+            }
+        }];
+    }
+    
     [DataModel sharedDataModelManager].nickname = consumerInfo[@"nickname"];
     [[DataModel sharedDataModelManager] setAgeGroupWithString:consumerInfo[@"age_group"]];
     [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
@@ -754,7 +778,7 @@ static AppDelegate *sharedObj;
 
     [self getDefaultCCForConsumer];
 
-    NSString* workEmail = consumerInfo[EmailWorkAddressKey];
+//    NSString* workEmail = consumerInfo[EmailWorkAddressKey];
     [self getAllCorps];
 //    [self getCorps:workEmail];
 }

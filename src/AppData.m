@@ -96,21 +96,21 @@ static AppData *sharedObj;
 //    [errorAlert show];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
-{
-    NSLog(@"didUpdateToLocation: %@", newLocation);
-    CLLocation *location = newLocation;
-    
-    if (location != nil) {
-        ;
-        NSLog(@"%@",[NSString stringWithFormat:@"%.8f", location.coordinate.longitude]);
-        NSLog(@"%@",[NSString stringWithFormat:@"%.8f", location.coordinate.latitude]);
-        
-        self.currentLocation = location;
-        
-        [self stopLocationService];
-    }
-}
+//- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+//{
+//    NSLog(@"didUpdateToLocation: %@", newLocation);
+//    CLLocation *location = newLocation;
+//
+//    if (location != nil) {
+//        ;
+//        NSLog(@"%@",[NSString stringWithFormat:@"%.8f", location.coordinate.longitude]);
+//        NSLog(@"%@",[NSString stringWithFormat:@"%.8f", location.coordinate.latitude]);
+//
+//        self.currentLocation = location;
+//
+//        [self stopLocationService];
+//    }
+//}
 
 - (void) getCurruntLocation {
     [self startLocationService];

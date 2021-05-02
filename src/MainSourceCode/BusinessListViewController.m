@@ -6,6 +6,7 @@
 //
 //
 
+#import "Corp.h"
 #import "BusinessListViewController.h"
 #import "BusinessTableViewCell.h"
 #import "Consts.h"
@@ -184,7 +185,7 @@ Business *biz;
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.navigationController];
     searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     searchController.searchResultsUpdater = self;
-    searchController.dimsBackgroundDuringPresentation = NO;
+//    searchController.dimsBackgroundDuringPresentation = NO;
     searchController.hidesNavigationBarDuringPresentation = NO;
     searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
     if (@available(iOS 13.0, *)) {
@@ -267,7 +268,22 @@ Business *biz;
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [CurrentBusiness sharedCurrentBusinessManager].business = nil;
     [AppData sharedInstance].Current_Selected_Tab = @"0";
+    
+    NSString *corp_id=@"";
+    if (([Corp sharedCorp].chosenCorp) && [[Corp sharedCorp].chosenCorp valueForKey:@"corp_id"]> 0 ) {
+        corp_id = [[Corp sharedCorp].chosenCorp valueForKey:@"corp_id"];
+    }
+    
+    NSDictionary *param = @{@"cmd":@"get_all_points",@"consumerID":[NSNumber numberWithInteger:[DataModel sharedDataModelManager].userID],@"businessID":@"", @"corp_id":corp_id};
+    [[APIUtility sharedInstance]getRewardpointsForBusiness:param completiedBlock:^(NSDictionary *points_data) {
+        int status = [[points_data objectForKey:@"status"] intValue];
+        if (status == 1) {
+            NSString *total_earned_points = [points_data valueForKey:@"total_point"];
+            [[self.tabBarController.tabBar.items objectAtIndex:Points_Tabbar_Position] setBadgeValue:total_earned_points];
+        }
+    }];
 }
 
 

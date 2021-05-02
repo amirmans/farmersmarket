@@ -1,5 +1,5 @@
 //
-//  BusinessListTableViewController.h
+//  MarketListTableViewController.h
 //  TapForAll
 //
 //  Created by Amir on 2/2/14.
@@ -14,6 +14,7 @@
 #import "SMCalloutView.h"
 #import "SMClassicCalloutView.h"
 #import "RewardDetailsModel.h"
+#import "MarketTableViewCell.h"
 
 @class MBProgressHUD;
 
@@ -25,11 +26,12 @@
 @property (strong, atomic) NSMutableArray *ResponseDataArray;
 @property (strong, atomic) NSMutableArray *marketListArray;
 @property (strong, atomic) NSMutableArray *filteredMarketListArray;
-// @property ( strong, nonatomic) NSMutableArray *markerArray;
+//@property (strong, nonatomic) NSMutableDictionary *externalLocation;
 @property (strong, nonatomic) SMCalloutView *calloutView;
 
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *listBusinessesActivityIndicator;
 @property (strong, nonatomic) IBOutlet UITableView *corpTableView;
 @property (strong, nonatomic) IBOutlet GMSMapView *mapView;
+
 
 @end

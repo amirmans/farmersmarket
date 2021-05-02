@@ -1709,7 +1709,7 @@ bool shouldOpenOptionMenu = false;
 //    [[APIUtility sharedInstance]BusinessListAPICall:data completiedBlock:^(NSDictionary *response) {
 //        NSLog(@"asd");
     shouldOpenOptionMenu = true;
-    NSString* ServerForBusiness = DefinedServerForBusiness;
+//    NSString* ServerForBusiness = DefinedServerForBusiness;
 
     NSDictionary *products = [CurrentBusiness sharedCurrentBusinessManager].business.businessProducts;
 
@@ -1814,24 +1814,24 @@ bool shouldOpenOptionMenu = false;
 
             [MenuItemTableView reloadData];
 
-            NSNumber *bizID= [NSNumber numberWithInt:business.businessID];
-            NSDictionary *inDataDict = @{@"cmd":@"get_average_wait_time_for_business",@"business_id":bizID};
-
-            [[APIUtility sharedInstance] getAverageWaitTimeForBusiness:inDataDict server:ServerForBusiness completiedBlock:^(NSDictionary *response) {
-                if([response valueForKey:@"data"] != nil) {
-
-                    NSDictionary *dataDict = [response valueForKey:@"data"];
-
-                    NSString* process_time = [dataDict valueForKey:@"process_time"];
-                    if (process_time == (id)[NSNull null] || process_time.length == 0 )
-                    {
-
-                    } else {
-                        self->business.process_time = [dataDict valueForKey:@"process_time"];
-                    }
-
-                }
-            }];
+//            NSNumber *bizID= [NSNumber numberWithInt:business.businessID];
+//            NSDictionary *inDataDict = @{@"cmd":@"get_average_wait_time_for_business",@"business_id":bizID};
+//
+//            [[APIUtility sharedInstance] getAverageWaitTimeForBusiness:inDataDict server:ServerForBusiness completiedBlock:^(NSDictionary *response) {
+//                if([response valueForKey:@"data"] != nil) {
+//
+//                    NSDictionary *dataDict = [response valueForKey:@"data"];
+//
+//                    NSString* process_time = [dataDict valueForKey:@"process_time"];
+//                    if (process_time == (id)[NSNull null] || process_time.length == 0 )
+//                    {
+//
+//                    } else {
+//                        self->business.process_time = [dataDict valueForKey:@"process_time"];
+//                    }
+//
+//                }
+//            }];
 
             [HUD hideAnimated:YES];
 
