@@ -595,14 +595,14 @@ UIBarButtonItem *btn_heart;
                     TPBusinessDetail *businessDetail = [TPBusinessDetail new];
                     
                     businessDetail.product_order_id = [[orderDetail valueForKey:@"order_item_id"] integerValue];
-                    businessDetail.price = [NSString stringWithFormat:@"%f",[[orderDetail valueForKey:@"price"] doubleValue]] ;
+                    businessDetail.price = [orderDetail valueForKey:@"price"];
                     businessDetail.short_description = [orderDetail valueForKey:@"product_short_description"];
                     businessDetail.product_id = [orderDetail valueForKey:@"product_id"];
                     businessDetail.name = [orderDetail valueForKey:@"product_name"];
                     businessDetail.quantity = [[orderDetail valueForKey:@"quantity"] integerValue];
                     businessDetail.ti_rating = [[orderDetail valueForKey:@"ti_rating"] doubleValue];
                     businessDetail.note = [orderDetail valueForKey:@"note"];
-                    self->previousOrderCount = previousOrderCount + [[orderDetail valueForKey:@"quantity"] integerValue];
+                    self->previousOrderCount = self->previousOrderCount + [[orderDetail valueForKey:@"quantity"] integerValue];
                     
                     NSArray *optionsArray = [orderDetail valueForKey:@"options"];
                     NSString *selectedItemString = @"";
