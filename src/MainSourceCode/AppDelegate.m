@@ -8,7 +8,7 @@
 //
 
 @import GoogleMaps;
-
+#import <UserNotifications/UserNotifications.h>
 #import "AppDelegate.h"
 #import "ListofBusinesses.h"
 #import "BusinessListViewController.h"
@@ -220,19 +220,30 @@ static AppDelegate *sharedObj;
 //    notificationImage = nil;
 //    referralImage = nil;
     /*messagesImage = nil;  chat to be offered in the next release */
+    [[UIApplication sharedApplication]
+     setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert)
+                          completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                              if (error) {
+                                  NSLog(@"Error in request authorization!");
+//                                  [self showAlert];
+                              }
+                          }];
 
-    #ifdef __IPHONE_8_0
+//    #ifdef __IPHONE_8_0
     [[UIApplication sharedApplication] registerForRemoteNotifications];
     UIUserNotificationType notifictionTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
     UIUserNotificationSettings *notificationSetting = [UIUserNotificationSettings settingsForTypes:notifictionTypes categories:nil];
     [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSetting];
 
-    #else
-
-    // Let the device know we want to receive push notifications
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-            (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-    #endif
+//    #else
+//
+//    // Let the device know we want to receive push notifications
+//    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+//            (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+//    #endif
     // Check if the app was launched in response to the user tapping on a
     // push notification.
     if (launchOptions != nil) {

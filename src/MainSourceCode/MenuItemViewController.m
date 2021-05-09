@@ -194,7 +194,7 @@ bool shouldOpenOptionMenu = false;
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.delegate = self;
     self.searchController.searchResultsUpdater = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.obscuresBackgroundDuringPresentation = NO;
     self.searchController.searchBar.delegate = self;
 
     self.MenuItemTableView.tableHeaderView = self.searchController.searchBar;
@@ -1725,8 +1725,8 @@ bool shouldOpenOptionMenu = false;
             }
             [self.businessListDetailArray removeAllObjects];
 
-            self.sectionKeyArray = [[NSMutableArray alloc] initWithArray:[data allKeys]];
-            
+//            self.sectionKeyArray = [[NSMutableArray alloc] initWithArray:[data allKeys]];
+            self.sectionKeyArray = [[data allKeys] sortedArrayUsingSelector:@selector(compare:)];
 
 //            NSLog(@"%@",self.sectionKeyArray);
 

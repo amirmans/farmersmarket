@@ -185,7 +185,7 @@ Business *biz;
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.navigationController];
     searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     searchController.searchResultsUpdater = self;
-//    searchController.dimsBackgroundDuringPresentation = NO;
+    searchController.obscuresBackgroundDuringPresentation = NO;
     searchController.hidesNavigationBarDuringPresentation = NO;
     searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x, self.searchController.searchBar.frame.origin.y, self.searchController.searchBar.frame.size.width, 44.0);
     if (@available(iOS 13.0, *)) {
@@ -896,7 +896,8 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     {
         NSPredicate *predicate = [NSPredicate predicateWithFormat:
                                   @"(SELF contains[cd] %@)", searchText];
-        if ([predicate evaluateWithObject:[bizDict objectForKey:@"keywords"]])
+        if ([predicate evaluateWithObject:[bizDict objectForKey:@"keywords"]] ||
+            [predicate evaluateWithObject:[bizDict objectForKey:@"name"]])
         {
             [filteredBusinessListArray addObject:bizDict];
         }

@@ -43,6 +43,10 @@
 	<string>We only use this info to show you the merchants closer to you.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Tap-In wants to use your location to find closest biz</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
