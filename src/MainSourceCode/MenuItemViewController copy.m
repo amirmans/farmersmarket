@@ -41,10 +41,15 @@
 UIBarButtonItem *backButton;
 bool shouldOpenOptionMenu = false;
 
+- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
+  return UIBarPositionTopAttached;
+}
+
+
 - (void)DisplayAlertForViewOnly {
     NSString *errorMessage = @"The ordering window is closed.\nPlease enjoy viewing the menus.";
-    
-    
+
+
     UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
     }];
@@ -64,8 +69,9 @@ bool shouldOpenOptionMenu = false;
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.edgesForExtendedLayout = NO;
     [AppData sharedInstance].Current_Selected_Tab = @"0";
-    
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(BusinessListAPICall)
                                                      name:@"GotProductData"
@@ -117,15 +123,15 @@ bool shouldOpenOptionMenu = false;
 //    HUD.bezelView.color =[UIColor orangeColor];
 //    HUD.backgroundView.color = [UIColor orangeColor];
     HUD.mode = MBProgressHUDModeIndeterminate;
-    
+
     [HUD.bezelView setBackgroundColor:[UIColor orangeColor]];
     HUD.bezelView.color = [UIColor orangeColor];
     HUD.bezelView.style = MBProgressHUDBackgroundStyleSolidColor;
 
     [self.view addSubview:HUD];
     self.txtNote.delegate = self;
-    
-    
+
+
 //    [HUD showWhileExecuting:@selector(doSomeFunkyStuff) onTarget:self withObject:nil animated:YES];
     [HUD showAnimated:YES];
 
@@ -141,10 +147,10 @@ bool shouldOpenOptionMenu = false;
     customButton = [[UIButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-85, 20, 80, 40)];
 //    [customButton setTitle:@"Order" forState:UIControlStateNormal];
 //    [customButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
+
     UIImage *btnImage = [UIImage imageNamed:@"shopping-cart.png"];
     [customButton setImage:btnImage forState:UIControlStateNormal];
-    
+
     self.rightButton = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:customButton];
     self.rightButton.badgeOriginX = 65.0f;
     self.rightButton.badgeOriginY = 2.0f;
@@ -188,30 +194,30 @@ bool shouldOpenOptionMenu = false;
 
     [self setMyCartValue];
 
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    
+//    self.automaticallyAdjustsScrollViewInsets = NO;
 
+    self.extendedLayoutIncludesOpaqueBars = true;
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.delegate = self;
     self.searchController.searchResultsUpdater = self;
-    self.searchController.obscuresBackgroundDuringPresentation = NO;
+//    self.searchController.dimsBackgroundDuringPresentation = NO;
     self.searchController.searchBar.delegate = self;
 
     self.MenuItemTableView.tableHeaderView = self.searchController.searchBar;
-    self.searchController.hidesNavigationBarDuringPresentation = false;
-    
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    self.definesPresentationContext = NO;
+
     self.searchController.searchBar.frame = CGRectMake(self.searchController.searchBar.frame.origin.x,
                                                        self.searchController.searchBar.frame.origin.y,
                                                        self.searchController.searchBar.frame.size.width, 44.0);
 
-    self.definesPresentationContext = NO;
 //    self.searchController.searchBar.translucent = NO;
 //    [[NSNotificationCenter defaultCenter] addObserver:self
 //                                                      selector:@selector(BusinessListAPICall)
 //                                                      name:@"GotProductData"
 //                                                       object:nil];
     self.rightButton.enabled = true;
-    
+
 //    NSString *openTime = [CurrentBusiness sharedCurrentBusinessManager].business.opening_time;
 //    NSString *closeTime = [CurrentBusiness sharedCurrentBusinessManager].business.closing_time;
 //    BOOL businessIsClosed = false;
@@ -242,15 +248,15 @@ bool shouldOpenOptionMenu = false;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
 
     menu.menuButton.isActive = false;
     [menu.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     shouldOpenOptionMenu = false;
 //    [self.navigationController popViewControllerAnimated:true];
-    [self.searchController setActive:NO];
+
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [super viewWillDisappear:animated];
 }
 
 -(void)dealloc {
@@ -315,7 +321,7 @@ bool shouldOpenOptionMenu = false;
 }
 
 -(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    
+
     if(textField == self.txtNote){
         NSUInteger newLength = [textField.text length] + [string length] - range.length;
 //        NSLog(@"%lu",(unsigned long)newLength);
@@ -329,12 +335,12 @@ bool shouldOpenOptionMenu = false;
         }
     }
     return YES;
-    
+
 }
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
-    
+
     self.btnCancelNote.hidden = true;
-    
+
     [textField resignFirstResponder];
     return YES;
 }
@@ -344,6 +350,9 @@ bool shouldOpenOptionMenu = false;
 }
 
 #pragma mark - Search
+- (void)searchDisplayControllerDidEndSearch:(UISearchController *)controller {
+    self.navigationController.navigationBar.translucent = NO;
+}
 
 - (void)filterContentForSearchText:(NSString*)searchText scope:(NSString*)scope
 {
@@ -361,11 +370,11 @@ bool shouldOpenOptionMenu = false;
                            searchText];
     NSPredicate *filter2 = [NSPredicate predicateWithFormat:@"product_keywords contains[c] %@",
                        searchText];
-    
+
     NSPredicate *predicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[filter, filter2]];
-    
+
     NSArray * dataArray = [[NSArray alloc]init];
-    dataArray = [mainCategoryArray filteredArrayUsingPredicate:predicate];
+    dataArray = [_MainArray filteredArrayUsingPredicate:predicate];
     self.filteredResult = [[NSMutableArray alloc]initWithArray:dataArray];
 //    NSLog(@"%ld",(unsigned long)self.filteredResult.count);
 }
@@ -412,11 +421,11 @@ bool shouldOpenOptionMenu = false;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
 {
     if (self.sectionKeyArray == nil) return  0;
-    
+
     if (self.searchController.active) {
         return 1;
     }
-    
+
     if (self.searchController.active) {
         //    if ([tableView isEqual:self.searchDisplayController.searchResultsTableView]) {
         return 1;
@@ -557,9 +566,9 @@ bool shouldOpenOptionMenu = false;
     else {
         rowCount = [[self.MainArray objectAtIndex:section] count];
     }
-    
+
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0, tableView.bounds.size.width,40)]; //10px top and 10px bottom. Just for illustration purposes.
-    
+
     UIImageView *sectionHeaderBG = [[UIImageView alloc]initWithFrame:CGRectMake(0, 15, 30, 30)];
 //    [sectionHeaderBG sd_setImageWithURL:[NSURL URLWithString:self.sectionKeysImageArray[section]]];
     [sectionHeaderBG layoutIfNeeded];
@@ -567,12 +576,12 @@ bool shouldOpenOptionMenu = false;
     sectionHeaderBG.clipsToBounds = YES;
 //    [sectionHeaderBG setImageWithURL:[NSURL URLWithString:self.sectionKeysImageArray[section]]];
 //    [sectionHeaderBG setBackgroundColor:[UIColor redColor]];
-    
+
     NSString *headerText = [NSString stringWithFormat:@"%@ (%ld)",self.sectionKeyArray[section],(long)rowCount];
 //    NSUInteger length = [headerText length];
 //    NSLog(@"%lu",(unsigned long)length);
-    
-    
+
+
     UILabel *sectionTitle = [[UILabel alloc] init];
 //    NSLog(@"Frame %@", NSStringFromCGRect(sectionTitle.frame));
     sectionTitle.text = headerText;
@@ -583,26 +592,26 @@ bool shouldOpenOptionMenu = false;
 //    CGSize expectedLabelSize = [headerText sizeWithFont:sectionTitle.font
 //                                      constrainedToSize:tableView.frame.size
 //                                          lineBreakMode:sectionTitle.lineBreakMode];
-    
+
     CGRect textRect = [headerText boundingRectWithSize:tableView.frame.size
                                          options:NSStringDrawingUsesLineFragmentOrigin
                                       attributes:@{NSFontAttributeName:sectionTitle.font}
                                          context:nil];
-    
+
     CGSize expectedLabelSize = textRect.size;
-    
+
     sectionTitle.frame = CGRectMake(35.0, 15.0, expectedLabelSize.width, 30);
-    
-    
+
+
     headerView.backgroundColor = [[UIColor colorWithRed:98.0/255.0f green:200.0/255.0f blue:207.0/255.0f alpha:1]colorWithAlphaComponent:1.0f];
-    
+
     [AppData setBusinessBackgroundColor:headerView];
-    
-    
+
+
 //    NSLog(@"Frame %@", NSStringFromCGRect(sectionTitle.frame));
     UIView *innerView = [[UIView alloc] initWithFrame:CGRectMake(0,10,expectedLabelSize.width+40, 50)];
 //    NSLog(@"Frame %@", NSStringFromCGRect(innerView.frame));
-    
+
     UIButton *headerButton = [[UIButton alloc] initWithFrame:innerView.bounds];
     [headerButton addTarget:self action:@selector(headerClicked:) forControlEvents:UIControlEventTouchUpInside];
     [innerView addSubview:headerButton];
@@ -611,7 +620,7 @@ bool shouldOpenOptionMenu = false;
     [innerView addSubview: sectionTitle];
     innerView.center = CGPointMake(headerView.bounds.size.width/2, headerView.bounds.size.height/2);
     [headerView addSubview: innerView];
-    
+
     return headerView;
 
 
@@ -847,7 +856,7 @@ bool shouldOpenOptionMenu = false;
     NSString *imageURLString = BusinessCustomerIndividualDirectory;
     NSString *pictureURL = [catArray[indexPath.row] valueForKey:@"pictures"];
 
-    
+
     if (pictureURL != (id)[NSNull null] && pictureURL.length != 0 ) {
 
         imageURLString = [imageURLString stringByAppendingFormat:@"%@/%@/%@",
@@ -873,20 +882,20 @@ bool shouldOpenOptionMenu = false;
         cell.tv_desc.text = short_desc;
     else
         cell.tv_desc.text = @"";
-    
-    
+
+
     NSString *productIconURL = [catArray[indexPath.row] valueForKey:@"product_icon"];
     NSString *iconDirectory = BusinessCustomerIconDirectory;
-    
+
     if (productIconURL != (id)[NSNull null] && productIconURL.length != 0 ) {
-        
+
         iconDirectory = [iconDirectory stringByAppendingFormat:@"%@",
                           productIconURL];
         [cell.imgProductIcon sd_setImageWithURL:[NSURL URLWithString:iconDirectory] placeholderImage:nil];
         cell.imgProductIcon.contentMode = UIViewContentModeScaleAspectFill;
-        
+
     }
-    
+
     cell.lbl_title.text = [catArray[indexPath.row] valueForKey:@"name"];
 
     cell.lbl_money.text = [NSString stringWithFormat:@"%@%@",self.currency_symbol,[catArray[indexPath.row] valueForKey:@"price"]];
@@ -920,7 +929,7 @@ bool shouldOpenOptionMenu = false;
 }
 
 - (MenuItemNoImageTableViewCell *) createMenuItemCellWithoutImageWithIndexpath : (UITableView *) tableView indexPath : (NSIndexPath *)indexPath  dataSource: (NSArray *) catArray {
-    
+
     static NSString *simpleTableIdentifier = @"MenuItemNoImageTableViewCell";
     MenuItemNoImageTableViewCell *cell = (MenuItemNoImageTableViewCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
     if (cell == nil)
@@ -952,20 +961,20 @@ bool shouldOpenOptionMenu = false;
         cell.tv_desc.text = short_desc;
     else
         cell.tv_desc.text = @"";
-    
+
     NSString *productIconURL = [catArray[indexPath.row] valueForKey:@"product_icon"];
     NSString *iconDirectory = BusinessCustomerIconDirectory;
-    
+
     if (productIconURL != (id)[NSNull null] && productIconURL.length != 0 ) {
-        
+
         iconDirectory = [iconDirectory stringByAppendingFormat:@"%@",
                          productIconURL];
         [cell.imgProductIcon sd_setImageWithURL:[NSURL URLWithString:iconDirectory] placeholderImage:nil];
         cell.imgProductIcon.contentMode = UIViewContentModeScaleAspectFill;
-        
-       
+
+
     }
-    
+
     cell.lbl_title.text = [catArray[indexPath.row] valueForKey:@"name"];
 
     cell.lbl_money.text = [NSString stringWithFormat:@"%@%@",self.currency_symbol,[catArray[indexPath.row] valueForKey:@"price"]];
@@ -1384,23 +1393,23 @@ bool shouldOpenOptionMenu = false;
     businessDetail.item_note = [content valueForKey:@"item_note"];
     businessDetail.note = [content valueForKey:@"note"];
     businessDetail.product_keywords = [content valueForKey:@"product_keywords"];
-    
+
     businessDetail.item_note = [content valueForKey:@"item_note"];
     //    NSManagedObjectContext *context = [self managedObjectContext];
-    
+
     //    NSLog(@"%@",_managedObjectContext.persistentStoreCoordinator.managedObjectModel.entities);
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
-    
+
     //    self.FetchedRecordArray = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
     //    NSLog(@"%lu",(unsigned long)_FetchedRecordArray.count);
     //    NSLog(@"%@",_FetchedRecordArray.description);
-    
+
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"MyCartItem"];
     NSError *error = nil;
     NSArray *results = [_managedObjectContext executeFetchRequest:request error:&error];
-    
+
     if (error != nil) {
-        
+
     }
     else {
         BOOL itemFound = false;
@@ -1452,7 +1461,7 @@ bool shouldOpenOptionMenu = false;
 }
 
 - (void) refreshRemoveFromCartDataWithProductId : (NSString *) product_id {
-    
+
     NSMutableArray *fetchedRecords = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
     self.FetchedRecordArray = [[NSMutableArray alloc]init];
     for (NSManagedObject *content in fetchedRecords) {
@@ -1485,20 +1494,20 @@ bool shouldOpenOptionMenu = false;
     //
     if (((AppDelegate *)[[UIApplication sharedApplication] delegate]).viewMode) {
         [self DisplayAlertForViewOnly];
-        
+
         return;
     }
     else {
-        
+
         self.txtNote.text = @"";
         self.btnCancelNote.hidden = YES;
-        
+
         //    NSLog(@"%@", [[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"name"]);
         //    NSLog(@"%@",[[self.MainArray[sender.section] objectAtIndex:sender.row]valueForKey:@"price"]);
-        
+
         //    SHMultipleSelect *multipleSelect = [[SHMultipleSelect alloc] init];
         TPBusinessDetail *businessDetail;
-        
+
         if (self.searchController.active) {
             businessDetail = [self.filteredResult objectAtIndex:sender.row];
         }
@@ -1507,9 +1516,9 @@ bool shouldOpenOptionMenu = false;
         }
         businessDetail.product_option = @"";
         businessDetail.item_note = @"";
-        
+
         self.searchController.active = false;
-        
+
         //    TPBusinessDetail *BusinessDetail = [[TPBusinessDetail alloc]init];
         //    BusinessDetail.product_id = [responseData objectForKey:@"product_id"];
         //    BusinessDetail.businessID = [responseData objectForKey:@"businessID"];
@@ -1537,7 +1546,7 @@ bool shouldOpenOptionMenu = false;
         //
         //    NSLog(@"%@",arr.debugDescription);
         //    BusinessDetail.optionArray = arr;
-        
+
         if (businessDetail.arrOptions.count > 0) {
             _dataSource = businessDetail.arrOptions;
             selectedButton = sender;
@@ -1555,20 +1564,20 @@ bool shouldOpenOptionMenu = false;
             selectedBusinessDetail.product_order_id = businessDetail.product_order_id;
             selectedBusinessDetail.product_option = businessDetail.product_option;
             selectedBusinessDetail.note = businessDetail.note;
-            
+
             selectedBusinessDetail.item_note = businessDetail.item_note;
             //        multipleSelect.delegate = self;
             //        multipleSelect.rowsCount = _dataSource.count;
             //        [multipleSelect show];
             BOOL flag = false;
-            
+
             for (NSDictionary *itemOptions in businessDetail.arrOptions) {
                 NSArray *optionDataArray = [itemOptions valueForKey:@"optionData"];
                 if ([optionDataArray count] > 0) {
                     flag = true;
                 }
             }
-            
+
             if (flag) {
                 [self setMenuItemOptionsViewWithDataSource:businessDetail.arrOptions];
             }
@@ -1577,7 +1586,7 @@ bool shouldOpenOptionMenu = false;
                                               alertControllerWithTitle:@"Tapin"
                                               message:@"Add Note For This Item (Optional)."
                                               preferredStyle:UIAlertControllerStyleAlert];
-                
+
                 UIAlertAction* ok = [UIAlertAction
                                      actionWithTitle:@"Ok"
                                      style:UIAlertActionStyleDefault
@@ -1592,16 +1601,16 @@ bool shouldOpenOptionMenu = false;
                                          [self AddItemInCart:businessDetail CustomUIButton:sender];
                                      }];
                 [alert addAction:ok];
-                
+
                 [alert addTextFieldWithConfigurationHandler:^(UITextField * textField) {
                     textField.accessibilityIdentifier = @"";
                     textField.placeholder = @"";
                     textField.accessibilityLabel = @"";
                     textField.returnKeyType = UIReturnKeyDone;
                 }];
-                
+
                 [self presentViewController:alert animated:YES completion:nil];
-                
+
             }
         }
         else{
@@ -1621,24 +1630,24 @@ bool shouldOpenOptionMenu = false;
 //    } else if (![[APIUtility sharedInstance] isBusinessOpen:openTime CloseTime:closeTime]) {
 //        businessIsClosed = true;
 //    }
-//    
+//
 //    if ( (businessIsClosed) && !(business.accept_orders_when_closed) ) {
 //        NSString *businessName = [CurrentBusiness sharedCurrentBusinessManager].business.businessName;
 //        NSString *title = [NSString stringWithFormat:@"%@ is closed now and has chosen not to accept orders", businessName];
 //        NSString *message = [NSString stringWithFormat:@"However, you may view the menu items"];
 //        [UIAlertController showInformationAlert:message withTitle:title];
-//        
+//
 //        return;
 //    }
-//    
-//    
+//
+//
     if (((AppDelegate *)[[UIApplication sharedApplication] delegate]).viewMode) {
         [self DisplayAlertForViewOnly];
         return;
     } else {
         menu.menuButton.isActive = false;
         [menu.menuButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-        
+
         shouldOpenOptionMenu = false;
         //    TotalCartItemController *TotalCartItemVC = [[TotalCartItemController alloc] initWithNibName:@"TotalCartItemController" bundle:nil];
         //    [self.navigationController pushViewController:TotalCartItemVC animated:YES];
@@ -1725,10 +1734,9 @@ bool shouldOpenOptionMenu = false;
             }
             [self.businessListDetailArray removeAllObjects];
 
-//            self.sectionKeyArray = [NSMutableArray alloc];
-            self.sectionKeyArray =
-            [[[data allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)] mutableCopy];
-            
+//            self.sectionKeyArray = [[NSMutableArray alloc] initWithArray:[data allKeys]];
+            self.sectionKeyArray = [[data allKeys] sortedArrayUsingSelector:@selector(compare:)];
+
 
 //            NSLog(@"%@",self.sectionKeyArray);
 
@@ -1747,8 +1755,8 @@ bool shouldOpenOptionMenu = false;
                 NSString *sectionString = [NSString stringWithFormat:@"%@ (%ld)",categoryString,(unsigned long)[categoryArray count]];
                 [self.sectionKeysWithCountArray addObject:sectionString];
 
-              
-                
+
+
                 NSMutableArray *catArray = [[NSMutableArray alloc] init];
                 for (NSDictionary* responseData  in categoryArray) {
                     TPBusinessDetail *businessDetail = [[TPBusinessDetail alloc]init];
@@ -1764,7 +1772,7 @@ bool shouldOpenOptionMenu = false;
                     NSString *URLString = [NSString stringWithFormat:@"%@/%@",BusinessCustomerIconDirectory,[responseData objectForKey:@"product_icon"]];
                     [self.sectionKeysImageArray addObject:URLString];
 //                    [self.sectionKeysImageArray addObject:[responseData objectForKey:@"product_icon"]];
-                    
+
 //                    NSString* field = [responseData objectForKey:@"ti_rating"];
 //                    if (field == (id)[NSNull null] || field.length == 0 )
 //                    {
@@ -1804,7 +1812,7 @@ bool shouldOpenOptionMenu = false;
             [menu displayMenuInView:self.navigationController.view];
             menu.items =  self.sectionKeysWithCountArray;
 //            menu.itemsImage = self.sectionKeysImageArray;
-            
+
             menu.delegate = self;
             self.navigationItem.titleView = menu;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
@@ -1881,7 +1889,7 @@ bool shouldOpenOptionMenu = false;
 
 - (void)AddItemInCart : (TPBusinessDetail *)businessDetail CustomUIButton:(CustomUIButton *)sender {
 
-    
+
     NSManagedObjectContext *context = [self managedObjectContext];
     _managedObjectContext= [[AppDelegate sharedInstance]managedObjectContext];
     self.FetchedRecordArray = [[NSMutableArray alloc]initWithArray:[[AppDelegate sharedInstance]getRecord]];
@@ -1926,10 +1934,10 @@ bool shouldOpenOptionMenu = false;
                         [storeManageObject setValue:businessDetail.pictures forKey:@"product_imageurg"];
                         [storeManageObject setValue:businessDetail.name forKey:@"productname"];
                         [storeManageObject setValue:businessDetail.product_option forKey:@"product_option"];
-                        
+
                         //zzzzz [storeManageObject setValue:businessDetail.item_note forKey:@"zzz"];
                         [storeManageObject setValue:businessDetail.item_note forKey:@"item_note"];
-                        
+
                         [storeManageObject setValue:[NSString stringWithFormat:@"%f",businessDetail.ti_rating]  forKey:@"ti_rating"];
                         [storeManageObject setValue:@([[dictionary valueForKey:@"product_order_id"] integerValue]) forKey:@"product_order_id"];
                         if([dictionary valueForKey:@"selected_ProductID_array"] == [NSNull null])
@@ -1966,9 +1974,9 @@ bool shouldOpenOptionMenu = false;
                         [storeManageObject setValue:businessDetail.pictures forKey:@"product_imageurg"];
                         [storeManageObject setValue:businessDetail.name forKey:@"productname"];
                         [storeManageObject setValue:businessDetail.product_option forKey:@"product_option"];
-                        
+
                         [storeManageObject setValue:businessDetail.item_note forKey:@"item_note"];
-                        
+
                         [storeManageObject setValue:[NSString stringWithFormat:@"%f",businessDetail.ti_rating]  forKey:@"ti_rating"];
                         [storeManageObject setValue:@([[dictionary valueForKey:@"product_order_id"] integerValue]) forKey:@"product_order_id"];
                         [storeManageObject setValue:[dictionary valueForKey:@"selected_ProductID_array"] forKey:@"selected_ProductID_array"];
@@ -2001,9 +2009,9 @@ bool shouldOpenOptionMenu = false;
             [storeManageObject setValue:businessDetail.pictures forKey:@"product_imageurg"];
             [storeManageObject setValue:businessDetail.name forKey:@"productname"];
             [storeManageObject setValue:businessDetail.product_option forKey:@"product_option"];
-            
+
             [storeManageObject setValue:businessDetail.item_note forKey:@"item_note"];
-            
+
             [storeManageObject setValue:[NSString stringWithFormat:@"%f",businessDetail.ti_rating]  forKey:@"ti_rating"];
             [storeManageObject setValue:order_id forKey:@"product_order_id"];
             NSString * selected_ProductID_arrayString = [businessDetail.selected_ProductID_array componentsJoinedByString:@","];
@@ -2224,7 +2232,7 @@ bool shouldOpenOptionMenu = false;
 
                 [self.optionTab1Array addObject:model];
             }
-            
+
             if([optionDataArray count] == 0) {
                 self.btnOptionTab1.userInteractionEnabled = false;
                 [self.btnOptionTab1 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
@@ -2249,7 +2257,7 @@ bool shouldOpenOptionMenu = false;
 
                 [self.optionTab2Array addObject:model];
             }
-            
+
             if([optionDataArray count] == 0) {
                 self.btnOptionTab2.userInteractionEnabled = false;
                 [self.btnOptionTab2 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
@@ -2275,7 +2283,7 @@ bool shouldOpenOptionMenu = false;
 
                 [self.optionTab3Array addObject:model];
             }
-            
+
             if([optionDataArray count] == 0) {
                 self.btnOptionTab3.userInteractionEnabled = false;
                 [self.btnOptionTab3 setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
@@ -2324,11 +2332,11 @@ bool shouldOpenOptionMenu = false;
 //    self.menuItemOptionsView.hidden = true;
 //}
 - (IBAction)btnCancelMenuItemOptionClicked:(id)sender {
-    
+
     [self enableBarButtons];
-    
+
     if( self.noteViewHeightConstraint.constant == 57.0){
-        
+
         self.noteViewHeightConstraint.constant = 1.0;
     }
     else{
@@ -2338,24 +2346,24 @@ bool shouldOpenOptionMenu = false;
 }
 
 //- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-//    
+//
 //    NSLog(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
-//    
+//
 //    [self addItemToMenuCart];}
 
 - (IBAction)btnAddToCartMenuItemOptionClicked:(id)sender {
-    
+
     if (((AppDelegate *)[[UIApplication sharedApplication] delegate]).viewMode) {
         NSString *errorMessage = @"At this time, please only enjoy viewing the businesses and the menus";
-        
-        
+
+
         UIAlertController *alert1 = [UIAlertController alertControllerWithTitle:@"" message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         }];
         [alert1 addAction:okAction];
         [self presentViewController:alert1 animated:true completion:^{
         }];
-        
+
         return;
     } else {
         [self addItemToMenuCart];
@@ -2365,16 +2373,16 @@ bool shouldOpenOptionMenu = false;
 -(void)addItemToMenuCart{
 
     [self enableBarButtons];
-    
+
     NSMutableArray *selectedItemsArray = [self getArrayFromSelectedOption];
-    
+
     NSString *selectedItemString = @"";
-    
+
     double optionTotal = 0;
-    
+
     TPBusinessDetail *businessDetail = selectedBusinessDetail;
     NSMutableArray *productID_array = [[NSMutableArray alloc] init];
-    
+
     //    for (NSIndexPath *indexPath in selectedIndexPaths) {
     //        NSLog(@"%@", _dataSource[indexPath.row]);
     //
@@ -2384,40 +2392,40 @@ bool shouldOpenOptionMenu = false;
     //
     //        optionTotal = optionTotal + [[[_dataSource objectAtIndex:indexPath.row] valueForKey:@"price"]doubleValue];
     //    }
-    
-    
+
+
     for (MenuOptionItemModel *model in selectedItemsArray) {
         selectedItemString = [selectedItemString stringByAppendingString:[NSString stringWithFormat:@"%@ (%@%@) ,",model.itemName,self.currency_symbol,model.itemPrice]];
         [productID_array addObject:model.itemOption_ID];
-        
+
         optionTotal = optionTotal + [model.itemPrice doubleValue];
     }
-    
+
     NSArray *sortedArray = [productID_array sortedArrayUsingDescriptors:
                             @[[NSSortDescriptor sortDescriptorWithKey:@"integerValue"
                                                             ascending:YES]]];
-    
+
     NSLog(@"Sorted: %@", sortedArray);
-    
+
     businessDetail.selected_ProductID_array = [NSMutableArray arrayWithArray:sortedArray];
-    
+
     NSLog(@"%@",selectedItemString);
-    
+
     businessDetail.product_option = selectedItemString;
-    
+
     if(self.txtNote.text.length != 0){
         businessDetail.item_note = self.txtNote.text;
     }
     double product_price = [businessDetail.price doubleValue];
-    
+
     double totalCartPrice = product_price + optionTotal;
-    
+
     NSLog(@"origional price = %@ , optional total= %f , total Cart price= %f",businessDetail.price,optionTotal,totalCartPrice);
     businessDetail.price = [NSString stringWithFormat:@"%f",(double)totalCartPrice];
     [self AddItemInCart:businessDetail  CustomUIButton:selectedButton];
-    
+
     self.menuItemOptionsView.hidden = true;
-    
+
 }
 
 - (IBAction)optionTab1Clicked:(id)sender {

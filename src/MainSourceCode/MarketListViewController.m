@@ -84,6 +84,7 @@ MKCoordinateRegion marketRegion;
     self.ResponseDataArray = [appDelegate.allCorps mutableCopy];
 //    NSLog(@"%@",_ResponseDataArray);
     if (self.ResponseDataArray.count > 0 ) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
         if (!marketListArray) {
             marketListArray= [[NSMutableArray alloc]init];
         }// m
@@ -97,7 +98,7 @@ MKCoordinateRegion marketRegion;
 
             [HUD hideAnimated:YES];
             self.marketListArray = [self getSortByLocationTapForApp];
-
+            self.searchResults = [NSMutableArray arrayWithCapacity:marketListArray.count];
             [corpTableView reloadData];
 //            TODO [self addMarkersToMap];
         }
@@ -169,7 +170,7 @@ MKCoordinateRegion marketRegion;
     self.navigationController.navigationBar.translucent = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
 
-    self.searchController.definesPresentationContext = YES;
+    self.searchController.definesPresentationContext = NO;
 
     //ToDO for a later release
 //    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
@@ -191,7 +192,7 @@ MKCoordinateRegion marketRegion;
 //                                                       (self.view.frame.size.width - 40), 44.0);
     self.extendedLayoutIncludesOpaqueBars = YES;
 
-    self.searchResults = [NSMutableArray arrayWithCapacity:marketListArray.count];
+
 
     // The table view controller is in a nav controller, and so the containing nav controller is the 'search results controller'
     //UINavigationController *searchResultsController = [[self storyboard] instantiateViewControllerWithIdentifier:@"TableSearchResultsNavController"];
@@ -598,7 +599,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
 //        cell.businessTypesTextField.text = businessTypes;
         cell.businessType.text = businessTypes;
     } else {
-        cell.businessType.text = @"";  
+        cell.businessType.text = @"";
     }
 //
 //    [cell.tf_corp_website setText:[cellDict objectForKey:@"website"]];
@@ -728,7 +729,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     } else {
         cell.lbChangeLocation.hidden = FALSE;
     }
-        
+
     cell.lbChangeLocation.tag = indexPath.row;
 
     [cell.lbChangeLocation addTarget:self action:@selector(corpChangeLocationAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -990,7 +991,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
     if (_deliveryLocations == nil || [_deliveryLocations count] == 0) {
         return;
     }
-    
+
     NSArray *deliveryLocations = [_deliveryLocations valueForKeyPath:@"Location address"];
     __block long tag = sender.tag;
     [ActionSheetStringPicker showPickerWithTitle:@"Delivery location?"
@@ -1000,7 +1001,7 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         NSLog(@"Picker: %@, Index: %ld, value: %@",
               picker, (long)selectedIndex, selectedValue);
         ((AppDelegate *)[[UIApplication sharedApplication] delegate]).pd_locations_id = selectedIndex;
-        
+
         NSArray *externalLocations =  [[self.marketListArray objectAtIndex:tag] objectForKey:@"external_locations"];
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         NSString *locationArrayIndex = [[externalLocations objectAtIndex:selectedIndex] objectForKey:@"external_pickup_location_id"];
@@ -1008,8 +1009,8 @@ didChangeCameraPosition:(GMSCameraPosition *)position {
         NSString* locationAddress = [[externalLocations objectAtIndex:selectedIndex] objectForKey:@"Location address"];
         [[self.marketListArray objectAtIndex:tag] setObject:selectedValue forKey:@"delivery_location"];
         [[self.marketListArray objectAtIndex:tag] setObject:locationAddress forKey:@"location_abbr"];
-        
-        
+
+
         [[self.marketListArray objectAtIndex:tag] setObject:selectedValue forKey:@"location_abbr"];
 //        [self.externalLocation setObject:[NSNumber numberWithLong:tag] forKey:@"index"];
 //        [self.externalLocation setObject:selectedValue forKey:@"address"];

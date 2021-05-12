@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.tapforall.tap4markets</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -36,7 +40,7 @@
 		<true/>
 	</dict>
 	<key>NSCalendarsUsageDescription</key>
-	<string>Tap-In wants to help you mark your calendars</string>
+	<string>Tap-In wants to help you mark your calendar</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription </key>
 	<string>We only use this info to show you the merchants closer to you.</string>
 	<key>NSLocationAlwaysUsageDescription </key>
@@ -46,6 +50,7 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
+		<string>processing</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

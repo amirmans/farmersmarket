@@ -125,7 +125,7 @@ static AppDelegate *sharedObj;
     enterBusinessNav.navigationBar.translucent = true;
     enterBusinessNav.extendedLayoutIncludesOpaqueBars = YES;
     enterBusinessNav.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
-   
+
 
     // messages from others - chat to be offered in the next release
 //    UIImage *messagesImage = [UIImage imageNamed:@"ic_messages_normal.png"];
@@ -209,8 +209,8 @@ static AppDelegate *sharedObj;
     consumerProfileViewController = nil;
     listTableView = nil;
 //    pointsViewController = nil;
-    
-    
+
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.tt_tabBarController;
     [self.window makeKeyAndVisible];
@@ -222,7 +222,7 @@ static AppDelegate *sharedObj;
     /*messagesImage = nil;  chat to be offered in the next release */
     [[UIApplication sharedApplication]
      setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
-    
+
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
     [center requestAuthorizationWithOptions:(UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert)
                           completionHandler:^(BOOL granted, NSError * _Nullable error) {
@@ -271,28 +271,30 @@ static AppDelegate *sharedObj;
 //
 //}
 
-//-(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
-//{
-//    NSString *myString = [NSString stringWithFormat:[CLLocationManager locationServicesEnabled] ? @"YES" : @"NO"];
-//    NSLog(@"%@",myString);
-//    NSLog(@"LocationManagerStatus %i",[CLLocationManager authorizationStatus]);
-//
-//}
+-(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    NSString *myString = [NSString stringWithFormat:[CLLocationManager locationServicesEnabled] ? @"YES" : @"NO"];
+    NSLog(@"%@",myString);
+    NSLog(@"LocationManagerStatus %i",[CLLocationManager authorizationStatus]);
 
-//- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
-//{
-//    CLLocation *location = locations.lastObject;
-////    CLLocation *oldLocation;
-////    if (locations.count > 1) {
-////        oldLocation = locations[locations.count - 2];
-////    }
-//
-//    // saving new location in nsuserdefaults
-//    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-//    [defaults setObject:[NSNumber numberWithDouble:location.coordinate.latitude] forKey:@"latitude"];
-//    [defaults setObject:[NSNumber numberWithDouble:location.coordinate.longitude] forKey:@"longitude"];
-//    [defaults synchronize];
-//}
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    CLLocation *location = locations.lastObject;
+//    CLLocation *oldLocation;
+//    if (locations.count > 1) {
+//        oldLocation = locations[locations.count - 2];
+//    }
+
+    // saving new location in nsuserdefaults
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[NSNumber numberWithDouble:location.coordinate.latitude] forKey:@"latitude"];
+    [defaults setObject:[NSNumber numberWithDouble:location.coordinate.longitude] forKey:@"longitude"];
+    [defaults synchronize];
+
+//    [manager stopUpdatingLocation];
+}
 
 //- (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
 //    UIApplicationState state = [application applicationState];
@@ -385,12 +387,12 @@ static AppDelegate *sharedObj;
     BOOL returnVal = false;
     NSString *currenttab = [AppData sharedInstance].Current_Selected_Tab;
     BOOL ProfileChanged = [AppData sharedInstance].is_Profile_Changed;
-    
-  
+
+
         if([currenttab isEqualToString:@"1"] && ProfileChanged)
         {
             [self showAlert:@"Alert" :@"Unsaved information in the profile.\nPlease use buttons to save or cancel" : 0];
-            
+
 //            UIWindow* topWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
 //                            topWindow.rootViewController = [UIViewController new];
 //                            topWindow.windowLevel = UIWindowLevelAlert + 1;
@@ -421,13 +423,13 @@ static AppDelegate *sharedObj;
 //
 //
 //
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
 //            [self alertWithResponse:^(BOOL didCancel) {
 //                if(didCancel) {
 //                    //alert returned Cancel
@@ -439,28 +441,28 @@ static AppDelegate *sharedObj;
 //                }
 //            }];
 //
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //            UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Confirmation!"
 //                                                                           message:@"You have unsaved information in the profile page.\nLeave page?"
 //                                                                    preferredStyle:UIAlertControllerStyleAlert];
@@ -486,7 +488,7 @@ static AppDelegate *sharedObj;
 //            alertWindow.windowLevel = UIWindowLevelAlert + 1;
 //            [alertWindow makeKeyAndVisible];
 //            [alertWindow.rootViewController presentViewController:alert animated:YES completion:nil];
-            
+
         } else if ([currenttab isEqualToString:@"5"])
         {
 //            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Alert" message:@"You have NOT placed your order yet. Are you sure you want to exit the page?" preferredStyle:  UIAlertControllerStyleAlert];
@@ -657,7 +659,7 @@ static AppDelegate *sharedObj;
 
     // At this point, the notification is recieved when the application is running.  So, lets update
     // the notification table with the new entry
-	if (updateUI)
+    if (updateUI)
         [notificationDelegate updateUIWithNewNotification];
 }
 
@@ -701,7 +703,7 @@ static AppDelegate *sharedObj;
             }
         }
     }];
-    
+
 //    NSLog (@"In appdelegate:getdefaultccforcustomer %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
 }
 
@@ -763,7 +765,7 @@ static AppDelegate *sharedObj;
 //
 - (void)postProcessForConsumerProfile:(NSDictionary *)consumerInfo {
     [[DataModel sharedDataModelManager] setUserIDWithString:consumerInfo[@"uid"]];
-    
+
     if ([DataModel sharedDataModelManager].userID != 0) {
         NSDictionary *param = @{@"cmd":@"get_all_points",@"consumerID":[NSNumber numberWithInteger:[DataModel sharedDataModelManager].userID],@"businessID":@"", @"corp_id":@""};
         [[APIUtility sharedInstance]getRewardpointsForBusiness:param completiedBlock:^(NSDictionary *points_data) {
@@ -771,14 +773,14 @@ static AppDelegate *sharedObj;
             if (status == 1) {
                 [RewardDetailsModel sharedInstance].rewardDict = points_data;
                 NSString *total_earned_points = [points_data valueForKey:@"total_point"];
-                
-                
+
+
                 [[self.tt_tabBarController.tabBar.items objectAtIndex:Points_Tabbar_Position]
                     setBadgeValue:total_earned_points];
             }
         }];
     }
-    
+
     [DataModel sharedDataModelManager].nickname = consumerInfo[@"nickname"];
     [[DataModel sharedDataModelManager] setAgeGroupWithString:consumerInfo[@"age_group"]];
     [DataModel sharedDataModelManager].zipcode = consumerInfo[@"zipcode"];
@@ -796,10 +798,10 @@ static AppDelegate *sharedObj;
 
 
 - (void)saveDeviceTokenAndUUID {
-    
+
 //    NSString *string = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"Config"];
 //    long longID = [NSBundle mainBundle].bundleIdentifier;
-    
+
 #ifdef DEBUG
     NSLog(@"I am in Debug mode.");
 #elif STAGING
@@ -807,10 +809,10 @@ static AppDelegate *sharedObj;
 #else
     NSLog(@"PRODUCTION");
 #endif
-    
 
-    
-    
+
+
+
 //    NSString *newToken = [deviceToken description];
 //    newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
 //    newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
@@ -895,7 +897,7 @@ static AppDelegate *sharedObj;
 
         [[DataModel sharedDataModelManager] setDeviceToken:newToken];
         serverManager = nil;
-    
+
     [Corp sharedCorp].chosenCorp = nil;
 //    }
 }
@@ -1028,9 +1030,9 @@ static AppDelegate *sharedObj;
                                 // this also keeps a reference to the window until the action is invoked.
                     topWindow.hidden = YES; // if you want to hide the topwindow then use this
                 //                topWindow = nil; // if you want to remove the topwindow then use this
-                    
+
                 }]];
-                    
+
 
                 [topWindow makeKeyAndVisible];
                 [topWindow.rootViewController presentViewController:alert animated:YES completion:nil];
@@ -1057,8 +1059,8 @@ static AppDelegate *sharedObj;
 //    alertWindow.windowLevel = UIWindowLevelAlert + 1;
 //    [alertWindow makeKeyAndVisible];
 //    [alertWindow.rootViewController presentViewController:alert animated:YES completion:nil];
-    
-    
+
+
     UIWindow* topWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     topWindow.rootViewController = [UIViewController new];
     topWindow.windowLevel = UIWindowLevelAlert + 1;
@@ -1076,8 +1078,8 @@ static AppDelegate *sharedObj;
 
     [topWindow makeKeyAndVisible];
     [topWindow.rootViewController presentViewController:alert animated:YES completion:nil];
-    
-    
+
+
 }
 
 

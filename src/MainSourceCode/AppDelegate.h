@@ -13,7 +13,7 @@
 #import "MenuItemViewController.h"
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,/*CLLocationManagerDelegate,*/ UITabBarControllerDelegate, UIActionSheetDelegate, PostProcesses, UIApplicationDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate, UITabBarControllerDelegate, UIActionSheetDelegate, PostProcesses, UIApplicationDelegate> {
     IBOutlet UIWindow *window;
     IBOutlet UITabBarController *tt_tabBarController;
     IBOutlet UINavigationController *enterBusinessNav;
