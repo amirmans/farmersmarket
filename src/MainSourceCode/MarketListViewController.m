@@ -131,7 +131,7 @@ MKCoordinateRegion marketRegion;
         [[APIUtility sharedInstance]getRewardpointsForBusiness:param completiedBlock:^(NSDictionary *points_data) {
             int status = [[points_data objectForKey:@"status"] intValue];
             if (status == 1) {
-                NSString *total_earned_points = [points_data valueForKey:@"total_point"];
+                NSString *total_earned_points = [NSString stringWithFormat:@"%@",[[points_data objectForKey:@"data"] objectForKey:@"total_available_points"]];
                 [[self.tabBarController.tabBar.items objectAtIndex:Points_Tabbar_Position] setBadgeValue:total_earned_points];
             }
         }];

@@ -1021,14 +1021,14 @@ NSMutableArray *cardDataArray;
         //------
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults  removeObjectForKey:StripeDefaultCard];
-//        NSString *cardName = @"";
-//        NSString *cardType = [self getTypeFromCardNumber:cardData.number];
-//        NSString *expMonthStr = [NSString stringWithFormat:@"%ld",cardData.expMonth];
-//        NSString *expYearStr = [NSString stringWithFormat:@"%ld",cardData.expYear];
-//        NSDictionary *cardDataDict = @{ @"cc_no":cardData.number,@"card_name":cardName,@"expMonth":expMonthStr,@"expYear":expYearStr ,@"cvc":cardData.cvc
-//                                        , @"zip_code":cardData.address.postalCode, @"card_type":cardType};
-//        [defaults setObject:cardDataDict forKey:StripeDefaultCard];
-//        [defaults synchronize];
+        NSString *cardName = @"";
+        NSString *cardType = [self getTypeFromCardNumber:cardData.number];
+        NSString *expMonthStr = [NSString stringWithFormat:@"%ld",cardData.expMonth];
+        NSString *expYearStr = [NSString stringWithFormat:@"%ld",cardData.expYear];
+        NSDictionary *cardDataDict = @{ @"cc_no":cardData.number,@"card_name":cardName,@"expMonth":expMonthStr,@"expYear":expYearStr ,@"cvc":cardData.cvc
+                                        , @"zip_code":cardData.address.postalCode, @"card_type":cardType};
+        [defaults setObject:cardDataDict forKey:StripeDefaultCard];
+        [defaults synchronize];
         returnVal = TRUE;
         //---------
     }else{

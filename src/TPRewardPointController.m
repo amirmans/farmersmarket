@@ -115,7 +115,13 @@
         NSString *localdate = [dateformater stringFromDate:converteddate];
         cell.lbldate.text =localdate;
     }
-    cell.lbl_order_no.text = [dic objectForKey:@"order_id"];
+    NSString *orderText = [dic objectForKey:@"order_id"];
+    if (orderText == (id)[NSNull null] || orderText.length == 0 )
+    {
+        cell.lbl_order_no.text = @"";
+    } else {
+        cell.lbl_order_no.text = orderText;
+    }
     //  cell.backgroundColor = [UIColor colorWithHue:245/255.0f saturation:245/255.0f brightness:245/255.0f alpha:1];
 
     return cell;
@@ -124,6 +130,10 @@
 - (void)getRewardAPICallWithBusinessId{
     self.tv_points_msg3.text = @"";
     self.lblRedeemPoints.text = @"";
+
+
+
+
 //  NSDictionary *data = [[NSDictionary alloc]initWithObjectsAndKeys:@"2",@"businessID", nil];
 
 //    Business *b = [CurrentBusiness sharedCurrentBusinessManager].business;

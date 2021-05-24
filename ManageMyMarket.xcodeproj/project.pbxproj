@@ -1762,12 +1762,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BEFE7FC720C74E6226CB1E07 /* Pods-ManageMyMarket.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Tap4Markets";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/ManageMyMarket.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1.2;
 				DEVELOPMENT_TEAM = E79MNN58JH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1779,7 +1779,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "TapForAll/ManageMyMarket-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.13;
+				MARKETING_VERSION = 1.17;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -1802,12 +1802,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9BE4BC2B8857645F6EA8704A /* Pods-ManageMyMarket.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Tap4Markets";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/ManageMyMarket.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1.2;
 				DEVELOPMENT_TEAM = E79MNN58JH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1819,7 +1819,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "TapForAll/ManageMyMarket-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.13;
+				MARKETING_VERSION = 1.17;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1936,12 +1936,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 704BF5C1DE6ED78C342AFE68 /* Pods-ManageMyMarket.staging.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Tap4Markets";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapForAll/ManageMyMarket.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Mohammad Amirmansoury (E79MNN58JH)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 1.0;
+				CURRENT_PROJECT_VERSION = 1.2;
 				DEVELOPMENT_TEAM = E79MNN58JH;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1953,7 +1953,7 @@
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "TapForAll/ManageMyMarket-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.13;
+				MARKETING_VERSION = 1.17;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",

@@ -110,6 +110,25 @@ Business *biz;
     NSLog(@"BusinessList is becoming active");
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    NSString *corp_id=@"";
+    if (([Corp sharedCorp].chosenCorp) && [[Corp sharedCorp].chosenCorp valueForKey:@"corp_id"]> 0 ) {
+        corp_id = [[Corp sharedCorp].chosenCorp valueForKey:@"corp_id"];
+    }
+    
+    NSDictionary *param = @{@"cmd":@"get_all_points",@"consumerID":[NSNumber numberWithInteger:[DataModel sharedDataModelManager].userID],@"businessID":@"", @"corp_id":corp_id};
+    [[APIUtility sharedInstance]getRewardpointsForBusiness:param completiedBlock:^(NSDictionary *points_data) {
+        int status = [[points_data objectForKey:@"status"] intValue];
+        if (status == 1) {
+            NSString *total_earned_points = [NSString stringWithFormat:@"%@",[[points_data objectForKey:@"data"] objectForKey:@"total_available_points"]];
+            [[self.tabBarController.tabBar.items objectAtIndex:Points_Tabbar_Position] setBadgeValue:total_earned_points];
+        }
+    }];
+    
+}
+
 - (void)viewDidLoad{
     [super viewDidLoad];
 //    self.searchController.searchBar.text = @"Search for product categories";
@@ -271,19 +290,19 @@ Business *biz;
     [CurrentBusiness sharedCurrentBusinessManager].business = nil;
     [AppData sharedInstance].Current_Selected_Tab = @"0";
     
-    NSString *corp_id=@"";
-    if (([Corp sharedCorp].chosenCorp) && [[Corp sharedCorp].chosenCorp valueForKey:@"corp_id"]> 0 ) {
-        corp_id = [[Corp sharedCorp].chosenCorp valueForKey:@"corp_id"];
-    }
-    
-    NSDictionary *param = @{@"cmd":@"get_all_points",@"consumerID":[NSNumber numberWithInteger:[DataModel sharedDataModelManager].userID],@"businessID":@"", @"corp_id":corp_id};
-    [[APIUtility sharedInstance]getRewardpointsForBusiness:param completiedBlock:^(NSDictionary *points_data) {
-        int status = [[points_data objectForKey:@"status"] intValue];
-        if (status == 1) {
-            NSString *total_earned_points = [points_data valueForKey:@"total_point"];
-            [[self.tabBarController.tabBar.items objectAtIndex:Points_Tabbar_Position] setBadgeValue:total_earned_points];
-        }
-    }];
+//    NSString *corp_id=@"";
+//    if (([Corp sharedCorp].chosenCorp) && [[Corp sharedCorp].chosenCorp valueForKey:@"corp_id"]> 0 ) {
+//        corp_id = [[Corp sharedCorp].chosenCorp valueForKey:@"corp_id"];
+//    }
+//
+//    NSDictionary *param = @{@"cmd":@"get_all_points",@"consumerID":[NSNumber numberWithInteger:[DataModel sharedDataModelManager].userID],@"businessID":@"", @"corp_id":corp_id};
+//    [[APIUtility sharedInstance]getRewardpointsForBusiness:param completiedBlock:^(NSDictionary *points_data) {
+//        int status = [[points_data objectForKey:@"status"] intValue];
+//        if (status == 1) {
+//            NSString *total_earned_points = [[points_data objectForKey:@"data"] valueForKey:@"total_available_points"];
+//            [[self.tabBarController.tabBar.items objectAtIndex:Points_Tabbar_Position] setBadgeValue:total_earned_points];
+//        }
+//    }];
 }
 
 

@@ -670,7 +670,7 @@ static AppDelegate *sharedObj;
             if ([response valueForKey:@"data"] != nil) {
                 NSArray *data = [response valueForKey:@"data"];
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                [defaults  removeObjectForKey:@"StripeDefaultCard"];
+                [defaults  removeObjectForKey:StripeDefaultCard];
                 [defaults synchronize];
                 for (NSDictionary *dataDict in data) {
                     NSString *cardName = [dataDict valueForKey:@"name_on_card"];
@@ -695,7 +695,7 @@ static AppDelegate *sharedObj;
 
                     NSDictionary *cardDataDict = @{ @"cc_no":cardNumber,@"card_name":cardName,@"expMonth":cardExpMonth,@"expYear":cardExpYear ,@"cvc":cardCvc
                                                     , @"zip_code":zipcode, @"card_type":cardType};
-                    [defaults setObject:cardDataDict forKey:@"StripeDefaultCard"];
+                    [defaults setObject:cardDataDict forKey:StripeDefaultCard];
                     [defaults synchronize];
 
                     break;

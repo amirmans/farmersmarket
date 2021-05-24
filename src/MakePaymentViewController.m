@@ -20,8 +20,8 @@
 }
 @property (assign) double  redeemPointsVal;// value for the points that we are redeeming
 @property (assign) double dollarValForEachPoints;  //detemined by the points level's ceiling
-@property (assign) double originalPointsVal;
-@property (assign) NSInteger currentPointsLevel;
+//@property (assign) double originalPointsVal;
+//@property (assign) NSInteger currentPointsLevel;
 @property (assign) NSInteger redeemNoPoint;  // number of points being redeemed
 @property (assign) NSInteger originalNoPoint;
 @property (assign) BOOL flagRedeemPointVal;
@@ -40,8 +40,8 @@
 
 @implementation MakePaymentViewController
 
-@synthesize redeemPointsVal,hud,dollarValForEachPoints,redeemNoPoint,currentPointsLevel,originalNoPoint
-    ,originalPointsVal,flagRedeemPointVal,tipAmt,subTotalVal,pd_charge, pd_noteText, order_type
+@synthesize redeemPointsVal,hud,dollarValForEachPoints,redeemNoPoint,/*currentPointsLevel,*/originalNoPoint
+    ,/*originalPointsVal,*/flagRedeemPointVal,tipAmt,subTotalVal,pd_charge, pd_noteText, order_type
     ,cardType, cardNo, uiExpirationDateString;
 @synthesize currency_symbol;
 @synthesize currency_code, corp_id;
@@ -299,22 +299,27 @@
 - (void) setInitialPointsValue {
 
     NSDictionary *rewards = [RewardDetailsModel sharedInstance].rewardDict;
-    currentPointsLevel = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"points"] integerValue];
-    originalNoPoint = [[[rewards valueForKey:@"data"] valueForKey:@"total_available_points"] integerValue];
-    originalPointsVal = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"dollar_value"] doubleValue];
-    int totaLAvailablePoints = [[[rewards valueForKey:@"data"] valueForKey:@"total_available_points"] intValue];
-    if (originalPointsVal > 0) {
-        dollarValForEachPoints = originalPointsVal / currentPointsLevel;
+//    currentPointsLevel = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"points"] integerValue];
+//    originalNoPoint = [[[rewards valueForKey:@"data"] valueForKey:@"total_available_points"] integerValue];
+//    originalPointsVal = [[[[rewards valueForKey:@"data"] valueForKey:@"current_points_level"] valueForKey:@"dollar_value"] doubleValue];
+//    int totaLAvailablePoints = [[[rewards valueForKey:@"data"] valueForKey:@"total_available_points"] intValue];
+    
+    
+    NSInteger currentPointsLevel = [[[[rewards valueForKey:@"data"] objectForKey:@"summary_points_array"] valueForKey:@"total_points"] integerValue];
+    originalNoPoint = [[[[rewards valueForKey:@"data"] objectForKey:@"summary_points_array"] valueForKey:@"total_redeemable"] integerValue];
+    double pointsVal = [[[[rewards valueForKey:@"data"] objectForKey:@"summary_points_array"] valueForKey:@"point_value"] doubleValue];
+    if (originalNoPoint > 0) {
+        dollarValForEachPoints = pointsVal;
         self.lblCurrentPoints.textColor = [UIColor blackColor];
         [self.btnRedeemPoint setImage:[UIImage imageNamed:@"Unchecked"] forState:UIControlStateNormal];
-        self.lblCurrentPoints.text = [NSString stringWithFormat:@"%ld points" ,(long)totaLAvailablePoints];
-        self.lblRedeemPointText.text = [NSString stringWithFormat:@"%ld points worth %.00f ¢ each.  Redeem some?",(long)totaLAvailablePoints,dollarValForEachPoints*100];
+        self.lblCurrentPoints.text = [NSString stringWithFormat:@"%ld points" ,(long)currentPointsLevel];
+        self.lblRedeemPointText.text = [NSString stringWithFormat:@"%ld can be redeembed worth %.00f ¢ each.  Redeem some?",(long)originalNoPoint,pointsVal*100];
     }
     else {
         dollarValForEachPoints = 0.0;
         self.lblCurrentPoints.textColor = [UIColor lightGrayColor];
         [self.btnRedeemPoint setImage:[UIImage imageNamed:@"ic_unchecked"] forState:UIControlStateNormal];
-        self.lblCurrentPoints.text = [NSString stringWithFormat:@"%ld points" ,(long)totaLAvailablePoints];
+        self.lblCurrentPoints.text = [NSString stringWithFormat:@"%ld points" ,(long)currentPointsLevel];
         self.lblRedeemPointText.text = @"You don't have enough points to use";
     }
 }
