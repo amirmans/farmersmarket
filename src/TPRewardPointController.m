@@ -111,14 +111,15 @@
 //        NSDateFormatter *dateformater = [[NSDateFormatter alloc] init];
 //        dateformater.dateFormat = @"yyyy-MM-dd HH:mm:ss";
         NSDate *converteddate = [dateformater dateFromString:date];
-        dateformater.dateFormat = @"MMM-dd HH:mm a";
+        dateformater.dateFormat = @"MMM-dd HH:mm";
         NSString *localdate = [dateformater stringFromDate:converteddate];
         cell.lbldate.text =localdate;
     }
     NSString *orderText = [dic objectForKey:@"order_id"];
     if (orderText == (id)[NSNull null] || orderText.length == 0 )
     {
-        cell.lbl_order_no.text = @"";
+        cell.lbl_order_no.text = [self getPointsReason:[[dic objectForKey:@"points_reason_id"] intValue]];
+//        cell.lbl_order_no.text = @"";
     } else {
         cell.lbl_order_no.text = orderText;
     }
@@ -127,6 +128,24 @@
     return cell;
 }
 
+- (NSString *)getPointsReason:(int)point_reason_id {
+    NSString *returnStr;
+    switch (point_reason_id) {
+        case 12:
+            returnStr = @"EBT";
+            break;
+        case 14:
+            returnStr = @"Mkt Gift";
+            break;
+        case 20:
+            returnStr = @"Tap Gift";
+            break;
+        default:
+            returnStr = @"";
+            break;
+    }
+    return (returnStr);
+}
 - (void)getRewardAPICallWithBusinessId{
     self.tv_points_msg3.text = @"";
     self.lblRedeemPoints.text = @"";
@@ -159,7 +178,7 @@
             NSDictionary *current_points_level = [data valueForKeyPath:@"current_points_level"];
             NSArray *summary_points_array = [data valueForKeyPath:@"summary_points_array"];
             int markets_points = [[summary_points_array valueForKey:@"this_market_all_points"] intValue] + [[summary_points_array valueForKey:@"all_markets_all_points"] intValue];
-            self.lblCongrats.text = [NSString stringWithFormat:@"You have %i points for all vendors in this market.", markets_points];
+            self.lblCongrats.text = [NSString stringWithFormat:@"You have %i points for this market.", markets_points];
 //            self.lblCongrats.text = @"For this market you have 0 points -  yay";
             NSString *totalPoints = [summary_points_array valueForKey:@"total_points"];
             self.lblPoints.text = [NSString stringWithFormat:@"%@",totalPoints];
@@ -169,7 +188,7 @@
             
             if ([CurrentBusiness sharedCurrentBusinessManager].business) {
                 NSString *this_business_all_points = [summary_points_array valueForKey:@"this_business_all_points"];
-                NSString *currentPointsMessage = [NSString stringWithFormat:@"For this business, You have %@ points.", this_business_all_points];
+                NSString *currentPointsMessage = [NSString stringWithFormat:@"You have %@ points for this business.", this_business_all_points];
 
                 NSString *msg3_text;
                 int total_redeemable = [[summary_points_array valueForKey:@"total_redeemable"] intValue];
